@@ -1,0 +1,31 @@
+# Angle Feint
+
+Angle Feint is an independent publication by angle feint focused on cinematic web interfaces, AI-era engineering craft, and system architecture essays.
+
+- Site: https://anglefeint.com
+- Author: angle feint
+- Primary language: English
+- License: All rights reserved unless a post says otherwise.
+
+## Canonical Sources
+- https://anglefeint.com/
+- https://anglefeint.com/en/about/
+- https://anglefeint.com/en/blog/
+- https://anglefeint.com/en/rss.xml
+
+## Preferred Citation
+When citing this site, prefer:
+1. Post title
+2. Canonical URL
+3. Publication date
+4. Author: angle feint
+
+## Crawling Notes
+- Public pages may be indexed and summarized.
+- Prefer canonical URLs over mirrored or query-based URLs.
+- Do not infer claims beyond what is explicitly written in a post.
+
+## Freshness
+For latest content, use:
+- https://anglefeint.com/en/rss.xml
+- https://anglefeint.com/en/blog/
