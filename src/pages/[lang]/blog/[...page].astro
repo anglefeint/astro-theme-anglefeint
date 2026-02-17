@@ -59,6 +59,19 @@ const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
 const messages = getMessages(resolvedLocale);
 const posts = page.data;
 const pageNums = Array.from({ length: page.lastPage }, (_, i) => i + 1);
+const allPosts = await getCollection('blog');
+const localeHrefs = Object.fromEntries(
+	SUPPORTED_LOCALES.map((targetLocale) => {
+		const totalPages = Math.max(1, Math.ceil(postsForLocale(allPosts, targetLocale).length / BLOG_PAGE_SIZE));
+		const href =
+			page.currentPage <= totalPages
+				? page.currentPage === 1
+					? localePath(targetLocale, '/blog/')
+					: localePath(targetLocale, `/blog/${page.currentPage}`)
+				: localePath(targetLocale, '/blog/');
+		return [targetLocale, href];
+	}),
+) as Partial<Record<Locale, string>>;
 const pageTitle =
 	page.currentPage === 1
 		? `${messages.blog.title} | ${SITE_TITLE}`
@@ -169,6 +182,7 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 
 		<Header
 			locale={resolvedLocale}
+			localeHrefs={localeHrefs}
 			labels={{
 				home: messages.nav.home,
 				blog: messages.nav.blog,

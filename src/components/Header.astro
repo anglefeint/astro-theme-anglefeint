@@ -16,6 +16,8 @@ import {
 interface Props {
 	locale?: Locale;
 	homeHref?: string;
+	/** Optional per-locale overrides (used for existence-aware language fallback on some routes). */
+	localeHrefs?: Partial<Record<Locale, string>>;
 	/** Show Blade Runner scanlines overlay on mesh-page (header/footer only) */
 	scanlines?: boolean;
 	labels?: {
@@ -49,7 +51,7 @@ const buildLocaleHref = (targetLocale: Locale) => {
 const localeOptions = SUPPORTED_LOCALES.map((targetLocale) => ({
 	locale: targetLocale,
 	label: LOCALE_LABELS[targetLocale],
-	href: buildLocaleHref(targetLocale),
+	href: props.localeHrefs?.[targetLocale] ?? buildLocaleHref(targetLocale),
 }));
 ---
 

@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
 import BlogPost from '../../../layouts/BlogPost.astro';
 import {
+	alternatePathForLocale,
 	DEFAULT_LOCALE,
 	SUPPORTED_LOCALES,
 	type Locale,
@@ -31,6 +32,17 @@ const { post, related, locale } = Astro.props;
 const lang = (Astro.params.lang ?? locale ?? DEFAULT_LOCALE) as string;
 const resolvedLocale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
 const { Content } = await render(post);
+const allPosts = await getCollection('blog');
+const currentSlug = blogIdToSlugAnyLocale(post.id);
+const localeHrefs = Object.fromEntries(
+	SUPPORTED_LOCALES.map((targetLocale) => {
+		const targetId = `${targetLocale}/${currentSlug}`;
+		const href = allPosts.some((p) => p.id === targetId)
+			? alternatePathForLocale(targetLocale, `/blog/${currentSlug}/`)
+			: alternatePathForLocale(targetLocale, '/blog/');
+		return [targetLocale, href];
+	}),
+) as Partial<Record<Locale, string>>;
 
 function extractText(markdown: string): string {
 	return markdown
@@ -76,6 +88,6 @@ const resolvedData = {
 };
 ---
 
-<BlogPost {...resolvedData} related={related}>
+<BlogPost {...resolvedData} related={related} localeHrefs={localeHrefs}>
 	<Content />
 </BlogPost>

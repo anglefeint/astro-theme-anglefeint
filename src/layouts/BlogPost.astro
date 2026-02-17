@@ -14,6 +14,7 @@ import { getMessages } from '../i18n/messages';
 type Props = CollectionEntry<'blog'>['data'] & {
 	locale?: string;
 	related?: CollectionEntry<'blog'>[];
+	localeHrefs?: Partial<Record<Locale, string>>;
 };
 
 const {
@@ -35,6 +36,7 @@ const {
 	tags,
 	locale = DEFAULT_LOCALE,
 	related = [],
+	localeHrefs,
 } = Astro.props;
 const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
 const messages = getMessages(resolvedLocale);
@@ -142,6 +144,7 @@ for (let i = 0; i < pts.length; i++) {
 		</div>
 		<Header
 			locale={resolvedLocale}
+			localeHrefs={localeHrefs}
 			scanlines
 			labels={{
 				home: messages.nav.home,
