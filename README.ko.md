@@ -92,6 +92,14 @@ pnpm build
 pnpm preview
 ```
 
+## 새 글 만들기
+
+모든 로케일(`en`, `ja`, `ko`, `es`, `zh`)에 같은 slug 글을 한 번에 생성합니다:
+
+```bash
+npm run new-post -- my-first-post
+```
+
 ## 테마 설정
 
 1. `.env.example` 를 `.env` 로 복사하고 사이트 정보를 설정합니다.

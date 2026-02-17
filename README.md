@@ -92,6 +92,14 @@ pnpm build
 pnpm preview
 ```
 
+## Create New Post
+
+Create the same slug in all locales (`en`, `ja`, `ko`, `es`, `zh`):
+
+```bash
+npm run new-post -- my-first-post
+```
+
 ## Theme Setup
 
 1. Copy `.env.example` to `.env` and set site identity variables.

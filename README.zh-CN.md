@@ -92,6 +92,14 @@ pnpm build
 pnpm preview
 ```
 
+## 新建文章
+
+一次为全部语言（`en`、`ja`、`ko`、`es`、`zh`）创建同名 slug：
+
+```bash
+npm run new-post -- my-first-post
+```
+
 ## 主题配置
 
 1. 复制 `.env.example` 为 `.env` 并填写站点信息。

@@ -92,6 +92,14 @@ pnpm build
 pnpm preview
 ```
 
+## 新しい記事を作成
+
+全ロケール（`en`, `ja`, `ko`, `es`, `zh`）に同じ slug の記事を一括作成します:
+
+```bash
+npm run new-post -- my-first-post
+```
+
 ## テーマ設定
 
 1. `.env.example` を `.env` にコピーし、サイト情報を設定。
