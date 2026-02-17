@@ -17,6 +17,18 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+## Instalacion con plantilla
+
+```bash
+npm create astro@latest -- --template voidtem/astro-theme-anglefeint
+```
+
+Con `pnpm`:
+
+```bash
+pnpm create astro@latest --template voidtem/astro-theme-anglefeint
+```
+
 ## Idiomas
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · Espanol (este archivo) · [한국어](README.ko.md)
