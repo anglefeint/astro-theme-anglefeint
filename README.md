@@ -113,6 +113,8 @@ pnpm preview
 - Visual systems: `docs/VISUAL_SYSTEMS.md`
 - Submission checklist: `docs/THEME_SUBMISSION_CHECKLIST.md`
 - Theme listing draft: `ASTRO_THEME_LISTING.md`
+- Upgrading guide: `UPGRADING.md`
+- Changelog: `CHANGELOG.md`
 
 ## License
 

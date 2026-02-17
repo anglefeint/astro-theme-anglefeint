@@ -113,6 +113,8 @@ pnpm preview
 - ビジュアルシステム: `docs/VISUAL_SYSTEMS.md`
 - 提出チェックリスト: `docs/THEME_SUBMISSION_CHECKLIST.md`
 - テーマ掲載文案: `ASTRO_THEME_LISTING.md`
+- アップグレードガイド: `UPGRADING.md`
+- 変更履歴: `CHANGELOG.md`
 
 ## ライセンス
 

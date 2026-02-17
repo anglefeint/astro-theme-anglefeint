@@ -113,6 +113,8 @@ pnpm preview
 - 视觉系统：`docs/VISUAL_SYSTEMS.md`
 - 提交检查单：`docs/THEME_SUBMISSION_CHECKLIST.md`
 - 主题提交文案：`ASTRO_THEME_LISTING.md`
+- 升级指南：`UPGRADING.md`
+- 变更日志：`CHANGELOG.md`
 
 ## 许可证
 
