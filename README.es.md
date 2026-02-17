@@ -113,6 +113,8 @@ pnpm preview
 - Sistemas visuales: `docs/VISUAL_SYSTEMS.md`
 - Checklist de envio: `docs/THEME_SUBMISSION_CHECKLIST.md`
 - Borrador de listado: `ASTRO_THEME_LISTING.md`
+- Guia de actualizacion: `UPGRADING.md`
+- Historial de cambios: `CHANGELOG.md`
 
 ## Licencia
 
