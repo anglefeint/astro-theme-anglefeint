@@ -40,14 +40,10 @@ const showAbout = THEME.ENABLE_ABOUT_PAGE;
 const currentSubpath = stripLocaleFromPath(Astro.url.pathname, locale);
 const homeHref = props.homeHref ?? alternatePathForLocale(locale, '/');
 const buildLocaleHref = (targetLocale: Locale) => {
-	// Language switcher: blog/about go to section index, not specific page
-	const sectionSubpath = currentSubpath.startsWith('/blog/')
-		? '/blog/'
-		: currentSubpath.startsWith('/about')
-			? showAbout
-				? '/about/'
-				: '/'
-			: currentSubpath || '/';
+	// Language switcher: preserve current route when switching locales.
+	// Only fall back for About when the feature is disabled.
+	const sectionSubpath =
+		currentSubpath.startsWith('/about') && !showAbout ? '/' : currentSubpath || '/';
 	return alternatePathForLocale(targetLocale, sectionSubpath);
 };
 const localeOptions = SUPPORTED_LOCALES.map((targetLocale) => ({
