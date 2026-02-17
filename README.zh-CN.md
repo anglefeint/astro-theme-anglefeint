@@ -1,48 +1,61 @@
-# Anglefeint
+<h1 align="center">Anglefeint</h1>
+<p align="center">一个具有电影感、多氛围切换的 Astro 个人发布主题。</p>
 
-一个具有电影感、多氛围切换的 Astro 个人发布主题。
+<p align="center">
+  <a href="https://demo.anglefeint.com/">在线演示</a>
+  ·
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">仓库地址</a>
+  ·
+  <a href="ASTRO_THEME_LISTING.md">主题提交文案</a>
+</p>
+
+<p align="center">
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-5.x-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
+</p>
 
 ## 语言
 
-- [English](README.md)
-- 简体中文（当前）
-- [日本語](README.ja.md)
-- [Español](README.es.md)
-- [한국어](README.ko.md)
+[English](README.md) · 简体中文（当前） · [日本語](README.ja.md) · [Español](README.es.md) · [한국어](README.ko.md)
 
-## 在线演示
+## 预览
 
-- https://demo.anglefeint.com/
+| 首页 | 博客列表 |
+| --- | --- |
+| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-## 技术栈
+| 文章页（展开） | 文章页（折叠） |
+| --- | --- |
+| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
 
-- Astro 5
-- TypeScript
-- Markdown + MDX 内容集合
-- 静态站点生成（SSG）
-- 可部署到 Cloudflare Workers / Pages
+| About |
+| --- |
+| ![About preview](public/images/theme-previews/preview-about.png) |
 
-## 环境要求
+## 路由视觉氛围
 
-- Node.js 18+（建议使用 LTS）
-- 包管理器：npm / pnpm / yarn / bun
-
-## 页面预览
-
-- 首页（`/`）：Matrix 终端风
-- 博客列表（`/:lang/blog`）：赛博朋克归档风
-- 文章页（`/:lang/blog/[slug]`）：AI 界面阅读风
-- About（`/:lang/about`）：可选黑客终端风个人页
+- `/`：Matrix 终端风首页
+- `/:lang/blog`：赛博朋克归档列表
+- `/:lang/blog/[slug]`：AI 界面风文章页
+- `/:lang/about`：可选黑客风 About 页面
 
 ## 功能特性
 
 - Astro 5 静态输出
-- Markdown + MDX 内容系统
+- Markdown + MDX 内容集合
 - 内置语言：`en`、`ja`、`ko`、`es`、`zh`
 - 按语言生成 RSS
-- 内置 Sitemap 与 robots 支持
-- 配置驱动（站点信息、主题行为、About 内容、社交链接）
-- 粘底 Footer（短页面下也贴底显示）
+- 内置 Sitemap 与 robots
+- 配置驱动的主题定制
+- 短页面下 Footer 贴底
+
+## 环境要求
+
+- Node.js `18+`（建议 LTS）
+- 包管理器：`npm`、`pnpm`、`yarn` 或 `bun`
 
 ## 快速开始
 
@@ -58,7 +71,7 @@ npm run build
 npm run preview
 ```
 
-`pnpm` 示例：
+使用 `pnpm`：
 
 ```bash
 pnpm install
@@ -71,16 +84,23 @@ pnpm preview
 
 1. 复制 `.env.example` 为 `.env` 并填写站点信息。
 2. 在 `src/config/social.ts` 修改社交链接。
-3. 在 `src/config/about.ts` 修改 About 文案。
+3. 在 `src/config/about.ts` 修改 About 内容。
 4. 在 `src/config/theme.ts` 用 `ENABLE_ABOUT_PAGE` 控制 About 页面开关。
 5. 在 `src/content/blog/<locale>/` 替换示例文章。
 
-## 主要配置入口
+## 配置入口
 
 - 站点信息：`src/config/site.ts`（或 `PUBLIC_*` 环境变量）
 - 主题行为：`src/config/theme.ts`
 - About 内容：`src/config/about.ts`
 - 社交链接：`src/config/social.ts`
+
+## 文档
+
+- 架构说明：`docs/ARCHITECTURE.md`
+- 视觉系统：`docs/VISUAL_SYSTEMS.md`
+- 提交检查单：`docs/THEME_SUBMISSION_CHECKLIST.md`
+- 主题提交文案：`ASTRO_THEME_LISTING.md`
 
 ## 许可证
 

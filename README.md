@@ -1,74 +1,63 @@
-# Anglefeint
+<h1 align="center">Anglefeint</h1>
+<p align="center">A cinematic, multi-atmosphere Astro theme for personal publishing.</p>
 
-A cinematic, multi-atmosphere Astro theme for personal publishing.
+<p align="center">
+  <a href="https://demo.anglefeint.com/">Live Demo</a>
+  ·
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">Repository</a>
+  ·
+  <a href="ASTRO_THEME_LISTING.md">Theme Listing</a>
+</p>
+
+<p align="center">
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-5.x-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
+</p>
 
 ## Languages
 
-- English (this file)
-- [简体中文](README.zh-CN.md)
-- [日本語](README.ja.md)
-- [Español](README.es.md)
-- [한국어](README.ko.md)
-
-## Live Demo
-
-- https://demo.anglefeint.com/
-
-## Tech Stack
-
-- Astro 5
-- TypeScript
-- Markdown + MDX content collections
-- Static site generation (SSG)
-- Cloudflare Workers / Pages compatible output
-
-## Requirements
-
-- Node.js 18+ (LTS recommended)
-- Package manager: npm / pnpm / yarn / bun
+English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Español](README.es.md) · [한국어](README.ko.md)
 
 ## Preview
 
-- Home (`/`): Matrix-inspired terminal landing
-- Blog list (`/:lang/blog`): cyberpunk archive mood
-- Blog post (`/:lang/blog/[slug]`): AI-interface reading layout
-- About (`/:lang/about`): optional hacker-style profile page
+| Home | Blog List |
+| --- | --- |
+| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-## Screenshots
+| Blog Post (Open) | Blog Post (Collapsed) |
+| --- | --- |
+| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
 
-### Home
+| About |
+| --- |
+| ![About preview](public/images/theme-previews/preview-about.png) |
 
-![Home preview](public/images/theme-previews/preview-home.png)
+## Route Atmospheres
 
-### Blog List
-
-![Blog list preview](public/images/theme-previews/preview-blog-list.png)
-
-### Blog Post (Monitor Open)
-
-![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png)
-
-### Blog Post (Monitor Collapsed)
-
-![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png)
-
-### About
-
-![About preview](public/images/theme-previews/preview-about.png)
+- `/`: Matrix-inspired terminal landing
+- `/:lang/blog`: cyberpunk archive mood
+- `/:lang/blog/[slug]`: AI-interface reading layout
+- `/:lang/about`: optional hacker-style profile page
 
 ## Features
 
-- Astro 5 static site output
+- Astro 5 static output
 - Markdown + MDX content collections
 - Built-in locales: `en`, `ja`, `ko`, `es`, `zh`
 - Per-locale RSS feeds
 - Sitemap + robots support
-- Config-driven theme options and profile content
-- Sticky footer (viewport-bottom on short pages, 2K/4K friendly)
+- Config-driven customization
+- Sticky footer (viewport-bottom on short pages)
+
+## Requirements
+
+- Node.js `18+` (LTS recommended)
+- Package manager: `npm`, `pnpm`, `yarn`, or `bun`
 
 ## Quick Start
-
-Install dependencies:
 
 ```bash
 npm install
@@ -82,7 +71,7 @@ npm run build
 npm run preview
 ```
 
-Using other package managers:
+With `pnpm`:
 
 ```bash
 pnpm install
@@ -93,45 +82,26 @@ pnpm preview
 
 ## Theme Setup
 
-1. Copy `.env.example` to `.env` and set your site identity variables.
+1. Copy `.env.example` to `.env` and set site identity variables.
 2. Update social links in `src/config/social.ts`.
 3. Edit About content in `src/config/about.ts`.
-4. Toggle About route/nav in `src/config/theme.ts` via `ENABLE_ABOUT_PAGE`.
+4. Toggle About route/nav with `ENABLE_ABOUT_PAGE` in `src/config/theme.ts`.
 5. Replace starter posts in `src/content/blog/<locale>/`.
 
-## Configuration
+## Configuration Surface
 
 - Site identity: `src/config/site.ts` (or `PUBLIC_*` env vars)
 - Theme behavior: `src/config/theme.ts`
 - About content/runtime text: `src/config/about.ts`
 - Social links: `src/config/social.ts`
 
-## Project Structure
-
-```text
-src/
-  components/
-  config/
-  content/
-  i18n/
-  layouts/
-  pages/
-  styles/
-public/
-  images/
-  scripts/
-  styles/
-```
-
-## Documentation
+## Docs
 
 - Architecture: `docs/ARCHITECTURE.md`
 - Visual systems: `docs/VISUAL_SYSTEMS.md`
 - Submission checklist: `docs/THEME_SUBMISSION_CHECKLIST.md`
 - Theme listing draft: `ASTRO_THEME_LISTING.md`
-- Deployment notes (Cloudflare): `wrangler.jsonc` + `npm run build` + `npx wrangler deploy`
-- AI coding assistant guide: `AGENTS.md`
 
 ## License
 
-Licensed under the MIT License. See `LICENSE`.
+MIT License. See `LICENSE`.
