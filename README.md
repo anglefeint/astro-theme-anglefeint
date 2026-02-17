@@ -2,6 +2,31 @@
 
 A cinematic, multi-atmosphere Astro theme for personal publishing.
 
+## Languages
+
+- English (this file)
+- [简体中文](README.zh-CN.md)
+- [日本語](README.ja.md)
+- [Español](README.es.md)
+- [한국어](README.ko.md)
+
+## Live Demo
+
+- https://demo.anglefeint.com/
+
+## Tech Stack
+
+- Astro 5
+- TypeScript
+- Markdown + MDX content collections
+- Static site generation (SSG)
+- Cloudflare Workers / Pages compatible output
+
+## Requirements
+
+- Node.js 18+ (LTS recommended)
+- Package manager: npm / pnpm / yarn / bun
+
 ## Preview
 
 - Home (`/`): Matrix-inspired terminal landing
@@ -43,6 +68,8 @@ A cinematic, multi-atmosphere Astro theme for personal publishing.
 
 ## Quick Start
 
+Install dependencies:
+
 ```bash
 npm install
 npm run dev
@@ -53,6 +80,15 @@ Build and preview:
 ```bash
 npm run build
 npm run preview
+```
+
+Using other package managers:
+
+```bash
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
 ```
 
 ## Theme Setup
@@ -93,6 +129,7 @@ public/
 - Visual systems: `docs/VISUAL_SYSTEMS.md`
 - Submission checklist: `docs/THEME_SUBMISSION_CHECKLIST.md`
 - Theme listing draft: `ASTRO_THEME_LISTING.md`
+- Deployment notes (Cloudflare): `wrangler.jsonc` + `npm run build` + `npx wrangler deploy`
 - AI coding assistant guide: `AGENTS.md`
 
 ## License
