@@ -100,6 +100,8 @@ pnpm preview
 npm run new-post -- my-first-post
 ```
 
+Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
+
 ## テーマ設定
 
 1. `.env.example` を `.env` にコピーし、サイト情報を設定。

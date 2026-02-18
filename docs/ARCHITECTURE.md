@@ -30,6 +30,9 @@
 - Blog post: `/:lang/blog/[slug]`
 - About page: `/:lang/about` (feature-toggled)
 - RSS: `/:lang/rss.xml`
+- Language switcher behavior:
+  - Preserves the current route when switching locales.
+  - For blog detail/pagination, if the target-locale page does not exist, it falls back to that locale's blog index.
 
 ## Configuration Surface
 

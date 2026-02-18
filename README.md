@@ -100,6 +100,8 @@ Create the same slug in all locales (`en`, `ja`, `ko`, `es`, `zh`):
 npm run new-post -- my-first-post
 ```
 
+Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-post`).
+
 ## Theme Setup
 
 1. Copy `.env.example` to `.env` and set site identity variables.

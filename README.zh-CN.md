@@ -100,6 +100,8 @@ pnpm preview
 npm run new-post -- my-first-post
 ```
 
+Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
+
 ## 主题配置
 
 1. 复制 `.env.example` 为 `.env` 并填写站点信息。

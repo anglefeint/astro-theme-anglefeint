@@ -100,6 +100,8 @@ Crea el mismo slug para todos los idiomas (`en`, `ja`, `ko`, `es`, `zh`):
 npm run new-post -- my-first-post
 ```
 
+Regla del slug: usa solo minusculas, numeros y guiones (ejemplo: `my-first-post`).
+
 ## Configuracion del tema
 
 1. Copia `.env.example` a `.env` y define la identidad del sitio.

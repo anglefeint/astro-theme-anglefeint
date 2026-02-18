@@ -10,6 +10,7 @@ Use this before submitting to an Astro theme listing/review.
 - Demo URL is public and stable
 - Repository URL points to this theme
 - No placeholder listing fields remain (e.g. `<YOUR_DEMO_URL>`)
+- Theme screenshots meet portal constraints (combined max 5MB, 16:9 ratio, width >= 1280px)
 
 ## Recommended
 

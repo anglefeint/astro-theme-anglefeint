@@ -34,6 +34,8 @@ When merging/upgrading, prioritize your own data in:
 - `src/config/social.ts`
 - `.env` (local only, never commit)
 
+Keep post slugs aligned across locales. Use `npm run new-post -- <slug>` to scaffold the same slug in all language folders.
+
 ## Validation Checklist
 
 After every upgrade:
@@ -52,4 +54,3 @@ After every upgrade:
 
 - Review `CHANGELOG.md` before upgrading.
 - Major versions may include breaking changes.
-
