@@ -102,6 +102,17 @@ npm run new-post -- my-first-post
 
 Slug 규칙: 소문자 영문, 숫자, 하이픈만 사용하세요 (예: `my-first-post`).
 
+## 새 페이지 만들기
+
+`new-post` 는 블로그 글만 생성합니다. 커스텀 페이지는 아래 명령으로 생성하세요:
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+지원 테마: `base`, `br`, `mesh`, `term`, `matrix`.  
+명령은 `src/pages/[lang]/projects.astro` 를 만들고 `getStaticPaths()` 로 모든 로케일 라우트를 생성합니다.
+
 ## 테마 설정
 
 1. `.env.example` 를 `.env` 로 복사하고 사이트 정보를 설정합니다.

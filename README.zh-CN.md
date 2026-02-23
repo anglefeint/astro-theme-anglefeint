@@ -102,6 +102,17 @@ npm run new-post -- my-first-post
 
 Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
 
+## 新建页面
+
+`new-post` 只创建博客文章。自定义页面请使用：
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+可选主题：`base`、`br`、`mesh`、`term`、`matrix`。  
+命令会生成 `src/pages/[lang]/projects.astro`，并通过 `getStaticPaths()` 输出全部语言路由。
+
 ## 主题配置
 
 1. 复制 `.env.example` 为 `.env` 并填写站点信息。
