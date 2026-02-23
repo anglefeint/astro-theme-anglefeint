@@ -78,6 +78,16 @@ npm run new-page -- projects --theme base
 利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。  
 `src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
 
+例:
+
+```bash
+npm run new-page -- projects --theme base
+npm run new-page -- projects --theme ai
+npm run new-page -- projects --theme cyber
+npm run new-page -- projects --theme hacker
+npm run new-page -- projects --theme matrix
+```
+
 ## 言語
 
 [English](README.md) · [简体中文](README.zh-CN.md) · 日本語（このファイル） · [Español](README.es.md) · [한국어](README.ko.md)

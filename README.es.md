@@ -78,6 +78,16 @@ npm run new-page -- projects --theme base
 Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
 El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
 
+Ejemplos:
+
+```bash
+npm run new-page -- projects --theme base
+npm run new-page -- projects --theme ai
+npm run new-page -- projects --theme cyber
+npm run new-page -- projects --theme hacker
+npm run new-page -- projects --theme matrix
+```
+
 ## Idiomas
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · Espanol (este archivo) · [한국어](README.ko.md)
