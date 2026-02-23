@@ -102,6 +102,17 @@ npm run new-post -- my-first-post
 
 Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
 
+## 新しいページを作成
+
+`new-post` はブログ記事専用です。カスタムページは次のコマンドを使用します:
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+利用可能なテーマ: `base`, `br`, `mesh`, `term`, `matrix`。  
+`src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
+
 ## テーマ設定
 
 1. `.env.example` を `.env` にコピーし、サイト情報を設定。

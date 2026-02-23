@@ -102,6 +102,17 @@ npm run new-post -- my-first-post
 
 Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-post`).
 
+## Create New Page
+
+`new-post` creates blog content only. For custom pages, use:
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+Available themes: `base`, `br`, `mesh`, `term`, `matrix`.
+The command creates `src/pages/[lang]/projects.astro` with locale routes via `getStaticPaths()`.
+
 ## Theme Setup
 
 1. Copy `.env.example` to `.env` and set site identity variables.

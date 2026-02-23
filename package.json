@@ -11,6 +11,7 @@
     "check": "astro check",
     "preview": "astro preview",
     "new-post": "node scripts/new-post.mjs",
+    "new-page": "node scripts/new-page.mjs",
     "astro": "astro"
   },
   "dependencies": {

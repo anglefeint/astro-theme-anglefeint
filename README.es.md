@@ -102,6 +102,17 @@ npm run new-post -- my-first-post
 
 Regla del slug: usa solo minusculas, numeros y guiones (ejemplo: `my-first-post`).
 
+## Crear nueva pagina
+
+`new-post` solo crea contenido del blog. Para paginas personalizadas usa:
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+Temas disponibles: `base`, `br`, `mesh`, `term`, `matrix`.  
+El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
+
 ## Configuracion del tema
 
 1. Copia `.env.example` a `.env` y define la identidad del sitio.
