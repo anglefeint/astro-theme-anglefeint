@@ -75,7 +75,7 @@ Regla del slug: usa solo minusculas, numeros y guiones (ejemplo: `my-first-post`
 npm run new-page -- projects --theme base
 ```
 
-Temas disponibles: `base`, `br`, `mesh`, `term`, `matrix`.  
+Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
 El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
 
 ## Idiomas

@@ -75,7 +75,7 @@ Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-po
 npm run new-page -- projects --theme base
 ```
 
-可选主题：`base`、`br`、`mesh`、`term`、`matrix`。  
+可选主题：`base`、`ai`、`cyber`、`hacker`、`matrix`。  
 命令会生成 `src/pages/[lang]/projects.astro`，并通过 `getStaticPaths()` 输出全部语言路由。
 
 ## 语言

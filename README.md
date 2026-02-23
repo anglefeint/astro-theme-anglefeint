@@ -75,7 +75,7 @@ Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-
 npm run new-page -- projects --theme base
 ```
 
-Available themes: `base`, `br`, `mesh`, `term`, `matrix`.
+Available themes: `base`, `ai`, `cyber`, `hacker`, `matrix`.
 The command creates `src/pages/[lang]/projects.astro` with locale routes via `getStaticPaths()`.
 
 ## Languages

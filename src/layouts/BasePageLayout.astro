@@ -5,7 +5,7 @@ import Header from '../components/Header.astro';
 import { type Locale, DEFAULT_LOCALE, isLocale } from '../i18n/config';
 import { getMessages } from '../i18n/messages';
 
-export type PageThemeVariant = 'base' | 'br' | 'mesh' | 'term' | 'matrix';
+export type PageThemeVariant = 'base' | 'cyber' | 'ai' | 'hacker' | 'matrix';
 
 interface Props {
 	locale?: Locale;
@@ -20,9 +20,9 @@ const { title, description, theme = 'base' } = Astro.props as Props;
 const messages = getMessages(locale);
 const bodyClassByTheme: Record<PageThemeVariant, string> = {
 	base: 'page-default',
-	br: 'br-page',
-	mesh: 'mesh-page',
-	term: 'term-page',
+	cyber: 'br-page',
+	ai: 'mesh-page',
+	hacker: 'term-page',
 	matrix: 'page-home',
 };
 const bodyClass = bodyClassByTheme[theme];
@@ -32,11 +32,11 @@ const bodyClass = bodyClassByTheme[theme];
 <html lang={locale}>
 	<head>
 		<BaseHead title={title} description={description} />
-		{theme === 'term' && <link rel="stylesheet" href="/styles/about-page.css" />}
+		{theme === 'hacker' && <link rel="stylesheet" href="/styles/about-page.css" />}
 	</head>
 	<body class={bodyClass}>
 		{theme === 'matrix' && <canvas id="matrix-bg" aria-hidden="true"></canvas>}
-		{theme === 'br' && (
+		{theme === 'cyber' && (
 			<>
 				<div class="br-load-glitch" aria-hidden="true"></div>
 				<div class="br-spotlight" aria-hidden="true">

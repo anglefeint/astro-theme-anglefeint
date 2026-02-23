@@ -2,11 +2,11 @@ import { access, mkdir, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
 
-const THEMES = ['base', 'br', 'mesh', 'term', 'matrix'];
+const THEMES = ['base', 'cyber', 'ai', 'hacker', 'matrix'];
 const PAGES_ROOT = path.resolve(process.cwd(), 'src/pages/[lang]');
 
 function usage() {
-	console.error('Usage: npm run new-page -- <slug> [--theme <base|br|mesh|term|matrix>]');
+	console.error('Usage: npm run new-page -- <slug> [--theme <base|cyber|ai|hacker|matrix>]');
 }
 
 function normalizeImportPath(filePath) {
@@ -81,7 +81,8 @@ const pageDescription = 'A custom page built from the ${theme} theme shell.';
 }
 
 async function main() {
-	const { slug, theme } = parseArgs(process.argv);
+	const { slug, theme: rawTheme } = parseArgs(process.argv);
+	const theme = String(rawTheme || '').toLowerCase();
 
 	if (!slug) {
 		usage();
@@ -92,7 +93,7 @@ async function main() {
 		process.exit(1);
 	}
 	if (!THEMES.includes(theme)) {
-		console.error(`Invalid theme "${theme}". Use one of: ${THEMES.join(', ')}`);
+		console.error(`Invalid theme "${rawTheme}". Use one of: ${THEMES.join(', ')}.`);
 		process.exit(1);
 	}
 

@@ -75,7 +75,7 @@ Slug ルール: 小文字英字・数字・ハイフンのみを使用してく�
 npm run new-page -- projects --theme base
 ```
 
-利用可能なテーマ: `base`, `br`, `mesh`, `term`, `matrix`。  
+利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。  
 `src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
 
 ## 言語

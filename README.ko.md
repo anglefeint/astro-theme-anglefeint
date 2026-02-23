@@ -75,7 +75,7 @@ Slug 규칙: 소문자 영문, 숫자, 하이픈만 사용하세요 (예: `my-fi
 npm run new-page -- projects --theme base
 ```
 
-지원 테마: `base`, `br`, `mesh`, `term`, `matrix`.  
+지원 테마: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
 명령은 `src/pages/[lang]/projects.astro` 를 만들고 `getStaticPaths()` 로 모든 로케일 라우트를 생성합니다.
 
 ## 언어
