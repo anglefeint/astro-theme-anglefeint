@@ -29,41 +29,6 @@ npm create astro@latest -- --template voidtem/astro-theme-anglefeint
 pnpm create astro@latest --template voidtem/astro-theme-anglefeint
 ```
 
-## 言語
-
-[English](README.md) · [简体中文](README.zh-CN.md) · 日本語（このファイル） · [Español](README.es.md) · [한국어](README.ko.md)
-
-## プレビュー
-
-| ホーム | ブログ一覧 |
-| --- | --- |
-| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
-
-| 記事ページ（展開） | 記事ページ（折りたたみ） |
-| --- | --- |
-| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
-
-| About |
-| --- |
-| ![About preview](public/images/theme-previews/preview-about.png) |
-
-## ルートごとの雰囲気
-
-- `/`：Matrix 風ターミナルのホーム
-- `/:lang/blog`：サイバーパンク調のアーカイブ
-- `/:lang/blog/[slug]`：AI インターフェース風の読書レイアウト
-- `/:lang/about`：任意で有効化できるハッカー風 About ページ
-
-## 主な機能
-
-- Astro 5 の静的出力
-- Markdown + MDX コンテンツコレクション
-- 組み込みロケール: `en`, `ja`, `ko`, `es`, `zh`
-- ロケール別 RSS
-- Sitemap + robots 対応
-- 設定駆動のカスタマイズ
-- 短いページでもフッターを下部に固定
-
 ## 動作要件
 
 - Node.js `18+`（LTS 推奨）
@@ -112,6 +77,41 @@ npm run new-page -- projects --theme base
 
 利用可能なテーマ: `base`, `br`, `mesh`, `term`, `matrix`。  
 `src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
+
+## 言語
+
+[English](README.md) · [简体中文](README.zh-CN.md) · 日本語（このファイル） · [Español](README.es.md) · [한국어](README.ko.md)
+
+## プレビュー
+
+| ホーム | ブログ一覧 |
+| --- | --- |
+| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
+
+| 記事ページ（展開） | 記事ページ（折りたたみ） |
+| --- | --- |
+| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
+
+| About |
+| --- |
+| ![About preview](public/images/theme-previews/preview-about.png) |
+
+## ルートごとの雰囲気
+
+- `/`：Matrix 風ターミナルのホーム
+- `/:lang/blog`：サイバーパンク調のアーカイブ
+- `/:lang/blog/[slug]`：AI インターフェース風の読書レイアウト
+- `/:lang/about`：任意で有効化できるハッカー風 About ページ
+
+## 主な機能
+
+- Astro 5 の静的出力
+- Markdown + MDX コンテンツコレクション
+- 組み込みロケール: `en`, `ja`, `ko`, `es`, `zh`
+- ロケール別 RSS
+- Sitemap + robots 対応
+- 設定駆動のカスタマイズ
+- 短いページでもフッターを下部に固定
 
 ## テーマ設定
 

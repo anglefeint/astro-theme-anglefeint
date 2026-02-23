@@ -29,41 +29,6 @@ npm create astro@latest -- --template voidtem/astro-theme-anglefeint
 pnpm create astro@latest --template voidtem/astro-theme-anglefeint
 ```
 
-## 语言
-
-[English](README.md) · 简体中文（当前） · [日本語](README.ja.md) · [Español](README.es.md) · [한국어](README.ko.md)
-
-## 预览
-
-| 首页 | 博客列表 |
-| --- | --- |
-| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
-
-| 文章页（展开） | 文章页（折叠） |
-| --- | --- |
-| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
-
-| About |
-| --- |
-| ![About preview](public/images/theme-previews/preview-about.png) |
-
-## 路由视觉氛围
-
-- `/`：Matrix 终端风首页
-- `/:lang/blog`：赛博朋克归档列表
-- `/:lang/blog/[slug]`：AI 界面风文章页
-- `/:lang/about`：可选黑客风 About 页面
-
-## 功能特性
-
-- Astro 5 静态输出
-- Markdown + MDX 内容集合
-- 内置语言：`en`、`ja`、`ko`、`es`、`zh`
-- 按语言生成 RSS
-- 内置 Sitemap 与 robots
-- 配置驱动的主题定制
-- 短页面下 Footer 贴底
-
 ## 环境要求
 
 - Node.js `18+`（建议 LTS）
@@ -112,6 +77,41 @@ npm run new-page -- projects --theme base
 
 可选主题：`base`、`br`、`mesh`、`term`、`matrix`。  
 命令会生成 `src/pages/[lang]/projects.astro`，并通过 `getStaticPaths()` 输出全部语言路由。
+
+## 语言
+
+[English](README.md) · 简体中文（当前） · [日本語](README.ja.md) · [Español](README.es.md) · [한국어](README.ko.md)
+
+## 预览
+
+| 首页 | 博客列表 |
+| --- | --- |
+| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
+
+| 文章页（展开） | 文章页（折叠） |
+| --- | --- |
+| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
+
+| About |
+| --- |
+| ![About preview](public/images/theme-previews/preview-about.png) |
+
+## 路由视觉氛围
+
+- `/`：Matrix 终端风首页
+- `/:lang/blog`：赛博朋克归档列表
+- `/:lang/blog/[slug]`：AI 界面风文章页
+- `/:lang/about`：可选黑客风 About 页面
+
+## 功能特性
+
+- Astro 5 静态输出
+- Markdown + MDX 内容集合
+- 内置语言：`en`、`ja`、`ko`、`es`、`zh`
+- 按语言生成 RSS
+- 内置 Sitemap 与 robots
+- 配置驱动的主题定制
+- 短页面下 Footer 贴底
 
 ## 主题配置
 
