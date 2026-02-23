@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from '../config/site';
+import { SITE_TAGLINE, SITE_TITLE } from '../config/site';
 import { SOCIAL_LINKS } from '../config/social';
 
 const today = new Date();
@@ -9,7 +9,7 @@ interface Props {
 	scanlines?: boolean;
 }
 
-const { tagline = 'Signal from anglefeint.', scanlines = false } = Astro.props as Props;
+const { tagline = SITE_TAGLINE, scanlines = false } = Astro.props as Props;
 ---
 
 <footer>

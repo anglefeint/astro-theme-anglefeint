@@ -5,17 +5,17 @@
 export const ABOUT_CONFIG = {
 	metaLine: '$ profile booted | mode: builder',
 	sections: {
-		who: 'I am a product-minded engineer who treats software as craft: clear intent, fast iteration, and accountable execution.',
-		what: 'I build web systems with Astro, TypeScript, and modern CSS, focused on content platforms, interface quality, and AI-era user experiences that remain performant and understandable.',
+		who: 'Write a short introduction about yourself, your background, and what you care about.',
+		what: 'Describe what you build, your core skills, and the kind of projects you want to be known for.',
 		ethos: [
-			'Curiosity before certainty: test assumptions early.',
-			'Craft before noise: ship clean interfaces and readable systems.',
-			'Open collaboration: document decisions so teams can move together.',
-			'Autonomy with accountability: own outcomes, not just output.',
+			'Add 3-4 principles that guide how you work.',
+			'Use concise lines that are easy to scan.',
+			'Focus on practical values your readers can understand quickly.',
+			'Keep wording personal, clear, and honest.',
 		],
-		now: 'Currently building a publish-ready Astro cyberpunk theme with configurable visual modes, stronger accessibility defaults, and reusable page variants.',
-		contactLead: 'Open to collaboration on frontend architecture, theme systems, and product UX.',
-		signature: '> ship small, learn fast',
+		now: 'Share what you are currently building or learning.',
+		contactLead: 'Add a short collaboration note (for example: open to freelance, consulting, or full-time roles).',
+		signature: '> replace with your own signature',
 	},
 	contact: {
 		email: 'hello@example.com',
@@ -83,4 +83,3 @@ export const ABOUT_CONFIG = {
 		},
 	},
 } as const;
-

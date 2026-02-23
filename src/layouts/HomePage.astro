@@ -4,7 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
+import { SITE_HERO_BY_LOCALE, SITE_TITLE } from '../consts';
 import { type Locale, blogIdToSlugAnyLocale, localePath } from '../i18n/config';
 import { getMessages } from '../i18n/messages';
 
@@ -15,6 +15,7 @@ interface Props {
 
 const { locale, latestPosts } = Astro.props;
 const messages = getMessages(locale);
+const heroText = SITE_HERO_BY_LOCALE[locale] ?? messages.home.hero;
 ---
 
 <!doctype html>
@@ -39,7 +40,7 @@ const messages = getMessages(locale);
 		<main>
 			<h1>{SITE_TITLE}</h1>
 			<p class="home-hero-copy">
-				{messages.home.hero}
+				{heroText}
 			</p>
 
 			<section class="home-latest">
@@ -66,7 +67,7 @@ const messages = getMessages(locale);
 				<p><a href={localePath(locale, '/blog/')}>{messages.home.viewAll}</a></p>
 			</section>
 		</main>
-		<Footer tagline={messages.footer.tagline} />
+		<Footer />
 			<script is:inline src="/scripts/home-matrix.js" defer></script>
 		</body>
 	</html>

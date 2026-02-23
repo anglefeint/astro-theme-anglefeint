@@ -200,7 +200,7 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 									<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
 									{post.data.heroImage && (
 										<div class="img-wrapper">
-											<Image width={720} height={360} src={post.data.heroImage} alt="" />
+											<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
 										</div>
 									)}
 									<h4 class="title">{post.data.title}</h4>
@@ -229,6 +229,6 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 				</nav>
 			)}
 		</main>
-		<Footer tagline={messages.footer.tagline} />
+		<Footer />
 	</body>
 </html>

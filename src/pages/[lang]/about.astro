@@ -231,7 +231,7 @@ const aboutRuntimeConfigJson = JSON.stringify(aboutRuntimeConfig).replace(/</g, 
 				</div>
 			</article>
 		</main>
-		<Footer tagline={messages.footer.tagline} />
+		<Footer />
 			<script is:inline id="term-runtime-config" type="application/json" set:html={aboutRuntimeConfigJson}></script>
 			<script is:inline src="/scripts/about-effects.js" defer></script>
 		</body>

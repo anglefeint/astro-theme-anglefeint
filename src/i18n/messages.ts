@@ -49,7 +49,7 @@ const MESSAGES: Record<Locale, Messages> = {
 		langLabel: 'Language',
 		nav: { home: 'Home', blog: 'Blog', about: 'About', status: 'system: online' },
 		home: {
-			hero: 'I build cinematic web interfaces and write about AI-era craft, system architecture, and how I understand the world.',
+			hero: 'Write a short introduction for your site and what readers can expect from your posts.',
 			latest: 'Latest Posts',
 			viewAll: 'View all posts',
 			noPosts: 'No posts available in this language yet.',
@@ -75,7 +75,7 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: 'Related',
 			regenerate: 'Regenerate',
 		},
-		footer: { tagline: 'Signal from anglefeint.' },
+		footer: { tagline: 'Built with Astro.' },
 	},
 	ja: {
 		siteTitle: 'Angle Feint',
@@ -83,7 +83,7 @@ const MESSAGES: Record<Locale, Messages> = {
 		langLabel: '言語',
 		nav: { home: 'ホーム', blog: 'ブログ', about: 'プロフィール', status: 'system: online' },
 		home: {
-			hero: '映画的なWeb体験を作り、AI時代の開発・設計・世界の見方について書いています。',
+			hero: 'このサイトの紹介文と、読者がどんな記事を期待できるかを書いてください。',
 			latest: '最新記事',
 			viewAll: 'すべての記事を見る',
 			noPosts: 'この言語の記事はまだありません。',
@@ -109,7 +109,7 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: '関連記事',
 			regenerate: '再生成',
 		},
-		footer: { tagline: 'anglefeint からのシグナル。' },
+		footer: { tagline: 'Astro で構築。' },
 	},
 	ko: {
 		siteTitle: 'Angle Feint',
@@ -117,7 +117,7 @@ const MESSAGES: Record<Locale, Messages> = {
 		langLabel: '언어',
 		nav: { home: '홈', blog: '블로그', about: '소개', status: 'system: online' },
 		home: {
-			hero: '시네마틱 웹 인터페이스를 만들고 AI 시대의 개발/아키텍처에 대해 씁니다.',
+			hero: '사이트 소개와 방문자가 어떤 글을 기대할 수 있는지 간단히 작성하세요.',
 			latest: '최신 글',
 			viewAll: '모든 글 보기',
 			noPosts: '이 언어에는 아직 게시물이 없습니다.',
@@ -143,7 +143,7 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: '관련 글',
 			regenerate: '재생성',
 		},
-		footer: { tagline: 'anglefeint에서 보내는 신호.' },
+		footer: { tagline: 'Astro로 제작됨.' },
 	},
 	es: {
 		siteTitle: 'Angle Feint',
@@ -151,7 +151,7 @@ const MESSAGES: Record<Locale, Messages> = {
 		langLabel: 'Idioma',
 		nav: { home: 'Inicio', blog: 'Blog', about: 'Sobre mí', status: 'system: online' },
 		home: {
-			hero: 'Construyo interfaces web cinematográficas y escribo sobre oficio en la era de IA y arquitectura de sistemas.',
+			hero: 'Escribe una breve presentación del sitio y qué tipo de contenido encontrarán tus lectores.',
 			latest: 'Últimas publicaciones',
 			viewAll: 'Ver todas las publicaciones',
 			noPosts: 'Aún no hay publicaciones en este idioma.',
@@ -177,7 +177,7 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: 'Relacionados',
 			regenerate: 'Regenerar',
 		},
-		footer: { tagline: 'Señal desde anglefeint.' },
+		footer: { tagline: 'Construido con Astro.' },
 	},
 	zh: {
 		siteTitle: 'Angle Feint',
@@ -185,7 +185,7 @@ const MESSAGES: Record<Locale, Messages> = {
 		langLabel: '语言',
 		nav: { home: '首页', blog: '博客', about: '关于', status: 'system: online' },
 		home: {
-			hero: '我构建具有电影感的 Web 界面，并写作 AI 时代的工程实践与系统架构。',
+			hero: '在这里写一段站点简介，并告诉读者你将发布什么类型的内容。',
 			latest: '最新文章',
 			viewAll: '查看全部文章',
 			noPosts: '该语言暂时没有文章。',
@@ -211,7 +211,7 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: '相关文章',
 			regenerate: '重新生成',
 		},
-		footer: { tagline: '来自 anglefeint 的信号。' },
+		footer: { tagline: 'Built with Astro.' },
 	},
 };
 

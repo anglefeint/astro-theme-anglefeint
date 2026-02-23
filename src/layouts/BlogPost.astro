@@ -248,7 +248,7 @@ for (let i = 0; i < pts.length; i++) {
 							<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(p.id)}`)} class="mesh-related-card">
 								{p.data.heroImage ? (
 									<div class="mesh-related-img">
-										<Image width={320} height={180} src={p.data.heroImage} alt="" />
+										<Image width={320} height={180} src={p.data.heroImage} alt={p.data.title} />
 									</div>
 								) : (
 									<div class="mesh-related-placeholder">
@@ -271,7 +271,7 @@ for (let i = 0; i < pts.length; i++) {
 				</a>
 			</nav>
 		</main>
-		<Footer tagline={messages.footer.tagline} scanlines />
+		<Footer scanlines />
 			<script is:inline src="/scripts/blogpost-effects.js" defer></script>
 		</body>
 	</html>
