@@ -66,6 +66,7 @@ npm run new-post -- my-first-post
 ```
 
 Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
+如果 `src/assets/blog/default-covers/` 中存在默认封面，脚本会按 slug 哈希自动分配一张（后续可手动替换 `heroImage`）。
 
 ## 新建页面
 

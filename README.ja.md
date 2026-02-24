@@ -66,6 +66,7 @@ npm run new-post -- my-first-post
 ```
 
 Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
+`src/assets/blog/default-covers/` に画像がある場合、slug ハッシュで安定したデフォルトカバーを自動設定します（後で `heroImage` を手動変更可能）。
 
 ## 新しいページを作成
 

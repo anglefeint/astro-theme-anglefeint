@@ -1,9 +1,10 @@
-import { mkdir, writeFile, access } from 'node:fs/promises';
+import { mkdir, writeFile, access, readdir } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
 
 const SUPPORTED_LOCALES = ['en', 'ja', 'ko', 'es', 'zh'];
 const CONTENT_ROOT = path.resolve(process.cwd(), 'src/content/blog');
+const DEFAULT_COVERS_ROOT = path.resolve(process.cwd(), 'src/assets/blog/default-covers');
 
 function toTitleFromSlug(slug) {
 	return slug
@@ -17,6 +18,30 @@ function validateSlug(slug) {
 	return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
 }
 
+function hashString(input) {
+	let hash = 5381;
+	for (let i = 0; i < input.length; i += 1) {
+		hash = ((hash << 5) + hash + input.charCodeAt(i)) >>> 0;
+	}
+	return hash >>> 0;
+}
+
+function normalizePathForFrontmatter(filePath) {
+	return filePath.split(path.sep).join('/');
+}
+
+async function loadDefaultCovers() {
+	try {
+		const entries = await readdir(DEFAULT_COVERS_ROOT, { withFileTypes: true });
+		return entries
+			.filter((entry) => entry.isFile() && /\.(webp|png|jpe?g)$/i.test(entry.name))
+			.map((entry) => path.join(DEFAULT_COVERS_ROOT, entry.name))
+			.sort((a, b) => a.localeCompare(b));
+	} catch {
+		return [];
+	}
+}
+
 async function exists(filePath) {
 	try {
 		await access(filePath, constants.F_OK);
@@ -26,7 +51,7 @@ async function exists(filePath) {
 	}
 }
 
-function templateFor(locale, slug, pubDate) {
+function templateFor(locale, slug, pubDate, heroImage) {
 	const titleByLocale = {
 		en: toTitleFromSlug(slug),
 		ja: '新しい記事タイトル',
@@ -52,6 +77,7 @@ function templateFor(locale, slug, pubDate) {
 title: '${titleByLocale[locale]}'
 description: '${descriptionByLocale[locale]}'
 pubDate: '${pubDate}'
+${heroImage ? `heroImage: '${heroImage}'` : ''}
 ---
 
 ${bodyByLocale[locale]}
@@ -71,6 +97,7 @@ async function main() {
 	}
 
 	const pubDate = new Date().toISOString().slice(0, 10);
+	const defaultCovers = await loadDefaultCovers();
 	const created = [];
 	const skipped = [];
 
@@ -84,7 +111,13 @@ async function main() {
 			continue;
 		}
 
-		await writeFile(filePath, templateFor(locale, slug, pubDate), 'utf8');
+		let heroImage = '';
+		if (defaultCovers.length > 0) {
+			const coverPath = defaultCovers[hashString(slug) % defaultCovers.length];
+			heroImage = normalizePathForFrontmatter(path.relative(localeDir, coverPath));
+		}
+
+		await writeFile(filePath, templateFor(locale, slug, pubDate, heroImage), 'utf8');
 		created.push(filePath);
 	}
 

@@ -66,6 +66,7 @@ npm run new-post -- my-first-post
 ```
 
 Regla del slug: usa solo minusculas, numeros y guiones (ejemplo: `my-first-post`).
+Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` despues).
 
 ## Crear nueva pagina
 

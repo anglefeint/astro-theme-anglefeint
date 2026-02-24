@@ -66,6 +66,7 @@ npm run new-post -- my-first-post
 ```
 
 Slug 규칙: 소문자 영문, 숫자, 하이픈만 사용하세요 (예: `my-first-post`).
+`src/assets/blog/default-covers/` 에 기본 커버가 있으면 slug 해시 기반으로 안정적인 기본 이미지가 자동 할당됩니다 (`heroImage` 는 나중에 직접 변경 가능).
 
 ## 새 페이지 만들기
 

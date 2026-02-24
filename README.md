@@ -66,6 +66,7 @@ npm run new-post -- my-first-post
 ```
 
 Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-post`).
+If default covers exist in `src/assets/blog/default-covers/`, a stable cover is auto-assigned by slug hash (you can replace `heroImage` later).
 
 ## Create New Page
 
