@@ -3,6 +3,7 @@
 		'!"#$%&\'()*+,-./:;<=>?[\\]^_{|}~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	const matrixFont =
 		'"Matrix Code NFI", "Atkinson", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+	const MAX_DPR = 2;
 
 	const canvas = document.getElementById('matrix-bg');
 	if (!(canvas instanceof HTMLCanvasElement)) return;
@@ -17,10 +18,14 @@
 
 	let animationId = 0;
 	let lastTime = 0;
+	let lastFrameTime = 0;
 	const cols = [];
 	const fontSize = 22;
 	const speed = 80;
 	const trailLen = 18;
+	const fpsInput = Number(canvas.dataset.matrixFps ?? window.__ANGLEFEINT_MATRIX_FPS ?? 45);
+	const matrixFps = Number.isFinite(fpsInput) ? Math.min(60, Math.max(15, fpsInput)) : 45;
+	const frameIntervalMs = 1000 / matrixFps;
 	let width = 0;
 	let height = 0;
 
@@ -29,7 +34,7 @@
 	}
 
 	function resize() {
-		const dpr = window.devicePixelRatio || 1;
+		const dpr = Math.min(MAX_DPR, window.devicePixelRatio || 1);
 		width = window.innerWidth;
 		height = window.innerHeight;
 		canvas.width = Math.round(width * dpr);
@@ -49,6 +54,11 @@
 	}
 
 	function draw(now) {
+		if (lastFrameTime && now - lastFrameTime < frameIntervalMs) {
+			animationId = window.requestAnimationFrame(draw);
+			return;
+		}
+		lastFrameTime = now;
 		const dt = lastTime ? (now - lastTime) / 200 : 0;
 		lastTime = now;
 
@@ -96,6 +106,7 @@
 			return;
 		}
 		lastTime = 0;
+		lastFrameTime = 0;
 		animationId = window.requestAnimationFrame(draw);
 	});
 

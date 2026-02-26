@@ -15,6 +15,7 @@
 					var bgCtx = bgCanvas.getContext('2d');
 					var fontSize = 13;
 					var lineHeight = 18;
+					var bgAnimationId = 0;
 					var fallbackDirLines = [
 						'~ $ ls -la',
 						'total 42',
@@ -95,9 +96,25 @@
 							bgCtx.fillRect(padX + promptW + inputW, currentY - fontSize + 4, 8, fontSize - 2);
 						}
 
-						requestAnimationFrame(renderBg);
+						bgAnimationId = requestAnimationFrame(renderBg);
 					}
-					requestAnimationFrame(renderBg);
+					function startBackgroundLoop() {
+						if (bgAnimationId || document.hidden) return;
+						bgAnimationId = requestAnimationFrame(renderBg);
+					}
+					function stopBackgroundLoop() {
+						if (!bgAnimationId) return;
+						cancelAnimationFrame(bgAnimationId);
+						bgAnimationId = 0;
+					}
+					startBackgroundLoop();
+					document.addEventListener('visibilitychange', function() {
+						if (document.hidden) {
+							stopBackgroundLoop();
+							return;
+						}
+						startBackgroundLoop();
+					});
 
 					// 点击背景聚焦，点击内容失焦
 					document.addEventListener('click', function(e) {
