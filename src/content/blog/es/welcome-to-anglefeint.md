@@ -2,6 +2,7 @@
 title: 'Bienvenido a Anglefeint'
 description: 'Un articulo breve en espanol para mostrar la publicacion de contenido multilingue.'
 pubDate: '2026-02-17'
+heroImage: '../../../assets/blog/default-covers/ai-01.webp'
 ---
 
 Esta es una pagina breve de ejemplo en espanol para mostrar la capacidad multilingue del tema.

@@ -2,6 +2,7 @@
 title: '欢迎使用 Anglefeint'
 description: '一篇简短的中文示例文章，用于展示多语言内容发布。'
 pubDate: '2026-02-17'
+heroImage: '../../../assets/blog/default-covers/ai-01.webp'
 ---
 
 这是一个简短的中文示例页面，用于演示主题的多语言内容能力。

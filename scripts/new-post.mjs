@@ -75,6 +75,7 @@ function templateFor(locale, slug, pubDate, heroImage) {
 	};
 	return `---
 title: '${titleByLocale[locale]}'
+subtitle: ''
 description: '${descriptionByLocale[locale]}'
 pubDate: '${pubDate}'
 ${heroImage ? `heroImage: '${heroImage}'` : ''}

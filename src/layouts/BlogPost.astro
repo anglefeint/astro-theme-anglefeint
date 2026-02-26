@@ -19,6 +19,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 
 const {
 	title,
+	subtitle,
 	description,
 	pubDate,
 	updatedDate,
@@ -209,6 +210,7 @@ for (let i = 0; i < pts.length; i++) {
 								</div>
 							)}
 							<h1 class="mesh-title-text">{title}</h1>
+							{subtitle && <p class="mesh-subtitle-text">{subtitle}</p>}
 							<hr />
 							<div class="mesh-title-flow" aria-hidden="true"></div>
 						</div>

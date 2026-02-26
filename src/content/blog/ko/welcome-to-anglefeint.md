@@ -2,6 +2,7 @@
 title: 'Anglefeint에 오신 것을 환영합니다'
 description: '다국어 콘텐츠 게시를 확인하기 위한 짧은 한국어 샘플 글입니다.'
 pubDate: '2026-02-17'
+heroImage: '../../../assets/blog/default-covers/ai-01.webp'
 ---
 
 이 페이지는 테마의 다국어 콘텐츠 기능을 보여주기 위한 짧은 한국어 샘플입니다.

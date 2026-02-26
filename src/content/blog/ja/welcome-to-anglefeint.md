@@ -2,6 +2,7 @@
 title: 'Anglefeint へようこそ'
 description: '多言語コンテンツ公開を確認するための短い日本語サンプル記事です。'
 pubDate: '2026-02-17'
+heroImage: '../../../assets/blog/default-covers/ai-01.webp'
 ---
 
 このページは、テーマの多言語コンテンツ機能を示すための短い日本語サンプルです。

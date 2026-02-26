@@ -300,6 +300,13 @@
 			body.mesh-page .title h1 {
 				margin: 0 0 0.5em 0;
 			}
+			.mesh-subtitle-text {
+				margin: -0.15rem 0 0.85rem;
+				font-size: 1rem;
+				line-height: 1.5;
+				color: rgba(210, 240, 255, 0.86);
+				text-wrap: balance;
+			}
 			.mesh-title-flow {
 				position: relative;
 				height: 3px;
