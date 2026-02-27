@@ -1,0 +1,21 @@
+---
+import type { Locale } from '../../i18n/config';
+import ThemeFrame from '../../components/shared/ThemeFrame.astro';
+
+interface Props {
+	locale?: Locale;
+	title: string;
+	description: string;
+	bodyClass?: string;
+}
+
+const { locale, title, description, bodyClass = 'hacker-page' } = Astro.props as Props;
+---
+
+<ThemeFrame locale={locale} title={title} description={description} bodyClass={bodyClass} mainClass="page-main hacker-content">
+	<link slot="head" rel="stylesheet" href="/styles/about-page.css" />
+	<slot name="head" slot="head" />
+	<slot name="body-start" slot="body-start" />
+	<slot />
+	<slot name="body-end" slot="body-end" />
+</ThemeFrame>

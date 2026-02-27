@@ -1,8 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import BaseHead from '@anglefeint/astro-theme/components/BaseHead.astro';
-import Footer from '@anglefeint/astro-theme/components/Footer.astro';
-import Header from '@anglefeint/astro-theme/components/Header.astro';
+import HackerShell from '../../layouts/shells/HackerShell.astro';
 import { getCollection } from 'astro:content';
 import { ABOUT_CONFIG } from '../../config/about';
 import { THEME } from '../../config/theme';
@@ -37,7 +35,7 @@ const blogPosts = postsForLocale(allPosts, locale)
 const scriptsFoldersHtml = blogPosts
 	.map(
 		(p) =>
-			`<a href="${localePath(locale, `/blog/${p.slug}`)}" class="term-script-folder"><svg class="term-script-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h8l2 2h10v12H2V4z"/></svg><span class="term-script-folder-label">${String(p.title).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')}</span></a>`
+			`<a href="${localePath(locale, `/blog/${p.slug}`)}" class="hacker-script-folder"><svg class="hacker-script-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h8l2 2h10v12H2V4z"/></svg><span class="hacker-script-folder-label">${String(p.title).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')}</span></a>`
 	)
 	.join('');
 
@@ -49,7 +47,7 @@ const escapeHtml = (value: string): string =>
 		.replace(/"/g, '&quot;');
 
 const aiBody = `<pre>${ABOUT_CONFIG.modals.ai.lines.map(escapeHtml).join('\n')}</pre>`;
-const decryptorBody = `<pre class="term-decryptor-pre">${escapeHtml(ABOUT_CONFIG.modals.decryptor.header)}
+const decryptorBody = `<pre class="hacker-decryptor-pre">${escapeHtml(ABOUT_CONFIG.modals.decryptor.header)}
 
 <span id="dec-keys">[00:00:01] 0 ${escapeHtml(ABOUT_CONFIG.modals.decryptor.keysLabel)}</span>
 
@@ -72,7 +70,7 @@ const aboutRuntimeConfig = {
 	modalContent: {
 		'dl-data': {
 			title: ABOUT_CONFIG.modals.dlData.title,
-			body: `<div class="term-modal-download"><div class="modal-subtitle">${escapeHtml(ABOUT_CONFIG.modals.dlData.subtitle)}</div><div class="term-modal-progress" id="dl-progress"></div></div>`,
+			body: `<div class="hacker-modal-download"><div class="modal-subtitle">${escapeHtml(ABOUT_CONFIG.modals.dlData.subtitle)}</div><div class="hacker-modal-progress" id="dl-progress"></div></div>`,
 			type: 'progress',
 		},
 		ai: {
@@ -100,139 +98,123 @@ const aboutRuntimeConfig = {
 const aboutRuntimeConfigJson = JSON.stringify(aboutRuntimeConfig).replace(/</g, '\\u003c');
 ---
 
-<html lang={locale}>
-	<head>
-		<BaseHead title={pageTitle} description={pageDescription} />
-		<link rel="stylesheet" href="/styles/about-page.css" />
-	</head>
-
-	<body class="term-page about-page">
-		<div class="term-bg" aria-hidden="true">
-			<canvas class="term-bg-canvas"></canvas>
-			<div class="term-scanlines"></div>
-			<div class="term-vignette"></div>
-			<div class="term-flicker"></div>
-			<div class="term-glow"></div>
+<HackerShell locale={locale} title={pageTitle} description={pageDescription} bodyClass="hacker-page about-page">
+	<Fragment slot="body-start">
+		<div class="hacker-bg" aria-hidden="true">
+			<canvas class="hacker-bg-canvas"></canvas>
+			<div class="hacker-scanlines"></div>
+			<div class="hacker-vignette"></div>
+			<div class="hacker-flicker"></div>
+			<div class="hacker-glow"></div>
 		</div>
-		<Header
-			locale={locale}
-			labels={{
-				home: messages.nav.home,
-				blog: messages.nav.blog,
-				about: messages.nav.about,
-				status: messages.nav.status,
-				language: messages.langLabel,
-			}}
-		/>
-		<div class="term-progress" aria-hidden="true"></div>
-		<button type="button" class="term-back-to-top" aria-label="Back to top" title="Back to top">↑</button>
-		<div class="term-toast" aria-live="polite" aria-atomic="true"></div>
-		<div class="term-mouse-glow" aria-hidden="true"></div>
-		<nav class="term-sidebar" aria-label="Quick access">
-			<button type="button" class="term-folder" data-modal="dl-data" aria-label={ABOUT_CONFIG.sidebar.dlData}>
-				<svg class="term-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
+		<div class="hacker-progress" aria-hidden="true"></div>
+		<button type="button" class="hacker-back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+		<div class="hacker-toast" aria-live="polite" aria-atomic="true"></div>
+		<div class="hacker-mouse-glow" aria-hidden="true"></div>
+		<nav class="hacker-sidebar" aria-label="Quick access">
+			<button type="button" class="hacker-folder" data-modal="dl-data" aria-label={ABOUT_CONFIG.sidebar.dlData}>
+				<svg class="hacker-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
 					<path d="M2 4h8l2 2h10v12H2V4z" />
 				</svg>
 				<span>{ABOUT_CONFIG.sidebar.dlData}</span>
 			</button>
-			<button type="button" class="term-folder" data-modal="ai" aria-label={ABOUT_CONFIG.sidebar.ai}>
-				<svg class="term-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
+			<button type="button" class="hacker-folder" data-modal="ai" aria-label={ABOUT_CONFIG.sidebar.ai}>
+				<svg class="hacker-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
 					<path d="M2 4h8l2 2h10v12H2V4z" />
 				</svg>
 				<span>{ABOUT_CONFIG.sidebar.ai}</span>
 			</button>
-			<button type="button" class="term-folder" data-modal="decryptor" aria-label={ABOUT_CONFIG.sidebar.decryptor}>
-				<svg class="term-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
+			<button type="button" class="hacker-folder" data-modal="decryptor" aria-label={ABOUT_CONFIG.sidebar.decryptor}>
+				<svg class="hacker-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
 					<path d="M2 4h8l2 2h10v12H2V4z" />
 				</svg>
 				<span>{ABOUT_CONFIG.sidebar.decryptor}</span>
 			</button>
-			<button type="button" class="term-folder" data-modal="help" aria-label={ABOUT_CONFIG.sidebar.help}>
-				<svg class="term-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
+			<button type="button" class="hacker-folder" data-modal="help" aria-label={ABOUT_CONFIG.sidebar.help}>
+				<svg class="hacker-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
 					<path d="M2 4h8l2 2h10v12H2V4z" />
 				</svg>
 				<span>{ABOUT_CONFIG.sidebar.help}</span>
 			</button>
-			<button type="button" class="term-folder" data-modal="all-scripts" aria-label={ABOUT_CONFIG.sidebar.allScripts}>
-				<svg class="term-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
+			<button type="button" class="hacker-folder" data-modal="all-scripts" aria-label={ABOUT_CONFIG.sidebar.allScripts}>
+				<svg class="hacker-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
 					<path d="M2 4h8l2 2h10v12H2V4z" />
 				</svg>
 				<span>{ABOUT_CONFIG.sidebar.allScripts}</span>
 			</button>
 		</nav>
-		<template id="term-scripts-folders-tpl">
-			<div class="term-modal-scripts">
-				<div class="term-modal-scripts-path">{ABOUT_CONFIG.scriptsPath}</div>
-				<div class="term-modal-scripts-grid" set:html={scriptsFoldersHtml}></div>
+		<template id="hacker-scripts-folders-tpl">
+			<div class="hacker-modal-scripts">
+				<div class="hacker-modal-scripts-path">{ABOUT_CONFIG.scriptsPath}</div>
+				<div class="hacker-modal-scripts-grid" set:html={scriptsFoldersHtml}></div>
 			</div>
 		</template>
-		<div class="term-modal-overlay" id="term-modal" aria-hidden="true">
-			<div class="term-modal" role="dialog" aria-modal="true" aria-labelledby="term-modal-title">
-				<div class="term-modal-header">
-					<div class="term-modal-dots" aria-hidden="true">
+		<div class="hacker-modal-overlay" id="hacker-modal" aria-hidden="true">
+			<div class="hacker-modal" role="dialog" aria-modal="true" aria-labelledby="hacker-modal-title">
+				<div class="hacker-modal-header">
+					<div class="hacker-modal-dots" aria-hidden="true">
 						<span></span><span></span><span></span>
 					</div>
-					<span class="term-modal-title" id="term-modal-title">Output</span>
-					<button type="button" class="term-modal-close" aria-label="Close">
-						<svg class="term-modal-close-icon" viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+					<span class="hacker-modal-title" id="hacker-modal-title">Output</span>
+					<button type="button" class="hacker-modal-close" aria-label="Close">
+						<svg class="hacker-modal-close-icon" viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
 							<path d="M6 6l12 12M18 6L6 18" />
 						</svg>
 					</button>
 				</div>
-				<div class="term-modal-body" id="term-modal-body"></div>
+				<div class="hacker-modal-body" id="hacker-modal-body"></div>
 			</div>
 		</div>
-		<main class="term-content">
-			<div class="term-load-scan" aria-hidden="true"></div>
-			<article class="about-shell">
-				<div class="prose">
-					<div class="title about-title">
-						<div class="term-meta">{ABOUT_CONFIG.metaLine}</div>
-						<h1>{messages.about.title}</h1>
-						<hr />
-						<div class="term-title-bar" aria-hidden="true"></div>
-					</div>
-
-					<div class="term-response">
-						<div class="term-response-header">
-							<div class="term-window-dots" aria-hidden="true">
-								<span></span><span></span><span></span>
-							</div>
-							<span class="term-response-label">Output</span>
-						</div>
-						<div class="term-body">
-							<h2 class="about-section-title">01 / {messages.about.who}</h2>
-							<p>{ABOUT_CONFIG.sections.who}</p>
-
-							<h2 class="about-section-title">02 / {messages.about.what}</h2>
-							<p>{ABOUT_CONFIG.sections.what}</p>
-
-							<h2 class="about-section-title">03 / {messages.about.ethos}</h2>
-							<div class="about-manifest">
-								<ul>
-									{ABOUT_CONFIG.sections.ethos.map((item) => <li>{item}</li>)}
-								</ul>
-							</div>
-
-							<h2 class="about-section-title">04 / {messages.about.now}</h2>
-							<p>{ABOUT_CONFIG.sections.now}</p>
-
-							<h2 class="about-section-title">05 / {messages.about.contact}</h2>
-							<p>
-								{ABOUT_CONFIG.sections.contactLead} Reach me via <a href={`mailto:${ABOUT_CONFIG.contact.email}`}>email</a> or connect on
-								<a href={ABOUT_CONFIG.contact.githubUrl} target="_blank" rel="noopener noreferrer">{ABOUT_CONFIG.contact.githubLabel}</a>.
-							</p>
-
-							<blockquote class="about-signature">{ABOUT_CONFIG.sections.signature}</blockquote>
-							<span class="term-cursor" aria-hidden="true"></span>
-						</div>
-					</div>
-					<button type="button" class="term-regenerate" aria-label={messages.about.regenerate}>{messages.about.regenerate}</button>
+	</Fragment>
+	<div class="hacker-load-scan" aria-hidden="true"></div>
+	<article class="about-shell">
+			<div class="prose">
+				<div class="title about-title">
+					<div class="hacker-meta">{ABOUT_CONFIG.metaLine}</div>
+					<h1>{messages.about.title}</h1>
+					<hr />
+					<div class="hacker-title-bar" aria-hidden="true"></div>
 				</div>
-			</article>
-		</main>
-		<Footer />
-			<script is:inline id="term-runtime-config" type="application/json" set:html={aboutRuntimeConfigJson}></script>
-			<script is:inline src="/scripts/about-effects.js" defer></script>
-		</body>
-	</html>
+
+				<div class="hacker-response">
+					<div class="hacker-response-header">
+						<div class="hacker-window-dots" aria-hidden="true">
+							<span></span><span></span><span></span>
+						</div>
+						<span class="hacker-response-label">Output</span>
+					</div>
+					<div class="hacker-body">
+						<h2 class="about-section-title">01 / {messages.about.who}</h2>
+						<p>{ABOUT_CONFIG.sections.who}</p>
+
+						<h2 class="about-section-title">02 / {messages.about.what}</h2>
+						<p>{ABOUT_CONFIG.sections.what}</p>
+
+						<h2 class="about-section-title">03 / {messages.about.ethos}</h2>
+						<div class="about-manifest">
+							<ul>
+								{ABOUT_CONFIG.sections.ethos.map((item) => <li>{item}</li>)}
+							</ul>
+						</div>
+
+						<h2 class="about-section-title">04 / {messages.about.now}</h2>
+						<p>{ABOUT_CONFIG.sections.now}</p>
+
+						<h2 class="about-section-title">05 / {messages.about.contact}</h2>
+						<p>
+							{ABOUT_CONFIG.sections.contactLead} Reach me via <a href={`mailto:${ABOUT_CONFIG.contact.email}`}>email</a> or connect on
+							<a href={ABOUT_CONFIG.contact.githubUrl} target="_blank" rel="noopener noreferrer">{ABOUT_CONFIG.contact.githubLabel}</a>.
+						</p>
+
+						<blockquote class="about-signature">{ABOUT_CONFIG.sections.signature}</blockquote>
+						<span class="hacker-cursor" aria-hidden="true"></span>
+					</div>
+				</div>
+				<button type="button" class="hacker-regenerate" aria-label={messages.about.regenerate}>{messages.about.regenerate}</button>
+			</div>
+	</article>
+	<Fragment slot="body-end">
+		<script is:inline id="hacker-runtime-config" type="application/json" set:html={aboutRuntimeConfigJson}></script>
+		<script is:inline src="/scripts/about-effects.js" defer></script>
+	</Fragment>
+</HackerShell>

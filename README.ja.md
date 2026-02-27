@@ -1,3 +1,12 @@
+---
+doc_id: readme_ja
+doc_role: localized-user-guide
+doc_scope: [setup, commands, themes, config, routing]
+update_triggers: [sync-from-readme-en]
+source_of_truth: false
+depends_on: [README.md]
+---
+
 <h1 align="center">Anglefeint</h1>
 <p align="center">映画的な表現と複数の雰囲気を持つ Astro テーマです。</p>
 
@@ -113,6 +122,12 @@ npm run new-page -- projects --theme matrix
 - `/:lang/blog`：サイバーパンク調のアーカイブ
 - `/:lang/blog/[slug]`：AI インターフェース風の読書レイアウト
 - `/:lang/about`：任意で有効化できるハッカー風 About ページ
+
+## テーマ命名ルール
+
+- テーマ引数: `base`, `ai`, `cyber`, `hacker`, `matrix`
+- 内部セレクタ/スクリプト接頭辞: `ai-*`, `cyber-*`, `hacker-*`
+- 構成レイヤー: `ThemeFrame -> Shell -> Layout -> Page`
 
 ## 主な機能
 

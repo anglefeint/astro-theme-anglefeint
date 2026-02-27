@@ -1,3 +1,12 @@
+---
+doc_id: readme_zh
+doc_role: localized-user-guide
+doc_scope: [setup, commands, themes, config, routing]
+update_triggers: [sync-from-readme-en]
+source_of_truth: false
+depends_on: [README.md]
+---
+
 <h1 align="center">Anglefeint</h1>
 <p align="center">一个具有电影感、多氛围切换的 Astro 个人发布主题。</p>
 
@@ -113,6 +122,12 @@ npm run new-page -- projects --theme matrix
 - `/:lang/blog`：赛博朋克归档列表
 - `/:lang/blog/[slug]`：AI 界面风文章页
 - `/:lang/about`：可选黑客风 About 页面
+
+## 主题命名约定
+
+- 主题参数：`base`、`ai`、`cyber`、`hacker`、`matrix`
+- 内部选择器与脚本前缀：`ai-*`、`cyber-*`、`hacker-*`
+- 核心组合结构：`ThemeFrame -> Shell -> Layout -> Page`
 
 ## 功能特性
 

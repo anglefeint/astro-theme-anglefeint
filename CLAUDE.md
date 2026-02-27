@@ -1,3 +1,12 @@
+---
+doc_id: claude_internal
+doc_role: internal-guide
+doc_scope: [internal-architecture, conventions, maintenance]
+update_triggers: [architecture-change, naming-change, workflow-change]
+source_of_truth: false
+depends_on: [docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md, README.md]
+---
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
@@ -30,9 +39,9 @@ Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined 
 ### Page Themes
 
 - **Home (`/`)** — Matrix falling characters (canvas), body class `page-home`; `/en/` redirects to `/` with noindex
-- **Blog list (`/:lang/blog/`)** — Blade Runner cyberpunk (rain, dust), body class `br-page` (no br-scanlines)
-- **Article (`/:lang/blog/[slug]`)** — AI terminal mesh (58 nodes), read progress, Red Queen monitor, mesh-scanlines on header/footer only (fade on hover), body class `mesh-page`. Hero canvas + Red Queen TV: CRT horizontal retrace/dropout (occasional black line flash, starts 6s after load, ~2.5% frames).
-- **About (`/:lang/about`)** — Anonymous-style terminal (black/green), body class `term-page`. Right sidebar with folder buttons opening modals: DL Data, AI, Decryptor, Help (virtual keyboard), All Scripts (folder grid of blog posts). Generated only when `ENABLE_ABOUT_PAGE` is `true`.
+- **Blog list (`/:lang/blog/`)** — Blade Runner cyberpunk (rain, dust), body class `cyber-page`
+- **Article (`/:lang/blog/[slug]`)** — AI interface reading layout (58-node network), read progress, Red Queen monitor, `ai-scanlines` on header/footer only (fade on hover), body class `ai-page`. Hero canvas + Red Queen TV: CRT horizontal retrace/dropout (occasional black line flash, starts 6s after load, ~2.5% frames).
+- **About (`/:lang/about`)** — Anonymous-style terminal (black/green), body class `hacker-page`. Right sidebar with folder buttons opening modals: DL Data, AI, Decryptor, Help (virtual keyboard), All Scripts (folder grid of blog posts). Generated only when `ENABLE_ABOUT_PAGE` is `true`.
 
 ### Key Files
 
@@ -42,7 +51,9 @@ Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined 
 - `src/config/about.ts` — About page profile copy, modal labels/content, terminal effect text
 - `src/consts.ts` — Re-exports from config (backwards compat)
 - `src/pages/[lang]/about.astro` — About page: terminal canvas, sidebar, modals, `getCollection('blog')` for All Scripts
-- `src/layouts/BlogPost.astro` — Post detail layout: mesh, progress bar, related posts, Red Queen monitor; CRT dropout in `public/scripts/blogpost-effects.js` (hero + Red Queen TV)
+- `src/layouts/BlogPost.astro` — Post detail layout: AI surface, progress bar, related posts, Red Queen monitor; CRT dropout in `public/scripts/blogpost-effects.js` (hero + Red Queen TV)
+- `src/components/shared/ThemeFrame.astro` — Shared document shell (head + header + footer + main container)
+- `src/layouts/shells/*.astro` — Theme shells (`BaseShell`, `AiShell`, `CyberShell`, `HackerShell`, `MatrixShell`)
 - `src/pages/[lang]/blog/[...page].astro` — Paginated blog list (THEME.BLOG_PAGE_SIZE)
 - `src/pages/index.astro` — Root home; `src/pages/[lang]/index.astro` — Localized home (/en/ redirects to /)
 - `src/pages/robots.txt.ts` — Dynamic robots.txt with sitemap URL

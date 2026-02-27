@@ -1,0 +1,85 @@
+---
+import BaseHead from '../BaseHead.astro';
+import CommonHeader from './CommonHeader.astro';
+import CommonFooter from './CommonFooter.astro';
+import { type Locale, DEFAULT_LOCALE, isLocale } from '../../i18n/config';
+import { getMessages } from '../../i18n/messages';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+	locale?: Locale;
+	title: string;
+	description: string;
+	image?: ImageMetadata;
+	pageType?: 'website' | 'article';
+	publishedTime?: Date;
+	modifiedTime?: Date;
+	author?: string;
+	tags?: string[];
+	schema?: Record<string, unknown> | Record<string, unknown>[];
+	noindex?: boolean;
+	bodyClass: string;
+	mainClass?: string;
+	scanlines?: boolean;
+	localeHrefs?: Partial<Record<Locale, string>>;
+}
+
+const rawLocale = Astro.props.locale ?? DEFAULT_LOCALE;
+const locale: Locale = isLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
+const {
+	title,
+	description,
+	image,
+	pageType,
+	publishedTime,
+	modifiedTime,
+	author,
+	tags,
+	schema,
+	noindex,
+	bodyClass,
+	mainClass = 'page-main',
+	scanlines = false,
+	localeHrefs,
+} = Astro.props as Props;
+const messages = getMessages(locale);
+---
+
+<!doctype html>
+<html lang={locale}>
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			image={image}
+			pageType={pageType}
+			publishedTime={publishedTime}
+			modifiedTime={modifiedTime}
+			author={author}
+			tags={tags}
+			schema={schema}
+			noindex={noindex}
+		/>
+		<slot name="head" />
+	</head>
+	<body class={bodyClass}>
+		<slot name="body-start" />
+		<CommonHeader
+			locale={locale}
+			localeHrefs={localeHrefs}
+			scanlines={scanlines}
+			labels={{
+				home: messages.nav.home,
+				blog: messages.nav.blog,
+				about: messages.nav.about,
+				status: messages.nav.status,
+				language: messages.langLabel,
+			}}
+		/>
+		<main class={mainClass}>
+			<slot />
+		</main>
+		<CommonFooter scanlines={scanlines} />
+		<slot name="body-end" />
+	</body>
+</html>

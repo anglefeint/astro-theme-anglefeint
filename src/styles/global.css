@@ -170,8 +170,8 @@ hr {
 	white-space: nowrap;
 }
 
-/* ========== Blade Runner 博客列表页 (body.br-page) ========== */
-body.br-page {
+/* ========== Blade Runner 博客列表页 (body.cyber-page) ========== */
+body.cyber-page {
   background: #090b12 !important;
 	background-image: none !important;
 	background-size: auto !important;
@@ -183,7 +183,7 @@ body.br-page {
   --chrome-active: rgba(228, 158, 224, 0.9);
   --chrome-text-muted: rgba(156, 188, 224, 0.76);
 }
-body.br-page::before {
+body.cyber-page::before {
   content: "";
 	position: fixed;
 	inset: 0;
@@ -197,7 +197,7 @@ body.br-page::before {
     #05070b 100%
   );
 }
-body.br-page::after {
+body.cyber-page::after {
   content: "";
 	position: fixed;
 	inset: 0;
@@ -218,10 +218,10 @@ body.br-page::after {
       rgba(226, 150, 214, 0.06) 0%,
       transparent 45%
     );
-  animation: br-fog-drift 20s ease-in-out infinite alternate;
+  animation: cyber-fog-drift 20s ease-in-out infinite alternate;
 	pointer-events: none;
 }
-@keyframes br-fog-drift {
+@keyframes cyber-fog-drift {
   0% {
     opacity: 0.7;
     transform: translate(-2%, -1%);
@@ -231,7 +231,7 @@ body.br-page::after {
     transform: translate(2%, 1%);
   }
 }
-body.br-page .br-rain {
+body.cyber-page .cyber-rain {
 	position: fixed;
 	inset: 0;
 	pointer-events: none;
@@ -240,7 +240,7 @@ body.br-page .br-rain {
   contain: layout paint;
 }
 /* Blade Runner: 雨滴 - 白色中脏脏的感觉，非琥珀也非冷青 */
-body.br-page .br-rain-drop {
+body.cyber-page .cyber-rain-drop {
 	position: absolute;
 	top: -20px;
   width: 6px;
@@ -254,16 +254,16 @@ body.br-page .br-rain-drop {
     rgba(195, 190, 182, 0.52) 70%,
     transparent 100%
   );
-	animation: br-rain-fall linear infinite;
+	animation: cyber-rain-fall linear infinite;
 }
-@keyframes br-rain-fall {
+@keyframes cyber-rain-fall {
   to {
     transform: translateY(100vh);
   }
 }
 /* Mesh-page: scanlines only on header and footer; fade on hover */
-body.mesh-page header .mesh-scanlines,
-body.mesh-page footer .mesh-scanlines {
+body.ai-page header .ai-scanlines,
+body.ai-page footer .ai-scanlines {
   position: absolute;
   inset: 0;
   contain: layout paint;
@@ -279,8 +279,8 @@ body.mesh-page footer .mesh-scanlines {
   opacity: 0.78;
   transition: opacity 0.3s ease;
 }
-body.mesh-page header .mesh-scanlines::after,
-body.mesh-page footer .mesh-scanlines::after {
+body.ai-page header .ai-scanlines::after,
+body.ai-page footer .ai-scanlines::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -294,11 +294,11 @@ body.mesh-page footer .mesh-scanlines::after {
   pointer-events: none;
   opacity: 0.8;
 }
-body.mesh-page header:hover .mesh-scanlines,
-body.mesh-page footer:hover .mesh-scanlines {
+body.ai-page header:hover .ai-scanlines,
+body.ai-page footer:hover .ai-scanlines {
   opacity: 0;
 }
-body.br-page .br-spotlight {
+body.cyber-page .cyber-spotlight {
 	position: fixed;
   top: 0;
   left: 0;
@@ -308,7 +308,7 @@ body.br-page .br-spotlight {
   z-index: 5;
   contain: layout paint;
 }
-body.br-page .br-spotlight-tl {
+body.cyber-page .cyber-spotlight-tl {
   position: absolute;
 	inset: 0;
   transform-origin: 0 0;
@@ -322,9 +322,9 @@ body.br-page .br-spotlight-tl {
     rgba(120, 192, 255, 0.18) 316deg,
     transparent 319deg 360deg
   );
-  animation: br-spotlight-sweep-tl 12s ease-in-out infinite;
+  animation: cyber-spotlight-sweep-tl 12s ease-in-out infinite;
 }
-body.br-page .br-spotlight-tr {
+body.cyber-page .cyber-spotlight-tr {
   position: absolute;
   inset: 0;
   transform-origin: 100% 0;
@@ -338,10 +338,10 @@ body.br-page .br-spotlight-tr {
     rgba(120, 192, 255, 0.18) 47deg,
     transparent 50deg 360deg
   );
-  animation: br-spotlight-sweep-tr 24s ease-in-out infinite;
+  animation: cyber-spotlight-sweep-tr 24s ease-in-out infinite;
   animation-delay: -1.5s;
 }
-@keyframes br-spotlight-sweep-tl {
+@keyframes cyber-spotlight-sweep-tl {
   0% {
     transform: rotate(50deg);
   }
@@ -352,7 +352,7 @@ body.br-page .br-spotlight-tr {
     transform: rotate(50deg);
   }
 }
-@keyframes br-spotlight-sweep-tr {
+@keyframes cyber-spotlight-sweep-tr {
   0%,
   100% {
     transform: rotate(-60deg);
@@ -361,7 +361,7 @@ body.br-page .br-spotlight-tr {
     transform: rotate(60deg);
   }
 }
-body.br-page .br-flicker {
+body.cyber-page .cyber-flicker {
   position: fixed;
   inset: 0;
   contain: layout paint;
@@ -381,11 +381,11 @@ body.br-page .br-flicker {
       rgba(224, 146, 212, 0.2) 0%,
       transparent 55%
     );
-  animation: br-neon-flicker-glow 6s ease-in-out infinite;
+  animation: cyber-neon-flicker-glow 6s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
-@keyframes br-neon-flicker-glow {
+@keyframes cyber-neon-flicker-glow {
   0%,
   100% {
     opacity: 0.8;
@@ -400,7 +400,7 @@ body.br-page .br-flicker {
     opacity: 0.95;
   }
 }
-body.br-page .br-haze {
+body.cyber-page .cyber-haze {
   position: fixed;
   inset: 0;
   contain: layout paint;
@@ -420,11 +420,11 @@ body.br-page .br-haze {
       rgba(255, 134, 92, 0.04) 0%,
       transparent 50%
     );
-  animation: br-haze-drift 20s ease-in-out infinite alternate;
+  animation: cyber-haze-drift 20s ease-in-out infinite alternate;
   pointer-events: none;
   z-index: 1;
 }
-@keyframes br-haze-drift {
+@keyframes cyber-haze-drift {
   0% {
     opacity: 0.5;
     transform: translate(3%, 2%) scale(1.05);
@@ -434,7 +434,7 @@ body.br-page .br-haze {
     transform: translate(-3%, -2%) scale(0.95);
   }
 }
-body.br-page .br-vignette {
+body.cyber-page .cyber-vignette {
   position: fixed;
   inset: 0;
   contain: layout paint;
@@ -446,24 +446,24 @@ body.br-page .br-vignette {
 	pointer-events: none;
 	z-index: 3;
 }
-body.br-page .br-rain-drop--thin {
+body.cyber-page .cyber-rain-drop--thin {
   width: 4px;
   height: 28px;
   clip-path: polygon(0.5px 0, 3.5px 0, 4px 100%, 0 100%);
 }
-body.br-page .br-rain-drop--fog {
+body.cyber-page .cyber-rain-drop--fog {
   opacity: 0.15;
   filter: blur(0.5px);
 }
-body.br-page .br-rain-drop--skew {
-  animation-name: br-rain-fall-skew;
+body.cyber-page .cyber-rain-drop--skew {
+  animation-name: cyber-rain-fall-skew;
 }
-@keyframes br-rain-fall-skew {
+@keyframes cyber-rain-fall-skew {
   to {
     transform: skewX(-3deg) translateY(100vh);
   }
 }
-body.br-page .br-dust {
+body.cyber-page .cyber-dust {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -471,7 +471,7 @@ body.br-page .br-dust {
   overflow: hidden;
   contain: layout paint;
 }
-body.br-page .br-dust-particle {
+body.cyber-page .cyber-dust-particle {
   position: absolute;
   border-radius: 50%;
   will-change: transform;
@@ -479,9 +479,9 @@ body.br-page .br-dust-particle {
   box-shadow:
     0 0 10px rgba(126, 196, 255, 0.35),
     0 0 20px rgba(214, 146, 210, 0.16);
-  animation: br-dust-float linear infinite;
+  animation: cyber-dust-float linear infinite;
 }
-@keyframes br-dust-float {
+@keyframes cyber-dust-float {
   0% {
     transform: translate(0, 0) scale(1);
     opacity: 0.7;
@@ -512,7 +512,7 @@ body.page-home header {
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
 }
-body.br-page header {
+body.cyber-page header {
   position: fixed;
   top: 0;
   left: 0;
@@ -521,20 +521,20 @@ body.br-page header {
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
 }
-body.br-page main {
+body.cyber-page main {
 	position: relative;
   z-index: 5;
 	width: 960px;
 	padding-top: calc(3em + 56px);
 }
-body.br-page .title,
-body.br-page .date {
+body.cyber-page .title,
+body.cyber-page .date {
   color: rgba(202, 228, 255, 0.93);
 }
-body.br-page .date {
+body.cyber-page .date {
   color: rgba(150, 186, 228, 0.68);
 }
-body.br-page ul {
+body.cyber-page ul {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 2rem;
@@ -542,24 +542,24 @@ body.br-page ul {
 	margin: 0;
 	padding: 0;
 }
-body.br-page ul li {
+body.cyber-page ul li {
 	width: calc(50% - 1rem);
 }
-body.br-page ul li * {
+body.cyber-page ul li * {
 	text-decoration: none;
 }
-body.br-page ul li:first-child {
+body.cyber-page ul li:first-child {
 	width: 100%;
 	margin-bottom: 1rem;
 	text-align: center;
 }
-body.br-page ul li:first-child img {
+body.cyber-page ul li:first-child img {
   width: 100%;
 }
-body.br-page ul li:first-child .title {
+body.cyber-page ul li:first-child .title {
   font-size: 2.369rem;
 }
-body.br-page ul li a {
+body.cyber-page ul li a {
 	display: block;
 	position: relative;
 	padding: 1rem;
@@ -573,15 +573,15 @@ body.br-page ul li a {
     border-color 0.2s,
     box-shadow 0.3s;
 }
-body.br-page ul li a:hover {
+body.cyber-page ul li a:hover {
   border-color: rgba(124, 204, 255, 0.62);
   box-shadow:
     0 0 10px rgba(112, 196, 255, 0.3),
     0 0 24px rgba(214, 146, 210, 0.2),
     inset 0 0 18px rgba(136, 204, 255, 0.08);
-  animation: br-neon-flicker 0.45s ease-in-out infinite;
+  animation: cyber-neon-flicker 0.45s ease-in-out infinite;
 }
-@keyframes br-neon-flicker {
+@keyframes cyber-neon-flicker {
   0%,
   100% {
     box-shadow:
@@ -596,15 +596,15 @@ body.br-page ul li a:hover {
       inset 0 0 10px rgba(136, 204, 255, 0.06);
   }
 }
-body.br-page ul li a:hover .title {
-  animation: br-glitch 0.3s ease-in-out;
+body.cyber-page ul li a:hover .title {
+  animation: cyber-glitch 0.3s ease-in-out;
   color: rgb(212, 236, 255);
   text-shadow:
     0 0 10px rgba(120, 200, 255, 0.62),
     0 0 22px rgba(222, 150, 214, 0.3),
     0 0 34px rgba(90, 170, 240, 0.2);
 }
-@keyframes br-glitch {
+@keyframes cyber-glitch {
   0% {
     transform: translate(0);
     text-shadow: 0 0 8px rgba(120, 200, 255, 0.55);
@@ -632,20 +632,20 @@ body.br-page ul li a:hover .title {
     text-shadow: 0 0 8px rgba(120, 200, 255, 0.55);
   }
 }
-body.br-page ul li a:hover .date {
+body.cyber-page ul li a:hover .date {
   color: rgba(196, 226, 255, 0.95);
   text-shadow:
     0 0 10px rgba(120, 194, 255, 0.45),
     0 0 20px rgba(218, 148, 210, 0.26);
 }
-body.br-page .img-wrapper {
+body.cyber-page .img-wrapper {
 	position: relative;
   margin-bottom: 0.5rem;
   border-radius: 4px;
 	overflow: hidden;
 }
 /* 水平扫线 - 日式樱花+赛博蓝 */
-body.br-page .img-wrapper::before {
+body.cyber-page .img-wrapper::before {
   content: "";
 	position: absolute;
 	left: 0;
@@ -669,10 +669,10 @@ body.br-page .img-wrapper::before {
   pointer-events: none;
   transition: top 1.2s linear;
 }
-body.br-page ul li a:hover .img-wrapper::before {
+body.cyber-page ul li a:hover .img-wrapper::before {
   top: 100%;
 }
-body.br-page .img-wrapper::after {
+body.cyber-page .img-wrapper::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -684,10 +684,10 @@ body.br-page .img-wrapper::after {
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-body.br-page ul li a:hover .img-wrapper::after {
+body.cyber-page ul li a:hover .img-wrapper::after {
   opacity: 1;
 }
-body.br-page ul li img {
+body.cyber-page ul li img {
 	display: block;
 	width: 100%;
 	height: auto;
@@ -697,34 +697,34 @@ body.br-page ul li img {
     filter 0.3s,
     box-shadow 0.3s;
 }
-body.br-page ul li a:hover img {
+body.cyber-page ul li a:hover img {
   filter: saturate(0.88) contrast(1.11) brightness(0.94) sepia(0.08)
     hue-rotate(-6deg);
   box-shadow:
     0 0 15px rgba(116, 194, 255, 0.22),
     0 0 30px rgba(224, 148, 212, 0.2);
 }
-body.br-page .title {
+body.cyber-page .title {
   margin: 0;
   line-height: 1;
   transition:
     color 0.2s,
     text-shadow 0.2s;
 }
-body.br-page .date {
+body.cyber-page .date {
   margin: 0;
   transition:
     color 0.2s,
     text-shadow 0.2s;
 }
 /* BR2049: Las Vegas/baseline 橙色光晕点缀 */
-body.br-page footer {
+body.cyber-page footer {
   box-shadow:
     0 -4px 42px rgba(104, 182, 255, 0.14),
     0 -4px 36px rgba(224, 146, 210, 0.16);
 }
 /* BR2049: 页面加载时轻微 glitch，可察觉但不抢眼 */
-body.br-page .br-load-glitch {
+body.cyber-page .cyber-load-glitch {
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -738,9 +738,9 @@ body.br-page .br-load-glitch {
   );
   mix-blend-mode: screen;
   opacity: 0;
-  animation: br-load-glitch 12s ease-out 0.5s infinite;
+  animation: cyber-load-glitch 12s ease-out 0.5s infinite;
 }
-@keyframes br-load-glitch {
+@keyframes cyber-load-glitch {
   /* 每 8 秒一周期：前 6.5s 静默，后 1.5s 执行 glitch */
   0%,
   81%,
@@ -762,36 +762,36 @@ body.br-page .br-load-glitch {
   }
 }
 @media (max-width: 720px) {
-  body.br-page main {
+  body.cyber-page main {
     padding-top: calc(1em + 56px);
   }
-  body.br-page ul {
+  body.cyber-page ul {
     gap: 0.5em;
   }
-  body.br-page ul li {
+  body.cyber-page ul li {
     width: 100%;
     text-align: center;
   }
-  body.br-page ul li:first-child {
+  body.cyber-page ul li:first-child {
     margin-bottom: 0;
   }
-  body.br-page ul li:first-child .title {
+  body.cyber-page ul li:first-child .title {
     font-size: 1.563em;
   }
   /* 移动端减少特效，减轻 GPU 压力 */
-  body.br-page .br-rain-drop:nth-child(2n) {
+  body.cyber-page .cyber-rain-drop:nth-child(2n) {
     display: none;
   }
-  body.br-page .br-dust-particle:nth-child(2n) {
+  body.cyber-page .cyber-dust-particle:nth-child(2n) {
     display: none;
   }
-  body.br-page .br-flicker {
+  body.cyber-page .cyber-flicker {
     animation-duration: 8s;
   }
 }
 
-/* ========== 点线网络 漂浮浮动 文章页 (body.mesh-page) ========== */
-body.mesh-page {
+/* ========== 点线网络 漂浮浮动 文章页 (body.ai-page) ========== */
+body.ai-page {
   background: #03060c !important;
   background-image: none !important;
   min-height: 100vh;
@@ -803,35 +803,35 @@ body.mesh-page {
   --chrome-text-muted: rgba(178, 220, 238, 0.7);
 }
 /* 终端式滚动条 */
-body.mesh-page {
+body.ai-page {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 106, 132, 0.48) transparent;
 }
-body.mesh-page::-webkit-scrollbar {
+body.ai-page::-webkit-scrollbar {
   width: 6px;
 }
-body.mesh-page::-webkit-scrollbar-track {
+body.ai-page::-webkit-scrollbar-track {
   background: transparent;
 }
-body.mesh-page::-webkit-scrollbar-thumb {
+body.ai-page::-webkit-scrollbar-thumb {
   background: rgba(255, 106, 132, 0.34);
   border-radius: 3px;
 }
-body.mesh-page::-webkit-scrollbar-thumb:hover {
+body.ai-page::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 120, 152, 0.58);
   box-shadow: 0 0 8px rgba(255, 106, 132, 0.4);
 }
-body.mesh-page::-webkit-scrollbar-thumb {
+body.ai-page::-webkit-scrollbar-thumb {
   box-shadow: 0 0 6px rgba(255, 106, 132, 0.26);
 }
-.mesh-bg {
+.ai-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
 }
-.mesh-glow {
+.ai-glow {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -843,10 +843,10 @@ body.mesh-page::-webkit-scrollbar-thumb {
     #13070f 100%
   );
 }
-.mesh-glow-shift {
-  animation: mesh-glow-shift 25s ease-in-out infinite;
+.ai-glow-shift {
+  animation: ai-glow-shift 25s ease-in-out infinite;
 }
-@keyframes mesh-glow-shift {
+@keyframes ai-glow-shift {
   0%,
   100% {
     filter: brightness(1) saturate(1);
@@ -859,7 +859,7 @@ body.mesh-page::-webkit-scrollbar-thumb {
   }
 }
 /* 柔和光晕：中心径向青蓝光 */
-.mesh-haze {
+.ai-haze {
   position: absolute;
   inset: 0;
   background: radial-gradient(
@@ -868,10 +868,10 @@ body.mesh-page::-webkit-scrollbar-thumb {
     rgba(255, 90, 120, 0.06) 34%,
     transparent 65%
   );
-  animation: mesh-haze-drift 18s ease-in-out infinite alternate;
+  animation: ai-haze-drift 18s ease-in-out infinite alternate;
   pointer-events: none;
 }
-@keyframes mesh-haze-drift {
+@keyframes ai-haze-drift {
   0% {
     opacity: 0.8;
     transform: translate(2%, 1%) scale(1.02);
@@ -882,7 +882,7 @@ body.mesh-page::-webkit-scrollbar-thumb {
   }
 }
 /* 边缘暗角 */
-.mesh-vignette {
+.ai-vignette {
   position: absolute;
   inset: 0;
   background: radial-gradient(
@@ -892,7 +892,7 @@ body.mesh-page::-webkit-scrollbar-thumb {
   );
   pointer-events: none;
 }
-.mesh-stripe {
+.ai-stripe {
   position: absolute;
   inset: 0;
   opacity: 0.06;
@@ -905,7 +905,7 @@ body.mesh-page::-webkit-scrollbar-thumb {
   );
 }
 /* 噪点层 */
-.mesh-noise {
+.ai-noise {
   position: absolute;
   inset: 0;
   opacity: 0.04;
@@ -913,7 +913,7 @@ body.mesh-page::-webkit-scrollbar-thumb {
   pointer-events: none;
 }
 /* 六边形网格 */
-.mesh-hex-grid {
+.ai-hex-grid {
   position: absolute;
   inset: 0;
   opacity: 0.11;
@@ -922,13 +922,13 @@ body.mesh-page::-webkit-scrollbar-thumb {
   pointer-events: none;
 }
 /* 思维流粒子 */
-.mesh-thought-particles {
+.ai-thought-particles {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
 }
-.mesh-particle {
+.ai-particle {
   position: absolute;
   left: var(--x, 50%);
   top: var(--y, 50%);
@@ -937,22 +937,22 @@ body.mesh-page::-webkit-scrollbar-thumb {
   background: rgba(255, 138, 158, 0.6);
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(255, 110, 136, 0.36);
-  animation: mesh-particle-float var(--d, 4s) ease-in-out infinite;
+  animation: ai-particle-float var(--d, 4s) ease-in-out infinite;
   animation-delay: calc(var(--i, 0) * -0.3s);
 }
-.mesh-particle:nth-child(3n) {
+.ai-particle:nth-child(3n) {
   width: 6px;
   height: 6px;
   background: rgba(168, 224, 255, 0.56);
   box-shadow: 0 0 12px rgba(124, 206, 255, 0.34);
 }
-.mesh-particle:nth-child(5n) {
+.ai-particle:nth-child(5n) {
   width: 2px;
   height: 2px;
   background: rgba(182, 255, 218, 0.62);
   box-shadow: 0 0 8px rgba(182, 255, 218, 0.28);
 }
-@keyframes mesh-particle-float {
+@keyframes ai-particle-float {
   0%,
   100% {
     transform: translate(0, 0) scale(1);
@@ -971,16 +971,16 @@ body.mesh-page::-webkit-scrollbar-thumb {
     opacity: 0.7;
   }
 }
-.mesh-network {
+.ai-network {
   position: absolute;
   inset: -8%;
   width: 116%;
   height: 116%;
   opacity: 1;
   filter: brightness(1.28) saturate(1.08);
-  animation: mesh-drift 25s ease-in-out infinite;
+  animation: ai-drift 25s ease-in-out infinite;
 }
-@keyframes mesh-drift {
+@keyframes ai-drift {
   0%,
   100% {
     transform: translate(0, 0) scale(1);
@@ -995,37 +995,37 @@ body.mesh-page::-webkit-scrollbar-thumb {
     transform: translate(0.5%, -0.8%) scale(1.005);
   }
 }
-.mesh-network .mesh-dots circle {
+.ai-network .ai-dots circle {
   transform-origin: center;
   animation:
-    mesh-dot-float 8s ease-in-out infinite,
-    mesh-dot-breathe 5s ease-in-out infinite;
+    ai-dot-float 8s ease-in-out infinite,
+    ai-dot-breathe 5s ease-in-out infinite;
 }
-.mesh-network .mesh-dots circle:nth-child(odd) {
+.ai-network .ai-dots circle:nth-child(odd) {
   animation-delay: -3s;
 }
-.mesh-network .mesh-dots circle:nth-child(3n) {
+.ai-network .ai-dots circle:nth-child(3n) {
   animation-delay: -5s;
 }
-.mesh-network .mesh-dots circle:nth-child(5n) {
+.ai-network .ai-dots circle:nth-child(5n) {
   animation-duration: 10s;
 }
-.mesh-network .mesh-dots circle:nth-child(4n) {
+.ai-network .ai-dots circle:nth-child(4n) {
   animation-delay: -1s;
 }
-.mesh-network .mesh-lines line {
+.ai-network .ai-lines line {
   stroke-dasharray: 6 12;
-  animation: mesh-line-pulse 4s linear infinite;
+  animation: ai-line-pulse 4s linear infinite;
 }
-.mesh-network .mesh-lines line:nth-child(odd) {
+.ai-network .ai-lines line:nth-child(odd) {
   animation-delay: -2s;
 }
-@keyframes mesh-line-pulse {
+@keyframes ai-line-pulse {
   to {
     stroke-dashoffset: -18;
   }
 }
-@keyframes mesh-dot-float {
+@keyframes ai-dot-float {
   0%,
   100% {
     transform: translate(0, 0);
@@ -1037,7 +1037,7 @@ body.mesh-page::-webkit-scrollbar-thumb {
     transform: translate(-1px, 1.5px);
   }
 }
-@keyframes mesh-dot-breathe {
+@keyframes ai-dot-breathe {
   0%,
   100% {
     opacity: 1;
@@ -1046,13 +1046,13 @@ body.mesh-page::-webkit-scrollbar-thumb {
     opacity: 0.75;
   }
 }
-body.mesh-page .mesh-content,
-body.mesh-page footer {
+body.ai-page .ai-content,
+body.ai-page footer {
   position: relative;
   z-index: 10;
 }
 /* GPU 风格：散热鳍片 + PCB 底 + 金属边框 */
-body.mesh-page .mesh-content .prose {
+body.ai-page .ai-content .prose {
   position: relative;
   background:
     repeating-linear-gradient(
@@ -1085,10 +1085,10 @@ body.mesh-page .mesh-content .prose {
     inset 0 1px 0 rgba(200, 210, 225, 0.12),
     inset 0 -1px 0 rgba(40, 50, 65, 0.4),
     inset 0 0 0 1px rgba(100, 120, 150, 0.15);
-  animation: mesh-breathe 6s ease-in-out infinite;
+  animation: ai-breathe 6s ease-in-out infinite;
 }
 /* 呼吸式微动 */
-@keyframes mesh-breathe {
+@keyframes ai-breathe {
   0%,
   100% {
     opacity: 1;
@@ -1100,7 +1100,7 @@ body.mesh-page .mesh-content .prose {
   }
 }
 /* 加载扫描线 */
-.mesh-load-scan {
+.ai-load-scan {
   position: fixed;
   left: 0;
   right: 0;
@@ -1113,11 +1113,11 @@ body.mesh-page .mesh-content .prose {
     transparent
   );
   box-shadow: 0 0 12px rgba(100, 255, 180, 0.5);
-  animation: mesh-scan 0.8s ease-out forwards;
+  animation: ai-scan 0.8s ease-out forwards;
   pointer-events: none;
   z-index: 20;
 }
-@keyframes mesh-scan {
+@keyframes ai-scan {
   0% {
     top: 0;
     opacity: 1;
@@ -1128,44 +1128,44 @@ body.mesh-page .mesh-content .prose {
   }
 }
 /* 文章区域渐显 */
-.mesh-article {
-  animation: mesh-article-in 0.6s ease-out forwards;
+.ai-article {
+  animation: ai-article-in 0.6s ease-out forwards;
   opacity: 0;
 }
-@keyframes mesh-article-in {
+@keyframes ai-article-in {
   to {
     opacity: 1;
   }
 }
-.mesh-title {
-  animation: mesh-title-in 0.5s ease-out 0.15s forwards;
+.ai-title {
+  animation: ai-title-in 0.5s ease-out 0.15s forwards;
   opacity: 0;
 }
-@keyframes mesh-title-in {
+@keyframes ai-title-in {
   to {
     opacity: 1;
   }
 }
-.mesh-prose-body {
-  animation: mesh-prose-in 0.6s ease-out 0.35s forwards;
+.ai-prose-body {
+  animation: ai-prose-in 0.6s ease-out 0.35s forwards;
   opacity: 0;
 }
-@keyframes mesh-prose-in {
+@keyframes ai-prose-in {
   to {
     opacity: 1;
   }
 }
 /* 标题/正文区光晕 */
-body.mesh-page .mesh-content .prose .mesh-title {
+body.ai-page .ai-content .prose .ai-title {
   text-shadow:
     0 0 20px rgba(132, 214, 255, 0.18),
     0 0 36px rgba(160, 224, 255, 0.16);
 }
-body.mesh-page .mesh-content .prose .mesh-prose-body {
+body.ai-page .ai-content .prose .ai-prose-body {
   box-shadow: inset 0 0 80px rgba(124, 206, 255, 0.035);
 }
 /* GPU 金属边框：铝银质感 */
-body.mesh-page .mesh-content .prose::before {
+body.ai-page .ai-content .prose::before {
   content: "";
   position: absolute;
   inset: -1px;
@@ -1190,11 +1190,11 @@ body.mesh-page .mesh-content .prose::before {
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
-body.mesh-page .mesh-content .prose:hover::before {
+body.ai-page .ai-content .prose:hover::before {
   opacity: 1.3;
 }
 /* 链接 hover 光晕/脉冲 */
-body.mesh-page .mesh-content .prose a {
+body.ai-page .ai-content .prose a {
   text-decoration: none;
   padding: 0 2px;
   border-radius: 2px;
@@ -1203,7 +1203,7 @@ body.mesh-page .mesh-content .prose a {
     text-shadow 0.25s ease,
     color 0.25s ease;
 }
-body.mesh-page .mesh-content .prose a:hover {
+body.ai-page .ai-content .prose a:hover {
   box-shadow:
     0 0 12px rgba(140, 210, 242, 0.4),
     0 0 24px rgba(132, 214, 255, 0.28);
@@ -1213,12 +1213,12 @@ body.mesh-page .mesh-content .prose a:hover {
   color: rgba(190, 236, 255, 0.98);
 }
 /* 代码块：输出窗口风格 */
-body.mesh-page .mesh-content .prose code {
+body.ai-page .ai-content .prose code {
   background: rgba(10, 18, 30, 0.72);
   border: 1px solid rgba(126, 192, 224, 0.26);
   color: rgba(196, 232, 248, 0.92);
 }
-body.mesh-page .mesh-content .prose pre {
+body.ai-page .ai-content .prose pre {
   background: rgba(8, 12, 22, 0.88);
   border: 1px solid rgba(142, 218, 255, 0.2);
   box-shadow:
@@ -1228,13 +1228,13 @@ body.mesh-page .mesh-content .prose pre {
   border-radius: 6px;
   overflow: hidden;
 }
-body.mesh-page .mesh-content .prose pre code {
+body.ai-page .ai-content .prose pre code {
   background: transparent;
   border: none;
   color: inherit;
 }
 /* 引用块：输出窗口风格 + 命令提示符 */
-body.mesh-page .mesh-content .prose blockquote {
+body.ai-page .ai-content .prose blockquote {
   position: relative;
   background: rgba(12, 18, 30, 0.64);
   border: 1px solid rgba(126, 192, 224, 0.22);
@@ -1245,7 +1245,7 @@ body.mesh-page .mesh-content .prose blockquote {
     0 0 16px rgba(136, 206, 238, 0.1),
     inset 0 0 20px rgba(8, 28, 44, 0.26);
 }
-body.mesh-page .mesh-content .prose blockquote::before {
+body.ai-page .ai-content .prose blockquote::before {
   content: ">";
   position: absolute;
   left: 0.6em;
@@ -1255,12 +1255,12 @@ body.mesh-page .mesh-content .prose blockquote::before {
   font-weight: bold;
 }
 /* 代码块命令提示符 */
-body.mesh-page .mesh-content .prose pre {
+body.ai-page .ai-content .prose pre {
   position: relative;
   padding-left: 2.5em;
   padding-top: 2.2em;
 }
-body.mesh-page .mesh-content .prose pre::before {
+body.ai-page .ai-content .prose pre::before {
   content: "●  ●  ●   runtime";
   position: absolute;
   left: 1em;
@@ -1272,7 +1272,7 @@ body.mesh-page .mesh-content .prose pre::before {
   letter-spacing: 0.12em;
   text-shadow: 0 0 8px rgba(124, 206, 246, 0.28);
 }
-body.mesh-page .mesh-content .prose pre::after {
+body.ai-page .ai-content .prose pre::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1286,10 +1286,10 @@ body.mesh-page .mesh-content .prose pre::after {
   transform: translateX(-130%);
   transition: transform 0.5s ease;
 }
-body.mesh-page .mesh-content .prose pre:hover::after {
+body.ai-page .ai-content .prose pre:hover::after {
   transform: translateX(130%);
 }
-body.mesh-page .mesh-content .prose blockquote::after {
+body.ai-page .ai-content .prose blockquote::after {
   content: "reference";
   position: absolute;
   right: 1em;
@@ -1300,7 +1300,7 @@ body.mesh-page .mesh-content .prose blockquote::after {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-body.mesh-page header {
+body.ai-page header {
   position: fixed;
   top: 0;
   left: 0;
@@ -1309,26 +1309,26 @@ body.mesh-page header {
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
 }
-body.mesh-page .mesh-content {
+body.ai-page .ai-content {
   padding-top: calc(3em + 56px);
 }
 @media (max-width: 720px) {
-  body.mesh-page .mesh-content {
+  body.ai-page .ai-content {
     padding-top: calc(1em + 56px);
   }
 }
 /* ========== 新增 AI 风格特效 ========== */
 /* 复古块状光标（正文末尾） */
-.mesh-block-cursor {
+.ai-block-cursor {
   display: inline-block;
   width: 0.6em;
   height: 1.1em;
   background: rgba(150, 226, 255, 0.94);
   margin-left: 2px;
   vertical-align: text-bottom;
-  animation: mesh-block-cursor-blink 1s step-end infinite;
+  animation: ai-block-cursor-blink 1s step-end infinite;
 }
-@keyframes mesh-block-cursor-blink {
+@keyframes ai-block-cursor-blink {
   0%,
   50% {
     opacity: 1;
@@ -1339,7 +1339,7 @@ body.mesh-page .mesh-content {
   }
 }
 /* 阅读进度条（紫色，更醒目） */
-.mesh-read-progress {
+.ai-read-progress {
   position: fixed;
   top: 0;
   left: 0;
@@ -1355,7 +1355,7 @@ body.mesh-page .mesh-content {
   transition: width 0.08s ease-out;
 }
 /* 鼠标跟随光斑 */
-.mesh-mouse-glow {
+.ai-mouse-glow {
   position: fixed;
   width: 300px;
   height: 300px;
@@ -1370,11 +1370,11 @@ body.mesh-page .mesh-content {
   z-index: 1;
   transition: opacity 0.3s;
 }
-body.mesh-page:not(:hover) .mesh-mouse-glow {
+body.ai-page:not(:hover) .ai-mouse-glow {
   opacity: 0.5;
 }
 /* 深度模糊：上下边缘虚化 */
-.mesh-depth-blur {
+.ai-depth-blur {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -1396,7 +1396,7 @@ body.mesh-page:not(:hover) .mesh-mouse-glow {
   backdrop-filter: blur(0);
   transition: backdrop-filter 0.3s;
 }
-.mesh-depth-blur::before {
+.ai-depth-blur::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1419,7 +1419,7 @@ body.mesh-page:not(:hover) .mesh-mouse-glow {
   );
 }
 /* 思考中三连点 */
-.mesh-thinking-dots {
+.ai-thinking-dots {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
@@ -1427,28 +1427,28 @@ body.mesh-page:not(:hover) .mesh-mouse-glow {
   gap: 6px;
   z-index: 50;
   opacity: 1;
-  animation: mesh-thinking-fade 0.8s ease-out 1.2s forwards;
+  animation: ai-thinking-fade 0.8s ease-out 1.2s forwards;
 }
-.mesh-thinking-dots span {
+.ai-thinking-dots span {
   width: 6px;
   height: 6px;
   background: rgba(150, 226, 255, 0.82);
   border-radius: 50%;
-  animation: mesh-dot-pulse 0.8s ease-in-out infinite;
+  animation: ai-dot-pulse 0.8s ease-in-out infinite;
 }
-.mesh-thinking-dots span:nth-child(2) {
+.ai-thinking-dots span:nth-child(2) {
   animation-delay: 0.15s;
 }
-.mesh-thinking-dots span:nth-child(3) {
+.ai-thinking-dots span:nth-child(3) {
   animation-delay: 0.3s;
 }
-@keyframes mesh-thinking-fade {
+@keyframes ai-thinking-fade {
   to {
     opacity: 0;
     visibility: hidden;
   }
 }
-@keyframes mesh-dot-pulse {
+@keyframes ai-dot-pulse {
   0%,
   100% {
     opacity: 0.4;
@@ -1460,13 +1460,13 @@ body.mesh-page:not(:hover) .mesh-mouse-glow {
   }
 }
 /* 故障效果：链接/代码块 hover 极轻微 RGB 分离 */
-body.mesh-page .mesh-content .prose a:hover {
-  animation: mesh-glitch-link 0.4s ease-out;
+body.ai-page .ai-content .prose a:hover {
+  animation: ai-glitch-link 0.4s ease-out;
 }
-body.mesh-page .mesh-content .prose pre:hover {
-  animation: mesh-glitch-pre 0.35s ease-out;
+body.ai-page .ai-content .prose pre:hover {
+  animation: ai-glitch-pre 0.35s ease-out;
 }
-@keyframes mesh-glitch-link {
+@keyframes ai-glitch-link {
   0%,
   100% {
     text-shadow:
@@ -1489,7 +1489,7 @@ body.mesh-page .mesh-content .prose pre:hover {
       0 0 20px rgba(120, 180, 255, 0.3);
   }
 }
-@keyframes mesh-glitch-pre {
+@keyframes ai-glitch-pre {
   0%,
   100% {
     box-shadow:
@@ -1504,10 +1504,10 @@ body.mesh-page .mesh-content .prose pre:hover {
   }
 }
 /* 悬浮预览卡 */
-body.mesh-page .mesh-content .prose a.mesh-link-preview {
+body.ai-page .ai-content .prose a.ai-link-preview {
   position: relative;
 }
-body.mesh-page .mesh-content .prose a.mesh-link-preview::after {
+body.ai-page .ai-content .prose a.ai-link-preview::after {
   content: attr(data-preview);
   position: absolute;
   bottom: 100%;
@@ -1527,36 +1527,36 @@ body.mesh-page .mesh-content .prose a.mesh-link-preview::after {
     transform 0.2s;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
-body.mesh-page .mesh-content .prose a.mesh-link-preview:hover::after {
+body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
   opacity: 1;
   transform: translateX(-50%) translateY(-12px);
 }
 /* 时间戳日志风格 */
-.mesh-log-date {
+.ai-log-date {
   font-family: ui-monospace, monospace;
   font-size: 0.85em;
 }
-.mesh-log-label {
+.ai-log-label {
   color: rgba(100, 255, 180, 0.7);
   margin-right: 0.25em;
 }
 
 /* ========== AI 时代氛围增强 ========== */
 /* 元信息终端化 */
-.mesh-meta-terminal {
+.ai-meta-terminal {
   font-family: ui-monospace, monospace;
   font-size: 0.78em;
   color: rgba(180, 224, 246, 0.84);
   margin-bottom: 0.62em;
   letter-spacing: 0.04em;
 }
-.mesh-system-row {
+.ai-system-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
   margin-bottom: 0.55rem;
 }
-.mesh-system-chip {
+.ai-system-chip {
   font-family: ui-monospace, monospace;
   font-size: 0.68em;
   color: rgba(186, 232, 252, 0.94);
@@ -1568,17 +1568,17 @@ body.mesh-page .mesh-content .prose a.mesh-link-preview:hover::after {
   text-transform: uppercase;
 }
 /* 提示词式标题 */
-.mesh-prompt-line {
+.ai-prompt-line {
   font-size: 0.86em;
   color: rgba(154, 218, 246, 0.8);
   margin-bottom: 0.4em;
 }
-.mesh-prompt-topic {
+.ai-prompt-topic {
   color: rgba(188, 232, 252, 0.88);
   font-style: normal;
 }
 /* 对话气泡 / Response 区域 */
-.mesh-response-wrap {
+.ai-response-wrap {
   position: relative;
   border: 1px solid rgba(152, 222, 255, 0.2);
   background: linear-gradient(
@@ -1592,13 +1592,13 @@ body.mesh-page .mesh-content .prose a.mesh-link-preview:hover::after {
     inset 0 0 0 1px rgba(138, 206, 238, 0.12),
     0 8px 26px rgba(0, 0, 0, 0.32);
 }
-.mesh-response-header {
+.ai-response-header {
   display: flex;
   align-items: center;
   gap: 0.6em;
   margin-bottom: 0.8em;
 }
-.mesh-response-avatar {
+.ai-response-avatar {
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -1612,14 +1612,14 @@ body.mesh-page .mesh-content .prose a.mesh-link-preview:hover::after {
     0 0 0 2px rgba(10, 18, 28, 0.64),
     0 0 14px rgba(124, 206, 246, 0.32);
 }
-.mesh-response-label {
+.ai-response-label {
   font-size: 0.8em;
   color: rgba(170, 226, 250, 0.92);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.mesh-response-meta {
+.ai-response-meta {
   margin-left: auto;
   display: flex;
   flex-wrap: wrap;
@@ -1628,12 +1628,12 @@ body.mesh-page .mesh-content .prose a.mesh-link-preview:hover::after {
   font-size: 0.68em;
   color: rgba(188, 226, 248, 0.76);
 }
-.mesh-response-meta strong {
+.ai-response-meta strong {
   color: rgba(194, 236, 252, 0.96);
   font-weight: 600;
 }
 /* 字数/Token 角落 */
-.mesh-stats-corner {
+.ai-stats-corner {
   position: absolute;
   top: 0.5em;
   right: 1em;
@@ -1641,11 +1641,11 @@ body.mesh-page .mesh-content .prose a.mesh-link-preview:hover::after {
   font-size: 0.7em;
   color: rgba(176, 218, 240, 0.58);
 }
-.mesh-model-id {
+.ai-model-id {
   color: rgba(158, 218, 246, 0.82);
 }
 /* Regenerate 按钮 */
-.mesh-regenerate {
+.ai-regenerate {
   display: block;
   margin: 2em auto 0;
   padding: 0.5em 1.2em;
@@ -1658,21 +1658,21 @@ body.mesh-page .mesh-content .prose a.mesh-link-preview:hover::after {
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.mesh-regenerate:hover:not(:disabled) {
+.ai-regenerate:hover:not(:disabled) {
   background: rgba(126, 192, 224, 0.12);
   box-shadow: 0 0 14px rgba(124, 206, 246, 0.24);
 }
-.mesh-regenerate:disabled {
+.ai-regenerate:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
-.mesh-regenerating {
+.ai-regenerating {
   pointer-events: none;
 }
-.mesh-regenerate-flash {
-  animation: mesh-flash 0.6s ease-out;
+.ai-regenerate-flash {
+  animation: ai-flash 0.6s ease-out;
 }
-@keyframes mesh-flash {
+@keyframes ai-flash {
   0% {
     opacity: 0.3;
   }
@@ -1681,10 +1681,10 @@ body.mesh-page .mesh-content .prose a.mesh-link-preview:hover::after {
   }
 }
 /* 首字放大 */
-body.mesh-page
-  .mesh-content
+body.ai-page
+  .ai-content
   .prose
-  .mesh-prose-body
+  .ai-prose-body
   > p:first-of-type::first-letter {
   float: left;
   font-size: 3.2em;
@@ -1694,47 +1694,47 @@ body.mesh-page
   text-shadow: 0 0 22px rgba(124, 206, 246, 0.3);
 }
 /* 段落滚动浮现 */
-.mesh-prose-body p,
-.mesh-prose-body h2,
-.mesh-prose-body h3,
-.mesh-prose-body pre,
-.mesh-prose-body blockquote,
-.mesh-prose-body ul,
-.mesh-prose-body ol {
+.ai-prose-body p,
+.ai-prose-body h2,
+.ai-prose-body h3,
+.ai-prose-body pre,
+.ai-prose-body blockquote,
+.ai-prose-body ul,
+.ai-prose-body ol {
   opacity: 0;
   transform: translateY(12px);
   transition:
     opacity 0.5s ease,
     transform 0.5s ease;
 }
-.mesh-prose-body .mesh-para-visible {
+.ai-prose-body .ai-para-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* ========== 相关文章 + 返回博客 ========== */
-.mesh-related {
+.ai-related {
   width: 720px;
   max-width: calc(100% - 2em);
   margin: 2.5rem auto 1.5rem;
 }
-.mesh-related-title {
+.ai-related-title {
   font-size: 0.9em;
   color: rgba(172, 228, 252, 0.88);
   margin-bottom: 1rem;
   font-weight: 500;
 }
-.mesh-related-grid {
+.ai-related-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 @media (max-width: 780px) {
-  .mesh-related-grid {
+  .ai-related-grid {
     grid-template-columns: 1fr;
   }
 }
-.mesh-related-card {
+.ai-related-card {
   display: block;
   background: rgba(12, 10, 20, 0.7);
   border: 1px solid rgba(126, 192, 224, 0.24);
@@ -1747,21 +1747,21 @@ body.mesh-page
     box-shadow 0.2s ease,
     border-color 0.2s ease;
 }
-.mesh-related-card:hover {
+.ai-related-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 0 24px rgba(124, 206, 246, 0.2);
   border-color: rgba(172, 228, 255, 0.34);
 }
-.mesh-related-img {
+.ai-related-img {
   aspect-ratio: 16/9;
   overflow: hidden;
 }
-.mesh-related-img img {
+.ai-related-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.mesh-related-placeholder {
+.ai-related-placeholder {
   aspect-ratio: 16/9;
   background: linear-gradient(
     135deg,
@@ -1773,29 +1773,29 @@ body.mesh-page
   align-items: center;
   justify-content: center;
 }
-.mesh-related-placeholder span {
+.ai-related-placeholder span {
   font-size: 2em;
   color: rgba(168, 222, 246, 0.62);
   font-weight: 600;
 }
-.mesh-related-card-title {
+.ai-related-card-title {
   padding: 0.75rem 1rem 0.25rem;
   font-size: 0.95em;
   margin: 0;
   color: rgba(220, 245, 255, 0.95);
 }
-.mesh-related-card-date {
+.ai-related-card-date {
   padding: 0 1rem 0.75rem;
   font-size: 0.75em;
   color: rgba(176, 216, 238, 0.66);
   margin: 0;
 }
-.mesh-back-to-blog {
+.ai-back-to-blog {
   width: 720px;
   max-width: calc(100% - 2em);
   margin: 0 auto 2.5rem;
 }
-.mesh-back-to-blog a {
+.ai-back-to-blog a {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -1808,16 +1808,16 @@ body.mesh-page
     color 0.2s ease,
     text-shadow 0.2s ease;
 }
-.mesh-back-to-blog a:hover {
+.ai-back-to-blog a:hover {
   color: rgba(188, 236, 255, 0.98);
   text-shadow: 0 0 12px rgba(124, 206, 246, 0.3);
 }
-.mesh-back-prompt {
+.ai-back-prompt {
   color: rgba(154, 218, 246, 0.78);
 }
 
 /* 回到顶部按钮：芯片电路图风格 */
-.mesh-back-to-top {
+.ai-back-to-top {
   position: fixed;
   /* 文章宽 720px 居中时，右半边空隙中心 = (100vw - 720px)/2 + 720px + (100vw - 720px)/4 = 75vw + 180px */
   left: calc(75vw + 180px);
@@ -1846,22 +1846,22 @@ body.mesh-page
   backdrop-filter: blur(10px);
   box-shadow: 0 0 20px rgba(124, 206, 246, 0.18);
 }
-.mesh-back-to-top.visible {
+.ai-back-to-top.visible {
   opacity: 1;
   transform: translate(-50%, -50%);
 }
-.mesh-back-to-top:hover {
+.ai-back-to-top:hover {
   border-color: rgba(162, 222, 248, 0.72);
   box-shadow: 0 0 24px rgba(124, 206, 246, 0.36);
 }
 @media (max-width: 840px) {
   /* 视口较窄时右侧空隙太小，改回贴右 */
-  .mesh-back-to-top {
+  .ai-back-to-top {
     left: auto;
     right: 1rem;
     transform: translateY(calc(-50% + 8px));
   }
-  .mesh-back-to-top.visible {
+  .ai-back-to-top.visible {
     transform: translateY(-50%);
   }
 }

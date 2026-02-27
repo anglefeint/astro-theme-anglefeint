@@ -3,8 +3,6 @@ import type { GetStaticPaths } from 'astro';
 import BasePageLayout from '../layouts/BasePageLayout.astro';
 import { SUPPORTED_LOCALES } from '../i18n/config';
 
-const PAGE_THEME = 'base';
-
 export const getStaticPaths = (() => SUPPORTED_LOCALES.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
 
 const locale = Astro.params.lang;
@@ -12,7 +10,7 @@ const pageTitle = 'Projects';
 const pageDescription = 'A custom page built from the default layout.';
 ---
 
-<BasePageLayout locale={locale} title={pageTitle} description={pageDescription} theme={PAGE_THEME}>
+<BasePageLayout locale={locale} title={pageTitle} description={pageDescription}>
 	<h1>Projects</h1>
 	<p>Replace this content with your own page content.</p>
 </BasePageLayout>

@@ -2,10 +2,8 @@
 import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import BaseHead from '@anglefeint/astro-theme/components/BaseHead.astro';
-import Footer from '@anglefeint/astro-theme/components/Footer.astro';
 import FormattedDate from '@anglefeint/astro-theme/components/FormattedDate.astro';
-import Header from '@anglefeint/astro-theme/components/Header.astro';
+import CyberShell from '../../../layouts/shells/CyberShell.astro';
 import { SITE_TITLE } from '../../../consts';
 import {
 	DEFAULT_LOCALE,
@@ -101,59 +99,47 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 	duration: `${8 + Math.random() * 12}s`,
 }));
 ---
-<!doctype html>
-<html lang={resolvedLocale}>
-	<head>
-		<BaseHead title={pageTitle} description={pageDescription} />
-		<style is:global>
-			/* Pagination - 仅分页页有此结构，复用 br-page 特效 */
-			body.br-page .pagination {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				gap: 0.5rem;
-				margin-top: 2.5rem;
-				padding: 1.5rem 0;
-			}
-			body.br-page .pagination a {
-				padding: 0.5rem 1rem;
-				color: rgb(212, 196, 232);
-				text-decoration: none;
-				border: 1px solid rgba(198, 156, 224, 0.42);
-				border-radius: 4px;
-				transition: 0.25s ease;
-				text-shadow: 0 0 10px rgba(214, 152, 226, 0.2);
-			}
-			body.br-page .pagination a:hover {
-				border-color: rgba(226, 166, 236, 0.88);
-				text-shadow: 0 0 15px rgba(232, 174, 242, 0.5);
-				box-shadow: 0 0 15px rgba(222, 154, 228, 0.26);
-			}
-			body.br-page .pagination a.current {
-				background: rgba(188, 122, 214, 0.2);
-				border-color: rgb(224, 170, 236);
-				color: rgb(244, 224, 252);
-				text-shadow: 0 0 15px rgba(232, 174, 242, 0.48);
-				box-shadow:
-					0 0 20px rgba(118, 198, 255, 0.24),
-					0 0 12px rgba(220, 152, 230, 0.22);
-			}
-		</style>
-	</head>
-	<body class="br-page">
-		<div class="br-load-glitch" aria-hidden="true"></div>
-		<div class="br-spotlight" aria-hidden="true">
-			<div class="br-spotlight-tr"></div>
-			<div class="br-spotlight-tl"></div>
-		</div>
-		<div class="br-flicker" aria-hidden="true"></div>
-		<div class="br-haze" aria-hidden="true"></div>
-		<div class="br-vignette" aria-hidden="true"></div>
-		<div class="br-rain" aria-hidden="true">
+<CyberShell locale={resolvedLocale} title={pageTitle} description={pageDescription} localeHrefs={localeHrefs}>
+	<style slot="head" is:global>
+		/* Pagination - 仅分页页有此结构，复用 cyber-page 特效 */
+		body.cyber-page .pagination {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 0.5rem;
+			margin-top: 2.5rem;
+			padding: 1.5rem 0;
+		}
+		body.cyber-page .pagination a {
+			padding: 0.5rem 1rem;
+			color: rgb(212, 196, 232);
+			text-decoration: none;
+			border: 1px solid rgba(198, 156, 224, 0.42);
+			border-radius: 4px;
+			transition: 0.25s ease;
+			text-shadow: 0 0 10px rgba(214, 152, 226, 0.2);
+		}
+		body.cyber-page .pagination a:hover {
+			border-color: rgba(226, 166, 236, 0.88);
+			text-shadow: 0 0 15px rgba(232, 174, 242, 0.5);
+			box-shadow: 0 0 15px rgba(222, 154, 228, 0.26);
+		}
+		body.cyber-page .pagination a.current {
+			background: rgba(188, 122, 214, 0.2);
+			border-color: rgb(224, 170, 236);
+			color: rgb(244, 224, 252);
+			text-shadow: 0 0 15px rgba(232, 174, 242, 0.48);
+			box-shadow:
+				0 0 20px rgba(118, 198, 255, 0.24),
+				0 0 12px rgba(220, 152, 230, 0.22);
+		}
+	</style>
+	<Fragment slot="body-start">
+		<div class="cyber-rain" aria-hidden="true">
 			{
 				rainDrops.map((drop) => (
 					<div
-						class={`br-rain-drop br-rain-drop--${drop.type}`}
+						class={`cyber-rain-drop cyber-rain-drop--${drop.type}`}
 						style={{
 							left: drop.left,
 							animationDelay: drop.delay,
@@ -164,10 +150,10 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 				))
 			}
 		</div>
-		<div class="br-dust" aria-hidden="true">
+		<div class="cyber-dust" aria-hidden="true">
 			{dustParticles.map((p) => (
 				<div
-					class="br-dust-particle"
+					class="cyber-dust-particle"
 					style={{
 						left: p.left,
 						top: p.top,
@@ -179,56 +165,41 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 				/>
 			))}
 		</div>
-
-		<Header
-			locale={resolvedLocale}
-			localeHrefs={localeHrefs}
-			labels={{
-				home: messages.nav.home,
-				blog: messages.nav.blog,
-				about: messages.nav.about,
-				status: messages.nav.status,
-				language: messages.langLabel,
-			}}
-		/>
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-									<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
-									{post.data.heroImage && (
-										<div class="img-wrapper">
-											<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
-										</div>
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-			{page.lastPage > 1 && (
-				<nav class="pagination" aria-label="Pagination">
-					{page.url.prev && <a href={page.url.prev}>{messages.blog.previous}</a>}
-					{pageNums.map((num) => (
-						<a
-							href={num === 1 ? localePath(resolvedLocale, '/blog/') : localePath(resolvedLocale, `/blog/${num}`)}
-							class={num === page.currentPage ? 'current' : undefined}
-							aria-current={num === page.currentPage ? 'page' : undefined}
-						>
-							{num}
+	</Fragment>
+	<section>
+		<ul>
+			{
+				posts.map((post) => (
+					<li>
+						<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
+							{post.data.heroImage && (
+								<div class="img-wrapper">
+									<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
+								</div>
+							)}
+							<h4 class="title">{post.data.title}</h4>
+							<p class="date">
+								<FormattedDate date={post.data.pubDate} />
+							</p>
 						</a>
-					))}
-					{page.url.next && <a href={page.url.next}>{messages.blog.next}</a>}
-				</nav>
-			)}
-		</main>
-		<Footer />
-	</body>
-</html>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+	{page.lastPage > 1 && (
+		<nav class="pagination" aria-label="Pagination">
+			{page.url.prev && <a href={page.url.prev}>{messages.blog.previous}</a>}
+			{pageNums.map((num) => (
+				<a
+					href={num === 1 ? localePath(resolvedLocale, '/blog/') : localePath(resolvedLocale, `/blog/${num}`)}
+					class={num === page.currentPage ? 'current' : undefined}
+					aria-current={num === page.currentPage ? 'page' : undefined}
+				>
+					{num}
+				</a>
+			))}
+			{page.url.next && <a href={page.url.next}>{messages.blog.next}</a>}
+		</nav>
+	)}
+</CyberShell>

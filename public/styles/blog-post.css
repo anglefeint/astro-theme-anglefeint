@@ -1,4 +1,4 @@
-			body.mesh-page main {
+			body.ai-page main {
 				width: calc(100% - 2em);
 				max-width: 100%;
 				margin: 0;
@@ -117,14 +117,14 @@
 					letter-spacing: 0.08em;
 				}
 			}
-			body.mesh-page .prose {
+			body.ai-page .prose {
 				width: 720px;
 				max-width: calc(100% - 2em);
 				margin: auto;
 				padding: 1em;
 				color: rgb(var(--text));
 			}
-			body.mesh-page .hero-shell + .prose {
+			body.ai-page .hero-shell + .prose {
 				margin-top: 1.1rem;
 			}
 			.rq-tv {
@@ -284,30 +284,30 @@
 					to { transform: rotate(360deg); }
 				}
 			@media (max-width: 720px) {
-				body.mesh-page .hero-shell + .prose {
+				body.ai-page .hero-shell + .prose {
 					margin-top: 0.85rem;
 				}
 			}
 			@media (max-width: 1300px) {
 				.rq-tv { display: none; }
 			}
-			body.mesh-page .title {
+			body.ai-page .title {
 				margin-bottom: 1em;
 				padding: 1em 0;
 				text-align: center;
 				line-height: 1;
 			}
-			body.mesh-page .title h1 {
+			body.ai-page .title h1 {
 				margin: 0 0 0.5em 0;
 			}
-			.mesh-subtitle-text {
+			.ai-subtitle-text {
 				margin: -0.15rem 0 0.85rem;
 				font-size: 1rem;
 				line-height: 1.5;
 				color: rgba(210, 240, 255, 0.86);
 				text-wrap: balance;
 			}
-			.mesh-title-flow {
+			.ai-title-flow {
 				position: relative;
 				height: 3px;
 				margin: 0.75rem 0 0.1rem;
@@ -323,7 +323,7 @@
 					0 0 0 1px rgba(148, 216, 244, 0.08),
 					0 0 14px rgba(124, 206, 246, 0.24);
 			}
-			.mesh-title-flow::before {
+			.ai-title-flow::before {
 				content: "";
 				position: absolute;
 				inset: 0;
@@ -333,7 +333,7 @@
 					rgba(162, 224, 250, 0) 9px 16px
 				);
 			}
-			.mesh-title-flow::after {
+			.ai-title-flow::after {
 				content: "";
 				position: absolute;
 				top: 0;
@@ -346,14 +346,14 @@
 					rgba(164, 228, 255, 0.88),
 					rgba(132, 214, 255, 0)
 				);
-				animation: mesh-title-flow-run 3.8s linear infinite;
+				animation: ai-title-flow-run 3.8s linear infinite;
 			}
-			@keyframes mesh-title-flow-run {
+			@keyframes ai-title-flow-run {
 				to {
 					left: 100%;
 				}
 			}
-			.mesh-stage-toast {
+			.ai-stage-toast {
 				position: fixed;
 				right: 1rem;
 				bottom: 1rem;
@@ -377,14 +377,14 @@
 					opacity 0.18s ease,
 					transform 0.18s ease;
 			}
-			.mesh-stage-toast.visible {
+			.ai-stage-toast.visible {
 				opacity: 1;
 				transform: translateY(0);
 			}
-			body.mesh-page .date {
+			body.ai-page .date {
 				margin-bottom: 0.5em;
 				color: rgb(var(--text-muted));
 			}
-			body.mesh-page .last-updated-on {
+			body.ai-page .last-updated-on {
 				font-style: italic;
 			}

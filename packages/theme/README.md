@@ -1,3 +1,12 @@
+---
+doc_id: package_readme
+doc_role: package-guide
+doc_scope: [package-install, package-upgrade, package-usage]
+update_triggers: [package-change, command-change, export-change]
+source_of_truth: true
+depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
+---
+
 # @anglefeint/astro-theme
 
 Core package for the Anglefeint Astro theme.

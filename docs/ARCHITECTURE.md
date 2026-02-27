@@ -1,3 +1,12 @@
+---
+doc_id: architecture
+doc_role: architecture-source
+doc_scope: [architecture, layouts, shells, components, routing, seo]
+update_triggers: [architecture-change, layout-change, shell-change, seo-change, i18n-change]
+source_of_truth: true
+sync_targets: [README.md, CLAUDE.md]
+---
+
 # Architecture Notes
 
 ## Stack
@@ -13,6 +22,36 @@
 - Interactivity is implemented with lightweight vanilla scripts in `public/scripts/`.
 - No API routes and no SSR runtime required.
 - Blog post side monitor runtime is stateful and event-driven in `public/scripts/blogpost-effects.js` (`initRedQueenTv`).
+
+## Layered Theme Architecture
+
+The project now follows a compositional structure:
+
+1. Shared chrome
+- `src/components/shared/ThemeFrame.astro`
+- `src/components/shared/CommonHeader.astro`
+- `src/components/shared/CommonFooter.astro`
+- Responsibility: shared HTML skeleton, head metadata, navigation, footer.
+
+2. Theme shells
+- `src/layouts/shells/BaseShell.astro`
+- `src/layouts/shells/AiShell.astro`
+- `src/layouts/shells/CyberShell.astro`
+- `src/layouts/shells/HackerShell.astro`
+- `src/layouts/shells/MatrixShell.astro`
+- Responsibility: route atmosphere container, theme body class, background layers, theme-specific script/style hooks.
+
+3. Page layouts
+- `src/layouts/BasePageLayout.astro`
+- `src/layouts/AiPageLayout.astro`
+- `src/layouts/CyberPageLayout.astro`
+- `src/layouts/HackerPageLayout.astro`
+- `src/layouts/MatrixPageLayout.astro`
+- Responsibility: thin composition layer for page generation and custom routes.
+
+4. Business pages
+- `src/pages/**`
+- Responsibility: content query, pagination, locale pathing, page-specific DOM/behavior.
 
 ## Content Pipeline
 
@@ -52,7 +91,18 @@
 - **Sticky footer:** `body` uses flex column with `min-height: 100vh`; `main` uses `flex: 1` so footer stays at viewport bottom on short pages (2K/4K, blog with no articles).
 - Home layout: `src/layouts/HomePage.astro`
 - Post layout: `src/layouts/BlogPost.astro`
-- Shared chrome: `src/components/Header.astro`, `src/components/Footer.astro`
+- Shared chrome: `src/components/shared/CommonHeader.astro`, `src/components/shared/CommonFooter.astro`
+- Unified frame: `src/components/shared/ThemeFrame.astro`
+
+## Theme Naming Contract
+
+- Route theme names are now unified across CLI/layout/CSS/JS:
+  - `base`
+  - `ai`
+  - `cyber`
+  - `hacker`
+  - `matrix`
+- Internal selectors and scripts use the same prefixes (`ai-*`, `cyber-*`, `hacker-*`) to avoid naming drift.
 
 ## Blog Post Monitor Lifecycle
 

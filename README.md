@@ -1,3 +1,13 @@
+---
+doc_id: readme_en
+doc_role: user-guide
+doc_scope: [setup, commands, themes, config, routing]
+update_triggers: [command-change, theme-naming, config-change, routing-change, i18n-change]
+source_of_truth: true
+depends_on: [docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md]
+sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
+---
+
 <h1 align="center">Anglefeint</h1>
 <p align="center">A cinematic, multi-atmosphere Astro theme for personal publishing.</p>
 
@@ -113,6 +123,12 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 - `/:lang/blog`: cyberpunk archive mood
 - `/:lang/blog/[slug]`: AI-interface reading layout
 - `/:lang/about`: optional hacker-style profile page
+
+## Theme Naming Contract
+
+- Theme variants: `base`, `ai`, `cyber`, `hacker`, `matrix`
+- Internal selectors/scripts use aligned prefixes: `ai-*`, `cyber-*`, `hacker-*`
+- Core composition follows: `ThemeFrame -> Shell -> Layout -> Page`
 
 ## Features
 

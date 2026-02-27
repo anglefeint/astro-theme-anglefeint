@@ -1,3 +1,11 @@
+---
+doc_id: changelog
+doc_role: release-log
+doc_scope: [release-notes, upgrade-impact]
+update_triggers: [release-change, command-change, behavior-change]
+source_of_truth: true
+---
+
 # Changelog
 
 All notable changes to this project are documented in this file.

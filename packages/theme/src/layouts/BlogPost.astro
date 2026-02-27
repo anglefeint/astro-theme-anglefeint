@@ -3,10 +3,8 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import themeRedqueen1 from '../assets/theme/red-queen/theme-redqueen1.webp';
 import themeRedqueen2 from '../assets/theme/red-queen/theme-redqueen2.gif';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import AiShell from './shells/AiShell.astro';
 import { SITE_AUTHOR } from '../consts';
 import { DEFAULT_LOCALE, type Locale, isLocale, localePath, blogIdToSlugAnyLocale } from '../i18n/config';
 import { getMessages } from '../i18n/messages';
@@ -75,42 +73,40 @@ for (let i = 0; i < pts.length; i++) {
 }
 ---
 
-<html lang={resolvedLocale}>
-	<head>
-		<BaseHead
-			title={title}
-			description={description}
-			image={heroImage}
-			pageType="article"
-			publishedTime={pubDate}
-			modifiedTime={updatedDate}
-			author={author ?? SITE_AUTHOR}
-			tags={tags}
-		/>
-		<link rel="stylesheet" href="/styles/blog-post.css" />
-	</head>
-
-	<body class="mesh-page">
-		<div class="mesh-bg" aria-hidden="true">
-			<div class="mesh-glow mesh-glow-shift"></div>
-			<div class="mesh-haze" aria-hidden="true"></div>
-			<div class="mesh-vignette" aria-hidden="true"></div>
-			<div class="mesh-stripe"></div>
-			<div class="mesh-noise" aria-hidden="true"></div>
-			<div class="mesh-hex-grid" aria-hidden="true"></div>
-			<div class="mesh-thought-particles" aria-hidden="true">
+<AiShell
+	locale={resolvedLocale}
+	title={title}
+	description={description}
+	image={heroImage}
+	pageType="article"
+	publishedTime={pubDate}
+	modifiedTime={updatedDate}
+	author={author ?? SITE_AUTHOR}
+	tags={tags}
+	localeHrefs={localeHrefs}
+>
+	<link slot="head" rel="stylesheet" href="/styles/blog-post.css" />
+	<Fragment slot="body-start">
+		<div class="ai-bg" aria-hidden="true">
+			<div class="ai-glow ai-glow-shift"></div>
+			<div class="ai-haze" aria-hidden="true"></div>
+			<div class="ai-vignette" aria-hidden="true"></div>
+			<div class="ai-stripe"></div>
+			<div class="ai-noise" aria-hidden="true"></div>
+			<div class="ai-hex-grid" aria-hidden="true"></div>
+			<div class="ai-thought-particles" aria-hidden="true">
 				{[...Array(12)].map((_, i) => (
-					<span class="mesh-particle" style={`--x: ${20 + (i * 7) % 60}%; --y: ${10 + (i * 11) % 70}%; --d: ${3 + (i % 4)}s`}></span>
+					<span class="ai-particle" style={`--x: ${20 + (i * 7) % 60}%; --y: ${10 + (i * 11) % 70}%; --d: ${3 + (i % 4)}s`}></span>
 				))}
 			</div>
-			<svg class="mesh-network" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+			<svg class="ai-network" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
 					<defs>
-						<linearGradient id="mesh-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+						<linearGradient id="ai-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
 							<stop offset="0%" stop-color="rgba(180,235,255,0.26)" />
 							<stop offset="50%" stop-color="rgba(236,252,255,0.74)" />
 							<stop offset="100%" stop-color="rgba(180,235,255,0.26)" />
 						</linearGradient>
-						<filter id="mesh-dot-glow">
+						<filter id="ai-dot-glow">
 							<feGaussianBlur stdDeviation="2.2" result="blur" />
 							<feMerge>
 								<feMergeNode in="blur" />
@@ -118,57 +114,45 @@ for (let i = 0; i < pts.length; i++) {
 						</feMerge>
 					</filter>
 				</defs>
-				<g class="mesh-lines">
+				<g class="ai-lines">
 					{edges.map(([i, j]) => (
 						<line
 							x1={pts[i].x}
 							y1={pts[i].y}
 							x2={pts[j].x}
 							y2={pts[j].y}
-							stroke="url(#mesh-line-grad)"
+							stroke="url(#ai-line-grad)"
 							stroke-width="0.4"
 						/>
 					))}
 				</g>
-				<g class="mesh-dots">
+				<g class="ai-dots">
 					{pts.map((p) => (
 						<circle
 								cx={p.x}
 								cy={p.y}
 								r={p.r}
 								fill={`rgba(232,255,255,${0.72 + p.depth * 0.48})`}
-								filter="url(#mesh-dot-glow)"
+								filter="url(#ai-dot-glow)"
 							/>
 						))}
 				</g>
 			</svg>
 		</div>
-		<Header
-			locale={resolvedLocale}
-			localeHrefs={localeHrefs}
-			scanlines
-			labels={{
-				home: messages.nav.home,
-				blog: messages.nav.blog,
-				about: messages.nav.about,
-				status: messages.nav.status,
-				language: messages.langLabel,
-			}}
-		/>
 		<aside class="rq-tv rq-tv-collapsed">
 			<div class="rq-tv-stage" data-rq-src={themeRedqueen1.src} data-rq-src2={themeRedqueen2.src}></div>
 			<div class="rq-tv-badge">monitor feed<span class="rq-tv-dot"></span></div>
 			<button type="button" class="rq-tv-toggle" aria-label="Replay monitor feed" aria-expanded="false">▶</button>
 		</aside>
-		<div class="mesh-read-progress" aria-hidden="true"></div>
-		<button type="button" class="mesh-back-to-top" aria-label="Back to top" title="Back to top">↑</button>
-		<div class="mesh-stage-toast" aria-live="polite" aria-atomic="true"></div>
-		<div class="mesh-mouse-glow" aria-hidden="true"></div>
-		<div class="mesh-depth-blur" aria-hidden="true"></div>
-		<div class="mesh-thinking-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-		<main class="mesh-content">
-			<div class="mesh-load-scan" aria-hidden="true"></div>
-				<article class="mesh-article">
+		<div class="ai-read-progress" aria-hidden="true"></div>
+		<button type="button" class="ai-back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+		<div class="ai-stage-toast" aria-live="polite" aria-atomic="true"></div>
+		<div class="ai-mouse-glow" aria-hidden="true"></div>
+		<div class="ai-depth-blur" aria-hidden="true"></div>
+		<div class="ai-thinking-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+	</Fragment>
+	<div class="ai-load-scan" aria-hidden="true"></div>
+	<article class="ai-article">
 					{heroImage && (
 						<div class="hero-shell">
 							<div class="hero-pane">
@@ -191,74 +175,74 @@ for (let i = 0; i < pts.length; i++) {
 						</div>
 					)}
 				<div class="prose">
-						<div class="title mesh-title">
-							<div class="mesh-meta-terminal">
+						<div class="title ai-title">
+							<div class="ai-meta-terminal">
 								$ published {fmt(pubDate)}
 								{updatedDate && <> | updated {fmt(updatedDate)}</>}
 								{readMinutes !== undefined && <> | ~{readMinutes} min read</>}
 							</div>
 							{hasSystemMeta && (
-								<div class="mesh-system-row" aria-label="Model status">
-									{aiModel && <span class="mesh-system-chip">model: {aiModel}</span>}
-									{aiMode && <span class="mesh-system-chip">mode: {aiMode}</span>}
-									{aiState && <span class="mesh-system-chip">state: {aiState}</span>}
+								<div class="ai-system-row" aria-label="Model status">
+									{aiModel && <span class="ai-system-chip">model: {aiModel}</span>}
+									{aiMode && <span class="ai-system-chip">mode: {aiMode}</span>}
+									{aiState && <span class="ai-system-chip">state: {aiState}</span>}
 								</div>
 							)}
 							{contextText && (
-								<div class="mesh-prompt-line">
-									Context: <span class="mesh-prompt-topic">{contextText}</span> →
+								<div class="ai-prompt-line">
+									Context: <span class="ai-prompt-topic">{contextText}</span> →
 								</div>
 							)}
-							<h1 class="mesh-title-text">{title}</h1>
-							{subtitle && <p class="mesh-subtitle-text">{subtitle}</p>}
+							<h1 class="ai-title-text">{title}</h1>
+							{subtitle && <p class="ai-subtitle-text">{subtitle}</p>}
 							<hr />
-							<div class="mesh-title-flow" aria-hidden="true"></div>
+							<div class="ai-title-flow" aria-hidden="true"></div>
 						</div>
-						<div class="mesh-response-wrap">
-							<div class="mesh-response-header">
-								<div class="mesh-response-avatar" aria-hidden="true"></div>
-								<span class="mesh-response-label">Output</span>
+						<div class="ai-response-wrap">
+							<div class="ai-response-header">
+								<div class="ai-response-avatar" aria-hidden="true"></div>
+								<span class="ai-response-label">Output</span>
 								{hasResponseMeta && (
-									<div class="mesh-response-meta">
+									<div class="ai-response-meta">
 										{aiLatencyMs !== undefined && <span>latency est <strong>{aiLatencyMs}</strong> ms</span>}
 										{confidenceText !== undefined && <span>confidence <strong>{confidenceText}</strong></span>}
 									</div>
 								)}
 							</div>
-							<div class="mesh-prose-body mesh-prose-fade">
+							<div class="ai-prose-body ai-prose-fade">
 								<slot />
-								<span class="mesh-block-cursor" aria-hidden="true"></span>
+								<span class="ai-block-cursor" aria-hidden="true"></span>
 							</div>
 						</div>
 						{hasStats && (
-							<div class="mesh-stats-corner">
-								{aiModel && <span class="mesh-model-id">{aiModel}</span>}
+							<div class="ai-stats-corner">
+								{aiModel && <span class="ai-model-id">{aiModel}</span>}
 								{aiModel && (wordCount !== undefined || tokenCount !== undefined) && ' · '}
 								{wordCount !== undefined && <span>{compact(wordCount)} words</span>}
 								{wordCount !== undefined && tokenCount !== undefined && ' · '}
 								{tokenCount !== undefined && <span>{compact(tokenCount)} tokens</span>}
 							</div>
 						)}
-						<button type="button" class="mesh-regenerate" aria-label={messages.blog.regenerate}>{messages.blog.regenerate}</button>
+						<button type="button" class="ai-regenerate" aria-label={messages.blog.regenerate}>{messages.blog.regenerate}</button>
 					</div>
 				</article>
 			{related.length > 0 && (
-				<section class="mesh-related" aria-label="Related posts">
-					<h2 class="mesh-related-title">{messages.blog.related}</h2>
-					<div class="mesh-related-grid">
+				<section class="ai-related" aria-label="Related posts">
+					<h2 class="ai-related-title">{messages.blog.related}</h2>
+					<div class="ai-related-grid">
 						{related.map((p) => (
-							<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(p.id)}`)} class="mesh-related-card">
+							<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(p.id)}`)} class="ai-related-card">
 								{p.data.heroImage ? (
-									<div class="mesh-related-img">
+									<div class="ai-related-img">
 										<Image width={320} height={180} src={p.data.heroImage} alt={p.data.title} />
 									</div>
 								) : (
-									<div class="mesh-related-placeholder">
+									<div class="ai-related-placeholder">
 										<span>{p.data.title.charAt(0)}</span>
 									</div>
 								)}
-								<h3 class="mesh-related-card-title">{p.data.title}</h3>
-								<p class="mesh-related-card-date">
+								<h3 class="ai-related-card-title">{p.data.title}</h3>
+								<p class="ai-related-card-date">
 									<FormattedDate date={p.data.pubDate} />
 								</p>
 							</a>
@@ -266,14 +250,13 @@ for (let i = 0; i < pts.length; i++) {
 					</div>
 				</section>
 			)}
-			<nav class="mesh-back-to-blog" aria-label="Back to blog">
+			<nav class="ai-back-to-blog" aria-label="Back to blog">
 				<a href={localePath(resolvedLocale, '/blog/')}>
-					<span class="mesh-back-prompt">$</span>
-					<span class="mesh-back-text">← {messages.blog.backToBlog}</span>
+					<span class="ai-back-prompt">$</span>
+					<span class="ai-back-text">← {messages.blog.backToBlog}</span>
 				</a>
 			</nav>
-		</main>
-		<Footer scanlines />
-			<script is:inline src="/scripts/blogpost-effects.js" defer></script>
-		</body>
-	</html>
+	<Fragment slot="body-end">
+		<script is:inline src="/scripts/blogpost-effects.js" defer></script>
+	</Fragment>
+</AiShell>

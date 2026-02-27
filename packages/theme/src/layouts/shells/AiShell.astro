@@ -1,0 +1,58 @@
+---
+import type { Locale } from '../../i18n/config';
+import ThemeFrame from '../../components/shared/ThemeFrame.astro';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+	locale?: Locale;
+	title: string;
+	description: string;
+	image?: ImageMetadata;
+	pageType?: 'website' | 'article';
+	publishedTime?: Date;
+	modifiedTime?: Date;
+	author?: string;
+	tags?: string[];
+	schema?: Record<string, unknown> | Record<string, unknown>[];
+	noindex?: boolean;
+	localeHrefs?: Partial<Record<Locale, string>>;
+}
+
+const {
+	locale,
+	title,
+	description,
+	image,
+	pageType,
+	publishedTime,
+	modifiedTime,
+	author,
+	tags,
+	schema,
+	noindex,
+	localeHrefs,
+} = Astro.props as Props;
+---
+
+<ThemeFrame
+	locale={locale}
+	title={title}
+	description={description}
+	image={image}
+	pageType={pageType}
+	publishedTime={publishedTime}
+	modifiedTime={modifiedTime}
+	author={author}
+	tags={tags}
+	schema={schema}
+	noindex={noindex}
+	bodyClass="ai-page"
+	mainClass="page-main ai-content"
+	scanlines
+	localeHrefs={localeHrefs}
+>
+	<slot name="head" slot="head" />
+	<slot name="body-start" slot="body-start" />
+	<slot />
+	<slot name="body-end" slot="body-end" />
+</ThemeFrame>

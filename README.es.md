@@ -1,3 +1,12 @@
+---
+doc_id: readme_es
+doc_role: localized-user-guide
+doc_scope: [setup, commands, themes, config, routing]
+update_triggers: [sync-from-readme-en]
+source_of_truth: false
+depends_on: [README.md]
+---
+
 <h1 align="center">Anglefeint</h1>
 <p align="center">Un tema Astro cinematografico con varias atmosferas para publicacion personal.</p>
 
@@ -113,6 +122,12 @@ npm run new-page -- projects --theme matrix
 - `/:lang/blog`: ambiente de archivo cyberpunk
 - `/:lang/blog/[slug]`: lectura estilo interfaz de IA
 - `/:lang/about`: pagina About opcional con estilo hacker
+
+## Contrato de nombres del tema
+
+- Variantes de tema: `base`, `ai`, `cyber`, `hacker`, `matrix`
+- Prefijos internos en selectores y scripts: `ai-*`, `cyber-*`, `hacker-*`
+- Composicion base: `ThemeFrame -> Shell -> Layout -> Page`
 
 ## Caracteristicas
 

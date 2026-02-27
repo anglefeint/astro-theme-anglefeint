@@ -18,8 +18,8 @@
     "public"
   ],
   "bin": {
-    "anglefeint-new-post": "./src/cli-new-post.mjs",
-    "anglefeint-new-page": "./src/cli-new-page.mjs"
+    "anglefeint-new-post": "src/cli-new-post.mjs",
+    "anglefeint-new-page": "src/cli-new-page.mjs"
   },
   "exports": {
     ".": "./src/index.ts",

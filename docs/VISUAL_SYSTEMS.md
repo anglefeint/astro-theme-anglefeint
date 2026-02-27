@@ -1,3 +1,12 @@
+---
+doc_id: visual_systems
+doc_role: visual-source
+doc_scope: [themes, naming, css, effects, scripts]
+update_triggers: [theme-naming, selector-change, script-change, visual-change]
+source_of_truth: true
+sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
+---
+
 # Visual Systems
 
 This theme uses four distinct atmospheres by route.
@@ -8,16 +17,16 @@ This theme uses four distinct atmospheres by route.
 - Canvas character rain (`public/scripts/home-matrix.js`)
 - Green-tinted glass panel with scanline overlays
 
-## 2) Blog List (`body.br-page`)
+## 2) Blog List (`body.cyber-page`)
 
 - Cyberpunk archive mood (rain, haze, glow)
 - Most effects are CSS-driven in `src/styles/global.css`
 - Paginated card grid for posts
 
-## 3) Blog Post (`body.mesh-page`)
+## 3) Blog Post (`body.ai-page`)
 
 - AI-interface reading environment
-- Mesh background, reading progress, reveal effects
+- AI network background, reading progress, reveal effects
 - Hero canvas processing + side monitor effects via `public/scripts/blogpost-effects.js`
 - Left monitor (`.rq-tv`) playback contract:
   - Auto run once after page load (`500ms` delayed start) when assets are ready.
@@ -28,12 +37,20 @@ This theme uses four distinct atmospheres by route.
   - Canvas is created on playback start and destroyed after playback ends (DOM teardown by design).
   - If preload fails or times out, playback is aborted and monitor stays collapsed.
 
-## 4) About (`body.term-page`)
+## 4) About (`body.hacker-page`)
 
 - Hacker/terminal profile page
 - Modal-driven right sidebar tools
 - Runtime text and modal content from `src/config/about.ts`
 - Interaction script: `public/scripts/about-effects.js`
+
+## Naming Consistency
+
+- Theme class and effect prefixes are aligned:
+  - AI: `ai-*`
+  - Cyber: `cyber-*`
+  - Hacker: `hacker-*`
+- This keeps CLI theme names, layout names, CSS selectors, and JS selectors in sync.
 
 ## Performance Notes
 

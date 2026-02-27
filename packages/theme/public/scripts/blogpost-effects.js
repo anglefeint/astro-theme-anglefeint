@@ -1,9 +1,9 @@
 			(function() {
 				function init() {
 				// 阅读进度条
-				var progress = document.querySelector('.mesh-read-progress');
-				var article = document.querySelector('.mesh-article');
-				var toast = document.querySelector('.mesh-stage-toast');
+				var progress = document.querySelector('.ai-read-progress');
+				var article = document.querySelector('.ai-article');
+				var toast = document.querySelector('.ai-stage-toast');
 				var stageSeen = { p30: false, p60: false, p90: false };
 				var toastTimer = 0;
 				var hasScrolled = false;
@@ -22,7 +22,7 @@
 						var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
 						var p = scrollHeight > 0 ? Math.min(1, scrollTop / scrollHeight) : 1;
 						progress.style.setProperty('--read-progress', String(p));
-						var btn = document.querySelector('.mesh-back-to-top');
+						var btn = document.querySelector('.ai-back-to-top');
 						if (btn) btn.classList.toggle('visible', scrollTop > 400);
 						if (!hasScrolled && scrollTop > 6) hasScrolled = true;
 						if (!hasScrolled) return;
@@ -42,7 +42,7 @@
 					onScroll();
 					window.addEventListener('scroll', onScroll, { passive: true });
 				}
-				var backTop = document.querySelector('.mesh-back-to-top');
+				var backTop = document.querySelector('.ai-back-to-top');
 				if (backTop) {
 					backTop.addEventListener('click', function() {
 						window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -880,7 +880,7 @@
 			initRedQueenTv();
 
 				// 鼠标跟随光斑
-				var glow = document.querySelector('.mesh-mouse-glow');
+				var glow = document.querySelector('.ai-mouse-glow');
 				if (glow) {
 					var raf;
 					var x = 0, y = 0;
@@ -896,10 +896,10 @@
 				}
 
 				// 悬浮预览卡：为链接添加 data-preview
-				document.querySelectorAll('.mesh-prose-body a[href]').forEach(function(a) {
+				document.querySelectorAll('.ai-prose-body a[href]').forEach(function(a) {
 					var href = a.getAttribute('href') || '';
 					if (!href || href.startsWith('#')) return;
-					a.classList.add('mesh-link-preview');
+					a.classList.add('ai-link-preview');
 					try {
 						a.setAttribute('data-preview', href.startsWith('http') ? new URL(href, location.origin).hostname : href);
 					} catch (_) {
@@ -908,40 +908,40 @@
 				});
 
 				// 段落滚动浮现
-				var paras = document.querySelectorAll('.mesh-prose-body p, .mesh-prose-body h2, .mesh-prose-body h3, .mesh-prose-body pre, .mesh-prose-body blockquote, .mesh-prose-body ul, .mesh-prose-body ol');
+				var paras = document.querySelectorAll('.ai-prose-body p, .ai-prose-body h2, .ai-prose-body h3, .ai-prose-body pre, .ai-prose-body blockquote, .ai-prose-body ul, .ai-prose-body ol');
 				if (window.IntersectionObserver) {
 					var io = new IntersectionObserver(function(entries) {
 						entries.forEach(function(e) {
 							if (e.isIntersecting) {
-								e.target.classList.add('mesh-para-visible');
+								e.target.classList.add('ai-para-visible');
 								io.unobserve(e.target);
 							}
 						});
 					}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
 					paras.forEach(function(p) { io.observe(p); });
 				} else {
-					paras.forEach(function(p) { p.classList.add('mesh-para-visible'); });
+					paras.forEach(function(p) { p.classList.add('ai-para-visible'); });
 				}
 
 				// Regenerate 按钮
-				var regen = document.querySelector('.mesh-regenerate');
-				var article = document.querySelector('.mesh-article');
-				var scan = document.querySelector('.mesh-load-scan');
+				var regen = document.querySelector('.ai-regenerate');
+				var article = document.querySelector('.ai-article');
+				var scan = document.querySelector('.ai-load-scan');
 				if (regen && article) {
 					regen.addEventListener('click', function() {
 						regen.disabled = true;
-						regen.classList.add('mesh-regenerating');
-						article.classList.add('mesh-regenerate-flash');
+						regen.classList.add('ai-regenerating');
+						article.classList.add('ai-regenerate-flash');
 						if (scan) {
 							scan.style.animation = 'none';
 							scan.offsetHeight;
-							scan.style.animation = 'mesh-scan 0.8s ease-out forwards';
+							scan.style.animation = 'ai-scan 0.8s ease-out forwards';
 							scan.style.top = '0';
 							scan.style.opacity = '1';
 						}
 						setTimeout(function() {
-							article.classList.remove('mesh-regenerate-flash');
-							regen.classList.remove('mesh-regenerating');
+							article.classList.remove('ai-regenerate-flash');
+							regen.classList.remove('ai-regenerating');
 							regen.disabled = false;
 						}, 1200);
 					});

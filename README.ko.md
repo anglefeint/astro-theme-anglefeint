@@ -1,3 +1,12 @@
+---
+doc_id: readme_ko
+doc_role: localized-user-guide
+doc_scope: [setup, commands, themes, config, routing]
+update_triggers: [sync-from-readme-en]
+source_of_truth: false
+depends_on: [README.md]
+---
+
 <h1 align="center">Anglefeint</h1>
 <p align="center">개인 퍼블리싱을 위한 시네마틱 멀티 무드 Astro 테마입니다.</p>
 
@@ -113,6 +122,12 @@ npm run new-page -- projects --theme matrix
 - `/:lang/blog`: 사이버펑크 아카이브 무드
 - `/:lang/blog/[slug]`: AI 인터페이스형 읽기 레이아웃
 - `/:lang/about`: 선택형 해커 스타일 About 페이지
+
+## 테마 네이밍 규약
+
+- 테마 파라미터: `base`, `ai`, `cyber`, `hacker`, `matrix`
+- 내부 셀렉터/스크립트 접두사: `ai-*`, `cyber-*`, `hacker-*`
+- 기본 구성 레이어: `ThemeFrame -> Shell -> Layout -> Page`
 
 ## 주요 기능
 

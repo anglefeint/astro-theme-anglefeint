@@ -1,3 +1,12 @@
+---
+doc_id: theme_listing
+doc_role: submission-copy
+doc_scope: [theme-description, feature-summary, submission]
+update_triggers: [theme-naming, visual-change, feature-change]
+source_of_truth: false
+depends_on: [README.md, docs/VISUAL_SYSTEMS.md]
+---
+
 # Astro Themes Listing Draft
 
 ## Short Description (EN)
@@ -14,7 +23,7 @@ Anglefeint is a cinematic Astro theme system that maps a distinct visual atmosph
 
 - Home (`/`): Matrix-style terminal ambiance for first impression.
 - Blog list (`/:lang/blog`): cyberpunk / Blade Runner mood for archive browsing.
-- Blog detail (`/:lang/blog/[slug]`): AI-interface reading experience with mesh, progress, and immersive effects.
+- Blog detail (`/:lang/blog/[slug]`): AI-interface reading experience with immersive overlays, reading progress, and animated feedback.
 - About (`/:lang/about`): hacker / Anonymous terminal profile with interactive sidebar modals.
 
 Designed for creators who want a bold editorial identity instead of one flat visual style.
@@ -25,7 +34,7 @@ Anglefeint 是一个具备电影感叙事节奏的 Astro 主题系统，将不�
 
 - 首页（`/`）：Matrix 风格终端氛围，强化首次进入时的品牌记忆。
 - 博客列表（`/:lang/blog`）：赛博朋克归档场景，适合内容浏览与筛选。
-- 文章详情（`/:lang/blog/[slug]`）：AI 界面风阅读体验，包含 mesh 背景与沉浸式细节。
+- 文章详情（`/:lang/blog/[slug]`）：AI 界面风阅读体验，包含进度反馈与沉浸式动态细节。
 - About 页面（`/:lang/about`）：黑客终端风个人页，支持侧边栏交互弹窗。
 
 适合希望通过“分场景视觉语言”建立个性化内容品牌的创作者，而不只是单一扁平风格博客。

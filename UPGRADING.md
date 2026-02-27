@@ -1,8 +1,27 @@
+---
+doc_id: upgrading
+doc_role: ops-guide
+doc_scope: [upgrade, release, package]
+update_triggers: [release-change, package-change, command-change]
+source_of_truth: true
+depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
+---
+
 # Upgrading Anglefeint
 
 This guide explains how to upgrade projects built from this template.
 
 ## Two Upgrade Paths
+
+### 0) Package Update (If your project depends on the theme package)
+
+If your project already uses `@anglefeint/astro-theme`, upgrade with:
+
+1. `npm update @anglefeint/astro-theme`
+2. `npm run build`
+3. `npm run check`
+
+Use this path when your project is package-driven and keeps most theme internals in `node_modules`.
 
 ### 1) Template Refresh (Recommended)
 

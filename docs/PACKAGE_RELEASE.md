@@ -1,3 +1,11 @@
+---
+doc_id: package_release
+doc_role: release-runbook
+doc_scope: [package-release, npm-publish, rollback]
+update_triggers: [release-change, package-change]
+source_of_truth: true
+---
+
 # Package Release Runbook
 
 ## Package

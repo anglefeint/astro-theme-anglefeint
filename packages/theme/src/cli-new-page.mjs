@@ -4,6 +4,13 @@ import path from 'node:path';
 
 const THEMES = ['base', 'cyber', 'ai', 'hacker', 'matrix'];
 const PAGES_ROOT = path.resolve(process.cwd(), 'src/pages/[lang]');
+const LAYOUT_BY_THEME = {
+	base: 'BasePageLayout',
+	ai: 'AiPageLayout',
+	cyber: 'CyberPageLayout',
+	hacker: 'HackerPageLayout',
+	matrix: 'MatrixPageLayout',
+};
 
 function usage() {
 	console.error('Usage: npm run new-page -- <slug> [--theme <base|cyber|ai|hacker|matrix>]');
@@ -54,12 +61,11 @@ async function exists(filePath) {
 
 function templateFor({ slug, theme }) {
 	const title = toTitleFromSlug(slug) || 'New Page';
+	const layoutName = LAYOUT_BY_THEME[theme];
 	return `---
 import type { GetStaticPaths } from 'astro';
-import BasePageLayout from '@anglefeint/astro-theme/layouts/BasePageLayout.astro';
-import { SUPPORTED_LOCALES } from '@anglefeint/astro-theme/i18n/config';
-
-const PAGE_THEME = '${theme}';
+import ${layoutName} from '@anglefeint/astro-theme/layouts/${layoutName}.astro';
+import { SUPPORTED_LOCALES } from '../../i18n/config';
 
 export const getStaticPaths = (() => SUPPORTED_LOCALES.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
 
@@ -68,10 +74,10 @@ const pageTitle = '${title}';
 const pageDescription = 'A custom page built from the ${theme} theme shell.';
 ---
 
-<BasePageLayout locale={locale} title={pageTitle} description={pageDescription} theme={PAGE_THEME}>
+<${layoutName} locale={locale} title={pageTitle} description={pageDescription}>
 \t<h1>${title}</h1>
 \t<p>Replace this content with your own page content.</p>
-</BasePageLayout>
+</${layoutName}>
 `;
 }
 
