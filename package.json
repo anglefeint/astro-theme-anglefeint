@@ -2,6 +2,10 @@
   "name": "astro-theme-anglefeint",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "engines": {
     "node": ">=18"
   },
@@ -10,11 +14,13 @@
     "build": "astro build",
     "check": "astro check",
     "preview": "astro preview",
-    "new-post": "node scripts/new-post.mjs",
-    "new-page": "node scripts/new-page.mjs",
-    "astro": "astro"
+    "new-post": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-post.mjs",
+    "new-page": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-page.mjs",
+    "astro": "astro",
+    "theme:pack": "npm pack --workspace @anglefeint/astro-theme"
   },
   "dependencies": {
+    "@anglefeint/astro-theme": "workspace:*",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",

@@ -1,0 +1,67 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { type Locale, DEFAULT_LOCALE, isLocale } from '../i18n/config';
+import { getMessages } from '../i18n/messages';
+
+export type PageThemeVariant = 'base' | 'cyber' | 'ai' | 'hacker' | 'matrix';
+
+interface Props {
+	locale?: Locale;
+	title: string;
+	description: string;
+	theme?: PageThemeVariant;
+}
+
+const rawLocale = Astro.props.locale ?? DEFAULT_LOCALE;
+const locale: Locale = isLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
+const { title, description, theme = 'base' } = Astro.props as Props;
+const messages = getMessages(locale);
+const bodyClassByTheme: Record<PageThemeVariant, string> = {
+	base: 'page-default',
+	cyber: 'br-page',
+	ai: 'mesh-page',
+	hacker: 'term-page',
+	matrix: 'page-home',
+};
+const bodyClass = bodyClassByTheme[theme];
+---
+
+<!doctype html>
+<html lang={locale}>
+	<head>
+		<BaseHead title={title} description={description} />
+		{theme === 'hacker' && <link rel="stylesheet" href="/styles/about-page.css" />}
+	</head>
+	<body class={bodyClass}>
+		{theme === 'matrix' && <canvas id="matrix-bg" aria-hidden="true"></canvas>}
+		{theme === 'cyber' && (
+			<>
+				<div class="br-load-glitch" aria-hidden="true"></div>
+				<div class="br-spotlight" aria-hidden="true">
+					<div class="br-spotlight-tr"></div>
+					<div class="br-spotlight-tl"></div>
+				</div>
+				<div class="br-flicker" aria-hidden="true"></div>
+				<div class="br-haze" aria-hidden="true"></div>
+				<div class="br-vignette" aria-hidden="true"></div>
+			</>
+		)}
+		<Header
+			locale={locale}
+			labels={{
+				home: messages.nav.home,
+				blog: messages.nav.blog,
+				about: messages.nav.about,
+				status: messages.nav.status,
+				language: messages.langLabel,
+			}}
+		/>
+		<main>
+			<slot />
+		</main>
+		<Footer />
+		{theme === 'matrix' && <script is:inline src="/scripts/home-matrix.js" defer></script>}
+	</body>
+</html>
