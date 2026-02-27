@@ -21,6 +21,7 @@ Use this before submitting to an Astro theme listing/review.
 - Repository URL points to this theme
 - No placeholder listing fields remain (e.g. `<YOUR_DEMO_URL>`)
 - Theme screenshots meet portal constraints (combined max 5MB, 16:9 ratio, width >= 1280px)
+- `PUBLIC_SITE_URL` is set to your real domain (no placeholder URL in canonical/hreflang)
 
 ## Recommended
 

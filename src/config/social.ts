@@ -10,8 +10,6 @@ export interface SocialLink {
 }
 
 export const SOCIAL_LINKS: SocialLink[] = [
-	// Replace with your links when using as a theme:
-	{ href: 'https://m.webtoo.ls/@astro', label: 'Mastodon', icon: 'mastodon' },
-	{ href: 'https://twitter.com/astrodotbuild', label: 'Twitter', icon: 'twitter' },
-	{ href: 'https://github.com/withastro/astro', label: 'GitHub', icon: 'github' },
+	// Replace with your links when using as a theme.
+	// Keep empty to hide social icons by default.
 ];

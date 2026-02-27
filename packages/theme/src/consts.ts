@@ -9,4 +9,4 @@ export {
 	SITE_AUTHOR,
 	SITE_TAGLINE,
 	SITE_HERO_BY_LOCALE,
-} from '@anglefeint/site-config/site';
+} from './config/site';

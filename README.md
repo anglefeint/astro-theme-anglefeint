@@ -159,6 +159,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 3. Edit About content in `src/config/about.ts`.
 4. Toggle About route/nav with `ENABLE_ABOUT_PAGE` in `src/config/theme.ts`.
 5. Replace starter posts in `src/content/blog/<locale>/`.
+6. Set your real site URL (`PUBLIC_SITE_URL` or `src/config/site.ts`) before production deploy.
 
 ## Configuration Surface
 
