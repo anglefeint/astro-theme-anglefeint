@@ -67,6 +67,17 @@ pnpm build
 pnpm preview
 ```
 
+## 테마 업그레이드
+
+`#starter` 로 생성한 프로젝트는 아래로 업그레이드합니다:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
+```
+
 ## 새 글 만들기
 
 모든 로케일(`en`, `ja`, `ko`, `es`, `zh`)에 같은 slug 글을 한 번에 생성합니다:
@@ -97,17 +108,6 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
-```
-
-## 테마 업그레이드
-
-`#starter` 로 생성한 프로젝트는 아래로 업그레이드합니다:
-
-```bash
-npm update @anglefeint/astro-theme
-npm install
-npm run check
-npm run build
 ```
 
 ## 언어

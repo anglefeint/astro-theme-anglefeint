@@ -67,6 +67,17 @@ pnpm build
 pnpm preview
 ```
 
+## テーマのアップグレード
+
+`#starter` から作成したプロジェクトは次で更新できます:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
+```
+
 ## 新しい記事を作成
 
 全ロケール（`en`, `ja`, `ko`, `es`, `zh`）に同じ slug の記事を一括作成します:
@@ -97,17 +108,6 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
-```
-
-## テーマのアップグレード
-
-`#starter` から作成したプロジェクトは次で更新できます:
-
-```bash
-npm update @anglefeint/astro-theme
-npm install
-npm run check
-npm run build
 ```
 
 ## 言語
