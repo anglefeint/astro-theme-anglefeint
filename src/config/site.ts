@@ -10,7 +10,7 @@ export const SITE_TITLE = (env.PUBLIC_SITE_TITLE as string | undefined) ?? 'My B
 export const SITE_DESCRIPTION =
 	(env.PUBLIC_SITE_DESCRIPTION as string | undefined) ??
 	'Cinematic web interfaces, AI-era engineering notes, and system architecture essays.';
-export const SITE_URL = (env.PUBLIC_SITE_URL as string | undefined) ?? (env.SITE as string | undefined) ?? 'https://anglefeint.com';
+export const SITE_URL = (env.PUBLIC_SITE_URL as string | undefined) ?? (env.SITE as string | undefined) ?? 'https://example.com';
 export const SITE_AUTHOR = (env.PUBLIC_SITE_AUTHOR as string | undefined) ?? 'Your Name';
 export const SITE_TAGLINE = (env.PUBLIC_SITE_TAGLINE as string | undefined) ?? 'Built with Astro.';
 
