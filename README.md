@@ -30,13 +30,13 @@ sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
 ## Template Install
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 Or with `pnpm`:
 
 ```bash
-pnpm create astro@latest --template anglefeint/astro-theme-anglefeint
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 ## Requirements
@@ -97,6 +97,17 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
+```
+
+## Upgrade Theme
+
+For projects created from `#starter`, upgrade with:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
 ```
 
 ## Languages

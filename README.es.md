@@ -29,13 +29,13 @@ depends_on: [README.md]
 ## Instalacion con plantilla
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 Con `pnpm`:
 
 ```bash
-pnpm create astro@latest --template anglefeint/astro-theme-anglefeint
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 ## Requisitos
@@ -96,6 +96,17 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
+```
+
+## Actualizar tema
+
+Para proyectos creados desde `#starter`:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
 ```
 
 ## Idiomas

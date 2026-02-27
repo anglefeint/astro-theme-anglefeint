@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "check": "astro check",
+    "check:docs": "node scripts/validate-doc-metadata.mjs",
+    "check": "npm run check:docs && astro check",
     "preview": "astro preview",
     "new-post": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-post.mjs",
     "new-page": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-page.mjs",

@@ -11,7 +11,9 @@ source_of_truth: true
 ## Goal
 
 - Publish a reusable theme package: `@anglefeint/astro-theme`.
-- Keep current repository as starter shell for project initialization.
+- Keep current repository with dual roles:
+  - `main` for monorepo theme development
+  - `starter` branch for end-user template initialization
 - Enable user upgrades via `npm update @anglefeint/astro-theme`.
 
 ## Phase 1: Baseline and Scaffolding
@@ -52,5 +54,6 @@ Review: README and UPGRADING show package-based upgrade flow.
 
 ## Current State
 
-- Phase 1 step 2-3 initialized in this repo.
-- Next actionable step: migrate starter imports to package exports (Phase 2 step 4).
+- Theme package is published and upgradeable from npm.
+- `starter` branch is wired to registry dependency (`@anglefeint/astro-theme`) for user projects.
+- `main` remains monorepo for core development and release workflows.

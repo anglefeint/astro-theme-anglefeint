@@ -29,13 +29,13 @@ depends_on: [README.md]
 ## テンプレートの導入
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 `pnpm` を使う場合:
 
 ```bash
-pnpm create astro@latest --template anglefeint/astro-theme-anglefeint
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 ## 動作要件
@@ -96,6 +96,17 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
+```
+
+## テーマのアップグレード
+
+`#starter` から作成したプロジェクトは次で更新できます:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
 ```
 
 ## 言語
