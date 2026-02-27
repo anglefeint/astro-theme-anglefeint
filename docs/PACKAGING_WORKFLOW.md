@@ -1,6 +1,7 @@
 ---
 doc_id: packaging_workflow
 doc_role: ops-reference
+doc_purpose: Packaging strategy and template/package boundary operations guide.
 doc_scope: [packaging, release, upgrade]
 update_triggers: [package-change, release-change]
 source_of_truth: true

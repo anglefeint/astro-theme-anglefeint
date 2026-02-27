@@ -1,6 +1,7 @@
 ---
 doc_id: architecture
 doc_role: architecture-source
+doc_purpose: Source-of-truth architecture map for layouts, shells, routing, and SEO.
 doc_scope: [architecture, layouts, shells, components, routing, seo]
 update_triggers: [architecture-change, layout-change, shell-change, seo-change, i18n-change]
 source_of_truth: true

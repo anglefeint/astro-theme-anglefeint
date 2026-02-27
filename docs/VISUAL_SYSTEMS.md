@@ -1,6 +1,7 @@
 ---
 doc_id: visual_systems
 doc_role: visual-source
+doc_purpose: Route-level visual system contracts and style/runtime behavior reference.
 doc_scope: [themes, naming, css, effects, scripts]
 update_triggers: [theme-naming, selector-change, script-change, visual-change]
 source_of_truth: true

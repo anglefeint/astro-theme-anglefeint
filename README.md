@@ -1,6 +1,7 @@
 ---
 doc_id: readme_en
 doc_role: user-guide
+doc_purpose: End-user setup, usage, and upgrade guide for the template.
 doc_scope: [setup, commands, themes, config, routing]
 update_triggers: [command-change, theme-naming, config-change, routing-change, i18n-change]
 source_of_truth: true

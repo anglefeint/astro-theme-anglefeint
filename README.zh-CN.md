@@ -1,6 +1,7 @@
 ---
 doc_id: readme_zh
 doc_role: localized-user-guide
+doc_purpose: 简体中文用户安装、使用与升级说明。
 doc_scope: [setup, commands, themes, config, routing]
 update_triggers: [sync-from-readme-en]
 source_of_truth: false

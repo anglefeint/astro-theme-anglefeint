@@ -1,6 +1,7 @@
 ---
 doc_id: readme_es
 doc_role: localized-user-guide
+doc_purpose: Guia en espanol para instalacion, uso y actualizacion del tema.
 doc_scope: [setup, commands, themes, config, routing]
 update_triggers: [sync-from-readme-en]
 source_of_truth: false
