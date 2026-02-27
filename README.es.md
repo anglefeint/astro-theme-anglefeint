@@ -1,6 +1,7 @@
 ---
 doc_id: readme_es
 doc_role: localized-user-guide
+doc_purpose: Guia en espanol para instalacion, uso y actualizacion del tema.
 doc_scope: [setup, commands, themes, config, routing]
 update_triggers: [sync-from-readme-en]
 source_of_truth: false
@@ -29,13 +30,13 @@ depends_on: [README.md]
 ## Instalacion con plantilla
 
 ```bash
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint
+npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
 ```
 
 Con `pnpm`:
 
 ```bash
-pnpm create astro@latest --template voidtem/astro-theme-anglefeint
+pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
 ```
 
 ## Requisitos
@@ -96,6 +97,17 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
+```
+
+## Actualizar tema
+
+Para proyectos creados desde `#starter`:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
 ```
 
 ## Idiomas

@@ -1,6 +1,7 @@
 ---
 doc_id: upgrading
 doc_role: ops-guide
+doc_purpose: Upgrade procedures for starter users and template-based projects.
 doc_scope: [upgrade, release, package]
 update_triggers: [release-change, package-change, command-change]
 source_of_truth: true
@@ -11,19 +12,24 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 This guide explains how to upgrade projects built from this template.
 
-## Two Upgrade Paths
+## Recommended Path (Starter Users)
 
-### 0) Package Update (If your project depends on the theme package)
+Projects created from:
 
-If your project already uses `@anglefeint/astro-theme`, upgrade with:
+`npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter`
+
+should upgrade with:
 
 1. `npm update @anglefeint/astro-theme`
-2. `npm run build`
+2. `npm install`
 3. `npm run check`
+4. `npm run build`
 
-Use this path when your project is package-driven and keeps most theme internals in `node_modules`.
+This keeps theme core upgrades package-driven through npm.
 
-### 1) Template Refresh (Recommended)
+## Other Upgrade Paths
+
+### 1) Template Refresh
 
 Use this if your project was created from `Use this template` or `npm create astro -- --template ...`.
 

@@ -1,6 +1,7 @@
 ---
 doc_id: readme_ko
 doc_role: localized-user-guide
+doc_purpose: 한국어 사용자용 설치, 사용, 업그레이드 안내.
 doc_scope: [setup, commands, themes, config, routing]
 update_triggers: [sync-from-readme-en]
 source_of_truth: false
@@ -29,13 +30,13 @@ depends_on: [README.md]
 ## 템플릿 설치
 
 ```bash
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint
+npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
 ```
 
 `pnpm` 사용:
 
 ```bash
-pnpm create astro@latest --template voidtem/astro-theme-anglefeint
+pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
 ```
 
 ## 요구 사항
@@ -96,6 +97,17 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
+```
+
+## 테마 업그레이드
+
+`#starter` 로 생성한 프로젝트는 아래로 업그레이드합니다:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
 ```
 
 ## 언어

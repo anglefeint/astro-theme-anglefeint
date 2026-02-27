@@ -1,6 +1,7 @@
 ---
 doc_id: readme_ja
 doc_role: localized-user-guide
+doc_purpose: 日本語ユーザー向けの導入・利用・アップグレード手順。
 doc_scope: [setup, commands, themes, config, routing]
 update_triggers: [sync-from-readme-en]
 source_of_truth: false
@@ -29,13 +30,13 @@ depends_on: [README.md]
 ## テンプレートの導入
 
 ```bash
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint
+npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
 ```
 
 `pnpm` を使う場合:
 
 ```bash
-pnpm create astro@latest --template voidtem/astro-theme-anglefeint
+pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
 ```
 
 ## 動作要件
@@ -96,6 +97,17 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
+```
+
+## テーマのアップグレード
+
+`#starter` から作成したプロジェクトは次で更新できます:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
 ```
 
 ## 言語
