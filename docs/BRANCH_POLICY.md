@@ -1,6 +1,7 @@
 ---
 doc_id: branch_policy
 doc_role: release-policy
+doc_purpose: Branch responsibilities and release sync policy between main and starter.
 doc_scope: [branching, starter, packaging, docs]
 update_triggers: [branch-change, package-release, command-change, docs-workflow-change]
 source_of_truth: true

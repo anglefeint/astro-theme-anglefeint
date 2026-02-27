@@ -1,6 +1,7 @@
 ---
 doc_id: theme_listing
 doc_role: submission-copy
+doc_purpose: Submission copy for Astro theme directory listing fields.
 doc_scope: [theme-description, feature-summary, submission]
 update_triggers: [theme-naming, visual-change, feature-change]
 source_of_truth: false

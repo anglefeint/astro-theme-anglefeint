@@ -1,6 +1,7 @@
 ---
 doc_id: upgrading
 doc_role: ops-guide
+doc_purpose: Upgrade procedures for starter users and template-based projects.
 doc_scope: [upgrade, release, package]
 update_triggers: [release-change, package-change, command-change]
 source_of_truth: true

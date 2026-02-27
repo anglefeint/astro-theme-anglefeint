@@ -1,6 +1,7 @@
 ---
 doc_id: package_release
 doc_role: release-runbook
+doc_purpose: npm publish runbook for stable and prerelease releases.
 doc_scope: [package-release, npm-publish, rollback]
 update_triggers: [release-change, package-change]
 source_of_truth: true

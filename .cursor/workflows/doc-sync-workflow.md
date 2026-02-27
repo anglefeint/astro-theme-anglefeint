@@ -37,9 +37,16 @@ Minimum required keys:
 
 Recommended:
 
+- `doc_purpose` (short one-line purpose summary for deterministic routing)
 - `source_of_truth` (bool)
 - `depends_on` (array)
 - `sync_targets` (array)
+
+Fallback when `doc_purpose` is missing:
+
+- Parse the first heading + first non-empty paragraph as inferred purpose.
+- Optional inline marker is allowed:
+  - `<!-- doc_purpose: ... -->`
 
 ## Exclusions
 
@@ -67,7 +74,7 @@ Run this workflow when any of these change:
    - `rg --files -g '*.md'`
 2. Metadata scan:
    - Read first 20 lines of each markdown file.
-   - Parse frontmatter keys.
+   - Parse frontmatter keys and purpose signals (`doc_purpose` or fallback).
 3. Quality gate for metadata:
    - If a maintained technical doc has no frontmatter, flag it and add to migration list.
 4. Build graph:
@@ -88,6 +95,7 @@ Run this workflow when any of these change:
    - Internal guidance (`CLAUDE.md`, `AGENTS.md`)
 8. Branch-aware consistency:
    - `README*` install commands must use `#starter`.
+   - `README*` must include `npm update @anglefeint/astro-theme`.
    - `docs/BRANCH_POLICY.md` must exist and reflect current branch strategy.
    - If branch policy changed, include `UPGRADING.md` and packaging docs in update set.
 9. Consistency scan:
@@ -123,6 +131,10 @@ npm run check:docs
 
 ```bash
 rg -n "#starter|voidtem/astro-theme-anglefeint#starter" README*.md UPGRADING.md docs/BRANCH_POLICY.md
+```
+
+```bash
+rg -n "npm update @anglefeint/astro-theme" README*.md UPGRADING.md
 ```
 
 ```bash

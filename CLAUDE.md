@@ -1,6 +1,7 @@
 ---
 doc_id: claude_internal
 doc_role: internal-guide
+doc_purpose: Internal maintainer guide for architecture and coding conventions.
 doc_scope: [internal-architecture, conventions, maintenance]
 update_triggers: [architecture-change, naming-change, workflow-change]
 source_of_truth: false

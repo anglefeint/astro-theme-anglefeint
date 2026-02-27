@@ -1,6 +1,7 @@
 ---
 doc_id: submission_checklist
 doc_role: submission-checklist
+doc_purpose: Checklist used before submitting or resubmitting the theme.
 doc_scope: [submission, review-checks, screenshots, seo]
 update_triggers: [submission-change, seo-change, visual-change]
 source_of_truth: true

@@ -1,6 +1,7 @@
 ---
 doc_id: changelog
 doc_role: release-log
+doc_purpose: Versioned log of user-visible changes and migration impact.
 doc_scope: [release-notes, upgrade-impact]
 update_triggers: [release-change, command-change, behavior-change]
 source_of_truth: true
