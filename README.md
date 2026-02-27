@@ -68,6 +68,17 @@ pnpm build
 pnpm preview
 ```
 
+## Upgrade Theme
+
+For projects created from `#starter`, upgrade with:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
+```
+
 ## Create New Post
 
 Create the same slug in all locales (`en`, `ja`, `ko`, `es`, `zh`):
@@ -98,17 +109,6 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
-```
-
-## Upgrade Theme
-
-For projects created from `#starter`, upgrade with:
-
-```bash
-npm update @anglefeint/astro-theme
-npm install
-npm run check
-npm run build
 ```
 
 ## Languages
