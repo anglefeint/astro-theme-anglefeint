@@ -67,6 +67,17 @@ pnpm build
 pnpm preview
 ```
 
+## 升级主题
+
+通过 `#starter` 创建的项目可直接执行：
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run check
+npm run build
+```
+
 ## 新建文章
 
 一次为全部语言（`en`、`ja`、`ko`、`es`、`zh`）创建同名 slug：
@@ -97,17 +108,6 @@ npm run new-page -- projects --theme ai
 npm run new-page -- projects --theme cyber
 npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
-```
-
-## 升级主题
-
-通过 `#starter` 创建的项目可直接执行：
-
-```bash
-npm update @anglefeint/astro-theme
-npm install
-npm run check
-npm run build
 ```
 
 ## 语言
