@@ -3,6 +3,15 @@
   "version": "0.1.12",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "blog",
+    "portfolio",
+    "cyberpunk",
+    "hacker",
+    "matrix"
+  ],
   "license": "MIT",
   "files": [
     "src/index.ts",

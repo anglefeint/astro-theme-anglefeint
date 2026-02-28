@@ -3,6 +3,13 @@
   "type": "module",
   "version": "0.0.1",
   "private": true,
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "blog",
+    "portfolio",
+    "cyberpunk"
+  ],
   "workspaces": [
     "packages/*"
   ],
