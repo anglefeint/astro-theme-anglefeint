@@ -118,11 +118,6 @@ Run this workflow when any of these change:
 - Internal prefixes: `ai-*`, `cyber-*`, `hacker-*`
 - Composition: `ThemeFrame -> Shell -> Layout -> Page`
 
-## Legacy Blacklist
-
-- `mesh-page`, `br-page`, `term-page`
-- theme prefixes `mesh-*`, `br-*`, `term-*` (except historical notes)
-
 ## Reusable Commands
 
 ```bash
@@ -146,7 +141,7 @@ rg -n "doc_id:|doc_role:|doc_scope:|update_triggers:|source_of_truth:|depends_on
 ```
 
 ```bash
-rg -n "mesh-|br-|term-|mesh-page|br-page|term-page" README*.md docs/*.md CLAUDE.md AGENTS.md ASTRO_THEME_LISTING.md UPGRADING.md CHANGELOG.md packages/theme/README.md
+rg -n "base|ai|cyber|hacker|matrix|ThemeFrame -> Shell -> Layout -> Page" README*.md docs/*.md CLAUDE.md AGENTS.md ASTRO_THEME_LISTING.md UPGRADING.md CHANGELOG.md packages/theme/README.md
 ```
 
 ```bash
