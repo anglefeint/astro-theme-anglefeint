@@ -216,12 +216,13 @@ body.ai-page::-webkit-scrollbar-thumb {
     opacity: 0.7;
   }
 }
-.ai-network {
+.ai-network-canvas {
   position: absolute;
   inset: -8%;
   width: 116%;
   height: 116%;
   opacity: 1;
+  pointer-events: none;
   filter: brightness(1.28) saturate(1.08);
   animation: ai-drift 25s ease-in-out infinite;
 }
@@ -238,57 +239,6 @@ body.ai-page::-webkit-scrollbar-thumb {
   }
   75% {
     transform: translate(0.5%, -0.8%) scale(1.005);
-  }
-}
-.ai-network .ai-dots circle {
-  transform-origin: center;
-  animation:
-    ai-dot-float 8s ease-in-out infinite,
-    ai-dot-breathe 5s ease-in-out infinite;
-}
-.ai-network .ai-dots circle:nth-child(odd) {
-  animation-delay: -3s;
-}
-.ai-network .ai-dots circle:nth-child(3n) {
-  animation-delay: -5s;
-}
-.ai-network .ai-dots circle:nth-child(5n) {
-  animation-duration: 10s;
-}
-.ai-network .ai-dots circle:nth-child(4n) {
-  animation-delay: -1s;
-}
-.ai-network .ai-lines line {
-  stroke-dasharray: 6 12;
-  animation: ai-line-pulse 4s linear infinite;
-}
-.ai-network .ai-lines line:nth-child(odd) {
-  animation-delay: -2s;
-}
-@keyframes ai-line-pulse {
-  to {
-    stroke-dashoffset: -18;
-  }
-}
-@keyframes ai-dot-float {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  33% {
-    transform: translate(1.5px, -2px);
-  }
-  66% {
-    transform: translate(-1px, 1.5px);
-  }
-}
-@keyframes ai-dot-breathe {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.75;
   }
 }
 body.ai-page .ai-content,
