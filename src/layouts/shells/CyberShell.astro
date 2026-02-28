@@ -13,6 +13,7 @@ const { locale, title, description, localeHrefs } = Astro.props as Props;
 ---
 
 <ThemeFrame locale={locale} title={title} description={description} bodyClass="cyber-page" mainClass="page-main cyber-content" localeHrefs={localeHrefs}>
+	<link slot="head" rel="stylesheet" href="/styles/theme-cyber.css" />
 	<Fragment slot="body-start">
 		<div class="cyber-load-glitch" aria-hidden="true"></div>
 		<div class="cyber-spotlight" aria-hidden="true">

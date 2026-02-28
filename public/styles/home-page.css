@@ -184,3 +184,13 @@ body.page-home code {
 		margin-bottom: 1rem;
 	}
 }
+
+body.page-home header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+	backdrop-filter: blur(3px);
+	-webkit-backdrop-filter: blur(3px);
+}
