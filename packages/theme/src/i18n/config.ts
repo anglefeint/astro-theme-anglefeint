@@ -1,7 +1,11 @@
-export const SUPPORTED_LOCALES = ['en', 'ja', 'ko', 'es', 'zh'] as const;
-export type Locale = (typeof SUPPORTED_LOCALES)[number];
+import {
+	SUPPORTED_LOCALES as SUPPORTED_LOCALES_RUNTIME,
+	DEFAULT_LOCALE as DEFAULT_LOCALE_RUNTIME,
+} from './locales.mjs';
 
-export const DEFAULT_LOCALE: Locale = 'en';
+export type Locale = 'en' | 'ja' | 'ko' | 'es' | 'zh';
+export const SUPPORTED_LOCALES = SUPPORTED_LOCALES_RUNTIME as readonly Locale[];
+export const DEFAULT_LOCALE: Locale = DEFAULT_LOCALE_RUNTIME as Locale;
 
 export const LOCALE_LABELS: Record<Locale, string> = {
 	en: 'English',
