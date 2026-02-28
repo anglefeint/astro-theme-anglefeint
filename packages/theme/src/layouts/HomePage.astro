@@ -32,7 +32,7 @@ const heroText = SITE_HERO_BY_LOCALE[locale] ?? messages.home.hero;
 								{post.data.title}
 							</a>
 							<div class="home-post-meta">
-								<FormattedDate date={post.data.pubDate} />
+								<FormattedDate date={post.data.pubDate} locale={locale} />
 								{post.data.description && <> · {post.data.description}</>}
 							</div>
 						</li>

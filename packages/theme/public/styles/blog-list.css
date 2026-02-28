@@ -1,0 +1,35 @@
+/* Pagination styles for cyber blog list pages */
+body.cyber-page .pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	margin-top: 2.5rem;
+	padding: 1.5rem 0;
+}
+
+body.cyber-page .pagination a {
+	padding: 0.5rem 1rem;
+	color: rgb(212, 196, 232);
+	text-decoration: none;
+	border: 1px solid rgba(198, 156, 224, 0.42);
+	border-radius: 4px;
+	transition: 0.25s ease;
+	text-shadow: 0 0 10px rgba(214, 152, 226, 0.2);
+}
+
+body.cyber-page .pagination a:hover {
+	border-color: rgba(226, 166, 236, 0.88);
+	text-shadow: 0 0 15px rgba(232, 174, 242, 0.5);
+	box-shadow: 0 0 15px rgba(222, 154, 228, 0.26);
+}
+
+body.cyber-page .pagination a.current {
+	background: rgba(188, 122, 214, 0.2);
+	border-color: rgb(224, 170, 236);
+	color: rgb(244, 224, 252);
+	text-shadow: 0 0 15px rgba(232, 174, 242, 0.48);
+	box-shadow:
+		0 0 20px rgba(118, 198, 255, 0.24),
+		0 0 12px rgba(220, 152, 230, 0.22);
+}
