@@ -75,7 +75,7 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: 'Related',
 			regenerate: 'Regenerate',
 		},
-		footer: { tagline: 'Built with Astro.' },
+		footer: { tagline: '由 Astro 构建。' },
 	},
 	ja: {
 		siteTitle: 'Angle Feint',
