@@ -18,6 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - About route generation and nav visibility are gated by `ENABLE_ABOUT_PAGE`.
 - New `src/config/about.ts` owns About page profile text, sidebar labels, modal content, and effect strings.
 - `public/scripts/about-effects.js` consumes runtime config injected by `src/pages/[lang]/about.astro`.
+- Page imports are unified to package paths (`@anglefeint/astro-theme/*`) and local duplicated `src/layouts`/`src/components` were removed from app-level source.
 
 ## Commands
 
@@ -52,13 +53,13 @@ Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined 
 - `src/config/about.ts` — About page profile copy, modal labels/content, terminal effect text
 - `src/consts.ts` — Re-exports from config (backwards compat)
 - `src/pages/[lang]/about.astro` — About page: terminal canvas, sidebar, modals, `getCollection('blog')` for All Scripts
-- `src/layouts/BlogPost.astro` — Post detail layout: AI surface, progress bar, related posts, Red Queen monitor; CRT dropout in `public/scripts/blogpost-effects.js` (hero + Red Queen TV)
-- `src/components/shared/ThemeFrame.astro` — Shared document shell (head + header + footer + main container)
-- `src/layouts/shells/*.astro` — Theme shells (`BaseShell`, `AiShell`, `CyberShell`, `HackerShell`, `MatrixShell`)
+- `packages/theme/src/layouts/BlogPost.astro` — Post detail layout: AI surface, progress bar, related posts, Red Queen monitor; CRT dropout in `public/scripts/blogpost-effects.js` (hero + Red Queen TV)
+- `packages/theme/src/components/shared/ThemeFrame.astro` — Shared document shell (head + header + footer + main container)
+- `packages/theme/src/layouts/shells/*.astro` — Theme shells (`BaseShell`, `AiShell`, `CyberShell`, `HackerShell`, `MatrixShell`)
 - `src/pages/[lang]/blog/[...page].astro` — Paginated blog list (THEME.BLOG_PAGE_SIZE)
 - `src/pages/index.astro` — Root home; `src/pages/[lang]/index.astro` — Localized home (/en/ redirects to /)
 - `src/pages/robots.txt.ts` — Dynamic robots.txt with sitemap URL
-- `src/components/BaseHead.astro` — Meta, hreflang (x-default), OG, JSON-LD
+- `packages/theme/src/components/BaseHead.astro` — Meta, hreflang (x-default), OG, JSON-LD
 
 ### SEO
 
