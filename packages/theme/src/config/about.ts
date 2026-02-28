@@ -1,6 +1,6 @@
 /**
  * About page content and runtime behavior configuration.
- * Used by src/pages/[lang]/about.astro and public/scripts/about-effects.js.
+ * Used by src/pages/[lang]/about.astro and packages/theme/src/scripts/about-effects.js.
  */
 export const ABOUT_CONFIG = {
 	metaLine: '$ profile booted | mode: builder',

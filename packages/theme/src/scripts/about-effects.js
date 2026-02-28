@@ -1,5 +1,4 @@
-			(function() {
-				function init() {
+export function initAboutEffects() {
 				var runtimeConfig = {};
 				var runtimeConfigEl = document.getElementById('hacker-runtime-config');
 				if (runtimeConfigEl && runtimeConfigEl.textContent) {
@@ -551,11 +550,4 @@
 						}, 1200);
 					});
 				}
-			}
-
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', init);
-			} else {
-				init();
-			}
-		})();
+}

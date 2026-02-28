@@ -14,6 +14,11 @@ const { locale, title, description } = Astro.props as Props;
 <ThemeFrame locale={locale} title={title} description={description} bodyClass="page-home" mainClass="page-main home-content">
 	<link slot="head" rel="stylesheet" href="/styles/home-page.css" />
 	<canvas slot="body-start" id="matrix-bg" aria-hidden="true"></canvas>
-	<script slot="body-end" is:inline src="/scripts/home-matrix.js" defer></script>
+	<Fragment slot="body-end">
+		<script>
+			import { initHomeMatrix } from '../../scripts/home-matrix.js';
+			initHomeMatrix();
+		</script>
+	</Fragment>
 	<slot />
 </ThemeFrame>

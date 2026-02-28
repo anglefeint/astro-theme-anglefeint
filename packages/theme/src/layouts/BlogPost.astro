@@ -257,6 +257,9 @@ for (let i = 0; i < pts.length; i++) {
 				</a>
 			</nav>
 	<Fragment slot="body-end">
-		<script is:inline src="/scripts/blogpost-effects.js" defer></script>
+		<script>
+			import { initBlogpostEffects } from '../scripts/blogpost-effects.js';
+			initBlogpostEffects();
+		</script>
 	</Fragment>
 </AiShell>

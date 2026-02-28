@@ -1,4 +1,4 @@
-(() => {
+export function initHomeMatrix() {
 	const chars =
 		'!"#$%&\'()*+,-./:;<=>?[\\]^_{|}~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	const matrixFont =
@@ -114,4 +114,4 @@
 		document.body.style.setProperty('--matrix-mx', `${event.clientX}px`);
 		document.body.style.setProperty('--matrix-my', `${event.clientY}px`);
 	});
-})();
+}

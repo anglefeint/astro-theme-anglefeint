@@ -1,5 +1,4 @@
-				(function() {
-					function init() {
+export function initBlogpostEffects() {
 					var prefersReducedMotion = false;
 					try {
 						prefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -972,11 +971,4 @@
 						}, 1200);
 					});
 				}
-			}
-
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', init);
-			} else {
-				init();
-			}
-		})();
+}
