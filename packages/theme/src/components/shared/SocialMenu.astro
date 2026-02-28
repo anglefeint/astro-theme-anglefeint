@@ -5,16 +5,44 @@ import Icon from './Icon.astro';
 interface Props {
 	links?: SocialLink[];
 	iconSize?: number;
+	showPlaceholdersWhenEmpty?: boolean;
 }
 
-const { links = SOCIAL_LINKS, iconSize = 32 } = Astro.props as Props;
+const {
+	links = SOCIAL_LINKS,
+	iconSize = 32,
+	showPlaceholdersWhenEmpty = true,
+} = Astro.props as Props;
+const placeholderLinks: SocialLink[] = [
+	{ href: '', label: 'Mastodon', icon: 'mastodon' },
+	{ href: '', label: 'Twitter', icon: 'twitter' },
+	{ href: '', label: 'GitHub', icon: 'github' },
+];
+const resolvedLinks = links.length > 0 || !showPlaceholdersWhenEmpty ? links : placeholderLinks;
 ---
 
 {
-	links.map((link) => (
-		<a href={link.href} target="_blank" rel="noopener noreferrer">
-			<span class="sr-only">{link.label}</span>
-			{link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
-		</a>
+	resolvedLinks.map((link) => (
+		links.length > 0 ? (
+			<a href={link.href} target="_blank" rel="noopener noreferrer">
+				<span class="sr-only">{link.label}</span>
+				{link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
+			</a>
+		) : (
+			<span class="social-placeholder" aria-hidden="true" title="Configure social links in src/site.config.ts">
+				{link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
+			</span>
+		)
 	))
 }
+
+<style>
+	.social-placeholder {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0.45;
+		filter: saturate(0.7);
+		cursor: default;
+	}
+</style>
