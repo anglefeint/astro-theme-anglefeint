@@ -15,6 +15,28 @@ All notable changes to this project are documented in this file.
 
 No unreleased changes yet.
 
+## [0.1.13] - 2026-03-01
+
+### Fixed
+
+- Restored language switcher styling by moving switcher UI styles into `LangSwitcher.astro` (component-local scope).
+
+### Changed
+
+- Social links now render non-clickable placeholder icons when `social.links` is empty, improving template discoverability.
+- Footer shows a development hint to configure social links in `src/site.config.ts` when links are unset.
+
+## [0.1.12] - 2026-03-01
+
+### Changed
+
+- Replaced blog post AI background network from server-rendered SVG nodes to client-rendered `<canvas>`.
+- Added canvas performance guards in blog post effects:
+  - DPR cap (`<= 2`)
+  - FPS cap (`30fps`)
+  - hidden-tab pause/resume lifecycle
+  - reduced-motion fallback
+
 ## [0.1.11] - 2026-03-01
 
 ### Changed

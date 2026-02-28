@@ -46,8 +46,7 @@ Anglefeint 是一个具备电影感叙事节奏的 Astro 主题系统，将不�
 - MD + MDX content collections
 - Locale routes (`en`, `ja`, `ko`, `es`, `zh`)
 - Route-specific atmosphere system
-- Configurable About content and modal copy (`src/config/about.ts`)
-- Configurable social links in both header and footer (`src/config/social.ts`)
+- Single-entry config via `src/site.config.ts` (site identity, social links, About content, feature toggles)
 - Optional About section via feature toggle (`ENABLE_ABOUT_PAGE`)
 - Sitemap + robots + locale RSS
 
@@ -57,8 +56,7 @@ Anglefeint 是一个具备电影感叙事节奏的 Astro 主题系统，将不�
 - 支持 MD + MDX 内容集合
 - 多语言路由（`en`、`ja`、`ko`、`es`、`zh`）
 - 按路由切换视觉氛围系统
-- About 页面文案与弹窗内容可配置（`src/config/about.ts`）
-- Header/Footer 社交链接可配置（`src/config/social.ts`）
+- 通过单一入口 `src/site.config.ts` 配置站点信息、社交链接、About 内容与功能开关
 - 支持 `ENABLE_ABOUT_PAGE` 功能开关
 - 内置 sitemap + robots + 多语言 RSS
 

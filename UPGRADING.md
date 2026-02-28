@@ -53,10 +53,7 @@ Use this if your project is a fork with an `upstream` remote.
 When merging/upgrading, prioritize your own data in:
 
 - `src/content/blog/**`
-- `src/config/site.ts`
-- `src/config/theme.ts`
-- `src/config/about.ts`
-- `src/config/social.ts`
+- `src/site.config.ts` (single user-facing config entry)
 - `.env` (local only, never commit)
 
 Keep post slugs aligned across locales. Use `npm run new-post -- <slug>` to scaffold the same slug in all language folders.
