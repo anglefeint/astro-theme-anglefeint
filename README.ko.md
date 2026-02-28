@@ -89,6 +89,12 @@ npm run new-post -- my-first-post
 Slug 규칙: 소문자 영문, 숫자, 하이픈만 사용하세요 (예: `my-first-post`).
 `src/assets/blog/default-covers/` 에 기본 커버가 있으면 slug 해시 기반으로 안정적인 기본 이미지가 자동 할당됩니다 (`heroImage` 는 나중에 직접 변경 가능).
 
+URL 규칙:
+- 파일: `src/content/blog/ko/my-first-post.md`
+- URL: `/ko/blog/my-first-post/`
+- 블로그 목록: `/ko/blog/`
+- 라우트를 수동으로 추가할 필요가 없습니다. Astro가 빌드 시 자동 생성합니다.
+
 ## 새 페이지 만들기
 
 `new-post` 는 블로그 글만 생성합니다. 커스텀 페이지는 아래 명령으로 생성하세요:

@@ -89,6 +89,12 @@ npm run new-post -- my-first-post
 Regla del slug: usa solo minusculas, numeros y guiones (ejemplo: `my-first-post`).
 Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` despues).
 
+Como funciona la URL:
+- Archivo: `src/content/blog/es/my-first-post.md`
+- URL: `/es/blog/my-first-post/`
+- Lista del blog: `/es/blog/`
+- No necesitas crear rutas a mano. Astro las genera automaticamente en build.
+
 ## Crear nueva pagina
 
 `new-post` solo crea contenido del blog. Para paginas personalizadas usa:

@@ -89,6 +89,12 @@ npm run new-post -- my-first-post
 Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
 `src/assets/blog/default-covers/` に画像がある場合、slug ハッシュで安定したデフォルトカバーを自動設定します（後で `heroImage` を手動変更可能）。
 
+URL のルール:
+- ファイル: `src/content/blog/ja/my-first-post.md`
+- URL: `/ja/blog/my-first-post/`
+- ブログ一覧: `/ja/blog/`
+- ルートを手動で追加する必要はありません。Astro が build 時に自動生成します。
+
 ## 新しいページを作成
 
 `new-post` はブログ記事専用です。カスタムページは次のコマンドを使用します:

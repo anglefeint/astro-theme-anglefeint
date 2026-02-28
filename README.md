@@ -90,6 +90,12 @@ npm run new-post -- my-first-post
 Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-post`).
 If default covers exist in `src/assets/blog/default-covers/`, a stable cover is auto-assigned by slug hash (you can replace `heroImage` later).
 
+How URL works:
+- File: `src/content/blog/en/my-first-post.md`
+- URL: `/en/blog/my-first-post/`
+- Blog list: `/en/blog/`
+- You do not need to add routes manually. Astro generates them from content files at build time.
+
 ## Create New Page
 
 `new-post` creates blog content only. For custom pages, use:

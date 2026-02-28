@@ -89,6 +89,12 @@ npm run new-post -- my-first-post
 Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
 如果 `src/assets/blog/default-covers/` 中存在默认封面，脚本会按 slug 哈希自动分配一张（后续可手动替换 `heroImage`）。
 
+URL 规则：
+- 文件：`src/content/blog/zh/my-first-post.md`
+- 访问地址：`/zh/blog/my-first-post/`
+- 博客列表：`/zh/blog/`
+- 不需要手动加路由，Astro 会在构建时根据内容文件自动生成。
+
 ## 新建页面
 
 `new-post` 只创建博客文章。自定义页面请使用：
