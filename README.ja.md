@@ -154,17 +154,17 @@ npm run new-page -- projects --theme matrix
 ## テーマ設定
 
 1. `.env.example` を `.env` にコピーし、サイト情報を設定。
-2. `src/config/social.ts` で SNS リンクを更新。
-3. `src/config/about.ts` で About コンテンツを編集。
-4. `src/config/theme.ts` の `ENABLE_ABOUT_PAGE` で About の表示を切り替え。
-5. `src/content/blog/<locale>/` のサンプル記事を差し替え。
+2. `src/site.config.ts` を編集:
+   - `social.links`: SNS リンク
+   - `about`: About コンテンツとランタイム文言
+   - `theme.enableAboutPage`: About の表示切り替え
+3. `src/content/blog/<locale>/` のサンプル記事を差し替え。
 
 ## 設定ポイント
 
-- サイト情報: `src/config/site.ts`（または `PUBLIC_*` 環境変数）
-- テーマ挙動: `src/config/theme.ts`
-- About コンテンツ: `src/config/about.ts`
-- ソーシャルリンク: `src/config/social.ts`
+- 単一エントリ: `src/site.config.ts`
+- アダプタ層（直接編集は非推奨）: `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
+- サイト情報は `PUBLIC_*` 環境変数でも上書き可能
 
 ## ドキュメント
 

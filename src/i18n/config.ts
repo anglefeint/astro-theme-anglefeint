@@ -1,15 +1,11 @@
-export const SUPPORTED_LOCALES = ['en', 'ja', 'ko', 'es', 'zh'] as const;
+import { THEME_CONFIG, type LocaleCode } from '../site.config';
+
+export const SUPPORTED_LOCALES = THEME_CONFIG.i18n.supportedLocales as readonly LocaleCode[];
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
-export const DEFAULT_LOCALE: Locale = 'en';
+export const DEFAULT_LOCALE: Locale = THEME_CONFIG.i18n.defaultLocale as Locale;
 
-export const LOCALE_LABELS: Record<Locale, string> = {
-	en: 'English',
-	ja: '日本語',
-	ko: '한국어',
-	es: 'Español',
-	zh: '中文',
-};
+export const LOCALE_LABELS: Record<Locale, string> = THEME_CONFIG.i18n.localeLabels as Record<Locale, string>;
 
 export function isLocale(value: string): value is Locale {
 	return (SUPPORTED_LOCALES as readonly string[]).includes(value);

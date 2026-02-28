@@ -154,17 +154,17 @@ npm run new-page -- projects --theme matrix
 ## 主题配置
 
 1. 复制 `.env.example` 为 `.env` 并填写站点信息。
-2. 在 `src/config/social.ts` 修改社交链接。
-3. 在 `src/config/about.ts` 修改 About 内容。
-4. 在 `src/config/theme.ts` 用 `ENABLE_ABOUT_PAGE` 控制 About 页面开关。
-5. 在 `src/content/blog/<locale>/` 替换示例文章。
+2. 编辑 `src/site.config.ts`：
+   - `social.links`：社交链接
+   - `about`：About 页面内容与运行文案
+   - `theme.enableAboutPage`：About 页面开关
+3. 在 `src/content/blog/<locale>/` 替换示例文章。
 
 ## 配置入口
 
-- 站点信息：`src/config/site.ts`（或 `PUBLIC_*` 环境变量）
-- 主题行为：`src/config/theme.ts`
-- About 内容：`src/config/about.ts`
-- 社交链接：`src/config/social.ts`
+- 单一入口：`src/site.config.ts`
+- 适配层（不建议直接编辑）：`src/config/site.ts`、`src/config/theme.ts`、`src/config/about.ts`、`src/config/social.ts`
+- 站点信息仍支持 `PUBLIC_*` 环境变量覆盖
 
 ## 文档
 

@@ -14,9 +14,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Recent Updates
 
-- Header social links now use `SOCIAL_LINKS` from `src/config/social.ts` (same source as Footer).
+- Header social links now use `SOCIAL_LINKS` from `src/site.config.ts` via config adapter exports.
 - About route generation and nav visibility are gated by `ENABLE_ABOUT_PAGE`.
-- New `src/config/about.ts` owns About page profile text, sidebar labels, modal content, and effect strings.
+- `src/site.config.ts` is the single user-facing config entry; `src/config/*.ts` are adapter exports consumed by pages/components.
 - `public/scripts/about-effects.js` consumes runtime config injected by `src/pages/[lang]/about.astro`.
 - Page imports are unified to package paths (`@anglefeint/astro-theme/*`) and local duplicated `src/layouts`/`src/components` were removed from app-level source.
 
@@ -47,10 +47,11 @@ Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined 
 
 ### Key Files
 
-- `src/config/site.ts` — Site identity (SITE_TITLE, SITE_URL, etc.); env-overridable via PUBLIC_* vars
-- `src/config/social.ts` — Header/footer social links (SOCIAL_LINKS array)
-- `src/config/theme.ts` — BLOG_PAGE_SIZE, HOME_LATEST_COUNT, ENABLE_ABOUT_PAGE (disables About nav/routes when false)
-- `src/config/about.ts` — About page profile copy, modal labels/content, terminal effect text
+- `src/site.config.ts` — Single config entry for site/theme/i18n/social/about
+- `src/config/site.ts` — Site adapter exports (env-overridable via PUBLIC_* vars)
+- `src/config/social.ts` — Social adapter exports (SOCIAL_LINKS)
+- `src/config/theme.ts` — Theme adapter exports (BLOG_PAGE_SIZE, HOME_LATEST_COUNT, ENABLE_ABOUT_PAGE)
+- `src/config/about.ts` — About adapter exports
 - `src/consts.ts` — Re-exports from config (backwards compat)
 - `src/pages/[lang]/about.astro` — About page: terminal canvas, sidebar, modals, `getCollection('blog')` for All Scripts
 - `packages/theme/src/layouts/BlogPost.astro` — Post detail layout: AI surface, progress bar, related posts, Red Queen monitor; CRT dropout in `public/scripts/blogpost-effects.js` (hero + Red Queen TV)
