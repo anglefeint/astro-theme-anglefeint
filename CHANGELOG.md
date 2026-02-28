@@ -15,6 +15,13 @@ All notable changes to this project are documented in this file.
 
 No unreleased changes yet.
 
+## [0.1.11] - 2026-03-01
+
+### Changed
+
+- Moved client-side effects scripts from `public/scripts` to `packages/theme/src/scripts` and switched to module imports in layouts/pages.
+- Let Vite pipeline handle script bundling for minification, hashed assets, and cache-friendly output.
+
 ## [0.1.10] - 2026-03-01
 
 ### Fixed
