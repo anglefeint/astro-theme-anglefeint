@@ -1,0 +1,35 @@
+---
+import type { Locale } from '@anglefeint/site-i18n/config';
+
+interface LocaleOption {
+	locale: Locale;
+	label: string;
+	href: string;
+}
+
+interface Props {
+	label: string;
+	currentLocale: Locale;
+	options: LocaleOption[];
+}
+
+const { label, currentLocale, options } = Astro.props as Props;
+---
+
+<div class="lang-switcher" aria-label={label}>
+	<label class="lang-label" for="lang-select">{label}</label>
+	<select
+		id="lang-select"
+		class="lang-select"
+		aria-label={label}
+		onchange="if (this.value) window.location.href = this.value;"
+	>
+		{
+			options.map((option) => (
+				<option value={option.href} selected={option.locale === currentLocale}>
+					{option.label}
+				</option>
+			))
+		}
+	</select>
+</div>

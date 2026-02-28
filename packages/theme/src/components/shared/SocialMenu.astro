@@ -1,0 +1,20 @@
+---
+import { SOCIAL_LINKS, type SocialLink } from '@anglefeint/site-config/social';
+import Icon from './Icon.astro';
+
+interface Props {
+	links?: SocialLink[];
+	iconSize?: number;
+}
+
+const { links = SOCIAL_LINKS, iconSize = 32 } = Astro.props as Props;
+---
+
+{
+	links.map((link) => (
+		<a href={link.href} target="_blank" rel="noopener noreferrer">
+			<span class="sr-only">{link.label}</span>
+			{link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
+		</a>
+	))
+}
