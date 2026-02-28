@@ -28,25 +28,25 @@ sync_targets: [README.md, CLAUDE.md]
 The project now follows a compositional structure:
 
 1. Shared chrome
-- `src/components/shared/ThemeFrame.astro`
-- `src/components/shared/CommonHeader.astro`
-- `src/components/shared/CommonFooter.astro`
+- `packages/theme/src/components/shared/ThemeFrame.astro`
+- `packages/theme/src/components/shared/CommonHeader.astro`
+- `packages/theme/src/components/shared/CommonFooter.astro`
 - Responsibility: shared HTML skeleton, head metadata, navigation, footer.
 
 2. Theme shells
-- `src/layouts/shells/BaseShell.astro`
-- `src/layouts/shells/AiShell.astro`
-- `src/layouts/shells/CyberShell.astro`
-- `src/layouts/shells/HackerShell.astro`
-- `src/layouts/shells/MatrixShell.astro`
+- `packages/theme/src/layouts/shells/BaseShell.astro`
+- `packages/theme/src/layouts/shells/AiShell.astro`
+- `packages/theme/src/layouts/shells/CyberShell.astro`
+- `packages/theme/src/layouts/shells/HackerShell.astro`
+- `packages/theme/src/layouts/shells/MatrixShell.astro`
 - Responsibility: route atmosphere container, theme body class, background layers, theme-specific script/style hooks.
 
 3. Page layouts
-- `src/layouts/BasePageLayout.astro`
-- `src/layouts/AiPageLayout.astro`
-- `src/layouts/CyberPageLayout.astro`
-- `src/layouts/HackerPageLayout.astro`
-- `src/layouts/MatrixPageLayout.astro`
+- `packages/theme/src/layouts/BasePageLayout.astro`
+- `packages/theme/src/layouts/AiPageLayout.astro`
+- `packages/theme/src/layouts/CyberPageLayout.astro`
+- `packages/theme/src/layouts/HackerPageLayout.astro`
+- `packages/theme/src/layouts/MatrixPageLayout.astro`
 - Responsibility: thin composition layer for page generation and custom routes.
 
 4. Business pages
@@ -82,17 +82,17 @@ The project now follows a compositional structure:
 
 ## SEO and Discovery
 
-- Head metadata and hreflang: `src/components/BaseHead.astro`
+- Head metadata and hreflang: `packages/theme/src/components/BaseHead.astro`
 - Sitemap integration: `@astrojs/sitemap` in `astro.config.mjs`
 - robots.txt route: `src/pages/robots.txt.ts`
 
 ## Key Layout and Components
 
 - **Sticky footer:** `body` uses flex column with `min-height: 100vh`; `main` uses `flex: 1` so footer stays at viewport bottom on short pages (2K/4K, blog with no articles).
-- Home layout: `src/layouts/HomePage.astro`
-- Post layout: `src/layouts/BlogPost.astro`
-- Shared chrome: `src/components/shared/CommonHeader.astro`, `src/components/shared/CommonFooter.astro`
-- Unified frame: `src/components/shared/ThemeFrame.astro`
+- Home layout: `packages/theme/src/layouts/HomePage.astro`
+- Post layout: `packages/theme/src/layouts/BlogPost.astro`
+- Shared chrome: `packages/theme/src/components/shared/CommonHeader.astro`, `packages/theme/src/components/shared/CommonFooter.astro`
+- Unified frame: `packages/theme/src/components/shared/ThemeFrame.astro`
 
 ## Theme Naming Contract
 
