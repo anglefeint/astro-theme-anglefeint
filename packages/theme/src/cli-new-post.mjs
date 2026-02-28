@@ -1,8 +1,8 @@
 import { mkdir, writeFile, access, readdir } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
+import { SUPPORTED_LOCALES } from './i18n/locales.mjs';
 
-const SUPPORTED_LOCALES = ['en', 'ja', 'ko', 'es', 'zh'];
 const CONTENT_ROOT = path.resolve(process.cwd(), 'src/content/blog');
 const DEFAULT_COVERS_ROOT = path.resolve(process.cwd(), 'src/assets/blog/default-covers');
 

@@ -65,7 +65,7 @@ function templateFor({ slug, theme }) {
 	return `---
 import type { GetStaticPaths } from 'astro';
 import ${layoutName} from '@anglefeint/astro-theme/layouts/${layoutName}.astro';
-import { SUPPORTED_LOCALES } from '../../i18n/config';
+import { SUPPORTED_LOCALES } from '@anglefeint/astro-theme/i18n/config';
 
 export const getStaticPaths = (() => SUPPORTED_LOCALES.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
 
