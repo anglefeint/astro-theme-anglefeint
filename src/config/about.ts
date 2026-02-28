@@ -5,21 +5,21 @@
 export const ABOUT_CONFIG = {
 	metaLine: '$ profile booted | mode: builder',
 	sections: {
-		who: 'Write a short introduction about yourself, your background, and what you care about.',
-		what: 'Describe what you build, your core skills, and the kind of projects you want to be known for.',
+		who: 'I build digital products that balance visual narrative, writing clarity, and engineering reliability.',
+		what: 'I focus on frontend architecture, content systems, and multilingual publishing workflows for modern web teams.',
 		ethos: [
-			'Add 3-4 principles that guide how you work.',
-			'Use concise lines that are easy to scan.',
-			'Focus on practical values your readers can understand quickly.',
-			'Keep wording personal, clear, and honest.',
+			'Design for clarity first, then add style with purpose.',
+			'Prefer maintainable systems over one-off visual hacks.',
+			'Ship in small iterations and improve from real feedback.',
+			'Keep communication direct, specific, and accountable.',
 		],
-		now: 'Share what you are currently building or learning.',
-		contactLead: 'Add a short collaboration note (for example: open to freelance, consulting, or full-time roles).',
-		signature: '> replace with your own signature',
+		now: 'Currently exploring AI-assisted content workflows and performance-aware visual systems for static-first sites.',
+		contactLead: 'Open to collaboration on design-heavy developer tools, documentation systems, and publication platforms.',
+		signature: '> Signal received.',
 	},
 	contact: {
-		email: 'hello@example.com',
-		githubUrl: 'https://github.com',
+		email: 'voidtem@users.noreply.github.com',
+		githubUrl: 'https://github.com/voidtem',
 		githubLabel: 'GitHub',
 	},
 	sidebar: {

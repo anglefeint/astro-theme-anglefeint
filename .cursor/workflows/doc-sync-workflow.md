@@ -37,9 +37,16 @@ Minimum required keys:
 
 Recommended:
 
+- `doc_purpose` (short one-line purpose summary for deterministic routing)
 - `source_of_truth` (bool)
 - `depends_on` (array)
 - `sync_targets` (array)
+
+Fallback when `doc_purpose` is missing:
+
+- Parse the first heading + first non-empty paragraph as inferred purpose.
+- Optional inline marker is allowed:
+  - `<!-- doc_purpose: ... -->`
 
 ## Exclusions
 
@@ -59,6 +66,7 @@ Run this workflow when any of these change:
 - Config surface (`src/config/*`, env vars, feature flags)
 - Routing/i18n/SEO behavior
 - Deployment or packaging workflow
+- Branch strategy or install path changes (`main` vs `starter`)
 
 ## Execution
 
@@ -66,7 +74,7 @@ Run this workflow when any of these change:
    - `rg --files -g '*.md'`
 2. Metadata scan:
    - Read first 20 lines of each markdown file.
-   - Parse frontmatter keys.
+   - Parse frontmatter keys and purpose signals (`doc_purpose` or fallback).
 3. Quality gate for metadata:
    - If a maintained technical doc has no frontmatter, flag it and add to migration list.
 4. Build graph:
@@ -85,12 +93,18 @@ Run this workflow when any of these change:
    - Operational docs (`UPGRADING`, release/checklist/changelog)
    - Localized docs (`README.*`)
    - Internal guidance (`CLAUDE.md`, `AGENTS.md`)
-8. Consistency scan:
+8. Branch-aware consistency:
+   - `README*` install commands must use `#starter`.
+   - `README*` must include `npm update @anglefeint/astro-theme`.
+   - `docs/BRANCH_POLICY.md` must exist and reflect current branch strategy.
+   - If branch policy changed, include `UPGRADING.md` and packaging docs in update set.
+9. Consistency scan:
    - Verify naming contract and command consistency.
-9. Validation gate:
+10. Validation gate:
+   - `npm run check:docs`
    - `npm run check`
    - run `npm run build` when routing/layout/SEO behavior changed
-10. Final report:
+11. Final report:
    - discovered docs count
    - docs with valid metadata count
    - updated docs list
@@ -104,12 +118,19 @@ Run this workflow when any of these change:
 - Internal prefixes: `ai-*`, `cyber-*`, `hacker-*`
 - Composition: `ThemeFrame -> Shell -> Layout -> Page`
 
-## Legacy Blacklist
-
-- `mesh-page`, `br-page`, `term-page`
-- theme prefixes `mesh-*`, `br-*`, `term-*` (except historical notes)
-
 ## Reusable Commands
+
+```bash
+npm run check:docs
+```
+
+```bash
+rg -n "#starter|voidtem/astro-theme-anglefeint#starter" README*.md UPGRADING.md docs/BRANCH_POLICY.md
+```
+
+```bash
+rg -n "npm update @anglefeint/astro-theme" README*.md UPGRADING.md
+```
 
 ```bash
 rg --files -g '*.md'
@@ -120,7 +141,7 @@ rg -n "doc_id:|doc_role:|doc_scope:|update_triggers:|source_of_truth:|depends_on
 ```
 
 ```bash
-rg -n "mesh-|br-|term-|mesh-page|br-page|term-page" README*.md docs/*.md CLAUDE.md AGENTS.md ASTRO_THEME_LISTING.md UPGRADING.md CHANGELOG.md packages/theme/README.md
+rg -n "base|ai|cyber|hacker|matrix|ThemeFrame -> Shell -> Layout -> Page" README*.md docs/*.md CLAUDE.md AGENTS.md ASTRO_THEME_LISTING.md UPGRADING.md CHANGELOG.md packages/theme/README.md
 ```
 
 ```bash
