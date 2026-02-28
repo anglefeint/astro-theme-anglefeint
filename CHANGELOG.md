@@ -15,6 +15,15 @@ All notable changes to this project are documented in this file.
 
 No unreleased changes yet.
 
+## [0.1.8] - 2026-02-28
+
+### Changed
+
+- Added starter alias mapping for `@anglefeint/site-i18n/*` in:
+  - `astro.config.mjs`
+  - `tsconfig.json`
+- Starter dependency updated to `@anglefeint/astro-theme@^0.1.8`.
+
 ## [0.1.7] - 2026-02-28
 
 ### Changed

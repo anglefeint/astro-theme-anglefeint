@@ -13,6 +13,7 @@ export default defineConfig({
 		resolve: {
 			alias: {
 				'@anglefeint/site-config': fileURLToPath(new URL('./src/config', import.meta.url)),
+				'@anglefeint/site-i18n': fileURLToPath(new URL('./src/i18n', import.meta.url)),
 			},
 		},
 	},
