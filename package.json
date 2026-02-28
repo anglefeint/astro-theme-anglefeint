@@ -13,8 +13,7 @@
     "preview": "astro preview",
     "new-post": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-post.mjs",
     "new-page": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-page.mjs",
-    "astro": "astro",
-    "theme:pack": "npm pack --workspace @anglefeint/astro-theme"
+    "astro": "astro"
   },
   "dependencies": {
     "@anglefeint/astro-theme": "^0.1.12",
@@ -26,7 +25,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
-    "typescript": "^5.9.3",
-    "wrangler": "^4.65.0"
+    "typescript": "^5.9.3"
   }
 }
