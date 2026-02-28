@@ -37,9 +37,6 @@ type Messages = {
 		related: string;
 		regenerate: string;
 	};
-	footer: {
-		tagline: string;
-	};
 };
 
 const MESSAGES: Record<Locale, Messages> = {
@@ -75,7 +72,6 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: 'Related',
 			regenerate: 'Regenerate',
 		},
-		footer: { tagline: '由 Astro 构建。' },
 	},
 	ja: {
 		siteTitle: 'Angle Feint',
@@ -109,7 +105,6 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: '関連記事',
 			regenerate: '再生成',
 		},
-		footer: { tagline: 'Astro で構築。' },
 	},
 	ko: {
 		siteTitle: 'Angle Feint',
@@ -143,7 +138,6 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: '관련 글',
 			regenerate: '재생성',
 		},
-		footer: { tagline: 'Astro로 제작됨.' },
 	},
 	es: {
 		siteTitle: 'Angle Feint',
@@ -177,7 +171,6 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: 'Relacionados',
 			regenerate: 'Regenerar',
 		},
-		footer: { tagline: 'Construido con Astro.' },
 	},
 	zh: {
 		siteTitle: 'Angle Feint',
@@ -211,7 +204,6 @@ const MESSAGES: Record<Locale, Messages> = {
 			related: '相关文章',
 			regenerate: '重新生成',
 		},
-		footer: { tagline: 'Built with Astro.' },
 	},
 };
 
