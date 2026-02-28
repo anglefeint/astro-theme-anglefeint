@@ -15,6 +15,26 @@ All notable changes to this project are documented in this file.
 
 No unreleased changes yet.
 
+## [0.1.10] - 2026-03-01
+
+### Fixed
+
+- Corrected Spanish accents in sample content and `new-post` scaffolding templates.
+- Removed unused `messages.footer.tagline` fields from i18n message maps to avoid misleading configuration surface.
+
+### Changed
+
+- Added a second short demo post (`hello-world`) for each locale (`en`, `ja`, `ko`, `es`, `zh`) with minimal AI metadata fields for richer post-detail previews.
+
+## [0.1.9] - 2026-03-01
+
+### Fixed
+
+- Added `public/styles/blog-list.css` to the published theme package.
+- Added `locale` support to `FormattedDate` and wired locale-aware date rendering in blog list/post related sections.
+- Added `prefers-reduced-motion` fallbacks for post-detail and about page effects scripts.
+- Updated Chinese footer copy in i18n message maps.
+
 ## [0.1.8] - 2026-02-28
 
 ### Changed
