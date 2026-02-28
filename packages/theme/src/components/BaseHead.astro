@@ -4,14 +4,14 @@
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/theme/placeholders/theme-placeholder-1.jpg';
-import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '../consts';
+import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '@anglefeint/site-config/site';
 import {
 	DEFAULT_LOCALE,
 	SUPPORTED_LOCALES,
 	alternatePathForLocale,
 	isLocale,
 	stripLocaleFromPath,
-} from '../i18n/config';
+} from '@anglefeint/site-i18n/config';
 
 interface Props {
 	title: string;

@@ -1,9 +1,9 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_HERO_BY_LOCALE, SITE_TITLE } from '../consts';
-import { type Locale, blogIdToSlugAnyLocale, localePath } from '../i18n/config';
-import { getMessages } from '../i18n/messages';
+import { SITE_HERO_BY_LOCALE, SITE_TITLE } from '@anglefeint/site-config/site';
+import { type Locale, blogIdToSlugAnyLocale, localePath } from '@anglefeint/site-i18n/config';
+import { getMessages } from '@anglefeint/site-i18n/messages';
 import MatrixShell from './shells/MatrixShell.astro';
 
 interface Props {

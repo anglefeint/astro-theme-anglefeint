@@ -15,6 +15,18 @@ All notable changes to this project are documented in this file.
 
 No unreleased changes yet.
 
+## [0.1.8] - 2026-02-28
+
+### Changed
+
+- Enforced single app-source runtime wiring for package UI:
+  - package layouts/components now read site config from `@anglefeint/site-config/*`
+  - package layouts/components now read i18n from `@anglefeint/site-i18n/*`
+- Added `@anglefeint/site-i18n` alias mapping in:
+  - `astro.config.mjs`
+  - `tsconfig.json`
+- Updated package/release docs for the config+i18n alias contract.
+
 ## [0.1.7] - 2026-02-28
 
 ### Changed

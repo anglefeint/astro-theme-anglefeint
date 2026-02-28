@@ -1,7 +1,7 @@
 ---
-import { SITE_TITLE } from '../../consts';
-import { SOCIAL_LINKS } from '../../config/social';
-import { THEME } from '../../config/theme';
+import { SITE_TITLE } from '@anglefeint/site-config/site';
+import { SOCIAL_LINKS } from '@anglefeint/site-config/social';
+import { THEME } from '@anglefeint/site-config/theme';
 import HeaderLink from '../HeaderLink.astro';
 import {
 	DEFAULT_LOCALE,
@@ -11,7 +11,7 @@ import {
 	alternatePathForLocale,
 	isLocale,
 	stripLocaleFromPath,
-} from '../../i18n/config';
+} from '@anglefeint/site-i18n/config';
 
 interface Props {
 	locale?: Locale;

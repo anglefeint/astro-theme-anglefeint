@@ -64,4 +64,5 @@ npm publish --access public
 ## Notes
 
 - Starter config is injected via alias `@anglefeint/site-config/*` in `astro.config.mjs` and `tsconfig.json`.
+- Starter i18n is injected via alias `@anglefeint/site-i18n/*` in `astro.config.mjs` and `tsconfig.json`.
 - Keep release notes explicit about breaking changes and required manual migrations.

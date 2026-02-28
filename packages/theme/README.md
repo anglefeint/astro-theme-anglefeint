@@ -48,8 +48,10 @@ This package reads site-specific config from alias imports:
 - `@anglefeint/site-config/site`
 - `@anglefeint/site-config/theme`
 - `@anglefeint/site-config/social`
+- `@anglefeint/site-i18n/config`
+- `@anglefeint/site-i18n/messages`
 
-In the starter/site project, map that alias to `src/config/*` in both Vite and TS config.
+In the starter/site project, map these aliases to `src/config/*` and `src/i18n/*` in both Vite and TS config.
 
 ## CLI
 

@@ -5,9 +5,9 @@ import themeRedqueen1 from '../assets/theme/red-queen/theme-redqueen1.webp';
 import themeRedqueen2 from '../assets/theme/red-queen/theme-redqueen2.gif';
 import FormattedDate from '../components/FormattedDate.astro';
 import AiShell from './shells/AiShell.astro';
-import { SITE_AUTHOR } from '../consts';
-import { DEFAULT_LOCALE, type Locale, isLocale, localePath, blogIdToSlugAnyLocale } from '../i18n/config';
-import { getMessages } from '../i18n/messages';
+import { SITE_AUTHOR } from '@anglefeint/site-config/site';
+import { DEFAULT_LOCALE, type Locale, isLocale, localePath, blogIdToSlugAnyLocale } from '@anglefeint/site-i18n/config';
+import { getMessages } from '@anglefeint/site-i18n/messages';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	locale?: string;
