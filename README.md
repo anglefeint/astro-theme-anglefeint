@@ -177,6 +177,11 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 - Upgrading guide: `UPGRADING.md`
 - Changelog: `CHANGELOG.md`
 
+## Credits
+
+- Parts of the base typography CSS are adapted from Bear Blog defaults (MIT).  
+  Source note is preserved in `src/styles/global.css`.
+
 ## License
 
 MIT License. See `LICENSE`.
