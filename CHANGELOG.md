@@ -13,6 +13,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+No unreleased changes yet.
+
+## [0.1.3] - 2026-02-28
+
 ### Added
 
 - `npm run new-post -- <slug>` script to scaffold the same post slug across `en`, `ja`, `ko`, `es`, `zh`.
@@ -26,6 +30,8 @@ All notable changes to this project are documented in this file.
   - If target-locale page exists, go to that page.
   - If not, fall back to target-locale blog index.
 - Blog sample content is aligned to one post per locale (`welcome-to-anglefeint`).
+- About page default content now uses neutral, non-placeholder profile/contact text.
+- Theme CSS was split from `global.css` into route-theme files (`theme-cyber.css`, `theme-ai.css`) to reduce cross-theme coupling.
 
 ## [0.0.1] - 2026-02-17
 
