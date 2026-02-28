@@ -33,3 +33,60 @@ const { label, currentLocale, options } = Astro.props as Props;
 		}
 	</select>
 </div>
+
+<style>
+	.lang-switcher {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.2rem 0.4rem;
+		margin-right: 0.1rem;
+		border: 1px solid var(--lang-switcher-border, rgba(132, 214, 255, 0.2));
+		border-radius: 999px;
+		background: var(--lang-switcher-bg, rgba(6, 16, 30, 0.35));
+		flex-shrink: 0;
+	}
+	.lang-label {
+		display: inline-block;
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 0.6rem;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--lang-label-color, rgba(190, 226, 248, 0.78));
+		white-space: nowrap;
+	}
+	.lang-select {
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		background:
+			linear-gradient(45deg, transparent 50%, var(--lang-select-arrow, rgba(204, 236, 252, 0.82)) 50%) calc(100% - 0.9rem) 50% /
+				0.35rem 0.35rem no-repeat,
+			linear-gradient(135deg, var(--lang-select-arrow, rgba(204, 236, 252, 0.82)) 50%, transparent 50%) calc(100% - 0.7rem) 50% /
+				0.35rem 0.35rem no-repeat,
+			var(--lang-select-bg, rgba(9, 22, 40, 0.68));
+		border: 1px solid var(--lang-select-border, rgba(132, 214, 255, 0.2));
+		border-radius: 999px;
+		padding: 0.2rem 1.45rem 0.2rem 0.55rem;
+		min-width: 6rem;
+		font-size: 0.62rem;
+		line-height: 1;
+		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+		color: var(--lang-select-text, rgba(204, 236, 252, 0.86));
+		cursor: pointer;
+	}
+	.lang-select:focus {
+		outline: none;
+		border-color: var(--lang-select-focus-border, rgba(132, 214, 255, 0.5));
+		box-shadow: 0 0 0 2px var(--lang-select-focus-ring, rgba(98, 180, 228, 0.18));
+	}
+	.lang-select option {
+		color: var(--lang-select-option-text, #ccecfb);
+		background: var(--lang-select-option-bg, #0b1c32);
+	}
+	@media (max-width: 720px) {
+		.lang-switcher {
+			margin-right: 0;
+		}
+	}
+</style>
