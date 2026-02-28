@@ -1,6 +1,12 @@
-			(function() {
-				function init() {
-				// 阅读进度条
+				(function() {
+					function init() {
+					var prefersReducedMotion = false;
+					try {
+						prefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+					} catch (_e) {
+						prefersReducedMotion = false;
+					}
+					// 阅读进度条
 				var progress = document.querySelector('.ai-read-progress');
 				var article = document.querySelector('.ai-article');
 				var toast = document.querySelector('.ai-stage-toast');
@@ -42,13 +48,13 @@
 					onScroll();
 					window.addEventListener('scroll', onScroll, { passive: true });
 				}
-				var backTop = document.querySelector('.ai-back-to-top');
-				if (backTop) {
-					backTop.addEventListener('click', function() {
-						window.scrollTo({ top: 0, behavior: 'smooth' });
-					});
-				}
-				function initHeroCanvas() {
+					var backTop = document.querySelector('.ai-back-to-top');
+					if (backTop) {
+						backTop.addEventListener('click', function() {
+							window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+						});
+					}
+					function initHeroCanvas() {
 					var shell = document.querySelector('.hero-shell');
 					if (!shell) return;
 					var canvas = shell.querySelector('.hero-canvas');
@@ -283,6 +289,11 @@
 						sizeCanvas();
 						buildEdge(img);
 						wrap.classList.add('ready');
+						if (prefersReducedMotion) {
+							var staticCtx = canvas.getContext('2d');
+							if (staticCtx) staticCtx.drawImage(baseCanvas, 0, 0);
+							return;
+						}
 						heroRaf = requestAnimationFrame(heroRender);
 					};
 					img.src = new URL(src, window.location.href).href;
@@ -294,6 +305,7 @@
 						}
 					}, { passive: true });
 					function onHeroVisibilityChange() {
+						if (prefersReducedMotion) return;
 						if (document.hidden) {
 							if (heroRaf) cancelAnimationFrame(heroRaf);
 							heroRaf = 0;
@@ -305,7 +317,7 @@
 					window.addEventListener('beforeunload', function() { cancelAnimationFrame(heroRaf); }, { once: true });
 				}
 				initHeroCanvas();
-			function initRedQueenTv() {
+				function initRedQueenTv() {
 				var shell = document.querySelector('.rq-tv');
 				var stage = document.querySelector('.rq-tv-stage');
 				var toggle = document.querySelector('.rq-tv-toggle');
@@ -361,8 +373,22 @@
 					return new URL(item.url, window.location.href).href;
 				}
 
-				var playlist = [{ url: source, type: guessImageType(source), holdLast: 360 }];
-				if (source2) playlist.push({ url: source2, type: guessImageType(source2), holdLast: 500 });
+					var playlist = [{ url: source, type: guessImageType(source), holdLast: 360 }];
+					if (source2) playlist.push({ url: source2, type: guessImageType(source2), holdLast: 500 });
+					if (prefersReducedMotion) {
+						setCollapsed(false);
+						var staticImg = new Image();
+						staticImg.className = 'rq-tv-screen';
+						staticImg.alt = '';
+						staticImg.decoding = 'async';
+						staticImg.loading = 'lazy';
+						staticImg.src = resolveItemUrl(playlist[0]);
+						stage.innerHTML = '';
+						stage.appendChild(staticImg);
+						toggle.hidden = true;
+						toggle.setAttribute('aria-hidden', 'true');
+						return;
+					}
 
 				function setCollapsed(collapsed) {
 					shell.classList.toggle('rq-tv-collapsed', collapsed);

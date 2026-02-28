@@ -9,6 +9,12 @@
 						runtimeConfig = {};
 					}
 				}
+				var prefersReducedMotion = false;
+				try {
+					prefersReducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+				} catch (_e) {
+					prefersReducedMotion = false;
+				}
 				// ── Terminal background: dir + 可输入 (点击背景聚焦，回车仅换行) ──
 				var bgCanvas = document.querySelector('.hacker-bg-canvas');
 				if (bgCanvas) {
@@ -107,14 +113,19 @@
 						cancelAnimationFrame(bgAnimationId);
 						bgAnimationId = 0;
 					}
-					startBackgroundLoop();
-					document.addEventListener('visibilitychange', function() {
-						if (document.hidden) {
+						if (prefersReducedMotion) {
+							renderBg(performance.now());
 							stopBackgroundLoop();
-							return;
+						} else {
+							startBackgroundLoop();
+							document.addEventListener('visibilitychange', function() {
+								if (document.hidden) {
+									stopBackgroundLoop();
+									return;
+								}
+								startBackgroundLoop();
+							});
 						}
-						startBackgroundLoop();
-					});
 
 					// 点击背景聚焦，点击内容失焦
 					document.addEventListener('click', function(e) {
@@ -207,7 +218,7 @@
 				var backTop = document.querySelector('.hacker-back-to-top');
 				if (backTop) {
 					backTop.addEventListener('click', function() {
-						window.scrollTo({ top: 0, behavior: 'smooth' });
+						window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
 					});
 				}
 
@@ -235,6 +246,7 @@
 					return s;
 				}
 				function startDecryptorFlash() {
+					if (prefersReducedMotion) return;
 					if (decryptorInterval) clearInterval(decryptorInterval);
 					var keys = 0, sec = 1;
 					decryptorInterval = setInterval(function() {
@@ -444,7 +456,7 @@
 
 				// ── Mouse glow ──
 				var glow = document.querySelector('.hacker-mouse-glow');
-				if (glow) {
+				if (glow && !prefersReducedMotion) {
 					var glowRaf;
 					var mx = 0, my = 0;
 					document.addEventListener('mousemove', function(e) {
@@ -476,7 +488,14 @@
 
 				// ── Typewriter section titles ──
 				var titles = document.querySelectorAll('.about-section-title');
-				if (window.IntersectionObserver && titles.length) {
+				if (prefersReducedMotion && titles.length) {
+					titles.forEach(function(el) {
+						var fullText = el.textContent || '';
+						el.setAttribute('data-full-text', fullText);
+						el.textContent = fullText;
+						el.style.minHeight = '1.2em';
+					});
+				} else if (window.IntersectionObserver && titles.length) {
 					titles.forEach(function(el) {
 						var fullText = el.textContent || '';
 						el.setAttribute('data-full-text', fullText);
@@ -510,6 +529,13 @@
 				var scan = document.querySelector('.hacker-load-scan');
 				if (regen && article) {
 					regen.addEventListener('click', function() {
+						if (prefersReducedMotion) {
+							article.classList.add('hacker-flash');
+							setTimeout(function() {
+								article.classList.remove('hacker-flash');
+							}, 120);
+							return;
+						}
 						regen.disabled = true;
 						article.classList.add('hacker-flash');
 						if (scan) {
