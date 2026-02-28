@@ -13,7 +13,7 @@ Guidance for AI IDE/CLI agents working in this repository.
 - `README.md` (theme user-facing setup)
 - `docs/ARCHITECTURE.md` (system overview)
 - `docs/VISUAL_SYSTEMS.md` (route-specific style behavior)
-- `src/config/*.ts` (customization surface)
+- `src/site.config.ts` (single customization entry)
 
 ## Commands
 
@@ -27,10 +27,10 @@ No dedicated lint/test scripts are currently configured.
 
 ## Safe Edit Areas
 
-- Theme behavior: `src/config/theme.ts`
-- About content/modals: `src/config/about.ts`
-- Social links: `src/config/social.ts`
-- Site identity: `src/config/site.ts`
+- Theme behavior: `src/site.config.ts` -> `theme`
+- About content/modals: `src/site.config.ts` -> `about`
+- Social links: `src/site.config.ts` -> `social.links`
+- Site identity: `src/site.config.ts` -> `site`
 - Content: `src/content/blog/<locale>/`
 
 ## High-Risk Areas

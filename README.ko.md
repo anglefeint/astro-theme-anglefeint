@@ -154,17 +154,17 @@ npm run new-page -- projects --theme matrix
 ## 테마 설정
 
 1. `.env.example` 를 `.env` 로 복사하고 사이트 정보를 설정합니다.
-2. `src/config/social.ts` 에서 소셜 링크를 수정합니다.
-3. `src/config/about.ts` 에서 About 콘텐츠를 수정합니다.
-4. `src/config/theme.ts` 의 `ENABLE_ABOUT_PAGE` 로 About 노출을 제어합니다.
-5. `src/content/blog/<locale>/` 의 샘플 글을 교체합니다.
+2. `src/site.config.ts` 를 수정합니다:
+   - `social.links`: 소셜 링크
+   - `about`: About 콘텐츠와 런타임 문구
+   - `theme.enableAboutPage`: About 노출 제어
+3. `src/content/blog/<locale>/` 의 샘플 글을 교체합니다.
 
 ## 설정 표면
 
-- 사이트 정보: `src/config/site.ts` (또는 `PUBLIC_*` 환경 변수)
-- 테마 동작: `src/config/theme.ts`
-- About 콘텐츠: `src/config/about.ts`
-- 소셜 링크: `src/config/social.ts`
+- 단일 엔트리: `src/site.config.ts`
+- 어댑터 레이어(직접 수정 비권장): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
+- 사이트 정보는 `PUBLIC_*` 환경 변수로도 덮어쓸 수 있습니다
 
 ## 문서
 
