@@ -41,7 +41,7 @@ This theme uses four distinct atmospheres by route.
 
 - Hacker/terminal profile page
 - Modal-driven right sidebar tools
-- Runtime text and modal content from `src/config/about.ts`
+- Runtime text and modal content from `src/site.config.ts` (exported via `src/config/about.ts` adapter)
 - Interaction script: `public/scripts/about-effects.js`
 
 ## Naming Consistency

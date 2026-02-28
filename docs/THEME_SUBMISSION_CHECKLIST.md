@@ -40,10 +40,11 @@ Use this before submitting to an Astro theme listing/review.
   - sitemap
   - robots
 - Confirm theme remains config-driven:
-  - `src/config/site.ts`
-  - `src/config/theme.ts`
-  - `src/config/about.ts`
-  - `src/config/social.ts`
+  - `src/site.config.ts` (single user-facing entry)
+  - `src/config/site.ts` (adapter)
+  - `src/config/theme.ts` (adapter)
+  - `src/config/about.ts` (adapter)
+  - `src/config/social.ts` (adapter)
 
 ## Project-Specific Risk Checks
 

@@ -75,10 +75,11 @@ The project now follows a compositional structure:
 
 ## Configuration Surface
 
-- `src/config/site.ts`: site title, URL, author, description
-- `src/config/theme.ts`: pagination, home latest count, About toggle
-- `src/config/about.ts`: About copy and modal/effects text
-- `src/config/social.ts`: header/footer social links
+- `src/site.config.ts`: single user-facing config entry
+- `src/config/site.ts`: site adapter (env override + mapped exports)
+- `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle)
+- `src/config/about.ts`: About adapter (copy and modal/effects text)
+- `src/config/social.ts`: social adapter (header/footer social links)
 
 ## SEO and Discovery
 

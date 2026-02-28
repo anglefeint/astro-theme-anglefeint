@@ -154,17 +154,17 @@ npm run new-page -- projects --theme matrix
 ## Configuracion del tema
 
 1. Copia `.env.example` a `.env` y define la identidad del sitio.
-2. Actualiza enlaces sociales en `src/config/social.ts`.
-3. Edita el contenido de About en `src/config/about.ts`.
-4. Activa o desactiva About con `ENABLE_ABOUT_PAGE` en `src/config/theme.ts`.
-5. Reemplaza posts de ejemplo en `src/content/blog/<locale>/`.
+2. Edita `src/site.config.ts`:
+   - `social.links` para enlaces sociales
+   - `about` para contenido y textos runtime de About
+   - `theme.enableAboutPage` para activar/desactivar About
+3. Reemplaza posts de ejemplo en `src/content/blog/<locale>/`.
 
 ## Superficie de configuracion
 
-- Identidad del sitio: `src/config/site.ts` (o variables `PUBLIC_*`)
-- Comportamiento del tema: `src/config/theme.ts`
-- Contenido de About: `src/config/about.ts`
-- Enlaces sociales: `src/config/social.ts`
+- Entrada unica: `src/site.config.ts`
+- Capa adaptadora (no editar directamente): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
+- La identidad del sitio tambien se puede sobrescribir con variables `PUBLIC_*`
 
 ## Documentacion
 

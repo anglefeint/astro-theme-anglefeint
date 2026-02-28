@@ -155,18 +155,18 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 ## Theme Setup
 
 1. Copy `.env.example` to `.env` and set site identity variables.
-2. Update social links in `src/config/social.ts`.
-3. Edit About content in `src/config/about.ts`.
-4. Toggle About route/nav with `ENABLE_ABOUT_PAGE` in `src/config/theme.ts`.
-5. Replace starter posts in `src/content/blog/<locale>/`.
-6. Set your real site URL (`PUBLIC_SITE_URL` or `src/config/site.ts`) before production deploy.
+2. Edit `src/site.config.ts`:
+   - `social.links` for header/footer links
+   - `about` for About content/runtime text
+   - `theme.enableAboutPage` for About route/nav toggle
+3. Replace starter posts in `src/content/blog/<locale>/`.
+4. Set your real site URL (`PUBLIC_SITE_URL` or `src/site.config.ts`) before production deploy.
 
 ## Configuration Surface
 
-- Site identity: `src/config/site.ts` (or `PUBLIC_*` env vars)
-- Theme behavior: `src/config/theme.ts`
-- About content/runtime text: `src/config/about.ts`
-- Social links: `src/config/social.ts`
+- Single entry: `src/site.config.ts`
+- Adapters (do not edit directly): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
+- Environment override supported: `PUBLIC_*` vars for site identity
 
 ## Docs
 
