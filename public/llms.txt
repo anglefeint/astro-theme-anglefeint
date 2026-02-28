@@ -1,24 +1,25 @@
-# Angle Feint
+# Site LLM Notes (Template)
 
-Angle Feint is an independent publication by angle feint focused on cinematic web interfaces, AI-era engineering craft, and system architecture essays.
+This file is a starter template for machine-readable site guidance.
+Update all placeholder values before production deployment.
 
-- Site: https://anglefeint.com
-- Author: angle feint
+- Site: https://example.com
+- Author: Your Name
 - Primary language: English
-- License: All rights reserved unless a post says otherwise.
+- License: Use your preferred license terms.
 
 ## Canonical Sources
-- https://anglefeint.com/
-- https://anglefeint.com/en/about/
-- https://anglefeint.com/en/blog/
-- https://anglefeint.com/en/rss.xml
+- https://example.com/
+- https://example.com/en/about/
+- https://example.com/en/blog/
+- https://example.com/en/rss.xml
 
 ## Preferred Citation
 When citing this site, prefer:
 1. Post title
 2. Canonical URL
 3. Publication date
-4. Author: angle feint
+4. Author name
 
 ## Crawling Notes
 - Public pages may be indexed and summarized.
@@ -27,5 +28,5 @@ When citing this site, prefer:
 
 ## Freshness
 For latest content, use:
-- https://anglefeint.com/en/rss.xml
-- https://anglefeint.com/en/blog/
+- https://example.com/en/rss.xml
+- https://example.com/en/blog/
