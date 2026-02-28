@@ -15,6 +15,19 @@ All notable changes to this project are documented in this file.
 
 No unreleased changes yet.
 
+## [0.1.7] - 2026-02-28
+
+### Changed
+
+- Unified app page shell imports to package paths:
+  - `@anglefeint/astro-theme/layouts/shells/HackerShell.astro`
+  - `@anglefeint/astro-theme/layouts/shells/CyberShell.astro`
+- Removed duplicated app-level implementation directories:
+  - `src/layouts/`
+  - `src/components/`
+- Updated architecture/internal docs to reflect package-source-of-truth paths under `packages/theme/src/*`.
+- Starter dependency updated to `@anglefeint/astro-theme@^0.1.7`.
+
 ## [0.1.3] - 2026-02-28
 
 ### Added

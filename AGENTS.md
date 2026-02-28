@@ -35,7 +35,7 @@ No dedicated lint/test scripts are currently configured.
 
 ## High-Risk Areas
 
-- `src/components/BaseHead.astro` (canonical/hreflang/JSON-LD)
+- `packages/theme/src/components/BaseHead.astro` (canonical/hreflang/JSON-LD)
 - i18n path logic in `src/i18n/config.ts`
 - performance-heavy scripts in `public/scripts/blogpost-effects.js` and `public/scripts/about-effects.js`
 
