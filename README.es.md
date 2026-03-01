@@ -156,7 +156,7 @@ npm run new-page -- projects --theme matrix
 
 ## Caracteristicas
 
-- Salida estatica con Astro 5
+- Salida estatica con Astro 6 (beta)
 - Colecciones de contenido Markdown + MDX
 - Idiomas incluidos: `en`, `ja`, `ko`, `es`, `zh`
 - RSS por idioma

@@ -157,7 +157,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Features
 
-- Astro 5 static output
+- Astro 6 static output (beta track)
 - Markdown + MDX content collections
 - Built-in locales: `en`, `ja`, `ko`, `es`, `zh`
 - Per-locale RSS feeds

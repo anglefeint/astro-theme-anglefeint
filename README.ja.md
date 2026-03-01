@@ -156,7 +156,7 @@ npm run new-page -- projects --theme matrix
 
 ## 主な機能
 
-- Astro 5 の静的出力
+- Astro 6 の静的出力（ベータ運用）
 - Markdown + MDX コンテンツコレクション
 - 組み込みロケール: `en`, `ja`, `ko`, `es`, `zh`
 - ロケール別 RSS
