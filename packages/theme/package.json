@@ -13,6 +13,9 @@
     "matrix"
   ],
   "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "files": [
     "src/index.ts",
     "src/consts.ts",
@@ -43,6 +46,6 @@
     "./consts": "./src/consts.ts"
   },
   "peerDependencies": {
-    "astro": "^5.0.0"
+    "astro": "^5.0.0 || ^6.0.0-beta.0"
   }
 }

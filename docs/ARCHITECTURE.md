@@ -12,7 +12,7 @@ sync_targets: [README.md, CLAUDE.md]
 
 ## Stack
 
-- Framework: Astro 5
+- Framework: Astro 6 (beta track)
 - Content: Astro Content Collections (`md` + `mdx`)
 - Styling: package-owned CSS modules + scoped component styles
 - Output: static build (`astro build`)
