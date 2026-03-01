@@ -16,9 +16,7 @@ const EXCLUDE_PREFIXES = [
 	'dist/',
 ];
 
-const EXCLUDE_FILES = new Set([
-	'AGENTS.md',
-]);
+const EXCLUDE_FILES = new Set([]);
 
 function walk(dir, out = []) {
 	for (const name of readdirSync(dir)) {

@@ -1,6 +1,7 @@
 ---
 doc_id: package_readme
 doc_role: package-guide
+doc_purpose: Package-level install, upgrade, and manual integration reference for advanced users.
 doc_scope: [package-install, package-upgrade, package-usage]
 update_triggers: [package-change, command-change, export-change]
 source_of_truth: true

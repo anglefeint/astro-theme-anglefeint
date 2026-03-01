@@ -1,3 +1,13 @@
+---
+doc_id: agents_repo_guide
+doc_role: internal-guide
+doc_purpose: Repository-specific guardrails and safe-edit guidance for coding agents.
+doc_scope: [agent-guidance, commands, risk-areas, validation]
+update_triggers: [workflow-change, script-change, architecture-change, command-change]
+source_of_truth: true
+depends_on: [README.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md]
+---
+
 # AGENTS.md
 
 Guidance for AI IDE/CLI agents working in this repository.
@@ -21,9 +31,12 @@ Guidance for AI IDE/CLI agents working in this repository.
 npm run dev
 npm run build
 npm run preview
+npm run check
+npm run check:docs
+npm run lint
 ```
 
-No dedicated lint/test scripts are currently configured.
+Lint and doc metadata checks are configured.
 
 ## Safe Edit Areas
 
@@ -37,7 +50,7 @@ No dedicated lint/test scripts are currently configured.
 
 - `packages/theme/src/components/BaseHead.astro` (canonical/hreflang/JSON-LD)
 - i18n path logic in `src/i18n/config.ts`
-- performance-heavy scripts in `public/scripts/blogpost-effects.js` and `public/scripts/about-effects.js`
+- performance-heavy scripts in `packages/theme/src/scripts/blogpost-effects.js` and `packages/theme/src/scripts/about-effects.js`
 
 ## Change Checklist
 
