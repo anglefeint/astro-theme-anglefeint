@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
