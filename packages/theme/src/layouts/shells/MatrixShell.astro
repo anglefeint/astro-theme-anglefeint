@@ -1,6 +1,7 @@
 ---
 import type { Locale } from '@anglefeint/site-i18n/config';
 import ThemeFrame from '../../components/shared/ThemeFrame.astro';
+import homePageCssUrl from '../../styles/home-page.css?url';
 
 interface Props {
 	locale?: Locale;
@@ -12,7 +13,7 @@ const { locale, title, description } = Astro.props as Props;
 ---
 
 <ThemeFrame locale={locale} title={title} description={description} bodyClass="page-home" mainClass="page-main home-content">
-	<link slot="head" rel="stylesheet" href="/styles/home-page.css" />
+	<link slot="head" rel="stylesheet" href={homePageCssUrl} />
 	<canvas slot="body-start" id="matrix-bg" aria-hidden="true"></canvas>
 	<Fragment slot="body-end">
 		<script>

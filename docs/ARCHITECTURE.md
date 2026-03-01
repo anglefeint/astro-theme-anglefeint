@@ -14,15 +14,15 @@ sync_targets: [README.md, CLAUDE.md]
 
 - Framework: Astro 5
 - Content: Astro Content Collections (`md` + `mdx`)
-- Styling: global CSS + page CSS + scoped styles
+- Styling: package-owned CSS modules + scoped component styles
 - Output: static build (`astro build`)
 
 ## Runtime Model
 
 - Most pages are statically generated at build time.
-- Interactivity is implemented with lightweight vanilla scripts in `public/scripts/`.
+- Interactivity is implemented with lightweight vanilla scripts in `packages/theme/src/scripts/` (bundled via Vite modules).
 - No API routes and no SSR runtime required.
-- Blog post side monitor runtime is stateful and event-driven in `public/scripts/blogpost-effects.js` (`initRedQueenTv`).
+- Blog post side monitor runtime is stateful and event-driven in `packages/theme/src/scripts/blogpost-effects.js` (`initRedQueenTv`).
 
 ## Layered Theme Architecture
 

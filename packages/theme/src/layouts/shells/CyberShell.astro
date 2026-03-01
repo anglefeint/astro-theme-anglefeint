@@ -1,6 +1,8 @@
 ---
 import type { Locale } from '@anglefeint/site-i18n/config';
 import ThemeFrame from '../../components/shared/ThemeFrame.astro';
+import themeCyberCssUrl from '../../styles/theme-cyber.css?url';
+import blogListCssUrl from '../../styles/blog-list.css?url';
 
 interface Props {
 	locale?: Locale;
@@ -13,7 +15,8 @@ const { locale, title, description, localeHrefs } = Astro.props as Props;
 ---
 
 <ThemeFrame locale={locale} title={title} description={description} bodyClass="cyber-page" mainClass="page-main cyber-content" localeHrefs={localeHrefs}>
-	<link slot="head" rel="stylesheet" href="/styles/theme-cyber.css" />
+	<link slot="head" rel="stylesheet" href={themeCyberCssUrl} />
+	<link slot="head" rel="stylesheet" href={blogListCssUrl} />
 	<Fragment slot="body-start">
 		<div class="cyber-load-glitch" aria-hidden="true"></div>
 		<div class="cyber-spotlight" aria-hidden="true">

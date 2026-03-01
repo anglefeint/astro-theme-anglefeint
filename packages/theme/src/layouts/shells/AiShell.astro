@@ -2,6 +2,7 @@
 import type { Locale } from '@anglefeint/site-i18n/config';
 import ThemeFrame from '../../components/shared/ThemeFrame.astro';
 import type { ImageMetadata } from 'astro';
+import themeAiCssUrl from '../../styles/theme-ai.css?url';
 
 interface Props {
 	locale?: Locale;
@@ -51,7 +52,7 @@ const {
 	scanlines
 	localeHrefs={localeHrefs}
 >
-	<link slot="head" rel="stylesheet" href="/styles/theme-ai.css" />
+	<link slot="head" rel="stylesheet" href={themeAiCssUrl} />
 	<slot name="head" slot="head" />
 	<slot name="body-start" slot="body-start" />
 	<slot />

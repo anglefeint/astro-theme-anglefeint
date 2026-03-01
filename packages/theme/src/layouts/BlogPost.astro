@@ -5,6 +5,7 @@ import themeRedqueen1 from '../assets/theme/red-queen/theme-redqueen1.webp';
 import themeRedqueen2 from '../assets/theme/red-queen/theme-redqueen2.gif';
 import FormattedDate from '../components/FormattedDate.astro';
 import AiShell from './shells/AiShell.astro';
+import blogPostCssUrl from '../styles/blog-post.css?url';
 import { SITE_AUTHOR } from '@anglefeint/site-config/site';
 import { DEFAULT_LOCALE, type Locale, isLocale, localePath, blogIdToSlugAnyLocale } from '@anglefeint/site-i18n/config';
 import { getMessages } from '@anglefeint/site-i18n/messages';
@@ -62,7 +63,7 @@ const confidenceText = aiConfidence !== undefined ? aiConfidence.toFixed(2) : un
 	tags={tags}
 	localeHrefs={localeHrefs}
 >
-	<link slot="head" rel="stylesheet" href="/styles/blog-post.css" />
+	<link slot="head" rel="stylesheet" href={blogPostCssUrl} />
 	<Fragment slot="body-start">
 		<div class="ai-bg" aria-hidden="true">
 			<div class="ai-glow ai-glow-shift"></div>

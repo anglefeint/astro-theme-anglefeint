@@ -15,20 +15,20 @@ This theme uses four distinct atmospheres by route.
 ## 1) Home (`body.page-home`)
 
 - Matrix-style terminal landing
-- Canvas character rain (`public/scripts/home-matrix.js`)
+- Canvas character rain (`packages/theme/src/scripts/home-matrix.js`)
 - Green-tinted glass panel with scanline overlays
 
 ## 2) Blog List (`body.cyber-page`)
 
 - Cyberpunk archive mood (rain, haze, glow)
-- Most effects are CSS-driven in `src/styles/global.css`
+- Most effects are CSS-driven in `packages/theme/src/styles/theme-cyber.css`
 - Paginated card grid for posts
 
 ## 3) Blog Post (`body.ai-page`)
 
 - AI-interface reading environment
 - AI network background, reading progress, reveal effects
-- Hero canvas processing + side monitor effects via `public/scripts/blogpost-effects.js`
+- Hero canvas processing + side monitor effects via `packages/theme/src/scripts/blogpost-effects.js`
 - Left monitor (`.rq-tv`) playback contract:
   - Auto run once after page load (`500ms` delayed start) when assets are ready.
   - Monitor opens only for playback, then collapses back to a small replay button.
@@ -43,7 +43,7 @@ This theme uses four distinct atmospheres by route.
 - Hacker/terminal profile page
 - Modal-driven right sidebar tools
 - Runtime text and modal content from `src/site.config.ts` (exported via `src/config/about.ts` adapter)
-- Interaction script: `public/scripts/about-effects.js`
+- Interaction script: `packages/theme/src/scripts/about-effects.js`
 
 ## Naming Consistency
 

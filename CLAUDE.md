@@ -83,6 +83,6 @@ Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined 
 
 - Animations respect `prefers-reduced-motion` media query.
 - Images are optimized via `sharp` and Astro's `Image` component (stored in `src/assets/`).
-- Global styles in `src/styles/global.css`; page-specific styles live in `public/styles/*.css` plus scoped styles in `.astro` files.
+- Global styles in `src/styles/global.css`; page-specific styles are package-owned under `packages/theme/src/styles/*.css` and consumed via module imports plus scoped styles in `.astro` files.
 - Header social region is hidden on small screens (`max-width: 720px`), so language/social UI is desktop-first.
 - Site is purely static (no API endpoints, no SSR).

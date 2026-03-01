@@ -1,6 +1,7 @@
 ---
 import type { Locale } from '@anglefeint/site-i18n/config';
 import ThemeFrame from '../../components/shared/ThemeFrame.astro';
+import aboutPageCssUrl from '../../styles/about-page.css?url';
 
 interface Props {
 	locale?: Locale;
@@ -13,7 +14,7 @@ const { locale, title, description, bodyClass = 'hacker-page' } = Astro.props as
 ---
 
 <ThemeFrame locale={locale} title={title} description={description} bodyClass={bodyClass} mainClass="page-main hacker-content">
-	<link slot="head" rel="stylesheet" href="/styles/about-page.css" />
+	<link slot="head" rel="stylesheet" href={aboutPageCssUrl} />
 	<slot name="head" slot="head" />
 	<slot name="body-start" slot="body-start" />
 	<slot />
