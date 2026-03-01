@@ -15,6 +15,14 @@ All notable changes to this project are documented in this file.
 
 No unreleased changes yet.
 
+## [0.1.14] - 2026-03-01
+
+### Changed
+
+- Migrated theme CSS source-of-truth to `packages/theme/src/styles/*` and removed duplicated app/public CSS copies.
+- Updated shells and post layout to load theme CSS through Vite URL imports (`?url`) for hashed build assets.
+- Attached blog list pagination styles from `CyberShell` so package consumers always receive consistent archive styling.
+
 ## [0.1.13] - 2026-03-01
 
 ### Fixed
