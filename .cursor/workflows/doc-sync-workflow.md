@@ -67,6 +67,7 @@ Run this workflow when any of these change:
 - Routing/i18n/SEO behavior
 - Deployment or packaging workflow
 - Branch strategy or install path changes (`main` vs `starter`)
+- Internal agent guidance drift (`CLAUDE.md`, `AGENTS.md`) after architecture/script/config changes
 
 ## Execution
 
@@ -85,6 +86,7 @@ Run this workflow when any of these change:
 5. Impact analysis:
    - Analyze code diff / requested change domains.
    - Select direct-hit docs where `doc_scope` or `update_triggers` match.
+   - Force-include `CLAUDE.md` when architecture, scripts path, config surface, or runtime behavior changed.
 6. Propagation:
    - Add dependent docs through graph traversal.
    - Multi-language sync docs are always included when source doc changes.

@@ -17,8 +17,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Header social links now use `SOCIAL_LINKS` from `src/site.config.ts` via config adapter exports.
 - About route generation and nav visibility are gated by `ENABLE_ABOUT_PAGE`.
 - `src/site.config.ts` is the single user-facing config entry; `src/config/*.ts` are adapter exports consumed by pages/components.
-- `public/scripts/about-effects.js` consumes runtime config injected by `src/pages/[lang]/about.astro`.
+- Theme effects scripts are source-managed under `packages/theme/src/scripts/*` and bundled by Vite module pipeline.
 - Page imports are unified to package paths (`@anglefeint/astro-theme/*`) and local duplicated `src/layouts`/`src/components` were removed from app-level source.
+- Blog post background network now uses `<canvas>` (not SSR SVG node mesh) with FPS/DPR/visibility/reduced-motion guards.
+- Language switcher styles are component-local (`LangSwitcher.astro`) and themed via CSS variables from `CommonHeader.astro`.
+- If `social.links` is empty, header/footer render non-clickable placeholder social icons (plus dev hint in footer).
 
 ## Commands
 
@@ -26,9 +29,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev        # Start dev server at localhost:4321
 npm run build      # Production build to ./dist/
 npm run preview    # Preview production build locally
+npm run check      # Doc metadata check + astro check
+npm run check:docs # Validate markdown metadata workflow contract
 ```
 
-No test or lint commands are configured.
+No dedicated unit/E2E/lint scripts are configured yet.
 
 ## Architecture
 
@@ -42,7 +47,7 @@ Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined 
 
 - **Home (`/`)** — Matrix falling characters (canvas), body class `page-home`; `/en/` redirects to `/` with noindex
 - **Blog list (`/:lang/blog/`)** — Blade Runner cyberpunk (rain, dust), body class `cyber-page`
-- **Article (`/:lang/blog/[slug]`)** — AI interface reading layout (58-node network), read progress, Red Queen monitor, `ai-scanlines` on header/footer only (fade on hover), body class `ai-page`. Hero canvas + Red Queen TV: CRT horizontal retrace/dropout (occasional black line flash, starts 6s after load, ~2.5% frames).
+- **Article (`/:lang/blog/[slug]`)** — AI interface reading layout, read progress, Red Queen monitor, `ai-scanlines` on header/footer only (fade on hover), body class `ai-page`. Background network is canvas-rendered (client-side), with capped DPR/FPS and hidden-tab pause/resume.
 - **About (`/:lang/about`)** — Anonymous-style terminal (black/green), body class `hacker-page`. Right sidebar with folder buttons opening modals: DL Data, AI, Decryptor, Help (virtual keyboard), All Scripts (folder grid of blog posts). Generated only when `ENABLE_ABOUT_PAGE` is `true`.
 
 ### Key Files
@@ -54,8 +59,12 @@ Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined 
 - `src/config/about.ts` — About adapter exports
 - `src/consts.ts` — Re-exports from config (backwards compat)
 - `src/pages/[lang]/about.astro` — About page: terminal canvas, sidebar, modals, `getCollection('blog')` for All Scripts
-- `packages/theme/src/layouts/BlogPost.astro` — Post detail layout: AI surface, progress bar, related posts, Red Queen monitor; CRT dropout in `public/scripts/blogpost-effects.js` (hero + Red Queen TV)
+- `packages/theme/src/layouts/BlogPost.astro` — Post detail layout: AI surface, progress bar, related posts, Red Queen monitor, canvas network layer
+- `packages/theme/src/scripts/blogpost-effects.js` — Legacy bridge entry (module-bundled) for post behavior
+- `packages/theme/src/scripts/about-effects.js` — About page effects (module-bundled)
+- `packages/theme/src/scripts/home-matrix.js` — Home matrix canvas runtime
 - `packages/theme/src/components/shared/ThemeFrame.astro` — Shared document shell (head + header + footer + main container)
+- `packages/theme/src/components/shared/LangSwitcher.astro` — Locale switcher UI + local scoped styles
 - `packages/theme/src/layouts/shells/*.astro` — Theme shells (`BaseShell`, `AiShell`, `CyberShell`, `HackerShell`, `MatrixShell`)
 - `src/pages/[lang]/blog/[...page].astro` — Paginated blog list (THEME.BLOG_PAGE_SIZE)
 - `src/pages/index.astro` — Root home; `src/pages/[lang]/index.astro` — Localized home (/en/ redirects to /)
@@ -75,4 +84,5 @@ Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined 
 - Animations respect `prefers-reduced-motion` media query.
 - Images are optimized via `sharp` and Astro's `Image` component (stored in `src/assets/`).
 - Global styles in `src/styles/global.css`; page-specific styles live in `public/styles/*.css` plus scoped styles in `.astro` files.
+- Header social region is hidden on small screens (`max-width: 720px`), so language/social UI is desktop-first.
 - Site is purely static (no API endpoints, no SSR).
