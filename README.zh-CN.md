@@ -156,7 +156,7 @@ npm run new-page -- projects --theme matrix
 
 ## 功能特性
 
-- Astro 5 静态输出
+- Astro 6 静态输出（beta 轨道）
 - Markdown + MDX 内容集合
 - 内置语言：`en`、`ja`、`ko`、`es`、`zh`
 - 按语言生成 RSS

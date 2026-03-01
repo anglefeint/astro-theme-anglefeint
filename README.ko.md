@@ -156,7 +156,7 @@ npm run new-page -- projects --theme matrix
 
 ## 주요 기능
 
-- Astro 5 정적 출력
+- Astro 6 정적 출력 (beta 트랙)
 - Markdown + MDX 콘텐츠 컬렉션
 - 기본 로케일: `en`, `ja`, `ko`, `es`, `zh`
 - 로케일별 RSS 피드

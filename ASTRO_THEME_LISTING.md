@@ -42,7 +42,7 @@ Anglefeint 是一个具备电影感叙事节奏的 Astro 主题系统，将不�
 
 ## Key Features (EN)
 
-- Astro 5 static output
+- Astro 6 static output (beta track)
 - MD + MDX content collections
 - Locale routes (`en`, `ja`, `ko`, `es`, `zh`)
 - Route-specific atmosphere system
@@ -52,7 +52,7 @@ Anglefeint 是一个具备电影感叙事节奏的 Astro 主题系统，将不�
 
 ## 核心特性 (ZH)
 
-- 基于 Astro 5 静态输出
+- 基于 Astro 6 静态输出（beta 轨道）
 - 支持 MD + MDX 内容集合
 - 多语言路由（`en`、`ja`、`ko`、`es`、`zh`）
 - 按路由切换视觉氛围系统

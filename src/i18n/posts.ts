@@ -9,4 +9,3 @@ export function postsForLocale(posts: CollectionEntry<'blog'>[], locale: Locale)
 		.filter((post) => post.id.startsWith(`${locale}/`))
 		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
-
