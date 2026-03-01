@@ -13,6 +13,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+No unreleased changes yet.
+
+## [0.1.15] - 2026-03-01
+
 ### Changed
 
 - Refactored theme effects scripts into smaller runtime modules under:
