@@ -141,4 +141,6 @@ The project now follows a compositional structure:
 npm run dev
 npm run build
 npm run preview
+npm run lint
+npm run format:check
 ```

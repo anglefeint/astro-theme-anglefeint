@@ -58,6 +58,13 @@ npm run build
 npm run preview
 ```
 
+品質チェック:
+
+```bash
+npm run lint
+npm run format:check
+```
+
 `pnpm` を使う場合:
 
 ```bash
