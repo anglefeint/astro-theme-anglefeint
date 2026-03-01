@@ -13,7 +13,17 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
-No unreleased changes yet.
+### Changed
+
+- Refactored theme effects scripts into smaller runtime modules under:
+  - `packages/theme/src/scripts/blogpost/*`
+  - `packages/theme/src/scripts/about/*`
+- Replaced About page script-folder `set:html` string injection with component-rendered Astro markup.
+- Added lint/format toolchain (`eslint` + `prettier`) with commands:
+  - `npm run lint`
+  - `npm run lint:fix`
+  - `npm run format`
+  - `npm run format:check`
 
 ## [0.1.14] - 2026-03-01
 

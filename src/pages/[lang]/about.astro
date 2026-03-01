@@ -32,13 +32,6 @@ const allPosts = await getCollection('blog');
 const blogPosts = postsForLocale(allPosts, locale)
 	.map((p) => ({ slug: blogIdToSlugAnyLocale(p.id), title: p.data.title ?? p.id }));
 
-const scriptsFoldersHtml = blogPosts
-	.map(
-		(p) =>
-			`<a href="${localePath(locale, `/blog/${p.slug}`)}" class="hacker-script-folder"><svg class="hacker-script-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h8l2 2h10v12H2V4z"/></svg><span class="hacker-script-folder-label">${String(p.title).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')}</span></a>`
-	)
-	.join('');
-
 const escapeHtml = (value: string): string =>
 	value
 		.replace(/&/g, '&amp;')
@@ -95,7 +88,7 @@ const aboutRuntimeConfig = {
 		},
 	},
 };
-const aboutRuntimeConfigJson = JSON.stringify(aboutRuntimeConfig).replace(/</g, '\\u003c');
+void aboutRuntimeConfig;
 ---
 
 <HackerShell locale={locale} title={pageTitle} description={pageDescription} bodyClass="hacker-page about-page">
@@ -143,12 +136,23 @@ const aboutRuntimeConfigJson = JSON.stringify(aboutRuntimeConfig).replace(/</g, 
 				<span>{ABOUT_CONFIG.sidebar.allScripts}</span>
 			</button>
 		</nav>
-		<template id="hacker-scripts-folders-tpl">
+		<div id="hacker-scripts-folders-tpl" hidden aria-hidden="true">
 			<div class="hacker-modal-scripts">
 				<div class="hacker-modal-scripts-path">{ABOUT_CONFIG.scriptsPath}</div>
-				<div class="hacker-modal-scripts-grid" set:html={scriptsFoldersHtml}></div>
+				<div class="hacker-modal-scripts-grid">
+					{
+						blogPosts.map((post) => (
+							<a href={localePath(locale, `/blog/${post.slug}`)} class="hacker-script-folder">
+								<svg class="hacker-script-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
+									<path d="M2 4h8l2 2h10v12H2V4z" />
+								</svg>
+								<span class="hacker-script-folder-label">{post.title}</span>
+							</a>
+						))
+					}
+				</div>
 			</div>
-		</template>
+		</div>
 		<div class="hacker-modal-overlay" id="hacker-modal" aria-hidden="true">
 			<div class="hacker-modal" role="dialog" aria-modal="true" aria-labelledby="hacker-modal-title">
 				<div class="hacker-modal-header">
@@ -214,7 +218,9 @@ const aboutRuntimeConfigJson = JSON.stringify(aboutRuntimeConfig).replace(/</g, 
 			</div>
 	</article>
 	<Fragment slot="body-end">
-		<script is:inline id="hacker-runtime-config" type="application/json" set:html={aboutRuntimeConfigJson}></script>
+		<script is:inline id="hacker-runtime-config" type="application/json">
+			{JSON.stringify(aboutRuntimeConfig).replace(/</g, '\\u003c')}
+		</script>
 		<script>
 			import { initAboutEffects } from '@anglefeint/astro-theme/scripts/about-effects.js';
 			initAboutEffects();

@@ -59,6 +59,13 @@ npm run build
 npm run preview
 ```
 
+Quality commands:
+
+```bash
+npm run lint
+npm run format:check
+```
+
 With `pnpm`:
 
 ```bash

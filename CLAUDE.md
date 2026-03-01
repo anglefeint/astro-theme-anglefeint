@@ -31,9 +31,9 @@ npm run build      # Production build to ./dist/
 npm run preview    # Preview production build locally
 npm run check      # Doc metadata check + astro check
 npm run check:docs # Validate markdown metadata workflow contract
+npm run lint       # Lint JS/MJS tool scripts
+npm run format     # Prettier write mode
 ```
-
-No dedicated unit/E2E/lint scripts are configured yet.
 
 ## Architecture
 
