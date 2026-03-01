@@ -9,7 +9,8 @@
       "@anglefeint/site-config": ["src/config/index.ts"],
       "@anglefeint/site-config/*": ["src/config/*"],
       "@anglefeint/site-i18n": ["src/i18n/config.ts"],
-      "@anglefeint/site-i18n/*": ["src/i18n/*"]
+      "@anglefeint/site-i18n/*": ["src/i18n/*"],
+      "@anglefeint/theme-default-i18n": ["node_modules/@anglefeint/astro-theme/src/i18n/messages.ts"]
     }
   }
 }

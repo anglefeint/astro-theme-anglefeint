@@ -13,7 +13,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
-No unreleased changes yet.
+### Changed
+
+- Added Astro v6 beta compatibility updates:
+  - root dependencies moved to Astro 6 beta + official integration beta versions
+  - content schema migrated from `astro:content` `z` import to `astro/zod`
+  - theme package peer dependency widened to `^5.0.0 || ^6.0.0-beta.0`
+- Updated Node.js requirement to `22.12.0+` for v6 compatibility.
 
 ## [0.1.15] - 2026-03-01
 

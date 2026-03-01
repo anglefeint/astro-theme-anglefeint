@@ -20,8 +20,8 @@ depends_on: [README.md]
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-5.x-BC52EE?logo=astro&logoColor=white" />
-  <img alt="Node" src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.0.0--beta.17-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
@@ -41,7 +41,7 @@ pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
 
 ## Requisitos
 
-- Node.js `18+` (LTS recomendado)
+- Node.js `22.12.0+` (LTS recomendado)
 - Gestor de paquetes: `npm`, `pnpm`, `yarn` o `bun`
 
 ## Inicio rapido
@@ -156,7 +156,7 @@ npm run new-page -- projects --theme matrix
 
 ## Caracteristicas
 
-- Salida estatica con Astro 5
+- Salida estatica con Astro 6 (beta)
 - Colecciones de contenido Markdown + MDX
 - Idiomas incluidos: `en`, `ja`, `ko`, `es`, `zh`
 - RSS por idioma

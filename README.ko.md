@@ -20,8 +20,8 @@ depends_on: [README.md]
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-5.x-BC52EE?logo=astro&logoColor=white" />
-  <img alt="Node" src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.0.0--beta.17-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
@@ -41,7 +41,7 @@ pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
 
 ## 요구 사항
 
-- Node.js `18+` (LTS 권장)
+- Node.js `22.12.0+` (LTS 권장)
 - 패키지 매니저: `npm`, `pnpm`, `yarn`, `bun`
 
 ## 빠른 시작
@@ -156,7 +156,7 @@ npm run new-page -- projects --theme matrix
 
 ## 주요 기능
 
-- Astro 5 정적 출력
+- Astro 6 정적 출력 (beta 트랙)
 - Markdown + MDX 콘텐츠 컬렉션
 - 기본 로케일: `en`, `ja`, `ko`, `es`, `zh`
 - 로케일별 RSS 피드

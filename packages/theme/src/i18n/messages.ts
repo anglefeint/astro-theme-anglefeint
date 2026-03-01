@@ -1,6 +1,6 @@
 import type { Locale } from './config';
 
-type Messages = {
+export type Messages = {
 	siteTitle: string;
 	siteDescription: string;
 	langLabel: string;
@@ -39,7 +39,7 @@ type Messages = {
 	};
 };
 
-const MESSAGES: Record<Locale, Messages> = {
+export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
 	en: {
 		siteTitle: 'Angle Feint',
 		siteDescription: 'Cinematic web interfaces and AI-era engineering essays.',
@@ -208,5 +208,5 @@ const MESSAGES: Record<Locale, Messages> = {
 };
 
 export function getMessages(locale: Locale): Messages {
-	return MESSAGES[locale];
+	return DEFAULT_MESSAGES[locale];
 }

@@ -20,8 +20,8 @@ depends_on: [README.md]
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-5.x-BC52EE?logo=astro&logoColor=white" />
-  <img alt="Node" src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.0.0--beta.17-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
@@ -41,7 +41,7 @@ pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
 
 ## 环境要求
 
-- Node.js `18+`（建议 LTS）
+- Node.js `22.12.0+`（建议 LTS）
 - 包管理器：`npm`、`pnpm`、`yarn` 或 `bun`
 
 ## 快速开始
@@ -156,7 +156,7 @@ npm run new-page -- projects --theme matrix
 
 ## 功能特性
 
-- Astro 5 静态输出
+- Astro 6 静态输出（beta 轨道）
 - Markdown + MDX 内容集合
 - 内置语言：`en`、`ja`、`ko`、`es`、`zh`
 - 按语言生成 RSS

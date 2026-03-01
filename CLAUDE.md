@@ -37,7 +37,7 @@ npm run format     # Prettier write mode
 
 ## Architecture
 
-This is a static site built with **Astro 5** using content collections, MDX, and vanilla CSS. No Tailwind — styling is split across global CSS, external page CSS files, and scoped `<style>` blocks.
+This is a static site built with **Astro 6 (beta track)** using content collections, MDX, and vanilla CSS. No Tailwind — styling is split across global CSS, external page CSS files, and scoped `<style>` blocks.
 
 ### Content Pipeline
 

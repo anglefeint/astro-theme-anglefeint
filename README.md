@@ -21,8 +21,8 @@ sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-5.x-BC52EE?logo=astro&logoColor=white" />
-  <img alt="Node" src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.0.0--beta.17-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
@@ -42,7 +42,7 @@ pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
 
 ## Requirements
 
-- Node.js `18+` (LTS recommended)
+- Node.js `22.12.0+` (LTS recommended)
 - Package manager: `npm`, `pnpm`, `yarn`, or `bun`
 
 ## Quick Start
@@ -157,7 +157,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Features
 
-- Astro 5 static output
+- Astro 6 static output (beta track)
 - Markdown + MDX content collections
 - Built-in locales: `en`, `ja`, `ko`, `es`, `zh`
 - Per-locale RSS feeds
