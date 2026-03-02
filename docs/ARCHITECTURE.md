@@ -78,7 +78,7 @@ The project now follows a compositional structure:
 
 - `src/site.config.ts`: single user-facing config entry
 - `src/config/site.ts`: site adapter (env override + mapped exports)
-- `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle)
+- `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle, effect switches such as `enableRedQueen`)
 - `src/config/about.ts`: About adapter (copy and modal/effects text)
 - `src/config/social.ts`: social adapter (header/footer social links)
 

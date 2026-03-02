@@ -187,6 +187,7 @@ npm run new-page -- projects --theme matrix
    - `social.links` para enlaces sociales
    - `about` para contenido y textos runtime de About
    - `theme.enableAboutPage` para activar/desactivar About
+   - `theme.effects.enableRedQueen` para activar/desactivar el monitor lateral en posts
 3. Reemplaza posts de ejemplo en `src/content/blog/<locale>/`.
 
 ## Superficie de configuracion

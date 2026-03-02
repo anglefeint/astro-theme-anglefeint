@@ -188,6 +188,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
    - `social.links` for header/footer links
    - `about` for About content/runtime text
    - `theme.enableAboutPage` for About route/nav toggle
+   - `theme.effects.enableRedQueen` to enable/disable the post-side monitor effect
 3. Replace starter posts in `src/content/blog/<locale>/`.
 4. Set your real site URL (`PUBLIC_SITE_URL` or `src/site.config.ts`) before production deploy.
 

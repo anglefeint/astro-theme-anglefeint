@@ -187,6 +187,7 @@ npm run new-page -- projects --theme matrix
    - `social.links`: SNS リンク
    - `about`: About コンテンツとランタイム文言
    - `theme.enableAboutPage`: About の表示切り替え
+   - `theme.effects.enableRedQueen`: 記事ページのサイドモニター演出をオン/オフ
 3. `src/content/blog/<locale>/` のサンプル記事を差し替え。
 
 ## 設定ポイント

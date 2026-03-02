@@ -187,6 +187,7 @@ npm run new-page -- projects --theme matrix
    - `social.links`: 소셜 링크
    - `about`: About 콘텐츠와 런타임 문구
    - `theme.enableAboutPage`: About 노출 제어
+   - `theme.effects.enableRedQueen`: 글 상세 사이드 모니터 이펙트 on/off
 3. `src/content/blog/<locale>/` 의 샘플 글을 교체합니다.
 
 ## 설정 표면

@@ -187,6 +187,7 @@ npm run new-page -- projects --theme matrix
    - `social.links`：社交链接
    - `about`：About 页面内容与运行文案
    - `theme.enableAboutPage`：About 页面开关
+   - `theme.effects.enableRedQueen`：开启/关闭文章页侧边监视器特效
 3. 在 `src/content/blog/<locale>/` 替换示例文章。
 
 ## 配置入口
