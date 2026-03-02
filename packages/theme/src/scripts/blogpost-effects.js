@@ -17,6 +17,8 @@ export function initBlogpostEffects() {
   initReadProgressAndBackToTop(prefersReducedMotion);
   initNetworkCanvas(prefersReducedMotion);
   initHeroCanvas(prefersReducedMotion);
-  initRedQueenTv(prefersReducedMotion);
+  if (document.querySelector('.rq-tv-stage')) {
+    initRedQueenTv(prefersReducedMotion);
+  }
   initPostInteractions(prefersReducedMotion);
 }

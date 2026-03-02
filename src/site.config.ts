@@ -2,6 +2,7 @@
  * Single user-facing config entry for Anglefeint.
  * Edit this file only. Other files under src/config/* and src/i18n/* are adapters.
  */
+import { deepMerge, type DeepPartial } from '@anglefeint/astro-theme/utils/merge';
 
 export type LocaleCode = 'en' | 'ja' | 'ko' | 'es' | 'zh';
 
@@ -10,14 +11,6 @@ export interface SocialLink {
 	label: string;
 	icon?: 'mastodon' | 'twitter' | 'github';
 }
-
-type DeepPartial<T> = {
-	[K in keyof T]?: T[K] extends Array<infer U>
-		? Array<DeepPartial<U>>
-		: T[K] extends object
-			? DeepPartial<T[K]>
-			: T[K];
-};
 
 export interface ThemeConfig {
 	site: {
@@ -32,6 +25,9 @@ export interface ThemeConfig {
 		blogPageSize: number;
 		homeLatestCount: number;
 		enableAboutPage: boolean;
+		effects: {
+			enableRedQueen: boolean;
+		};
 	};
 	i18n: {
 		defaultLocale: LocaleCode;
@@ -121,6 +117,9 @@ const defaultThemeConfig: ThemeConfig = {
 		blogPageSize: 9,
 		homeLatestCount: 3,
 		enableAboutPage: true,
+		effects: {
+			enableRedQueen: true,
+		},
 	},
 	i18n: {
 		defaultLocale: 'en',
@@ -219,29 +218,6 @@ const defaultThemeConfig: ThemeConfig = {
 	},
 };
 
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-	return Object.prototype.toString.call(value) === '[object Object]';
-}
-
-function deepMerge<T>(base: T, override: DeepPartial<T>): T {
-	if (!isPlainObject(base) || !isPlainObject(override)) return (override as T) ?? base;
-	const result: Record<string, unknown> = { ...(base as Record<string, unknown>) };
-	for (const [key, value] of Object.entries(override)) {
-		if (value === undefined) continue;
-		const existing = result[key];
-		if (Array.isArray(value)) {
-			result[key] = value;
-			continue;
-		}
-		if (isPlainObject(existing) && isPlainObject(value)) {
-			result[key] = deepMerge(existing, value);
-			continue;
-		}
-		result[key] = value;
-	}
-	return result as T;
-}
-
 export function defineThemeConfig(config: DeepPartial<ThemeConfig>): ThemeConfig {
 	return deepMerge(defaultThemeConfig, config);
 }
@@ -254,4 +230,3 @@ export const THEME_CONFIG = defineThemeConfig({
 	// Example:
 	// site: { title: "Bruce's VoidTemple" },
 });
-

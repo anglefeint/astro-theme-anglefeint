@@ -8,4 +8,8 @@ export const THEME = {
 	HOME_LATEST_COUNT: 3,
 	/** Whether to enable the About page (disable to hide from nav/routes if needed) */
 	ENABLE_ABOUT_PAGE: true,
+	/** Optional visual effects switches */
+	EFFECTS: {
+		ENABLE_RED_QUEEN: true,
+	},
 } as const;

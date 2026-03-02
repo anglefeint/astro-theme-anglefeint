@@ -82,6 +82,9 @@ For projects created from `#starter`, upgrade with:
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run doctor
+# if doctor reports adapter drift:
+# npm run sync-adapters
 npm run check
 npm run build
 ```
@@ -101,6 +104,13 @@ npm run new-post -- my-first-post
 
 Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-post`).
 If default covers exist in `src/assets/blog/default-covers/`, a stable cover is auto-assigned by slug hash (you can replace `heroImage` later).
+Optional locale override:
+
+```bash
+npm run new-post -- my-first-post --locales en,ja
+# or
+ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+```
 
 How URL works:
 - File: `src/content/blog/en/my-first-post.md`

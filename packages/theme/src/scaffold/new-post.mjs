@@ -3,7 +3,48 @@ import { readdir } from 'node:fs/promises';
 import { hashString, normalizePathForFrontmatter, toTitleFromSlug, validatePostSlug } from './shared.mjs';
 
 export function usageNewPost() {
-	return 'Usage: npm run new-post -- <slug>';
+	return 'Usage: npm run new-post -- <slug> [--locales en,ja,ko,es,zh]';
+}
+
+export function parseNewPostArgs(argv) {
+	const args = argv.slice(2);
+	const positional = [];
+	let locales = '';
+
+	for (let i = 0; i < args.length; i += 1) {
+		const token = args[i];
+		if (token === '--locales') {
+			locales = args[i + 1] ?? '';
+			i += 1;
+			continue;
+		}
+		positional.push(token);
+	}
+
+	return { slug: positional[0], locales };
+}
+
+export function resolveLocales({ cliLocales, envLocales, defaultLocales }) {
+	const raw = cliLocales || envLocales || '';
+	if (!raw) return [...defaultLocales];
+
+	const parsed = raw
+		.split(',')
+		.map((locale) => locale.trim())
+		.filter(Boolean)
+		.map((locale) => locale.toLowerCase());
+
+	if (parsed.length === 0) {
+		throw new Error('Locales list is empty. Example: --locales en,ja,ko');
+	}
+
+	const localePattern = /^[a-z]{2,3}(?:-[a-z0-9]+)?$/;
+	const invalid = parsed.find((locale) => !localePattern.test(locale));
+	if (invalid) {
+		throw new Error(`Invalid locale "${invalid}".`);
+	}
+
+	return Array.from(new Set(parsed));
 }
 
 export function buildNewPostTemplate(locale, slug, pubDate, heroImage) {

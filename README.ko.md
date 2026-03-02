@@ -81,6 +81,9 @@ pnpm preview
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run doctor
+# doctor가 adapter drift를 보고하면:
+# npm run sync-adapters
 npm run check
 npm run build
 ```
@@ -100,6 +103,13 @@ npm run new-post -- my-first-post
 
 Slug 규칙: 소문자 영문, 숫자, 하이픈만 사용하세요 (예: `my-first-post`).
 `src/assets/blog/default-covers/` 에 기본 커버가 있으면 slug 해시 기반으로 안정적인 기본 이미지가 자동 할당됩니다 (`heroImage` 는 나중에 직접 변경 가능).
+선택 로케일 지정:
+
+```bash
+npm run new-post -- my-first-post --locales en,ja
+# 또는
+ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+```
 
 URL 규칙:
 - 파일: `src/content/blog/ko/my-first-post.md`

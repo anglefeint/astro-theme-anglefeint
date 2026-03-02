@@ -7,6 +7,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import AiShell from './shells/AiShell.astro';
 import blogPostCssUrl from '../styles/blog-post.css?url';
 import { SITE_AUTHOR } from '@anglefeint/site-config/site';
+import { THEME } from '@anglefeint/site-config/theme';
 import { DEFAULT_LOCALE, type Locale, isLocale, localePath, blogIdToSlugAnyLocale } from '@anglefeint/site-i18n/config';
 import { getMessages } from '@anglefeint/site-i18n/messages';
 
@@ -49,6 +50,7 @@ const hasSystemMeta = Boolean(aiModel || aiMode || aiState);
 const hasResponseMeta = aiLatencyMs !== undefined || aiConfidence !== undefined;
 const hasStats = aiModel || wordCount !== undefined || tokenCount !== undefined;
 const confidenceText = aiConfidence !== undefined ? aiConfidence.toFixed(2) : undefined;
+const enableRedQueen = THEME.EFFECTS.ENABLE_RED_QUEEN;
 ---
 
 <AiShell
@@ -79,11 +81,13 @@ const confidenceText = aiConfidence !== undefined ? aiConfidence.toFixed(2) : un
 			</div>
 			<canvas class="ai-network-canvas" aria-hidden="true"></canvas>
 		</div>
-		<aside class="rq-tv rq-tv-collapsed">
-			<div class="rq-tv-stage" data-rq-src={themeRedqueen1.src} data-rq-src2={themeRedqueen2.src}></div>
-			<div class="rq-tv-badge">monitor feed<span class="rq-tv-dot"></span></div>
-			<button type="button" class="rq-tv-toggle" aria-label="Replay monitor feed" aria-expanded="false">▶</button>
-		</aside>
+		{enableRedQueen && (
+			<aside class="rq-tv rq-tv-collapsed">
+				<div class="rq-tv-stage" data-rq-src={themeRedqueen1.src} data-rq-src2={themeRedqueen2.src}></div>
+				<div class="rq-tv-badge">monitor feed<span class="rq-tv-dot"></span></div>
+				<button type="button" class="rq-tv-toggle" aria-label="Replay monitor feed" aria-expanded="false">▶</button>
+			</aside>
+		)}
 		<div class="ai-read-progress" aria-hidden="true"></div>
 		<button type="button" class="ai-back-to-top" aria-label="Back to top" title="Back to top">↑</button>
 		<div class="ai-stage-toast" aria-live="polite" aria-atomic="true"></div>

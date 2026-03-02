@@ -81,6 +81,9 @@ pnpm preview
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run doctor
+# 如果 doctor 提示 adapter 漂移：
+# npm run sync-adapters
 npm run check
 npm run build
 ```
@@ -100,6 +103,13 @@ npm run new-post -- my-first-post
 
 Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
 如果 `src/assets/blog/default-covers/` 中存在默认封面，脚本会按 slug 哈希自动分配一张（后续可手动替换 `heroImage`）。
+可选语言覆盖：
+
+```bash
+npm run new-post -- my-first-post --locales en,ja
+# 或
+ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+```
 
 URL 规则：
 - 文件：`src/content/blog/zh/my-first-post.md`
