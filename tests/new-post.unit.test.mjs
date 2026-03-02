@@ -1,6 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildNewPostTemplate, pickDefaultCoverBySlug, validatePostSlug } from '../packages/theme/src/scaffold/new-post.mjs';
+import {
+	buildNewPostTemplate,
+	parseNewPostArgs,
+	pickDefaultCoverBySlug,
+	resolveLocales,
+	validatePostSlug,
+} from '../packages/theme/src/scaffold/new-post.mjs';
+
+test('parseNewPostArgs parses slug and locales override', () => {
+	const parsed = parseNewPostArgs(['node', 'cli', 'my-post', '--locales', 'en,ja']);
+	assert.equal(parsed.slug, 'my-post');
+	assert.equal(parsed.locales, 'en,ja');
+});
 
 test('validatePostSlug accepts lowercase-hyphen slugs', () => {
 	assert.equal(validatePostSlug('hello-world'), true);
@@ -22,4 +34,34 @@ test('buildNewPostTemplate emits expected locale strings', () => {
 	assert.match(template, /title: 'Título del nuevo artículo'/);
 	assert.match(template, /Plantilla breve en español/);
 	assert.match(template, /heroImage: '\.\.\/\.\.\/\.\.\/assets\/blog\/default-covers\/ai-01\.webp'/);
+});
+
+test('resolveLocales uses defaults when no override is provided', () => {
+	const locales = resolveLocales({
+		cliLocales: '',
+		envLocales: '',
+		defaultLocales: ['en', 'ja', 'ko'],
+	});
+	assert.deepEqual(locales, ['en', 'ja', 'ko']);
+});
+
+test('resolveLocales prefers cli override and deduplicates values', () => {
+	const locales = resolveLocales({
+		cliLocales: 'en,ja,en,es',
+		envLocales: 'ko,zh',
+		defaultLocales: ['en'],
+	});
+	assert.deepEqual(locales, ['en', 'ja', 'es']);
+});
+
+test('resolveLocales rejects invalid locale tokens', () => {
+	assert.throws(
+		() =>
+			resolveLocales({
+				cliLocales: 'en,@@',
+				envLocales: '',
+				defaultLocales: ['en'],
+			}),
+		/Invalid locale/,
+	);
 });

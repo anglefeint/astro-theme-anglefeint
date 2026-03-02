@@ -22,8 +22,10 @@ should upgrade with:
 
 1. `npm update @anglefeint/astro-theme`
 2. `npm install`
-3. `npm run check`
-4. `npm run build`
+3. `npm run doctor`
+4. If `doctor` reports adapter drift: `npm run sync-adapters`
+5. `npm run check`
+6. `npm run build`
 
 This keeps theme core upgrades package-driven through npm and avoids manual file synchronization.
 
@@ -32,8 +34,9 @@ This keeps theme core upgrades package-driven through npm and avoids manual file
 After every upgrade:
 
 1. `npm install`
-2. `npm run build`
-3. Check routes:
+2. `npm run doctor`
+3. `npm run build`
+4. Check routes:
 - `/`
 - `/en/`
 - `/:lang/blog`

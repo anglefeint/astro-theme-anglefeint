@@ -26,6 +26,7 @@
     "src/scripts",
     "src/i18n",
     "src/styles",
+    "src/utils",
     "src/assets/theme",
     "src/cli-new-post.mjs",
     "src/cli-new-page.mjs"
@@ -42,6 +43,8 @@
     "./i18n/*": "./src/i18n/*",
     "./styles/*": "./src/styles/*",
     "./assets/*": "./src/assets/*",
+    "./utils/merge": "./src/utils/merge.ts",
+    "./utils/*": "./src/utils/*",
     "./content-schema": "./src/content-schema.ts",
     "./consts": "./src/consts.ts"
   },

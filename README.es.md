@@ -81,6 +81,9 @@ Para proyectos creados desde `#starter`:
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run doctor
+# si doctor reporta drift de adapters:
+# npm run sync-adapters
 npm run check
 npm run build
 ```
@@ -100,6 +103,13 @@ npm run new-post -- my-first-post
 
 Regla del slug: usa solo minusculas, numeros y guiones (ejemplo: `my-first-post`).
 Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` despues).
+Override opcional de idiomas:
+
+```bash
+npm run new-post -- my-first-post --locales en,ja
+# o
+ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+```
 
 Como funciona la URL:
 - Archivo: `src/content/blog/es/my-first-post.md`

@@ -81,6 +81,9 @@ pnpm preview
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run doctor
+# doctor が adapter 差分を報告した場合:
+# npm run sync-adapters
 npm run check
 npm run build
 ```
@@ -100,6 +103,13 @@ npm run new-post -- my-first-post
 
 Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
 `src/assets/blog/default-covers/` に画像がある場合、slug ハッシュで安定したデフォルトカバーを自動設定します（後で `heroImage` を手動変更可能）。
+ロケールを明示指定する場合:
+
+```bash
+npm run new-post -- my-first-post --locales en,ja
+# または
+ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+```
 
 URL のルール:
 - ファイル: `src/content/blog/ja/my-first-post.md`

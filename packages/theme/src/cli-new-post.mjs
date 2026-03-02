@@ -5,7 +5,9 @@ import { SUPPORTED_LOCALES } from './i18n/locales.mjs';
 import {
 	buildNewPostTemplate,
 	loadDefaultCovers,
+	parseNewPostArgs,
 	pickDefaultCoverBySlug,
+	resolveLocales,
 	usageNewPost,
 	validatePostSlug,
 } from './scaffold/new-post.mjs';
@@ -23,7 +25,7 @@ async function exists(filePath) {
 }
 
 async function main() {
-	const slug = process.argv[2];
+	const { slug, locales: cliLocales } = parseNewPostArgs(process.argv);
 	if (!slug) {
 		console.error(usageNewPost());
 		process.exit(1);
@@ -36,10 +38,15 @@ async function main() {
 
 	const pubDate = new Date().toISOString().slice(0, 10);
 	const defaultCovers = await loadDefaultCovers(DEFAULT_COVERS_ROOT);
+	const locales = resolveLocales({
+		cliLocales,
+		envLocales: process.env.ANGLEFEINT_LOCALES ?? '',
+		defaultLocales: SUPPORTED_LOCALES,
+	});
 	const created = [];
 	const skipped = [];
 
-	for (const locale of SUPPORTED_LOCALES) {
+	for (const locale of locales) {
 		const localeDir = path.join(CONTENT_ROOT, locale);
 		const filePath = path.join(localeDir, `${slug}.md`);
 		await mkdir(localeDir, { recursive: true });
