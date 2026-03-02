@@ -1,46 +1,17 @@
-import { mkdir, writeFile, access, readdir } from 'node:fs/promises';
+import { mkdir, writeFile, access } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
 import { SUPPORTED_LOCALES } from './i18n/locales.mjs';
+import {
+	buildNewPostTemplate,
+	loadDefaultCovers,
+	pickDefaultCoverBySlug,
+	usageNewPost,
+	validatePostSlug,
+} from './scaffold/new-post.mjs';
 
 const CONTENT_ROOT = path.resolve(process.cwd(), 'src/content/blog');
 const DEFAULT_COVERS_ROOT = path.resolve(process.cwd(), 'src/assets/blog/default-covers');
-
-function toTitleFromSlug(slug) {
-	return slug
-		.split('-')
-		.filter(Boolean)
-		.map((segment) => segment[0].toUpperCase() + segment.slice(1))
-		.join(' ');
-}
-
-function validateSlug(slug) {
-	return /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
-}
-
-function hashString(input) {
-	let hash = 5381;
-	for (let i = 0; i < input.length; i += 1) {
-		hash = ((hash << 5) + hash + input.charCodeAt(i)) >>> 0;
-	}
-	return hash >>> 0;
-}
-
-function normalizePathForFrontmatter(filePath) {
-	return filePath.split(path.sep).join('/');
-}
-
-async function loadDefaultCovers() {
-	try {
-		const entries = await readdir(DEFAULT_COVERS_ROOT, { withFileTypes: true });
-		return entries
-			.filter((entry) => entry.isFile() && /\.(webp|png|jpe?g)$/i.test(entry.name))
-			.map((entry) => path.join(DEFAULT_COVERS_ROOT, entry.name))
-			.sort((a, b) => a.localeCompare(b));
-	} catch {
-		return [];
-	}
-}
 
 async function exists(filePath) {
 	try {
@@ -51,54 +22,20 @@ async function exists(filePath) {
 	}
 }
 
-function templateFor(locale, slug, pubDate, heroImage) {
-	const titleByLocale = {
-		en: toTitleFromSlug(slug),
-		ja: '新しい記事タイトル',
-		ko: '새 글 제목',
-		es: 'Título del nuevo artículo',
-		zh: '新文章标题',
-	};
-	const descriptionByLocale = {
-		en: `A short EN post scaffold for "${slug}".`,
-		ja: `「${slug}」用の短い日本語記事テンプレートです。`,
-		ko: `"${slug}"용 한국어 글 템플릿입니다.`,
-		es: `Plantilla breve en español para "${slug}".`,
-		zh: `“${slug}”的中文文章模板。`,
-	};
-	const bodyByLocale = {
-		en: `Write your EN content for "${slug}" here.`,
-		ja: `ここに「${slug}」の日本語本文を書いてください。`,
-		ko: `여기에 "${slug}" 한국어 본문을 작성하세요.`,
-		es: `Escribe aquí el contenido en español para "${slug}".`,
-		zh: `请在这里填写“${slug}”的中文正文。`,
-	};
-	return `---
-title: '${titleByLocale[locale]}'
-subtitle: ''
-description: '${descriptionByLocale[locale]}'
-pubDate: '${pubDate}'
-${heroImage ? `heroImage: '${heroImage}'` : ''}
----
-
-${bodyByLocale[locale]}
-`;
-}
-
 async function main() {
 	const slug = process.argv[2];
 	if (!slug) {
-		console.error('Usage: npm run new-post -- <slug>');
+		console.error(usageNewPost());
 		process.exit(1);
 	}
 
-	if (!validateSlug(slug)) {
+	if (!validatePostSlug(slug)) {
 		console.error('Invalid slug. Use lowercase letters, numbers, and hyphens only.');
 		process.exit(1);
 	}
 
 	const pubDate = new Date().toISOString().slice(0, 10);
-	const defaultCovers = await loadDefaultCovers();
+	const defaultCovers = await loadDefaultCovers(DEFAULT_COVERS_ROOT);
 	const created = [];
 	const skipped = [];
 
@@ -112,13 +49,9 @@ async function main() {
 			continue;
 		}
 
-		let heroImage = '';
-		if (defaultCovers.length > 0) {
-			const coverPath = defaultCovers[hashString(slug) % defaultCovers.length];
-			heroImage = normalizePathForFrontmatter(path.relative(localeDir, coverPath));
-		}
+		const heroImage = pickDefaultCoverBySlug(slug, localeDir, defaultCovers);
 
-		await writeFile(filePath, templateFor(locale, slug, pubDate, heroImage), 'utf8');
+		await writeFile(filePath, buildNewPostTemplate(locale, slug, pubDate, heroImage), 'utf8');
 		created.push(filePath);
 	}
 
