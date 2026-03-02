@@ -85,6 +85,11 @@ npm run check
 npm run build
 ```
 
+Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- その後、このプロジェクトで `npm run check` と `npm run build` を実行します。
+
 ## 新しい記事を作成
 
 全ロケール（`en`, `ja`, `ko`, `es`, `zh`）に同じ slug の記事を一括作成します:
@@ -112,6 +117,7 @@ npm run new-page -- projects --theme base
 
 利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。  
 `src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
+slug ルール: 小文字・数字・ハイフンのみ（例: `projects/labs` のようなネストは可）。`_` と大文字は不可です。
 
 例:
 

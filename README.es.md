@@ -85,6 +85,11 @@ npm run check
 npm run build
 ```
 
+Para migraciones de versiones mayores de Astro, revisa primero la guia oficial:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- luego ejecuta `npm run check` y `npm run build` en este proyecto.
+
 ## Crear nuevo post
 
 Crea el mismo slug para todos los idiomas (`en`, `ja`, `ko`, `es`, `zh`):
@@ -112,6 +117,7 @@ npm run new-page -- projects --theme base
 
 Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
 El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
+Regla de slug: solo minusculas, numeros y guiones; se permiten rutas anidadas (ejemplo: `projects/labs`). `_` y mayusculas no son validos.
 
 Ejemplos:
 

@@ -10,9 +10,9 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
-This guide explains how to upgrade projects built from this template.
+This guide explains the recommended upgrade path for projects created from the starter branch.
 
-## Recommended Path (Starter Users)
+## Official Path
 
 Projects created from:
 
@@ -25,38 +25,7 @@ should upgrade with:
 3. `npm run check`
 4. `npm run build`
 
-This keeps theme core upgrades package-driven through npm.
-
-## Other Upgrade Paths
-
-### 1) Template Refresh
-
-Use this if your project was created from `Use this template` or `npm create astro -- --template ...`.
-
-1. Create a backup branch in your current project.
-2. Generate a fresh project from the latest template.
-3. Move your content/config into the fresh project.
-4. Re-apply custom component/style changes as needed.
-5. Run validation checks.
-
-### 2) Fork Sync (For Advanced Users)
-
-Use this if your project is a fork with an `upstream` remote.
-
-1. `git fetch upstream`
-2. `git merge upstream/main` (or rebase)
-3. Resolve conflicts
-4. Run validation checks
-
-## Keep These Files First
-
-When merging/upgrading, prioritize your own data in:
-
-- `src/content/blog/**`
-- `src/site.config.ts` (single user-facing config entry)
-- `.env` (local only, never commit)
-
-Keep post slugs aligned across locales. Use `npm run new-post -- <slug>` to scaffold the same slug in all language folders.
+This keeps theme core upgrades package-driven through npm and avoids manual file synchronization.
 
 ## Validation Checklist
 
@@ -75,4 +44,5 @@ After every upgrade:
 ## Notes
 
 - Review `CHANGELOG.md` before upgrading.
-- Major versions may include breaking changes.
+- For Astro major-version migrations, follow the official Astro guide first:
+  - https://docs.astro.build/en/guides/upgrade-to/

@@ -85,6 +85,11 @@ npm run check
 npm run build
 ```
 
+如需进行 Astro 大版本升级，请先参考官方升级文档：
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- 然后再执行本项目的 `npm run check` 和 `npm run build`。
+
 ## 新建文章
 
 一次为全部语言（`en`、`ja`、`ko`、`es`、`zh`）创建同名 slug：
@@ -112,6 +117,7 @@ npm run new-page -- projects --theme base
 
 可选主题：`base`、`ai`、`cyber`、`hacker`、`matrix`。  
 命令会生成 `src/pages/[lang]/projects.astro`，并通过 `getStaticPaths()` 输出全部语言路由。
+Slug 规则：只允许小写字母、数字和连字符；支持嵌套路由（例如 `projects/labs`）。不支持下划线或大写。
 
 示例：
 

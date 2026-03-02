@@ -85,6 +85,11 @@ npm run check
 npm run build
 ```
 
+Astro 메이저 버전 마이그레이션은 먼저 공식 가이드를 확인하세요:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- 이후 이 프로젝트에서 `npm run check` 와 `npm run build` 를 실행하세요.
+
 ## 새 글 만들기
 
 모든 로케일(`en`, `ja`, `ko`, `es`, `zh`)에 같은 slug 글을 한 번에 생성합니다:
@@ -112,6 +117,7 @@ npm run new-page -- projects --theme base
 
 지원 테마: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
 명령은 `src/pages/[lang]/projects.astro` 를 만들고 `getStaticPaths()` 로 모든 로케일 라우트를 생성합니다.
+slug 규칙: 소문자, 숫자, 하이픈만 허용하며 중첩 경로(예: `projects/labs`)를 지원합니다. `_` 와 대문자는 허용되지 않습니다.
 
 예시:
 
