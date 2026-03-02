@@ -86,6 +86,11 @@ npm run check
 npm run build
 ```
 
+For Astro major-version migrations, follow the official Astro guide first:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- then re-run this project's `npm run check` and `npm run build`.
+
 ## Create New Post
 
 Create the same slug in all locales (`en`, `ja`, `ko`, `es`, `zh`):
@@ -113,6 +118,7 @@ npm run new-page -- projects --theme base
 
 Available themes: `base`, `ai`, `cyber`, `hacker`, `matrix`.
 The command creates `src/pages/[lang]/projects.astro` with locale routes via `getStaticPaths()`.
+Slug rule: lowercase letters, numbers, and hyphens only; nested paths are allowed (example: `projects/labs`). `_` and uppercase are invalid.
 
 Examples:
 
