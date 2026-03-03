@@ -1,0 +1,337 @@
+/* About panel layer: main content/prose, title bar, and reading panel styles. */
+			/* ── content ── */
+			.hacker-content {
+				position: relative;
+				z-index: 10;
+			}
+			.hacker-content .prose {
+				position: relative;
+				background:
+					linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.92)),
+					linear-gradient(180deg, rgba(30, 30, 30, 0.1), rgba(15, 15, 15, 0.15));
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 8px;
+				box-shadow:
+					0 0 0 1px rgba(255, 255, 255, 0.06),
+					0 16px 48px rgba(0, 0, 0, 0.6);
+			}
+			.about-shell {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto 2rem;
+			}
+			/* ── toast ── */
+			.hacker-toast {
+				position: fixed;
+				right: 1rem;
+				bottom: 1rem;
+				z-index: 56;
+				padding: 0.5rem 0.75rem;
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				font-size: 0.7rem;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.95);
+				background: rgba(0, 0, 0, 0.94);
+				border: 1px solid rgba(255, 255, 255, 0.25);
+				border-radius: 6px;
+				box-shadow:
+					0 0 0 1px rgba(255, 255, 255, 0.08),
+					0 0 24px rgba(0, 255, 100, 0.12);
+				opacity: 0;
+				transform: translateY(8px);
+				pointer-events: none;
+				transition: opacity 0.18s ease, transform 0.18s ease;
+			}
+			.hacker-toast.visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
+			/* ── progress bar ── */
+			.hacker-progress {
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 3px;
+				width: calc(var(--read-progress, 0) * 100%);
+				background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(0, 255, 100, 0.9));
+				box-shadow: 0 0 12px rgba(0, 255, 100, 0.25);
+				z-index: 100;
+				pointer-events: none;
+			}
+			/* ── back to top ── */
+			.hacker-back-to-top {
+				position: fixed;
+				right: 1.5rem;
+				bottom: 3.5rem;
+				width: 40px;
+				height: 40px;
+				border: 1px solid rgba(255, 255, 255, 0.25);
+				border-radius: 8px;
+				background: rgba(0, 0, 0, 0.88);
+				color: rgba(255, 255, 255, 0.9);
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				font-size: 1.1rem;
+				cursor: pointer;
+				z-index: 55;
+				opacity: 0;
+				transform: translateY(8px);
+				transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+				pointer-events: none;
+				box-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
+			}
+			.hacker-back-to-top.visible {
+				opacity: 1;
+				transform: translateY(0);
+				pointer-events: auto;
+			}
+			.hacker-back-to-top:hover {
+				box-shadow: 0 0 20px rgba(0, 255, 100, 0.25);
+				border-color: rgba(0, 255, 100, 0.5);
+				color: rgba(0, 255, 100, 0.95);
+			}
+			/* ── title ── */
+			.about-title {
+				margin-bottom: 1.4rem;
+			}
+			.hacker-meta {
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				font-size: 0.78em;
+				color: rgba(255, 255, 255, 0.55);
+				margin-bottom: 0.62em;
+				letter-spacing: 0.04em;
+			}
+			.hacker-title-bar {
+				position: relative;
+				height: 3px;
+				margin: 0.75rem 0 0.1rem;
+				border-radius: 999px;
+				overflow: hidden;
+				background: linear-gradient(
+					90deg,
+					rgba(255, 255, 255, 0.1),
+					rgba(255, 255, 255, 0.2),
+					rgba(255, 255, 255, 0.1)
+				);
+				box-shadow: 0 0 14px rgba(255, 255, 255, 0.1);
+			}
+			.hacker-title-bar::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: -35%;
+				width: 35%;
+				background: linear-gradient(
+					90deg,
+					rgba(11, 15, 20, 0.4),
+					rgba(255, 0, 51, 0.7),
+					rgba(156, 163, 175, 0.6),
+					rgba(11, 15, 20, 0.4)
+				);
+				animation: hacker-bar-sweep 3.8s linear infinite;
+			}
+			@keyframes hacker-bar-sweep {
+				to { left: 100%; }
+			}
+			/* ── response panel: Anonymous 窗口风格 (白标题栏 + 黑内容区) ── */
+			.hacker-response {
+				border: 1px solid rgba(255, 255, 255, 0.25);
+				background: #000;
+				border-radius: 0;
+				padding: 0;
+				overflow: hidden;
+				box-shadow:
+					0 0 0 1px rgba(255, 255, 255, 0.1),
+					0 8px 32px rgba(0, 0, 0, 0.6);
+			}
+			.hacker-response-header {
+				display: flex;
+				align-items: center;
+				gap: 0.5em;
+				padding: 0.5rem 0.9rem;
+				background: #fff;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+			}
+			.hacker-window-dots {
+				display: flex;
+				gap: 6px;
+				align-items: center;
+			}
+			.hacker-window-dots span {
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				flex-shrink: 0;
+			}
+			.hacker-window-dots span:nth-child(1) { background: #ff5f57; }
+			.hacker-window-dots span:nth-child(2) { background: #febc2e; }
+			.hacker-window-dots span:nth-child(3) { background: #28c840; }
+			.hacker-response-label {
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				font-size: 0.75em;
+				color: #000;
+				font-weight: 600;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+			}
+			.hacker-body {
+				padding: 1rem 0.9rem 1.2rem;
+				background: #000;
+			}
+			/* ── prose body ── */
+			.hacker-body p,
+			.hacker-body h2,
+			.hacker-body blockquote,
+			.hacker-body .about-manifest {
+				opacity: 0;
+				transform: translateY(12px);
+				transition: opacity 0.5s ease, transform 0.5s ease;
+			}
+			.hacker-body .hacker-visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
+			.hacker-body a {
+				color: rgba(255, 255, 255, 0.9);
+				text-decoration-color: rgba(255, 255, 255, 0.35);
+			}
+			.hacker-body a:hover {
+				color: rgba(0, 255, 100, 0.95);
+				text-decoration-color: rgba(0, 255, 100, 0.6);
+			}
+			/* ── cursor ── */
+			.hacker-cursor {
+				display: inline-block;
+				width: 0.6em;
+				height: 1.1em;
+				background: rgba(0, 255, 100, 0.9);
+				margin-left: 2px;
+				vertical-align: text-bottom;
+				animation: hacker-cursor-blink 1s step-end infinite;
+			}
+			@keyframes hacker-cursor-blink {
+				0%, 50% { opacity: 1; }
+				51%, 100% { opacity: 0; }
+			}
+			/* ── section titles ── */
+			.about-section-title {
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				font-size: 0.78rem;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: rgba(255, 255, 255, 0.82);
+				margin: 1.7rem 0 0.45rem;
+			}
+			/* ── manifest box ── */
+			.about-manifest {
+				margin: 1rem 0 1.4rem;
+				padding: 0.8rem 0.95rem;
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				border-radius: 8px;
+				background: rgba(0, 0, 0, 0.4);
+			}
+			.about-manifest ul {
+				margin: 0;
+				padding-left: 1.1rem;
+			}
+			.about-manifest li {
+				margin: 0.38rem 0;
+			}
+			.about-manifest li::marker {
+				color: rgba(255, 255, 255, 0.5);
+			}
+			/* ── signature ── */
+			.about-signature {
+				margin-top: 1.2rem;
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				font-size: 0.8rem;
+				color: rgba(255, 255, 255, 0.6);
+			}
+			/* ── regenerate ── */
+			.hacker-regenerate {
+				display: block;
+				margin: 2em auto 0;
+				padding: 0.5em 1.2em;
+				font-size: 0.85em;
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				color: rgba(255, 255, 255, 0.88);
+				background: rgba(0, 0, 0, 0.68);
+				border: 1px solid rgba(255, 255, 255, 0.25);
+				border-radius: 4px;
+				cursor: pointer;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				transition: all 0.2s ease;
+			}
+			.hacker-regenerate:hover:not(:disabled) {
+				color: rgba(0, 255, 100, 0.95);
+				border-color: rgba(0, 255, 100, 0.4);
+				background: rgba(0, 255, 100, 0.06);
+				box-shadow: 0 0 14px rgba(0, 255, 100, 0.15);
+			}
+			/* ── prose container: Anonymous 全等宽 ── */
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: rgba(255, 255, 255, 0.88);
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				font-size: 0.9rem;
+				line-height: 1.6;
+			}
+			.prose p {
+				color: rgba(255, 255, 255, 0.82);
+			}
+			.prose hr {
+				border-color: rgba(255, 255, 255, 0.15);
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+				color: rgba(255, 255, 255, 0.92);
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				letter-spacing: 0.04em;
+			}
+			/* ── mouse glow (green) ── */
+			.hacker-mouse-glow {
+				position: fixed;
+				width: 300px;
+				height: 300px;
+				left: calc(var(--mouse-x, -9999px) - 150px);
+				top: calc(var(--mouse-y, -9999px) - 150px);
+				background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+				pointer-events: none;
+				z-index: 1;
+				border-radius: 50%;
+			}
+			/* ── load scan ── */
+			.hacker-load-scan {
+				position: fixed;
+				left: 0;
+				right: 0;
+				height: 2px;
+				background: linear-gradient(90deg, rgba(11, 15, 20, 0.3), rgba(255, 0, 51, 0.7), rgba(156, 163, 175, 0.6), rgba(11, 15, 20, 0.3));
+				box-shadow: 0 0 12px rgba(255, 0, 51, 0.4);
+				animation: hacker-scan 0.8s ease-out forwards;
+				pointer-events: none;
+				z-index: 20;
+			}
+			@keyframes hacker-scan {
+				0% { top: 0; opacity: 1; }
+				100% { top: 100vh; opacity: 0.2; }
+			}
+			/* ── flash on regenerate ── */
+			.hacker-flash {
+				animation: hacker-flash-anim 0.3s ease-out;
+			}
+			@keyframes hacker-flash-anim {
+				0% { filter: brightness(2) saturate(0.5); }
+				100% { filter: none; }
+			}

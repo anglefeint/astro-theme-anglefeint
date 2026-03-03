@@ -1,0 +1,39 @@
+/* About sidebar layer: quick-action folders and related sidebar affordances. */
+			/* ── 右侧文件夹 (Anonymous) ── */
+			.hacker-sidebar {
+				position: fixed;
+				top: 20%;
+				right: 1rem;
+				z-index: 50;
+				display: flex;
+				flex-direction: column;
+				gap: 0.6rem;
+			}
+			.hacker-folder {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				padding: 0.4rem 0.6rem;
+				background: rgba(0, 0, 0, 0.6);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 8px;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				text-decoration: none;
+				color: rgba(255, 255, 255, 0.9);
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				font-size: 0.72rem;
+				letter-spacing: 0.06em;
+			}
+			.hacker-folder:hover {
+				background: rgba(0, 0, 0, 0.85);
+				border-color: rgba(0, 255, 100, 0.5);
+				color: rgba(0, 255, 100, 0.95);
+				box-shadow: 0 0 12px rgba(0, 255, 100, 0.15);
+			}
+			.hacker-folder-icon {
+				width: 24px;
+				height: 20px;
+				flex-shrink: 0;
+				opacity: 0.9;
+			}

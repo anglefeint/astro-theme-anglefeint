@@ -1,0 +1,57 @@
+/* About background layer: terminal backdrop and scan/flicker ambience. */
+			/* ── terminal background ── */
+			.hacker-bg {
+				position: fixed;
+				inset: 0;
+				z-index: 0;
+				overflow: hidden;
+				pointer-events: none;
+			}
+			.hacker-bg-canvas {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+			}
+			.hacker-scanlines {
+				position: absolute;
+				inset: 0;
+				/* 浅色扫描线：在深色背景上可见，全屏 CRT 感 */
+				background: repeating-linear-gradient(
+					180deg,
+					transparent 0px,
+					transparent 2px,
+					rgba(255, 255, 255, 0.03) 2px,
+					rgba(255, 255, 255, 0.03) 3px
+				);
+				pointer-events: none;
+			}
+			.hacker-vignette {
+				position: absolute;
+				inset: 0;
+				background: radial-gradient(
+					ellipse at center,
+					transparent 50%,
+					rgba(0, 0, 0, 0.5) 80%,
+					rgba(0, 0, 0, 0.85) 100%
+				);
+				pointer-events: none;
+			}
+			.hacker-flicker {
+				position: absolute;
+				inset: 0;
+				background: transparent;
+				animation: hacker-flicker-anim 0.08s infinite;
+				pointer-events: none;
+			}
+			@keyframes hacker-flicker-anim {
+				0% { background: rgba(255, 255, 255, 0.012); }
+				50% { background: transparent; }
+				100% { background: rgba(255, 255, 255, 0.005); }
+			}
+			.hacker-glow {
+				position: absolute;
+				inset: 0;
+				box-shadow: inset 0 0 120px rgba(255, 255, 255, 0.03);
+				pointer-events: none;
+			}

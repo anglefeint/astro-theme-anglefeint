@@ -1,0 +1,112 @@
+/* About keyboard layer: virtual keyboard and helper interaction visuals. */
+			/* Help: 虚拟键盘 */
+			.hacker-vkeyboard {
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+				font-size: 0.7rem;
+			}
+			.hacker-vkeyboard-row {
+				display: flex;
+				justify-content: center;
+				gap: 3px;
+			}
+			.hacker-vkey {
+				min-width: 24px;
+				height: 28px;
+				padding: 0 6px;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				background: rgba(255, 255, 255, 0.08);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				border-radius: 4px;
+				color: rgba(255, 255, 255, 0.9);
+				font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+				cursor: pointer;
+				transition: all 0.1s ease;
+				user-select: none;
+			}
+			.hacker-vkey:hover {
+				background: rgba(255, 255, 255, 0.15);
+				border-color: rgba(255, 255, 255, 0.35);
+			}
+			.hacker-vkey.highlight {
+				background: rgba(0, 255, 100, 0.35);
+				border-color: rgba(0, 255, 100, 0.7);
+				box-shadow: 0 0 12px rgba(0, 255, 100, 0.3);
+			}
+			.hacker-vkey.wide { min-width: 36px; }
+			.hacker-vkey.backspace { min-width: 72px; }
+			.hacker-vkey.space { min-width: 120px; }
+			.hacker-vkey.acc { background: rgba(255, 140, 0, 0.25); border-color: rgba(255, 140, 0, 0.5); }
+			.hacker-vkey.acc:hover { background: rgba(255, 140, 0, 0.35); }
+			.hacker-vkeyboard-wrap {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 2rem;
+				align-items: stretch;
+			}
+			.hacker-vkeyboard-main {
+				flex: 1;
+				min-width: 0;
+			}
+			.hacker-vkeyboard-side {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+				flex-shrink: 0;
+				min-width: 140px;
+			}
+			.hacker-vkeyboard-side-block {
+				display: flex;
+				flex-direction: column;
+				gap: 4px;
+				margin-bottom: 4px;
+			}
+			.hacker-vkeyboard-side-row {
+				display: flex;
+				gap: 3px;
+			}
+			.hacker-vkeyboard-side-block .hacker-vkey {
+				flex: 1;
+				min-width: 0;
+			}
+			.hacker-vkey.nav-home { background: rgba(66, 133, 244, 0.3); border-color: rgba(66, 133, 244, 0.5); }
+			.hacker-vkey.nav-home:hover { background: rgba(66, 133, 244, 0.4); }
+			.hacker-vkey.nav-end { background: rgba(234, 67, 53, 0.25); border-color: rgba(234, 67, 53, 0.5); }
+			.hacker-vkey.nav-end:hover { background: rgba(234, 67, 53, 0.35); }
+			.hacker-vkeyboard-arrows-wrap {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin-top: 6px;
+			}
+			.hacker-vkeyboard-arrows {
+				display: grid;
+				grid-template: ". u ." 1fr "l d r" 1fr / 1fr 1fr 1fr;
+				gap: 2px;
+				height: 56px;
+			}
+			.hacker-vkeyboard-arrows .arr-u { grid-area: u; }
+			.hacker-vkeyboard-arrows .arr-l { grid-area: l; }
+			.hacker-vkeyboard-arrows .arr-r { grid-area: r; }
+			.hacker-vkeyboard-arrows .arr-d { grid-area: d; }
+			.hacker-vkeyboard-arrows .hacker-vkey { width: 50px; height: 22px; font-size: 0.65rem; padding: 0; }
+			.hacker-vkeyboard-stats {
+				width: 100%;
+				margin-top: 0.2rem;
+				font-size: 0.75em;
+				color: rgba(255, 255, 255, 0.6);
+			}
+			.hacker-vkeyboard-stats-label {
+				font-size: 0.65rem;
+				color: rgba(255, 255, 255, 0.5);
+				letter-spacing: 0.1em;
+			}
+			.hacker-modal-body.hacker-modal-keyboard {
+				overflow: visible;
+			}
+			@media (max-width: 900px) {
+				.hacker-sidebar { display: none; }
+			}

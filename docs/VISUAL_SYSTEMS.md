@@ -53,6 +53,19 @@ This theme uses four distinct atmospheres by route.
   - Hacker: `hacker-*`
 - This keeps CLI theme names, layout names, CSS selectors, and JS selectors in sync.
 
+## CSS Organization Contract
+
+- Style entry files:
+  - `packages/theme/src/styles/theme-ai.css`
+  - `packages/theme/src/styles/about-page.css`
+- These files are import-only aggregators. Feature rules live in layered partials:
+  - AI: `packages/theme/src/styles/ai/*`
+  - About: `packages/theme/src/styles/about/*`
+- Layer order is fixed and must not be reordered without review:
+  - `base -> layout -> components -> states -> responsive`
+- Cross-layer overrides are discouraged. If unavoidable, keep them local and add a short comment explaining the dependency.
+- Keep selectors, class names, and runtime JS query hooks stable during refactors to avoid visual regressions.
+
 ## Performance Notes
 
 - Heavy effects are concentrated on post/about pages.
