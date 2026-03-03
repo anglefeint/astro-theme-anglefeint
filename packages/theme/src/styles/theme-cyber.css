@@ -490,6 +490,7 @@ body.cyber-page ul li a:hover img {
 }
 body.cyber-page .title {
   margin: 0;
+  font-size: 1.2rem;
   line-height: 1;
   transition:
     color 0.2s,

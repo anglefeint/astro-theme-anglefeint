@@ -101,6 +101,7 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 ---
 <CyberShell locale={resolvedLocale} title={pageTitle} description={pageDescription} localeHrefs={localeHrefs}>
 	<Fragment slot="body-start">
+		<h1 class="sr-only">{pageTitle}</h1>
 		<div class="cyber-rain" aria-hidden="true">
 			{
 				rainDrops.map((drop) => (
@@ -133,17 +134,24 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 		</div>
 	</Fragment>
 	<section>
+		<h2 class="sr-only">{messages.blog.title}</h2>
 		<ul>
 			{
-				posts.map((post) => (
-					<li>
-						<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
-							{post.data.heroImage && (
-								<div class="img-wrapper">
-									<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
-								</div>
-							)}
-							<h4 class="title">{post.data.title}</h4>
+				posts.map((post, index) => (
+						<li>
+							<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
+								{post.data.heroImage && (
+									<div class="img-wrapper">
+										<Image
+											width={index === 0 ? 1200 : 720}
+											height={index === 0 ? 600 : 360}
+											sizes={index === 0 ? '(max-width: 720px) 100vw, 960px' : '(max-width: 720px) 100vw, 480px'}
+											src={post.data.heroImage}
+											alt={post.data.title}
+										/>
+									</div>
+								)}
+								<h2 class="title">{post.data.title}</h2>
 							<p class="date">
 								<FormattedDate date={post.data.pubDate} locale={resolvedLocale} />
 							</p>
