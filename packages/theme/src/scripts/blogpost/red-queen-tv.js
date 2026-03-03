@@ -24,6 +24,10 @@ export function initRedQueenTv(prefersReducedMotion) {
   var revealTimer = 0;
   var preloadTimeoutTimer = 0;
   var preloadRetryTimers = new Set();
+  var autoDelayTimer = 0;
+  var autoIdleHandle = 0;
+  var autoLoadHandler = null;
+  var autoStarted = false;
 
   var start = 0;
   var width = 320;
@@ -103,6 +107,21 @@ export function initRedQueenTv(prefersReducedMotion) {
     }
     preloadRetryTimers.forEach(function(id) { clearTimeout(id); });
     preloadRetryTimers.clear();
+  }
+
+  function clearAutoStartTimers() {
+    if (autoDelayTimer) {
+      clearTimeout(autoDelayTimer);
+      autoDelayTimer = 0;
+    }
+    if (autoIdleHandle && typeof window.cancelIdleCallback === 'function') {
+      window.cancelIdleCallback(autoIdleHandle);
+      autoIdleHandle = 0;
+    }
+    if (autoLoadHandler) {
+      window.removeEventListener('load', autoLoadHandler);
+      autoLoadHandler = null;
+    }
   }
 
   function scheduleSequence(fn, delay) {
@@ -283,6 +302,7 @@ export function initRedQueenTv(prefersReducedMotion) {
     forceStaticUntil = 0;
     clearSequenceTimer();
     clearPreloadTimers();
+    clearAutoStartTimers();
     if (revealTimer) {
       clearTimeout(revealTimer);
       revealTimer = 0;
@@ -535,22 +555,53 @@ export function initRedQueenTv(prefersReducedMotion) {
   }
 
   function queueAutoPlay() {
-    function run() {
-      clearSequenceTimer();
-      sequenceTimer = setTimeout(function() {
-        if (document.hidden) {
-          pendingAutoPlay = true;
-          return;
-        }
-        startPlayback();
-      }, OPEN_DELAY_MS);
+    var readyByDelay = false;
+    var readyByLoad = document.readyState === 'complete';
+    var readyByIdle = false;
+
+    function tryAutoStart() {
+      if (autoStarted || !readyByDelay || !readyByLoad || !readyByIdle) return;
+      if (document.hidden) {
+        pendingAutoPlay = true;
+        return;
+      }
+      autoStarted = true;
+      clearAutoStartTimers();
+      startPlayback();
     }
 
-    if (document.readyState === 'complete') run();
-    else window.addEventListener('load', run, { once: true });
+    autoDelayTimer = setTimeout(function() {
+      autoDelayTimer = 0;
+      readyByDelay = true;
+      tryAutoStart();
+    }, OPEN_DELAY_MS);
+
+    if (!readyByLoad) {
+      autoLoadHandler = function() {
+        readyByLoad = true;
+        autoLoadHandler = null;
+        tryAutoStart();
+      };
+      window.addEventListener('load', autoLoadHandler, { once: true });
+    }
+
+    if (typeof window.requestIdleCallback === 'function') {
+      autoIdleHandle = window.requestIdleCallback(function() {
+        autoIdleHandle = 0;
+        readyByIdle = true;
+        tryAutoStart();
+      }, { timeout: 1500 });
+    } else {
+      setTimeout(function() {
+        readyByIdle = true;
+        tryAutoStart();
+      }, 600);
+    }
   }
 
   toggle.addEventListener('click', function() {
+    autoStarted = true;
+    clearAutoStartTimers();
     startPlayback();
   });
 
