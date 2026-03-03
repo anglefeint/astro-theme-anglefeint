@@ -27,16 +27,27 @@
 					0 24px 48px rgba(8, 18, 30, 0.68),
 					0 0 34px rgba(8, 18, 30, 0.64);
 			}
-			.hero-stack {
-				position: relative;
-				aspect-ratio: 1020 / 510;
-				background: #0a1218;
-			}
-			.hero-canvas-wrap {
-				position: absolute;
-				inset: 0;
-				z-index: 1;
-				opacity: 0;
+				.hero-stack {
+					position: relative;
+					aspect-ratio: 1020 / 510;
+					background: #0a1218;
+				}
+				.hero-base-wrap {
+					position: absolute;
+					inset: 0;
+					z-index: 0;
+				}
+				.hero-base-image {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					display: block;
+				}
+				.hero-canvas-wrap {
+					position: absolute;
+					inset: 0;
+					z-index: 1;
+					opacity: 0;
 				transition: opacity 260ms ease;
 			}
 			.hero-canvas-wrap.ready { opacity: 1; }

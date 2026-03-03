@@ -108,12 +108,22 @@ const enableRedQueen = THEME.EFFECTS.ENABLE_RED_QUEEN;
 					{heroImage && (
 						<div class="hero-shell">
 							<div class="hero-pane">
-								<div class="hero-image">
-									<div class="hero-stack">
-										<div class="hero-canvas-wrap" aria-hidden="true">
-											<canvas class="hero-canvas" data-hero-src={heroImage.src}></canvas>
+									<div class="hero-image">
+										<div class="hero-stack">
+											<div class="hero-base-wrap">
+												<Image
+													class="hero-base-image"
+													src={heroImage}
+													alt={title}
+													loading="eager"
+													decoding="async"
+													fetchpriority="high"
+												/>
+											</div>
+											<div class="hero-canvas-wrap" aria-hidden="true">
+												<canvas class="hero-canvas" data-hero-src={heroImage.src}></canvas>
+											</div>
 										</div>
-									</div>
 									<div class="hero-frame" aria-hidden="true">
 										<span>neural monitor</span>
 										<span class="hero-frame-dot"></span>
