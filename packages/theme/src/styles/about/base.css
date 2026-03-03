@@ -1,0 +1,58 @@
+/* About base layer: hacker-page chrome variables and shell baselines. */
+			body.hacker-page {
+				background: #000 !important;
+				background-image: none !important;
+				color: rgba(255, 255, 255, 0.88);
+				min-height: 100vh;
+				scrollbar-width: thin;
+				scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+				/* header: Anonymous 黑白灰 + 黄点缀 */
+				--chrome-bg: rgba(0, 0, 0, 0.42);
+				--chrome-border: rgba(255, 255, 255, 0.2);
+				--chrome-link: rgba(255, 255, 255, 0.9);
+				--chrome-link-hover: rgba(0, 255, 100, 0.95);
+				--chrome-active: rgba(255, 255, 255, 0.5);
+				--chrome-text-muted: rgba(255, 255, 255, 0.5);
+			}
+			body.hacker-page::-webkit-scrollbar { width: 6px; }
+			body.hacker-page::-webkit-scrollbar-track { background: transparent; }
+			body.hacker-page::-webkit-scrollbar-thumb {
+				background: rgba(255, 255, 255, 0.22);
+				border-radius: 3px;
+			}
+			/* fixed header + content offset (mirrors ai-page in global.css) */
+			body.hacker-page header {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 100;
+				backdrop-filter: blur(3px);
+				-webkit-backdrop-filter: blur(3px);
+			}
+			body.hacker-page .hacker-content {
+				padding-top: calc(3em + 56px);
+			}
+			body.hacker-page .hacker-content,
+			body.hacker-page footer {
+				position: relative;
+				z-index: 10;
+			}
+			/* footer: Anonymous 灰白 */
+			body.hacker-page footer {
+				--chrome-bg: rgba(0, 0, 0, 0.85);
+				--chrome-border: rgba(255, 255, 255, 0.15);
+				border-top-color: rgba(255, 255, 255, 0.15) !important;
+				color: rgba(255, 255, 255, 0.55);
+			}
+			body.hacker-page footer a {
+				color: rgba(255, 255, 255, 0.7) !important;
+			}
+			body.hacker-page footer a:hover {
+				color: rgba(0, 255, 100, 0.9) !important;
+			}
+			@media (max-width: 720px) {
+				body.hacker-page .hacker-content {
+					padding-top: calc(1em + 56px);
+				}
+			}

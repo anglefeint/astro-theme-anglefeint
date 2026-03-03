@@ -1,0 +1,249 @@
+/* AI base layer: page chrome variables and foundational surfaces. */
+/* AI theme styles extracted from global.css */
+body.ai-page header .ai-scanlines,
+body.ai-page footer .ai-scanlines {
+  position: absolute;
+  inset: 0;
+  contain: layout paint;
+  z-index: 1;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.55) 2px,
+    rgba(0, 0, 0, 0.55) 4px
+  );
+  pointer-events: none;
+  opacity: 0.78;
+  transition: opacity 0.3s ease;
+}
+body.ai-page header .ai-scanlines::after,
+body.ai-page footer .ai-scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.12) 1px,
+    rgba(0, 0, 0, 0.12) 2px
+  );
+  pointer-events: none;
+  opacity: 0.8;
+}
+body.ai-page header:hover .ai-scanlines,
+body.ai-page footer:hover .ai-scanlines {
+  opacity: 0;
+}
+/* ========== 点线网络 漂浮浮动 文章页 (body.ai-page) ========== */
+body.ai-page {
+  background: #03060c !important;
+  background-image: none !important;
+  min-height: 100vh;
+  --chrome-bg: rgba(14, 10, 16, 0.72);
+  --chrome-border: rgba(255, 106, 132, 0.14);
+  --chrome-link: rgba(214, 243, 255, 0.92);
+  --chrome-link-hover: rgba(255, 168, 188, 0.98);
+  --chrome-active: rgba(132, 214, 255, 0.92);
+  --chrome-text-muted: rgba(178, 220, 238, 0.7);
+}
+/* 终端式滚动条 */
+body.ai-page {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 106, 132, 0.48) transparent;
+}
+body.ai-page::-webkit-scrollbar {
+  width: 6px;
+}
+body.ai-page::-webkit-scrollbar-track {
+  background: transparent;
+}
+body.ai-page::-webkit-scrollbar-thumb {
+  background: rgba(255, 106, 132, 0.34);
+  border-radius: 3px;
+}
+body.ai-page::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 120, 152, 0.58);
+  box-shadow: 0 0 8px rgba(255, 106, 132, 0.4);
+}
+body.ai-page::-webkit-scrollbar-thumb {
+  box-shadow: 0 0 6px rgba(255, 106, 132, 0.26);
+}
+.ai-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ai-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    140deg,
+    #05060b 0%,
+    #0b1322 24%,
+    #0f1d2f 46%,
+    #221018 72%,
+    #13070f 100%
+  );
+}
+.ai-glow-shift {
+  animation: ai-glow-shift 25s ease-in-out infinite;
+}
+@keyframes ai-glow-shift {
+  0%,
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+  33% {
+    filter: brightness(1.02) saturate(1.1) hue-rotate(5deg);
+  }
+  66% {
+    filter: brightness(0.99) saturate(1.05) hue-rotate(-3deg);
+  }
+}
+/* 柔和光晕：中心径向青蓝光 */
+.ai-haze {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 92% 72% at 50% 38%,
+    rgba(122, 212, 252, 0.08) 0%,
+    rgba(255, 90, 120, 0.06) 34%,
+    transparent 65%
+  );
+  animation: ai-haze-drift 18s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes ai-haze-drift {
+  0% {
+    opacity: 0.8;
+    transform: translate(2%, 1%) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-2%, -1%) scale(0.98);
+  }
+}
+/* 边缘暗角 */
+.ai-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 75% 75% at 50% 50%,
+    transparent 45%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  pointer-events: none;
+}
+.ai-stripe {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 1px,
+    rgba(196, 232, 255, 0.28) 1px,
+    rgba(196, 232, 255, 0.28) 2px
+  );
+}
+/* 噪点层 */
+.ai-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+/* 六边形网格 */
+.ai-hex-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.11;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='49'%3E%3Cpath d='M28 0L56 14.5v29L28 49L0 43.5v-29z' fill='none' stroke='rgba(255,112,140,0.42)' stroke-width='0.5'/%3E%3Cpath d='M0 14.5L28 29v14.5' fill='none' stroke='rgba(162,220,255,0.32)' stroke-width='0.4'/%3E%3C/svg%3E");
+  background-size: 56px 49px;
+  pointer-events: none;
+}
+/* 思维流粒子 */
+.ai-thought-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ai-particle {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 138, 158, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 110, 136, 0.36);
+  animation: ai-particle-float var(--d, 4s) ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * -0.3s);
+}
+.ai-particle:nth-child(3n) {
+  width: 6px;
+  height: 6px;
+  background: rgba(168, 224, 255, 0.56);
+  box-shadow: 0 0 12px rgba(124, 206, 255, 0.34);
+}
+.ai-particle:nth-child(5n) {
+  width: 2px;
+  height: 2px;
+  background: rgba(182, 255, 218, 0.62);
+  box-shadow: 0 0 8px rgba(182, 255, 218, 0.28);
+}
+@keyframes ai-particle-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+  25% {
+    transform: translate(8px, -12px) scale(1.2);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-6px, 6px) scale(0.9);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translate(4px, 8px) scale(1.1);
+    opacity: 0.7;
+  }
+}
+.ai-network-canvas {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  opacity: 1;
+  pointer-events: none;
+  filter: brightness(1.28) saturate(1.08);
+  animation: ai-drift 25s ease-in-out infinite;
+}
+@keyframes ai-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(1.2%, 0.6%) scale(1.008);
+  }
+  50% {
+    transform: translate(-0.8%, 1%) scale(0.995);
+  }
+  75% {
+    transform: translate(0.5%, -0.8%) scale(1.005);
+  }
+}
+body.ai-page .ai-content,
+body.ai-page footer {
+  position: relative;
+  z-index: 10;
+}

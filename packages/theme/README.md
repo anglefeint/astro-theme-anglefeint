@@ -59,4 +59,24 @@ In the starter/site project, map these aliases to `src/config/*` and `src/i18n/*
 - `anglefeint-new-post`
 - `anglefeint-new-page`
 
-Starter projects can invoke these directly (or wrap them in npm scripts).
+Examples:
+
+```bash
+# create one post slug in all default locales
+anglefeint-new-post my-first-post
+
+# create post only for selected locales
+anglefeint-new-post my-first-post --locales en,ja
+
+# or via environment variable
+ANGLEFEINT_LOCALES=en,ja anglefeint-new-post my-first-post
+
+# create a custom page with theme variant
+anglefeint-new-page projects --theme base
+anglefeint-new-page projects --theme ai
+anglefeint-new-page projects --theme cyber
+anglefeint-new-page projects --theme hacker
+anglefeint-new-page projects --theme matrix
+```
+
+Starter projects can invoke these directly (or wrap them in npm scripts). For most users, `#starter` is the recommended installation path.
