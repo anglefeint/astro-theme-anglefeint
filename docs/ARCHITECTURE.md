@@ -81,6 +81,26 @@ The project now follows a compositional structure:
 - `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle, effect switches such as `enableRedQueen`)
 - `src/config/about.ts`: About adapter (copy and modal/effects text)
 - `src/config/social.ts`: social adapter (header/footer social links)
+- `packages/theme/src/config/*.ts`: package fallback defaults for non-starter/manual consumers
+
+### Config Ownership Contract
+
+- Source of truth for starter users is `src/site.config.ts`.
+- App adapter files under `src/config/*` and `src/i18n/*` are generated/maintained integration glue for alias injection.
+- Package defaults under `packages/theme/src/config/*` are fallback values and should not be treated as site-level runtime config in starter projects.
+
+### Adapter Sync Workflow
+
+- Adapter templates live in `scripts/adapter-templates/*`.
+- Generated adapter targets are:
+  - `src/config/*`
+  - `src/i18n/*`
+  - `src/types/theme-scripts.d.ts`
+- Commands:
+  - `npm run sync-adapters` to regenerate targets from templates
+  - `npm run check:adapters` to verify alias and adapter contract
+- Rule:
+  - When changing adapter behavior, edit templates first, then sync, then run adapter checks.
 
 ## SEO and Discovery
 

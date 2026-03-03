@@ -58,3 +58,13 @@ Review: README and UPGRADING show package-based upgrade flow.
 - Theme package is published and upgradeable from npm.
 - `starter` branch is wired to registry dependency (`@anglefeint/astro-theme`) for user projects.
 - `main` remains monorepo for core development and release workflows.
+
+## Adapter Sync Contract
+
+- Adapter templates are source-of-truth: `scripts/adapter-templates/*`.
+- Generated files in `src/config/*`, `src/i18n/*`, and `src/types/theme-scripts.d.ts` must be treated as synced artifacts.
+- If template logic changes:
+  1. update template files first
+  2. run `npm run sync-adapters`
+  3. run `npm run check:adapters`
+- Do not hand-edit generated adapter outputs without back-porting changes to templates.
