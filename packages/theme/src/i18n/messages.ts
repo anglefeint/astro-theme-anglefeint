@@ -36,6 +36,10 @@ export type Messages = {
 		backToBlog: string;
 		related: string;
 		regenerate: string;
+		toastP10: string;
+		toastP30: string;
+		toastP60: string;
+		toastDone: string;
 	};
 };
 
@@ -71,6 +75,10 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
 			backToBlog: 'Back to blog',
 			related: 'Related',
 			regenerate: 'Regenerate',
+			toastP10: 'context parsed 10%',
+			toastP30: 'context parsed 30%',
+			toastP60: 'inference stable 60%',
+			toastDone: 'output finalized',
 		},
 	},
 	ja: {
@@ -104,6 +112,10 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
 			backToBlog: 'ブログへ戻る',
 			related: '関連記事',
 			regenerate: '再生成',
+			toastP10: '文脈解析 10%',
+			toastP30: '文脈解析 30%',
+			toastP60: '推論安定 60%',
+			toastDone: '出力確定',
 		},
 	},
 	ko: {
@@ -137,6 +149,10 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
 			backToBlog: '블로그로 돌아가기',
 			related: '관련 글',
 			regenerate: '재생성',
+			toastP10: '컨텍스트 파싱 10%',
+			toastP30: '컨텍스트 파싱 30%',
+			toastP60: '추론 안정화 60%',
+			toastDone: '출력 완료',
 		},
 	},
 	es: {
@@ -170,6 +186,10 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
 			backToBlog: 'Volver al blog',
 			related: 'Relacionados',
 			regenerate: 'Regenerar',
+			toastP10: 'contexto analizado 10%',
+			toastP30: 'contexto analizado 30%',
+			toastP60: 'inferencia estable 60%',
+			toastDone: 'salida finalizada',
 		},
 	},
 	zh: {
@@ -203,6 +223,10 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
 			backToBlog: '返回博客',
 			related: '相关文章',
 			regenerate: '重新生成',
+			toastP10: '语境解析 10%',
+			toastP30: '语境解析 30%',
+			toastP60: '推理稳定 60%',
+			toastDone: '输出完成',
 		},
 	},
 };

@@ -15,6 +15,8 @@ export function initHeroCanvas(prefersReducedMotion) {
   var heroStart = 0;
   var heroRaf = 0;
   var resizeTimer = 0;
+  var isInViewport = true;
+  var heroObserver = null;
   var baseCanvas = document.createElement('canvas');
   var baseCtx = baseCanvas.getContext('2d');
   var pixelCanvas = document.createElement('canvas');
@@ -117,6 +119,10 @@ export function initHeroCanvas(prefersReducedMotion) {
   }
 
   function heroRender(t) {
+    if (prefersReducedMotion || document.hidden || !isInViewport) {
+      heroRaf = 0;
+      return;
+    }
     if (!heroStart) heroStart = t;
     var elapsed = (t - heroStart) * 0.001;
     frameCount++;
@@ -237,7 +243,22 @@ export function initHeroCanvas(prefersReducedMotion) {
       }
     }
 
+    if (!prefersReducedMotion && !document.hidden && isInViewport) {
+      heroRaf = requestAnimationFrame(heroRender);
+    } else {
+      heroRaf = 0;
+    }
+  }
+
+  function startHeroLoop() {
+    if (prefersReducedMotion || document.hidden || !isInViewport || !canvas.img || heroRaf) return;
     heroRaf = requestAnimationFrame(heroRender);
+  }
+
+  function stopHeroLoop() {
+    if (!heroRaf) return;
+    cancelAnimationFrame(heroRaf);
+    heroRaf = 0;
   }
 
   var img = new Image();
@@ -250,7 +271,7 @@ export function initHeroCanvas(prefersReducedMotion) {
       ctx.drawImage(baseCanvas, 0, 0);
       return;
     }
-    heroRaf = requestAnimationFrame(heroRender);
+    startHeroLoop();
   };
   img.src = new URL(src, window.location.href).href;
 
@@ -267,16 +288,27 @@ export function initHeroCanvas(prefersReducedMotion) {
   function onHeroVisibilityChange() {
     if (prefersReducedMotion) return;
     if (document.hidden) {
-      if (heroRaf) cancelAnimationFrame(heroRaf);
-      heroRaf = 0;
-    } else if (canvas.img && !heroRaf) {
-      heroRaf = requestAnimationFrame(heroRender);
+      stopHeroLoop();
+    } else {
+      startHeroLoop();
     }
+  }
+
+  if (!prefersReducedMotion && typeof IntersectionObserver !== 'undefined') {
+    heroObserver = new IntersectionObserver(function(entries) {
+      var entry = entries[0];
+      if (!entry) return;
+      isInViewport = entry.isIntersecting;
+      if (isInViewport) startHeroLoop();
+      else stopHeroLoop();
+    }, { threshold: 0.02 });
+    heroObserver.observe(shell);
   }
 
   document.addEventListener('visibilitychange', onHeroVisibilityChange);
   window.addEventListener('beforeunload', function() {
     if (resizeTimer) clearTimeout(resizeTimer);
-    cancelAnimationFrame(heroRaf);
+    stopHeroLoop();
+    if (heroObserver) heroObserver.disconnect();
   }, { once: true });
 }

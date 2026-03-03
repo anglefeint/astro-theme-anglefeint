@@ -90,7 +90,15 @@ const enableRedQueen = THEME.EFFECTS.ENABLE_RED_QUEEN;
 		)}
 		<div class="ai-read-progress" aria-hidden="true"></div>
 		<button type="button" class="ai-back-to-top" aria-label="Back to top" title="Back to top">↑</button>
-		<div class="ai-stage-toast" aria-live="polite" aria-atomic="true"></div>
+			<div
+				class="ai-stage-toast"
+				aria-live="polite"
+				aria-atomic="true"
+				data-toast-p10={messages.blog.toastP10}
+				data-toast-p30={messages.blog.toastP30}
+				data-toast-p60={messages.blog.toastP60}
+				data-toast-done={messages.blog.toastDone}
+			></div>
 		<div class="ai-mouse-glow" aria-hidden="true"></div>
 		<div class="ai-depth-blur" aria-hidden="true"></div>
 		<div class="ai-thinking-dots" aria-hidden="true"><span></span><span></span><span></span></div>
