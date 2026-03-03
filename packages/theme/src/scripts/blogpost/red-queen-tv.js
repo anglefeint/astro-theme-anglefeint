@@ -124,67 +124,40 @@ export function initRedQueenTv(prefersReducedMotion) {
     preloadRetryTimers.add(id);
   }
 
-  function preloadGif(item, token, attempt, done) {
+  function preloadDecoderData(item, token, attempt, done) {
     if (token !== playToken || !isPlaying) return;
     var tryCount = typeof attempt === 'number' ? attempt : 0;
     var cachedData = mediaDataCache[item.url];
-
-    if (cachedData instanceof ArrayBuffer) {
-      if (typeof ImageDecoder === 'undefined') {
-        done(true);
+    function retryOrFail() {
+      if (tryCount >= PRELOAD_RETRY_MAX) {
+        done(false);
         return;
       }
-      var cachedDecoder = new ImageDecoder({ data: cachedData, type: item.type });
-      cachedDecoder.tracks.ready.then(async function() {
-        var result = await cachedDecoder.decode({ frameIndex: 0 });
+      var retryDelay = Math.min(1800, RETRY_BASE_MS * (tryCount + 1));
+      schedulePreloadRetry(function() {
+        preloadDecoderData(item, token, tryCount + 1, done);
+      }, retryDelay);
+    }
+
+    function verifyBuffer(buffer) {
+      mediaDataCache[item.url] = buffer;
+      var decoder = new ImageDecoder({ data: buffer, type: item.type });
+      decoder.tracks.ready.then(async function() {
+        var result = await decoder.decode({ frameIndex: 0 });
         if (result && result.image && result.image.close) result.image.close();
         done(true);
-      }).catch(function() {
-        if (tryCount >= PRELOAD_RETRY_MAX) {
-          done(false);
-          return;
-        }
-        var retryDelay = Math.min(1800, RETRY_BASE_MS * (tryCount + 1));
-        schedulePreloadRetry(function() {
-          preloadGif(item, token, tryCount + 1, done);
-        }, retryDelay);
-      });
+      }).catch(retryOrFail);
+    }
+
+    if (cachedData instanceof ArrayBuffer) {
+      verifyBuffer(cachedData);
       return;
     }
 
     fetch(resolveItemUrl(item))
       .then(function(response) { return response.arrayBuffer(); })
-      .then(function(buffer) {
-        mediaDataCache[item.url] = buffer;
-        if (typeof ImageDecoder === 'undefined') {
-          done(true);
-          return;
-        }
-        var decoder = new ImageDecoder({ data: buffer, type: item.type });
-        decoder.tracks.ready.then(async function() {
-          var result = await decoder.decode({ frameIndex: 0 });
-          if (result && result.image && result.image.close) result.image.close();
-          done(true);
-        }).catch(function() {
-          if (tryCount >= PRELOAD_RETRY_MAX) {
-            done(false);
-            return;
-          }
-          var retryDelay = Math.min(1800, RETRY_BASE_MS * (tryCount + 1));
-          schedulePreloadRetry(function() {
-            preloadGif(item, token, tryCount + 1, done);
-          }, retryDelay);
-        });
-      }).catch(function() {
-        if (tryCount >= PRELOAD_RETRY_MAX) {
-          done(false);
-          return;
-        }
-        var retryDelay = Math.min(1800, RETRY_BASE_MS * (tryCount + 1));
-        schedulePreloadRetry(function() {
-          preloadGif(item, token, tryCount + 1, done);
-        }, retryDelay);
-      });
+      .then(verifyBuffer)
+      .catch(retryOrFail);
   }
 
   function preloadImage(item, token, attempt, done) {
@@ -235,8 +208,9 @@ export function initRedQueenTv(prefersReducedMotion) {
       if (left <= 0) finish(!failed);
     }
 
+    var hasImageDecoder = typeof ImageDecoder !== 'undefined';
     playlist.forEach(function(item) {
-      if (item.type === 'image/gif') preloadGif(item, token, 0, markDone);
+      if (hasImageDecoder) preloadDecoderData(item, token, 0, markDone);
       else preloadImage(item, token, 0, markDone);
     });
   }
