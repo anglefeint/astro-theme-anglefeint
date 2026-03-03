@@ -89,19 +89,31 @@ body.ai-page::-webkit-scrollbar-thumb {
     #13070f 100%
   );
 }
+.ai-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 28%, rgba(164, 220, 255, 0.1), rgba(164, 220, 255, 0) 46%),
+    radial-gradient(circle at 72% 64%, rgba(255, 112, 140, 0.08), rgba(255, 112, 140, 0) 52%);
+  opacity: 0.38;
+  transform: translateZ(0);
+  will-change: opacity;
+}
 .ai-glow-shift {
   animation: ai-glow-shift 25s ease-in-out infinite;
 }
 @keyframes ai-glow-shift {
   0%,
   100% {
-    filter: brightness(1) saturate(1);
+    opacity: 0.32;
   }
   33% {
-    filter: brightness(1.02) saturate(1.1) hue-rotate(5deg);
+    opacity: 0.52;
   }
   66% {
-    filter: brightness(0.99) saturate(1.05) hue-rotate(-3deg);
+    opacity: 0.4;
   }
 }
 /* 柔和光晕：中心径向青蓝光 */
