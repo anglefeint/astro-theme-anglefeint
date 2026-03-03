@@ -15,8 +15,11 @@ export function initHeroCanvas(prefersReducedMotion) {
   var heroStart = 0;
   var heroRaf = 0;
   var resizeTimer = 0;
+  var startDelayTimer = 0;
+  var idleStartHandle = 0;
   var isInViewport = true;
   var heroObserver = null;
+  var heroStartScheduled = false;
   var baseCanvas = document.createElement('canvas');
   var baseCtx = baseCanvas.getContext('2d');
   var pixelCanvas = document.createElement('canvas');
@@ -252,6 +255,15 @@ export function initHeroCanvas(prefersReducedMotion) {
 
   function startHeroLoop() {
     if (prefersReducedMotion || document.hidden || !isInViewport || !canvas.img || heroRaf) return;
+    heroStartScheduled = false;
+    if (startDelayTimer) {
+      clearTimeout(startDelayTimer);
+      startDelayTimer = 0;
+    }
+    if (idleStartHandle && typeof window.cancelIdleCallback === 'function') {
+      window.cancelIdleCallback(idleStartHandle);
+      idleStartHandle = 0;
+    }
     heroRaf = requestAnimationFrame(heroRender);
   }
 
@@ -259,6 +271,29 @@ export function initHeroCanvas(prefersReducedMotion) {
     if (!heroRaf) return;
     cancelAnimationFrame(heroRaf);
     heroRaf = 0;
+  }
+
+  function scheduleHeroStart() {
+    if (prefersReducedMotion || !canvas.img || heroRaf || heroStartScheduled) return;
+    heroStartScheduled = true;
+
+    function runStart() {
+      startDelayTimer = 0;
+      idleStartHandle = 0;
+      startHeroLoop();
+    }
+
+    if (typeof window.requestIdleCallback === 'function') {
+      idleStartHandle = window.requestIdleCallback(runStart, { timeout: 1200 });
+      return;
+    }
+
+    function afterLoad() {
+      startDelayTimer = setTimeout(runStart, 180);
+    }
+
+    if (document.readyState === 'complete') afterLoad();
+    else window.addEventListener('load', afterLoad, { once: true });
   }
 
   var img = new Image();
@@ -271,7 +306,12 @@ export function initHeroCanvas(prefersReducedMotion) {
       ctx.drawImage(baseCanvas, 0, 0);
       return;
     }
-    startHeroLoop();
+    // Keep first paint static for LCP, then promote to animated mode when idle.
+    ctx.drawImage(baseCanvas, 0, 0);
+    scheduleHeroStart();
+  };
+  img.onerror = function() {
+    wrap.classList.add('ready');
   };
   img.src = new URL(src, window.location.href).href;
 
@@ -290,6 +330,7 @@ export function initHeroCanvas(prefersReducedMotion) {
     if (document.hidden) {
       stopHeroLoop();
     } else {
+      if (heroStartScheduled) return;
       startHeroLoop();
     }
   }
@@ -299,8 +340,10 @@ export function initHeroCanvas(prefersReducedMotion) {
       var entry = entries[0];
       if (!entry) return;
       isInViewport = entry.isIntersecting;
-      if (isInViewport) startHeroLoop();
-      else stopHeroLoop();
+      if (isInViewport) {
+        if (heroStartScheduled) return;
+        startHeroLoop();
+      } else stopHeroLoop();
     }, { threshold: 0.02 });
     heroObserver.observe(shell);
   }
@@ -309,6 +352,10 @@ export function initHeroCanvas(prefersReducedMotion) {
   window.addEventListener('beforeunload', function() {
     if (resizeTimer) clearTimeout(resizeTimer);
     stopHeroLoop();
+    if (startDelayTimer) clearTimeout(startDelayTimer);
+    if (idleStartHandle && typeof window.cancelIdleCallback === 'function') {
+      window.cancelIdleCallback(idleStartHandle);
+    }
     if (heroObserver) heroObserver.disconnect();
   }, { once: true });
 }
