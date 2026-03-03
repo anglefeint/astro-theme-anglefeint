@@ -150,11 +150,11 @@
 					inset 0 1px 0 rgba(220, 242, 255, 0.22);
 				overflow: hidden;
 				backdrop-filter: blur(1.5px);
+				transform: translate3d(0, 0, 0);
+				will-change: transform, opacity;
 				transition:
-					width 360ms cubic-bezier(0.23, 1, 0.32, 1),
-					top 320ms ease,
-					padding 320ms ease,
-					border-radius 320ms ease,
+					transform 320ms ease,
+					opacity 220ms ease,
 					box-shadow 320ms ease,
 					background 320ms ease;
 			}
@@ -243,10 +243,10 @@
 				outline-offset: -2px;
 			}
 			.rq-tv.rq-tv-collapsed {
-				top: 27vh;
 				width: 34px;
 				padding: 0;
 				border-radius: 6px;
+				transform: translate3d(0, 2vh, 0);
 				background: linear-gradient(165deg, rgba(34, 58, 78, 0.9), rgba(10, 19, 30, 0.92));
 				box-shadow:
 					0 10px 20px rgba(4, 10, 18, 0.42),
@@ -338,7 +338,7 @@
 				position: absolute;
 				top: 0;
 				bottom: 0;
-				left: -35%;
+				left: 0;
 				width: 35%;
 				background: linear-gradient(
 					90deg,
@@ -346,11 +346,13 @@
 					rgba(164, 228, 255, 0.88),
 					rgba(132, 214, 255, 0)
 				);
+				transform: translateX(-100%);
+				will-change: transform;
 				animation: ai-title-flow-run 3.8s linear infinite;
 			}
 			@keyframes ai-title-flow-run {
 				to {
-					left: 100%;
+					transform: translateX(285%);
 				}
 			}
 			.ai-stage-toast {
