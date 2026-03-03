@@ -8,7 +8,7 @@ export function initRedQueenTv(prefersReducedMotion) {
   var source2 = stage.getAttribute('data-rq-src2') || '';
   if (!source) return;
 
-  var OPEN_DELAY_MS = 1000;
+  var OPEN_DELAY_MS = 1500;
   var COLLAPSE_DELAY_MS = 260;
   var FRAME_MS = 33;
   var FALLBACK_STEP_MS = 650;
