@@ -150,9 +150,9 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 | --- | --- |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| Blog Post (Open) | Blog Post (Collapsed) |
-| --- | --- |
-| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| Blog Post |
+| --- |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
 | About |
 | --- |
