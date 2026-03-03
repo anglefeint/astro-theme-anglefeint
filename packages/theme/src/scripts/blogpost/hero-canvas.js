@@ -15,11 +15,12 @@ export function initHeroCanvas(prefersReducedMotion) {
   var heroStart = 0;
   var heroRaf = 0;
   var resizeTimer = 0;
-  var startDelayTimer = 0;
-  var idleStartHandle = 0;
+  var prepareTimer = 0;
+  var prepareIdleHandle = 0;
   var isInViewport = true;
   var heroObserver = null;
-  var heroStartScheduled = false;
+  var heroEffectsPrepared = false;
+  var heroEffectsPreparing = false;
   var baseCanvas = document.createElement('canvas');
   var baseCtx = baseCanvas.getContext('2d');
   var pixelCanvas = document.createElement('canvas');
@@ -254,16 +255,7 @@ export function initHeroCanvas(prefersReducedMotion) {
   }
 
   function startHeroLoop() {
-    if (prefersReducedMotion || document.hidden || !isInViewport || !canvas.img || heroRaf) return;
-    heroStartScheduled = false;
-    if (startDelayTimer) {
-      clearTimeout(startDelayTimer);
-      startDelayTimer = 0;
-    }
-    if (idleStartHandle && typeof window.cancelIdleCallback === 'function') {
-      window.cancelIdleCallback(idleStartHandle);
-      idleStartHandle = 0;
-    }
+    if (prefersReducedMotion || document.hidden || !isInViewport || !canvas.img || !heroEffectsPrepared || heroRaf) return;
     heroRaf = requestAnimationFrame(heroRender);
   }
 
@@ -273,23 +265,40 @@ export function initHeroCanvas(prefersReducedMotion) {
     heroRaf = 0;
   }
 
-  function scheduleHeroStart() {
-    if (prefersReducedMotion || !canvas.img || heroRaf || heroStartScheduled) return;
-    heroStartScheduled = true;
+  function drawStaticFrame(img) {
+    var w = canvas.width;
+    var h = canvas.height;
+    baseCanvas.width = w;
+    baseCanvas.height = h;
+    drawBase(baseCtx, img, w, h);
+    ctx.clearRect(0, 0, w, h);
+    ctx.drawImage(baseCanvas, 0, 0);
+  }
 
-    function runStart() {
-      startDelayTimer = 0;
-      idleStartHandle = 0;
+  function scheduleHeroEffectsPrepare() {
+    if (prefersReducedMotion || !canvas.img || heroEffectsPrepared || heroEffectsPreparing) return;
+    heroEffectsPreparing = true;
+
+    function runPrepare() {
+      prepareTimer = 0;
+      prepareIdleHandle = 0;
+      if (!canvas.img) {
+        heroEffectsPreparing = false;
+        return;
+      }
+      buildEdge(canvas.img);
+      heroEffectsPrepared = true;
+      heroEffectsPreparing = false;
       startHeroLoop();
     }
 
     if (typeof window.requestIdleCallback === 'function') {
-      idleStartHandle = window.requestIdleCallback(runStart, { timeout: 1200 });
+      prepareIdleHandle = window.requestIdleCallback(runPrepare, { timeout: 1200 });
       return;
     }
 
     function afterLoad() {
-      startDelayTimer = setTimeout(runStart, 180);
+      prepareTimer = setTimeout(runPrepare, 180);
     }
 
     if (document.readyState === 'complete') afterLoad();
@@ -300,15 +309,13 @@ export function initHeroCanvas(prefersReducedMotion) {
   img.onload = function() {
     canvas.img = img;
     sizeCanvas();
-    buildEdge(img);
+    drawStaticFrame(img);
     wrap.classList.add('ready');
     if (prefersReducedMotion) {
-      ctx.drawImage(baseCanvas, 0, 0);
       return;
     }
-    // Keep first paint static for LCP, then promote to animated mode when idle.
-    ctx.drawImage(baseCanvas, 0, 0);
-    scheduleHeroStart();
+    // Keep first paint static for LCP, then prepare heavy effects when idle.
+    scheduleHeroEffectsPrepare();
   };
   img.onerror = function() {
     wrap.classList.add('ready');
@@ -321,7 +328,8 @@ export function initHeroCanvas(prefersReducedMotion) {
     resizeTimer = setTimeout(function() {
       resizeTimer = 0;
       sizeCanvas();
-      buildEdge(canvas.img);
+      drawStaticFrame(canvas.img);
+      if (heroEffectsPrepared) buildEdge(canvas.img);
     }, 180);
   }, { passive: true });
 
@@ -330,7 +338,6 @@ export function initHeroCanvas(prefersReducedMotion) {
     if (document.hidden) {
       stopHeroLoop();
     } else {
-      if (heroStartScheduled) return;
       startHeroLoop();
     }
   }
@@ -340,10 +347,8 @@ export function initHeroCanvas(prefersReducedMotion) {
       var entry = entries[0];
       if (!entry) return;
       isInViewport = entry.isIntersecting;
-      if (isInViewport) {
-        if (heroStartScheduled) return;
-        startHeroLoop();
-      } else stopHeroLoop();
+      if (isInViewport) startHeroLoop();
+      else stopHeroLoop();
     }, { threshold: 0.02 });
     heroObserver.observe(shell);
   }
@@ -352,9 +357,9 @@ export function initHeroCanvas(prefersReducedMotion) {
   window.addEventListener('beforeunload', function() {
     if (resizeTimer) clearTimeout(resizeTimer);
     stopHeroLoop();
-    if (startDelayTimer) clearTimeout(startDelayTimer);
-    if (idleStartHandle && typeof window.cancelIdleCallback === 'function') {
-      window.cancelIdleCallback(idleStartHandle);
+    if (prepareTimer) clearTimeout(prepareTimer);
+    if (prepareIdleHandle && typeof window.cancelIdleCallback === 'function') {
+      window.cancelIdleCallback(prepareIdleHandle);
     }
     if (heroObserver) heroObserver.disconnect();
   }, { once: true });
