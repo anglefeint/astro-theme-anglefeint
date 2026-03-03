@@ -149,9 +149,9 @@ npm run new-page -- projects --theme matrix
 | --- | --- |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| 글 상세 (모니터 열림) | 글 상세 (모니터 접힘) |
-| --- | --- |
-| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| 글 상세 |
+| --- |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
 | About |
 | --- |

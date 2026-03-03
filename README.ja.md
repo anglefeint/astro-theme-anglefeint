@@ -149,9 +149,9 @@ npm run new-page -- projects --theme matrix
 | --- | --- |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| 記事ページ（展開） | 記事ページ（折りたたみ） |
-| --- | --- |
-| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| 記事ページ |
+| --- |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
 | About |
 | --- |
