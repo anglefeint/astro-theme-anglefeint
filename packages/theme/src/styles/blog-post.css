@@ -154,9 +154,7 @@
 				will-change: transform, opacity;
 				transition:
 					transform 320ms ease,
-					opacity 220ms ease,
-					box-shadow 320ms ease,
-					background 320ms ease;
+					opacity 220ms ease;
 			}
 			.rq-tv::before {
 				content: "";
