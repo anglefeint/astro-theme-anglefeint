@@ -2,9 +2,9 @@
 /* ========== Blade Runner 博客列表页 (body.cyber-page) ========== */
 body.cyber-page {
   background: #090b12 !important;
-	background-image: none !important;
-	background-size: auto !important;
-	min-height: 100vh !important;
+  background-image: none !important;
+  background-size: auto !important;
+  min-height: 100vh !important;
   --chrome-bg: rgba(7, 13, 24, 0.72);
   --chrome-border: rgba(112, 196, 255, 0.2);
   --chrome-link: rgba(196, 226, 255, 0.92);
@@ -13,10 +13,10 @@ body.cyber-page {
   --chrome-text-muted: rgba(156, 188, 224, 0.76);
 }
 body.cyber-page::before {
-  content: "";
-	position: fixed;
-	inset: 0;
-	z-index: -1;
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background: linear-gradient(
     180deg,
     #05070b 0%,
@@ -27,28 +27,16 @@ body.cyber-page::before {
   );
 }
 body.cyber-page::after {
-  content: "";
-	position: fixed;
-	inset: 0;
-	z-index: -1;
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background:
-    radial-gradient(
-      ellipse 82% 52% at 50% 18%,
-      rgba(110, 186, 255, 0.14) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse 62% 42% at 82% 78%,
-      rgba(255, 132, 88, 0.06) 0%,
-      transparent 40%
-    ),
-    radial-gradient(
-      ellipse 52% 37% at 20% 62%,
-      rgba(226, 150, 214, 0.06) 0%,
-      transparent 45%
-    );
+    radial-gradient(ellipse 82% 52% at 50% 18%, rgba(110, 186, 255, 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse 62% 42% at 82% 78%, rgba(255, 132, 88, 0.06) 0%, transparent 40%),
+    radial-gradient(ellipse 52% 37% at 20% 62%, rgba(226, 150, 214, 0.06) 0%, transparent 45%);
   animation: cyber-fog-drift 20s ease-in-out infinite alternate;
-	pointer-events: none;
+  pointer-events: none;
 }
 @keyframes cyber-fog-drift {
   0% {
@@ -61,17 +49,17 @@ body.cyber-page::after {
   }
 }
 body.cyber-page .cyber-rain {
-	position: fixed;
-	inset: 0;
-	pointer-events: none;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
   z-index: 6;
-	overflow: hidden;
+  overflow: hidden;
   contain: layout paint;
 }
 /* Blade Runner: 雨滴 - 白色中脏脏的感觉，非琥珀也非冷青 */
 body.cyber-page .cyber-rain-drop {
-	position: absolute;
-	top: -20px;
+  position: absolute;
+  top: -20px;
   width: 6px;
   height: 38px;
   clip-path: polygon(1.5px 0, 4.5px 0, 6px 100%, 0 100%);
@@ -83,7 +71,7 @@ body.cyber-page .cyber-rain-drop {
     rgba(195, 190, 182, 0.52) 70%,
     transparent 100%
   );
-	animation: cyber-rain-fall linear infinite;
+  animation: cyber-rain-fall linear infinite;
 }
 @keyframes cyber-rain-fall {
   to {
@@ -92,7 +80,7 @@ body.cyber-page .cyber-rain-drop {
 }
 /* AI page: scanlines only on header and footer; fade on hover */
 body.cyber-page .cyber-spotlight {
-	position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   width: calc(hypot(100vw, 100vh) * 1.3 / 1.41421356);
@@ -103,7 +91,7 @@ body.cyber-page .cyber-spotlight {
 }
 body.cyber-page .cyber-spotlight-tl {
   position: absolute;
-	inset: 0;
+  inset: 0;
   transform-origin: 0 0;
   background: conic-gradient(
     from 180deg at 0 0,
@@ -159,21 +147,9 @@ body.cyber-page .cyber-flicker {
   inset: 0;
   contain: layout paint;
   background:
-    radial-gradient(
-      ellipse 25% 30% at 85% 20%,
-      rgba(255, 146, 96, 0.18) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 20% 24% at 20% 68%,
-      rgba(96, 182, 255, 0.28) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 28% 35% at 70% 85%,
-      rgba(224, 146, 212, 0.2) 0%,
-      transparent 55%
-    );
+    radial-gradient(ellipse 25% 30% at 85% 20%, rgba(255, 146, 96, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 20% 24% at 20% 68%, rgba(96, 182, 255, 0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 28% 35% at 70% 85%, rgba(224, 146, 212, 0.2) 0%, transparent 55%);
   animation: cyber-neon-flicker-glow 6s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
@@ -198,21 +174,9 @@ body.cyber-page .cyber-haze {
   inset: 0;
   contain: layout paint;
   background:
-    radial-gradient(
-      ellipse 100% 80% at 50% 50%,
-      rgba(52, 84, 128, 0.08) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 40% 30% at 30% 30%,
-      rgba(224, 144, 208, 0.05) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse 35% 25% at 70% 70%,
-      rgba(255, 134, 92, 0.04) 0%,
-      transparent 50%
-    );
+    radial-gradient(ellipse 100% 80% at 50% 50%, rgba(52, 84, 128, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 30% 30%, rgba(224, 144, 208, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 35% 25% at 70% 70%, rgba(255, 134, 92, 0.04) 0%, transparent 50%);
   animation: cyber-haze-drift 20s ease-in-out infinite alternate;
   pointer-events: none;
   z-index: 1;
@@ -231,13 +195,9 @@ body.cyber-page .cyber-vignette {
   position: fixed;
   inset: 0;
   contain: layout paint;
-  background: radial-gradient(
-    ellipse 80% 80% at 50% 50%,
-    transparent 40%,
-    rgba(0, 0, 0, 0.4) 100%
-  );
-	pointer-events: none;
-	z-index: 3;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  z-index: 3;
 }
 body.cyber-page .cyber-rain-drop--thin {
   width: 4px;
@@ -306,10 +266,10 @@ body.cyber-page header {
   -webkit-backdrop-filter: blur(3px);
 }
 body.cyber-page main {
-	position: relative;
+  position: relative;
   z-index: 5;
-	width: 960px;
-	padding-top: calc(3em + 56px);
+  width: 960px;
+  padding-top: calc(3em + 56px);
 }
 body.cyber-page .title,
 body.cyber-page .date {
@@ -319,23 +279,23 @@ body.cyber-page .date {
   color: rgba(150, 186, 228, 0.68);
 }
 body.cyber-page ul {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 2rem;
-	list-style: none;
-	margin: 0;
-	padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 body.cyber-page ul li {
-	width: calc(50% - 1rem);
+  width: calc(50% - 1rem);
 }
 body.cyber-page ul li * {
-	text-decoration: none;
+  text-decoration: none;
 }
 body.cyber-page ul li:first-child {
-	width: 100%;
-	margin-bottom: 1rem;
-	text-align: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 body.cyber-page ul li:first-child img {
   width: 100%;
@@ -344,9 +304,9 @@ body.cyber-page ul li:first-child .title {
   font-size: 2.369rem;
 }
 body.cyber-page ul li a {
-	display: block;
-	position: relative;
-	padding: 1rem;
+  display: block;
+  position: relative;
+  padding: 1rem;
   border-radius: 4px;
   border: 1px solid rgba(116, 194, 255, 0.24);
   box-shadow:
@@ -423,18 +383,18 @@ body.cyber-page ul li a:hover .date {
     0 0 20px rgba(218, 148, 210, 0.26);
 }
 body.cyber-page .img-wrapper {
-	position: relative;
+  position: relative;
   margin-bottom: 0.5rem;
   border-radius: 4px;
-	overflow: hidden;
+  overflow: hidden;
 }
 /* 水平扫线 - 日式樱花+赛博蓝 */
 body.cyber-page .img-wrapper::before {
-  content: "";
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: -20px;
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20px;
   height: 10px;
   z-index: 3;
   background: linear-gradient(
@@ -457,14 +417,14 @@ body.cyber-page ul li a:hover .img-wrapper::before {
   top: 100%;
 }
 body.cyber-page .img-wrapper::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
-	z-index: 2;
+  z-index: 2;
   box-shadow:
     inset 0 0 25px rgba(108, 190, 255, 0.16),
     inset 0 0 50px rgba(224, 148, 212, 0.1);
-	pointer-events: none;
+  pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -472,18 +432,16 @@ body.cyber-page ul li a:hover .img-wrapper::after {
   opacity: 1;
 }
 body.cyber-page ul li img {
-	display: block;
-	width: 100%;
-	height: auto;
-  filter: saturate(0.75) contrast(1.05) brightness(0.88) sepia(0.15)
-    hue-rotate(-2deg);
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(0.75) contrast(1.05) brightness(0.88) sepia(0.15) hue-rotate(-2deg);
   transition:
     filter 0.3s,
     box-shadow 0.3s;
 }
 body.cyber-page ul li a:hover img {
-  filter: saturate(0.88) contrast(1.11) brightness(0.94) sepia(0.08)
-    hue-rotate(-6deg);
+  filter: saturate(0.88) contrast(1.11) brightness(0.94) sepia(0.08) hue-rotate(-6deg);
   box-shadow:
     0 0 15px rgba(116, 194, 255, 0.22),
     0 0 30px rgba(224, 148, 212, 0.2);
@@ -491,7 +449,15 @@ body.cyber-page ul li a:hover img {
 body.cyber-page .title {
   margin: 0;
   font-size: 1.2rem;
-  line-height: 1;
+  line-height: 1.2;
+  min-height: calc(1.2em * 2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
   transition:
     color 0.2s,
     text-shadow 0.2s;
