@@ -29,5 +29,7 @@ Our implementation goals are straightforward:
 
 That is why this list is more than cards plus pagination. It acts like a navigable corridor: signs, rain, glow, and direction. Users are not just scrolling a feed, they are moving through a designed environment.
 
+We also believe this visual language points to something bigger: technology will keep reshaping how humans live, decide, and create. Cyberpunk aesthetics are not only about style; they are a way to discuss acceleration, adaptation, and identity in a future where interfaces increasingly mediate reality.
+
 For us, this is not decoration for decoration's sake.
 It is environmental UX for content discovery.
