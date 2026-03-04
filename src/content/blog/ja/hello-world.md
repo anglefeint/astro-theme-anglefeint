@@ -1,7 +1,7 @@
 ---
 title: 'Hello World'
-subtitle: '最小サンプル記事'
-description: 'テーマ表示確認用の短いサンプル記事です。'
+subtitle: '今でも Hello World から始める'
+description: 'なぜ私たちは今もこの定番の合言葉を使うのか。'
 pubDate: '2026-03-01'
 heroImage: '../../../assets/blog/default-covers/matrix-01.webp'
 aiModel: 'anglefeint-core'
@@ -15,4 +15,5 @@ tokenCount: 96
 
 Hello world.
 
-表示確認用の短い記事です。
+このプロジェクトでも最初の一行はこの定番です。
+シンプルですが、一行の出力から公開可能なシステムへ進む出発点を示しています。

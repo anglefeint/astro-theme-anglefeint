@@ -1,7 +1,7 @@
 ---
 title: 'Hello World'
-subtitle: 'A minimal starter post'
-description: 'A short universal sample post for quick theme preview.'
+subtitle: 'We still start with Hello World'
+description: 'Why we still begin with the classic slogan: Hello World.'
 pubDate: '2026-03-01'
 heroImage: '../../../assets/blog/default-covers/matrix-01.webp'
 aiModel: 'anglefeint-core'
@@ -15,4 +15,5 @@ tokenCount: 96
 
 Hello world.
 
-This is a short starter post for quick testing.
+We still keep this classic slogan as the first line of the project.
+It is simple, but it represents a stable beginning: from one output to a complete publishing system.
