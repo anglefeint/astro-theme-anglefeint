@@ -18,16 +18,13 @@ source_of_truth: true
 ## 1) Pre-release checks
 
 ```bash
-npm run build
-npm run check
-npm_config_cache=/tmp/npm-cache-anglefeint npm run theme:pack
+npm run release:npm -- --dry-run
 ```
 
 ## 2) Publish alpha/beta
 
 ```bash
-cd packages/theme
-npm publish --access public --tag alpha
+npm run release:npm -- --tag alpha
 ```
 
 ## 3) Consume in starter/blog project
@@ -57,9 +54,8 @@ npm run check
 After alpha verification:
 
 ```bash
-cd packages/theme
 npm version patch
-npm publish --access public
+npm run release:npm
 ```
 
 ## Notes
