@@ -218,11 +218,29 @@ void aboutRuntimeConfig;
 			</div>
 	</article>
 	<Fragment slot="body-end">
-		<script is:inline id="hacker-runtime-config" type="application/json">
-			{JSON.stringify(aboutRuntimeConfig).replace(/</g, '\\u003c')}
-		</script>
+		<script
+			is:inline
+			id="hacker-runtime-config"
+			type="application/json"
+			set:html={JSON.stringify(aboutRuntimeConfig).replace(/</g, '\\u003c')}
+		/>
 		<script>
 			import { initAboutEffects } from '@anglefeint/astro-theme/scripts/about-effects.js';
+			const runtimeConfigEl = document.getElementById('hacker-runtime-config');
+			const runtimeConfigText = runtimeConfigEl?.textContent?.trim() ?? '';
+			if (!runtimeConfigText) {
+				throw new Error('Missing hacker runtime config payload.');
+			}
+			let runtimeConfig;
+			try {
+				runtimeConfig = JSON.parse(runtimeConfigText);
+			} catch (_error) {
+				throw new Error('Invalid hacker runtime config JSON payload.');
+			}
+			const aiModalBody = runtimeConfig?.modalContent?.ai?.body;
+			if (typeof aiModalBody !== 'string' || !aiModalBody.includes('ai --status --verbose')) {
+				throw new Error('Hacker runtime config missing expected AI modal payload.');
+			}
 			initAboutEffects();
 		</script>
 	</Fragment>
