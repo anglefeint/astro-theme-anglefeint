@@ -53,9 +53,17 @@ for (const filePath of aboutPages) {
     continue;
   }
 
-  const aiBody = runtimeConfig?.modalContent?.ai?.body;
-  if (typeof aiBody !== 'string' || !aiBody.includes('ai --status --verbose')) {
-    errors.push(`${filePath}: runtime config missing expected AI modal content.`);
+  const modalContent = runtimeConfig?.modalContent;
+  const requiredModalKeys = ['dl-data', 'ai', 'decryptor', 'help', 'all-scripts'];
+  const missingKeys = requiredModalKeys.filter((key) => !modalContent || !modalContent[key]);
+  if (missingKeys.length > 0) {
+    errors.push(`${filePath}: runtime config missing modal keys: ${missingKeys.join(', ')}.`);
+    continue;
+  }
+
+  const aiBody = modalContent.ai?.body;
+  if (typeof aiBody !== 'string' || aiBody.trim().length === 0) {
+    errors.push(`${filePath}: runtime config has empty AI modal content.`);
   }
 }
 
