@@ -25,6 +25,21 @@ export interface ThemeConfig {
     blogPageSize: number;
     homeLatestCount: number;
     enableAboutPage: boolean;
+    pagination: {
+      windowSize: number;
+      showJumpThreshold: number;
+      jump: {
+        enabled: boolean;
+        enterToGo: boolean;
+      };
+      style: {
+        enabled: boolean;
+        mode: 'random' | 'sequential' | 'fixed';
+        variants: number;
+        fixedVariant: number;
+        stableBy: 'page' | 'locale' | 'slug';
+      };
+    };
     effects: {
       enableRedQueen: boolean;
     };
@@ -118,6 +133,21 @@ const defaultThemeConfig: ThemeConfig = {
     blogPageSize: 9,
     homeLatestCount: 3,
     enableAboutPage: true,
+    pagination: {
+      windowSize: 7,
+      showJumpThreshold: 12,
+      jump: {
+        enabled: true,
+        enterToGo: true,
+      },
+      style: {
+        enabled: true,
+        mode: 'random',
+        variants: 9,
+        fixedVariant: 1,
+        stableBy: 'page',
+      },
+    },
     effects: {
       enableRedQueen: true,
     },

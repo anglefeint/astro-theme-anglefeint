@@ -1,35 +1,276 @@
-/* Pagination styles for cyber blog list pages */
+/* Cyber pagination system: base + variant styles */
+body.cyber-page .pagination-wrap {
+  --pg-accent: rgba(224, 170, 236, 0.95);
+  --pg-border: rgba(198, 156, 224, 0.42);
+  --pg-fg: rgb(212, 196, 232);
+  --pg-bg: rgba(126, 67, 142, 0.12);
+  --pg-glow: rgba(226, 166, 236, 0.45);
+  margin-top: 2.4rem;
+  display: grid;
+  gap: 0.8rem;
+  justify-items: center;
+}
+
 body.cyber-page .pagination {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 0.5rem;
-	margin-top: 2.5rem;
-	padding: 1.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-body.cyber-page .pagination a {
-	padding: 0.5rem 1rem;
-	color: rgb(212, 196, 232);
-	text-decoration: none;
-	border: 1px solid rgba(198, 156, 224, 0.42);
-	border-radius: 4px;
-	transition: 0.25s ease;
-	text-shadow: 0 0 10px rgba(214, 152, 226, 0.2);
+body.cyber-page .pagination .pg-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4rem;
+  padding: 0.52rem 0.82rem;
+  text-decoration: none;
+  color: var(--pg-fg);
+  border: 1px solid var(--pg-border);
+  background: rgba(9, 8, 16, 0.58);
+  border-radius: 6px;
+  text-shadow: 0 0 10px rgba(214, 152, 226, 0.2);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+  --item-accent: var(--pg-accent);
+  --item-border: var(--pg-border);
+  --item-bg: var(--pg-bg);
+  --item-glow: var(--pg-glow);
+  border-color: var(--item-border);
 }
 
-body.cyber-page .pagination a:hover {
-	border-color: rgba(226, 166, 236, 0.88);
-	text-shadow: 0 0 15px rgba(232, 174, 242, 0.5);
-	box-shadow: 0 0 15px rgba(222, 154, 228, 0.26);
+body.cyber-page .pagination .pg-item:hover {
+  transform: translateY(-1px);
+  border-color: var(--item-accent);
+  box-shadow: 0 0 15px var(--item-glow);
 }
 
-body.cyber-page .pagination a.current {
-	background: rgba(188, 122, 214, 0.2);
-	border-color: rgb(224, 170, 236);
-	color: rgb(244, 224, 252);
-	text-shadow: 0 0 15px rgba(232, 174, 242, 0.48);
-	box-shadow:
-		0 0 20px rgba(118, 198, 255, 0.24),
-		0 0 12px rgba(220, 152, 230, 0.22);
+body.cyber-page .pagination .pg-item.current {
+  background: var(--item-bg);
+  border-color: var(--item-accent);
+  color: rgb(246, 229, 252);
+  box-shadow:
+    0 0 18px rgba(118, 198, 255, 0.22),
+    0 0 12px var(--item-glow);
+}
+
+body.cyber-page .pagination .pg-item.pg-nav {
+  padding-inline: 0.92rem;
+}
+
+body.cyber-page .pagination .pg-item.pg-ellipsis {
+  border-style: dashed;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+body.cyber-page .pagination-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.52rem;
+  padding: 0.42rem 0.56rem;
+  border: 1px solid rgba(198, 156, 224, 0.32);
+  border-radius: 8px;
+  background: rgba(8, 8, 14, 0.62);
+}
+
+body.cyber-page .pagination-jump-label {
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  color: rgb(176, 152, 201);
+}
+
+body.cyber-page .pagination-jump-input {
+  width: 4.2rem;
+  padding: 0.32rem 0.4rem;
+  border: 1px solid rgba(198, 156, 224, 0.42);
+  border-radius: 5px;
+  background: rgba(16, 14, 24, 0.9);
+  color: rgb(230, 219, 241);
+  font-size: 0.94rem;
+}
+
+body.cyber-page .pagination-jump-input:focus {
+  outline: none;
+  border-color: var(--pg-accent);
+  box-shadow: 0 0 10px var(--pg-glow);
+}
+
+body.cyber-page .pagination-jump-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.7rem;
+  padding: 0.34rem 0.62rem;
+  border: 1px solid rgba(198, 156, 224, 0.5);
+  border-radius: 5px;
+  background: rgba(122, 69, 144, 0.25);
+  color: rgb(239, 227, 248);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+body.cyber-page .pagination-jump-btn:hover {
+  border-color: var(--pg-accent);
+  box-shadow: 0 0 12px var(--pg-glow);
+}
+
+/* v1: soft neon default */
+body.cyber-page .pagination-wrap.cyber-pg-v1 {
+  --pg-accent: rgba(224, 170, 236, 0.95);
+  --pg-border: rgba(198, 156, 224, 0.42);
+  --pg-bg: rgba(126, 67, 142, 0.12);
+  --pg-glow: rgba(226, 166, 236, 0.45);
+}
+
+/* v2: cyan edge */
+body.cyber-page .pagination-wrap.cyber-pg-v2 {
+  --pg-accent: rgba(144, 237, 255, 0.95);
+  --pg-border: rgba(117, 210, 255, 0.52);
+  --pg-bg: rgba(54, 114, 134, 0.2);
+  --pg-glow: rgba(127, 221, 255, 0.5);
+}
+
+/* v3: magenta pulse */
+body.cyber-page .pagination-wrap.cyber-pg-v3 {
+  --pg-accent: rgba(247, 132, 214, 0.95);
+  --pg-border: rgba(231, 116, 201, 0.58);
+  --pg-bg: rgba(140, 40, 110, 0.23);
+  --pg-glow: rgba(244, 126, 210, 0.58);
+}
+
+/* v4: electric violet */
+body.cyber-page .pagination-wrap.cyber-pg-v4 {
+  --pg-accent: rgba(183, 139, 255, 0.95);
+  --pg-border: rgba(168, 123, 245, 0.55);
+  --pg-bg: rgba(95, 61, 173, 0.23);
+  --pg-glow: rgba(185, 140, 255, 0.54);
+}
+
+/* v5: acid green */
+body.cyber-page .pagination-wrap.cyber-pg-v5 {
+  --pg-accent: rgba(157, 255, 168, 0.95);
+  --pg-border: rgba(125, 240, 144, 0.55);
+  --pg-bg: rgba(44, 118, 56, 0.26);
+  --pg-glow: rgba(145, 252, 167, 0.48);
+}
+
+/* v6: amber warning */
+body.cyber-page .pagination-wrap.cyber-pg-v6 {
+  --pg-accent: rgba(255, 194, 120, 0.95);
+  --pg-border: rgba(241, 176, 96, 0.56);
+  --pg-bg: rgba(123, 75, 20, 0.26);
+  --pg-glow: rgba(255, 188, 110, 0.45);
+}
+
+/* v7: frosted blue */
+body.cyber-page .pagination-wrap.cyber-pg-v7 {
+  --pg-accent: rgba(162, 214, 255, 0.95);
+  --pg-border: rgba(131, 189, 238, 0.58);
+  --pg-bg: rgba(54, 89, 133, 0.24);
+  --pg-glow: rgba(160, 211, 255, 0.52);
+}
+
+/* v8: hot pink grid */
+body.cyber-page .pagination-wrap.cyber-pg-v8 {
+  --pg-accent: rgba(255, 132, 189, 0.95);
+  --pg-border: rgba(239, 107, 172, 0.58);
+  --pg-bg: rgba(132, 42, 90, 0.25);
+  --pg-glow: rgba(255, 130, 185, 0.56);
+}
+
+/* v9: ghost white phosphor */
+body.cyber-page .pagination-wrap.cyber-pg-v9 {
+  --pg-accent: rgba(243, 244, 250, 0.92);
+  --pg-border: rgba(210, 214, 232, 0.58);
+  --pg-bg: rgba(113, 125, 164, 0.22);
+  --pg-glow: rgba(223, 229, 255, 0.56);
+}
+
+/* Per-item variant map: each pagination button can use a different neon style */
+body.cyber-page .pagination .pg-item.pg-var-1 {
+  --item-accent: rgba(224, 170, 236, 0.95);
+  --item-border: rgba(198, 156, 224, 0.42);
+  --item-bg: rgba(126, 67, 142, 0.12);
+  --item-glow: rgba(226, 166, 236, 0.45);
+}
+body.cyber-page .pagination .pg-item.pg-var-2 {
+  --item-accent: rgba(144, 237, 255, 0.95);
+  --item-border: rgba(117, 210, 255, 0.52);
+  --item-bg: rgba(54, 114, 134, 0.2);
+  --item-glow: rgba(127, 221, 255, 0.5);
+}
+body.cyber-page .pagination .pg-item.pg-var-3 {
+  --item-accent: rgba(247, 132, 214, 0.95);
+  --item-border: rgba(231, 116, 201, 0.58);
+  --item-bg: rgba(140, 40, 110, 0.23);
+  --item-glow: rgba(244, 126, 210, 0.58);
+}
+body.cyber-page .pagination .pg-item.pg-var-4 {
+  --item-accent: rgba(183, 139, 255, 0.95);
+  --item-border: rgba(168, 123, 245, 0.55);
+  --item-bg: rgba(95, 61, 173, 0.23);
+  --item-glow: rgba(185, 140, 255, 0.54);
+}
+body.cyber-page .pagination .pg-item.pg-var-5 {
+  --item-accent: rgba(157, 255, 168, 0.95);
+  --item-border: rgba(125, 240, 144, 0.55);
+  --item-bg: rgba(44, 118, 56, 0.26);
+  --item-glow: rgba(145, 252, 167, 0.48);
+}
+body.cyber-page .pagination .pg-item.pg-var-6 {
+  --item-accent: rgba(255, 194, 120, 0.95);
+  --item-border: rgba(241, 176, 96, 0.56);
+  --item-bg: rgba(123, 75, 20, 0.26);
+  --item-glow: rgba(255, 188, 110, 0.45);
+}
+body.cyber-page .pagination .pg-item.pg-var-7 {
+  --item-accent: rgba(162, 214, 255, 0.95);
+  --item-border: rgba(131, 189, 238, 0.58);
+  --item-bg: rgba(54, 89, 133, 0.24);
+  --item-glow: rgba(160, 211, 255, 0.52);
+}
+body.cyber-page .pagination .pg-item.pg-var-8 {
+  --item-accent: rgba(255, 132, 189, 0.95);
+  --item-border: rgba(239, 107, 172, 0.58);
+  --item-bg: rgba(132, 42, 90, 0.25);
+  --item-glow: rgba(255, 130, 185, 0.56);
+}
+body.cyber-page .pagination .pg-item.pg-var-9 {
+  --item-accent: rgba(243, 244, 250, 0.92);
+  --item-border: rgba(210, 214, 232, 0.58);
+  --item-bg: rgba(113, 125, 164, 0.22);
+  --item-glow: rgba(223, 229, 255, 0.56);
+}
+
+@media (max-width: 720px) {
+  body.cyber-page .pagination {
+    gap: 0.36rem;
+  }
+
+  body.cyber-page .pagination .pg-item {
+    min-width: 2rem;
+    padding: 0.42rem 0.62rem;
+    font-size: 0.86rem;
+  }
+
+  body.cyber-page .pagination-jump {
+    gap: 0.42rem;
+  }
+
+  body.cyber-page .pagination-jump-label {
+    font-size: 0.78rem;
+  }
+
+  body.cyber-page .pagination-jump-input {
+    width: 3.5rem;
+    font-size: 0.84rem;
+  }
 }
