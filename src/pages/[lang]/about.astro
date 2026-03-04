@@ -237,9 +237,10 @@ void aboutRuntimeConfig;
 			} catch (_error) {
 				throw new Error('Invalid hacker runtime config JSON payload.');
 			}
-			const aiModalBody = runtimeConfig?.modalContent?.ai?.body;
-			if (typeof aiModalBody !== 'string' || !aiModalBody.includes('ai --status --verbose')) {
-				throw new Error('Hacker runtime config missing expected AI modal payload.');
+			const modalContent = runtimeConfig?.modalContent;
+			const aiModalBody = modalContent?.ai?.body;
+			if (!modalContent || typeof aiModalBody !== 'string' || aiModalBody.trim().length === 0) {
+				throw new Error('Hacker runtime config missing valid modal content.');
 			}
 			initAboutEffects();
 		</script>
