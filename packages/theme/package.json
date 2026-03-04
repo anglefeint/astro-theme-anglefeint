@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -23,6 +23,7 @@
     "src/config",
     "src/components",
     "src/layouts",
+    "src/scaffold",
     "src/scripts",
     "src/i18n",
     "src/styles",
