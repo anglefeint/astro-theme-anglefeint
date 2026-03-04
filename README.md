@@ -113,6 +113,7 @@ ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
 ```
 
 How URL works:
+
 - File: `src/content/blog/en/my-first-post.md`
 - URL: `/en/blog/my-first-post/`
 - Blog list: `/en/blog/`
@@ -146,16 +147,16 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Preview
 
-| Home | Blog List |
-| --- | --- |
+| Home                                                           | Blog List                                                                |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| Blog Post |
-| --- |
+| Blog Post                                                                     |
+| ----------------------------------------------------------------------------- |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## Route Atmospheres

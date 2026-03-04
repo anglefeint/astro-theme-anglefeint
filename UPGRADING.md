@@ -37,6 +37,7 @@ After every upgrade:
 2. `npm run doctor`
 3. `npm run build`
 4. Check routes:
+
 - `/`
 - `/en/`
 - `/:lang/blog`

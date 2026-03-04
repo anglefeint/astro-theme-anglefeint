@@ -112,6 +112,7 @@ ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
 ```
 
 URL のルール:
+
 - ファイル: `src/content/blog/ja/my-first-post.md`
 - URL: `/ja/blog/my-first-post/`
 - ブログ一覧: `/ja/blog/`
@@ -145,16 +146,16 @@ npm run new-page -- projects --theme matrix
 
 ## プレビュー
 
-| ホーム | ブログ一覧 |
-| --- | --- |
+| ホーム                                                         | ブログ一覧                                                               |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| 記事ページ |
-| --- |
+| 記事ページ                                                                    |
+| ----------------------------------------------------------------------------- |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## ルートごとの雰囲気

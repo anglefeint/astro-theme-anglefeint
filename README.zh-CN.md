@@ -112,6 +112,7 @@ ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
 ```
 
 URL 规则：
+
 - 文件：`src/content/blog/zh/my-first-post.md`
 - 访问地址：`/zh/blog/my-first-post/`
 - 博客列表：`/zh/blog/`
@@ -145,16 +146,16 @@ npm run new-page -- projects --theme matrix
 
 ## 预览
 
-| 首页 | 博客列表 |
-| --- | --- |
+| 首页                                                           | 博客列表                                                                 |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| 文章页 |
-| --- |
+| 文章页                                                                        |
+| ----------------------------------------------------------------------------- |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## 路由视觉氛围

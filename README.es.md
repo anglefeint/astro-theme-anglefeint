@@ -112,6 +112,7 @@ ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
 ```
 
 Como funciona la URL:
+
 - Archivo: `src/content/blog/es/my-first-post.md`
 - URL: `/es/blog/my-first-post/`
 - Lista del blog: `/es/blog/`
@@ -145,16 +146,16 @@ npm run new-page -- projects --theme matrix
 
 ## Vista previa
 
-| Inicio | Lista del blog |
-| --- | --- |
+| Inicio                                                         | Lista del blog                                                           |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| Post |
-| --- |
+| Post                                                                          |
+| ----------------------------------------------------------------------------- |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## Ambiente por ruta
