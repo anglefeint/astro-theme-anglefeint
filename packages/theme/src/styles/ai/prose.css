@@ -17,12 +17,13 @@ body.ai-page .ai-content .prose {
       rgba(55, 65, 80, 0.14) 2px,
       rgba(55, 65, 80, 0.14) 4px
     ),
-    linear-gradient(135deg, rgba(14, 18, 24, 0.97) 0%, rgba(10, 14, 20, 0.95) 50%, rgba(6, 10, 16, 0.97) 100%),
-    radial-gradient(
-      ellipse 80% 50% at 50% 0%,
-      rgba(70, 110, 150, 0.06),
-      transparent 60%
-    );
+    linear-gradient(
+      135deg,
+      rgba(14, 18, 24, 0.97) 0%,
+      rgba(10, 14, 20, 0.95) 50%,
+      rgba(6, 10, 16, 0.97) 100%
+    ),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(70, 110, 150, 0.06), transparent 60%);
   backdrop-filter: blur(16px) saturate(1.1);
   -webkit-backdrop-filter: blur(16px) saturate(1.1);
   border-radius: 8px;
@@ -116,7 +117,7 @@ body.ai-page .ai-content .prose .ai-prose-body {
 }
 /* GPU 金属边框：铝银质感 */
 body.ai-page .ai-content .prose::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: -1px;
   border-radius: inherit;
@@ -145,13 +146,20 @@ body.ai-page .ai-content .prose:hover::before {
 }
 /* 链接 hover 光晕/脉冲 */
 body.ai-page .ai-content .prose a {
+  color: rgba(142, 220, 248, 0.96);
   text-decoration: none;
   padding: 0 2px;
   border-radius: 2px;
+  text-shadow:
+    0 0 8px rgba(110, 198, 238, 0.24),
+    0 0 16px rgba(95, 184, 226, 0.14);
   transition:
     box-shadow 0.25s ease,
     text-shadow 0.25s ease,
     color 0.25s ease;
+}
+body.ai-page .ai-content .prose a:visited {
+  color: rgba(156, 210, 255, 0.94);
 }
 body.ai-page .ai-content .prose a:hover {
   box-shadow:
@@ -196,7 +204,7 @@ body.ai-page .ai-content .prose blockquote {
     inset 0 0 20px rgba(8, 28, 44, 0.26);
 }
 body.ai-page .ai-content .prose blockquote::before {
-  content: ">";
+  content: '>';
   position: absolute;
   left: 0.6em;
   top: 1em;
@@ -211,7 +219,7 @@ body.ai-page .ai-content .prose pre {
   padding-top: 2.2em;
 }
 body.ai-page .ai-content .prose pre::before {
-  content: "●  ●  ●   runtime";
+  content: '●  ●  ●   runtime';
   position: absolute;
   left: 1em;
   top: 0.9em;
@@ -223,7 +231,7 @@ body.ai-page .ai-content .prose pre::before {
   text-shadow: 0 0 8px rgba(124, 206, 246, 0.28);
 }
 body.ai-page .ai-content .prose pre::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -240,7 +248,7 @@ body.ai-page .ai-content .prose pre:hover::after {
   transform: translateX(130%);
 }
 body.ai-page .ai-content .prose blockquote::after {
-  content: "reference";
+  content: 'reference';
   position: absolute;
   right: 1em;
   top: 0.9em;
