@@ -203,13 +203,17 @@ const defaultThemeConfig: ThemeConfig = {
       ai: {
         title: 'AI',
         lines: [
-          '~ $ model --status',
+          '~ $ ai --status --verbose',
           '',
-          'inference: stable',
-          'context: 8k tokens',
-          'latency: < 200ms',
+          'model: anglefeint-core',
+          'mode: reasoning + builder',
+          'context window: 128k',
+          'tools: codex / cursor / claude-code',
+          'latency: 120-220ms',
+          'safety: guardrails enabled',
           '',
           '>> system online',
+          '>> ready for execution',
         ],
       },
       decryptor: {
