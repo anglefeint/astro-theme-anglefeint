@@ -8,36 +8,42 @@ import AiShell from './shells/AiShell.astro';
 import blogPostCssUrl from '../styles/blog-post.css?url';
 import { SITE_AUTHOR } from '@anglefeint/site-config/site';
 import { THEME } from '@anglefeint/site-config/theme';
-import { DEFAULT_LOCALE, type Locale, isLocale, localePath, blogIdToSlugAnyLocale } from '@anglefeint/site-i18n/config';
+import {
+  DEFAULT_LOCALE,
+  type Locale,
+  isLocale,
+  localePath,
+  blogIdToSlugAnyLocale,
+} from '@anglefeint/site-i18n/config';
 import { getMessages } from '@anglefeint/site-i18n/messages';
 
 type Props = CollectionEntry<'blog'>['data'] & {
-	locale?: string;
-	related?: CollectionEntry<'blog'>[];
-	localeHrefs?: Partial<Record<Locale, string>>;
+  locale?: string;
+  related?: CollectionEntry<'blog'>[];
+  localeHrefs?: Partial<Record<Locale, string>>;
 };
 
 const {
-	title,
-	subtitle,
-	description,
-	pubDate,
-	updatedDate,
-	heroImage,
-	context,
-	readMinutes,
-	aiModel,
-	aiMode,
-	aiState,
-	aiLatencyMs,
-	aiConfidence,
-	wordCount,
-	tokenCount,
-	author,
-	tags,
-	locale = DEFAULT_LOCALE,
-	related = [],
-	localeHrefs,
+  title,
+  subtitle,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  context,
+  readMinutes,
+  aiModel,
+  aiMode,
+  aiState,
+  aiLatencyMs,
+  aiConfidence,
+  wordCount,
+  tokenCount,
+  author,
+  tags,
+  locale = DEFAULT_LOCALE,
+  related = [],
+  localeHrefs,
 } = Astro.props;
 const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
 const messages = getMessages(resolvedLocale);
@@ -54,193 +60,241 @@ const enableRedQueen = THEME.EFFECTS.ENABLE_RED_QUEEN;
 ---
 
 <AiShell
-	locale={resolvedLocale}
-	title={title}
-	description={description}
-	image={heroImage}
-	pageType="article"
-	publishedTime={pubDate}
-	modifiedTime={updatedDate}
-	author={author ?? SITE_AUTHOR}
-	tags={tags}
-	localeHrefs={localeHrefs}
+  locale={resolvedLocale}
+  title={title}
+  description={description}
+  image={heroImage}
+  pageType="article"
+  publishedTime={pubDate}
+  modifiedTime={updatedDate}
+  author={author ?? SITE_AUTHOR}
+  tags={tags}
+  localeHrefs={localeHrefs}
 >
-	<link slot="head" rel="stylesheet" href={blogPostCssUrl} />
-	<Fragment slot="body-start">
-		<div class="ai-bg" aria-hidden="true">
-			<div class="ai-glow ai-glow-shift"></div>
-			<div class="ai-haze" aria-hidden="true"></div>
-			<div class="ai-vignette" aria-hidden="true"></div>
-			<div class="ai-stripe"></div>
-			<div class="ai-noise" aria-hidden="true"></div>
-			<div class="ai-hex-grid" aria-hidden="true"></div>
-			<div class="ai-thought-particles" aria-hidden="true">
-				{[...Array(12)].map((_, i) => (
-					<span class="ai-particle" style={`--x: ${20 + (i * 7) % 60}%; --y: ${10 + (i * 11) % 70}%; --d: ${3 + (i % 4)}s`}></span>
-				))}
-			</div>
-			<canvas class="ai-network-canvas" aria-hidden="true"></canvas>
-		</div>
-		{enableRedQueen && (
-			<aside class="rq-tv rq-tv-collapsed">
-				<div class="rq-tv-stage" data-rq-src={themeRedqueen1.src} data-rq-src2={themeRedqueen2.src}></div>
-				<div class="rq-tv-badge">monitor feed<span class="rq-tv-dot"></span></div>
-				<button type="button" class="rq-tv-toggle" aria-label="Replay monitor feed" aria-expanded="false">▶</button>
-			</aside>
-		)}
-		<div class="ai-read-progress" aria-hidden="true"></div>
-		<button type="button" class="ai-back-to-top" aria-label="Back to top" title="Back to top">↑</button>
-			<div
-				class="ai-stage-toast"
-				aria-live="polite"
-				aria-atomic="true"
-				data-toast-p10={messages.blog.toastP10}
-				data-toast-p30={messages.blog.toastP30}
-				data-toast-p60={messages.blog.toastP60}
-				data-toast-done={messages.blog.toastDone}
-			></div>
-		<div class="ai-mouse-glow" aria-hidden="true"></div>
-		<div class="ai-depth-blur" aria-hidden="true"></div>
-		<div class="ai-thinking-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-	</Fragment>
-	<div class="ai-load-scan" aria-hidden="true"></div>
-	<article class="ai-article">
-					{heroImage && (
-						<div class="hero-shell">
-							<div class="hero-pane">
-									<div class="hero-image">
-										<div class="hero-stack">
-											<div class="hero-base-wrap">
-												<Image
-													class="hero-base-image"
-													src={heroImage}
-													alt={title}
-													loading="eager"
-													decoding="async"
-													fetchpriority="high"
-												/>
-											</div>
-											<div class="hero-canvas-wrap" aria-hidden="true">
-												<canvas class="hero-canvas" data-hero-src={heroImage.src}></canvas>
-											</div>
-										</div>
-									<div class="hero-frame" aria-hidden="true">
-										<span>neural monitor</span>
-										<span class="hero-frame-dot"></span>
-									</div>
-								</div>
-								<div class="hero-threat-bar" aria-hidden="true">
-									<span>signal sync active</span>
-									<span>model online</span>
-								</div>
-							</div>
-						</div>
-					)}
-				<div class="prose">
-						<div class="title ai-title">
-							<div class="ai-meta-terminal">
-								$ published {fmt(pubDate)}
-								{updatedDate && <> | updated {fmt(updatedDate)}</>}
-								{readMinutes !== undefined && <> | ~{readMinutes} min read</>}
-							</div>
-							{hasSystemMeta && (
-								<div class="ai-system-row" aria-label="Model status">
-									{aiModel && <span class="ai-system-chip">model: {aiModel}</span>}
-									{aiMode && <span class="ai-system-chip">mode: {aiMode}</span>}
-									{aiState && <span class="ai-system-chip">state: {aiState}</span>}
-								</div>
-							)}
-							{contextText && (
-								<div class="ai-prompt-line">
-									Context: <span class="ai-prompt-topic">{contextText}</span> →
-								</div>
-							)}
-							<h1 class="ai-title-text">{title}</h1>
-							{subtitle && <p class="ai-subtitle-text">{subtitle}</p>}
-							<hr />
-							<div class="ai-title-flow" aria-hidden="true"></div>
-						</div>
-						<div class="ai-response-wrap">
-							<div class="ai-response-header">
-								<div class="ai-response-avatar" aria-hidden="true"></div>
-								<span class="ai-response-label">Output</span>
-								{hasResponseMeta && (
-									<div class="ai-response-meta">
-										{aiLatencyMs !== undefined && <span>latency est <strong>{aiLatencyMs}</strong> ms</span>}
-										{confidenceText !== undefined && <span>confidence <strong>{confidenceText}</strong></span>}
-									</div>
-								)}
-							</div>
-							<div class="ai-prose-body ai-prose-fade">
-								<slot />
-								<span class="ai-block-cursor" aria-hidden="true"></span>
-							</div>
-						</div>
-						{hasStats && (
-							<div class="ai-stats-corner">
-								{aiModel && <span class="ai-model-id">{aiModel}</span>}
-								{aiModel && (wordCount !== undefined || tokenCount !== undefined) && ' · '}
-								{wordCount !== undefined && <span>{compact(wordCount)} words</span>}
-								{wordCount !== undefined && tokenCount !== undefined && ' · '}
-								{tokenCount !== undefined && <span>{compact(tokenCount)} tokens</span>}
-							</div>
-						)}
-						<button type="button" class="ai-regenerate" aria-label={messages.blog.regenerate}>{messages.blog.regenerate}</button>
-					</div>
-				</article>
-			{related.length > 0 && (
-				<section class="ai-related" aria-label="Related posts">
-					<h2 class="ai-related-title">{messages.blog.related}</h2>
-					<div class="ai-related-grid">
-						{related.map((p) => (
-							<a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(p.id)}`)} class="ai-related-card">
-								{p.data.heroImage ? (
-									<div class="ai-related-img">
-										<Image width={320} height={180} src={p.data.heroImage} alt={p.data.title} />
-									</div>
-								) : (
-									<div class="ai-related-placeholder">
-										<span>{p.data.title.charAt(0)}</span>
-									</div>
-								)}
-								<h3 class="ai-related-card-title">{p.data.title}</h3>
-								<p class="ai-related-card-date">
-									<FormattedDate date={p.data.pubDate} locale={resolvedLocale} />
-								</p>
-							</a>
-						))}
-					</div>
-				</section>
-			)}
-			<nav class="ai-back-to-blog" aria-label="Back to blog">
-				<a href={localePath(resolvedLocale, '/blog/')}>
-					<span class="ai-back-prompt">$</span>
-					<span class="ai-back-text">← {messages.blog.backToBlog}</span>
-				</a>
-			</nav>
-			<section class="prose ai-comments" aria-label="Comments">
-				<script
-					src="https://giscus.app/client.js"
-					data-repo="anglefeint/astro-theme-anglefeint"
-					data-repo-id="R_kgDORRyzkg"
-					data-category="Comments"
-					data-category-id="DIC_kwDORRyzks4C3pRw"
-					data-mapping="pathname"
-					data-strict="0"
-					data-reactions-enabled="1"
-					data-emit-metadata="0"
-					data-input-position="bottom"
-					data-theme="cobalt"
-					data-lang="en"
-					data-loading="lazy"
-					crossorigin="anonymous"
-					async
-				></script>
-			</section>
-	<Fragment slot="body-end">
-		<script>
-			import { initBlogpostEffects } from '../scripts/blogpost-effects.js';
-			initBlogpostEffects();
-		</script>
-	</Fragment>
+  <link slot="head" rel="stylesheet" href={blogPostCssUrl} />
+  <Fragment slot="body-start">
+    <div class="ai-bg" aria-hidden="true">
+      <div class="ai-glow ai-glow-shift"></div>
+      <div class="ai-haze" aria-hidden="true"></div>
+      <div class="ai-vignette" aria-hidden="true"></div>
+      <div class="ai-stripe"></div>
+      <div class="ai-noise" aria-hidden="true"></div>
+      <div class="ai-hex-grid" aria-hidden="true"></div>
+      <div class="ai-thought-particles" aria-hidden="true">
+        {
+          [...Array(12)].map((_, i) => (
+            <span
+              class="ai-particle"
+              style={`--x: ${20 + ((i * 7) % 60)}%; --y: ${10 + ((i * 11) % 70)}%; --d: ${3 + (i % 4)}s`}
+            />
+          ))
+        }
+      </div>
+      <canvas class="ai-network-canvas" aria-hidden="true"></canvas>
+    </div>
+    {
+      enableRedQueen && (
+        <aside class="rq-tv rq-tv-collapsed">
+          <div
+            class="rq-tv-stage"
+            data-rq-src={themeRedqueen1.src}
+            data-rq-src2={themeRedqueen2.src}
+          />
+          <div class="rq-tv-badge">
+            monitor feed
+            <span class="rq-tv-dot" />
+          </div>
+          <button
+            type="button"
+            class="rq-tv-toggle"
+            aria-label="Replay monitor feed"
+            aria-expanded="false"
+          >
+            ▶
+          </button>
+        </aside>
+      )
+    }
+    <div class="ai-read-progress" aria-hidden="true"></div>
+    <button type="button" class="ai-back-to-top" aria-label="Back to top" title="Back to top"
+      >↑</button
+    >
+    <div
+      class="ai-stage-toast"
+      aria-live="polite"
+      aria-atomic="true"
+      data-toast-p10={messages.blog.toastP10}
+      data-toast-p30={messages.blog.toastP30}
+      data-toast-p60={messages.blog.toastP60}
+      data-toast-done={messages.blog.toastDone}
+    >
+    </div>
+    <div class="ai-mouse-glow" aria-hidden="true"></div>
+    <div class="ai-depth-blur" aria-hidden="true"></div>
+    <div class="ai-thinking-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+  </Fragment>
+  <div class="ai-load-scan" aria-hidden="true"></div>
+  <article class="ai-article">
+    {
+      heroImage && (
+        <div class="hero-shell">
+          <div class="hero-pane">
+            <div class="hero-image">
+              <div class="hero-stack">
+                <div class="hero-base-wrap">
+                  <Image
+                    class="hero-base-image"
+                    src={heroImage}
+                    alt={title}
+                    loading="eager"
+                    decoding="async"
+                    fetchpriority="high"
+                  />
+                </div>
+                <div class="hero-canvas-wrap" aria-hidden="true">
+                  <canvas class="hero-canvas" data-hero-src={heroImage.src} />
+                </div>
+              </div>
+              <div class="hero-frame" aria-hidden="true">
+                <span>neural monitor</span>
+                <span class="hero-frame-dot" />
+              </div>
+            </div>
+            <div class="hero-threat-bar" aria-hidden="true">
+              <span>signal sync active</span>
+              <span>model online</span>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    <div class="prose">
+      <div class="title ai-title">
+        <div class="ai-meta-terminal">
+          $ published {fmt(pubDate)}
+          {updatedDate && <> | updated {fmt(updatedDate)}</>}
+          {readMinutes !== undefined && <> | ~{readMinutes} min read</>}
+        </div>
+        {
+          hasSystemMeta && (
+            <div class="ai-system-row" aria-label="Model status">
+              {aiModel && <span class="ai-system-chip">model: {aiModel}</span>}
+              {aiMode && <span class="ai-system-chip">mode: {aiMode}</span>}
+              {aiState && <span class="ai-system-chip">state: {aiState}</span>}
+            </div>
+          )
+        }
+        {
+          contextText && (
+            <div class="ai-prompt-line">
+              Context: <span class="ai-prompt-topic">{contextText}</span> →
+            </div>
+          )
+        }
+        <h1 class="ai-title-text">{title}</h1>
+        {subtitle && <p class="ai-subtitle-text">{subtitle}</p>}
+        <hr />
+        <div class="ai-title-flow" aria-hidden="true"></div>
+      </div>
+      <div class="ai-response-wrap">
+        <div class="ai-response-header">
+          <div class="ai-response-avatar" aria-hidden="true"></div>
+          <span class="ai-response-label">Output</span>
+          {
+            hasResponseMeta && (
+              <div class="ai-response-meta">
+                {aiLatencyMs !== undefined && (
+                  <span>
+                    latency est <strong>{aiLatencyMs}</strong> ms
+                  </span>
+                )}
+                {confidenceText !== undefined && (
+                  <span>
+                    confidence <strong>{confidenceText}</strong>
+                  </span>
+                )}
+              </div>
+            )
+          }
+        </div>
+        <div class="ai-prose-body ai-prose-fade">
+          <slot />
+          <span class="ai-block-cursor" aria-hidden="true"></span>
+        </div>
+      </div>
+      {
+        hasStats && (
+          <div class="ai-stats-corner">
+            {aiModel && <span class="ai-model-id">{aiModel}</span>}
+            {aiModel && (wordCount !== undefined || tokenCount !== undefined) && ' · '}
+            {wordCount !== undefined && <span>{compact(wordCount)} words</span>}
+            {wordCount !== undefined && tokenCount !== undefined && ' · '}
+            {tokenCount !== undefined && <span>{compact(tokenCount)} tokens</span>}
+          </div>
+        )
+      }
+      <button type="button" class="ai-regenerate" aria-label={messages.blog.regenerate}
+        >{messages.blog.regenerate}</button
+      >
+    </div>
+  </article>
+  {
+    related.length > 0 && (
+      <section class="ai-related" aria-label="Related posts">
+        <h2 class="ai-related-title">{messages.blog.related}</h2>
+        <div class="ai-related-grid">
+          {related.map((p) => (
+            <a
+              href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(p.id)}`)}
+              class="ai-related-card"
+            >
+              {p.data.heroImage ? (
+                <div class="ai-related-img">
+                  <Image width={320} height={180} src={p.data.heroImage} alt={p.data.title} />
+                </div>
+              ) : (
+                <div class="ai-related-placeholder">
+                  <span>{p.data.title.charAt(0)}</span>
+                </div>
+              )}
+              <h3 class="ai-related-card-title">{p.data.title}</h3>
+              <p class="ai-related-card-date">
+                <FormattedDate date={p.data.pubDate} locale={resolvedLocale} />
+              </p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+  <nav class="ai-back-to-blog" aria-label="Back to blog">
+    <a href={localePath(resolvedLocale, '/blog/')}>
+      <span class="ai-back-prompt">$</span>
+      <span class="ai-back-text">← {messages.blog.backToBlog}</span>
+    </a>
+  </nav>
+  <section class="prose ai-comments" aria-label="Comments">
+    <script
+      src="https://giscus.app/client.js"
+      data-repo="anglefeint/astro-theme-anglefeint"
+      data-repo-id="R_kgDORRyzkg"
+      data-category="Comments"
+      data-category-id="DIC_kwDORRyzks4C3pRw"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="dark"
+      data-lang="en"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async></script>
+  </section>
+  <Fragment slot="body-end">
+    <script>
+      import { initBlogpostEffects } from '../scripts/blogpost-effects.js';
+      initBlogpostEffects();
+    </script>
+  </Fragment>
 </AiShell>
