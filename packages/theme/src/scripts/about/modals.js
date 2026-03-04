@@ -25,7 +25,8 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
     },
     ai: {
       title: 'AI',
-      body: '<pre>~ $ model --status\n\ninference: stable\ncontext: 8k tokens\nlatency: &lt; 200ms\n\n&gt;&gt; system online</pre>',
+      body: '<pre>~ $ ai --status --verbose\n\nmodel: anglefeint-core\nmode: reasoning + builder\ncontext window: 128k\ntools: codex / cursor / claude-code\nlatency: 120-220ms\nsafety: guardrails enabled\n\n&gt;&gt; system online\n&gt;&gt; ready for execution</pre>',
+      type: 'plain',
     },
     decryptor: {
       title: 'Password Decryptor',
