@@ -15,14 +15,14 @@ sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
 <p align="center">
   <a href="https://demo.anglefeint.com/">Live Demo</a>
   ·
-  <a href="https://github.com/voidtem/astro-theme-anglefeint">Repository</a>
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">Repository</a>
   ·
   <a href="ASTRO_THEME_LISTING.md">Theme Listing</a>
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-5.x-BC52EE?logo=astro&logoColor=white" />
-  <img alt="Node" src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.0.0--beta.17-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
@@ -31,18 +31,18 @@ sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
 ## Template Install
 
 ```bash
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 Or with `pnpm`:
 
 ```bash
-pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 ## Requirements
 
-- Node.js `18+` (LTS recommended)
+- Node.js `22.12.0+` (LTS recommended)
 - Package manager: `npm`, `pnpm`, `yarn`, or `bun`
 
 ## Quick Start
@@ -57,6 +57,13 @@ Build and preview:
 ```bash
 npm run build
 npm run preview
+```
+
+Quality commands:
+
+```bash
+npm run lint
+npm run format:check
 ```
 
 With `pnpm`:
@@ -75,9 +82,17 @@ For projects created from `#starter`, upgrade with:
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run doctor
+# if doctor reports adapter drift:
+# npm run sync-adapters
 npm run check
 npm run build
 ```
+
+For Astro major-version migrations, follow the official Astro guide first:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- then re-run this project's `npm run check` and `npm run build`.
 
 ## Create New Post
 
@@ -89,6 +104,20 @@ npm run new-post -- my-first-post
 
 Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-post`).
 If default covers exist in `src/assets/blog/default-covers/`, a stable cover is auto-assigned by slug hash (you can replace `heroImage` later).
+Optional locale override:
+
+```bash
+npm run new-post -- my-first-post --locales en,ja
+# or
+ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+```
+
+How URL works:
+
+- File: `src/content/blog/en/my-first-post.md`
+- URL: `/en/blog/my-first-post/`
+- Blog list: `/en/blog/`
+- You do not need to add routes manually. Astro generates them from content files at build time.
 
 ## Create New Page
 
@@ -100,6 +129,7 @@ npm run new-page -- projects --theme base
 
 Available themes: `base`, `ai`, `cyber`, `hacker`, `matrix`.
 The command creates `src/pages/[lang]/projects.astro` with locale routes via `getStaticPaths()`.
+Slug rule: lowercase letters, numbers, and hyphens only; nested paths are allowed (example: `projects/labs`). `_` and uppercase are invalid.
 
 Examples:
 
@@ -117,16 +147,16 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Preview
 
-| Home | Blog List |
-| --- | --- |
+| Home                                                           | Blog List                                                                |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| Blog Post (Open) | Blog Post (Collapsed) |
-| --- | --- |
-| ![Blog post open preview](public/images/theme-previews/preview-blog-post-open.png) | ![Blog post collapsed preview](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| Blog Post                                                                     |
+| ----------------------------------------------------------------------------- |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## Route Atmospheres
@@ -144,7 +174,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Features
 
-- Astro 5 static output
+- Astro 6 static output (beta track)
 - Markdown + MDX content collections
 - Built-in locales: `en`, `ja`, `ko`, `es`, `zh`
 - Per-locale RSS feeds
@@ -159,6 +189,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
    - `social.links` for header/footer links
    - `about` for About content/runtime text
    - `theme.enableAboutPage` for About route/nav toggle
+   - `theme.effects.enableRedQueen` to enable/disable the post-side monitor effect
 3. Replace starter posts in `src/content/blog/<locale>/`.
 4. Set your real site URL (`PUBLIC_SITE_URL` or `src/site.config.ts`) before production deploy.
 
