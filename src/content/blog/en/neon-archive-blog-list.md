@@ -15,19 +15,19 @@ tokenCount: 812
 
 A post list is usually treated as a plain archive. We treat it as a street.
 
-In our design, the blog list is cyberpunk on purpose: rain layers, neon edges, fog, and moving light pressure. The reference is Blade Runner's urban mood, where exploration feels active instead of passive.
+The visual direction is intentionally rooted in cyberpunk culture. We borrow mood and rhythm from the Blade Runner film series and the spatial density of Cyberpunk 2077: wet reflections, layered haze, neon contrast, and moving light pressure that makes the scene feel alive.
 
 Why spend this much energy on a list page?
 
-Because this is the page where users make decisions. They scan titles, compare context, and decide where to go next. Atmosphere can improve that moment if it is controlled well.
+Because this is where decisions happen. People scan titles, compare context, and choose where to go next. If atmosphere is controlled, it helps orientation instead of distracting from it.
 
-Our intent is simple:
+Our implementation goals are straightforward:
 
-- make browsing feel cinematic,
-- keep text readable under effects,
-- preserve performance while maintaining character.
+- cinematic mood with readable typography,
+- strong depth cues without sacrificing focus,
+- controlled effects that keep interaction smooth.
 
-So the list becomes more than pagination plus cards. It becomes a corridor. Users move through content like moving through a neon district: signs, rain, depth, and choices.
+That is why this list is more than cards plus pagination. It acts like a navigable corridor: signs, rain, glow, and direction. Users are not just scrolling a feed, they are moving through a designed environment.
 
-For us, this is not visual excess.
-It is a narrative map for discovery.
+For us, this is not decoration for decoration's sake.
+It is environmental UX for content discovery.
