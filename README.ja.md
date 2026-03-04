@@ -1,0 +1,211 @@
+---
+doc_id: readme_ja
+doc_role: localized-user-guide
+doc_purpose: 日本語ユーザー向けの導入・利用・アップグレード手順。
+doc_scope: [setup, commands, themes, config, routing]
+update_triggers: [sync-from-readme-en]
+source_of_truth: false
+depends_on: [README.md]
+---
+
+<h1 align="center">Anglefeint</h1>
+<p align="center">映画的な表現と複数の雰囲気を持つ Astro テーマです。</p>
+
+<p align="center">
+  <a href="https://demo.anglefeint.com/">デモ</a>
+  ·
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">リポジトリ</a>
+  ·
+  <a href="ASTRO_THEME_LISTING.md">テーマ掲載文案</a>
+</p>
+
+<p align="center">
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.0.0--beta.17-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
+</p>
+
+## テンプレートの導入
+
+```bash
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+```
+
+`pnpm` を使う場合:
+
+```bash
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
+```
+
+## 動作要件
+
+- Node.js `22.12.0+`（LTS 推奨）
+- パッケージマネージャー: `npm` / `pnpm` / `yarn` / `bun`
+
+## クイックスタート
+
+```bash
+npm install
+npm run dev
+```
+
+ビルドとプレビュー:
+
+```bash
+npm run build
+npm run preview
+```
+
+品質チェック:
+
+```bash
+npm run lint
+npm run format:check
+```
+
+`pnpm` を使う場合:
+
+```bash
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
+```
+
+## テーマのアップグレード
+
+`#starter` から作成したプロジェクトは次で更新できます:
+
+```bash
+npm update @anglefeint/astro-theme
+npm install
+npm run doctor
+# doctor が adapter 差分を報告した場合:
+# npm run sync-adapters
+npm run check
+npm run build
+```
+
+Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- その後、このプロジェクトで `npm run check` と `npm run build` を実行します。
+
+## 新しい記事を作成
+
+全ロケール（`en`, `ja`, `ko`, `es`, `zh`）に同じ slug の記事を一括作成します:
+
+```bash
+npm run new-post -- my-first-post
+```
+
+Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
+`src/assets/blog/default-covers/` に画像がある場合、slug ハッシュで安定したデフォルトカバーを自動設定します（後で `heroImage` を手動変更可能）。
+ロケールを明示指定する場合:
+
+```bash
+npm run new-post -- my-first-post --locales en,ja
+# または
+ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+```
+
+URL のルール:
+
+- ファイル: `src/content/blog/ja/my-first-post.md`
+- URL: `/ja/blog/my-first-post/`
+- ブログ一覧: `/ja/blog/`
+- ルートを手動で追加する必要はありません。Astro が build 時に自動生成します。
+
+## 新しいページを作成
+
+`new-post` はブログ記事専用です。カスタムページは次のコマンドを使用します:
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。  
+`src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
+slug ルール: 小文字・数字・ハイフンのみ（例: `projects/labs` のようなネストは可）。`_` と大文字は不可です。
+
+例:
+
+```bash
+npm run new-page -- projects --theme base
+npm run new-page -- projects --theme ai
+npm run new-page -- projects --theme cyber
+npm run new-page -- projects --theme hacker
+npm run new-page -- projects --theme matrix
+```
+
+## 言語
+
+[English](README.md) · [简体中文](README.zh-CN.md) · 日本語（このファイル） · [Español](README.es.md) · [한국어](README.ko.md)
+
+## プレビュー
+
+| ホーム                                                         | ブログ一覧                                                               |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
+
+| 記事ページ                                                                    |
+| ----------------------------------------------------------------------------- |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
+
+| About                                                            |
+| ---------------------------------------------------------------- |
+| ![About preview](public/images/theme-previews/preview-about.png) |
+
+## ルートごとの雰囲気
+
+- `/`：Matrix 風ターミナルのホーム
+- `/:lang/blog`：サイバーパンク調のアーカイブ
+- `/:lang/blog/[slug]`：AI インターフェース風の読書レイアウト
+- `/:lang/about`：任意で有効化できるハッカー風 About ページ
+
+## テーマ命名ルール
+
+- テーマ引数: `base`, `ai`, `cyber`, `hacker`, `matrix`
+- 内部セレクタ/スクリプト接頭辞: `ai-*`, `cyber-*`, `hacker-*`
+- 構成レイヤー: `ThemeFrame -> Shell -> Layout -> Page`
+
+## 主な機能
+
+- Astro 6 の静的出力（ベータ運用）
+- Markdown + MDX コンテンツコレクション
+- 組み込みロケール: `en`, `ja`, `ko`, `es`, `zh`
+- ロケール別 RSS
+- Sitemap + robots 対応
+- 設定駆動のカスタマイズ
+- 短いページでもフッターを下部に固定
+
+## テーマ設定
+
+1. `.env.example` を `.env` にコピーし、サイト情報を設定。
+2. `src/site.config.ts` を編集:
+   - `social.links`: SNS リンク
+   - `about`: About コンテンツとランタイム文言
+   - `theme.enableAboutPage`: About の表示切り替え
+   - `theme.effects.enableRedQueen`: 記事ページのサイドモニター演出をオン/オフ
+3. `src/content/blog/<locale>/` のサンプル記事を差し替え。
+
+## 設定ポイント
+
+- 単一エントリ: `src/site.config.ts`
+- アダプタ層（直接編集は非推奨）: `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
+- サイト情報は `PUBLIC_*` 環境変数でも上書き可能
+
+## ドキュメント
+
+- アーキテクチャ: `docs/ARCHITECTURE.md`
+- ビジュアルシステム: `docs/VISUAL_SYSTEMS.md`
+- 提出チェックリスト: `docs/THEME_SUBMISSION_CHECKLIST.md`
+- テーマ掲載文案: `ASTRO_THEME_LISTING.md`
+- アップグレードガイド: `UPGRADING.md`
+- 変更履歴: `CHANGELOG.md`
+
+## ライセンス
+
+MIT License。`LICENSE` を参照。

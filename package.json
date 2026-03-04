@@ -3,20 +3,30 @@
   "type": "module",
   "version": "0.0.1",
   "private": true,
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "blog",
+    "portfolio",
+    "cyberpunk"
+  ],
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "check": "astro check",
+    "check:adapters": "node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check",
+    "sync-adapters": "node scripts/sync-adapters.mjs",
+    "doctor": "npm run check:adapters && npm run check",
+    "check": "npm run check:adapters && astro check",
     "preview": "astro preview",
     "new-post": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-post.mjs",
     "new-page": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-page.mjs",
     "astro": "astro"
   },
   "dependencies": {
-    "@anglefeint/astro-theme": "^0.1.18",
+    "@anglefeint/astro-theme": "0.1.28",
     "@astrojs/mdx": "5.0.0-beta.9",
     "@astrojs/rss": "4.0.15-beta.4",
     "@astrojs/sitemap": "3.6.1-beta.3",
