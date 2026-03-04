@@ -15,7 +15,7 @@ sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
 <p align="center">
   <a href="https://demo.anglefeint.com/">Live Demo</a>
   ·
-  <a href="https://github.com/voidtem/astro-theme-anglefeint">Repository</a>
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">Repository</a>
   ·
   <a href="ASTRO_THEME_LISTING.md">Theme Listing</a>
 </p>
@@ -31,13 +31,13 @@ sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
 ## Template Install
 
 ```bash
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 Or with `pnpm`:
 
 ```bash
-pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 ## Requirements
@@ -113,6 +113,7 @@ ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
 ```
 
 How URL works:
+
 - File: `src/content/blog/en/my-first-post.md`
 - URL: `/en/blog/my-first-post/`
 - Blog list: `/en/blog/`
@@ -146,16 +147,16 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Preview
 
-| Home | Blog List |
-| --- | --- |
+| Home                                                           | Blog List                                                                |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| Blog Post |
-| --- |
+| Blog Post                                                                     |
+| ----------------------------------------------------------------------------- |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## Route Atmospheres

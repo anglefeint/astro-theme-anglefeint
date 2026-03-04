@@ -17,7 +17,7 @@ Un problema típico en temas es que iniciar es fácil pero actualizar es costoso
 
 Inicialización:
 
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
 Actualización:
 

@@ -14,7 +14,7 @@ depends_on: [README.md]
 <p align="center">
   <a href="https://demo.anglefeint.com/">在线演示</a>
   ·
-  <a href="https://github.com/voidtem/astro-theme-anglefeint">仓库地址</a>
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">仓库地址</a>
   ·
   <a href="ASTRO_THEME_LISTING.md">主题提交文案</a>
 </p>
@@ -30,13 +30,13 @@ depends_on: [README.md]
 ## 模板安装
 
 ```bash
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 使用 `pnpm`：
 
 ```bash
-pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 ## 环境要求
@@ -112,6 +112,7 @@ ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
 ```
 
 URL 规则：
+
 - 文件：`src/content/blog/zh/my-first-post.md`
 - 访问地址：`/zh/blog/my-first-post/`
 - 博客列表：`/zh/blog/`
@@ -145,16 +146,16 @@ npm run new-page -- projects --theme matrix
 
 ## 预览
 
-| 首页 | 博客列表 |
-| --- | --- |
+| 首页                                                           | 博客列表                                                                 |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| 文章页 |
-| --- |
+| 文章页                                                                        |
+| ----------------------------------------------------------------------------- |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## 路由视觉氛围

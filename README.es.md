@@ -14,7 +14,7 @@ depends_on: [README.md]
 <p align="center">
   <a href="https://demo.anglefeint.com/">Demo en vivo</a>
   ·
-  <a href="https://github.com/voidtem/astro-theme-anglefeint">Repositorio</a>
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">Repositorio</a>
   ·
   <a href="ASTRO_THEME_LISTING.md">Ficha de listado</a>
 </p>
@@ -30,13 +30,13 @@ depends_on: [README.md]
 ## Instalacion con plantilla
 
 ```bash
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 Con `pnpm`:
 
 ```bash
-pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 ## Requisitos
@@ -112,6 +112,7 @@ ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
 ```
 
 Como funciona la URL:
+
 - Archivo: `src/content/blog/es/my-first-post.md`
 - URL: `/es/blog/my-first-post/`
 - Lista del blog: `/es/blog/`
@@ -145,16 +146,16 @@ npm run new-page -- projects --theme matrix
 
 ## Vista previa
 
-| Inicio | Lista del blog |
-| --- | --- |
+| Inicio                                                         | Lista del blog                                                           |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| Post |
-| --- |
+| Post                                                                          |
+| ----------------------------------------------------------------------------- |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## Ambiente por ruta

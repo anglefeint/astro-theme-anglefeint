@@ -14,7 +14,7 @@ depends_on: [README.md]
 <p align="center">
   <a href="https://demo.anglefeint.com/">라이브 데모</a>
   ·
-  <a href="https://github.com/voidtem/astro-theme-anglefeint">저장소</a>
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">저장소</a>
   ·
   <a href="ASTRO_THEME_LISTING.md">테마 제출 문안</a>
 </p>
@@ -30,13 +30,13 @@ depends_on: [README.md]
 ## 템플릿 설치
 
 ```bash
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 `pnpm` 사용:
 
 ```bash
-pnpm create astro@latest --template voidtem/astro-theme-anglefeint#starter
+pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
 ```
 
 ## 요구 사항
@@ -112,6 +112,7 @@ ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
 ```
 
 URL 규칙:
+
 - 파일: `src/content/blog/ko/my-first-post.md`
 - URL: `/ko/blog/my-first-post/`
 - 블로그 목록: `/ko/blog/`
@@ -145,16 +146,16 @@ npm run new-page -- projects --theme matrix
 
 ## 미리보기
 
-| 홈 | 블로그 목록 |
-| --- | --- |
+| 홈                                                             | 블로그 목록                                                              |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
 | ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
 
-| 글 상세 |
-| --- |
+| 글 상세                                                                       |
+| ----------------------------------------------------------------------------- |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
 
-| About |
-| --- |
+| About                                                            |
+| ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
 ## 라우트별 분위기

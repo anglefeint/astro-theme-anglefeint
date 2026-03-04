@@ -17,7 +17,7 @@ tokenCount: 1040
 
 초기화:
 
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
 업그레이드:
 

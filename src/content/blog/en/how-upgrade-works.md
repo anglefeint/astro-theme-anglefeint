@@ -17,7 +17,7 @@ A common theme problem is easy initialization but painful upgrades. Anglefeint s
 
 Initialization:
 
-npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
 Upgrade:
 

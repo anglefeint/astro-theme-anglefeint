@@ -27,7 +27,7 @@ This repository uses two long-lived branches with different responsibilities.
 - Must depend on registry package version:
   - `@anglefeint/astro-theme` (for example: `^0.1.0`).
 - Install command examples in READMEs must use:
-  - `npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter`
+  - `npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter`
 
 ## Sync Rule
 

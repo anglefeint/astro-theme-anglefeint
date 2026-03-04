@@ -16,7 +16,7 @@ This guide explains the recommended upgrade path for projects created from the s
 
 Projects created from:
 
-`npm create astro@latest -- --template voidtem/astro-theme-anglefeint#starter`
+`npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter`
 
 should upgrade with:
 
@@ -37,6 +37,7 @@ After every upgrade:
 2. `npm run doctor`
 3. `npm run build`
 4. Check routes:
+
 - `/`
 - `/en/`
 - `/:lang/blog`
