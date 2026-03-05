@@ -70,6 +70,7 @@ Class C: Cross-layer Contract Changes
 Main branch quality gate:
 
 ```bash
+npm install
 npm run check
 node scripts/check-scaffold.mjs
 ```
@@ -138,6 +139,7 @@ When delegating to AI/coding agents, require this sequence:
 ## Branch Switching Hygiene
 
 - After switching branches, run `npm install` before commit/push operations.
+- `main` check chain includes `npm run check:workspace-link` and must pass before merge/release.
 - `main` keeps maintainer hooks (`husky` + `lint-staged`) for engineering gates.
 - `starter` must stay hook-free (no `prepare`, no `lint-staged`, no `.husky`) to avoid user template friction.
 - If hooks still misbehave after reinstall, treat it as a local environment issue and recover locally before proceeding.
