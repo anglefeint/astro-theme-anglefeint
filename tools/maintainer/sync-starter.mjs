@@ -178,6 +178,7 @@ async function sanitizeStarterPackageJson(repoRoot) {
   delete pkg.scripts['maintainer:sync-starter'];
   delete pkg.scripts['maintainer:sync-starter:check'];
   delete pkg.scripts['release:starter'];
+  delete pkg.scripts['release:starter:push'];
   const next = `${JSON.stringify(pkg, null, 2)}\n`;
   if (next !== raw) {
     await writeFile(pkgPath, next, 'utf8');
