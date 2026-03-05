@@ -7,11 +7,20 @@ import { promisify } from 'node:util';
 const execFileAsync = promisify(execFile);
 
 const MANAGED_FILES = [
+  'README.md',
+  'README.zh-CN.md',
+  'README.ja.md',
+  'README.es.md',
+  'README.ko.md',
   'scripts/adapter-templates/src/config/theme.ts',
   'src/components/pagination/CyberPagination.astro',
+  'src/config/about.ts',
   'src/config/theme.ts',
+  'src/pages/[lang]/about.astro',
   'src/pages/[lang]/blog/[...page].astro',
   'src/pages/[lang]/index.astro',
+  'src/pages/[lang]/rss.xml.ts',
+  'src/scripts/cyber-rain-dust.js',
   'src/site.config.ts',
   'src/utils/pagination-style.ts',
   'src/utils/pagination.ts',

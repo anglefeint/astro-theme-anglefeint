@@ -58,6 +58,13 @@ npm run build
 npm run preview
 ```
 
+Comandos de calidad:
+
+```bash
+npm run lint
+npm run format:check
+```
+
 Con `pnpm`:
 
 ```bash
@@ -208,6 +215,15 @@ Si falta algun campo requerido, el bloque de comentarios no se renderiza.
 - Entrada unica: `src/site.config.ts`
 - Capa adaptadora (no editar directamente): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - La identidad del sitio tambien se puede sobrescribir con variables `PUBLIC_*`
+
+## Documentacion
+
+- Arquitectura: `docs/ARCHITECTURE.md`
+- Sistemas visuales: `docs/VISUAL_SYSTEMS.md`
+- Checklist de envio: `docs/THEME_SUBMISSION_CHECKLIST.md`
+- Borrador de listado: `ASTRO_THEME_LISTING.md`
+- Guia de actualizacion: `UPGRADING.md`
+- Historial de cambios: `CHANGELOG.md`
 
 ## Licencia
 
