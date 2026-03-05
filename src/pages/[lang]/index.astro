@@ -26,7 +26,7 @@ const siteURL = Astro.site ?? SITE_URL;
 ---
 
 {isEnRedirect ? (
-	<html lang="en">
+	<html lang={DEFAULT_LOCALE}>
 		<head>
 			<meta charset="utf-8" />
 			<meta name="robots" content="noindex, follow" />
