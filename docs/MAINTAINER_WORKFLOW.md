@@ -1,3 +1,13 @@
+---
+doc_id: maintainer_workflow
+doc_role: internal-guide
+doc_purpose: Defines maintainer-only release and starter synchronization rules.
+doc_scope: [release-flow, starter-sync, change-classification, guardrails]
+update_triggers: [release-process-change, starter-sync-change, command-change]
+source_of_truth: true
+depends_on: [README.md]
+---
+
 # Maintainer Workflow
 
 This document defines the release and synchronization rules for maintainers.
