@@ -206,6 +206,8 @@ npm run new-page -- projects --theme matrix
    - `theme.comments.categoryId`
 3. 任意項目:
    - `theme.comments.mapping`
+   - `theme.comments.term`（`mapping = "specific"` のとき必須）
+   - `theme.comments.number`（`mapping = "number"` のとき必須）
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
    - `theme.comments.emitMetadata`

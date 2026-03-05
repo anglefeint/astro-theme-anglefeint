@@ -9,6 +9,7 @@ export type Messages = {
     blog: string;
     about: string;
     status: string;
+    statusAria: string;
   };
   home: {
     hero: string;
@@ -41,10 +42,24 @@ export type Messages = {
     related: string;
     comments: string;
     responseOutput: string;
+    rqBadge: string;
+    rqReplayAria: string;
+    metaPublished: string;
+    metaUpdated: string;
+    metaReadMinutes: string;
+    systemStatusAria: string;
+    promptContextLabel: string;
+    latencyLabel: string;
+    confidenceLabel: string;
+    statsWords: string;
+    statsTokens: string;
     heroMonitor: string;
     heroSignalSync: string;
     heroModelOnline: string;
     regenerate: string;
+    relatedAria: string;
+    backToBlogAria: string;
+    paginationAria: string;
     toastP10: string;
     toastP30: string;
     toastP60: string;
@@ -57,7 +72,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
     siteTitle: 'Angle Feint',
     siteDescription: 'Cinematic web interfaces and AI-era engineering essays.',
     langLabel: 'Language',
-    nav: { home: 'Home', blog: 'Blog', about: 'About', status: 'system: online' },
+    nav: {
+      home: 'Home',
+      blog: 'Blog',
+      about: 'About',
+      status: 'system: online',
+      statusAria: 'System status',
+    },
     home: {
       hero: 'Write a short introduction for your site and what readers can expect from your posts.',
       latest: 'Latest Posts',
@@ -89,10 +110,24 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       related: 'Related',
       comments: 'Comments',
       responseOutput: 'Output',
+      rqBadge: 'monitor feed',
+      rqReplayAria: 'Replay monitor feed',
+      metaPublished: 'published',
+      metaUpdated: 'updated',
+      metaReadMinutes: 'min read',
+      systemStatusAria: 'Model status',
+      promptContextLabel: 'Context',
+      latencyLabel: 'latency est',
+      confidenceLabel: 'confidence',
+      statsWords: 'words',
+      statsTokens: 'tokens',
       heroMonitor: 'neural monitor',
       heroSignalSync: 'signal sync active',
       heroModelOnline: 'model online',
       regenerate: 'Regenerate',
+      relatedAria: 'Related posts',
+      backToBlogAria: 'Back to blog',
+      paginationAria: 'Pagination',
       toastP10: 'context parsed 10%',
       toastP30: 'context parsed 30%',
       toastP60: 'inference stable 60%',
@@ -103,7 +138,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
     siteTitle: 'Angle Feint',
     siteDescription: '映画的なWebインターフェースとAI時代のエンジニアリング考察。',
     langLabel: '言語',
-    nav: { home: 'ホーム', blog: 'ブログ', about: 'プロフィール', status: 'system: online' },
+    nav: {
+      home: 'ホーム',
+      blog: 'ブログ',
+      about: 'プロフィール',
+      status: 'system: online',
+      statusAria: 'システム状態',
+    },
     home: {
       hero: 'このサイトの紹介文と、読者がどんな記事を期待できるかを書いてください。',
       latest: '最新記事',
@@ -135,10 +176,24 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       related: '関連記事',
       comments: 'コメント',
       responseOutput: '出力',
+      rqBadge: 'モニターフィード',
+      rqReplayAria: 'モニターフィードを再生',
+      metaPublished: '公開',
+      metaUpdated: '更新',
+      metaReadMinutes: '分で読了',
+      systemStatusAria: 'モデル状態',
+      promptContextLabel: 'コンテキスト',
+      latencyLabel: '推定レイテンシ',
+      confidenceLabel: '信頼度',
+      statsWords: '語',
+      statsTokens: 'トークン',
       heroMonitor: 'ニューラルモニター',
       heroSignalSync: 'シグナル同期中',
       heroModelOnline: 'モデルオンライン',
       regenerate: '再生成',
+      relatedAria: '関連記事',
+      backToBlogAria: 'ブログへ戻る',
+      paginationAria: 'ページネーション',
       toastP10: '文脈解析 10%',
       toastP30: '文脈解析 30%',
       toastP60: '推論安定 60%',
@@ -149,7 +204,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
     siteTitle: 'Angle Feint',
     siteDescription: '시네마틱 웹 인터페이스와 AI 시대 엔지니어링 에세이.',
     langLabel: '언어',
-    nav: { home: '홈', blog: '블로그', about: '소개', status: 'system: online' },
+    nav: {
+      home: '홈',
+      blog: '블로그',
+      about: '소개',
+      status: 'system: online',
+      statusAria: '시스템 상태',
+    },
     home: {
       hero: '사이트 소개와 방문자가 어떤 글을 기대할 수 있는지 간단히 작성하세요.',
       latest: '최신 글',
@@ -181,10 +242,24 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       related: '관련 글',
       comments: '댓글',
       responseOutput: '출력',
+      rqBadge: '모니터 피드',
+      rqReplayAria: '모니터 피드 다시 재생',
+      metaPublished: '게시',
+      metaUpdated: '수정',
+      metaReadMinutes: '분 읽기',
+      systemStatusAria: '모델 상태',
+      promptContextLabel: '컨텍스트',
+      latencyLabel: '지연 추정',
+      confidenceLabel: '신뢰도',
+      statsWords: '단어',
+      statsTokens: '토큰',
       heroMonitor: '뉴럴 모니터',
       heroSignalSync: '신호 동기화 활성',
       heroModelOnline: '모델 온라인',
       regenerate: '재생성',
+      relatedAria: '관련 글',
+      backToBlogAria: '블로그로 돌아가기',
+      paginationAria: '페이지네이션',
       toastP10: '컨텍스트 파싱 10%',
       toastP30: '컨텍스트 파싱 30%',
       toastP60: '추론 안정화 60%',
@@ -195,7 +270,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
     siteTitle: 'Angle Feint',
     siteDescription: 'Interfaces web cinematográficas y ensayos de ingeniería en la era de IA.',
     langLabel: 'Idioma',
-    nav: { home: 'Inicio', blog: 'Blog', about: 'Sobre mí', status: 'system: online' },
+    nav: {
+      home: 'Inicio',
+      blog: 'Blog',
+      about: 'Sobre mí',
+      status: 'system: online',
+      statusAria: 'Estado del sistema',
+    },
     home: {
       hero: 'Escribe una breve presentación del sitio y qué tipo de contenido encontrarán tus lectores.',
       latest: 'Últimas publicaciones',
@@ -228,10 +309,24 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       related: 'Relacionados',
       comments: 'Comentarios',
       responseOutput: 'Salida',
+      rqBadge: 'monitor de señal',
+      rqReplayAria: 'Reproducir monitor de señal',
+      metaPublished: 'publicado',
+      metaUpdated: 'actualizado',
+      metaReadMinutes: 'min de lectura',
+      systemStatusAria: 'Estado del modelo',
+      promptContextLabel: 'Contexto',
+      latencyLabel: 'latencia est',
+      confidenceLabel: 'confianza',
+      statsWords: 'palabras',
+      statsTokens: 'tokens',
       heroMonitor: 'monitor neural',
       heroSignalSync: 'sincronización de señal activa',
       heroModelOnline: 'modelo en línea',
       regenerate: 'Regenerar',
+      relatedAria: 'Publicaciones relacionadas',
+      backToBlogAria: 'Volver al blog',
+      paginationAria: 'Paginación',
       toastP10: 'contexto analizado 10%',
       toastP30: 'contexto analizado 30%',
       toastP60: 'inferencia estable 60%',
@@ -242,7 +337,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
     siteTitle: 'Angle Feint',
     siteDescription: '电影感网页界面与 AI 时代工程实践文章。',
     langLabel: '语言',
-    nav: { home: '首页', blog: '博客', about: '关于', status: 'system: online' },
+    nav: {
+      home: '首页',
+      blog: '博客',
+      about: '关于',
+      status: 'system: online',
+      statusAria: '系统状态',
+    },
     home: {
       hero: '在这里写一段站点简介，并告诉读者你将发布什么类型的内容。',
       latest: '最新文章',
@@ -274,10 +375,24 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       related: '相关文章',
       comments: '评论',
       responseOutput: '输出',
+      rqBadge: '监视器信号',
+      rqReplayAria: '重放监视器信号',
+      metaPublished: '发布',
+      metaUpdated: '更新',
+      metaReadMinutes: '分钟阅读',
+      systemStatusAria: '模型状态',
+      promptContextLabel: '语境',
+      latencyLabel: '延迟估计',
+      confidenceLabel: '置信度',
+      statsWords: '词',
+      statsTokens: '令牌',
       heroMonitor: '神经监视器',
       heroSignalSync: '信号同步中',
       heroModelOnline: '模型在线',
       regenerate: '重新生成',
+      relatedAria: '相关文章',
+      backToBlogAria: '返回博客',
+      paginationAria: '分页导航',
       toastP10: '语境解析 10%',
       toastP30: '语境解析 30%',
       toastP60: '推理稳定 60%',

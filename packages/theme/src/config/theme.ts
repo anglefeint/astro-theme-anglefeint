@@ -35,6 +35,8 @@ export const THEME = {
     CATEGORY: '',
     CATEGORY_ID: '',
     MAPPING: 'pathname',
+    TERM: '',
+    NUMBER: '',
     STRICT: '0',
     REACTIONS_ENABLED: '1',
     EMIT_METADATA: '0',

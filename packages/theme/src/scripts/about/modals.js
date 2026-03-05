@@ -25,7 +25,7 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
     },
     ai: {
       title: 'AI',
-      body: '<pre>~ $ ai --status --verbose\n\nmodel: anglefeint-core\nmode: reasoning + builder\ncontext window: 128k\ntools: codex / cursor / claude-code\nlatency: 120-220ms\nsafety: guardrails enabled\n\n&gt;&gt; system online\n&gt;&gt; ready for execution</pre>',
+      body: '<pre>~ $ ai --status --verbose\n\nmodel: runtime-default\nmode: standard\ncontext window: 32k\nlatency: 100-250ms\nsafety: enabled\n\n&gt;&gt; system online\n&gt;&gt; ready</pre>',
       type: 'plain',
     },
     decryptor: {

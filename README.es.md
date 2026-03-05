@@ -206,6 +206,8 @@ Los comentarios vienen desactivados por defecto. Para activarlos:
    - `theme.comments.categoryId`
 3. Campos opcionales:
    - `theme.comments.mapping`
+   - `theme.comments.term` (obligatorio cuando `mapping = "specific"`)
+   - `theme.comments.number` (obligatorio cuando `mapping = "number"`)
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
    - `theme.comments.emitMetadata`

@@ -37,6 +37,8 @@ export const THEME = {
     CATEGORY: THEME_CONFIG.theme.comments.category,
     CATEGORY_ID: THEME_CONFIG.theme.comments.categoryId,
     MAPPING: THEME_CONFIG.theme.comments.mapping,
+    TERM: THEME_CONFIG.theme.comments.term,
+    NUMBER: THEME_CONFIG.theme.comments.number,
     STRICT: THEME_CONFIG.theme.comments.strict,
     REACTIONS_ENABLED: THEME_CONFIG.theme.comments.reactionsEnabled,
     EMIT_METADATA: THEME_CONFIG.theme.comments.emitMetadata,

@@ -208,6 +208,8 @@ Comments are disabled by default. To enable:
    - `theme.comments.categoryId`
 3. Optionally customize:
    - `theme.comments.mapping`
+   - `theme.comments.term` (required when `mapping = "specific"`)
+   - `theme.comments.number` (required when `mapping = "number"`)
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
    - `theme.comments.emitMetadata`

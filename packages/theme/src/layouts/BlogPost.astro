@@ -58,8 +58,19 @@ const hasStats = aiModel || wordCount !== undefined || tokenCount !== undefined;
 const confidenceText = aiConfidence !== undefined ? aiConfidence.toFixed(2) : undefined;
 const enableRedQueen = THEME.EFFECTS.ENABLE_RED_QUEEN;
 const comments = THEME.COMMENTS;
+const hasMappingParam =
+  comments.MAPPING === 'specific'
+    ? Boolean(comments.TERM)
+    : comments.MAPPING === 'number'
+      ? Boolean(comments.NUMBER)
+      : true;
 const hasCommentsConfig = Boolean(
-  comments.ENABLED && comments.REPO && comments.REPO_ID && comments.CATEGORY && comments.CATEGORY_ID
+  comments.ENABLED &&
+  comments.REPO &&
+  comments.REPO_ID &&
+  comments.CATEGORY &&
+  comments.CATEGORY_ID &&
+  hasMappingParam
 );
 ---
 
@@ -105,13 +116,13 @@ const hasCommentsConfig = Boolean(
             data-rq-src2={themeRedqueen2.src}
           />
           <div class="rq-tv-badge">
-            monitor feed
+            {messages.blog.rqBadge}
             <span class="rq-tv-dot" />
           </div>
           <button
             type="button"
             class="rq-tv-toggle"
-            aria-label="Replay monitor feed"
+            aria-label={messages.blog.rqReplayAria}
             aria-expanded="false"
           >
             ▶
@@ -178,13 +189,28 @@ const hasCommentsConfig = Boolean(
     <div class="prose">
       <div class="title ai-title">
         <div class="ai-meta-terminal">
-          $ published {fmt(pubDate)}
-          {updatedDate && <> | updated {fmt(updatedDate)}</>}
-          {readMinutes !== undefined && <> | ~{readMinutes} min read</>}
+          $ {messages.blog.metaPublished}
+          {fmt(pubDate)}
+          {
+            updatedDate && (
+              <>
+                {' '}
+                | {messages.blog.metaUpdated} {fmt(updatedDate)}
+              </>
+            )
+          }
+          {
+            readMinutes !== undefined && (
+              <>
+                {' '}
+                | ~{readMinutes} {messages.blog.metaReadMinutes}
+              </>
+            )
+          }
         </div>
         {
           hasSystemMeta && (
-            <div class="ai-system-row" aria-label="Model status">
+            <div class="ai-system-row" aria-label={messages.blog.systemStatusAria}>
               {aiModel && <span class="ai-system-chip">model: {aiModel}</span>}
               {aiMode && <span class="ai-system-chip">mode: {aiMode}</span>}
               {aiState && <span class="ai-system-chip">state: {aiState}</span>}
@@ -194,7 +220,8 @@ const hasCommentsConfig = Boolean(
         {
           contextText && (
             <div class="ai-prompt-line">
-              Context: <span class="ai-prompt-topic">{contextText}</span> →
+              {messages.blog.promptContextLabel}: <span class="ai-prompt-topic">{contextText}</span>{' '}
+              →
             </div>
           )
         }
@@ -212,12 +239,12 @@ const hasCommentsConfig = Boolean(
               <div class="ai-response-meta">
                 {aiLatencyMs !== undefined && (
                   <span>
-                    latency est <strong>{aiLatencyMs}</strong> ms
+                    {messages.blog.latencyLabel} <strong>{aiLatencyMs}</strong> ms
                   </span>
                 )}
                 {confidenceText !== undefined && (
                   <span>
-                    confidence <strong>{confidenceText}</strong>
+                    {messages.blog.confidenceLabel} <strong>{confidenceText}</strong>
                   </span>
                 )}
               </div>
@@ -234,9 +261,17 @@ const hasCommentsConfig = Boolean(
           <div class="ai-stats-corner">
             {aiModel && <span class="ai-model-id">{aiModel}</span>}
             {aiModel && (wordCount !== undefined || tokenCount !== undefined) && ' · '}
-            {wordCount !== undefined && <span>{compact(wordCount)} words</span>}
+            {wordCount !== undefined && (
+              <span>
+                {compact(wordCount)} {messages.blog.statsWords}
+              </span>
+            )}
             {wordCount !== undefined && tokenCount !== undefined && ' · '}
-            {tokenCount !== undefined && <span>{compact(tokenCount)} tokens</span>}
+            {tokenCount !== undefined && (
+              <span>
+                {compact(tokenCount)} {messages.blog.statsTokens}
+              </span>
+            )}
           </div>
         )
       }
@@ -247,7 +282,7 @@ const hasCommentsConfig = Boolean(
   </article>
   {
     related.length > 0 && (
-      <section class="ai-related" aria-label="Related posts">
+      <section class="ai-related" aria-label={messages.blog.relatedAria}>
         <h2 class="ai-related-title">{messages.blog.related}</h2>
         <div class="ai-related-grid">
           {related.map((p) => (
@@ -274,7 +309,7 @@ const hasCommentsConfig = Boolean(
       </section>
     )
   }
-  <nav class="ai-back-to-blog" aria-label="Back to blog">
+  <nav class="ai-back-to-blog" aria-label={messages.blog.backToBlogAria}>
     <a href={localePath(resolvedLocale, '/blog/')}>
       <span class="ai-back-prompt">$</span>
       <span class="ai-back-text">← {messages.blog.backToBlog}</span>
@@ -290,6 +325,8 @@ const hasCommentsConfig = Boolean(
           data-category={comments.CATEGORY}
           data-category-id={comments.CATEGORY_ID}
           data-mapping={comments.MAPPING}
+          data-term={comments.MAPPING === 'specific' ? comments.TERM : undefined}
+          data-number={comments.MAPPING === 'number' ? comments.NUMBER : undefined}
           data-strict={comments.STRICT}
           data-reactions-enabled={comments.REACTIONS_ENABLED}
           data-emit-metadata={comments.EMIT_METADATA}
