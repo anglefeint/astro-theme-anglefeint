@@ -191,7 +191,7 @@ npm run new-page -- projects --theme matrix
    - `aboutByLocale`：按语言配置 About 页面内容与运行文案
    - `theme.enableAboutPage`：About 页面开关
    - `theme.effects.enableRedQueen`：开启/关闭文章页侧边监视器特效
-   - `theme.comments`：开启并配置 Giscus（`repo`、`repoId`、`category`、`categoryId`、`theme`、`lang`）
+   - `theme.comments`：开启并配置 Giscus（核心 ID + 行为参数）
 3. 在 `src/content/blog/<locale>/` 替换示例文章。
 
 ### 可选：Giscus 评论
@@ -205,8 +205,15 @@ npm run new-page -- projects --theme matrix
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. 可选设置：
+   - `theme.comments.mapping`
+   - `theme.comments.strict`
+   - `theme.comments.reactionsEnabled`
+   - `theme.comments.emitMetadata`
+   - `theme.comments.inputPosition`（`top` 或 `bottom`）
    - `theme.comments.theme`
    - `theme.comments.lang`
+   - `theme.comments.loading`
+   - `theme.comments.crossorigin`
 
 若以上必填项缺失，评论区不会渲染。
 

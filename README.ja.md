@@ -191,7 +191,7 @@ npm run new-page -- projects --theme matrix
    - `aboutByLocale`: ロケール別 About コンテンツとランタイム文言
    - `theme.enableAboutPage`: About の表示切り替え
    - `theme.effects.enableRedQueen`: 記事ページのサイドモニター演出をオン/オフ
-   - `theme.comments`: Giscus を有効化・設定（`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`）
+   - `theme.comments`: Giscus を有効化・設定（コア ID + 動作パラメータ）
 3. `src/content/blog/<locale>/` のサンプル記事を差し替え。
 
 ### 任意: Giscus コメント
@@ -205,8 +205,15 @@ npm run new-page -- projects --theme matrix
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. 任意項目:
+   - `theme.comments.mapping`
+   - `theme.comments.strict`
+   - `theme.comments.reactionsEnabled`
+   - `theme.comments.emitMetadata`
+   - `theme.comments.inputPosition`（`top` または `bottom`）
    - `theme.comments.theme`
    - `theme.comments.lang`
+   - `theme.comments.loading`
+   - `theme.comments.crossorigin`
 
 必須項目が不足している場合、コメントブロックは描画されません。
 

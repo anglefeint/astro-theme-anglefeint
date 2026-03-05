@@ -192,7 +192,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
    - `aboutByLocale` for localized About content/runtime text
    - `theme.enableAboutPage` for About route/nav toggle
    - `theme.effects.enableRedQueen` to enable/disable the post-side monitor effect
-   - `theme.comments` to enable and configure Giscus (`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`)
+   - `theme.comments` to enable and configure Giscus (core IDs + behavior options)
 3. Replace starter posts in `src/content/blog/<locale>/`.
 4. Set your real site URL (`PUBLIC_SITE_URL` or `src/site.config.ts`) before production deploy.
 
@@ -207,8 +207,15 @@ Comments are disabled by default. To enable:
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. Optionally customize:
+   - `theme.comments.mapping`
+   - `theme.comments.strict`
+   - `theme.comments.reactionsEnabled`
+   - `theme.comments.emitMetadata`
+   - `theme.comments.inputPosition` (`top` or `bottom`)
    - `theme.comments.theme`
    - `theme.comments.lang`
+   - `theme.comments.loading`
+   - `theme.comments.crossorigin`
 
 If these required fields are missing, the comments block is not rendered.
 
