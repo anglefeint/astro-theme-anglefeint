@@ -48,6 +48,9 @@ export type Messages = {
     metaUpdated: string;
     metaReadMinutes: string;
     systemStatusAria: string;
+    systemModelLabel: string;
+    systemModeLabel: string;
+    systemStateLabel: string;
     promptContextLabel: string;
     latencyLabel: string;
     confidenceLabel: string;
@@ -116,6 +119,9 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       metaUpdated: 'updated',
       metaReadMinutes: 'min read',
       systemStatusAria: 'Model status',
+      systemModelLabel: 'model',
+      systemModeLabel: 'mode',
+      systemStateLabel: 'state',
       promptContextLabel: 'Context',
       latencyLabel: 'latency est',
       confidenceLabel: 'confidence',
@@ -182,6 +188,9 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       metaUpdated: '更新',
       metaReadMinutes: '分で読了',
       systemStatusAria: 'モデル状態',
+      systemModelLabel: 'モデル',
+      systemModeLabel: 'モード',
+      systemStateLabel: '状態',
       promptContextLabel: 'コンテキスト',
       latencyLabel: '推定レイテンシ',
       confidenceLabel: '信頼度',
@@ -248,6 +257,9 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       metaUpdated: '수정',
       metaReadMinutes: '분 읽기',
       systemStatusAria: '모델 상태',
+      systemModelLabel: '모델',
+      systemModeLabel: '모드',
+      systemStateLabel: '상태',
       promptContextLabel: '컨텍스트',
       latencyLabel: '지연 추정',
       confidenceLabel: '신뢰도',
@@ -315,6 +327,9 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       metaUpdated: 'actualizado',
       metaReadMinutes: 'min de lectura',
       systemStatusAria: 'Estado del modelo',
+      systemModelLabel: 'modelo',
+      systemModeLabel: 'modo',
+      systemStateLabel: 'estado',
       promptContextLabel: 'Contexto',
       latencyLabel: 'latencia est',
       confidenceLabel: 'confianza',
@@ -381,6 +396,9 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       metaUpdated: '更新',
       metaReadMinutes: '分钟阅读',
       systemStatusAria: '模型状态',
+      systemModelLabel: '模型',
+      systemModeLabel: '模式',
+      systemStateLabel: '状态',
       promptContextLabel: '语境',
       latencyLabel: '延迟估计',
       confidenceLabel: '置信度',
