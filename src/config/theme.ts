@@ -23,7 +23,6 @@ export const THEME = {
       MODE: THEME_CONFIG.theme.pagination.style.mode,
       VARIANTS: THEME_CONFIG.theme.pagination.style.variants,
       FIXED_VARIANT: THEME_CONFIG.theme.pagination.style.fixedVariant,
-      STABLE_BY: THEME_CONFIG.theme.pagination.style.stableBy,
     },
   },
   /** Optional visual effects switches */

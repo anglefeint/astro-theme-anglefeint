@@ -5,7 +5,7 @@ doc_purpose: End-user setup, usage, and upgrade guide for the template.
 doc_scope: [setup, commands, themes, config, routing]
 update_triggers: [command-change, theme-naming, config-change, routing-change, i18n-change]
 source_of_truth: true
-depends_on: [docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md]
+depends_on: []
 sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
 ---
 
@@ -59,13 +59,6 @@ npm run build
 npm run preview
 ```
 
-Quality commands:
-
-```bash
-npm run lint
-npm run format:check
-```
-
 With `pnpm`:
 
 ```bash
@@ -82,6 +75,7 @@ For projects created from `#starter`, upgrade with:
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run starter:check
 npm run doctor
 # if doctor reports adapter drift:
 # npm run sync-adapters
@@ -198,15 +192,6 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 - Single entry: `src/site.config.ts`
 - Adapters (do not edit directly): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - Environment override supported: `PUBLIC_*` vars for site identity
-
-## Docs
-
-- Architecture: `docs/ARCHITECTURE.md`
-- Visual systems: `docs/VISUAL_SYSTEMS.md`
-- Submission checklist: `docs/THEME_SUBMISSION_CHECKLIST.md`
-- Theme listing draft: `ASTRO_THEME_LISTING.md`
-- Upgrading guide: `UPGRADING.md`
-- Changelog: `CHANGELOG.md`
 
 ## Credits
 
