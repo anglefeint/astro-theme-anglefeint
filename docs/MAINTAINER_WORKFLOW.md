@@ -88,7 +88,7 @@ Use this sequence unless explicitly skipped for a documented reason.
 
 1. Update `main` and push.
 2. If Class A/C affects shipped package behavior, publish npm package.
-3. Sync `starter` from `main` managed files.
+3. Run `npm run release:starter` on `main` to sync and validate `starter`.
 4. Validate `starter`.
 5. Push `starter`.
 
@@ -103,12 +103,14 @@ Before running `npm run release:npm`, verify whether `packages/theme/**` changed
   - do **not** publish npm
   - do **not** run starter dependency update only for release cadence
 
-Maintainer entry commands:
+Maintainer entry commands (run on `main`):
 
 ```bash
-npm run maintainer:sync-starter
-# check-only mode:
+npm run release:starter
+# optional check-only mode:
 npm run maintainer:sync-starter:check
+# optional sync + auto-push:
+npm run release:starter:push
 ```
 
 ## Starter Sync Policy
@@ -116,8 +118,8 @@ npm run maintainer:sync-starter:check
 - Managed files should be synced from `main` using maintainer tooling.
 - User-facing docs must not tell end users to run maintainer sync scripts.
 - End users should upgrade via package updates and normal checks.
-- When introducing new starter-managed runtime/config files, update `scripts/regenerate-starter.mjs` `MANAGED_FILES` in the same change.
-- After changing `MANAGED_FILES`, run `npm run maintainer:sync-starter:check` on `starter` before push.
+- When introducing new starter-managed runtime/config files, update `tools/maintainer/sync-starter.mjs` `MANAGED_FILES` in the same change.
+- `starter` is generated/distribution only. Do not maintain runtime logic there manually.
 
 ## End-user Upgrade Guidance (for docs)
 
@@ -155,4 +157,5 @@ When delegating to AI/coding agents, require this sequence:
 - `main` check chain includes `npm run check:workspace-link` and must pass before merge/release.
 - `main` keeps maintainer hooks (`husky` + `lint-staged`) for engineering gates.
 - `starter` must stay hook-free (no `prepare`, no `lint-staged`, no `.husky`) to avoid user template friction.
+- `starter` must stay maintainer-tooling-free (no `maintainer:*` or `release:starter*` scripts in starter `package.json`).
 - If hooks still misbehave after reinstall, treat it as a local environment issue and recover locally before proceeding.
