@@ -188,7 +188,7 @@ npm run new-page -- projects --theme matrix
 1. `.env.example` 를 `.env` 로 복사하고 사이트 정보를 설정합니다.
 2. `src/site.config.ts` 를 수정합니다:
    - `social.links`: 소셜 링크
-   - `about`: About 콘텐츠와 런타임 문구
+   - `aboutByLocale`: 로케일별 About 콘텐츠와 런타임 문구
    - `theme.enableAboutPage`: About 노출 제어
    - `theme.effects.enableRedQueen`: 글 상세 사이드 모니터 이펙트 on/off
    - `theme.comments`: Giscus 활성화/설정 (`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`)

@@ -188,7 +188,7 @@ npm run new-page -- projects --theme matrix
 1. `.env.example` を `.env` にコピーし、サイト情報を設定。
 2. `src/site.config.ts` を編集:
    - `social.links`: SNS リンク
-   - `about`: About コンテンツとランタイム文言
+   - `aboutByLocale`: ロケール別 About コンテンツとランタイム文言
    - `theme.enableAboutPage`: About の表示切り替え
    - `theme.effects.enableRedQueen`: 記事ページのサイドモニター演出をオン/オフ
    - `theme.comments`: Giscus を有効化・設定（`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`）
