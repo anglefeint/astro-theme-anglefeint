@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { SITE_URL } from '../consts';
+import { SITE_URL } from '../config/site';
 
 /**
  * Dynamically generate robots.txt with correct sitemap reference.
