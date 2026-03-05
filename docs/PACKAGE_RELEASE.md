@@ -12,7 +12,7 @@ source_of_truth: true
 ## Package
 
 - Name: `@anglefeint/astro-theme`
-- Current latest: `0.1.33`
+- Latest version: check npm registry before release (`npm view @anglefeint/astro-theme version`)
 - Current prerelease tag: `alpha` (optional track)
 
 ## 1) Pre-release checks
