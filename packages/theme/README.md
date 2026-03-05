@@ -54,6 +54,8 @@ This package reads site-specific config from alias imports:
 
 In the starter/site project, map these aliases to `src/config/*` and `src/i18n/*` in both Vite and TS config.
 
+Giscus comments are configured from site-side `theme.comments` (enabled + repo/category IDs). If required fields are not set, comments are not rendered.
+
 ## CLI
 
 - `anglefeint-new-post`

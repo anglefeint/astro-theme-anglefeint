@@ -27,4 +27,14 @@ export const THEME = {
   EFFECTS: {
     ENABLE_RED_QUEEN: true,
   },
+  /** Optional comments integration (Giscus) */
+  COMMENTS: {
+    ENABLED: false,
+    REPO: '',
+    REPO_ID: '',
+    CATEGORY: '',
+    CATEGORY_ID: '',
+    THEME: 'dark',
+    LANG: 'en',
+  },
 } as const;

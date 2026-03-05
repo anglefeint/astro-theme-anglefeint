@@ -37,7 +37,13 @@ export type Messages = {
     jumpGo: string;
     jumpInputLabel: string;
     backToBlog: string;
+    backToTop: string;
     related: string;
+    comments: string;
+    responseOutput: string;
+    heroMonitor: string;
+    heroSignalSync: string;
+    heroModelOnline: string;
     regenerate: string;
     toastP10: string;
     toastP30: string;
@@ -79,7 +85,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       jumpGo: 'Go',
       jumpInputLabel: 'Page number',
       backToBlog: 'Back to blog',
+      backToTop: 'Back to top',
       related: 'Related',
+      comments: 'Comments',
+      responseOutput: 'Output',
+      heroMonitor: 'neural monitor',
+      heroSignalSync: 'signal sync active',
+      heroModelOnline: 'model online',
       regenerate: 'Regenerate',
       toastP10: 'context parsed 10%',
       toastP30: 'context parsed 30%',
@@ -119,7 +131,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       jumpGo: '移動',
       jumpInputLabel: 'ページ番号',
       backToBlog: 'ブログへ戻る',
+      backToTop: '先頭へ戻る',
       related: '関連記事',
+      comments: 'コメント',
+      responseOutput: '出力',
+      heroMonitor: 'ニューラルモニター',
+      heroSignalSync: 'シグナル同期中',
+      heroModelOnline: 'モデルオンライン',
       regenerate: '再生成',
       toastP10: '文脈解析 10%',
       toastP30: '文脈解析 30%',
@@ -159,7 +177,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       jumpGo: '이동',
       jumpInputLabel: '페이지 번호',
       backToBlog: '블로그로 돌아가기',
+      backToTop: '맨 위로',
       related: '관련 글',
+      comments: '댓글',
+      responseOutput: '출력',
+      heroMonitor: '뉴럴 모니터',
+      heroSignalSync: '신호 동기화 활성',
+      heroModelOnline: '모델 온라인',
       regenerate: '재생성',
       toastP10: '컨텍스트 파싱 10%',
       toastP30: '컨텍스트 파싱 30%',
@@ -200,7 +224,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       jumpGo: 'Ir',
       jumpInputLabel: 'Número de página',
       backToBlog: 'Volver al blog',
+      backToTop: 'Volver arriba',
       related: 'Relacionados',
+      comments: 'Comentarios',
+      responseOutput: 'Salida',
+      heroMonitor: 'monitor neural',
+      heroSignalSync: 'sincronización de señal activa',
+      heroModelOnline: 'modelo en línea',
       regenerate: 'Regenerar',
       toastP10: 'contexto analizado 10%',
       toastP30: 'contexto analizado 30%',
@@ -240,7 +270,13 @@ export const DEFAULT_MESSAGES: Record<Locale, Messages> = {
       jumpGo: '跳转',
       jumpInputLabel: '页码',
       backToBlog: '返回博客',
+      backToTop: '返回顶部',
       related: '相关文章',
+      comments: '评论',
+      responseOutput: '输出',
+      heroMonitor: '神经监视器',
+      heroSignalSync: '信号同步中',
+      heroModelOnline: '模型在线',
       regenerate: '重新生成',
       toastP10: '语境解析 10%',
       toastP30: '语境解析 30%',

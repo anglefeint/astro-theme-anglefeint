@@ -7,8 +7,8 @@ import { getMessages } from '@anglefeint/site-i18n/messages';
 import MatrixShell from './shells/MatrixShell.astro';
 
 interface Props {
-	locale: Locale;
-	latestPosts: CollectionEntry<'blog'>[];
+  locale: Locale;
+  latestPosts: CollectionEntry<'blog'>[];
 }
 
 const { locale, latestPosts } = Astro.props;
@@ -17,31 +17,33 @@ const heroText = SITE_HERO_BY_LOCALE[locale] ?? messages.home.hero;
 ---
 
 <MatrixShell locale={locale} title={SITE_TITLE} description={messages.siteDescription}>
-	<link slot="head" rel="preload" href="/fonts/ff2a407fe06752facf8828a86955e988.woff2" as="font" type="font/woff2" crossorigin />
-	<h1>{SITE_TITLE}</h1>
-	<p class="home-hero-copy">{heroText}</p>
+  <h1>{SITE_TITLE}</h1>
+  <p class="home-hero-copy">{heroText}</p>
 
-	<section class="home-latest">
-		<h2 class="home-section-title">{messages.home.latest}</h2>
-		<ul class="home-post-list">
-			{
-				latestPosts.length > 0 ? (
-					latestPosts.map((post) => (
-						<li>
-							<a class="home-post-title" href={localePath(locale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
-								{post.data.title}
-							</a>
-							<div class="home-post-meta">
-								<FormattedDate date={post.data.pubDate} locale={locale} />
-								{post.data.description && <> · {post.data.description}</>}
-							</div>
-						</li>
-					))
-				) : (
-					<li>{messages.home.noPosts}</li>
-				)
-			}
-		</ul>
-		<p><a href={localePath(locale, '/blog/')}>{messages.home.viewAll}</a></p>
-	</section>
+  <section class="home-latest">
+    <h2 class="home-section-title">{messages.home.latest}</h2>
+    <ul class="home-post-list">
+      {
+        latestPosts.length > 0 ? (
+          latestPosts.map((post) => (
+            <li>
+              <a
+                class="home-post-title"
+                href={localePath(locale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}
+              >
+                {post.data.title}
+              </a>
+              <div class="home-post-meta">
+                <FormattedDate date={post.data.pubDate} locale={locale} />
+                {post.data.description && <> · {post.data.description}</>}
+              </div>
+            </li>
+          ))
+        ) : (
+          <li>{messages.home.noPosts}</li>
+        )
+      }
+    </ul>
+    <p><a href={localePath(locale, '/blog/')}>{messages.home.viewAll}</a></p>
+  </section>
 </MatrixShell>
