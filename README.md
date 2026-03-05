@@ -89,6 +89,8 @@ npm run check
 npm run build
 ```
 
+If your custom code still imports `src/consts` or `@anglefeint/astro-theme/consts`, migrate to `src/config/site.ts`.
+
 For Astro major-version migrations, follow the official Astro guide first:
 
 - https://docs.astro.build/en/guides/upgrade-to/

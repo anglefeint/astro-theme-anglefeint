@@ -20,6 +20,8 @@ All notable changes to this project are documented in this file.
   - content schema migrated from `astro:content` `z` import to `astro/zod`
   - theme package peer dependency widened to `^5.0.0 || ^6.0.0-beta.0`
 - Updated Node.js requirement to `22.12.0+` for v6 compatibility.
+- Removed deprecated `consts` exports from both starter and theme package.
+  - Use `src/config/site.ts` (starter) and `@anglefeint/site-config/site` (theme internal alias) instead.
 
 ## [0.1.15] - 2026-03-01
 
