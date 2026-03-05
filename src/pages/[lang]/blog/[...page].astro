@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 import FormattedDate from '@anglefeint/astro-theme/components/FormattedDate.astro';
 import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
 import CyberPagination from '../../../components/pagination/CyberPagination.astro';
-import { SITE_TITLE } from '../../../consts';
+import { SITE_TITLE } from '../../../config/site';
 import { THEME } from '../../../config/theme';
 import {
   DEFAULT_LOCALE,
@@ -181,7 +181,8 @@ const pageDescription =
         return h >>> 0;
       };
 
-      let seed = (Date.now() ^ Math.floor(performance.now() * 1000) ^ hash(location.pathname)) >>> 0;
+      let seed =
+        (Date.now() ^ Math.floor(performance.now() * 1000) ^ hash(location.pathname)) >>> 0;
       if (seed === 0) seed = 0x9e3779b9;
       const rand = () => {
         seed ^= seed << 13;
