@@ -101,10 +101,10 @@ void aboutRuntimeConfig;
 			<div class="hacker-glow"></div>
 		</div>
 		<div class="hacker-progress" aria-hidden="true"></div>
-		<button type="button" class="hacker-back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+		<button type="button" class="hacker-back-to-top" aria-label={ABOUT_CONFIG.labels.backToTop} title={ABOUT_CONFIG.labels.backToTop}>↑</button>
 		<div class="hacker-toast" aria-live="polite" aria-atomic="true"></div>
 		<div class="hacker-mouse-glow" aria-hidden="true"></div>
-		<nav class="hacker-sidebar" aria-label="Quick access">
+		<nav class="hacker-sidebar" aria-label={ABOUT_CONFIG.labels.quickAccess}>
 			<button type="button" class="hacker-folder" data-modal="dl-data" aria-label={ABOUT_CONFIG.sidebar.dlData}>
 				<svg class="hacker-folder-icon" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="1.5">
 					<path d="M2 4h8l2 2h10v12H2V4z" />
@@ -206,7 +206,7 @@ void aboutRuntimeConfig;
 
 						<h2 class="about-section-title">05 / {messages.about.contact}</h2>
 						<p>
-							{ABOUT_CONFIG.sections.contactLead} {ABOUT_CONFIG.labels.contactEmailLead} <a href={`mailto:${ABOUT_CONFIG.contact.email}`}>email</a> {ABOUT_CONFIG.labels.contactConnectLead}
+							{ABOUT_CONFIG.sections.contactLead} {ABOUT_CONFIG.labels.contactEmailLead} <a href={`mailto:${ABOUT_CONFIG.contact.email}`}>{ABOUT_CONFIG.labels.contactEmailLabel}</a> {ABOUT_CONFIG.labels.contactConnectLead}
 							<a href={ABOUT_CONFIG.contact.githubUrl} target="_blank" rel="noopener noreferrer">{ABOUT_CONFIG.contact.githubLabel}</a>.
 						</p>
 

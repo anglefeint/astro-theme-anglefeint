@@ -80,6 +80,9 @@ export interface ThemeConfig {
       responseOutput: string;
       contactEmailLead: string;
       contactConnectLead: string;
+      backToTop: string;
+      quickAccess: string;
+      contactEmailLabel: string;
     };
     modals: {
       dlData: {
@@ -206,6 +209,9 @@ const defaultThemeConfig: ThemeConfig = {
       responseOutput: 'Output',
       contactEmailLead: 'Reach me via',
       contactConnectLead: 'or connect on',
+      backToTop: 'Back to top',
+      quickAccess: 'Quick access',
+      contactEmailLabel: 'email',
     },
     modals: {
       dlData: {

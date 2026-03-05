@@ -57,7 +57,7 @@ async function resolveSourceRef(requested) {
     if (await hasRef(candidate)) return candidate;
   }
   throw new Error(
-    `[starter:regen] Cannot resolve source ref "${requested}". Try: npm run starter:regen -- --from=<ref>`
+    `[starter:regen] Cannot resolve source ref "${requested}". Try: npm run maintainer:sync-starter -- --from=<ref>`
   );
 }
 
@@ -113,7 +113,7 @@ async function main() {
   if (check) {
     console.error(`Starter drift detected against ${sourceRef}:`);
     for (const relPath of changed) console.error(`- ${relPath}`);
-    console.error(`\nRun: npm run starter:regen -- --from=${sourceRef}`);
+    console.error(`\nRun: npm run maintainer:sync-starter -- --from=${sourceRef}`);
     process.exit(1);
   }
 
