@@ -11,6 +11,7 @@ This document defines the release and synchronization rules for maintainers.
 ## Change Classes
 
 Class A: Theme Runtime Changes
+
 - Scope:
   - `packages/theme/src/**`
   - Shared contracts consumed by installed users
@@ -25,6 +26,7 @@ Class A: Theme Runtime Changes
   4. Sync `starter`
 
 Class B: Starter-only Changes
+
 - Scope:
   - Starter docs
   - Starter demo content/examples
@@ -38,6 +40,7 @@ Class B: Starter-only Changes
   3. Push `starter`
 
 Class C: Cross-layer Contract Changes
+
 - Scope:
   - `src/site.config.ts` schema
   - adapter mappings under `src/config/*` and `src/i18n/*`
@@ -121,3 +124,10 @@ When delegating to AI/coding agents, require this sequence:
 - Never treat `starter` as source-of-truth.
 - Never bypass checks silently.
 - If unexpected branch drift appears, stop and request maintainer confirmation.
+
+## Branch Switching Hygiene
+
+- After switching branches, run `npm install` before commit/push operations.
+- `main` keeps maintainer hooks (`husky` + `lint-staged`) for engineering gates.
+- `starter` must stay hook-free (no `prepare`, no `lint-staged`, no `.husky`) to avoid user template friction.
+- If hooks still misbehave after reinstall, treat it as a local environment issue and recover locally before proceeding.
