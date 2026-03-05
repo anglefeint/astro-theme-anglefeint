@@ -92,26 +92,6 @@ const pageDescription =
   page.currentPage === 1
     ? messages.blog.archiveDescription
     : `${messages.blog.pageDescription} ${page.currentPage}.`;
-
-// Blade Runner: 负 delay 让雨滴首次加载即分布全屏
-const rainTypes = ['normal', 'thin', 'fog', 'skew'];
-const rainDrops = Array.from({ length: 48 }, (_, i) => {
-  const type = rainTypes[i % 4];
-  return {
-    left: `${Math.random() * 100}%`,
-    delay: `${-5 + Math.random() * 6}s`,
-    duration: `${3.3 + Math.random() * (type === 'thin' ? 1.1 : type === 'fog' || type === 'skew' ? 1.7 : 1.4)}s`,
-    opacity: type === 'fog' ? 0.12 + Math.random() * 0.1 : 0.2 + Math.random() * 0.25,
-    type,
-  };
-});
-const dustParticles = Array.from({ length: 22 }, () => ({
-  left: `${Math.random() * 100}%`,
-  top: `${Math.random() * 100}%`,
-  size: 4 + Math.random() * 4,
-  delay: `${Math.random() * 10}s`,
-  duration: `${8 + Math.random() * 12}s`,
-}));
 ---
 
 <CyberShell
@@ -122,38 +102,8 @@ const dustParticles = Array.from({ length: 22 }, () => ({
 >
   <Fragment slot="body-start">
     <h1 class="sr-only">{pageTitle}</h1>
-    <div class="cyber-rain" aria-hidden="true">
-      {
-        rainDrops.map((drop) => (
-          <div
-            class={`cyber-rain-drop cyber-rain-drop--${drop.type}`}
-            style={{
-              left: drop.left,
-              animationDelay: drop.delay,
-              animationDuration: drop.duration,
-              opacity: drop.opacity,
-            }}
-          />
-        ))
-      }
-    </div>
-    <div class="cyber-dust" aria-hidden="true">
-      {
-        dustParticles.map((p) => (
-          <div
-            class="cyber-dust-particle"
-            style={{
-              left: p.left,
-              top: p.top,
-              width: p.size,
-              height: p.size,
-              animationDelay: p.delay,
-              animationDuration: p.duration,
-            }}
-          />
-        ))
-      }
-    </div>
+    <div class="cyber-rain" data-cyber-rain aria-hidden="true"></div>
+    <div class="cyber-dust" data-cyber-dust aria-hidden="true"></div>
   </Fragment>
   <section>
     <h2 class="sr-only">{messages.blog.title}</h2>
@@ -216,4 +166,58 @@ const dustParticles = Array.from({ length: 22 }, () => ({
       />
     )
   }
+  <script is:inline>
+    (() => {
+      const rainRoot = document.querySelector('[data-cyber-rain]');
+      const dustRoot = document.querySelector('[data-cyber-dust]');
+      if (!(rainRoot instanceof HTMLElement) || !(dustRoot instanceof HTMLElement)) return;
+
+      const hash = (value) => {
+        let h = 2166136261;
+        for (let i = 0; i < value.length; i += 1) {
+          h ^= value.charCodeAt(i);
+          h = Math.imul(h, 16777619);
+        }
+        return h >>> 0;
+      };
+
+      let seed = (Date.now() ^ Math.floor(performance.now() * 1000) ^ hash(location.pathname)) >>> 0;
+      if (seed === 0) seed = 0x9e3779b9;
+      const rand = () => {
+        seed ^= seed << 13;
+        seed ^= seed >>> 17;
+        seed ^= seed << 5;
+        return (seed >>> 0) / 4294967296;
+      };
+
+      const rainTypes = ['normal', 'thin', 'fog', 'skew'];
+      const rainCount = 48;
+      const dustCount = 22;
+
+      for (let i = 0; i < rainCount; i += 1) {
+        const type = rainTypes[i % rainTypes.length];
+        const drop = document.createElement('div');
+        drop.className = `cyber-rain-drop cyber-rain-drop--${type}`;
+        const durationBase = type === 'thin' ? 1.1 : type === 'fog' || type === 'skew' ? 1.7 : 1.4;
+        drop.style.left = `${(rand() * 100).toFixed(3)}%`;
+        drop.style.animationDelay = `${(-5 + rand() * 6).toFixed(3)}s`;
+        drop.style.animationDuration = `${(3.3 + rand() * durationBase).toFixed(3)}s`;
+        drop.style.opacity = String(type === 'fog' ? 0.12 + rand() * 0.1 : 0.2 + rand() * 0.25);
+        rainRoot.append(drop);
+      }
+
+      for (let i = 0; i < dustCount; i += 1) {
+        const p = document.createElement('div');
+        p.className = 'cyber-dust-particle';
+        const size = 4 + rand() * 4;
+        p.style.left = `${(rand() * 100).toFixed(3)}%`;
+        p.style.top = `${(rand() * 100).toFixed(3)}%`;
+        p.style.width = `${size.toFixed(3)}px`;
+        p.style.height = `${size.toFixed(3)}px`;
+        p.style.animationDelay = `${(rand() * 10).toFixed(3)}s`;
+        p.style.animationDuration = `${(8 + rand() * 12).toFixed(3)}s`;
+        dustRoot.append(p);
+      }
+    })();
+  </script>
 </CyberShell>
