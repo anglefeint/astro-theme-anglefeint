@@ -58,11 +58,16 @@ const hasStats = aiModel || wordCount !== undefined || tokenCount !== undefined;
 const confidenceText = aiConfidence !== undefined ? aiConfidence.toFixed(2) : undefined;
 const enableRedQueen = THEME.EFFECTS.ENABLE_RED_QUEEN;
 const comments = THEME.COMMENTS;
+const normalizedCommentTerm = comments.TERM.trim();
+const normalizedCommentNumber = comments.NUMBER.trim();
+const hasValidCommentNumber =
+  /^[1-9]\d*$/.test(normalizedCommentNumber) &&
+  Number.isSafeInteger(Number(normalizedCommentNumber));
 const hasMappingParam =
   comments.MAPPING === 'specific'
-    ? Boolean(comments.TERM)
+    ? Boolean(normalizedCommentTerm)
     : comments.MAPPING === 'number'
-      ? Boolean(comments.NUMBER)
+      ? hasValidCommentNumber
       : true;
 const hasCommentsConfig = Boolean(
   comments.ENABLED &&
@@ -211,9 +216,21 @@ const hasCommentsConfig = Boolean(
         {
           hasSystemMeta && (
             <div class="ai-system-row" aria-label={messages.blog.systemStatusAria}>
-              {aiModel && <span class="ai-system-chip">model: {aiModel}</span>}
-              {aiMode && <span class="ai-system-chip">mode: {aiMode}</span>}
-              {aiState && <span class="ai-system-chip">state: {aiState}</span>}
+              {aiModel && (
+                <span class="ai-system-chip">
+                  {messages.blog.systemModelLabel}: {aiModel}
+                </span>
+              )}
+              {aiMode && (
+                <span class="ai-system-chip">
+                  {messages.blog.systemModeLabel}: {aiMode}
+                </span>
+              )}
+              {aiState && (
+                <span class="ai-system-chip">
+                  {messages.blog.systemStateLabel}: {aiState}
+                </span>
+              )}
             </div>
           )
         }
@@ -325,8 +342,8 @@ const hasCommentsConfig = Boolean(
           data-category={comments.CATEGORY}
           data-category-id={comments.CATEGORY_ID}
           data-mapping={comments.MAPPING}
-          data-term={comments.MAPPING === 'specific' ? comments.TERM : undefined}
-          data-number={comments.MAPPING === 'number' ? comments.NUMBER : undefined}
+          data-term={comments.MAPPING === 'specific' ? normalizedCommentTerm : undefined}
+          data-number={comments.MAPPING === 'number' ? normalizedCommentNumber : undefined}
           data-strict={comments.STRICT}
           data-reactions-enabled={comments.REACTIONS_ENABLED}
           data-emit-metadata={comments.EMIT_METADATA}
