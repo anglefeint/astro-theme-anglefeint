@@ -88,6 +88,8 @@ npm run check
 npm run build
 ```
 
+Si tu codigo personalizado aun importa `src/consts` o `@anglefeint/astro-theme/consts`, migralo a `src/config/site.ts`.
+
 Para migraciones de versiones mayores de Astro, revisa primero la guia oficial:
 
 - https://docs.astro.build/en/guides/upgrade-to/
@@ -189,7 +191,24 @@ npm run new-page -- projects --theme matrix
    - `about` para contenido y textos runtime de About
    - `theme.enableAboutPage` para activar/desactivar About
    - `theme.effects.enableRedQueen` para activar/desactivar el monitor lateral en posts
+   - `theme.comments` para activar y configurar Giscus (`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`)
 3. Reemplaza posts de ejemplo en `src/content/blog/<locale>/`.
+
+### Opcional: comentarios con Giscus
+
+Los comentarios vienen desactivados por defecto. Para activarlos:
+
+1. En `src/site.config.ts`, define `theme.comments.enabled = true`.
+2. Completa los campos requeridos:
+   - `theme.comments.repo`
+   - `theme.comments.repoId`
+   - `theme.comments.category`
+   - `theme.comments.categoryId`
+3. Campos opcionales:
+   - `theme.comments.theme`
+   - `theme.comments.lang`
+
+Si falta algun campo requerido, el bloque de comentarios no se renderiza.
 
 ## Superficie de configuracion
 
