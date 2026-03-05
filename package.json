@@ -16,8 +16,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "starter:regen": "node scripts/regenerate-starter.mjs",
-    "starter:check": "node scripts/regenerate-starter.mjs --check",
+    "maintainer:sync-starter": "node tools/maintainer/sync-starter.mjs",
+    "maintainer:sync-starter:check": "node tools/maintainer/sync-starter.mjs --check",
     "check:adapters": "node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check",
     "check:about-runtime": "npm run build && node scripts/check-about-runtime-config.mjs",
     "sync-adapters": "node scripts/sync-adapters.mjs",

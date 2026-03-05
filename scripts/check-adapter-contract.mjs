@@ -36,6 +36,9 @@ async function fileExists(filePath) {
 async function main() {
 	const issues = [];
 	const cwd = process.cwd();
+	const assertContains = (text, pattern, message) => {
+		if (!text.includes(pattern)) issues.push(message);
+	};
 
 	for (const rel of REQUIRED_FILES) {
 		const exists = await fileExists(path.join(cwd, rel));
@@ -57,14 +60,87 @@ async function main() {
 	}
 
 	const siteAdapter = await readFile(path.join(cwd, 'src/config/site.ts'), 'utf8');
-	if (!siteAdapter.includes("from '../site.config'")) {
-		issues.push('src/config/site.ts must read from src/site.config.ts');
-	}
+	assertContains(siteAdapter, "from '../site.config'", 'src/config/site.ts must read from src/site.config.ts');
+	assertContains(siteAdapter, 'THEME_CONFIG.site.title', 'src/config/site.ts must map site title from THEME_CONFIG.site.title');
+	assertContains(
+		siteAdapter,
+		'THEME_CONFIG.site.description',
+		'src/config/site.ts must map site description from THEME_CONFIG.site.description'
+	);
+	assertContains(siteAdapter, 'THEME_CONFIG.site.url', 'src/config/site.ts must map site url from THEME_CONFIG.site.url');
+	assertContains(siteAdapter, 'THEME_CONFIG.site.author', 'src/config/site.ts must map site author from THEME_CONFIG.site.author');
+	assertContains(
+		siteAdapter,
+		'THEME_CONFIG.site.tagline',
+		'src/config/site.ts must map site tagline from THEME_CONFIG.site.tagline'
+	);
+	assertContains(
+		siteAdapter,
+		'THEME_CONFIG.site.heroByLocale',
+		'src/config/site.ts must map site hero copy from THEME_CONFIG.site.heroByLocale'
+	);
 
 	const i18nAdapter = await readFile(path.join(cwd, 'src/i18n/config.ts'), 'utf8');
-	if (!i18nAdapter.includes("from '../site.config'")) {
-		issues.push('src/i18n/config.ts must read locales from src/site.config.ts');
-	}
+	assertContains(i18nAdapter, "from '../site.config'", 'src/i18n/config.ts must read locales from src/site.config.ts');
+	assertContains(
+		i18nAdapter,
+		'THEME_CONFIG.i18n.supportedLocales',
+		'src/i18n/config.ts must map locales from THEME_CONFIG.i18n.supportedLocales'
+	);
+	assertContains(
+		i18nAdapter,
+		'THEME_CONFIG.i18n.defaultLocale',
+		'src/i18n/config.ts must map default locale from THEME_CONFIG.i18n.defaultLocale'
+	);
+	assertContains(
+		i18nAdapter,
+		'THEME_CONFIG.i18n.localeLabels',
+		'src/i18n/config.ts must map labels from THEME_CONFIG.i18n.localeLabels'
+	);
+
+	const themeAdapter = await readFile(path.join(cwd, 'src/config/theme.ts'), 'utf8');
+	assertContains(themeAdapter, "from '../site.config'", 'src/config/theme.ts must read from src/site.config.ts');
+	assertContains(
+		themeAdapter,
+		'THEME_CONFIG.theme.blogPageSize',
+		'src/config/theme.ts must map blog page size from THEME_CONFIG.theme.blogPageSize'
+	);
+	assertContains(
+		themeAdapter,
+		'THEME_CONFIG.theme.homeLatestCount',
+		'src/config/theme.ts must map home latest count from THEME_CONFIG.theme.homeLatestCount'
+	);
+	assertContains(
+		themeAdapter,
+		'THEME_CONFIG.theme.enableAboutPage',
+		'src/config/theme.ts must map about toggle from THEME_CONFIG.theme.enableAboutPage'
+	);
+	assertContains(
+		themeAdapter,
+		'THEME_CONFIG.theme.pagination',
+		'src/config/theme.ts must map pagination settings from THEME_CONFIG.theme.pagination'
+	);
+	assertContains(
+		themeAdapter,
+		'THEME_CONFIG.theme.effects.enableRedQueen',
+		'src/config/theme.ts must map red queen effect from THEME_CONFIG.theme.effects.enableRedQueen'
+	);
+
+	const aboutAdapter = await readFile(path.join(cwd, 'src/config/about.ts'), 'utf8');
+	assertContains(aboutAdapter, "from '../site.config'", 'src/config/about.ts must read from src/site.config.ts');
+	assertContains(
+		aboutAdapter,
+		'ABOUT_CONFIG = THEME_CONFIG.about',
+		'src/config/about.ts must expose THEME_CONFIG.about as ABOUT_CONFIG'
+	);
+
+	const socialAdapter = await readFile(path.join(cwd, 'src/config/social.ts'), 'utf8');
+	assertContains(socialAdapter, "from '../site.config'", 'src/config/social.ts must read from src/site.config.ts');
+	assertContains(
+		socialAdapter,
+		'SOCIAL_LINKS: SocialLink[] = THEME_CONFIG.social.links',
+		'src/config/social.ts must map social links from THEME_CONFIG.social.links'
+	);
 
 	if (issues.length > 0) {
 		console.error('Adapter contract check failed:');

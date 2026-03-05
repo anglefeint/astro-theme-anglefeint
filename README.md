@@ -75,7 +75,6 @@ For projects created from `#starter`, upgrade with:
 ```bash
 npm update @anglefeint/astro-theme
 npm install
-npm run starter:check
 npm run doctor
 # if doctor reports adapter drift:
 # npm run sync-adapters
