@@ -159,8 +159,8 @@ void aboutRuntimeConfig;
 					<div class="hacker-modal-dots" aria-hidden="true">
 						<span></span><span></span><span></span>
 					</div>
-					<span class="hacker-modal-title" id="hacker-modal-title">Output</span>
-					<button type="button" class="hacker-modal-close" aria-label="Close">
+					<span class="hacker-modal-title" id="hacker-modal-title">{ABOUT_CONFIG.labels.modalOutput}</span>
+					<button type="button" class="hacker-modal-close" aria-label={ABOUT_CONFIG.labels.modalClose}>
 						<svg class="hacker-modal-close-icon" viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
 							<path d="M6 6l12 12M18 6L6 18" />
 						</svg>
@@ -185,7 +185,7 @@ void aboutRuntimeConfig;
 						<div class="hacker-window-dots" aria-hidden="true">
 							<span></span><span></span><span></span>
 						</div>
-						<span class="hacker-response-label">Output</span>
+						<span class="hacker-response-label">{ABOUT_CONFIG.labels.responseOutput}</span>
 					</div>
 					<div class="hacker-body">
 						<h2 class="about-section-title">01 / {messages.about.who}</h2>
@@ -206,7 +206,7 @@ void aboutRuntimeConfig;
 
 						<h2 class="about-section-title">05 / {messages.about.contact}</h2>
 						<p>
-							{ABOUT_CONFIG.sections.contactLead} Reach me via <a href={`mailto:${ABOUT_CONFIG.contact.email}`}>email</a> or connect on
+							{ABOUT_CONFIG.sections.contactLead} {ABOUT_CONFIG.labels.contactEmailLead} <a href={`mailto:${ABOUT_CONFIG.contact.email}`}>email</a> {ABOUT_CONFIG.labels.contactConnectLead}
 							<a href={ABOUT_CONFIG.contact.githubUrl} target="_blank" rel="noopener noreferrer">{ABOUT_CONFIG.contact.githubLabel}</a>.
 						</p>
 

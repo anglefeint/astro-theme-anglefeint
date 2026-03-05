@@ -74,7 +74,6 @@ pnpm preview
 ```bash
 npm update @anglefeint/astro-theme
 npm install
-npm run starter:check
 npm run doctor
 # doctor가 adapter drift를 보고하면:
 # npm run sync-adapters
