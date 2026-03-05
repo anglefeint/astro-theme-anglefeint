@@ -16,14 +16,16 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "starter:regen": "node scripts/regenerate-starter.mjs",
+    "starter:check": "node scripts/regenerate-starter.mjs --check",
     "check:adapters": "node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check",
     "check:about-runtime": "npm run build && node scripts/check-about-runtime-config.mjs",
     "sync-adapters": "node scripts/sync-adapters.mjs",
     "doctor": "npm run check:adapters && npm run check",
     "check": "npm run check:adapters && astro check && npm run check:about-runtime",
     "preview": "astro preview",
-    "new-post": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-post.mjs",
-    "new-page": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-page.mjs",
+    "new-post": "node ./scripts/new-post.mjs",
+    "new-page": "node ./scripts/new-page.mjs",
     "astro": "astro"
   },
   "dependencies": {

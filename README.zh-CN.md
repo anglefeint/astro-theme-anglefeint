@@ -58,13 +58,6 @@ npm run build
 npm run preview
 ```
 
-质量检查命令：
-
-```bash
-npm run lint
-npm run format:check
-```
-
 使用 `pnpm`：
 
 ```bash
@@ -81,6 +74,7 @@ pnpm preview
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run starter:check
 npm run doctor
 # 如果 doctor 提示 adapter 漂移：
 # npm run sync-adapters
@@ -196,15 +190,6 @@ npm run new-page -- projects --theme matrix
 - 单一入口：`src/site.config.ts`
 - 适配层（不建议直接编辑）：`src/config/site.ts`、`src/config/theme.ts`、`src/config/about.ts`、`src/config/social.ts`
 - 站点信息仍支持 `PUBLIC_*` 环境变量覆盖
-
-## 文档
-
-- 架构说明：`docs/ARCHITECTURE.md`
-- 视觉系统：`docs/VISUAL_SYSTEMS.md`
-- 提交检查单：`docs/THEME_SUBMISSION_CHECKLIST.md`
-- 主题提交文案：`ASTRO_THEME_LISTING.md`
-- 升级指南：`UPGRADING.md`
-- 变更日志：`CHANGELOG.md`
 
 ## 许可证
 
