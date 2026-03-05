@@ -1,3 +1,4 @@
+import { clamp, int } from './number';
 export type PaginationItem = { kind: 'page'; page: number } | { kind: 'ellipsis'; id: string };
 
 export interface PaginationModel {
@@ -12,15 +13,6 @@ interface BuildPaginationModelOptions {
   totalPages: number;
   windowSize?: number;
   showJumpThreshold?: number;
-}
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, value));
-}
-
-function int(value: number): number {
-  if (!Number.isFinite(value)) return 0;
-  return Math.floor(value);
 }
 
 function addRange(set: Set<number>, start: number, end: number, totalPages: number) {
