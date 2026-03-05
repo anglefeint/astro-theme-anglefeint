@@ -150,13 +150,16 @@ const itemVariantClass = (seed: string, index: number) => {
 <script is:inline>
   document.querySelectorAll('[data-pagination-component="cyber"]').forEach((wrap) => {
     if (!(wrap instanceof HTMLElement)) return;
+    const toInt = (value, fallback) => {
+      const parsed = Number.parseInt(value ?? '', 10);
+      return Number.isFinite(parsed) ? parsed : fallback;
+    };
+    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
     const styleEnabled = wrap.dataset.styleEnabled === 'true';
     const styleMode = wrap.dataset.styleMode || 'random';
-    const variants = Math.max(1, Math.min(12, Number.parseInt(wrap.dataset.styleVariants || '9', 10)));
-    const fixedVariant = Math.max(
-      1,
-      Math.min(variants, Number.parseInt(wrap.dataset.styleFixedVariant || '1', 10))
-    );
+    const variants = clamp(toInt(wrap.dataset.styleVariants, 9), 1, 12);
+    const fixedVariant = clamp(toInt(wrap.dataset.styleFixedVariant, 1), 1, variants);
 
     const items = wrap.querySelectorAll('.pagination .pg-item');
 
