@@ -1,14 +1,17 @@
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
 import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
 
 const execFileAsync = promisify(execFile);
-const repoRoot = process.cwd();
-const cliNewPage = path.join(repoRoot, 'packages/theme/src/cli-new-page.mjs');
-const cliNewPost = path.join(repoRoot, 'packages/theme/src/cli-new-post.mjs');
+const require = createRequire(import.meta.url);
+const themeEntry = require.resolve('@anglefeint/astro-theme');
+const themeRoot = path.resolve(path.dirname(themeEntry), '..');
+const cliNewPage = path.join(themeRoot, 'src/cli-new-page.mjs');
+const cliNewPost = path.join(themeRoot, 'src/cli-new-post.mjs');
 
 async function runNode(scriptPath, args, cwd) {
 	await execFileAsync('node', [scriptPath, ...args], { cwd });

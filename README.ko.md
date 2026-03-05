@@ -58,13 +58,6 @@ npm run build
 npm run preview
 ```
 
-품질 점검 명령:
-
-```bash
-npm run lint
-npm run format:check
-```
-
 `pnpm` 사용:
 
 ```bash
@@ -81,6 +74,7 @@ pnpm preview
 ```bash
 npm update @anglefeint/astro-theme
 npm install
+npm run starter:check
 npm run doctor
 # doctor가 adapter drift를 보고하면:
 # npm run sync-adapters
@@ -196,15 +190,6 @@ npm run new-page -- projects --theme matrix
 - 단일 엔트리: `src/site.config.ts`
 - 어댑터 레이어(직접 수정 비권장): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - 사이트 정보는 `PUBLIC_*` 환경 변수로도 덮어쓸 수 있습니다
-
-## 문서
-
-- 아키텍처: `docs/ARCHITECTURE.md`
-- 비주얼 시스템: `docs/VISUAL_SYSTEMS.md`
-- 제출 체크리스트: `docs/THEME_SUBMISSION_CHECKLIST.md`
-- 테마 등록 초안: `ASTRO_THEME_LISTING.md`
-- 업그레이드 가이드: `UPGRADING.md`
-- 변경 이력: `CHANGELOG.md`
 
 ## 라이선스
 
