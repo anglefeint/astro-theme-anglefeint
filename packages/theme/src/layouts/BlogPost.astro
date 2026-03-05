@@ -289,15 +289,15 @@ const hasCommentsConfig = Boolean(
           data-repo-id={comments.REPO_ID}
           data-category={comments.CATEGORY}
           data-category-id={comments.CATEGORY_ID}
-          data-mapping="pathname"
-          data-strict="0"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="bottom"
+          data-mapping={comments.MAPPING}
+          data-strict={comments.STRICT}
+          data-reactions-enabled={comments.REACTIONS_ENABLED}
+          data-emit-metadata={comments.EMIT_METADATA}
+          data-input-position={comments.INPUT_POSITION}
           data-theme={comments.THEME}
           data-lang={comments.LANG || resolvedLocale}
-          data-loading="lazy"
-          crossorigin="anonymous"
+          data-loading={comments.LOADING}
+          crossorigin={comments.CROSSORIGIN}
           async
         />
       </section>

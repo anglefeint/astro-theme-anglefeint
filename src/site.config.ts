@@ -118,8 +118,15 @@ export interface ThemeConfig {
       repoId: string;
       category: string;
       categoryId: string;
+      mapping: 'pathname' | 'url' | 'title' | 'og:title' | 'specific' | 'number';
+      strict: '0' | '1';
+      reactionsEnabled: '0' | '1';
+      emitMetadata: '0' | '1';
+      inputPosition: 'top' | 'bottom';
       theme: string;
       lang: string;
+      loading: 'lazy' | 'eager';
+      crossorigin: 'anonymous' | 'use-credentials';
     };
   };
   i18n: {
@@ -273,8 +280,15 @@ const defaultThemeConfig: ThemeConfig = {
       repoId: '',
       category: '',
       categoryId: '',
+      mapping: 'pathname',
+      strict: '0',
+      reactionsEnabled: '1',
+      emitMetadata: '0',
+      inputPosition: 'bottom',
       theme: 'dark',
       lang: 'en',
+      loading: 'lazy',
+      crossorigin: 'anonymous',
     },
   },
   i18n: {
@@ -318,8 +332,15 @@ export const THEME_CONFIG = defineThemeConfig({
   //     repoId: "R_kgDOxxxxxx",
   //     category: "Comments",
   //     categoryId: "DIC_kwDOxxxxxx",
+  //     mapping: "pathname",
+  //     strict: "0",
+  //     reactionsEnabled: "1",
+  //     emitMetadata: "0",
+  //     inputPosition: "top",
   //     theme: "dark",
   //     lang: "en",
+  //     loading: "lazy",
+  //     crossorigin: "anonymous",
   //   },
   // },
 });
