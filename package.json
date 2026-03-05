@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check:workspace-link": "node scripts/check-workspace-link.mjs",
     "maintainer:sync-starter": "node tools/maintainer/sync-starter.mjs",
     "maintainer:sync-starter:check": "node tools/maintainer/sync-starter.mjs --check",
     "check:adapters": "node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check",
