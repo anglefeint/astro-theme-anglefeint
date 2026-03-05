@@ -58,6 +58,13 @@ npm run build
 npm run preview
 ```
 
+品質チェック:
+
+```bash
+npm run lint
+npm run format:check
+```
+
 `pnpm` を使う場合:
 
 ```bash
@@ -208,6 +215,15 @@ npm run new-page -- projects --theme matrix
 - 単一エントリ: `src/site.config.ts`
 - アダプタ層（直接編集は非推奨）: `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - サイト情報は `PUBLIC_*` 環境変数でも上書き可能
+
+## ドキュメント
+
+- アーキテクチャ: `docs/ARCHITECTURE.md`
+- ビジュアルシステム: `docs/VISUAL_SYSTEMS.md`
+- 提出チェックリスト: `docs/THEME_SUBMISSION_CHECKLIST.md`
+- テーマ掲載文案: `ASTRO_THEME_LISTING.md`
+- アップグレードガイド: `UPGRADING.md`
+- 変更履歴: `CHANGELOG.md`
 
 ## ライセンス
 
