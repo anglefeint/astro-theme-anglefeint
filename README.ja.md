@@ -81,6 +81,8 @@ npm run check
 npm run build
 ```
 
+カスタムコードが `src/consts` または `@anglefeint/astro-theme/consts` を参照している場合は、`src/config/site.ts` へ移行してください。
+
 Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
 
 - https://docs.astro.build/en/guides/upgrade-to/
@@ -182,7 +184,24 @@ npm run new-page -- projects --theme matrix
    - `about`: About コンテンツとランタイム文言
    - `theme.enableAboutPage`: About の表示切り替え
    - `theme.effects.enableRedQueen`: 記事ページのサイドモニター演出をオン/オフ
+   - `theme.comments`: Giscus を有効化・設定（`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`）
 3. `src/content/blog/<locale>/` のサンプル記事を差し替え。
+
+### 任意: Giscus コメント
+
+コメントはデフォルトで無効です。有効化するには:
+
+1. `src/site.config.ts` で `theme.comments.enabled = true` を設定。
+2. 必須項目を設定:
+   - `theme.comments.repo`
+   - `theme.comments.repoId`
+   - `theme.comments.category`
+   - `theme.comments.categoryId`
+3. 任意項目:
+   - `theme.comments.theme`
+   - `theme.comments.lang`
+
+必須項目が不足している場合、コメントブロックは描画されません。
 
 ## 設定ポイント
 
