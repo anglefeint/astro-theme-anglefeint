@@ -74,6 +74,13 @@ export interface ThemeConfig {
       allScripts: string;
     };
     scriptsPath: string;
+    labels: {
+      modalOutput: string;
+      modalClose: string;
+      responseOutput: string;
+      contactEmailLead: string;
+      contactConnectLead: string;
+    };
     modals: {
       dlData: {
         title: string;
@@ -193,6 +200,13 @@ const defaultThemeConfig: ThemeConfig = {
       allScripts: 'All Scripts',
     },
     scriptsPath: '/root/bash/scripts',
+    labels: {
+      modalOutput: 'Output',
+      modalClose: 'Close',
+      responseOutput: 'Output',
+      contactEmailLead: 'Reach me via',
+      contactConnectLead: 'or connect on',
+    },
     modals: {
       dlData: {
         title: 'Downloading...',

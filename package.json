@@ -22,6 +22,8 @@
     "build": "astro build",
     "check:docs": "node scripts/validate-doc-metadata.mjs",
     "check:fonts": "node scripts/check-font-assets.mjs",
+    "maintainer:sync-starter": "node tools/maintainer/sync-starter.mjs",
+    "maintainer:sync-starter:check": "node tools/maintainer/sync-starter.mjs --check",
     "check:adapters": "node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check",
     "check:about-runtime": "npm run build && node scripts/check-about-runtime-config.mjs",
     "check:pack-cli": "node scripts/check-theme-pack-cli.mjs",
