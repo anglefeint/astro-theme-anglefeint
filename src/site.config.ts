@@ -119,6 +119,8 @@ export interface ThemeConfig {
       category: string;
       categoryId: string;
       mapping: 'pathname' | 'url' | 'title' | 'og:title' | 'specific' | 'number';
+      term: string;
+      number: string;
       strict: '0' | '1';
       reactionsEnabled: '0' | '1';
       emitMetadata: '0' | '1';
@@ -281,6 +283,8 @@ const defaultThemeConfig: ThemeConfig = {
       category: '',
       categoryId: '',
       mapping: 'pathname',
+      term: '',
+      number: '',
       strict: '0',
       reactionsEnabled: '1',
       emitMetadata: '0',
@@ -333,6 +337,8 @@ export const THEME_CONFIG = defineThemeConfig({
   //     category: "Comments",
   //     categoryId: "DIC_kwDOxxxxxx",
   //     mapping: "pathname",
+  //     term: "",
+  //     number: "",
   //     strict: "0",
   //     reactionsEnabled: "1",
   //     emitMetadata: "0",

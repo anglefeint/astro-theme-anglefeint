@@ -206,6 +206,8 @@ npm run new-page -- projects --theme matrix
    - `theme.comments.categoryId`
 3. 可选设置：
    - `theme.comments.mapping`
+   - `theme.comments.term`（当 `mapping = "specific"` 时必填）
+   - `theme.comments.number`（当 `mapping = "number"` 时必填）
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
    - `theme.comments.emitMetadata`
