@@ -189,7 +189,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 1. Copy `.env.example` to `.env` and set site identity variables.
 2. Edit `src/site.config.ts`:
    - `social.links` for header/footer links
-   - `about` for About content/runtime text
+   - `aboutByLocale` for localized About content/runtime text
    - `theme.enableAboutPage` for About route/nav toggle
    - `theme.effects.enableRedQueen` to enable/disable the post-side monitor effect
    - `theme.comments` to enable and configure Giscus (`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`)

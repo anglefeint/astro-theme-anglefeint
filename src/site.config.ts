@@ -12,6 +12,76 @@ export interface SocialLink {
   icon?: 'mastodon' | 'twitter' | 'github';
 }
 
+export interface AboutConfig {
+  metaLine: string;
+  sections: {
+    who: string;
+    what: string;
+    ethos: string[];
+    now: string;
+    contactLead: string;
+    signature: string;
+  };
+  contact: {
+    email: string;
+    githubUrl: string;
+    githubLabel: string;
+  };
+  sidebar: {
+    dlData: string;
+    ai: string;
+    decryptor: string;
+    help: string;
+    allScripts: string;
+  };
+  scriptsPath: string;
+  labels: {
+    modalOutput: string;
+    modalClose: string;
+    responseOutput: string;
+    contactEmailLead: string;
+    contactConnectLead: string;
+    backToTop: string;
+    quickAccess: string;
+    contactEmailLabel: string;
+  };
+  modals: {
+    dlData: {
+      title: string;
+      subtitle: string;
+    };
+    ai: {
+      title: string;
+      lines: string[];
+    };
+    decryptor: {
+      title: string;
+      header: string;
+      keysLabel: string;
+      currentPassphraseLabel: string;
+      masterKeyLabel: string;
+      transientKeyLabel: string;
+    };
+    help: {
+      title: string;
+      statsLabel: string;
+      typedPrefix: string;
+      typedSuffix: string;
+    };
+    allScripts: {
+      title: string;
+    };
+  };
+  effects: {
+    backgroundLines: string[];
+    scrollToasts: {
+      p30: string;
+      p60: string;
+      p90: string;
+    };
+  };
+}
+
 export interface ThemeConfig {
   site: {
     title: string;
@@ -60,76 +130,105 @@ export interface ThemeConfig {
   social: {
     links: SocialLink[];
   };
-  about: {
-    metaLine: string;
-    sections: {
-      who: string;
-      what: string;
-      ethos: string[];
-      now: string;
-      contactLead: string;
-      signature: string;
-    };
-    contact: {
-      email: string;
-      githubUrl: string;
-      githubLabel: string;
-    };
-    sidebar: {
-      dlData: string;
-      ai: string;
-      decryptor: string;
-      help: string;
-      allScripts: string;
-    };
-    scriptsPath: string;
-    labels: {
-      modalOutput: string;
-      modalClose: string;
-      responseOutput: string;
-      contactEmailLead: string;
-      contactConnectLead: string;
-      backToTop: string;
-      quickAccess: string;
-      contactEmailLabel: string;
-    };
-    modals: {
-      dlData: {
-        title: string;
-        subtitle: string;
-      };
-      ai: {
-        title: string;
-        lines: string[];
-      };
-      decryptor: {
-        title: string;
-        header: string;
-        keysLabel: string;
-        currentPassphraseLabel: string;
-        masterKeyLabel: string;
-        transientKeyLabel: string;
-      };
-      help: {
-        title: string;
-        statsLabel: string;
-        typedPrefix: string;
-        typedSuffix: string;
-      };
-      allScripts: {
-        title: string;
-      };
-    };
-    effects: {
-      backgroundLines: string[];
-      scrollToasts: {
-        p30: string;
-        p60: string;
-        p90: string;
-      };
-    };
-  };
+  aboutByLocale: Record<LocaleCode, AboutConfig>;
 }
+
+const defaultAboutConfig: AboutConfig = {
+  metaLine: '$ profile booted | mode: builder',
+  sections: {
+    who: 'Write a short introduction about yourself, your background, and your primary focus areas.',
+    what: 'Describe what you build, your core skills, and the kinds of projects you want to be known for.',
+    ethos: [
+      'Prioritize clarity before complexity.',
+      'Favor maintainable systems over one-off solutions.',
+      'Ship in small iterations and learn from feedback.',
+      'Communicate directly and document decisions.',
+    ],
+    now: 'Share what you are currently building, shipping, or learning.',
+    contactLead:
+      'Add a short collaboration note (for example: open to freelance, consulting, or full-time roles).',
+    signature: '> Replace with your own signature.',
+  },
+  contact: {
+    email: 'you@example.com',
+    githubUrl: 'https://github.com/yourname',
+    githubLabel: 'GitHub',
+  },
+  sidebar: {
+    dlData: 'DL Data',
+    ai: 'AI',
+    decryptor: 'Decryptor',
+    help: 'Help',
+    allScripts: 'All Scripts',
+  },
+  scriptsPath: '/root/bash/scripts',
+  labels: {
+    modalOutput: 'Output',
+    modalClose: 'Close',
+    responseOutput: 'Output',
+    contactEmailLead: 'Reach me via',
+    contactConnectLead: 'or connect on',
+    backToTop: 'Back to top',
+    quickAccess: 'Quick access',
+    contactEmailLabel: 'email',
+  },
+  modals: {
+    dlData: {
+      title: 'Downloading...',
+      subtitle: 'Critical Data',
+    },
+    ai: {
+      title: 'AI',
+      lines: [
+        '~ $ ai --status --verbose',
+        '',
+        'model: anglefeint-core',
+        'mode: reasoning + builder',
+        'context window: 128k',
+        'tools: codex / cursor / claude-code',
+        'latency: 120-220ms',
+        'safety: guardrails enabled',
+        '',
+        '>> system online',
+        '>> ready for execution',
+      ],
+    },
+    decryptor: {
+      title: 'Password Decryptor',
+      header: 'Calculating Hashes',
+      keysLabel: 'keys tested',
+      currentPassphraseLabel: 'Current passphrase:',
+      masterKeyLabel: 'Master key',
+      transientKeyLabel: 'Transient key',
+    },
+    help: {
+      title: 'Help',
+      statsLabel: 'Stats & Achievements',
+      typedPrefix: 'You typed:',
+      typedSuffix: 'characters',
+    },
+    allScripts: {
+      title: '/root/bash/scripts',
+    },
+  },
+  effects: {
+    backgroundLines: [
+      '~ $ ls -la',
+      'total 42',
+      'drwxr-xr-x  12 user  staff   384  Jan 12  about  blog  projects',
+      'drwxr-xr-x   8 user  staff   256  Jan 11  .config  .ssh  keys',
+      '-rw-r--r--   1 user  staff  2048  Jan 10  README.md  .env.gpg',
+      '-rwxr-xr-x   1 user  staff   512  Jan  9  deploy.sh  script',
+      '~ $ cat .motd',
+      '>> welcome | access granted',
+    ],
+    scrollToasts: {
+      p30: 'context parsed',
+      p60: 'inference stable',
+      p90: 'output finalized',
+    },
+  },
+};
 
 const defaultThemeConfig: ThemeConfig = {
   site: {
@@ -192,101 +291,12 @@ const defaultThemeConfig: ThemeConfig = {
   social: {
     links: [],
   },
-  about: {
-    metaLine: '$ profile booted | mode: builder',
-    sections: {
-      who: 'Write a short introduction about yourself, your background, and your primary focus areas.',
-      what: 'Describe what you build, your core skills, and the kinds of projects you want to be known for.',
-      ethos: [
-        'Prioritize clarity before complexity.',
-        'Favor maintainable systems over one-off solutions.',
-        'Ship in small iterations and learn from feedback.',
-        'Communicate directly and document decisions.',
-      ],
-      now: 'Share what you are currently building, shipping, or learning.',
-      contactLead:
-        'Add a short collaboration note (for example: open to freelance, consulting, or full-time roles).',
-      signature: '> Replace with your own signature.',
-    },
-    contact: {
-      email: 'you@example.com',
-      githubUrl: 'https://github.com/yourname',
-      githubLabel: 'GitHub',
-    },
-    sidebar: {
-      dlData: 'DL Data',
-      ai: 'AI',
-      decryptor: 'Decryptor',
-      help: 'Help',
-      allScripts: 'All Scripts',
-    },
-    scriptsPath: '/root/bash/scripts',
-    labels: {
-      modalOutput: 'Output',
-      modalClose: 'Close',
-      responseOutput: 'Output',
-      contactEmailLead: 'Reach me via',
-      contactConnectLead: 'or connect on',
-      backToTop: 'Back to top',
-      quickAccess: 'Quick access',
-      contactEmailLabel: 'email',
-    },
-    modals: {
-      dlData: {
-        title: 'Downloading...',
-        subtitle: 'Critical Data',
-      },
-      ai: {
-        title: 'AI',
-        lines: [
-          '~ $ ai --status --verbose',
-          '',
-          'model: anglefeint-core',
-          'mode: reasoning + builder',
-          'context window: 128k',
-          'tools: codex / cursor / claude-code',
-          'latency: 120-220ms',
-          'safety: guardrails enabled',
-          '',
-          '>> system online',
-          '>> ready for execution',
-        ],
-      },
-      decryptor: {
-        title: 'Password Decryptor',
-        header: 'Calculating Hashes',
-        keysLabel: 'keys tested',
-        currentPassphraseLabel: 'Current passphrase:',
-        masterKeyLabel: 'Master key',
-        transientKeyLabel: 'Transient key',
-      },
-      help: {
-        title: 'Help',
-        statsLabel: 'Stats & Achievements',
-        typedPrefix: 'You typed:',
-        typedSuffix: 'characters',
-      },
-      allScripts: {
-        title: '/root/bash/scripts',
-      },
-    },
-    effects: {
-      backgroundLines: [
-        '~ $ ls -la',
-        'total 42',
-        'drwxr-xr-x  12 user  staff   384  Jan 12  about  blog  projects',
-        'drwxr-xr-x   8 user  staff   256  Jan 11  .config  .ssh  keys',
-        '-rw-r--r--   1 user  staff  2048  Jan 10  README.md  .env.gpg',
-        '-rwxr-xr-x   1 user  staff   512  Jan  9  deploy.sh  script',
-        '~ $ cat .motd',
-        '>> welcome | access granted',
-      ],
-      scrollToasts: {
-        p30: 'context parsed',
-        p60: 'inference stable',
-        p90: 'output finalized',
-      },
-    },
+  aboutByLocale: {
+    en: defaultAboutConfig,
+    ja: defaultAboutConfig,
+    ko: defaultAboutConfig,
+    es: defaultAboutConfig,
+    zh: defaultAboutConfig,
   },
 };
 

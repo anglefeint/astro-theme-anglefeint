@@ -168,8 +168,13 @@ async function main() {
   );
   assertContains(
     aboutAdapter,
-    'ABOUT_CONFIG = THEME_CONFIG.about',
-    'src/config/about.ts must expose THEME_CONFIG.about as ABOUT_CONFIG'
+    'getAboutConfig(locale',
+    'src/config/about.ts must expose getAboutConfig(locale) selector'
+  );
+  assertContains(
+    aboutAdapter,
+    'THEME_CONFIG.aboutByLocale',
+    'src/config/about.ts must map about config from THEME_CONFIG.aboutByLocale'
   );
 
   const socialAdapter = await readFile(path.join(cwd, 'src/config/social.ts'), 'utf8');
