@@ -92,6 +92,17 @@ Use this sequence unless explicitly skipped for a documented reason.
 4. Validate `starter`.
 5. Push `starter`.
 
+## Release Decision Gate
+
+Before running `npm run release:npm`, verify whether `packages/theme/**` changed in this delivery.
+
+- If changed:
+  - publish npm package
+  - then update starter lockfile (`npm update @anglefeint/astro-theme`)
+- If not changed:
+  - do **not** publish npm
+  - do **not** run starter dependency update only for release cadence
+
 Maintainer entry commands:
 
 ```bash
@@ -105,6 +116,8 @@ npm run maintainer:sync-starter:check
 - Managed files should be synced from `main` using maintainer tooling.
 - User-facing docs must not tell end users to run maintainer sync scripts.
 - End users should upgrade via package updates and normal checks.
+- When introducing new starter-managed runtime/config files, update `scripts/regenerate-starter.mjs` `MANAGED_FILES` in the same change.
+- After changing `MANAGED_FILES`, run `npm run maintainer:sync-starter:check` on `starter` before push.
 
 ## End-user Upgrade Guidance (for docs)
 
