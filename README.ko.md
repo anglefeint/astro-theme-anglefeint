@@ -191,7 +191,7 @@ npm run new-page -- projects --theme matrix
    - `aboutByLocale`: 로케일별 About 콘텐츠와 런타임 문구
    - `theme.enableAboutPage`: About 노출 제어
    - `theme.effects.enableRedQueen`: 글 상세 사이드 모니터 이펙트 on/off
-   - `theme.comments`: Giscus 활성화/설정 (`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`)
+   - `theme.comments`: Giscus 활성화/설정 (핵심 ID + 동작 파라미터)
 3. `src/content/blog/<locale>/` 의 샘플 글을 교체합니다.
 
 ### 선택: Giscus 댓글
@@ -205,8 +205,15 @@ npm run new-page -- projects --theme matrix
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. 선택 항목:
+   - `theme.comments.mapping`
+   - `theme.comments.strict`
+   - `theme.comments.reactionsEnabled`
+   - `theme.comments.emitMetadata`
+   - `theme.comments.inputPosition` (`top` 또는 `bottom`)
    - `theme.comments.theme`
    - `theme.comments.lang`
+   - `theme.comments.loading`
+   - `theme.comments.crossorigin`
 
 필수 항목이 누락되면 댓글 블록은 렌더링되지 않습니다.
 

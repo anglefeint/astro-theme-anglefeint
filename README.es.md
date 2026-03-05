@@ -191,7 +191,7 @@ npm run new-page -- projects --theme matrix
    - `aboutByLocale` para contenido y textos runtime de About por idioma
    - `theme.enableAboutPage` para activar/desactivar About
    - `theme.effects.enableRedQueen` para activar/desactivar el monitor lateral en posts
-   - `theme.comments` para activar y configurar Giscus (`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`)
+   - `theme.comments` para activar y configurar Giscus (IDs base + parametros de comportamiento)
 3. Reemplaza posts de ejemplo en `src/content/blog/<locale>/`.
 
 ### Opcional: comentarios con Giscus
@@ -205,8 +205,15 @@ Los comentarios vienen desactivados por defecto. Para activarlos:
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. Campos opcionales:
+   - `theme.comments.mapping`
+   - `theme.comments.strict`
+   - `theme.comments.reactionsEnabled`
+   - `theme.comments.emitMetadata`
+   - `theme.comments.inputPosition` (`top` o `bottom`)
    - `theme.comments.theme`
    - `theme.comments.lang`
+   - `theme.comments.loading`
+   - `theme.comments.crossorigin`
 
 Si falta algun campo requerido, el bloque de comentarios no se renderiza.
 
