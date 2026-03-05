@@ -42,6 +42,15 @@ export interface ThemeConfig {
     effects: {
       enableRedQueen: boolean;
     };
+    comments: {
+      enabled: boolean;
+      repo: string;
+      repoId: string;
+      category: string;
+      categoryId: string;
+      theme: string;
+      lang: string;
+    };
   };
   i18n: {
     defaultLocale: LocaleCode;
@@ -158,6 +167,15 @@ const defaultThemeConfig: ThemeConfig = {
     },
     effects: {
       enableRedQueen: true,
+    },
+    comments: {
+      enabled: false,
+      repo: '',
+      repoId: '',
+      category: '',
+      categoryId: '',
+      theme: 'dark',
+      lang: 'en',
     },
   },
   i18n: {
@@ -283,4 +301,15 @@ export function defineThemeConfig(config: DeepPartial<ThemeConfig>): ThemeConfig
 export const THEME_CONFIG = defineThemeConfig({
   // Example:
   // site: { title: "My Site Title" },
+  // theme: {
+  //   comments: {
+  //     enabled: true,
+  //     repo: "your-org/your-repo",
+  //     repoId: "R_kgDOxxxxxx",
+  //     category: "Comments",
+  //     categoryId: "DIC_kwDOxxxxxx",
+  //     theme: "dark",
+  //     lang: "en",
+  //   },
+  // },
 });

@@ -5,7 +5,7 @@ doc_purpose: End-user setup, usage, and upgrade guide for the template.
 doc_scope: [setup, commands, themes, config, routing]
 update_triggers: [command-change, theme-naming, config-change, routing-change, i18n-change]
 source_of_truth: true
-depends_on: []
+depends_on: [docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md]
 sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
 ---
 
@@ -57,6 +57,13 @@ Build and preview:
 ```bash
 npm run build
 npm run preview
+```
+
+Quality commands:
+
+```bash
+npm run lint
+npm run format:check
 ```
 
 With `pnpm`:
@@ -183,14 +190,40 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
    - `about` for About content/runtime text
    - `theme.enableAboutPage` for About route/nav toggle
    - `theme.effects.enableRedQueen` to enable/disable the post-side monitor effect
+   - `theme.comments` to enable and configure Giscus (`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`)
 3. Replace starter posts in `src/content/blog/<locale>/`.
 4. Set your real site URL (`PUBLIC_SITE_URL` or `src/site.config.ts`) before production deploy.
+
+### Optional: Giscus Comments
+
+Comments are disabled by default. To enable:
+
+1. In `src/site.config.ts`, set `theme.comments.enabled = true`.
+2. Fill:
+   - `theme.comments.repo`
+   - `theme.comments.repoId`
+   - `theme.comments.category`
+   - `theme.comments.categoryId`
+3. Optionally customize:
+   - `theme.comments.theme`
+   - `theme.comments.lang`
+
+If these required fields are missing, the comments block is not rendered.
 
 ## Configuration Surface
 
 - Single entry: `src/site.config.ts`
 - Adapters (do not edit directly): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - Environment override supported: `PUBLIC_*` vars for site identity
+
+## Docs
+
+- Architecture: `docs/ARCHITECTURE.md`
+- Visual systems: `docs/VISUAL_SYSTEMS.md`
+- Submission checklist: `docs/THEME_SUBMISSION_CHECKLIST.md`
+- Theme listing draft: `ASTRO_THEME_LISTING.md`
+- Upgrading guide: `UPGRADING.md`
+- Changelog: `CHANGELOG.md`
 
 ## Credits
 
