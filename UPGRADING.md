@@ -50,3 +50,5 @@ After every upgrade:
 - Review `CHANGELOG.md` before upgrading.
 - For Astro major-version migrations, follow the official Astro guide first:
   - https://docs.astro.build/en/guides/upgrade-to/
+- `consts` has been removed. If your code imported from `src/consts` or `@anglefeint/astro-theme/consts`,
+  migrate to `src/config/site.ts` fields (`SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_URL`, `SITE_AUTHOR`, `SITE_TAGLINE`, `SITE_HERO_BY_LOCALE`).
