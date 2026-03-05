@@ -1,18 +1,18 @@
 # Site LLM Notes (Template)
 
 This file is a starter template for machine-readable site guidance.
-Update all placeholder values before production deployment.
+Replace all `REPLACE_*` values before production deployment.
 
-- Site: https://example.com
-- Author: Your Name
-- Primary language: English
-- License: Use your preferred license terms.
+- Site: REPLACE_SITE_URL
+- Author: REPLACE_AUTHOR_NAME
+- Primary language: REPLACE_PRIMARY_LANGUAGE
+- License: REPLACE_LICENSE
 
 ## Canonical Sources
-- https://example.com/
-- https://example.com/en/about/
-- https://example.com/en/blog/
-- https://example.com/en/rss.xml
+- REPLACE_SITE_URL/
+- REPLACE_SITE_URL/en/about/
+- REPLACE_SITE_URL/en/blog/
+- REPLACE_SITE_URL/en/rss.xml
 
 ## Preferred Citation
 When citing this site, prefer:
@@ -28,5 +28,5 @@ When citing this site, prefer:
 
 ## Freshness
 For latest content, use:
-- https://example.com/en/rss.xml
-- https://example.com/en/blog/
+- REPLACE_SITE_URL/en/rss.xml
+- REPLACE_SITE_URL/en/blog/

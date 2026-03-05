@@ -1,6 +1,6 @@
 import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
-import { SITE_TITLE } from '../../consts';
+import { SITE_TITLE } from '../../config/site';
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES, isLocale } from '../../i18n/config';
 import { getMessages } from '../../i18n/messages';
 import { postsForLocale } from '../../i18n/posts';
