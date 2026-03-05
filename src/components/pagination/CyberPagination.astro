@@ -14,6 +14,7 @@ interface Props {
   labels: {
     previous: string;
     next: string;
+    paginationAria: string;
     jumpTo: string;
     jumpInputLabel: string;
     jumpGo: string;
@@ -38,7 +39,10 @@ const pageHref = (pageNum: number) => (pageNum === 1 ? blogRoot : `${blogRoot}${
 const styleEnabled = config.style.enabled;
 const styleMode = config.style.mode;
 const styleVariants = Math.max(1, Math.min(12, Math.floor(config.style.variants)));
-const styleFixedVariant = Math.max(1, Math.min(styleVariants, Math.floor(config.style.fixedVariant)));
+const styleFixedVariant = Math.max(
+  1,
+  Math.min(styleVariants, Math.floor(config.style.fixedVariant))
+);
 const showJump = config.jump.enabled && model.showJump;
 
 const wrapVariant = resolvePaginationVariant({
@@ -80,7 +84,7 @@ const itemVariantClass = (seed: string, index: number) => {
       data-style-variants={String(styleVariants)}
       data-style-fixed-variant={String(styleFixedVariant)}
     >
-      <nav class="pagination" aria-label="Pagination">
+      <nav class="pagination" aria-label={labels.paginationAria}>
         {model.currentPage > 1 && (
           <a
             class={`pg-item pg-nav ${itemVariantClass(`${locale}:prev:${model.currentPage}`, 0)}`}
@@ -165,18 +169,27 @@ const itemVariantClass = (seed: string, index: number) => {
 
     if (!styleEnabled) {
       items.forEach((item) => {
-        item.className = item.className.replace(/\bpg-var-\d+\b/g, '').replace(/\bpg-var-random\b/g, '').trim();
+        item.className = item.className
+          .replace(/\bpg-var-\d+\b/g, '')
+          .replace(/\bpg-var-random\b/g, '')
+          .trim();
         item.classList.add('pg-var-1');
       });
     } else if (styleMode === 'random') {
       items.forEach((item) => {
-        item.className = item.className.replace(/\bpg-var-\d+\b/g, '').replace(/\bpg-var-random\b/g, '').trim();
+        item.className = item.className
+          .replace(/\bpg-var-\d+\b/g, '')
+          .replace(/\bpg-var-random\b/g, '')
+          .trim();
         const variant = Math.floor(Math.random() * variants) + 1;
         item.classList.add(`pg-var-${variant}`);
       });
     } else if (styleMode === 'fixed') {
       items.forEach((item) => {
-        item.className = item.className.replace(/\bpg-var-\d+\b/g, '').replace(/\bpg-var-random\b/g, '').trim();
+        item.className = item.className
+          .replace(/\bpg-var-\d+\b/g, '')
+          .replace(/\bpg-var-random\b/g, '')
+          .trim();
         item.classList.add(`pg-var-${fixedVariant}`);
       });
     }
