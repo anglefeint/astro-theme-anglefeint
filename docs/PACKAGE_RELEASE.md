@@ -12,7 +12,7 @@ source_of_truth: true
 ## Package
 
 - Name: `@anglefeint/astro-theme`
-- Current latest: `0.1.32`
+- Current latest: `0.1.33`
 - Current prerelease tag: `alpha` (optional track)
 
 ## 1) Pre-release checks

@@ -37,7 +37,6 @@ export interface ThemeConfig {
         mode: 'random' | 'sequential' | 'fixed';
         variants: number;
         fixedVariant: number;
-        stableBy: 'page' | 'locale' | 'slug';
       };
     };
     effects: {
@@ -145,7 +144,6 @@ const defaultThemeConfig: ThemeConfig = {
         mode: 'random',
         variants: 9,
         fixedVariant: 1,
-        stableBy: 'page',
       },
     },
     effects: {

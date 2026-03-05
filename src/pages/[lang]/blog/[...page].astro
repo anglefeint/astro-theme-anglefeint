@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import FormattedDate from '@anglefeint/astro-theme/components/FormattedDate.astro';
 import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
+import CyberPagination from '../../../components/pagination/CyberPagination.astro';
 import { SITE_TITLE } from '../../../consts';
 import { THEME } from '../../../config/theme';
 import {
@@ -17,10 +18,6 @@ import {
 import { getMessages } from '../../../i18n/messages';
 import { BLOG_PAGE_SIZE, postsForLocale } from '../../../i18n/posts';
 import { buildPaginationModel } from '../../../utils/pagination';
-import {
-  resolvePaginationItemVariant,
-  resolvePaginationVariant,
-} from '../../../utils/pagination-style';
 
 export const getStaticPaths = (async () => {
   const all = await getCollection('blog');
@@ -68,33 +65,9 @@ const paginationModel = buildPaginationModel({
   windowSize: THEME.PAGINATION.WINDOW_SIZE,
   showJumpThreshold: THEME.PAGINATION.SHOW_JUMP_THRESHOLD,
 });
-const paginationVariant = resolvePaginationVariant({
-  currentPage: paginationModel.currentPage,
-  totalPages: paginationModel.totalPages,
-  locale: resolvedLocale,
-  pathname: Astro.url.pathname,
-  config: THEME.PAGINATION.STYLE,
-});
 const blogRoot = localePath(resolvedLocale, '/blog/');
-const pageHref = (pageNum: number) =>
-  pageNum === 1 ? blogRoot : localePath(resolvedLocale, `/blog/${pageNum}`);
-const isRandomItemStyle =
-  THEME.PAGINATION.STYLE.MODE === 'random' && THEME.PAGINATION.STYLE.ENABLED;
-const itemVariantClass = (seed: string, index: number) =>
-  isRandomItemStyle
-    ? 'pg-var-random'
-    : resolvePaginationItemVariant({
-        seed,
-        index,
-        config: THEME.PAGINATION.STYLE,
-      }).className;
 const jumpToText = messages.blog.jumpTo || 'Jump to page';
 const jumpInputLabelText = messages.blog.jumpInputLabel || 'Page number';
-const prevClass = itemVariantClass(`${resolvedLocale}:prev:${paginationModel.currentPage}`, 0);
-const nextClass = itemVariantClass(
-  `${resolvedLocale}:next:${paginationModel.currentPage}`,
-  paginationModel.items.length + 2
-);
 const allPosts = await getCollection('blog');
 const localeHrefs = Object.fromEntries(
   SUPPORTED_LOCALES.map((targetLocale) => {
@@ -216,138 +189,31 @@ const dustParticles = Array.from({ length: 22 }, () => ({
   </section>
   {
     page.lastPage > 1 && (
-      <div class={`pagination-wrap ${paginationVariant.className}`}>
-        <div
-          class="pagination-style-config sr-only"
-          data-style-mode={THEME.PAGINATION.STYLE.MODE}
-          data-style-variants={THEME.PAGINATION.STYLE.VARIANTS}
-        />
-        <nav class="pagination" aria-label="Pagination">
-          {page.url.prev && (
-            <a
-              class={`pg-item pg-nav ${prevClass}`}
-              href={page.url.prev}
-              aria-label={messages.blog.previous}
-            >
-              {messages.blog.previous}
-            </a>
-          )}
-          {paginationModel.items.map((item, index) =>
-            item.kind === 'ellipsis' ? (
-              <span
-                class={`pg-item pg-ellipsis ${itemVariantClass(
-                  `${resolvedLocale}:ellipsis:${item.id}`,
-                  index
-                )}`}
-                aria-hidden="true"
-              >
-                ...
-              </span>
-            ) : (
-              <a
-                class={`pg-item ${itemVariantClass(
-                  `${resolvedLocale}:page:${item.page}`,
-                  index
-                )} ${item.page === paginationModel.currentPage ? 'current' : ''}`}
-                href={pageHref(item.page)}
-                aria-current={item.page === paginationModel.currentPage ? 'page' : undefined}
-              >
-                {item.page}
-              </a>
-            )
-          )}
-          {page.url.next && (
-            <a
-              class={`pg-item pg-nav ${nextClass}`}
-              href={page.url.next}
-              aria-label={messages.blog.next}
-            >
-              {messages.blog.next}
-            </a>
-          )}
-        </nav>
-        {THEME.PAGINATION.JUMP.ENABLED && paginationModel.showJump && (
-          <form
-            class="pagination-jump"
-            data-blog-root={blogRoot}
-            data-total-pages={paginationModel.totalPages}
-            data-enter-to-go={THEME.PAGINATION.JUMP.ENTER_TO_GO ? 'true' : 'false'}
-            aria-label={jumpToText}
-          >
-            <label class="sr-only" for="pagination-jump-input">
-              {jumpInputLabelText}
-            </label>
-            <span class="pagination-jump-label">{jumpToText}</span>
-            <input
-              id="pagination-jump-input"
-              class="pagination-jump-input"
-              type="text"
-              inputmode="numeric"
-              pattern="[0-9]*"
-              value={paginationModel.currentPage}
-            />
-            <button type="submit" class="pagination-jump-btn">
-              {messages.blog.jumpGo || 'Go'}
-            </button>
-          </form>
-        )}
-      </div>
+      <CyberPagination
+        model={paginationModel}
+        locale={resolvedLocale}
+        blogRoot={blogRoot}
+        pathname={Astro.url.pathname}
+        labels={{
+          previous: messages.blog.previous,
+          next: messages.blog.next,
+          jumpTo: jumpToText,
+          jumpInputLabel: jumpInputLabelText,
+          jumpGo: messages.blog.jumpGo || 'Go',
+        }}
+        config={{
+          jump: {
+            enabled: THEME.PAGINATION.JUMP.ENABLED,
+            enterToGo: THEME.PAGINATION.JUMP.ENTER_TO_GO,
+          },
+          style: {
+            enabled: THEME.PAGINATION.STYLE.ENABLED,
+            mode: THEME.PAGINATION.STYLE.MODE,
+            variants: THEME.PAGINATION.STYLE.VARIANTS,
+            fixedVariant: THEME.PAGINATION.STYLE.FIXED_VARIANT,
+          },
+        }}
+      />
     )
   }
 </CyberShell>
-
-<script is:inline>
-  document.querySelectorAll('.pagination-wrap').forEach((wrap) => {
-    const configEl = wrap.querySelector('.pagination-style-config');
-    if (!(configEl instanceof HTMLElement)) return;
-    if (configEl.dataset.styleMode !== 'random') return;
-    const variants = Math.max(
-      1,
-      Math.min(12, Number.parseInt(configEl.dataset.styleVariants || '9', 10))
-    );
-    const items = wrap.querySelectorAll('.pagination .pg-item');
-    items.forEach((item) => {
-      item.className = item.className.replace(/\bpg-var-\d+\b/g, '').trim();
-      const variant = Math.floor(Math.random() * variants) + 1;
-      item.classList.add(`pg-var-${variant}`);
-    });
-  });
-
-  document.querySelectorAll('.pagination-jump').forEach((form) => {
-    const blogRoot = form.getAttribute('data-blog-root') || '/blog/';
-    const totalPages = Math.max(1, parseInt(form.getAttribute('data-total-pages') || '1', 10));
-    const enterToGo = form.getAttribute('data-enter-to-go') !== 'false';
-    const input = form.querySelector('.pagination-jump-input');
-    if (!(input instanceof HTMLInputElement)) return;
-
-    const normalizeRoot = (root) => {
-      if (!root) return '/blog/';
-      return root.endsWith('/') ? root : `${root}/`;
-    };
-
-    const toHref = (pageNum) => {
-      const root = normalizeRoot(blogRoot);
-      return pageNum === 1 ? root : `${root}${pageNum}/`;
-    };
-
-    const runJump = () => {
-      const normalized = (input.value || '').replace(/[^\d]/g, '');
-      const value = Number.parseInt(normalized || '1', 10);
-      if (!Number.isFinite(value)) return;
-      const target = Math.max(1, Math.min(totalPages, Math.round(value)));
-      window.location.assign(toHref(target));
-    };
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      runJump();
-    });
-
-    if (!enterToGo) {
-      input.addEventListener('keydown', (event) => {
-        if (event.key !== 'Enter') return;
-        event.preventDefault();
-      });
-    }
-  });
-</script>

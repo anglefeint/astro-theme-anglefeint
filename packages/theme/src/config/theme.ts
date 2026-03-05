@@ -21,7 +21,6 @@ export const THEME = {
       MODE: 'random',
       VARIANTS: 9,
       FIXED_VARIANT: 1,
-      STABLE_BY: 'page',
     },
   },
   /** Optional visual effects switches */

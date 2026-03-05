@@ -1,5 +1,6 @@
 import { mkdir, writeFile, access } from 'node:fs/promises';
 import { constants } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { SUPPORTED_LOCALES } from './i18n/locales.mjs';
 import {
@@ -14,6 +15,7 @@ import {
 
 const CONTENT_ROOT = path.resolve(process.cwd(), 'src/content/blog');
 const DEFAULT_COVERS_ROOT = path.resolve(process.cwd(), 'src/assets/blog/default-covers');
+const SITE_CONFIG_PATH = path.resolve(process.cwd(), 'src/site.config.ts');
 
 async function exists(filePath) {
 	try {
@@ -21,6 +23,37 @@ async function exists(filePath) {
 		return true;
 	} catch {
 		return false;
+	}
+}
+
+function parseSupportedLocalesFromConfig(configSource) {
+	const localeArrayPattern = /supportedLocales\s*:\s*\[([\s\S]*?)\]/g;
+	let match = null;
+	let picked = '';
+
+	while (true) {
+		const next = localeArrayPattern.exec(configSource);
+		if (!next) break;
+		const body = next[1] ?? '';
+		if (body.includes("'") || body.includes('"')) {
+			match = next;
+			picked = body;
+		}
+	}
+
+	if (!match || !picked) return [];
+	const localeMatches = picked.match(/['"]([a-z]{2,3}(?:-[a-z0-9]+)?)['"]/gi) || [];
+	return localeMatches.map((token) => token.slice(1, -1).toLowerCase());
+}
+
+async function resolveProjectLocales() {
+	try {
+		const configSource = await readFile(SITE_CONFIG_PATH, 'utf8');
+		const locales = parseSupportedLocalesFromConfig(configSource);
+		if (locales.length === 0) return [];
+		return Array.from(new Set(locales));
+	} catch {
+		return [];
 	}
 }
 
@@ -38,10 +71,11 @@ async function main() {
 
 	const pubDate = new Date().toISOString().slice(0, 10);
 	const defaultCovers = await loadDefaultCovers(DEFAULT_COVERS_ROOT);
+	const projectLocales = await resolveProjectLocales();
 	const locales = resolveLocales({
 		cliLocales,
 		envLocales: process.env.ANGLEFEINT_LOCALES ?? '',
-		defaultLocales: SUPPORTED_LOCALES,
+		defaultLocales: projectLocales.length > 0 ? projectLocales : SUPPORTED_LOCALES,
 	});
 	const created = [];
 	const skipped = [];
