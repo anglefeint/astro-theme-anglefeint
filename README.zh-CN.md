@@ -188,7 +188,7 @@ npm run new-page -- projects --theme matrix
 1. 复制 `.env.example` 为 `.env` 并填写站点信息。
 2. 编辑 `src/site.config.ts`：
    - `social.links`：社交链接
-   - `about`：About 页面内容与运行文案
+   - `aboutByLocale`：按语言配置 About 页面内容与运行文案
    - `theme.enableAboutPage`：About 页面开关
    - `theme.effects.enableRedQueen`：开启/关闭文章页侧边监视器特效
    - `theme.comments`：开启并配置 Giscus（`repo`、`repoId`、`category`、`categoryId`、`theme`、`lang`）

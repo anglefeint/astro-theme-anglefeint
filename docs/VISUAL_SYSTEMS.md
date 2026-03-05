@@ -22,6 +22,7 @@ This theme uses four distinct atmospheres by route.
 
 - Cyberpunk archive mood (rain, haze, glow)
 - Most effects are CSS-driven in `packages/theme/src/styles/theme-cyber.css`
+- Runtime rain/dust distribution is initialized by `src/scripts/cyber-rain-dust.js`
 - Paginated card grid for posts
 
 ## 3) Blog Post (`body.ai-page`)
@@ -47,7 +48,7 @@ This theme uses four distinct atmospheres by route.
 
 - Hacker/terminal profile page
 - Modal-driven right sidebar tools
-- Runtime text and modal content from `src/site.config.ts` (exported via `src/config/about.ts` adapter)
+- Runtime text and modal content from `src/site.config.ts -> aboutByLocale` (selected via `src/config/about.ts`)
 - Interaction script: `packages/theme/src/scripts/about-effects.js`
 
 ## Naming Consistency

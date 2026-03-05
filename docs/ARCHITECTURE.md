@@ -20,7 +20,10 @@ sync_targets: [README.md, CLAUDE.md]
 ## Runtime Model
 
 - Most pages are statically generated at build time.
-- Interactivity is implemented with lightweight vanilla scripts in `packages/theme/src/scripts/` (bundled via Vite modules).
+- Interactivity is implemented with lightweight vanilla scripts in:
+  - `packages/theme/src/scripts/` (theme-shared runtime)
+  - `src/scripts/` (starter-owned page runtime)
+    (bundled via Vite modules).
 - No API routes and no SSR runtime required.
 - Blog post side monitor runtime is stateful and event-driven in `packages/theme/src/scripts/blogpost-effects.js` (`initRedQueenTv`).
 
@@ -29,12 +32,14 @@ sync_targets: [README.md, CLAUDE.md]
 The project now follows a compositional structure:
 
 1. Shared chrome
+
 - `packages/theme/src/components/shared/ThemeFrame.astro`
 - `packages/theme/src/components/shared/CommonHeader.astro`
 - `packages/theme/src/components/shared/CommonFooter.astro`
 - Responsibility: shared HTML skeleton, head metadata, navigation, footer.
 
 2. Theme shells
+
 - `packages/theme/src/layouts/shells/BaseShell.astro`
 - `packages/theme/src/layouts/shells/AiShell.astro`
 - `packages/theme/src/layouts/shells/CyberShell.astro`
@@ -43,6 +48,7 @@ The project now follows a compositional structure:
 - Responsibility: route atmosphere container, theme body class, background layers, theme-specific script/style hooks.
 
 3. Page layouts
+
 - `packages/theme/src/layouts/BasePageLayout.astro`
 - `packages/theme/src/layouts/AiPageLayout.astro`
 - `packages/theme/src/layouts/CyberPageLayout.astro`
@@ -51,6 +57,7 @@ The project now follows a compositional structure:
 - Responsibility: thin composition layer for page generation and custom routes.
 
 4. Business pages
+
 - `src/pages/**`
 - Responsibility: content query, pagination, locale pathing, page-specific DOM/behavior.
 
@@ -79,7 +86,7 @@ The project now follows a compositional structure:
 - `src/site.config.ts`: single user-facing config entry
 - `src/config/site.ts`: site adapter (env override + mapped exports)
 - `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle, effect switches such as `enableRedQueen`)
-- `src/config/about.ts`: About adapter (copy and modal/effects text)
+- `src/config/about.ts`: About adapter selector (`getAboutConfig(locale)` from `aboutByLocale`)
 - `src/config/social.ts`: social adapter (header/footer social links)
 - `packages/theme/src/config/*.ts`: package fallback defaults for non-starter/manual consumers
 
