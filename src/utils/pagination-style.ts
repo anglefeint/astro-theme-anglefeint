@@ -1,3 +1,5 @@
+import { clamp, int } from './number';
+
 type PaginationStyleMode = 'random' | 'sequential' | 'fixed';
 
 interface PaginationStyleConfig {
@@ -13,15 +15,6 @@ interface ResolvePaginationVariantOptions {
   locale: string;
   pathname: string;
   config: PaginationStyleConfig;
-}
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, value));
-}
-
-function int(value: number): number {
-  if (!Number.isFinite(value)) return 0;
-  return Math.floor(value);
 }
 
 function hashString(value: string): number {
