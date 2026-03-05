@@ -25,6 +25,8 @@
     "check:workspace-link": "node scripts/check-workspace-link.mjs",
     "maintainer:sync-starter": "node tools/maintainer/sync-starter.mjs",
     "maintainer:sync-starter:check": "node tools/maintainer/sync-starter.mjs --check",
+    "release:starter": "node tools/maintainer/sync-starter.mjs --from=main",
+    "release:starter:push": "node tools/maintainer/sync-starter.mjs --from=main --push",
     "check:adapters": "node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check",
     "check:about-runtime": "npm run build && node scripts/check-about-runtime-config.mjs",
     "check:no-build": "npm run check:docs && npm run check:workspace-link && npm run check:fonts && npm run check:adapters && npm run check:pack-cli && npm run test && npm run check:scaffold && astro check",
