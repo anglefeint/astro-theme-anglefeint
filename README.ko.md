@@ -88,6 +88,8 @@ npm run check
 npm run build
 ```
 
+커스텀 코드가 `src/consts` 또는 `@anglefeint/astro-theme/consts` 를 참조하고 있다면 `src/config/site.ts` 로 마이그레이션하세요.
+
 Astro 메이저 버전 마이그레이션은 먼저 공식 가이드를 확인하세요:
 
 - https://docs.astro.build/en/guides/upgrade-to/
@@ -189,7 +191,24 @@ npm run new-page -- projects --theme matrix
    - `about`: About 콘텐츠와 런타임 문구
    - `theme.enableAboutPage`: About 노출 제어
    - `theme.effects.enableRedQueen`: 글 상세 사이드 모니터 이펙트 on/off
+   - `theme.comments`: Giscus 활성화/설정 (`repo`, `repoId`, `category`, `categoryId`, `theme`, `lang`)
 3. `src/content/blog/<locale>/` 의 샘플 글을 교체합니다.
+
+### 선택: Giscus 댓글
+
+댓글은 기본적으로 비활성화되어 있습니다. 활성화하려면:
+
+1. `src/site.config.ts` 에서 `theme.comments.enabled = true` 로 설정합니다.
+2. 필수 항목을 입력합니다:
+   - `theme.comments.repo`
+   - `theme.comments.repoId`
+   - `theme.comments.category`
+   - `theme.comments.categoryId`
+3. 선택 항목:
+   - `theme.comments.theme`
+   - `theme.comments.lang`
+
+필수 항목이 누락되면 댓글 블록은 렌더링되지 않습니다.
 
 ## 설정 표면
 

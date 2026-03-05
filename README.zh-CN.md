@@ -88,6 +88,8 @@ npm run check
 npm run build
 ```
 
+如果你的自定义代码还在引用 `src/consts` 或 `@anglefeint/astro-theme/consts`，请迁移到 `src/config/site.ts`。
+
 如需进行 Astro 大版本升级，请先参考官方升级文档：
 
 - https://docs.astro.build/en/guides/upgrade-to/
@@ -189,7 +191,24 @@ npm run new-page -- projects --theme matrix
    - `about`：About 页面内容与运行文案
    - `theme.enableAboutPage`：About 页面开关
    - `theme.effects.enableRedQueen`：开启/关闭文章页侧边监视器特效
+   - `theme.comments`：开启并配置 Giscus（`repo`、`repoId`、`category`、`categoryId`、`theme`、`lang`）
 3. 在 `src/content/blog/<locale>/` 替换示例文章。
+
+### 可选：Giscus 评论
+
+评论默认关闭。启用方式：
+
+1. 在 `src/site.config.ts` 中设置 `theme.comments.enabled = true`。
+2. 填写：
+   - `theme.comments.repo`
+   - `theme.comments.repoId`
+   - `theme.comments.category`
+   - `theme.comments.categoryId`
+3. 可选设置：
+   - `theme.comments.theme`
+   - `theme.comments.lang`
+
+若以上必填项缺失，评论区不会渲染。
 
 ## 配置入口
 
