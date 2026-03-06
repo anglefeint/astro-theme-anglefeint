@@ -1,5 +1,4 @@
 ---
-import type { Locale } from '../../i18n/config';
 import type { PaginationModel } from '../../utils/pagination';
 import {
   resolvePaginationItemVariant,
@@ -8,7 +7,7 @@ import {
 
 interface Props {
   model: PaginationModel;
-  locale: Locale;
+  locale: string;
   blogRoot: string;
   pathname: string;
   labels: {
