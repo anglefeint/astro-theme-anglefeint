@@ -35,19 +35,21 @@ Class A: Theme Runtime Changes
   3. Publish npm package (if runtime/package behavior changed)
   4. Sync `starter`
 
-Class B: Starter-only Changes
+Class B: Starter Distribution Changes
 
 - Scope:
-  - Starter docs
+  - Starter docs and template defaults distributed to end users
   - Starter demo content/examples
   - Non-runtime template guidance
 - Examples:
   - README wording
   - Example posts
+  - Starter package defaults
 - Required flow:
-  1. Implement on `starter`
-  2. Run starter checks
-  3. Push `starter`
+  1. Implement on `main`
+  2. Run `npm run check`
+  3. Run `npm run release:starter`
+  4. Push `starter`
 
 Class C: Cross-layer Contract Changes
 
@@ -88,9 +90,8 @@ Use this sequence unless explicitly skipped for a documented reason.
 
 1. Update `main` and push.
 2. If Class A/C affects shipped package behavior, publish npm package.
-3. Run `npm run release:starter` on `main` to sync and validate `starter`.
-4. Validate `starter`.
-5. Push `starter`.
+3. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
+4. Push `starter`.
 
 ## Release Decision Gate
 
@@ -98,10 +99,10 @@ Before running `npm run release:npm`, verify whether `packages/theme/**` changed
 
 - If changed:
   - publish npm package
-  - then update starter lockfile (`npm update @anglefeint/astro-theme`)
+  - then run `npm run release:starter` so starter package range and lockfile move together
 - If not changed:
   - do **not** publish npm
-  - do **not** run starter dependency update only for release cadence
+  - do **not** update starter dependency only for release cadence
 
 Maintainer entry commands (run on `main`):
 
@@ -119,7 +120,7 @@ npm run release:starter:push
 - User-facing docs must not tell end users to run maintainer sync scripts.
 - End users should upgrade via package updates and normal checks.
 - When introducing new starter-managed runtime/config files, update `tools/maintainer/sync-starter.mjs` `MANAGED_FILES` in the same change.
-- `starter` is generated/distribution only. Do not maintain runtime logic there manually.
+- `starter` is generated/distribution only. Do not maintain runtime logic or starter package versions there manually.
 
 ## End-user Upgrade Guidance (for docs)
 
@@ -142,7 +143,7 @@ When delegating to AI/coding agents, require this sequence:
 1. Classify requested changes as A/B/C.
 2. State branch target before editing.
 3. Run mandatory commands and report outputs.
-4. If syncing starter, list synced files explicitly.
+4. If syncing starter, report file sync plus starter dependency version/lockfile result.
 5. Confirm whether npm release is required and why.
 
 ## Guardrails
@@ -154,6 +155,7 @@ When delegating to AI/coding agents, require this sequence:
 ## Branch Switching Hygiene
 
 - After switching branches, run `npm install` before commit/push operations.
+- `npm run release:starter` installs dependencies on `starter` and restores dependencies after switching back to the original branch.
 - `main` check chain includes `npm run check:workspace-link` and must pass before merge/release.
 - `main` keeps maintainer hooks (`husky` + `lint-staged`) for engineering gates.
 - `starter` must stay hook-free (no `prepare`, no `lint-staged`, no `.husky`) to avoid user template friction.
