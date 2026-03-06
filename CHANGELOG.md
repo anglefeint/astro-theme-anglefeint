@@ -15,6 +15,19 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-03-07
+
+### Changed
+
+- Tightened locale runtime correctness around path stripping, hero resolution, Giscus locale mapping, and safer region-code fallback parsing in `new-post`.
+- Improved visitor-facing UX with a visible mobile language switcher, modal focus management, longer reading toasts, and clearer replay-scan wording.
+- Hardened JSON-LD serialization, RSS item mapping, adapter contract validation, and removed dead config/runtime surface that no longer had real behavior.
+- Updated docs and submission-facing copy to match the current default-locale routing model and current config terminology.
+
+### Notes
+
+- See [`docs/releases/0.2.1.md`](docs/releases/0.2.1.md) for release details and validation summary.
+
 ## [0.2.0] - 2026-03-07
 
 ### Changed
