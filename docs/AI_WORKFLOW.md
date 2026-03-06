@@ -132,11 +132,13 @@ If npm release is not required but starter should still change:
   - updating starter dependency range for `@anglefeint/astro-theme`
   - reinstalling starter dependencies
   - validating starter via `check` and `build`
-  - returning to the original branch
+  - staging only manifest-owned starter files plus starter dependency files
+  - returning to the original branch only after a successful starter sync
   - restoring `main` dependencies after switching back
 - Starter validation must work in both:
   - workspace-link development installs on `main`
   - installed-package starter environments where `@anglefeint/astro-theme` resolves from `node_modules`
+- `npm run release:npm` cleans up the generated `anglefeint-astro-theme-<version>.tgz` tarball after publish or dry-run completion.
 
 Use `npm run maintainer:sync-starter:check` to detect drift without mutating branches.
 
@@ -170,7 +172,7 @@ Do not maintain separate, conflicting workflow copies in those adapter files.
 - Do not treat stale docs as harmless; update or explicitly skip with a reason.
 - Do not publish npm without a version bump.
 - Do not leave release tarballs or generated artifacts tracked in `starter`.
-- Do not run `release:starter` with generated artifacts still present in the working tree (for example package tarballs, Playwright output, or test result folders).
+- Do not bypass manifest-driven starter staging with full-worktree git adds.
 
 ## End-to-End Release Sequence
 
