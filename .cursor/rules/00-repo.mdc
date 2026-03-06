@@ -1,4 +1,21 @@
 ---
+doc_id: cursor_repo_entry
+doc_role: adapter-entry
+doc_purpose: Thin Cursor adapter that points to the repository's neutral agent entrypoint and canonical workflow docs.
+doc_scope:
+  - agent-guidance
+  - workflow
+update_triggers:
+  - workflow-change
+  - architecture-change
+  - adapter-change
+source_of_truth: false
+audience:
+  - agent
+depends_on:
+  - AGENTS.md
+  - docs/AI_WORKFLOW.md
+  - docs/DOC_METADATA_SPEC.md
 description: Repository entry rule for Cursor. Read AGENTS.md first, then follow the canonical workflow and architecture docs it references.
 alwaysApply: true
 ---
@@ -10,8 +27,9 @@ Start with `AGENTS.md`.
 Then read:
 
 1. `docs/AI_WORKFLOW.md`
-2. `README.md`
-3. Task-relevant docs:
+2. `docs/DOC_METADATA_SPEC.md`
+3. `README.md`
+4. Task-relevant docs:
    - `docs/ARCHITECTURE.md`
    - `docs/VISUAL_SYSTEMS.md`
    - `docs/MAINTAINER_WORKFLOW.md`
