@@ -108,7 +108,7 @@ function walk(dir, out = []) {
       walk(abs, out);
       continue;
     }
-    if (!rel.endsWith('.md')) continue;
+    if (!rel.endsWith('.md') && !rel.endsWith('.mdc')) continue;
     if (EXCLUDE_FILES.has(rel)) continue;
     out.push(rel);
   }
