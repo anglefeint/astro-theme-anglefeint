@@ -110,4 +110,5 @@ Lint and doc metadata checks are configured.
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)
 - If package behavior changed, follow `docs/AI_WORKFLOW.md` release rules before pushing
+- If adding starter-consumed runtime/config/script/template files, update `tools/maintainer/sync-starter.mjs` in the same change
 - If markdown metadata changed, keep it aligned with `docs/DOC_METADATA_SPEC.md`
