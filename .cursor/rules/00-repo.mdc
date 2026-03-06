@@ -1,0 +1,20 @@
+---
+description: Repository entry rule for Cursor. Read AGENTS.md first, then follow the canonical workflow and architecture docs it references.
+alwaysApply: true
+---
+
+# Cursor Repository Entry
+
+Start with `AGENTS.md`.
+
+Then read:
+
+1. `docs/AI_WORKFLOW.md`
+2. `README.md`
+3. Task-relevant docs:
+   - `docs/ARCHITECTURE.md`
+   - `docs/VISUAL_SYSTEMS.md`
+   - `docs/MAINTAINER_WORKFLOW.md`
+   - `.cursor/workflows/doc-sync-workflow.md`
+
+Do not maintain a separate Cursor-only workflow here if the same rule already belongs in `AGENTS.md` or `docs/AI_WORKFLOW.md`.

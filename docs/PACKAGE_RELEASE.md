@@ -21,6 +21,16 @@ source_of_truth: true
 npm run release:npm -- --dry-run
 ```
 
+Before a real publish, bump the workspace package version first. `npm run release:npm` does not auto-increment the package version.
+
+Stable patch example:
+
+```bash
+npm version patch --workspace @anglefeint/astro-theme --no-git-tag-version
+git add packages/theme/package.json package-lock.json
+git commit -m "chore(release): bump @anglefeint/astro-theme to <version>"
+```
+
 ## 2) Publish alpha/beta
 
 ```bash
@@ -54,8 +64,11 @@ npm run check
 After alpha verification:
 
 ```bash
-npm version patch
+npm version patch --workspace @anglefeint/astro-theme --no-git-tag-version
+git add packages/theme/package.json package-lock.json
+git commit -m "chore(release): bump @anglefeint/astro-theme to <version>"
 npm run release:npm
+npm run release:starter
 ```
 
 ## Notes
@@ -63,3 +76,4 @@ npm run release:npm
 - Starter config is injected via alias `@anglefeint/site-config/*` in `astro.config.mjs` and `tsconfig.json`.
 - Starter i18n is injected via alias `@anglefeint/site-i18n/*` in `astro.config.mjs` and `tsconfig.json`.
 - Keep release notes explicit about breaking changes and required manual migrations.
+- After a successful publish, sync starter so the dependency range and lockfile move together.

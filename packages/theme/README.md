@@ -42,6 +42,8 @@ For content schema:
 export { collections } from '@anglefeint/astro-theme/content-schema';
 ```
 
+`sourceLinks` in blog frontmatter accepts standard `http(s)` URLs and bare domains such as `github.com/anglefeint/astro-theme-anglefeint`. Bare domains are normalized to `https://...` during schema parsing.
+
 ## Site Config Injection
 
 This package reads site-specific config from alias imports:
