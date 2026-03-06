@@ -1,9 +1,9 @@
 ---
 doc_id: visual_systems
-doc_role: visual-source
+doc_role: reference
 doc_purpose: Route-level visual system contracts and style/runtime behavior reference.
-doc_scope: [themes, naming, css, effects, scripts]
-update_triggers: [theme-naming, selector-change, script-change, visual-change]
+doc_scope: [visual-system, architecture]
+update_triggers: [architecture-change, script-change]
 source_of_truth: true
 sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
 ---

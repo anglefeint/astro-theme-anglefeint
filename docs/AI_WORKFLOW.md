@@ -16,8 +16,12 @@ update_triggers:
 source_of_truth: true
 depends_on:
   - AGENTS.md
+  - docs/DOC_METADATA_SPEC.md
   - docs/MAINTAINER_WORKFLOW.md
   - .cursor/workflows/doc-sync-workflow.md
+sync_targets:
+  - CLAUDE.md
+  - .cursor/rules/00-repo.mdc
 ---
 
 # AI Workflow
@@ -27,6 +31,7 @@ This document is the canonical workflow guide for AI coding agents in this repos
 Use it together with:
 
 - `AGENTS.md` for repository entry rules and document routing
+- `docs/DOC_METADATA_SPEC.md` for markdown metadata rules and validator boundaries
 - `docs/ARCHITECTURE.md` for system structure and routing
 - `docs/VISUAL_SYSTEMS.md` for route-specific visual/runtime contracts
 - `docs/MAINTAINER_WORKFLOW.md` for maintainer release policy details
@@ -47,10 +52,12 @@ Before editing code, read in this order:
 2. `docs/AI_WORKFLOW.md`
 3. `README.md`
 4. Task-relevant source docs:
+   - `docs/DOC_METADATA_SPEC.md` for markdown metadata protocol and validation boundaries
    - `docs/ARCHITECTURE.md` for layouts, routing, shell, SEO, content pipeline
    - `docs/VISUAL_SYSTEMS.md` for route-specific visual/effects behavior
    - `src/site.config.ts` for site/theme/about/social customization surface
 5. Workflow-specific docs when relevant:
+   - `docs/DOC_METADATA_SPEC.md`
    - `docs/MAINTAINER_WORKFLOW.md`
    - `.cursor/workflows/doc-sync-workflow.md`
 
@@ -124,6 +131,7 @@ When code/config/theme behavior changes, document sync is not automatic by filen
 Core rules:
 
 - discover markdown files
+- validate metadata against `docs/DOC_METADATA_SPEC.md`
 - inspect frontmatter responsibilities
 - update only documents whose `doc_scope` / `update_triggers` were actually hit
 - propagate changes only through declared `depends_on` / `sync_targets`
