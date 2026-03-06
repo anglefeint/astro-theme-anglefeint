@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizeI18nConfig } from '../src/site.config.runtime.ts';
+import { stripLocaleFromPath } from '../src/i18n/runtime.ts';
 
 test('normalizeI18nConfig derives locale metadata from a single registry', () => {
   const normalized = normalizeI18nConfig({
@@ -25,12 +26,6 @@ test('normalizeI18nConfig derives locale metadata from a single registry', () =>
     },
     routing: {
       defaultLocalePrefix: 'never',
-    },
-    validation: {
-      requireCompleteMessages: false,
-      requireCompleteAbout: false,
-      requireCompleteHero: false,
-      requireOgLocale: false,
     },
   });
 
@@ -57,14 +52,14 @@ test('normalizeI18nConfig injects the default locale when omitted from locale re
     routing: {
       defaultLocalePrefix: 'never',
     },
-    validation: {
-      requireCompleteMessages: false,
-      requireCompleteAbout: false,
-      requireCompleteHero: false,
-      requireOgLocale: false,
-    },
   });
 
   assert.equal(normalized.locales.en.meta.label, 'en');
   assert.deepEqual(normalized.locales.fr.meta.fallback, ['en']);
+});
+
+test('stripLocaleFromPath only strips a true locale path segment', () => {
+  assert.equal(stripLocaleFromPath('/en/blog/', 'en'), '/blog/');
+  assert.equal(stripLocaleFromPath('/en', 'en'), '/');
+  assert.equal(stripLocaleFromPath('/enhanced-tools/', 'en'), '/enhanced-tools/');
 });

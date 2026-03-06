@@ -32,7 +32,8 @@ export function localePath(locale: string, path = '/'): string {
 
 export function stripLocaleFromPath(pathname: string, locale: string): string {
   const prefix = `/${locale}`;
-  if (!pathname.startsWith(prefix)) return pathname;
+  if (pathname === prefix) return '/';
+  if (!pathname.startsWith(`${prefix}/`)) return pathname;
   const withoutLocale = pathname.slice(prefix.length);
   return withoutLocale || '/';
 }

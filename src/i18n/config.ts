@@ -10,7 +10,7 @@ export {
   getDefaultLocaleHomePath,
   getLocaleConfig,
   getLocaleDirection,
-  getLocaleFallbackChain,
+  getLocaleResolutionChain,
   getLocaleHreflang,
   getLocaleLabel,
   getLocaleMeta,
@@ -21,4 +21,4 @@ export {
   shouldRedirectRootToDefaultLocale,
   stripLocaleFromPath,
   withLeadingSlash,
-} from './runtime';
+} from './runtime.ts';

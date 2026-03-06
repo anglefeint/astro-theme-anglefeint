@@ -135,7 +135,7 @@ function extractThemeConfigObject(configSource) {
 }
 
 function localeKeyFromToken(key) {
-  return /^[a-z]{2,3}(?:-[a-z0-9]+)?$/i.test(key) ? key.toLowerCase() : '';
+  return /^[a-z]{2,3}(?:-[a-z0-9]+)?$/i.test(key) ? key : '';
 }
 
 function localeObjectIsEnabled(localeObjectSource) {

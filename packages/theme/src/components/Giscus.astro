@@ -25,6 +25,10 @@ type Props = {
 const { comments, resolvedLocale } = Astro.props;
 const normalizedCommentTerm = comments.TERM.trim();
 const normalizedCommentNumber = comments.NUMBER.trim();
+const GISCUS_LOCALE_MAP: Record<string, string> = {
+  zh: 'zh-CN',
+};
+const giscusLocale = comments.LANG || GISCUS_LOCALE_MAP[resolvedLocale] || resolvedLocale;
 ---
 
 <script
@@ -42,7 +46,7 @@ const normalizedCommentNumber = comments.NUMBER.trim();
   data-emit-metadata={comments.EMIT_METADATA}
   data-input-position={comments.INPUT_POSITION}
   data-theme={comments.THEME}
-  data-lang={comments.LANG || resolvedLocale}
+  data-lang={giscusLocale}
   data-loading={comments.LOADING}
   crossorigin={comments.CROSSORIGIN}
   async></script>

@@ -211,13 +211,7 @@ const defaultThemeConfig: ThemeConfig = {
       },
     },
     routing: {
-      defaultLocalePrefix: 'never',
-    },
-    validation: {
-      requireCompleteMessages: false,
-      requireCompleteAbout: false,
-      requireCompleteHero: false,
-      requireOgLocale: false,
+      defaultLocalePrefix: 'always',
     },
   },
   social: {
