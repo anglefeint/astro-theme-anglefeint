@@ -5,7 +5,14 @@ doc_purpose: Defines maintainer-only release and starter synchronization rules.
 doc_scope: [workflow, release, starter-sync, validation]
 update_triggers: [workflow-change, release-change, command-change]
 source_of_truth: true
-depends_on: [README.md]
+audience:
+  - maintainer
+  - agent
+depends_on:
+  - README.md
+  - AGENTS.md
+  - docs/AI_WORKFLOW.md
+machine_summary: Maintainer-only runbook for release preparation, npm publishing, starter synchronization, failure recovery, and branch hygiene.
 ---
 
 # Maintainer Workflow
@@ -47,7 +54,7 @@ Class B: Starter Distribution Changes
   - Starter package defaults
 - Required flow:
   1. Implement on `main`
-  2. Run `npm run check`
+  2. Run `npm run check:docs` for docs-only starter changes, or `npm run check` if starter runtime/config behavior also changed
   3. Run `npm run release:starter`
   4. Push `starter`
 
@@ -74,6 +81,7 @@ Main branch quality gate:
 ```bash
 npm install
 npm run check
+npm run check:workspace-link
 node scripts/check-scaffold.mjs
 ```
 
@@ -118,6 +126,13 @@ npm run maintainer:sync-starter:check
 npm run release:starter
 # optional sync + auto-push:
 npm run release:starter:push
+```
+
+Main release checks also rely on:
+
+```bash
+npm run check:workspace-link
+node scripts/check-scaffold.mjs
 ```
 
 ## Starter Sync Policy

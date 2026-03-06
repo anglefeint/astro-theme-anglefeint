@@ -81,6 +81,7 @@ npm run preview
 npm run check
 npm run check:no-build
 npm run check:docs
+npm run check:workspace-link
 npm run lint
 npm run e2e:install
 npm run e2e
@@ -109,6 +110,7 @@ Lint and doc metadata checks are configured.
 - About page toggle still works (`ENABLE_ABOUT_PAGE`)
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)
+- Starter/runtime changes still pass `node scripts/check-scaffold.mjs`
 - If package behavior changed, follow `docs/AI_WORKFLOW.md` release rules before pushing
 - If adding starter-consumed runtime/config/script/template files, update `scripts/starter-manifest.mjs` in the same change
 - If `release:starter` fails, fix the issue on `main`, and make sure maintainer checks still pass in both workspace-link and installed-package starter contexts
