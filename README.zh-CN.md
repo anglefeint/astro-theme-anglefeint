@@ -78,7 +78,7 @@ pnpm preview
 
 ## 升级主题
 
-通过 `#starter` 创建的项目可直接执行：
+对于 `#starter` 创建的项目，包层更新可先执行：
 
 ```bash
 npm update @anglefeint/astro-theme
@@ -89,6 +89,8 @@ npm run doctor
 npm run check
 npm run build
 ```
+
+如果 release note 提到 starter 侧 contract 变化，还需要把对应 starter 改动同步进你的项目；`npm update` 本身只会更新已发布包。
 
 如果你的自定义代码还在引用 `src/consts` 或 `@anglefeint/astro-theme/consts`，请迁移到 `src/config/site.ts`。
 
@@ -164,7 +166,7 @@ npm run new-page -- projects --theme matrix
 
 ## 路由视觉氛围
 
-- `/`：Matrix 终端风首页
+- `/<default-locale>/`（默认 `/` 会重定向到这里）：Matrix 终端风首页
 - `/:lang/blog`：赛博朋克归档列表
 - `/:lang/blog/[slug]`：AI 界面风文章页
 - `/:lang/about`：可选黑客风 About 页面
@@ -189,8 +191,8 @@ npm run new-page -- projects --theme matrix
 
 1. 复制 `.env.example` 为 `.env` 并填写站点信息。
 2. 编辑 `src/site.config.ts`：
-   - `i18n.defaultLocale`：设置默认语言与根路径行为
-   - `i18n.routing.defaultLocalePrefix`：决定默认语言使用 `/` 还是 `/<default-locale>/`
+   - `i18n.defaultLocale`：设置默认语言
+   - `i18n.routing.defaultLocalePrefix`：决定默认语言使用 `/<default-locale>/`（默认）还是 `/`
    - `i18n.locales`：作为单一来源增减站点支持语言
    - `social.links`：社交链接
    - `i18n.locales.<code>.about`：按语言配置 About 页面内容与运行文案

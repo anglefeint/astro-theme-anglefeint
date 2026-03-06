@@ -29,14 +29,6 @@ export const getStaticPaths = (async () => {
       const currentPage = pageIndex + 1;
       const start = pageIndex * BLOG_PAGE_SIZE;
       const data = localizedPosts.slice(start, start + BLOG_PAGE_SIZE);
-      const prev =
-        currentPage > 1
-          ? currentPage === 2
-            ? localePath(locale, '/blog/')
-            : localePath(locale, `/blog/${currentPage - 1}`)
-          : undefined;
-      const next =
-        currentPage < totalPages ? localePath(locale, `/blog/${currentPage + 1}`) : undefined;
 
       return {
         params: currentPage === 1 ? { lang: locale } : { lang: locale, page: String(currentPage) },
@@ -46,7 +38,6 @@ export const getStaticPaths = (async () => {
             data,
             currentPage,
             lastPage: totalPages,
-            url: { prev, next },
           },
         },
       };
@@ -123,7 +114,7 @@ const pageDescription =
                         : '(max-width: 720px) 100vw, 480px'
                     }
                     src={post.data.heroImage}
-                    alt={post.data.title}
+                    alt=""
                   />
                 </div>
               )}

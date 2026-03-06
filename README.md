@@ -79,7 +79,7 @@ pnpm preview
 
 ## Upgrade Theme
 
-For projects created from `#starter`, upgrade with:
+For package updates in projects created from `#starter`, start with:
 
 ```bash
 npm update @anglefeint/astro-theme
@@ -90,6 +90,8 @@ npm run doctor
 npm run check
 npm run build
 ```
+
+If release notes mention starter-side contract changes, pull those changes into your project as well. `npm update` alone only updates the published package.
 
 If your custom code still imports `src/consts` or `@anglefeint/astro-theme/consts`, migrate to `src/config/site.ts`.
 
@@ -165,7 +167,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Route Atmospheres
 
-- `/`: Matrix-inspired terminal landing
+- `/<default-locale>/` (with `/` redirecting there by default): Matrix-inspired terminal landing
 - `/:lang/blog`: cyberpunk archive mood
 - `/:lang/blog/[slug]`: AI-interface reading layout
 - `/:lang/about`: optional hacker-style profile page
@@ -190,8 +192,8 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 1. Copy `.env.example` to `.env` and set site identity variables.
 2. Edit `src/site.config.ts`:
-   - `i18n.defaultLocale` to set the canonical root-locale behavior
-   - `i18n.routing.defaultLocalePrefix` to choose whether the default locale lives at `/` or `/<default-locale>/`
+   - `i18n.defaultLocale` to set the canonical root locale
+   - `i18n.routing.defaultLocalePrefix` to choose whether the default locale lives at `/<default-locale>/` (default) or `/`
    - `i18n.locales` to add/remove supported locales from a single source
    - `i18n.locales.<code>.messages` for localized UI copy overrides
    - `i18n.locales.<code>.site.hero` for localized home hero copy
