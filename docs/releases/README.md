@@ -42,6 +42,7 @@ The following grouped notes backfill the release history that predates the forma
 - [`0.1.38-0.1.40`](./0.1.38-0.1.40.md)
 - [`0.2.0`](./0.2.0.md)
 - [`0.2.1`](./0.2.1.md)
+- [`0.2.2`](./0.2.2.md)
 
 ## Forward Rule
 

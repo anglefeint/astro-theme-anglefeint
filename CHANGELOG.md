@@ -15,6 +15,18 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-03-07
+
+### Changed
+
+- Moved the cyber pagination component and its supporting pagination utilities out of the starter app layer and into `@anglefeint/astro-theme`.
+- Updated the blog list route to consume package-owned pagination so future package upgrades can carry pagination fixes and styling changes.
+- Removed the starter-owned pagination implementation from the managed starter surface and tightened local TypeScript path resolution for package subpath imports.
+
+### Notes
+
+- See [`docs/releases/0.2.2.md`](docs/releases/0.2.2.md) for release details and validation summary.
+
 ## [0.2.1] - 2026-03-07
 
 ### Changed
