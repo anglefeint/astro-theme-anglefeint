@@ -10,6 +10,7 @@ const REQUIRED_FILES = [
   'src/config/about.ts',
   'src/config/index.ts',
   'src/i18n/config.ts',
+  'src/i18n/runtime.ts',
   'src/i18n/messages.ts',
   'src/i18n/posts.ts',
   'src/types/theme-scripts.d.ts',
@@ -97,30 +98,42 @@ async function main() {
   );
   assertContains(
     siteAdapter,
-    'THEME_CONFIG.site.heroByLocale',
-    'src/config/site.ts must map site hero copy from THEME_CONFIG.site.heroByLocale'
+    'getLocaleFallbackChain(locale)',
+    'src/config/site.ts must resolve site hero through locale fallback chain'
+  );
+  assertContains(
+    siteAdapter,
+    'getLocaleConfig(code).site.hero',
+    'src/config/site.ts must read locale hero copy from normalized locale config'
+  );
+
+  const i18nRuntime = await readFile(path.join(cwd, 'src/i18n/runtime.ts'), 'utf8');
+  assertContains(
+    i18nRuntime,
+    "from '../site.config'",
+    'src/i18n/runtime.ts must read locales from src/site.config.ts'
+  );
+  assertContains(
+    i18nRuntime,
+    'normalizeI18nConfig(THEME_CONFIG.i18n)',
+    'src/i18n/runtime.ts must normalize locales from THEME_CONFIG.i18n'
+  );
+  assertContains(
+    i18nRuntime,
+    'SUPPORTED_LOCALES = Object.values(I18N.locales)',
+    'src/i18n/runtime.ts must derive supported locales from normalized locale registry'
+  );
+  assertContains(
+    i18nRuntime,
+    'LOCALE_LABELS: Record<Locale, string>',
+    'src/i18n/runtime.ts must expose locale labels derived from normalized locale registry'
   );
 
   const i18nAdapter = await readFile(path.join(cwd, 'src/i18n/config.ts'), 'utf8');
   assertContains(
     i18nAdapter,
-    "from '../site.config'",
-    'src/i18n/config.ts must read locales from src/site.config.ts'
-  );
-  assertContains(
-    i18nAdapter,
-    'THEME_CONFIG.i18n.supportedLocales',
-    'src/i18n/config.ts must map locales from THEME_CONFIG.i18n.supportedLocales'
-  );
-  assertContains(
-    i18nAdapter,
-    'THEME_CONFIG.i18n.defaultLocale',
-    'src/i18n/config.ts must map default locale from THEME_CONFIG.i18n.defaultLocale'
-  );
-  assertContains(
-    i18nAdapter,
-    'THEME_CONFIG.i18n.localeLabels',
-    'src/i18n/config.ts must map labels from THEME_CONFIG.i18n.localeLabels'
+    "from './runtime'",
+    'src/i18n/config.ts must re-export the runtime adapter'
   );
 
   const themeAdapter = await readFile(path.join(cwd, 'src/config/theme.ts'), 'utf8');
@@ -173,8 +186,13 @@ async function main() {
   );
   assertContains(
     aboutAdapter,
-    'THEME_CONFIG.aboutByLocale',
-    'src/config/about.ts must map about config from THEME_CONFIG.aboutByLocale'
+    'getLocaleFallbackChain(locale)',
+    'src/config/about.ts must resolve about config through locale fallback chain'
+  );
+  assertContains(
+    aboutAdapter,
+    'DEFAULT_ABOUT_CONFIG',
+    'src/config/about.ts must merge against DEFAULT_ABOUT_CONFIG'
   );
 
   const socialAdapter = await readFile(path.join(cwd, 'src/config/social.ts'), 'utf8');
