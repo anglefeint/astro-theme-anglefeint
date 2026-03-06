@@ -104,9 +104,11 @@ Publish npm when the change affects installed users through the package, for exa
 If npm release is required:
 
 1. ensure `main` is clean
-2. publish with `npm run release:npm`
-3. create or update the matching release note entry under `docs/releases/`
-4. then sync starter with `npm run release:starter`
+2. bump the package version
+3. update `CHANGELOG.md` and create or update the matching release note entry under `docs/releases/`
+4. commit the release-prep changes on `main`
+5. publish with `npm run release:npm`
+6. then sync starter with `npm run release:starter`
 
 If npm release is not required but starter should still change:
 
@@ -122,6 +124,9 @@ If npm release is not required but starter should still change:
   - validating starter via `check` and `build`
   - returning to the original branch
   - restoring `main` dependencies after switching back
+- Starter validation must work in both:
+  - workspace-link development installs on `main`
+  - installed-package starter environments where `@anglefeint/astro-theme` resolves from `node_modules`
 
 Use `npm run maintainer:sync-starter:check` to detect drift without mutating branches.
 
@@ -155,6 +160,7 @@ Do not maintain separate, conflicting workflow copies in those adapter files.
 - Do not treat stale docs as harmless; update or explicitly skip with a reason.
 - Do not publish npm without a version bump.
 - Do not leave release tarballs or generated artifacts tracked in `starter`.
+- Do not run `release:starter` with generated artifacts still present in the working tree (for example package tarballs, Playwright output, or test result folders).
 
 ## End-to-End Release Sequence
 
@@ -162,11 +168,13 @@ For package-affecting changes:
 
 1. implement on `main`
 2. run validation
-3. `npm run release:npm`
-4. update `CHANGELOG.md` and the matching `docs/releases/` entry
-5. `npm run release:starter`
-6. push `main`
-7. push `starter`
+3. bump package version and update `CHANGELOG.md` plus the matching `docs/releases/` entry
+4. commit the release-prep changes on `main`
+5. `npm run release:npm`
+6. `npm run maintainer:sync-starter:check`
+7. `npm run release:starter`
+8. push `main`
+9. push `starter`
 
 For docs-only changes:
 

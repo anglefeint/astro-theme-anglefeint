@@ -88,11 +88,17 @@ node scripts/check-scaffold.mjs
 
 Use this sequence unless explicitly skipped for a documented reason.
 
-1. Update `main` and push.
-2. If Class A/C affects shipped package behavior, publish npm package.
+1. Finish implementation on `main`.
+2. If Class A/C affects shipped package behavior:
+   - bump package version
+   - update `CHANGELOG.md`
+   - add or update `docs/releases/<version>.md`
+   - commit the release-prep changes on `main`
 3. Run `npm run maintainer:sync-starter:check` on `main` to confirm the expected starter drift before mutating branches.
-4. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
-5. Push `starter`.
+4. If Class A/C affects shipped package behavior, publish npm with `npm run release:npm`.
+5. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
+6. Push `main`.
+7. Push `starter`.
 
 ## Release Decision Gate
 
@@ -123,8 +129,26 @@ npm run release:starter:push
 - When introducing starter-managed runtime/config files, update `scripts/starter-manifest.mjs` in the same change.
 - When introducing starter-consumed runtime/config/script/template files, update `scripts/starter-manifest.mjs` in the same change.
 - `starter` is generated/distribution only. Do not maintain runtime logic or starter package versions there manually.
+- Starter validation must pass in a real installed-package environment, not only in the workspace-link environment on `main`.
 
 If `npm run release:starter` fails, return to `main` and fix the sync contract or package-side issue there. Do not patch starter runtime logic manually.
+
+## Failure Recovery
+
+If `npm run release:starter` fails mid-run:
+
+1. check which branch you are on
+2. if you are left on `starter` with synced-but-uncommitted changes:
+   - inspect the failure
+   - remove generated artifacts that should not be committed (for example package tarballs, `test-results/`, temporary `tests/`)
+   - if you need to return to `main` before finishing, stash with untracked files:
+     - `git stash -u`
+3. return to `main`
+4. run `npm install` to restore maintainer dependencies and hooks before retrying commits or checks
+5. fix the contract or maintainer-tooling issue on `main`
+6. rerun `npm run release:starter`
+
+Do not patch starter runtime logic manually as a recovery path.
 
 ## End-user Upgrade Guidance (for docs)
 
@@ -165,3 +189,4 @@ When delegating to AI/coding agents, require this sequence:
 - `starter` must stay hook-free (no `prepare`, no `lint-staged`, no `.husky`) to avoid user template friction.
 - `starter` must stay maintainer-tooling-free (no `maintainer:*` or `release:starter*` scripts in starter `package.json`).
 - If hooks still misbehave after reinstall, treat it as a local environment issue and recover locally before proceeding.
+- Before running `npm run release:starter`, ensure generated artifacts from release/test flows are not sitting in the working tree.

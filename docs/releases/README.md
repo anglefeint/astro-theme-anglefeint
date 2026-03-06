@@ -58,6 +58,8 @@ Each new note should include:
 - whether starter sync was required
 - validation summary
 
+Release-note metadata must also stay within the allowed `docs/DOC_METADATA_SPEC.md` vocab. Keep `doc_scope` values conservative (for example `release`, `package-upgrade`, `config`, `docs`) instead of inventing new labels during release prep.
+
 ## Naming
 
 - Historical backfill groups may use ranges.
