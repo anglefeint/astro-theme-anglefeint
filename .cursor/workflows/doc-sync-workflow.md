@@ -4,11 +4,18 @@ Use this workflow when code/config/theme behavior changes and docs must be synch
 
 ## Core Rule
 
-This workflow defines the algorithm, not document responsibilities.
+This workflow defines the update algorithm, not the metadata schema itself.
 
 - Responsibilities are defined inside each markdown file's own frontmatter.
+- The canonical metadata schema is defined in `docs/DOC_METADATA_SPEC.md`.
 - The workflow must never hardcode which specific docs are "always updated."
 - Decision chain: discover -> read metadata -> compare against current code changes -> update or skip per file.
+
+## Metadata Source
+
+Use `docs/DOC_METADATA_SPEC.md` as the canonical frontmatter specification.
+
+This workflow consumes that metadata; it does not redefine the schema.
 
 ## Required Frontmatter Contract
 

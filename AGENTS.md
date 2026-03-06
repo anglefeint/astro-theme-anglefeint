@@ -17,8 +17,12 @@ source_of_truth: true
 depends_on:
   - README.md
   - docs/AI_WORKFLOW.md
+  - docs/DOC_METADATA_SPEC.md
   - docs/ARCHITECTURE.md
   - docs/VISUAL_SYSTEMS.md
+sync_targets:
+  - CLAUDE.md
+  - .cursor/rules/00-repo.mdc
 ---
 
 # AGENTS.md
@@ -43,9 +47,10 @@ This file is the neutral entrypoint for all coding agents working in this reposi
 
 1. `README.md` (theme user-facing setup)
 2. `docs/AI_WORKFLOW.md` (canonical AI safety/release/doc-sync workflow)
-3. `docs/ARCHITECTURE.md` (system overview)
-4. `docs/VISUAL_SYSTEMS.md` (route-specific style behavior)
-5. `src/site.config.ts` (single customization entry)
+3. `docs/DOC_METADATA_SPEC.md` (canonical markdown metadata contract)
+4. `docs/ARCHITECTURE.md` (system overview)
+5. `docs/VISUAL_SYSTEMS.md` (route-specific style behavior)
+6. `src/site.config.ts` (single customization entry)
 
 ## Document Map
 
@@ -54,6 +59,10 @@ This file is the neutral entrypoint for all coding agents working in this reposi
   - Safe change sequence
   - npm release + starter sync rules
   - doc-sync entry rules
+- `docs/DOC_METADATA_SPEC.md`
+  - canonical frontmatter contract
+  - metadata field semantics
+  - doc validation boundaries
 - `docs/ARCHITECTURE.md`
   - layouts, routing, SEO, content pipeline
 - `docs/VISUAL_SYSTEMS.md`
@@ -99,3 +108,4 @@ Lint and doc metadata checks are configured.
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)
 - If package behavior changed, follow `docs/AI_WORKFLOW.md` release rules before pushing
+- If markdown metadata changed, keep it aligned with `docs/DOC_METADATA_SPEC.md`

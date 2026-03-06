@@ -1,9 +1,9 @@
 ---
 doc_id: architecture
-doc_role: architecture-source
+doc_role: reference
 doc_purpose: Source-of-truth architecture map for layouts, shells, routing, and SEO.
-doc_scope: [architecture, layouts, shells, components, routing, seo]
-update_triggers: [architecture-change, layout-change, shell-change, seo-change, i18n-change]
+doc_scope: [architecture, routing, seo, config]
+update_triggers: [architecture-change, config-change]
 source_of_truth: true
 sync_targets: [README.md, CLAUDE.md]
 ---

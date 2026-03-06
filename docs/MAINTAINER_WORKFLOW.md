@@ -1,9 +1,9 @@
 ---
 doc_id: maintainer_workflow
-doc_role: internal-guide
+doc_role: runbook
 doc_purpose: Defines maintainer-only release and starter synchronization rules.
-doc_scope: [release-flow, starter-sync, change-classification, guardrails]
-update_triggers: [release-process-change, starter-sync-change, command-change]
+doc_scope: [workflow, release, starter-sync, validation]
+update_triggers: [workflow-change, release-change, command-change]
 source_of_truth: true
 depends_on: [README.md]
 ---
