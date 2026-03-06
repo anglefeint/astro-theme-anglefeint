@@ -1,4 +1,4 @@
-import { THEME_CONFIG } from '../site.config';
+import { THEME_CONFIG } from '../site.config.ts';
 
 const commentsConfig = THEME_CONFIG.theme.comments;
 const normalizedCommentTerm = commentsConfig.term.trim();

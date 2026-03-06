@@ -159,12 +159,6 @@ export interface ThemeI18nConfig {
   routing: {
     defaultLocalePrefix: 'never' | 'always';
   };
-  validation: {
-    requireCompleteMessages: boolean;
-    requireCompleteAbout: boolean;
-    requireCompleteHero: boolean;
-    requireOgLocale: boolean;
-  };
 }
 
 export interface NormalizedLocaleConfig {
@@ -188,5 +182,4 @@ export interface NormalizedThemeI18nConfig {
   defaultLocale: LocaleCode;
   locales: Record<string, NormalizedLocaleConfig>;
   routing: ThemeI18nConfig['routing'];
-  validation: ThemeI18nConfig['validation'];
 }

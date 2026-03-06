@@ -30,7 +30,9 @@ export async function GET(context: APIContext) {
     site: context.site ?? SITE_URL,
     trailingSlash: rssTrailingSlash,
     items: sourcePosts.map((post) => ({
-      ...post.data,
+      title: post.data.title,
+      description: post.data.description,
+      pubDate: post.data.pubDate,
       link: localePath(locale, `/blog/${blogIdToSlugAnyLocale(post.id)}`),
     })),
   });

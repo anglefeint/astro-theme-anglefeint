@@ -1,12 +1,12 @@
 import type { Messages } from '@anglefeint/theme-default-i18n';
 import { DEFAULT_MESSAGES } from '@anglefeint/theme-default-i18n';
 import { deepMerge } from '@anglefeint/astro-theme/utils/merge';
-import { getLocaleConfig, getLocaleFallbackChain, type Locale } from './runtime';
+import { getLocaleConfig, getLocaleResolutionChain, type Locale } from './runtime.ts';
 
 const BUILTIN_MESSAGES = DEFAULT_MESSAGES as Record<string, Messages>;
 
 export function getMessages(locale: Locale): Messages {
-  const fallbackChain = [...getLocaleFallbackChain(locale)].reverse();
+  const fallbackChain = [...getLocaleResolutionChain(locale)].reverse();
   let resolved = deepMerge(DEFAULT_MESSAGES.en, {});
 
   for (const code of fallbackChain) {

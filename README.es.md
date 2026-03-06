@@ -78,7 +78,7 @@ pnpm preview
 
 ## Actualizar tema
 
-Para proyectos creados desde `#starter`:
+Para proyectos creados desde `#starter`, empieza asi cuando solo actualizas el package:
 
 ```bash
 npm update @anglefeint/astro-theme
@@ -89,6 +89,8 @@ npm run doctor
 npm run check
 npm run build
 ```
+
+Si las release notes mencionan cambios de contrato del starter, tambien debes sincronizar esos cambios en tu proyecto. `npm update` solo actualiza el package publicado.
 
 Si tu codigo personalizado aun importa `src/consts` o `@anglefeint/astro-theme/consts`, migralo a `src/config/site.ts`.
 
@@ -164,7 +166,7 @@ npm run new-page -- projects --theme matrix
 
 ## Ambiente por ruta
 
-- `/`: portada tipo terminal Matrix
+- `/<default-locale>/` (por defecto `/` redirige aqui): portada tipo terminal Matrix
 - `/:lang/blog`: ambiente de archivo cyberpunk
 - `/:lang/blog/[slug]`: lectura estilo interfaz de IA
 - `/:lang/about`: pagina About opcional con estilo hacker
@@ -189,8 +191,8 @@ npm run new-page -- projects --theme matrix
 
 1. Copia `.env.example` a `.env` y define la identidad del sitio.
 2. Edita `src/site.config.ts`:
-   - `i18n.defaultLocale` para definir el idioma por defecto y el comportamiento de la ruta raiz
-   - `i18n.routing.defaultLocalePrefix` para elegir si el idioma por defecto vive en `/` o en `/<default-locale>/`
+   - `i18n.defaultLocale` para definir el idioma por defecto
+   - `i18n.routing.defaultLocalePrefix` para elegir si el idioma por defecto vive en `/<default-locale>/` (por defecto) o en `/`
    - `i18n.locales` como fuente unica para agregar o quitar idiomas soportados
    - `social.links` para enlaces sociales
    - `i18n.locales.<code>.about` para contenido y textos runtime de About por idioma

@@ -78,7 +78,7 @@ pnpm preview
 
 ## テーマのアップグレード
 
-`#starter` から作成したプロジェクトは次で更新できます:
+`#starter` から作成したプロジェクトで package 側の更新を取り込むときは、まず次を実行します:
 
 ```bash
 npm update @anglefeint/astro-theme
@@ -89,6 +89,8 @@ npm run doctor
 npm run check
 npm run build
 ```
+
+release note に starter 側 contract の変更がある場合は、その差分もプロジェクトへ取り込んでください。`npm update` だけで更新されるのは公開 package 側だけです。
 
 カスタムコードが `src/consts` または `@anglefeint/astro-theme/consts` を参照している場合は、`src/config/site.ts` へ移行してください。
 
@@ -164,7 +166,7 @@ npm run new-page -- projects --theme matrix
 
 ## ルートごとの雰囲気
 
-- `/`：Matrix 風ターミナルのホーム
+- `/<default-locale>/`（デフォルトでは `/` がここへリダイレクト）：Matrix 風ターミナルのホーム
 - `/:lang/blog`：サイバーパンク調のアーカイブ
 - `/:lang/blog/[slug]`：AI インターフェース風の読書レイアウト
 - `/:lang/about`：任意で有効化できるハッカー風 About ページ
@@ -189,8 +191,8 @@ npm run new-page -- projects --theme matrix
 
 1. `.env.example` を `.env` にコピーし、サイト情報を設定。
 2. `src/site.config.ts` を編集:
-   - `i18n.defaultLocale`: 既定ロケールとルートURLの基準を設定
-   - `i18n.routing.defaultLocalePrefix`: 既定ロケールを `/` に置くか `/<default-locale>/` に置くかを設定
+   - `i18n.defaultLocale`: 既定ロケールを設定
+   - `i18n.routing.defaultLocalePrefix`: 既定ロケールを `/<default-locale>/`（デフォルト）に置くか `/` に置くかを設定
    - `i18n.locales`: 単一の設定源として対応ロケールを追加・削除
    - `social.links`: SNS リンク
    - `i18n.locales.<code>.about`: ロケール別 About コンテンツとランタイム文言

@@ -81,13 +81,7 @@ export function normalizeI18nConfig(config: ThemeI18nConfig): NormalizedThemeI18
     defaultLocale,
     locales: normalizedLocales,
     routing: {
-      defaultLocalePrefix: config.routing.defaultLocalePrefix || 'never',
-    },
-    validation: {
-      requireCompleteMessages: config.validation.requireCompleteMessages,
-      requireCompleteAbout: config.validation.requireCompleteAbout,
-      requireCompleteHero: config.validation.requireCompleteHero,
-      requireOgLocale: config.validation.requireOgLocale,
+      defaultLocalePrefix: config.routing.defaultLocalePrefix || 'always',
     },
   };
 }
