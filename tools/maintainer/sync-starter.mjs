@@ -15,6 +15,8 @@ const execFileAsync = promisify(execFile);
 const STARTER_PACKAGE_JSON = 'package.json';
 const STARTER_PACKAGE_LOCK = 'package-lock.json';
 const THEME_PACKAGE_JSON = 'packages/theme/package.json';
+const STARTER_SYNC_FILES = [STARTER_PACKAGE_JSON, STARTER_PACKAGE_LOCK];
+const GENERATED_ARTIFACT_PATTERNS = [/^anglefeint-astro-theme-.*\.tgz$/];
 
 function parseArgs(argv) {
   return {
@@ -118,6 +120,25 @@ async function fileExists(filePath) {
   } catch {
     return false;
   }
+}
+
+async function listRepoRootEntries(repoRoot) {
+  try {
+    const { readdir } = await import('node:fs/promises');
+    return await readdir(repoRoot);
+  } catch {
+    return [];
+  }
+}
+
+async function cleanupGeneratedArtifacts(repoRoot) {
+  const removed = [];
+  for (const entry of await listRepoRootEntries(repoRoot)) {
+    if (!GENERATED_ARTIFACT_PATTERNS.some((pattern) => pattern.test(entry))) continue;
+    await rm(path.join(repoRoot, entry), { force: true, recursive: true });
+    removed.push(entry);
+  }
+  return removed;
 }
 
 async function collectDrift(sourceRef, targetRef) {
@@ -233,7 +254,13 @@ async function commitStarterIfNeeded(sourceRef, changedFiles) {
     console.log('[maintainer:sync-starter] starter already up to date.');
     return false;
   }
-  await run('git', ['add', '-A']);
+  const staged = [...new Set([...MANAGED_FILES, ...STARTER_SYNC_FILES])];
+  if (staged.length > 0) {
+    await run('git', ['add', '--', ...staged]);
+  }
+  for (const relPath of STARTER_OBSOLETE_FILES) {
+    await runSilent('git', ['rm', '--cached', '--ignore-unmatch', '--', relPath]);
+  }
   await run('git', [
     'commit',
     '-m',
@@ -256,10 +283,12 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
   const repoRoot = process.cwd();
   const expectedRange = await expectedStarterThemeRange(sourceRef);
   let switched = false;
+  let syncSucceeded = false;
   try {
     await run('git', ['checkout', targetBranch]);
     switched = true;
 
+    const removedGenerated = await cleanupGeneratedArtifacts(repoRoot);
     const changedManaged = await writeManagedFilesFromRef(sourceRef, repoRoot);
     const removedObsolete = await cleanupObsoleteStarterFiles(repoRoot);
     const sanitized = await sanitizeStarterPackageJson(repoRoot);
@@ -270,6 +299,7 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     await run('npm', ['run', 'build']);
 
     const changed = [...changedManaged, ...removedObsolete];
+    for (const relPath of removedGenerated) changed.push(relPath);
     if (sanitized) changed.push('package.json');
     if (dependencyUpdated && !changed.includes('package.json')) changed.push('package.json');
     changed.push(STARTER_PACKAGE_LOCK);
@@ -278,8 +308,9 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
       `[maintainer:sync-starter] starter theme dependency target: ${expectedRange} (lockfile resolved via npm install).`
     );
     if (committed && push) await run('git', ['push', 'origin', targetBranch]);
+    syncSucceeded = true;
   } finally {
-    if (switched && (await currentBranch()) !== originalBranch) {
+    if (syncSucceeded && switched && (await currentBranch()) !== originalBranch) {
       await run('git', ['checkout', originalBranch]);
       await run('npm', ['install']);
       console.log(`[maintainer:sync-starter] restored dependencies for "${originalBranch}".`);
@@ -330,5 +361,8 @@ async function main() {
 
 main().catch((error) => {
   console.error(error.message || error);
+  console.error(
+    '[maintainer:sync-starter] sync failed. If you are left on "starter", inspect the working tree there, then return to "main" to fix the issue before retrying.'
+  );
   process.exit(1);
 });

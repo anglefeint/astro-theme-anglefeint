@@ -145,6 +145,8 @@ node scripts/check-scaffold.mjs
 - When introducing starter-consumed runtime/config/script/template files, update `scripts/starter-manifest.mjs` in the same change.
 - `starter` is generated/distribution only. Do not maintain runtime logic or starter package versions there manually.
 - Starter validation must pass in a real installed-package environment, not only in the workspace-link environment on `main`.
+- `npm run release:npm` removes the generated package tarball after publish/dry-run completion.
+- `npm run release:starter` stages starter changes from `scripts/starter-manifest.mjs` plus starter dependency files; it must not rely on `git add -A`.
 
 If `npm run release:starter` fails, return to `main` and fix the sync contract or package-side issue there. Do not patch starter runtime logic manually.
 
@@ -155,7 +157,7 @@ If `npm run release:starter` fails mid-run:
 1. check which branch you are on
 2. if you are left on `starter` with synced-but-uncommitted changes:
    - inspect the failure
-   - remove generated artifacts that should not be committed (for example package tarballs, `test-results/`, temporary `tests/`)
+   - generated release tarballs should already be cleaned automatically, but still remove any remaining stray artifacts (for example `test-results/`, temporary `tests/`)
    - if you need to return to `main` before finishing, stash with untracked files:
      - `git stash -u`
 3. return to `main`
@@ -204,4 +206,4 @@ When delegating to AI/coding agents, require this sequence:
 - `starter` must stay hook-free (no `prepare`, no `lint-staged`, no `.husky`) to avoid user template friction.
 - `starter` must stay maintainer-tooling-free (no `maintainer:*` or `release:starter*` scripts in starter `package.json`).
 - If hooks still misbehave after reinstall, treat it as a local environment issue and recover locally before proceeding.
-- Before running `npm run release:starter`, ensure generated artifacts from release/test flows are not sitting in the working tree.
+- `release:starter` is expected to leave the repo on `starter` when starter validation fails; treat that as the deliberate recovery state, not as a bug in the workflow.
