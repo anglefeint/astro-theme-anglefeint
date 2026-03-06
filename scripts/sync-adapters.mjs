@@ -1,18 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-
-const MAP = [
-  ['scripts/adapter-templates/src/config/site.ts', 'src/config/site.ts'],
-  ['scripts/adapter-templates/src/config/theme.ts', 'src/config/theme.ts'],
-  ['scripts/adapter-templates/src/config/social.ts', 'src/config/social.ts'],
-  ['scripts/adapter-templates/src/config/about.ts', 'src/config/about.ts'],
-  ['scripts/adapter-templates/src/config/index.ts', 'src/config/index.ts'],
-  ['scripts/adapter-templates/src/i18n/config.ts', 'src/i18n/config.ts'],
-  ['scripts/adapter-templates/src/i18n/runtime.ts', 'src/i18n/runtime.ts'],
-  ['scripts/adapter-templates/src/i18n/messages.ts', 'src/i18n/messages.ts'],
-  ['scripts/adapter-templates/src/i18n/posts.ts', 'src/i18n/posts.ts'],
-  ['scripts/adapter-templates/src/types/theme-scripts.d.ts', 'src/types/theme-scripts.d.ts'],
-];
+import { ADAPTER_TEMPLATE_MAP } from './starter-manifest.mjs';
 
 function parseArgs(argv) {
   return {
@@ -25,7 +13,7 @@ async function main() {
   const cwd = process.cwd();
   const changed = [];
 
-  for (const [sourceRel, targetRel] of MAP) {
+  for (const [sourceRel, targetRel] of ADAPTER_TEMPLATE_MAP) {
     const sourcePath = path.join(cwd, sourceRel);
     const targetPath = path.join(cwd, targetRel);
     const sourceText = await readFile(sourcePath, 'utf8');

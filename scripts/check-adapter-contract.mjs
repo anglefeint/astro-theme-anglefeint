@@ -1,20 +1,7 @@
 import { readFile, access } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
-
-const REQUIRED_FILES = [
-  'src/site.config.ts',
-  'src/config/site.ts',
-  'src/config/theme.ts',
-  'src/config/social.ts',
-  'src/config/about.ts',
-  'src/config/index.ts',
-  'src/i18n/config.ts',
-  'src/i18n/runtime.ts',
-  'src/i18n/messages.ts',
-  'src/i18n/posts.ts',
-  'src/types/theme-scripts.d.ts',
-];
+import { REQUIRED_ADAPTER_TARGET_FILES } from './starter-manifest.mjs';
 
 const REQUIRED_VITE_ALIASES = [
   '@anglefeint/site-config',
@@ -45,7 +32,7 @@ async function main() {
     if (!text.includes(pattern)) issues.push(message);
   };
 
-  for (const rel of REQUIRED_FILES) {
+  for (const rel of REQUIRED_ADAPTER_TARGET_FILES) {
     const exists = await fileExists(path.join(cwd, rel));
     if (!exists) issues.push(`Missing required adapter file: ${rel}`);
   }
@@ -115,8 +102,8 @@ async function main() {
   );
   assertContains(
     i18nRuntime,
-    'normalizeI18nConfig(THEME_CONFIG.i18n)',
-    'src/i18n/runtime.ts must normalize locales from THEME_CONFIG.i18n'
+    "from '../site.config.runtime.ts'",
+    'src/i18n/runtime.ts must read normalize helpers from src/site.config.runtime.ts'
   );
   assertContains(
     i18nRuntime,
@@ -176,8 +163,13 @@ async function main() {
   const aboutAdapter = await readFile(path.join(cwd, 'src/config/about.ts'), 'utf8');
   assertContains(
     aboutAdapter,
-    "from '../site.config'",
-    'src/config/about.ts must read from src/site.config.ts'
+    "from '../site.config.defaults.ts'",
+    'src/config/about.ts must read default about config from src/site.config.defaults.ts'
+  );
+  assertContains(
+    aboutAdapter,
+    "from '../site.config.schema.ts'",
+    'src/config/about.ts must read AboutConfig type from src/site.config.schema.ts'
   );
   assertContains(
     aboutAdapter,

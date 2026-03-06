@@ -1,4 +1,5 @@
-import { THEME_CONFIG, normalizeI18nConfig } from '../site.config';
+import { THEME_CONFIG } from '../site.config';
+import { normalizeI18nConfig } from '../site.config.runtime.ts';
 
 export const I18N = normalizeI18nConfig(THEME_CONFIG.i18n);
 export type Locale = string;
