@@ -336,9 +336,20 @@ const aboutRuntimeConfig = {
       } catch (_error) {
         throw new Error('Invalid hacker runtime config JSON payload.');
       }
+      const decryptorKeysLabel = runtimeConfig?.decryptorKeysLabel;
       const modalContent = runtimeConfig?.modalContent;
       const aiModalBody = modalContent?.ai?.body;
-      if (!modalContent || typeof aiModalBody !== 'string' || aiModalBody.trim().length === 0) {
+      const hasRequiredModalKeys =
+        modalContent &&
+        typeof modalContent === 'object' &&
+        ['dl-data', 'ai', 'decryptor', 'help', 'all-scripts'].every((key) => modalContent[key]);
+      if (
+        typeof decryptorKeysLabel !== 'string' ||
+        decryptorKeysLabel.trim().length === 0 ||
+        !hasRequiredModalKeys ||
+        typeof aiModalBody !== 'string' ||
+        aiModalBody.trim().length === 0
+      ) {
         throw new Error('Hacker runtime config missing valid modal content.');
       }
       initAboutEffects();

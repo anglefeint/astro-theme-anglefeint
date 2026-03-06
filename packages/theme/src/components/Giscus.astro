@@ -1,0 +1,48 @@
+---
+type GiscusComments = {
+  REPO: string;
+  REPO_ID: string;
+  CATEGORY: string;
+  CATEGORY_ID: string;
+  MAPPING: string;
+  TERM: string;
+  NUMBER: string;
+  STRICT: string;
+  REACTIONS_ENABLED: string;
+  EMIT_METADATA: string;
+  INPUT_POSITION: string;
+  THEME: string;
+  LANG: string;
+  LOADING: string;
+  CROSSORIGIN: string;
+};
+
+type Props = {
+  comments: GiscusComments;
+  resolvedLocale: string;
+};
+
+const { comments, resolvedLocale } = Astro.props;
+const normalizedCommentTerm = comments.TERM.trim();
+const normalizedCommentNumber = comments.NUMBER.trim();
+---
+
+<script
+  is:inline
+  src="https://giscus.app/client.js"
+  data-repo={comments.REPO}
+  data-repo-id={comments.REPO_ID}
+  data-category={comments.CATEGORY}
+  data-category-id={comments.CATEGORY_ID}
+  data-mapping={comments.MAPPING}
+  data-term={comments.MAPPING === 'specific' ? normalizedCommentTerm : undefined}
+  data-number={comments.MAPPING === 'number' ? normalizedCommentNumber : undefined}
+  data-strict={comments.STRICT}
+  data-reactions-enabled={comments.REACTIONS_ENABLED}
+  data-emit-metadata={comments.EMIT_METADATA}
+  data-input-position={comments.INPUT_POSITION}
+  data-theme={comments.THEME}
+  data-lang={comments.LANG || resolvedLocale}
+  data-loading={comments.LOADING}
+  crossorigin={comments.CROSSORIGIN}
+  async></script>
