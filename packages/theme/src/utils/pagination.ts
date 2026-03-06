@@ -1,4 +1,5 @@
 import { clamp, int } from './number';
+
 export type PaginationItem = { kind: 'page'; page: number } | { kind: 'ellipsis'; id: string };
 
 export interface PaginationModel {
@@ -47,8 +48,9 @@ export function buildPaginationModel(options: BuildPaginationModelOptions): Pagi
   addRange(picked, currentPage - siblingCount, currentPage + siblingCount, totalPages);
 
   if (currentPage <= nearEdgeSlots) addRange(picked, 1, nearEdgeSlots + 1, totalPages);
-  if (currentPage >= totalPages - nearEdgeSlots + 1)
+  if (currentPage >= totalPages - nearEdgeSlots + 1) {
     addRange(picked, totalPages - nearEdgeSlots, totalPages, totalPages);
+  }
 
   const pages = [...picked].sort((a, b) => a - b);
   const items: PaginationItem[] = [];

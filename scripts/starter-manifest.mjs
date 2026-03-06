@@ -17,6 +17,9 @@ export const STARTER_OBSOLETE_FILES = [
   'scripts/regenerate-starter.mjs',
   'tools/maintainer/sync-starter.mjs',
   'docs/MAINTAINER_WORKFLOW.md',
+  'src/components/pagination/CyberPagination.astro',
+  'src/utils/pagination-style.ts',
+  'src/utils/pagination.ts',
 ];
 
 export const STARTER_SUPPORT_SCRIPTS = [
@@ -34,7 +37,6 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'README.ja.md',
   'README.es.md',
   'README.ko.md',
-  'src/components/pagination/CyberPagination.astro',
   'src/pages/[lang]/about.astro',
   'src/pages/[lang]/blog/[...page].astro',
   'src/pages/[lang]/index.astro',
@@ -44,8 +46,6 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'src/site.config.defaults.ts',
   'src/site.config.runtime.ts',
   'src/site.config.schema.ts',
-  'src/utils/pagination-style.ts',
-  'src/utils/pagination.ts',
 ];
 
 export const REQUIRED_STARTER_MANAGED_FILES = [

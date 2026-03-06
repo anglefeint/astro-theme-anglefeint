@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import FormattedDate from '@anglefeint/astro-theme/components/FormattedDate.astro';
 import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
-import CyberPagination from '../../../components/pagination/CyberPagination.astro';
+import CyberPagination from '@anglefeint/astro-theme/components/pagination/CyberPagination.astro';
 import { SITE_TITLE } from '../../../config/site';
 import { THEME } from '../../../config/theme';
 import {
@@ -17,7 +17,7 @@ import {
 } from '../../../i18n/config';
 import { getMessages } from '../../../i18n/messages';
 import { BLOG_PAGE_SIZE, postsForLocale } from '../../../i18n/posts';
-import { buildPaginationModel } from '../../../utils/pagination';
+import { buildPaginationModel } from '@anglefeint/astro-theme/utils/pagination';
 
 export const getStaticPaths = (async () => {
   const all = await getCollection('blog');
