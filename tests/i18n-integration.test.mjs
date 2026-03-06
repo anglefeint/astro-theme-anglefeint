@@ -61,8 +61,7 @@ function defineThemeConfig(config) { return deepMerge({
   i18n: {
     defaultLocale: 'en',
     locales: {},
-    routing: { defaultLocalePrefix: 'never' },
-    validation: {}
+    routing: { defaultLocalePrefix: 'always' }
   }
 }, config); }
 export function normalizeI18nConfig(config) {
@@ -104,8 +103,7 @@ export function normalizeI18nConfig(config) {
   return {
     defaultLocale,
     locales: normalizedLocales,
-    routing: { defaultLocalePrefix: config.routing.defaultLocalePrefix || 'never' },
-    validation: config.validation || {}
+    routing: { defaultLocalePrefix: config.routing.defaultLocalePrefix || 'always' }
   };
 }
 export const THEME_CONFIG = defineThemeConfig({
@@ -143,11 +141,7 @@ export const THEME_CONFIG = defineThemeConfig({
         about: { metaLine: '$ disabled locale' }
       }
     },
-    routing: { defaultLocalePrefix: 'always' },
-    validation: {
-      requireCompleteMessages: false, requireCompleteAbout: false,
-      requireCompleteHero: false, requireOgLocale: false
-    }
+    routing: { defaultLocalePrefix: 'always' }
   },
   social: { links: [] }
 });
@@ -209,7 +203,7 @@ export const THEME_CONFIG = defineThemeConfig({
     await writeFile(
       path.join(tempRoot, 'src/i18n/messages.ts'),
       `import { deepMerge } from '@anglefeint/astro-theme/utils/merge';
-import { getLocaleConfig, getLocaleFallbackChain, type Locale } from './runtime';
+import { getLocaleConfig, getLocaleResolutionChain, type Locale } from './runtime';
 
 const DEFAULT_MESSAGES = {
   en: {
@@ -236,7 +230,7 @@ const DEFAULT_MESSAGES = {
 };
 
 export function getMessages(locale: Locale) {
-  const fallbackChain = [...getLocaleFallbackChain(locale)].reverse();
+  const fallbackChain = [...getLocaleResolutionChain(locale)].reverse();
   let resolved = deepMerge(DEFAULT_MESSAGES.en, {});
 
   for (const code of fallbackChain) {
@@ -254,7 +248,7 @@ export function getMessages(locale: Locale) {
     await writeFile(
       path.join(tempRoot, 'src/config/site.ts'),
       `import { THEME_CONFIG } from '../site.config';
-import { getLocaleConfig, getLocaleFallbackChain, SUPPORTED_LOCALES, type Locale } from '../i18n/config';
+import { getLocaleConfig, getLocaleResolutionChain, SUPPORTED_LOCALES, type Locale } from '../i18n/config';
 
 export const SITE_TITLE = THEME_CONFIG.site.title;
 export const SITE_DESCRIPTION = THEME_CONFIG.site.description;
@@ -263,16 +257,23 @@ export const SITE_AUTHOR = THEME_CONFIG.site.author;
 export const SITE_TAGLINE = THEME_CONFIG.site.tagline;
 
 export function getSiteHero(locale: Locale): string | undefined {
-  for (const code of getLocaleFallbackChain(locale)) {
+  for (const code of getLocaleResolutionChain(locale)) {
     const hero = getLocaleConfig(code).site.hero;
-    if (hero) return hero;
+    if (hero !== undefined) return hero;
   }
   return undefined;
 }
 
-export const SITE_HERO_BY_LOCALE: Record<Locale, string> = Object.fromEntries(
-  SUPPORTED_LOCALES.map((locale) => [locale, getSiteHero(locale) ?? ''])
-) as Record<Locale, string>;
+export const SITE_HERO_BY_LOCALE: Partial<Record<Locale, string>> = SUPPORTED_LOCALES.reduce(
+  (heroes, locale) => {
+    const hero = getSiteHero(locale);
+    if (hero !== undefined) {
+      heroes[locale] = hero;
+    }
+    return heroes;
+  },
+  {} as Partial<Record<Locale, string>>
+);
 `,
       'utf8'
     );

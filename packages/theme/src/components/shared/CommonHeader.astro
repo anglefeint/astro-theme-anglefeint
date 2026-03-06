@@ -80,7 +80,9 @@ const localeOptions = SUPPORTED_LOCALES.map((targetLocale) => ({
           <span class="nav-status-dot" aria-hidden="true"></span>
           <span class="nav-status-text">{labels.status}</span>
         </div>
-        <SocialMenu links={SOCIAL_LINKS} />
+        <div class="social-menu-wrap">
+          <SocialMenu links={SOCIAL_LINKS} />
+        </div>
       </div>
     </div>
   </nav>
@@ -244,6 +246,9 @@ const localeOptions = SUPPORTED_LOCALES.map((targetLocale) => ({
       display: none !important;
     }
     .social-links {
+      display: flex;
+    }
+    .social-menu-wrap {
       display: none;
     }
     .lang-switcher {

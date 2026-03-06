@@ -22,6 +22,8 @@ type Props = CollectionEntry<'blog'>['data'] & {
   locale?: string;
   related?: CollectionEntry<'blog'>[];
   localeHrefs?: Partial<Record<Locale, string>>;
+  aiLatencyEstimated?: boolean;
+  aiConfidenceEstimated?: boolean;
 };
 
 const {
@@ -37,7 +39,9 @@ const {
   aiMode,
   aiState,
   aiLatencyMs,
+  aiLatencyEstimated = false,
   aiConfidence,
+  aiConfidenceEstimated = false,
   wordCount,
   tokenCount,
   author,
@@ -169,7 +173,7 @@ const hasCommentsConfig = Boolean(
                   <Image
                     class="hero-base-image"
                     src={heroImage}
-                    alt={title}
+                    alt=""
                     loading="eager"
                     decoding="async"
                     fetchpriority="high"
@@ -257,12 +261,14 @@ const hasCommentsConfig = Boolean(
               <div class="ai-response-meta">
                 {aiLatencyMs !== undefined && (
                   <span>
-                    {messages.blog.latencyLabel} <strong>{aiLatencyMs}</strong> ms
+                    {messages.blog.latencyLabel}{' '}
+                    <strong>{aiLatencyEstimated ? `~${aiLatencyMs}` : aiLatencyMs}</strong> ms
                   </span>
                 )}
                 {confidenceText !== undefined && (
                   <span>
-                    {messages.blog.confidenceLabel} <strong>{confidenceText}</strong>
+                    {messages.blog.confidenceLabel}{' '}
+                    <strong>{aiConfidenceEstimated ? `~${confidenceText}` : confidenceText}</strong>
                   </span>
                 )}
               </div>
@@ -293,8 +299,11 @@ const hasCommentsConfig = Boolean(
           </div>
         )
       }
-      <button type="button" class="ai-regenerate" aria-label={messages.blog.regenerate}
-        >{messages.blog.regenerate}</button
+      <button
+        type="button"
+        class="ai-regenerate"
+        aria-label={messages.blog.regenerate}
+        title={messages.blog.regenerate}>{messages.blog.regenerate}</button
       >
     </div>
   </article>
@@ -310,7 +319,7 @@ const hasCommentsConfig = Boolean(
             >
               {p.data.heroImage ? (
                 <div class="ai-related-img">
-                  <Image width={320} height={180} src={p.data.heroImage} alt={p.data.title} />
+                  <Image width={320} height={180} src={p.data.heroImage} alt="" />
                 </div>
               ) : (
                 <div class="ai-related-placeholder">

@@ -32,8 +32,8 @@ Use this before submitting to an Astro theme listing/review.
   - Blog detail
   - About (if enabled)
 - Verify i18n routes:
-  - `/`
-  - `/<default-locale>/` (redirect behavior when root is canonical)
+  - `/` (redirect behavior when `/<default-locale>/` is canonical)
+  - `/<default-locale>/`
   - `/:lang/blog`
   - `/:lang/blog/[slug]`
 - Verify SEO output:
@@ -56,4 +56,4 @@ Use this before submitting to an Astro theme listing/review.
   - runs one sequence
   - collapses after playback
   - replay button works repeatedly
-- About route behavior follows `ENABLE_ABOUT_PAGE`
+- About route behavior follows `theme.enableAboutPage`

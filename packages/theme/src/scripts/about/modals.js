@@ -10,7 +10,19 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
   const modalOverlay = document.getElementById('hacker-modal');
   const modalBody = document.getElementById('hacker-modal-body');
   const modalTitle = document.querySelector('.hacker-modal-title');
+  const closeButton = document.querySelector('.hacker-modal-close');
   if (!modalOverlay || !modalBody || !modalTitle) return;
+  let lastFocusedElement = null;
+
+  function getFocusableElements() {
+    return Array.from(
+      modalOverlay.querySelectorAll(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter(
+      (element) => !element.hasAttribute('hidden') && element.getAttribute('aria-hidden') !== 'true'
+    );
+  }
 
   const decryptorKeysLabel =
     typeof runtimeConfig.decryptorKeysLabel === 'string' ? runtimeConfig.decryptorKeysLabel : '';
@@ -36,10 +48,15 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
     if (modalEl) modalEl.classList.remove('hacker-modal-wide');
     modalOverlay.classList.remove('open');
     modalOverlay.setAttribute('aria-hidden', 'true');
+    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+      lastFocusedElement.focus();
+    }
   };
 
   const openModal = (data) => {
     if (!data) return;
+    lastFocusedElement =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
     decryptor.stop();
     if (cleanupKeyboard) {
@@ -84,6 +101,13 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
 
     modalOverlay.classList.add('open');
     modalOverlay.setAttribute('aria-hidden', 'false');
+    window.requestAnimationFrame(() => {
+      const focusables = getFocusableElements();
+      const nextFocus = focusables[0] || closeButton || modalOverlay;
+      if (nextFocus && typeof nextFocus.focus === 'function') {
+        nextFocus.focus();
+      }
+    });
   };
 
   const folderButtons = Array.from(document.querySelectorAll('.hacker-folder[data-modal]'));
@@ -97,7 +121,6 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
     return [button, onClick];
   });
 
-  const closeButton = document.querySelector('.hacker-modal-close');
   if (closeButton) closeButton.addEventListener('click', closeModal);
 
   const onOverlayClick = (event) => {
@@ -106,7 +129,38 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
   modalOverlay.addEventListener('click', onOverlayClick);
 
   const onDocumentKeydown = (event) => {
-    if (event.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
+    if (!modalOverlay.classList.contains('open')) return;
+    if (event.key === 'Escape') {
+      closeModal();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+
+    const focusables = getFocusableElements();
+    if (focusables.length === 0) {
+      event.preventDefault();
+      if (closeButton && typeof closeButton.focus === 'function') {
+        closeButton.focus();
+      }
+      return;
+    }
+
+    const currentIndex = focusables.indexOf(document.activeElement);
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if (event.shiftKey) {
+      if (document.activeElement === first || currentIndex === -1) {
+        event.preventDefault();
+        last.focus();
+      }
+      return;
+    }
+
+    if (document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   };
   document.addEventListener('keydown', onDocumentKeydown);
 

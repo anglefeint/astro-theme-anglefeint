@@ -107,6 +107,7 @@ const articleSchema = isArticle
 
 const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 const jsonLdSchemas = [websiteSchema, personSchema, articleSchema, ...extraSchemas].filter(Boolean);
+const serializeJsonLd = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 ---
 
 <!-- Global Metadata -->
@@ -178,6 +179,6 @@ const jsonLdSchemas = [websiteSchema, personSchema, articleSchema, ...extraSchem
 
 {
   jsonLdSchemas.map((schemaItem) => (
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaItem)} />
+    <script is:inline type="application/ld+json" set:html={serializeJsonLd(schemaItem)} />
   ))
 }

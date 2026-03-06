@@ -23,9 +23,9 @@ export function initReadProgressAndBackToTop(prefersReducedMotion) {
     toast.textContent = msg;
     toast.classList.add('visible');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function() {
+    toastTimer = setTimeout(function () {
       toast.classList.remove('visible');
-    }, 900);
+    }, 1800);
   }
 
   if (progress) {
@@ -62,7 +62,7 @@ export function initReadProgressAndBackToTop(prefersReducedMotion) {
 
   var backTop = document.querySelector('.ai-back-to-top');
   if (backTop) {
-    backTop.addEventListener('click', function() {
+    backTop.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
   }

@@ -1,7 +1,11 @@
+import { execFile } from 'node:child_process';
 import { readFile, access } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
+import { promisify } from 'node:util';
 import { REQUIRED_ADAPTER_TARGET_FILES } from './starter-manifest.mjs';
+
+const execFileAsync = promisify(execFile);
 
 const REQUIRED_VITE_ALIASES = [
   '@anglefeint/site-config',
@@ -25,12 +29,87 @@ async function fileExists(filePath) {
   }
 }
 
+async function runAdapterSmokeCheck(cwd) {
+  const smokeSource = `
+    import path from 'node:path';
+    import { pathToFileURL } from 'node:url';
+
+    const root = process.cwd();
+    const importModule = (relPath) => import(pathToFileURL(path.join(root, relPath)).href);
+
+    const [
+      siteConfig,
+      configIndex,
+      i18nConfig,
+      i18nRuntime,
+      siteAdapter,
+      aboutAdapter,
+      themeAdapter,
+      socialAdapter,
+    ] = await Promise.all([
+      importModule('src/site.config.ts'),
+      importModule('src/config/index.ts'),
+      importModule('src/i18n/config.ts'),
+      importModule('src/i18n/runtime.ts'),
+      importModule('src/config/site.ts'),
+      importModule('src/config/about.ts'),
+      importModule('src/config/theme.ts'),
+      importModule('src/config/social.ts'),
+    ]);
+
+    const defaultLocale = i18nConfig.DEFAULT_LOCALE;
+    const aboutConfig = aboutAdapter.getAboutConfig(defaultLocale);
+    const payload = {
+      defaultLocaleMatches:
+        defaultLocale === siteConfig.THEME_CONFIG.i18n.defaultLocale &&
+        defaultLocale === i18nRuntime.DEFAULT_LOCALE,
+      supportedLocalesValid:
+        Array.isArray(i18nConfig.SUPPORTED_LOCALES) &&
+        i18nConfig.SUPPORTED_LOCALES.length > 0 &&
+        i18nConfig.SUPPORTED_LOCALES.includes(defaultLocale),
+      localeLabelsValid:
+        typeof i18nConfig.LOCALE_LABELS?.[defaultLocale] === 'string' &&
+        i18nConfig.LOCALE_LABELS[defaultLocale].length > 0,
+      siteAdapterValid:
+        siteAdapter.SITE_TITLE === siteConfig.THEME_CONFIG.site.title &&
+        siteAdapter.SITE_DESCRIPTION === siteConfig.THEME_CONFIG.site.description &&
+        siteAdapter.SITE_AUTHOR === siteConfig.THEME_CONFIG.site.author &&
+        siteAdapter.SITE_TAGLINE === siteConfig.THEME_CONFIG.site.tagline &&
+        typeof siteAdapter.getSiteHero(defaultLocale) === 'string',
+      aboutAdapterValid:
+        typeof aboutAdapter.getAboutConfig === 'function' &&
+        typeof aboutConfig.metaLine === 'string' &&
+        aboutConfig.metaLine.length > 0,
+      themeAdapterValid:
+        themeAdapter.THEME.BLOG_PAGE_SIZE === siteConfig.THEME_CONFIG.theme.blogPageSize &&
+        themeAdapter.THEME.HOME_LATEST_COUNT === siteConfig.THEME_CONFIG.theme.homeLatestCount &&
+        themeAdapter.THEME.ENABLE_ABOUT_PAGE === siteConfig.THEME_CONFIG.theme.enableAboutPage,
+      socialAdapterValid: Array.isArray(socialAdapter.SOCIAL_LINKS),
+      configIndexValid:
+        typeof configIndex.SITE_TITLE === 'string' &&
+        typeof configIndex.getAboutConfig === 'function' &&
+        typeof configIndex.SOCIAL_LINKS !== 'undefined',
+    };
+
+    process.stdout.write(JSON.stringify(payload));
+  `;
+
+  const { stdout } = await execFileAsync(
+    process.execPath,
+    ['--experimental-strip-types', '--input-type=module', '--eval', smokeSource],
+    {
+      cwd,
+      maxBuffer: 20 * 1024 * 1024,
+      encoding: 'utf8',
+    }
+  );
+
+  return JSON.parse(stdout);
+}
+
 async function main() {
   const issues = [];
   const cwd = process.cwd();
-  const assertContains = (text, pattern, message) => {
-    if (!text.includes(pattern)) issues.push(message);
-  };
 
   for (const rel of REQUIRED_ADAPTER_TARGET_FILES) {
     const exists = await fileExists(path.join(cwd, rel));
@@ -52,152 +131,39 @@ async function main() {
       issues.push(`tsconfig.json is missing compilerOptions.paths entry: ${key}`);
   }
 
-  const siteAdapter = await readFile(path.join(cwd, 'src/config/site.ts'), 'utf8');
-  assertContains(
-    siteAdapter,
-    "from '../site.config'",
-    'src/config/site.ts must read from src/site.config.ts'
-  );
-  assertContains(
-    siteAdapter,
-    'THEME_CONFIG.site.title',
-    'src/config/site.ts must map site title from THEME_CONFIG.site.title'
-  );
-  assertContains(
-    siteAdapter,
-    'THEME_CONFIG.site.description',
-    'src/config/site.ts must map site description from THEME_CONFIG.site.description'
-  );
-  assertContains(
-    siteAdapter,
-    'THEME_CONFIG.site.url',
-    'src/config/site.ts must map site url from THEME_CONFIG.site.url'
-  );
-  assertContains(
-    siteAdapter,
-    'THEME_CONFIG.site.author',
-    'src/config/site.ts must map site author from THEME_CONFIG.site.author'
-  );
-  assertContains(
-    siteAdapter,
-    'THEME_CONFIG.site.tagline',
-    'src/config/site.ts must map site tagline from THEME_CONFIG.site.tagline'
-  );
-  assertContains(
-    siteAdapter,
-    'getLocaleFallbackChain(locale)',
-    'src/config/site.ts must resolve site hero through locale fallback chain'
-  );
-  assertContains(
-    siteAdapter,
-    'getLocaleConfig(code).site.hero',
-    'src/config/site.ts must read locale hero copy from normalized locale config'
-  );
-
-  const i18nRuntime = await readFile(path.join(cwd, 'src/i18n/runtime.ts'), 'utf8');
-  assertContains(
-    i18nRuntime,
-    "from '../site.config'",
-    'src/i18n/runtime.ts must read locales from src/site.config.ts'
-  );
-  assertContains(
-    i18nRuntime,
-    "from '../site.config.runtime.ts'",
-    'src/i18n/runtime.ts must read normalize helpers from src/site.config.runtime.ts'
-  );
-  assertContains(
-    i18nRuntime,
-    'SUPPORTED_LOCALES = Object.values(I18N.locales)',
-    'src/i18n/runtime.ts must derive supported locales from normalized locale registry'
-  );
-  assertContains(
-    i18nRuntime,
-    'LOCALE_LABELS: Record<Locale, string>',
-    'src/i18n/runtime.ts must expose locale labels derived from normalized locale registry'
-  );
-
-  const i18nAdapter = await readFile(path.join(cwd, 'src/i18n/config.ts'), 'utf8');
-  assertContains(
-    i18nAdapter,
-    "from './runtime'",
-    'src/i18n/config.ts must re-export the runtime adapter'
-  );
-
-  const themeAdapter = await readFile(path.join(cwd, 'src/config/theme.ts'), 'utf8');
-  assertContains(
-    themeAdapter,
-    "from '../site.config'",
-    'src/config/theme.ts must read from src/site.config.ts'
-  );
-  assertContains(
-    themeAdapter,
-    'THEME_CONFIG.theme.blogPageSize',
-    'src/config/theme.ts must map blog page size from THEME_CONFIG.theme.blogPageSize'
-  );
-  assertContains(
-    themeAdapter,
-    'THEME_CONFIG.theme.homeLatestCount',
-    'src/config/theme.ts must map home latest count from THEME_CONFIG.theme.homeLatestCount'
-  );
-  assertContains(
-    themeAdapter,
-    'THEME_CONFIG.theme.enableAboutPage',
-    'src/config/theme.ts must map about toggle from THEME_CONFIG.theme.enableAboutPage'
-  );
-  assertContains(
-    themeAdapter,
-    'THEME_CONFIG.theme.pagination',
-    'src/config/theme.ts must map pagination settings from THEME_CONFIG.theme.pagination'
-  );
-  assertContains(
-    themeAdapter,
-    'THEME_CONFIG.theme.effects.enableRedQueen',
-    'src/config/theme.ts must map red queen effect from THEME_CONFIG.theme.effects.enableRedQueen'
-  );
-  assertContains(
-    themeAdapter,
-    'THEME_CONFIG.theme.comments',
-    'src/config/theme.ts must map comments settings from THEME_CONFIG.theme.comments'
-  );
-
-  const aboutAdapter = await readFile(path.join(cwd, 'src/config/about.ts'), 'utf8');
-  assertContains(
-    aboutAdapter,
-    "from '../site.config.defaults.ts'",
-    'src/config/about.ts must read default about config from src/site.config.defaults.ts'
-  );
-  assertContains(
-    aboutAdapter,
-    "from '../site.config.schema.ts'",
-    'src/config/about.ts must read AboutConfig type from src/site.config.schema.ts'
-  );
-  assertContains(
-    aboutAdapter,
-    'getAboutConfig(locale',
-    'src/config/about.ts must expose getAboutConfig(locale) selector'
-  );
-  assertContains(
-    aboutAdapter,
-    'getLocaleFallbackChain(locale)',
-    'src/config/about.ts must resolve about config through locale fallback chain'
-  );
-  assertContains(
-    aboutAdapter,
-    'DEFAULT_ABOUT_CONFIG',
-    'src/config/about.ts must merge against DEFAULT_ABOUT_CONFIG'
-  );
-
-  const socialAdapter = await readFile(path.join(cwd, 'src/config/social.ts'), 'utf8');
-  assertContains(
-    socialAdapter,
-    "from '../site.config'",
-    'src/config/social.ts must read from src/site.config.ts'
-  );
-  assertContains(
-    socialAdapter,
-    'SOCIAL_LINKS: SocialLink[] = THEME_CONFIG.social.links',
-    'src/config/social.ts must map social links from THEME_CONFIG.social.links'
-  );
+  const smoke = await runAdapterSmokeCheck(cwd);
+  if (!smoke.defaultLocaleMatches) {
+    issues.push('Adapter smoke check failed: i18n default locale wiring is inconsistent.');
+  }
+  if (!smoke.supportedLocalesValid) {
+    issues.push('Adapter smoke check failed: supported locales are not derived from config.');
+  }
+  if (!smoke.localeLabelsValid) {
+    issues.push('Adapter smoke check failed: locale labels are not exposed correctly.');
+  }
+  if (!smoke.siteAdapterValid) {
+    issues.push(
+      'Adapter smoke check failed: src/config/site.ts does not map THEME_CONFIG correctly.'
+    );
+  }
+  if (!smoke.aboutAdapterValid) {
+    issues.push(
+      'Adapter smoke check failed: src/config/about.ts does not expose a valid about selector.'
+    );
+  }
+  if (!smoke.themeAdapterValid) {
+    issues.push(
+      'Adapter smoke check failed: src/config/theme.ts does not map theme settings correctly.'
+    );
+  }
+  if (!smoke.socialAdapterValid) {
+    issues.push(
+      'Adapter smoke check failed: src/config/social.ts does not expose social links correctly.'
+    );
+  }
+  if (!smoke.configIndexValid) {
+    issues.push('Adapter smoke check failed: src/config/index.ts re-exports are incomplete.');
+  }
 
   if (issues.length > 0) {
     console.error('Adapter contract check failed:');

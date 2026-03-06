@@ -4,30 +4,30 @@ import { getCollection, render } from 'astro:content';
 import BlogPost from '@anglefeint/astro-theme/layouts/BlogPost.astro';
 import { countWords, deriveMetrics } from '../../../utils/metrics';
 import {
-	alternatePathForLocale,
-	DEFAULT_LOCALE,
-	SUPPORTED_LOCALES,
-	type Locale,
-	blogIdToSlugAnyLocale,
-	isLocale,
+  alternatePathForLocale,
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES,
+  type Locale,
+  blogIdToSlugAnyLocale,
+  isLocale,
 } from '../../../i18n/config';
 import { postsForLocale } from '../../../i18n/posts';
 
 export const getStaticPaths = (async () => {
-	const all = await getCollection('blog');
-	return SUPPORTED_LOCALES.flatMap((locale) => {
-		const localizedPosts = postsForLocale(all, locale);
-		return localizedPosts.map((post) => {
-			const related = localizedPosts
-				.filter((p) => p.id !== post.id)
-				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-				.slice(0, 3);
-			return {
-				params: { lang: locale, slug: blogIdToSlugAnyLocale(post.id) },
-				props: { post, related, locale },
-			};
-		});
-	});
+  const all = await getCollection('blog');
+  return SUPPORTED_LOCALES.flatMap((locale) => {
+    const localizedPosts = postsForLocale(all, locale);
+    return localizedPosts.map((post) => {
+      const related = localizedPosts
+        .filter((p) => p.id !== post.id)
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+        .slice(0, 3);
+      return {
+        params: { lang: locale, slug: blogIdToSlugAnyLocale(post.id) },
+        props: { post, related, locale },
+      };
+    });
+  });
 }) satisfies GetStaticPaths;
 const { post, related, locale } = Astro.props;
 const lang = (Astro.params.lang ?? locale ?? DEFAULT_LOCALE) as string;
@@ -36,27 +36,29 @@ const { Content } = await render(post);
 const allPosts = await getCollection('blog');
 const currentSlug = blogIdToSlugAnyLocale(post.id);
 const localeHrefs = Object.fromEntries(
-	SUPPORTED_LOCALES.map((targetLocale) => {
-		const targetId = `${targetLocale}/${currentSlug}`;
-		const href = allPosts.some((p) => p.id === targetId)
-			? alternatePathForLocale(targetLocale, `/blog/${currentSlug}/`)
-			: alternatePathForLocale(targetLocale, '/blog/');
-		return [targetLocale, href];
-	}),
-	) as Partial<Record<Locale, string>>;
+  SUPPORTED_LOCALES.map((targetLocale) => {
+    const targetId = `${targetLocale}/${currentSlug}`;
+    const href = allPosts.some((p) => p.id === targetId)
+      ? alternatePathForLocale(targetLocale, `/blog/${currentSlug}/`)
+      : alternatePathForLocale(targetLocale, '/blog/');
+    return [targetLocale, href];
+  })
+) as Partial<Record<Locale, string>>;
 
 const computed = deriveMetrics(countWords(post.body ?? ''));
 const resolvedData = {
-	...post.data,
-	locale: resolvedLocale,
-	readMinutes: post.data.readMinutes ?? computed.readMinutes,
-	wordCount: post.data.wordCount ?? computed.wordCount,
-	tokenCount: post.data.tokenCount ?? computed.tokenCount,
-	aiLatencyMs: post.data.aiLatencyMs ?? computed.aiLatencyMs,
-	aiConfidence: post.data.aiConfidence ?? computed.aiConfidence,
+  ...post.data,
+  locale: resolvedLocale,
+  readMinutes: post.data.readMinutes ?? computed.readMinutes,
+  wordCount: post.data.wordCount ?? computed.wordCount,
+  tokenCount: post.data.tokenCount ?? computed.tokenCount,
+  aiLatencyMs: post.data.aiLatencyMs ?? computed.aiLatencyMs,
+  aiLatencyEstimated: post.data.aiLatencyMs === undefined,
+  aiConfidence: post.data.aiConfidence ?? computed.aiConfidence,
+  aiConfidenceEstimated: post.data.aiConfidence === undefined,
 };
 ---
 
 <BlogPost {...resolvedData} related={related} localeHrefs={localeHrefs}>
-	<Content />
+  <Content />
 </BlogPost>

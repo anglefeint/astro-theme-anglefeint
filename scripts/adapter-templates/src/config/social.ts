@@ -1,4 +1,4 @@
-import { THEME_CONFIG, type SocialLink } from '../site.config';
+import { THEME_CONFIG, type SocialLink } from '../site.config.ts';
 
 /**
  * Social links shown in Header + Footer. Set to [] to hide.

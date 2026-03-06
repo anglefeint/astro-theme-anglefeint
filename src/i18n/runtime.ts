@@ -1,4 +1,4 @@
-import { THEME_CONFIG } from '../site.config';
+import { THEME_CONFIG } from '../site.config.ts';
 import { normalizeI18nConfig } from '../site.config.runtime.ts';
 
 export const I18N = normalizeI18nConfig(THEME_CONFIG.i18n);
@@ -30,7 +30,7 @@ export function getLocaleLabel(locale: string): string {
   return getLocaleMeta(locale).label;
 }
 
-export function getLocaleFallbackChain(locale: string): Locale[] {
+export function getLocaleResolutionChain(locale: string): Locale[] {
   const resolved = getLocaleConfig(locale);
   return [resolved.code, ...resolved.meta.fallback] as Locale[];
 }
@@ -72,7 +72,8 @@ export function localePath(locale: string, path = '/'): string {
 
 export function stripLocaleFromPath(pathname: string, locale: string): string {
   const prefix = `/${locale}`;
-  if (!pathname.startsWith(prefix)) return pathname;
+  if (pathname === prefix) return '/';
+  if (!pathname.startsWith(`${prefix}/`)) return pathname;
   const withoutLocale = pathname.slice(prefix.length);
   return withoutLocale || '/';
 }
