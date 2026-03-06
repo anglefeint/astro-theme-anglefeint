@@ -70,10 +70,10 @@ Examples:
 anglefeint-new-post my-first-post
 
 # create post only for selected locales
-anglefeint-new-post my-first-post --locales en,ja
+anglefeint-new-post my-first-post --locales en,fr
 
 # or via environment variable
-ANGLEFEINT_LOCALES=en,ja anglefeint-new-post my-first-post
+ANGLEFEINT_LOCALES=en,fr anglefeint-new-post my-first-post
 
 # create a custom page with theme variant
 anglefeint-new-page projects --theme base

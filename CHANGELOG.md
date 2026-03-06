@@ -15,15 +15,19 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-03-07
+
 ### Changed
 
-- Added Astro v6 beta compatibility updates:
-  - root dependencies moved to Astro 6 beta + official integration beta versions
-  - content schema migrated from `astro:content` `z` import to `astro/zod`
-  - theme package peer dependency widened to `^5.0.0 || ^6.0.0-beta.0`
-- Updated Node.js requirement to `22.12.0+` for v6 compatibility.
-- Removed deprecated `consts` exports from both starter and theme package.
-  - Use `src/config/site.ts` (starter) and `@anglefeint/site-config/site` (theme internal alias) instead.
+- Rebuilt the starter i18n system around a single source of truth in `src/site.config.ts -> i18n`.
+- Added structured locale metadata, localized UI overrides, per-locale hero copy, and localized About config under `i18n.locales`.
+- Completed default-locale routing support with configurable `i18n.routing.defaultLocalePrefix` behavior across runtime, SEO, and sitemap generation.
+- Hardened `new-post` so it follows configured enabled locales, supports region-code locales, and safely falls back for unknown locale templates.
+- Added a minimal Playwright smoke-test layer via `npm run e2e:install` and `npm run e2e`.
+
+### Notes
+
+- See [`docs/releases/0.2.0.md`](docs/releases/0.2.0.md) for release details and validation summary.
 
 ## [0.1.40] - 2026-03-06
 

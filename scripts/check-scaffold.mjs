@@ -11,39 +11,67 @@ const cliNewPage = path.join(repoRoot, 'packages/theme/src/cli-new-page.mjs');
 const cliNewPost = path.join(repoRoot, 'packages/theme/src/cli-new-post.mjs');
 
 async function runNode(scriptPath, args, cwd) {
-	await execFileAsync('node', [scriptPath, ...args], { cwd });
+  await execFileAsync('node', [scriptPath, ...args], { cwd });
 }
 
 async function main() {
-	const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'anglefeint-scaffold-'));
-	try {
-		const pagesRoot = path.join(tempRoot, 'src/pages/[lang]');
-		const coversRoot = path.join(tempRoot, 'src/assets/blog/default-covers');
-		await mkdir(pagesRoot, { recursive: true });
-		await mkdir(coversRoot, { recursive: true });
-		await writeFile(path.join(coversRoot, 'ai-01.webp'), 'cover', 'utf8');
+  const tempRoot = await mkdtemp(path.join(os.tmpdir(), 'anglefeint-scaffold-'));
+  try {
+    const pagesRoot = path.join(tempRoot, 'src/pages/[lang]');
+    const coversRoot = path.join(tempRoot, 'src/assets/blog/default-covers');
+    await mkdir(pagesRoot, { recursive: true });
+    await mkdir(coversRoot, { recursive: true });
+    await writeFile(path.join(coversRoot, 'ai-01.webp'), 'cover', 'utf8');
+    await writeFile(
+      path.join(tempRoot, 'src/site.config.ts'),
+      `export const THEME_CONFIG = {
+  i18n: {
+    defaultLocale: 'en',
+    locales: {
+      en: { meta: { label: 'English' } },
+      fr: { meta: { label: 'Français', fallback: ['en'] } }
+    }
+  }
+};
+`,
+      'utf8'
+    );
 
-		await runNode(cliNewPage, ['scaffold-check', '--theme', 'ai'], tempRoot);
-		await runNode(cliNewPost, ['scaffold-check-post'], tempRoot);
+    await runNode(cliNewPage, ['scaffold-check', '--theme', 'ai'], tempRoot);
+    await runNode(cliNewPost, ['scaffold-check-post'], tempRoot);
 
-		const pageFile = path.join(pagesRoot, 'scaffold-check.astro');
-		const pageText = await readFile(pageFile, 'utf8');
-		assert.match(pageText, /import AiPageLayout from '@anglefeint\/astro-theme\/layouts\/AiPageLayout\.astro';/);
-		assert.match(pageText, /import \{ SUPPORTED_LOCALES, type Locale \} from '@anglefeint\/site-i18n\/config';/);
-		assert.doesNotMatch(pageText, /@anglefeint\/astro-theme\/i18n\/config/);
+    const pageFile = path.join(pagesRoot, 'scaffold-check.astro');
+    const pageText = await readFile(pageFile, 'utf8');
+    assert.match(
+      pageText,
+      /import AiPageLayout from '@anglefeint\/astro-theme\/layouts\/AiPageLayout\.astro';/
+    );
+    assert.match(
+      pageText,
+      /import \{ SUPPORTED_LOCALES, type Locale \} from '@anglefeint\/site-i18n\/config';/
+    );
+    assert.doesNotMatch(pageText, /@anglefeint\/astro-theme\/i18n\/config/);
 
-		const postFile = path.join(tempRoot, 'src/content/blog/en/scaffold-check-post.md');
-		const postText = await readFile(postFile, 'utf8');
-		assert.match(postText, /title: 'Scaffold Check Post'/);
-		assert.match(postText, /heroImage: '\.\.\/\.\.\/\.\.\/assets\/blog\/default-covers\/ai-01\.webp'/);
+    const postFileEn = path.join(tempRoot, 'src/content/blog/en/scaffold-check-post.md');
+    const postTextEn = await readFile(postFileEn, 'utf8');
+    assert.match(postTextEn, /title: 'Scaffold Check Post'/);
+    assert.match(
+      postTextEn,
+      /heroImage: '\.\.\/\.\.\/\.\.\/assets\/blog\/default-covers\/ai-01\.webp'/
+    );
 
-		console.log('Scaffold checks passed.');
-	} finally {
-		await rm(tempRoot, { recursive: true, force: true });
-	}
+    const postFileFr = path.join(tempRoot, 'src/content/blog/fr/scaffold-check-post.md');
+    const postTextFr = await readFile(postFileFr, 'utf8');
+    assert.match(postTextFr, /^title: '.+'/m);
+    assert.doesNotMatch(postTextFr, /undefined/);
+
+    console.log('Scaffold checks passed.');
+  } finally {
+    await rm(tempRoot, { recursive: true, force: true });
+  }
 }
 
 main().catch((error) => {
-	console.error(error);
-	process.exit(1);
+  console.error(error);
+  process.exit(1);
 });

@@ -33,7 +33,7 @@ Use this before submitting to an Astro theme listing/review.
   - About (if enabled)
 - Verify i18n routes:
   - `/`
-  - `/en/` (redirect behavior)
+  - `/<default-locale>/` (redirect behavior when root is canonical)
   - `/:lang/blog`
   - `/:lang/blog/[slug]`
 - Verify SEO output:
