@@ -105,7 +105,8 @@ If npm release is required:
 
 1. ensure `main` is clean
 2. publish with `npm run release:npm`
-3. then sync starter with `npm run release:starter`
+3. create or update the matching release note entry under `docs/releases/`
+4. then sync starter with `npm run release:starter`
 
 If npm release is not required but starter should still change:
 
@@ -162,9 +163,10 @@ For package-affecting changes:
 1. implement on `main`
 2. run validation
 3. `npm run release:npm`
-4. `npm run release:starter`
-5. push `main`
-6. push `starter`
+4. update `CHANGELOG.md` and the matching `docs/releases/` entry
+5. `npm run release:starter`
+6. push `main`
+7. push `starter`
 
 For docs-only changes:
 

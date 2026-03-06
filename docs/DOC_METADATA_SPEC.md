@@ -176,16 +176,23 @@ If the text must be read by a human to understand the document, it usually belon
 
 This repository currently uses the following role model:
 
-- `user-guide`
-  - end-user setup, install, upgrade, usage
-- `internal-guide`
-  - repository guidance for maintainers and agents
-- `runbook`
-  - executable operational procedures
-- `reference`
-  - architecture, visual systems, schema, or protocol references
-- `adapter-entry`
-  - thin tool-specific entry documents that point back to canonical sources
+- Core roles:
+  - `user-guide`
+  - `internal-guide`
+  - `runbook`
+  - `reference`
+  - `adapter-entry`
+- Extended roles currently in use:
+  - `localized-user-guide`
+  - `package-guide`
+  - `contributor-guide`
+  - `ops-guide`
+  - `ops-reference`
+  - `release-policy`
+  - `submission-checklist`
+  - `submission-copy`
+
+Use the core roles by default. Extended roles exist for current repository compatibility and should only be reused when the distinction matters.
 
 ## Current Scope Vocabulary
 
@@ -208,6 +215,24 @@ Prefer the existing vocabulary below before inventing new scope values:
 - `package-usage`
 - `doc-metadata`
 - `docs`
+- `setup`
+- `themes`
+- `package`
+- `upgrade`
+- `packaging`
+- `branches`
+- `branching`
+- `contribution`
+- `adapter-sync`
+- `risk-areas`
+- `doc-routing`
+- `agent-workflow`
+- `release-flow`
+- `submission`
+- `review-checks`
+- `screenshots`
+- `theme-description`
+- `feature-summary`
 
 If a new scope term is needed, add it deliberately and keep naming stable.
 
@@ -224,6 +249,18 @@ Prefer the existing trigger vocabulary below:
 - `adapter-change`
 - `validation-change`
 - `script-change`
+- `routing-change`
+- `i18n-change`
+- `theme-naming`
+- `visual-change`
+- `package-change`
+- `package-release`
+- `branch-change`
+- `branch-policy-change`
+- `docs-workflow-change`
+- `submission-change`
+- `feature-change`
+- `sync-from-readme-en`
 
 ## Source-of-Truth Mapping
 
@@ -258,8 +295,9 @@ Tool adapters such as `CLAUDE.md` and `.cursor/rules/00-repo.mdc` should normall
 - YAML parses successfully
 - required keys are present
 - field types are correct
-- relationship paths in `depends_on` and `sync_targets` resolve
 - `doc_id` values remain unique
+- `doc_role`, `doc_scope`, `update_triggers`, and `audience` use allowed vocabulary
+- relationship paths in `depends_on` and `sync_targets` resolve
 - repository policy checks that are explicitly encoded in the validator
 
 ### It should not attempt to validate
