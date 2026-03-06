@@ -1,88 +1,29 @@
 ---
-doc_id: claude_internal
-doc_role: internal-guide
-doc_purpose: Internal maintainer guide for architecture and coding conventions.
-doc_scope: [internal-architecture, conventions, maintenance]
-update_triggers: [architecture-change, naming-change, workflow-change]
+doc_id: claude_adapter
+doc_role: tool-adapter
+doc_purpose: Thin Claude Code adapter that points to the repository's neutral agent entrypoint and canonical workflow docs.
+doc_scope: [tool-adapter, agent-entry]
+update_triggers: [doc-structure-change, workflow-change, architecture-change]
 source_of_truth: false
-depends_on: [docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md, README.md]
+depends_on: [AGENTS.md, docs/AI_WORKFLOW.md]
 ---
 
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Claude Code should treat this file as a thin adapter, not as the canonical workflow source.
 
-## Recent Updates
+## Required Read Order
 
-- Header social links now use `SOCIAL_LINKS` from `src/site.config.ts` via config adapter exports.
-- About route generation and nav visibility are gated by `ENABLE_ABOUT_PAGE`.
-- `src/site.config.ts` is the single user-facing config entry; `src/config/*.ts` are adapter exports consumed by pages/components.
-- Theme effects scripts are source-managed under `packages/theme/src/scripts/*` and bundled by Vite module pipeline.
-- Page imports are unified to package paths (`@anglefeint/astro-theme/*`) and local duplicated `src/layouts`/`src/components` were removed from app-level source.
-- Blog post background network now uses `<canvas>` (not SSR SVG node mesh) with FPS/DPR/visibility/reduced-motion guards.
-- Language switcher styles are component-local (`LangSwitcher.astro`) and themed via CSS variables from `CommonHeader.astro`.
-- If `social.links` is empty, header/footer render non-clickable placeholder social icons (plus dev hint in footer).
+1. `AGENTS.md`
+2. `docs/AI_WORKFLOW.md`
+3. `README.md`
+4. Task-relevant source docs:
+   - `docs/ARCHITECTURE.md`
+   - `docs/VISUAL_SYSTEMS.md`
+   - `docs/MAINTAINER_WORKFLOW.md`
+   - `.cursor/workflows/doc-sync-workflow.md`
 
-## Commands
+## Claude-Specific Note
 
-```bash
-npm run dev        # Start dev server at localhost:4321
-npm run build      # Production build to ./dist/
-npm run preview    # Preview production build locally
-npm run check      # Doc metadata check + astro check
-npm run check:docs # Validate markdown metadata workflow contract
-npm run lint       # Lint JS/MJS tool scripts
-npm run format     # Prettier write mode
-```
-
-## Architecture
-
-This is a static site built with **Astro 6 (beta track)** using content collections, MDX, and vanilla CSS. No Tailwind — styling is split across global CSS, external page CSS files, and scoped `<style>` blocks.
-
-### Content Pipeline
-
-Blog posts live in `src/content/blog/` as `.md`/`.mdx` files. Schema is defined in `src/content.config.ts` with standard fields (title, description, pubDate, heroImage) plus AI-themed metadata fields (aiModel, aiConfidence, etc.). The `[...slug].astro` page auto-derives reading time, token count, and AI latency from word count.
-
-### Page Themes
-
-- **Home (`/`)** — Matrix falling characters (canvas), body class `page-home`; `/en/` redirects to `/` with noindex
-- **Blog list (`/:lang/blog/`)** — Blade Runner cyberpunk (rain, dust), body class `cyber-page`
-- **Article (`/:lang/blog/[slug]`)** — AI interface reading layout, read progress, Red Queen monitor, `ai-scanlines` on header/footer only (fade on hover), body class `ai-page`. Background network is canvas-rendered (client-side), with capped DPR/FPS and hidden-tab pause/resume.
-- **About (`/:lang/about`)** — Anonymous-style terminal (black/green), body class `hacker-page`. Right sidebar with folder buttons opening modals: DL Data, AI, Decryptor, Help (virtual keyboard), All Scripts (folder grid of blog posts). Generated only when `ENABLE_ABOUT_PAGE` is `true`.
-
-### Key Files
-
-- `src/site.config.ts` — Single config entry for site/theme/i18n/social/about
-- `src/config/site.ts` — Site adapter exports (env-overridable via PUBLIC_* vars)
-- `src/config/social.ts` — Social adapter exports (SOCIAL_LINKS)
-- `src/config/theme.ts` — Theme adapter exports (BLOG_PAGE_SIZE, HOME_LATEST_COUNT, ENABLE_ABOUT_PAGE)
-- `src/config/about.ts` — About adapter exports
-- `src/consts.ts` — Re-exports from config (backwards compat)
-- `src/pages/[lang]/about.astro` — About page: terminal canvas, sidebar, modals, `getCollection('blog')` for All Scripts
-- `packages/theme/src/layouts/BlogPost.astro` — Post detail layout: AI surface, progress bar, related posts, Red Queen monitor, canvas network layer
-- `packages/theme/src/scripts/blogpost-effects.js` — Legacy bridge entry (module-bundled) for post behavior
-- `packages/theme/src/scripts/about-effects.js` — About page effects (module-bundled)
-- `packages/theme/src/scripts/home-matrix.js` — Home matrix canvas runtime
-- `packages/theme/src/components/shared/ThemeFrame.astro` — Shared document shell (head + header + footer + main container)
-- `packages/theme/src/components/shared/LangSwitcher.astro` — Locale switcher UI + local scoped styles
-- `packages/theme/src/layouts/shells/*.astro` — Theme shells (`BaseShell`, `AiShell`, `CyberShell`, `HackerShell`, `MatrixShell`)
-- `src/pages/[lang]/blog/[...page].astro` — Paginated blog list (THEME.BLOG_PAGE_SIZE)
-- `src/pages/index.astro` — Root home; `src/pages/[lang]/index.astro` — Localized home (/en/ redirects to /)
-- `src/pages/robots.txt.ts` — Dynamic robots.txt with sitemap URL
-- `packages/theme/src/components/BaseHead.astro` — Meta, hreflang (x-default), OG, JSON-LD
-
-### SEO
-
-- robots.txt is generated by `robots.txt.ts`; sitemap excludes `/en/`; hreflang x-default points to default-locale version; `alternatePathForLocale` returns `/` for English home.
-
-### Layout
-
-- **Sticky footer:** `body { display: flex; flex-direction: column; min-height: 100vh }`, `main { flex: 1 1 auto }` — footer stays at viewport bottom on short pages (e.g. blog with no articles, 2K/4K).
-
-### Patterns
-
-- Animations respect `prefers-reduced-motion` media query.
-- Images are optimized via `sharp` and Astro's `Image` component (stored in `src/assets/`).
-- Global styles in `src/styles/global.css`; page-specific styles are package-owned under `packages/theme/src/styles/*.css` and consumed via module imports plus scoped styles in `.astro` files.
-- Header social region is hidden on small screens (`max-width: 720px`), so language/social UI is desktop-first.
-- Site is purely static (no API endpoints, no SSR).
+- Prefer the repository-neutral rules in `AGENTS.md` over maintaining Claude-only workflow variants here.
+- If this file and `AGENTS.md` ever conflict, `AGENTS.md` and `docs/AI_WORKFLOW.md` win.

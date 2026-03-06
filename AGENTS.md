@@ -1,16 +1,24 @@
 ---
 doc_id: agents_repo_guide
 doc_role: internal-guide
-doc_purpose: Repository-specific guardrails and safe-edit guidance for coding agents.
-doc_scope: [agent-guidance, commands, risk-areas, validation]
+doc_purpose: Unified entrypoint for AI coding agents.
+doc_scope: [agent-guidance, commands, risk-areas, validation, doc-routing]
 update_triggers: [workflow-change, script-change, architecture-change, command-change]
 source_of_truth: true
-depends_on: [README.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md]
+depends_on: [README.md, docs/AI_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md]
 ---
 
 # AGENTS.md
 
 Guidance for AI IDE/CLI agents working in this repository.
+
+## Role
+
+This file is the neutral entrypoint for all coding agents working in this repository.
+
+- Use this file as the first document to read.
+- Then follow its document map to the deeper workflow and architecture sources.
+- Tool-specific files such as `CLAUDE.md` or `.cursor/rules/*.mdc` should point here instead of duplicating repository rules.
 
 ## Priority
 
@@ -20,10 +28,27 @@ Guidance for AI IDE/CLI agents working in this repository.
 
 ## First Read
 
-- `README.md` (theme user-facing setup)
-- `docs/ARCHITECTURE.md` (system overview)
-- `docs/VISUAL_SYSTEMS.md` (route-specific style behavior)
-- `src/site.config.ts` (single customization entry)
+1. `README.md` (theme user-facing setup)
+2. `docs/AI_WORKFLOW.md` (canonical AI safety/release/doc-sync workflow)
+3. `docs/ARCHITECTURE.md` (system overview)
+4. `docs/VISUAL_SYSTEMS.md` (route-specific style behavior)
+5. `src/site.config.ts` (single customization entry)
+
+## Document Map
+
+- `docs/AI_WORKFLOW.md`
+  - Canonical AI workflow
+  - Safe change sequence
+  - npm release + starter sync rules
+  - doc-sync entry rules
+- `docs/ARCHITECTURE.md`
+  - layouts, routing, SEO, content pipeline
+- `docs/VISUAL_SYSTEMS.md`
+  - page visual contracts, effects, script ownership
+- `docs/MAINTAINER_WORKFLOW.md`
+  - maintainer release policy details
+- `.cursor/workflows/doc-sync-workflow.md`
+  - metadata-driven documentation update algorithm
 
 ## Commands
 
@@ -32,6 +57,7 @@ npm run dev
 npm run build
 npm run preview
 npm run check
+npm run check:no-build
 npm run check:docs
 npm run lint
 ```
@@ -59,3 +85,4 @@ Lint and doc metadata checks are configured.
 - About page toggle still works (`ENABLE_ABOUT_PAGE`)
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)
+- If package behavior changed, follow `docs/AI_WORKFLOW.md` release rules before pushing
