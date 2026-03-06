@@ -1,5 +1,6 @@
 import { deepMerge } from '@anglefeint/astro-theme/utils/merge';
-import { DEFAULT_ABOUT_CONFIG, type AboutConfig } from '../site.config';
+import { DEFAULT_ABOUT_CONFIG } from '../site.config.defaults.ts';
+import type { AboutConfig } from '../site.config.schema.ts';
 import { getLocaleConfig, getLocaleFallbackChain, type Locale } from '../i18n/config';
 
 /**
