@@ -1,3 +1,26 @@
+---
+doc_id: doc_sync_workflow
+doc_role: internal-guide
+doc_purpose: Metadata-driven algorithm for deciding which repository documents must be updated after code or workflow changes.
+doc_scope:
+  - doc-sync
+  - docs
+  - workflow
+  - validation
+update_triggers:
+  - docs-workflow-change
+  - doc-process-change
+  - workflow-change
+source_of_truth: true
+audience:
+  - agent
+  - maintainer
+depends_on:
+  - docs/DOC_METADATA_SPEC.md
+  - docs/AI_WORKFLOW.md
+machine_summary: Deterministic doc-sync procedure based on markdown metadata, dependency graph traversal, and minimal sufficient validation.
+---
+
 # Doc Sync Workflow (Metadata-Driven, Fully Dynamic)
 
 Use this workflow when code/config/theme behavior changes and docs must be synchronized.
@@ -90,11 +113,12 @@ Run this workflow whenever repository changes may alter documentation truth:
    - otherwise skip with explicit reason
 6. Propagate:
    - include dependent docs via graph traversal
+   - traversal is transitive and breadth-first until no new dependent docs are discovered
 7. Apply updates in dependency-safe order:
    - source docs -> derived docs
 8. Validate:
    - `npm run check:docs`
-   - `npm run check`
+   - run `npm run check` only if the updated docs describe changed behavior, commands, routing, layout, runtime, release flow, or SEO
    - run `npm run build` only if behavior/routing/layout/SEO changed
 9. Report:
    - discovered docs count

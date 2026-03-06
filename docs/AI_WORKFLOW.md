@@ -14,14 +14,19 @@ update_triggers:
   - doc-process-change
   - command-change
 source_of_truth: true
+audience:
+  - agent
+  - maintainer
 depends_on:
   - AGENTS.md
   - docs/DOC_METADATA_SPEC.md
   - docs/MAINTAINER_WORKFLOW.md
+  - docs/PACKAGE_RELEASE.md
   - .cursor/workflows/doc-sync-workflow.md
 sync_targets:
   - CLAUDE.md
   - .cursor/rules/00-repo.mdc
+machine_summary: Canonical AI execution order for implementation, validation, release preparation, npm publishing, starter sync, and doc-sync in this repository.
 ---
 
 # AI Workflow
@@ -57,7 +62,6 @@ Before editing code, read in this order:
    - `docs/VISUAL_SYSTEMS.md` for route-specific visual/effects behavior
    - `src/site.config.ts` for site/theme/about/social customization surface
 5. Workflow-specific docs when relevant:
-   - `docs/DOC_METADATA_SPEC.md`
    - `docs/MAINTAINER_WORKFLOW.md`
    - `.cursor/workflows/doc-sync-workflow.md`
 
@@ -107,12 +111,18 @@ If npm release is required:
 2. bump the package version
 3. update `CHANGELOG.md` and create or update the matching release note entry under `docs/releases/`
 4. commit the release-prep changes on `main`
-5. publish with `npm run release:npm`
-6. then sync starter with `npm run release:starter`
+5. run `npm run maintainer:sync-starter:check`
+6. publish with `npm run release:npm`
+7. then sync starter with `npm run release:starter`
+8. push `main`
+9. push `starter`
 
 If npm release is not required but starter should still change:
 
+- run `npm run maintainer:sync-starter:check`
 - run `npm run release:starter`
+- push `main`
+- push `starter`
 
 ## Starter Synchronization Contract
 
@@ -170,8 +180,8 @@ For package-affecting changes:
 2. run validation
 3. bump package version and update `CHANGELOG.md` plus the matching `docs/releases/` entry
 4. commit the release-prep changes on `main`
-5. `npm run release:npm`
-6. `npm run maintainer:sync-starter:check`
+5. `npm run maintainer:sync-starter:check`
+6. `npm run release:npm`
 7. `npm run release:starter`
 8. push `main`
 9. push `starter`
