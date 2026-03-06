@@ -63,6 +63,8 @@ Comandos de calidad:
 ```bash
 npm run lint
 npm run format:check
+npm run e2e:install
+npm run e2e
 ```
 
 Con `pnpm`:
@@ -108,9 +110,9 @@ Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script 
 Override opcional de idiomas:
 
 ```bash
-npm run new-post -- my-first-post --locales en,ja
+npm run new-post -- my-first-post --locales en,fr
 # o
-ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
 ```
 
 Como funciona la URL:
@@ -177,7 +179,7 @@ npm run new-page -- projects --theme matrix
 
 - Salida estatica con Astro 6 (beta)
 - Colecciones de contenido Markdown + MDX
-- Idiomas incluidos: `en`, `ja`, `ko`, `es`, `zh`
+- El starter incluye idiomas de ejemplo: `en`, `ja`, `ko`, `es`, `zh`
 - RSS por idioma
 - Soporte para sitemap + robots
 - Personalizacion orientada a configuracion
@@ -187,8 +189,11 @@ npm run new-page -- projects --theme matrix
 
 1. Copia `.env.example` a `.env` y define la identidad del sitio.
 2. Edita `src/site.config.ts`:
+   - `i18n.defaultLocale` para definir el idioma por defecto y el comportamiento de la ruta raiz
+   - `i18n.routing.defaultLocalePrefix` para elegir si el idioma por defecto vive en `/` o en `/<default-locale>/`
+   - `i18n.locales` como fuente unica para agregar o quitar idiomas soportados
    - `social.links` para enlaces sociales
-   - `aboutByLocale` para contenido y textos runtime de About por idioma
+   - `i18n.locales.<code>.about` para contenido y textos runtime de About por idioma
    - `theme.enableAboutPage` para activar/desactivar About
    - `theme.effects.enableRedQueen` para activar/desactivar el monitor lateral en posts
    - `theme.comments` para activar y configurar Giscus (IDs base + parametros de comportamiento)
