@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import matter from 'gray-matter';
 
 const ROOT = process.cwd();
 const REQUIRED_FIELDS = ['doc_id', 'doc_role', 'doc_scope', 'update_triggers'];
@@ -35,29 +36,21 @@ function walk(dir, out = []) {
   return out;
 }
 
-function extractFrontmatter(text) {
-  if (!text.startsWith('---\n')) return null;
-  const end = text.indexOf('\n---\n', 4);
-  if (end === -1) return null;
-  return text.slice(4, end);
-}
-
-function parseFrontmatter(frontmatter) {
-  const map = {};
-  for (const raw of frontmatter.split('\n')) {
-    const line = raw.trim();
-    if (!line || line.startsWith('#')) continue;
-    const idx = line.indexOf(':');
-    if (idx === -1) continue;
-    const key = line.slice(0, idx).trim();
-    const value = line.slice(idx + 1).trim();
-    map[key] = value;
+function parseDocFrontmatter(file, text) {
+  try {
+    const parsed = matter(text);
+    if (!parsed.matter || Object.keys(parsed.data).length === 0) {
+      return { ok: false, reason: 'missing-frontmatter' };
+    }
+    return { ok: true, data: parsed.data };
+  } catch (error) {
+    return {
+      ok: false,
+      reason: 'parse-error',
+      error: error instanceof Error ? error.message : String(error),
+      file,
+    };
   }
-  return map;
-}
-
-function isArrayLike(v) {
-  return v.startsWith('[') && v.endsWith(']');
 }
 
 function getBranchName() {
@@ -108,26 +101,35 @@ function validateReadmeBranchPolicy(files, branch) {
 function main() {
   const files = walk(ROOT).sort();
   const missingFrontmatter = [];
+  const parseErrors = [];
   const missingFields = [];
   const wrongTypeFields = [];
 
   for (const file of files) {
     const text = readFileSync(file, 'utf8');
-    const fm = extractFrontmatter(text);
-    if (!fm) {
+    const parsedFrontmatter = parseDocFrontmatter(file, text);
+    if (!parsedFrontmatter.ok) {
+      if (parsedFrontmatter.reason === 'missing-frontmatter') {
+        missingFrontmatter.push(file);
+      } else {
+        parseErrors.push(`${file}: ${parsedFrontmatter.error}`);
+      }
+      continue;
+    }
+    const parsed = parsedFrontmatter.data;
+    if (!parsed || typeof parsed !== 'object') {
       missingFrontmatter.push(file);
       continue;
     }
-    const parsed = parseFrontmatter(fm);
     for (const field of REQUIRED_FIELDS) {
-      if (!(field in parsed) || parsed[field] === '') {
+      if (!(field in parsed) || parsed[field] === '' || parsed[field] === undefined) {
         missingFields.push(`${file}: missing field '${field}'`);
       }
     }
     for (const field of REQUIRED_ARRAY_FIELDS) {
       const value = parsed[field];
-      if (value && !isArrayLike(value)) {
-        wrongTypeFields.push(`${file}: field '${field}' should be array-like, got '${value}'`);
+      if (value !== undefined && !Array.isArray(value)) {
+        wrongTypeFields.push(`${file}: field '${field}' should be an array, got '${typeof value}'`);
       }
     }
   }
@@ -137,6 +139,7 @@ function main() {
 
   const hasError =
     missingFrontmatter.length > 0 ||
+    parseErrors.length > 0 ||
     missingFields.length > 0 ||
     wrongTypeFields.length > 0 ||
     branchPolicyIssues.length > 0;
@@ -151,6 +154,10 @@ function main() {
   if (missingFrontmatter.length) {
     console.error('\nMissing frontmatter:');
     for (const item of missingFrontmatter) console.error(`- ${item}`);
+  }
+  if (parseErrors.length) {
+    console.error('\nFrontmatter parse errors:');
+    for (const item of parseErrors) console.error(`- ${item}`);
   }
   if (missingFields.length) {
     console.error('\nMissing required fields:');
