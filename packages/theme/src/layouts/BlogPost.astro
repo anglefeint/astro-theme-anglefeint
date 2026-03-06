@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content';
 import themeRedqueen1 from '../assets/theme/red-queen/theme-redqueen1.webp';
 import themeRedqueen2 from '../assets/theme/red-queen/theme-redqueen2.gif';
 import FormattedDate from '../components/FormattedDate.astro';
+import Giscus from '../components/Giscus.astro';
 import AiShell from './shells/AiShell.astro';
 import blogPostCssUrl from '../styles/blog-post.css?url';
 import { SITE_AUTHOR } from '@anglefeint/site-config/site';
@@ -335,25 +336,7 @@ const hasCommentsConfig = Boolean(
   {
     hasCommentsConfig && (
       <section class="prose ai-comments" aria-label={messages.blog.comments}>
-        <script
-          src="https://giscus.app/client.js"
-          data-repo={comments.REPO}
-          data-repo-id={comments.REPO_ID}
-          data-category={comments.CATEGORY}
-          data-category-id={comments.CATEGORY_ID}
-          data-mapping={comments.MAPPING}
-          data-term={comments.MAPPING === 'specific' ? normalizedCommentTerm : undefined}
-          data-number={comments.MAPPING === 'number' ? normalizedCommentNumber : undefined}
-          data-strict={comments.STRICT}
-          data-reactions-enabled={comments.REACTIONS_ENABLED}
-          data-emit-metadata={comments.EMIT_METADATA}
-          data-input-position={comments.INPUT_POSITION}
-          data-theme={comments.THEME}
-          data-lang={comments.LANG || resolvedLocale}
-          data-loading={comments.LOADING}
-          crossorigin={comments.CROSSORIGIN}
-          async
-        />
+        <Giscus comments={comments} resolvedLocale={resolvedLocale} />
       </section>
     )
   }

@@ -2,13 +2,18 @@ import { createDecryptorController } from './modal-decryptor.js';
 import { mountHelpKeyboard } from './modal-keyboard.js';
 import { renderProgressModal } from './modal-progress.js';
 
+let cleanupAboutModals = null;
+
 export function initAboutModals(runtimeConfig, prefersReducedMotion) {
+  if (cleanupAboutModals) cleanupAboutModals();
+
   const modalOverlay = document.getElementById('hacker-modal');
   const modalBody = document.getElementById('hacker-modal-body');
   const modalTitle = document.querySelector('.hacker-modal-title');
   if (!modalOverlay || !modalBody || !modalTitle) return;
 
-  const decryptorKeysLabel = runtimeConfig.decryptorKeysLabel || 'keys tested';
+  const decryptorKeysLabel =
+    typeof runtimeConfig.decryptorKeysLabel === 'string' ? runtimeConfig.decryptorKeysLabel : '';
   const decryptor = createDecryptorController(
     modalOverlay,
     prefersReducedMotion,
@@ -17,26 +22,8 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
   let cleanupKeyboard = null;
 
   const scriptsTpl = document.getElementById('hacker-scripts-folders-tpl');
-  const fallbackModalContent = {
-    'dl-data': {
-      title: 'Downloading...',
-      body: '<div class="hacker-modal-download"><div class="modal-subtitle">Critical Data</div><div class="hacker-modal-progress" id="dl-progress"></div></div>',
-      type: 'progress',
-    },
-    ai: {
-      title: 'AI',
-      body: '<pre>~ $ ai --status --verbose\n\nmodel: runtime-default\nmode: standard\ncontext window: 32k\nlatency: 100-250ms\nsafety: enabled\n\n&gt;&gt; system online\n&gt;&gt; ready</pre>',
-      type: 'plain',
-    },
-    decryptor: {
-      title: 'Password Decryptor',
-      body: '<pre class="hacker-decryptor-pre">Calculating Hashes\n\n<span id="dec-keys">[00:00:01] 0 keys tested</span>\n\nCurrent passphrase: <span id="dec-pass">********</span>\n\nMaster key\n<span id="dec-master1"></span>\n<span id="dec-master2"></span>\n\nTransient key\n<span id="dec-trans1"></span>\n<span id="dec-trans2"></span>\n<span id="dec-trans3"></span>\n<span id="dec-trans4"></span></pre>',
-      type: 'decryptor',
-    },
-    help: { title: 'Help', body: '', type: 'keyboard' },
-    'all-scripts': { title: '/root/bash/scripts', body: '', type: 'scripts' },
-  };
-  const modalContent = runtimeConfig.modalContent || fallbackModalContent;
+  const modalContent = runtimeConfig.modalContent;
+  if (!modalContent || typeof modalContent !== 'object') return;
 
   const closeModal = () => {
     decryptor.stop();
@@ -99,22 +86,43 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
     modalOverlay.setAttribute('aria-hidden', 'false');
   };
 
-  document.querySelectorAll('.hacker-folder[data-modal]').forEach((button) => {
-    button.addEventListener('click', () => {
+  const folderButtons = Array.from(document.querySelectorAll('.hacker-folder[data-modal]'));
+  const buttonHandlers = folderButtons.map((button) => {
+    const onClick = () => {
       const id = button.getAttribute('data-modal');
       if (!id) return;
       openModal(modalContent[id]);
-    });
+    };
+    button.addEventListener('click', onClick);
+    return [button, onClick];
   });
 
   const closeButton = document.querySelector('.hacker-modal-close');
   if (closeButton) closeButton.addEventListener('click', closeModal);
 
-  modalOverlay.addEventListener('click', (event) => {
+  const onOverlayClick = (event) => {
     if (event.target === modalOverlay) closeModal();
-  });
+  };
+  modalOverlay.addEventListener('click', onOverlayClick);
 
-  document.addEventListener('keydown', (event) => {
+  const onDocumentKeydown = (event) => {
     if (event.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal();
-  });
+  };
+  document.addEventListener('keydown', onDocumentKeydown);
+
+  cleanupAboutModals = () => {
+    decryptor.stop();
+    if (cleanupKeyboard) {
+      cleanupKeyboard();
+      cleanupKeyboard = null;
+    }
+    if (closeButton) closeButton.removeEventListener('click', closeModal);
+    modalOverlay.removeEventListener('click', onOverlayClick);
+    document.removeEventListener('keydown', onDocumentKeydown);
+    buttonHandlers.forEach(([button, handler]) => {
+      button.removeEventListener('click', handler);
+    });
+  };
+
+  return cleanupAboutModals;
 }
