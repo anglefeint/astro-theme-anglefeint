@@ -54,6 +54,28 @@ const STARTER_OBSOLETE_FILES = [
 const STARTER_PACKAGE_JSON = 'package.json';
 const STARTER_PACKAGE_LOCK = 'package-lock.json';
 const THEME_PACKAGE_JSON = 'packages/theme/package.json';
+const REQUIRED_STARTER_MANAGED_FILES = [
+  'scripts/adapter-templates/src/config/about.ts',
+  'scripts/adapter-templates/src/config/index.ts',
+  'scripts/adapter-templates/src/config/site.ts',
+  'scripts/adapter-templates/src/config/social.ts',
+  'scripts/adapter-templates/src/config/theme.ts',
+  'scripts/adapter-templates/src/i18n/config.ts',
+  'scripts/adapter-templates/src/i18n/messages.ts',
+  'scripts/adapter-templates/src/i18n/posts.ts',
+  'scripts/adapter-templates/src/i18n/runtime.ts',
+  'scripts/adapter-templates/src/types/theme-scripts.d.ts',
+  'scripts/check-about-runtime-config.mjs',
+  'scripts/check-adapter-contract.mjs',
+  'scripts/new-page.mjs',
+  'scripts/new-post.mjs',
+  'scripts/sync-adapters.mjs',
+  'src/config/about.ts',
+  'src/config/site.ts',
+  'src/i18n/config.ts',
+  'src/i18n/messages.ts',
+  'src/i18n/runtime.ts',
+];
 
 function parseArgs(argv) {
   return {
@@ -64,6 +86,16 @@ function parseArgs(argv) {
     from: argv.find((arg) => arg.startsWith('--from='))?.slice('--from='.length) || 'main',
     target: argv.find((arg) => arg.startsWith('--target='))?.slice('--target='.length) || 'starter',
   };
+}
+
+function validateManagedCoverage() {
+  const managed = new Set(MANAGED_FILES);
+  const missing = REQUIRED_STARTER_MANAGED_FILES.filter((relPath) => !managed.has(relPath));
+  if (missing.length === 0) return;
+
+  throw new Error(
+    `[maintainer:sync-starter] MANAGED_FILES is missing starter-required file(s):\n- ${missing.join('\n- ')}`
+  );
 }
 
 async function run(command, args, options = {}) {
@@ -320,6 +352,7 @@ async function main() {
   const { checkOnly, push, allowAnyBranch, allowDirty, from, target } = parseArgs(
     process.argv.slice(2)
   );
+  validateManagedCoverage();
   const sourceRef = await resolveRefCandidates(from);
   const { localRef: targetLocalRef, compareRef: targetCompareRef } =
     await resolveBranchCandidates(target);

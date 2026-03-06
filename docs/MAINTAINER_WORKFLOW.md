@@ -90,8 +90,9 @@ Use this sequence unless explicitly skipped for a documented reason.
 
 1. Update `main` and push.
 2. If Class A/C affects shipped package behavior, publish npm package.
-3. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
-4. Push `starter`.
+3. Run `npm run maintainer:sync-starter:check` on `main` to confirm the expected starter drift before mutating branches.
+4. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
+5. Push `starter`.
 
 ## Release Decision Gate
 
@@ -107,9 +108,8 @@ Before running `npm run release:npm`, verify whether `packages/theme/**` changed
 Maintainer entry commands (run on `main`):
 
 ```bash
-npm run release:starter
-# optional check-only mode:
 npm run maintainer:sync-starter:check
+npm run release:starter
 # optional sync + auto-push:
 npm run release:starter:push
 ```
@@ -120,7 +120,10 @@ npm run release:starter:push
 - User-facing docs must not tell end users to run maintainer sync scripts.
 - End users should upgrade via package updates and normal checks.
 - When introducing new starter-managed runtime/config files, update `tools/maintainer/sync-starter.mjs` `MANAGED_FILES` in the same change.
+- When introducing starter-consumed runtime/config/script/template files, update `tools/maintainer/sync-starter.mjs` in the same change.
 - `starter` is generated/distribution only. Do not maintain runtime logic or starter package versions there manually.
+
+If `npm run release:starter` fails, return to `main` and fix the sync contract or package-side issue there. Do not patch starter runtime logic manually.
 
 ## End-user Upgrade Guidance (for docs)
 
