@@ -63,6 +63,8 @@ npm run preview
 ```bash
 npm run lint
 npm run format:check
+npm run e2e:install
+npm run e2e
 ```
 
 `pnpm` 사용:
@@ -108,9 +110,9 @@ Slug 규칙: 소문자 영문, 숫자, 하이픈만 사용하세요 (예: `my-fi
 선택 로케일 지정:
 
 ```bash
-npm run new-post -- my-first-post --locales en,ja
+npm run new-post -- my-first-post --locales en,fr
 # 또는
-ANGLEFEINT_LOCALES=en,ja npm run new-post -- my-first-post
+ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
 ```
 
 URL 규칙:
@@ -177,7 +179,7 @@ npm run new-page -- projects --theme matrix
 
 - Astro 6 정적 출력 (beta 트랙)
 - Markdown + MDX 콘텐츠 컬렉션
-- 기본 로케일: `en`, `ja`, `ko`, `es`, `zh`
+- 스타터에 포함된 예시 로케일: `en`, `ja`, `ko`, `es`, `zh`
 - 로케일별 RSS 피드
 - sitemap + robots 지원
 - 설정 중심의 커스터마이징
@@ -187,8 +189,11 @@ npm run new-page -- projects --theme matrix
 
 1. `.env.example` 를 `.env` 로 복사하고 사이트 정보를 설정합니다.
 2. `src/site.config.ts` 를 수정합니다:
+   - `i18n.defaultLocale`: 기본 언어와 루트 경로 기준을 설정
+   - `i18n.routing.defaultLocalePrefix`: 기본 언어를 `/` 또는 `/<default-locale>/` 중 어디에 둘지 설정
+   - `i18n.locales`: 지원 언어를 한 곳에서 추가/제거하는 단일 소스
    - `social.links`: 소셜 링크
-   - `aboutByLocale`: 로케일별 About 콘텐츠와 런타임 문구
+   - `i18n.locales.<code>.about`: 로케일별 About 콘텐츠와 런타임 문구
    - `theme.enableAboutPage`: About 노출 제어
    - `theme.effects.enableRedQueen`: 글 상세 사이드 모니터 이펙트 on/off
    - `theme.comments`: Giscus 활성화/설정 (핵심 ID + 동작 파라미터)
