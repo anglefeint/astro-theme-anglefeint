@@ -2,10 +2,23 @@
 doc_id: agents_repo_guide
 doc_role: internal-guide
 doc_purpose: Unified entrypoint for AI coding agents.
-doc_scope: [agent-guidance, commands, risk-areas, validation, doc-routing]
-update_triggers: [workflow-change, script-change, architecture-change, command-change]
+doc_scope:
+  - agent-guidance
+  - commands
+  - risk-areas
+  - validation
+  - doc-routing
+update_triggers:
+  - workflow-change
+  - script-change
+  - architecture-change
+  - command-change
 source_of_truth: true
-depends_on: [README.md, docs/AI_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md]
+depends_on:
+  - README.md
+  - docs/AI_WORKFLOW.md
+  - docs/ARCHITECTURE.md
+  - docs/VISUAL_SYSTEMS.md
 ---
 
 # AGENTS.md

@@ -2,10 +2,22 @@
 doc_id: ai_workflow
 doc_role: internal-guide
 doc_purpose: Canonical AI agent workflow.
-doc_scope: [agent-workflow, release-flow, starter-sync, doc-sync, validation]
-update_triggers: [workflow-change, release-change, doc-process-change, command-change]
+doc_scope:
+  - agent-workflow
+  - release-flow
+  - starter-sync
+  - doc-sync
+  - validation
+update_triggers:
+  - workflow-change
+  - release-change
+  - doc-process-change
+  - command-change
 source_of_truth: true
-depends_on: [AGENTS.md, docs/MAINTAINER_WORKFLOW.md, .cursor/workflows/doc-sync-workflow.md]
+depends_on:
+  - AGENTS.md
+  - docs/MAINTAINER_WORKFLOW.md
+  - .cursor/workflows/doc-sync-workflow.md
 ---
 
 # AI Workflow
