@@ -15,6 +15,16 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-03-07
+
+### Fixed
+
+- Added explicit package exports for pagination utilities so installed-package starter projects can resolve `@anglefeint/astro-theme/utils/pagination` correctly after the pagination migration.
+
+### Notes
+
+- See [`docs/releases/0.2.3.md`](docs/releases/0.2.3.md) for release details and validation summary.
+
 ## [0.2.2] - 2026-03-07
 
 ### Changed
