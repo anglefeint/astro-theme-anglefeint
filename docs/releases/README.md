@@ -40,10 +40,11 @@ The following grouped notes backfill the release history that predates the forma
 - [`0.1.25-0.1.31`](./0.1.25-0.1.31.md)
 - [`0.1.32-0.1.37`](./0.1.32-0.1.37.md)
 - [`0.1.38-0.1.40`](./0.1.38-0.1.40.md)
+- [`0.2.0`](./0.2.0.md)
 
 ## Forward Rule
 
-Starting with the next publish after `0.1.40`, create a dedicated note file:
+Starting with `0.2.0`, create a dedicated note file for each publish:
 
 - `docs/releases/<version>.md`
 

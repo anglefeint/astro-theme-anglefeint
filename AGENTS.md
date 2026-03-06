@@ -82,6 +82,8 @@ npm run check
 npm run check:no-build
 npm run check:docs
 npm run lint
+npm run e2e:install
+npm run e2e
 ```
 
 Lint and doc metadata checks are configured.
@@ -103,7 +105,7 @@ Lint and doc metadata checks are configured.
 ## Change Checklist
 
 - Build succeeds (`npm run build`)
-- Route behavior remains correct (`/`, `/en/`, localized pages)
+- Route behavior remains correct (`/`, `/<default-locale>/`, localized pages)
 - About page toggle still works (`ENABLE_ABOUT_PAGE`)
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)

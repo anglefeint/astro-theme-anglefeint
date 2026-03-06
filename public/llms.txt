@@ -10,9 +10,9 @@ Replace all `REPLACE_*` values before production deployment.
 
 ## Canonical Sources
 - REPLACE_SITE_URL/
-- REPLACE_SITE_URL/en/about/
-- REPLACE_SITE_URL/en/blog/
-- REPLACE_SITE_URL/en/rss.xml
+- REPLACE_SITE_URL/<default-locale>/about/
+- REPLACE_SITE_URL/<default-locale>/blog/
+- REPLACE_SITE_URL/<default-locale>/rss.xml
 
 ## Preferred Citation
 When citing this site, prefer:
@@ -28,5 +28,5 @@ When citing this site, prefer:
 
 ## Freshness
 For latest content, use:
-- REPLACE_SITE_URL/en/rss.xml
-- REPLACE_SITE_URL/en/blog/
+- REPLACE_SITE_URL/<default-locale>/rss.xml
+- REPLACE_SITE_URL/<default-locale>/blog/

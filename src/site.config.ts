@@ -3,8 +3,9 @@
  * Edit this file only. Other files under src/config/* and src/i18n/* are adapters.
  */
 import { deepMerge, type DeepPartial } from '@anglefeint/astro-theme/utils/merge';
+import type { Messages } from '@anglefeint/theme-default-i18n';
 
-export type LocaleCode = 'en' | 'ja' | 'ko' | 'es' | 'zh';
+export type LocaleCode = string;
 
 export interface SocialLink {
   href: string;
@@ -89,7 +90,6 @@ export interface ThemeConfig {
     url: string;
     author: string;
     tagline: string;
-    heroByLocale: Record<LocaleCode, string>;
   };
   theme: {
     blogPageSize: number;
@@ -131,18 +131,71 @@ export interface ThemeConfig {
       crossorigin: 'anonymous' | 'use-credentials';
     };
   };
-  i18n: {
-    defaultLocale: LocaleCode;
-    supportedLocales: LocaleCode[];
-    localeLabels: Record<LocaleCode, string>;
-  };
+  i18n: ThemeI18nConfig;
   social: {
     links: SocialLink[];
   };
-  aboutByLocale: Record<LocaleCode, AboutConfig>;
 }
 
-const defaultAboutConfig: AboutConfig = {
+export interface LocaleMetaConfig {
+  label: string;
+  hreflang?: string;
+  ogLocale?: string;
+  dir?: 'ltr' | 'rtl';
+  enabled?: boolean;
+  fallback?: LocaleCode[];
+}
+
+export interface LocaleSiteConfig {
+  hero?: string;
+}
+
+export interface LocaleConfig {
+  meta: LocaleMetaConfig;
+  site?: LocaleSiteConfig;
+  about?: DeepPartial<AboutConfig>;
+  messages?: DeepPartial<Messages>;
+}
+
+export interface ThemeI18nConfig {
+  defaultLocale: LocaleCode;
+  locales: Record<string, LocaleConfig>;
+  routing: {
+    defaultLocalePrefix: 'never' | 'always';
+  };
+  validation: {
+    requireCompleteMessages: boolean;
+    requireCompleteAbout: boolean;
+    requireCompleteHero: boolean;
+    requireOgLocale: boolean;
+  };
+}
+
+export interface NormalizedLocaleConfig {
+  code: LocaleCode;
+  meta: {
+    label: string;
+    hreflang: string;
+    ogLocale?: string;
+    dir: 'ltr' | 'rtl';
+    enabled: boolean;
+    fallback: LocaleCode[];
+  };
+  site: {
+    hero?: string;
+  };
+  about?: DeepPartial<AboutConfig>;
+  messages?: DeepPartial<Messages>;
+}
+
+export interface NormalizedThemeI18nConfig {
+  defaultLocale: LocaleCode;
+  locales: Record<string, NormalizedLocaleConfig>;
+  routing: ThemeI18nConfig['routing'];
+  validation: ThemeI18nConfig['validation'];
+}
+
+export const DEFAULT_ABOUT_CONFIG: AboutConfig = {
   metaLine: '$ profile booted | mode: builder',
   sections: {
     who: 'Write a short introduction about yourself, your background, and your primary focus areas.',
@@ -247,13 +300,6 @@ const defaultThemeConfig: ThemeConfig = {
     url: 'https://example.com',
     author: 'Your Name',
     tagline: 'Built with Astro.',
-    heroByLocale: {
-      en: 'Write a short introduction for your site and what readers can expect from your posts.',
-      ja: 'このサイトの紹介文と、読者がどんな記事を期待できるかを書いてください。',
-      ko: '사이트 소개와 방문자가 어떤 글을 기대할 수 있는지 간단히 작성하세요.',
-      es: 'Escribe una breve presentación del sitio y qué tipo de contenido encontrarán tus lectores.',
-      zh: '在这里写一段站点简介，并告诉读者你将发布什么类型的内容。',
-    },
   },
   theme: {
     blogPageSize: 9,
@@ -297,29 +343,171 @@ const defaultThemeConfig: ThemeConfig = {
   },
   i18n: {
     defaultLocale: 'en',
-    supportedLocales: ['en', 'ja', 'ko', 'es', 'zh'],
-    localeLabels: {
-      en: 'English',
-      ja: '日本語',
-      ko: '한국어',
-      es: 'Español',
-      zh: '中文',
+    locales: {
+      en: {
+        meta: {
+          label: 'English',
+          hreflang: 'en',
+          ogLocale: 'en_US',
+        },
+        site: {
+          hero: 'Write a short introduction for your site and what readers can expect from your posts.',
+        },
+        about: DEFAULT_ABOUT_CONFIG,
+      },
+      ja: {
+        meta: {
+          label: '日本語',
+          hreflang: 'ja',
+          ogLocale: 'ja_JP',
+          fallback: ['en'],
+        },
+        site: {
+          hero: 'このサイトの紹介文と、読者がどんな記事を期待できるかを書いてください。',
+        },
+        about: DEFAULT_ABOUT_CONFIG,
+      },
+      ko: {
+        meta: {
+          label: '한국어',
+          hreflang: 'ko',
+          ogLocale: 'ko_KR',
+          fallback: ['en'],
+        },
+        site: {
+          hero: '사이트 소개와 방문자가 어떤 글을 기대할 수 있는지 간단히 작성하세요.',
+        },
+        about: DEFAULT_ABOUT_CONFIG,
+      },
+      es: {
+        meta: {
+          label: 'Español',
+          hreflang: 'es',
+          ogLocale: 'es_ES',
+          fallback: ['en'],
+        },
+        site: {
+          hero: 'Escribe una breve presentación del sitio y qué tipo de contenido encontrarán tus lectores.',
+        },
+        about: DEFAULT_ABOUT_CONFIG,
+      },
+      zh: {
+        meta: {
+          label: '中文',
+          hreflang: 'zh-CN',
+          ogLocale: 'zh_CN',
+          fallback: ['en'],
+        },
+        site: {
+          hero: '在这里写一段站点简介，并告诉读者你将发布什么类型的内容。',
+        },
+        about: DEFAULT_ABOUT_CONFIG,
+      },
+    },
+    routing: {
+      defaultLocalePrefix: 'never',
+    },
+    validation: {
+      requireCompleteMessages: false,
+      requireCompleteAbout: false,
+      requireCompleteHero: false,
+      requireOgLocale: false,
     },
   },
   social: {
     links: [],
   },
-  aboutByLocale: {
-    en: defaultAboutConfig,
-    ja: defaultAboutConfig,
-    ko: defaultAboutConfig,
-    es: defaultAboutConfig,
-    zh: defaultAboutConfig,
-  },
 };
 
 export function defineThemeConfig(config: DeepPartial<ThemeConfig>): ThemeConfig {
   return deepMerge(defaultThemeConfig, config);
+}
+
+function sanitizeFallbackChain(
+  locale: LocaleCode,
+  fallback: readonly LocaleCode[] | undefined,
+  defaultLocale: LocaleCode,
+  supportedLocales: ReadonlySet<LocaleCode>
+): LocaleCode[] {
+  const fallbackCandidates =
+    fallback && fallback.length > 0 ? fallback : locale === defaultLocale ? [] : [defaultLocale];
+  const seen = new Set<LocaleCode>();
+  const resolved: LocaleCode[] = [];
+
+  for (const candidate of fallbackCandidates) {
+    if (
+      !candidate ||
+      candidate === locale ||
+      seen.has(candidate) ||
+      !supportedLocales.has(candidate)
+    ) {
+      continue;
+    }
+    seen.add(candidate);
+    resolved.push(candidate);
+  }
+
+  if (locale !== defaultLocale && !seen.has(defaultLocale) && supportedLocales.has(defaultLocale)) {
+    resolved.push(defaultLocale);
+  }
+
+  return resolved;
+}
+
+export function normalizeI18nConfig(config: ThemeI18nConfig): NormalizedThemeI18nConfig {
+  const localeEntries = { ...config.locales };
+  const defaultLocale = config.defaultLocale || 'en';
+
+  if (!localeEntries[defaultLocale]) {
+    localeEntries[defaultLocale] = {
+      meta: {
+        label: defaultLocale,
+      },
+    };
+  }
+
+  const supportedLocales = new Set(Object.keys(localeEntries));
+  const normalizedLocales: Record<string, NormalizedLocaleConfig> = {};
+
+  for (const [code, localeConfig] of Object.entries(localeEntries)) {
+    const fallback = sanitizeFallbackChain(
+      code,
+      localeConfig.meta.fallback,
+      defaultLocale,
+      supportedLocales
+    );
+
+    normalizedLocales[code] = {
+      code,
+      meta: {
+        label: localeConfig.meta.label || code,
+        hreflang: localeConfig.meta.hreflang || code,
+        ogLocale: localeConfig.meta.ogLocale,
+        dir: localeConfig.meta.dir || 'ltr',
+        enabled: code === defaultLocale ? true : localeConfig.meta.enabled !== false,
+        fallback,
+      },
+      site: {
+        hero: localeConfig.site?.hero,
+      },
+      about: localeConfig.about,
+      messages: localeConfig.messages,
+    };
+  }
+
+  return {
+    defaultLocale,
+    locales: normalizedLocales,
+    routing: {
+      defaultLocalePrefix: config.routing.defaultLocalePrefix || 'never',
+    },
+    validation: {
+      requireCompleteMessages: config.validation.requireCompleteMessages,
+      requireCompleteAbout: config.validation.requireCompleteAbout,
+      requireCompleteHero: config.validation.requireCompleteHero,
+      requireOgLocale: config.validation.requireOgLocale,
+    },
+  };
 }
 
 /**
@@ -328,25 +516,15 @@ export function defineThemeConfig(config: DeepPartial<ThemeConfig>): ThemeConfig
  */
 export const THEME_CONFIG = defineThemeConfig({
   // Example:
-  // site: { title: "My Site Title" },
-  // theme: {
-  //   comments: {
-  //     enabled: true,
-  //     repo: "your-org/your-repo",
-  //     repoId: "R_kgDOxxxxxx",
-  //     category: "Comments",
-  //     categoryId: "DIC_kwDOxxxxxx",
-  //     mapping: "pathname",
-  //     term: "",
-  //     number: "",
-  //     strict: "0",
-  //     reactionsEnabled: "1",
-  //     emitMetadata: "0",
-  //     inputPosition: "top",
-  //     theme: "dark",
-  //     lang: "en",
-  //     loading: "lazy",
-  //     crossorigin: "anonymous",
+  // i18n: {
+  //   defaultLocale: 'en',
+  //   locales: {
+  //     en: {
+  //       meta: { label: 'English', hreflang: 'en', ogLocale: 'en_US' },
+  //       site: { hero: 'Your localized hero copy.' },
+  //       about: { metaLine: '$ profile booted | mode: builder' },
+  //       messages: { nav: { home: 'Home' } },
+  //     },
   //   },
   // },
 });

@@ -39,7 +39,7 @@ After every upgrade:
 4. Check routes:
 
 - `/`
-- `/en/`
+- `/<default-locale>/`
 - `/:lang/blog`
 - `/:lang/blog/[slug]`
 - `/robots.txt`

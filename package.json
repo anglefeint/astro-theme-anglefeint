@@ -41,6 +41,9 @@
     "format": "prettier --write \"**/*.{js,mjs,ts,astro,md,json,jsonc,css}\"",
     "format:check": "prettier --check \"**/*.{js,mjs,ts,astro,md,json,jsonc,css}\"",
     "preview": "astro preview",
+    "e2e:install": "playwright install chromium",
+    "e2e:prepare": "node scripts/build-e2e-smoke-config.mjs",
+    "e2e": "npm run build && npm run e2e:prepare && playwright test",
     "release:npm": "node scripts/release-npm.mjs",
     "new-post": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-post.mjs",
     "new-page": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-page.mjs",
@@ -67,6 +70,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.7-beta.1",
     "@eslint/js": "^9.22.0",
+    "@playwright/test": "^1.58.2",
     "eslint": "^9.22.0",
     "globals": "^16.0.0",
     "gray-matter": "^4.0.3",

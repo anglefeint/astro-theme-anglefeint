@@ -70,8 +70,9 @@ The project now follows a compositional structure:
 
 ## Routing
 
-- `/` is canonical English home
-- `/en/` redirects to `/` (noindex)
+- `src/site.config.ts -> i18n.routing.defaultLocalePrefix` controls default-locale home routing
+- `'never'`: `/` is canonical for the default locale and `/<default-locale>/` redirects back to `/` (noindex)
+- `'always'`: `/<default-locale>/` is canonical and `/` redirects to it (noindex)
 - Other locales are explicit via `/:lang/`
 - Blog list: `/:lang/blog` (paginated)
 - Blog post: `/:lang/blog/[slug]`
@@ -84,9 +85,10 @@ The project now follows a compositional structure:
 ## Configuration Surface
 
 - `src/site.config.ts`: single user-facing config entry
+- `src/site.config.ts -> i18n`: single locale registry, localized messages, hero copy, and About content
 - `src/config/site.ts`: site adapter (env override + mapped exports)
 - `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle, effect switches such as `enableRedQueen`)
-- `src/config/about.ts`: About adapter selector (`getAboutConfig(locale)` from `aboutByLocale`)
+- `src/config/about.ts`: About adapter selector (`getAboutConfig(locale)` from `src/site.config.ts -> i18n.locales`)
 - `src/config/social.ts`: social adapter (header/footer social links)
 - `packages/theme/src/config/*.ts`: package fallback defaults for non-starter/manual consumers
 
@@ -112,7 +114,7 @@ The project now follows a compositional structure:
 ## SEO and Discovery
 
 - Head metadata and hreflang: `packages/theme/src/components/BaseHead.astro`
-- Sitemap integration: `@astrojs/sitemap` in `astro.config.mjs`
+- Sitemap integration: `@astrojs/sitemap` in `astro.config.mjs` (follows `defaultLocalePrefix` routing mode)
 - robots.txt route: `src/pages/robots.txt.ts`
 
 ## Key Layout and Components

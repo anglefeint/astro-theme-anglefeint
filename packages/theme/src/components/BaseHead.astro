@@ -9,6 +9,8 @@ import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
   alternatePathForLocale,
+  getLocaleHreflang,
+  getLocaleOgLocale,
   isLocale,
   stripLocaleFromPath,
 } from '@anglefeint/site-i18n/config';
@@ -52,21 +54,14 @@ const rssURL = new URL(`/${currentLocale}/rss.xml`, siteURL);
 const localeSubpath = stripLocaleFromPath(Astro.url.pathname, currentLocale);
 const alternatePaths = SUPPORTED_LOCALES.map((locale) => ({
   locale,
+  hreflang: getLocaleHreflang(locale),
   href: new URL(alternatePathForLocale(locale, localeSubpath), siteURL).toString(),
 }));
 const xDefaultHref = new URL(alternatePathForLocale(DEFAULT_LOCALE, localeSubpath), siteURL);
-
-const OG_LOCALE: Record<string, string> = {
-  en: 'en_US',
-  ja: 'ja_JP',
-  ko: 'ko_KR',
-  es: 'es_ES',
-  zh: 'zh_CN',
-};
-const ogLocale = OG_LOCALE[currentLocale] ?? 'en_US';
-const ogLocaleAlternates = SUPPORTED_LOCALES.filter((l) => l !== currentLocale).map(
-  (l) => OG_LOCALE[l]
-);
+const ogLocale = getLocaleOgLocale(currentLocale);
+const ogLocaleAlternates = SUPPORTED_LOCALES.filter((locale) => locale !== currentLocale)
+  .map((locale) => getLocaleOgLocale(locale))
+  .filter(Boolean);
 const articleModifiedISO = (modifiedTime ?? publishedTime)?.toISOString();
 
 const websiteSchema = {
@@ -133,7 +128,7 @@ const jsonLdSchemas = [websiteSchema, personSchema, articleSchema, ...extraSchem
 <link rel="canonical" href={canonicalURL} />
 {
   alternatePaths.map((alternate) => (
-    <link rel="alternate" hreflang={alternate.locale} href={alternate.href} />
+    <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
   ))
 }
 <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
@@ -160,7 +155,7 @@ const jsonLdSchemas = [websiteSchema, personSchema, articleSchema, ...extraSchem
     <meta property="og:image:height" content={String(image.height)} />
   )
 }
-<meta property="og:locale" content={ogLocale} />
+{ogLocale && <meta property="og:locale" content={ogLocale} />}
 {ogLocaleAlternates.map((loc) => <meta property="og:locale:alternate" content={loc} />)}
 {
   isArticle && publishedTime && (

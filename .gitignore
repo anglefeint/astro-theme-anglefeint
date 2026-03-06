@@ -1,7 +1,10 @@
 # build output
 dist/
+playwright-report/
+test-results/
 # generated types
 .astro/
+tests/e2e/.generated-smoke-config.json
 
 # dependencies
 node_modules/

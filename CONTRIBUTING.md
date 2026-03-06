@@ -28,6 +28,13 @@ npm run check
 npm run build
 ```
 
+For routing, SEO, or browser-level behavior changes, also run:
+
+```bash
+npm run e2e:install
+npm run e2e
+```
+
 4. Commit with clear scope and push.
 
 ## Adapter Changes (Important)

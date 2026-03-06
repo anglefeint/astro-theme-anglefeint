@@ -1,13 +1,42 @@
 ---
 import { getCollection } from 'astro:content';
 import HomePage from '@anglefeint/astro-theme/layouts/HomePage.astro';
+import { SITE_URL } from '../config/site';
 import { THEME } from '../config/theme';
-import { DEFAULT_LOCALE } from '../i18n/config';
+import {
+  DEFAULT_LOCALE,
+  getDefaultLocaleHomePath,
+  shouldRedirectRootToDefaultLocale,
+} from '../i18n/config';
 import { postsForLocale } from '../i18n/posts';
 
 const locale = DEFAULT_LOCALE;
-const allPosts = await getCollection('blog');
-const latestPosts = postsForLocale(allPosts, locale).slice(0, THEME.HOME_LATEST_COUNT);
+const shouldRedirect = shouldRedirectRootToDefaultLocale();
+const allPosts = shouldRedirect ? [] : await getCollection('blog');
+const latestPosts = shouldRedirect
+  ? []
+  : postsForLocale(allPosts, locale).slice(0, THEME.HOME_LATEST_COUNT);
+const redirectHref = getDefaultLocaleHomePath();
+const siteURL = Astro.site ?? SITE_URL;
 ---
 
-<HomePage locale={locale} latestPosts={latestPosts} />
+{
+  shouldRedirect ? (
+    <html lang={DEFAULT_LOCALE}>
+      <head>
+        <meta charset="utf-8" />
+        <meta name="robots" content="noindex, follow" />
+        <meta http-equiv="refresh" content={`0;url=${redirectHref}`} />
+        <link rel="canonical" href={new URL(redirectHref, siteURL)} />
+        <title>Redirecting...</title>
+      </head>
+      <body>
+        <p>
+          Redirecting to <a href={redirectHref}>home</a>…
+        </p>
+      </body>
+    </html>
+  ) : (
+    <HomePage locale={locale} latestPosts={latestPosts} />
+  )
+}
