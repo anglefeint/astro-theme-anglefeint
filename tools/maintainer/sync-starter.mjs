@@ -33,6 +33,10 @@ const STARTER_OBSOLETE_FILES = [
   'docs/MAINTAINER_WORKFLOW.md',
 ];
 
+const STARTER_PACKAGE_JSON = 'package.json';
+const STARTER_PACKAGE_LOCK = 'package-lock.json';
+const THEME_PACKAGE_JSON = 'packages/theme/package.json';
+
 function parseArgs(argv) {
   return {
     checkOnly: argv.includes('--check'),
@@ -142,6 +146,11 @@ async function collectDrift(sourceRef, targetRef) {
     const targetText = await readFromGitOrNull(targetRef, relPath);
     if (targetText !== null) changed.push(relPath);
   }
+  const expectedRange = await expectedStarterThemeRange(sourceRef);
+  const starterPkg = await readStarterThemeDependency(targetRef);
+  if (starterPkg !== expectedRange) changed.push(STARTER_PACKAGE_JSON);
+  const starterLockVersion = await readStarterThemeLockVersion(targetRef);
+  if (starterLockVersion !== expectedRange.slice(1)) changed.push(STARTER_PACKAGE_LOCK);
   return changed;
 }
 
@@ -187,6 +196,48 @@ async function sanitizeStarterPackageJson(repoRoot) {
   return false;
 }
 
+async function expectedStarterThemeRange(sourceRef) {
+  const pkgRaw = await readFromGit(sourceRef, THEME_PACKAGE_JSON);
+  const pkg = JSON.parse(pkgRaw);
+  if (typeof pkg.version !== 'string' || !pkg.version.trim()) {
+    throw new Error('[maintainer:sync-starter] packages/theme/package.json missing valid version.');
+  }
+  return `^${pkg.version}`;
+}
+
+async function readStarterThemeDependency(ref) {
+  const raw = await readFromGitOrNull(ref, STARTER_PACKAGE_JSON);
+  if (!raw) return null;
+  const pkg = JSON.parse(raw);
+  return pkg?.dependencies?.['@anglefeint/astro-theme'] ?? null;
+}
+
+async function readStarterThemeLockVersion(ref) {
+  const raw = await readFromGitOrNull(ref, STARTER_PACKAGE_LOCK);
+  if (!raw) return null;
+  const lock = JSON.parse(raw);
+  return (
+    lock?.packages?.['node_modules/@anglefeint/astro-theme']?.version ??
+    lock?.dependencies?.['@anglefeint/astro-theme']?.version ??
+    null
+  );
+}
+
+async function syncStarterThemeDependency(repoRoot, expectedRange) {
+  const pkgPath = path.join(repoRoot, STARTER_PACKAGE_JSON);
+  const raw = await readFile(pkgPath, 'utf8');
+  const pkg = JSON.parse(raw);
+  pkg.dependencies = pkg.dependencies || {};
+  const prev = pkg.dependencies['@anglefeint/astro-theme'];
+  pkg.dependencies['@anglefeint/astro-theme'] = expectedRange;
+  const next = `${JSON.stringify(pkg, null, 2)}\n`;
+  if (next !== raw) {
+    await writeFile(pkgPath, next, 'utf8');
+    return prev !== expectedRange;
+  }
+  return false;
+}
+
 async function commitStarterIfNeeded(sourceRef, changedFiles) {
   const status = await gitStatusPorcelain();
   if (!status) {
@@ -214,6 +265,7 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
   }
 
   const repoRoot = process.cwd();
+  const expectedRange = await expectedStarterThemeRange(sourceRef);
   let switched = false;
   try {
     await run('git', ['checkout', targetBranch]);
@@ -222,6 +274,7 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     const changedManaged = await writeManagedFilesFromRef(sourceRef, repoRoot);
     const removedObsolete = await cleanupObsoleteStarterFiles(repoRoot);
     const sanitized = await sanitizeStarterPackageJson(repoRoot);
+    const dependencyUpdated = await syncStarterThemeDependency(repoRoot, expectedRange);
 
     await run('npm', ['install']);
     await run('npm', ['run', 'check']);
@@ -229,11 +282,18 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
 
     const changed = [...changedManaged, ...removedObsolete];
     if (sanitized) changed.push('package.json');
+    if (dependencyUpdated && !changed.includes('package.json')) changed.push('package.json');
+    changed.push(STARTER_PACKAGE_LOCK);
     const committed = await commitStarterIfNeeded(sourceRef, changed);
+    console.log(
+      `[maintainer:sync-starter] starter theme dependency target: ${expectedRange} (lockfile resolved via npm install).`
+    );
     if (committed && push) await run('git', ['push', 'origin', targetBranch]);
   } finally {
     if (switched && (await currentBranch()) !== originalBranch) {
       await run('git', ['checkout', originalBranch]);
+      await run('npm', ['install']);
+      console.log(`[maintainer:sync-starter] restored dependencies for "${originalBranch}".`);
     }
   }
 }
