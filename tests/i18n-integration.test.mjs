@@ -154,9 +154,39 @@ export const THEME_CONFIG = defineThemeConfig({
 `,
       'utf8'
     );
+    await writeFile(
+      path.join(tempRoot, 'src/site.config.runtime.ts'),
+      `export { normalizeI18nConfig } from './site.config.ts';
+`,
+      'utf8'
+    );
+    await writeFile(
+      path.join(tempRoot, 'src/site.config.defaults.ts'),
+      `export { DEFAULT_ABOUT_CONFIG } from './site.config.ts';
+`,
+      'utf8'
+    );
+    await writeFile(
+      path.join(tempRoot, 'src/site.config.schema.ts'),
+      `export type AboutConfig = typeof import('./site.config.ts').DEFAULT_ABOUT_CONFIG;
+`,
+      'utf8'
+    );
     await symlink(
       path.join(tempRoot, 'src/site.config.ts'),
       path.join(tempRoot, 'src/site.config')
+    );
+    await symlink(
+      path.join(tempRoot, 'src/site.config.runtime.ts'),
+      path.join(tempRoot, 'src/site.config.runtime')
+    );
+    await symlink(
+      path.join(tempRoot, 'src/site.config.defaults.ts'),
+      path.join(tempRoot, 'src/site.config.defaults')
+    );
+    await symlink(
+      path.join(tempRoot, 'src/site.config.schema.ts'),
+      path.join(tempRoot, 'src/site.config.schema')
     );
 
     await runNode([syncAdapters], tempRoot);

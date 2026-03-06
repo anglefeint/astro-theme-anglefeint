@@ -85,6 +85,9 @@ The project now follows a compositional structure:
 ## Configuration Surface
 
 - `src/site.config.ts`: single user-facing config entry
+- `src/site.config.schema.ts`: internal config types and normalized config types
+- `src/site.config.defaults.ts`: internal config defaults and `defineThemeConfig()`
+- `src/site.config.runtime.ts`: internal config normalization helpers
 - `src/site.config.ts -> i18n`: single locale registry, localized messages, hero copy, and About content
 - `src/config/site.ts`: site adapter (env override + mapped exports)
 - `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle, effect switches such as `enableRedQueen`)
@@ -95,12 +98,14 @@ The project now follows a compositional structure:
 ### Config Ownership Contract
 
 - Source of truth for starter users is `src/site.config.ts`.
+- Internal schema/default/normalize logic lives beside it in `src/site.config.schema.ts`, `src/site.config.defaults.ts`, and `src/site.config.runtime.ts`.
 - App adapter files under `src/config/*` and `src/i18n/*` are generated/maintained integration glue for alias injection.
 - Package defaults under `packages/theme/src/config/*` are fallback values and should not be treated as site-level runtime config in starter projects.
 
 ### Adapter Sync Workflow
 
 - Adapter templates live in `scripts/adapter-templates/*`.
+- Starter/adapters file ownership is declared once in `scripts/starter-manifest.mjs`.
 - Generated adapter targets are:
   - `src/config/*`
   - `src/i18n/*`

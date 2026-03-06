@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeI18nConfig } from '../src/site.config.ts';
+import { normalizeI18nConfig } from '../src/site.config.runtime.ts';
 
 test('normalizeI18nConfig derives locale metadata from a single registry', () => {
   const normalized = normalizeI18nConfig({

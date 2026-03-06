@@ -4,78 +4,17 @@ import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import {
+  REQUIRED_STARTER_MANAGED_FILES,
+  STARTER_MANAGED_FILES as MANAGED_FILES,
+  STARTER_OBSOLETE_FILES,
+} from '../../scripts/starter-manifest.mjs';
 
 const execFileAsync = promisify(execFile);
-
-const MANAGED_FILES = [
-  'README.md',
-  'README.zh-CN.md',
-  'README.ja.md',
-  'README.es.md',
-  'README.ko.md',
-  'scripts/adapter-templates/src/config/about.ts',
-  'scripts/adapter-templates/src/config/index.ts',
-  'scripts/adapter-templates/src/config/site.ts',
-  'scripts/adapter-templates/src/config/social.ts',
-  'scripts/check-about-runtime-config.mjs',
-  'scripts/check-adapter-contract.mjs',
-  'scripts/new-page.mjs',
-  'scripts/new-post.mjs',
-  'scripts/sync-adapters.mjs',
-  'scripts/adapter-templates/src/config/theme.ts',
-  'scripts/adapter-templates/src/i18n/config.ts',
-  'scripts/adapter-templates/src/i18n/messages.ts',
-  'scripts/adapter-templates/src/i18n/posts.ts',
-  'scripts/adapter-templates/src/i18n/runtime.ts',
-  'scripts/adapter-templates/src/types/theme-scripts.d.ts',
-  'src/components/pagination/CyberPagination.astro',
-  'src/config/about.ts',
-  'src/config/site.ts',
-  'src/config/theme.ts',
-  'src/i18n/config.ts',
-  'src/i18n/messages.ts',
-  'src/i18n/runtime.ts',
-  'src/pages/[lang]/about.astro',
-  'src/pages/[lang]/blog/[...page].astro',
-  'src/pages/[lang]/index.astro',
-  'src/pages/[lang]/rss.xml.ts',
-  'src/scripts/cyber-rain-dust.js',
-  'src/site.config.ts',
-  'src/utils/pagination-style.ts',
-  'src/utils/pagination.ts',
-];
-
-const STARTER_OBSOLETE_FILES = [
-  'scripts/regenerate-starter.mjs',
-  'tools/maintainer/sync-starter.mjs',
-  'docs/MAINTAINER_WORKFLOW.md',
-];
 
 const STARTER_PACKAGE_JSON = 'package.json';
 const STARTER_PACKAGE_LOCK = 'package-lock.json';
 const THEME_PACKAGE_JSON = 'packages/theme/package.json';
-const REQUIRED_STARTER_MANAGED_FILES = [
-  'scripts/adapter-templates/src/config/about.ts',
-  'scripts/adapter-templates/src/config/index.ts',
-  'scripts/adapter-templates/src/config/site.ts',
-  'scripts/adapter-templates/src/config/social.ts',
-  'scripts/adapter-templates/src/config/theme.ts',
-  'scripts/adapter-templates/src/i18n/config.ts',
-  'scripts/adapter-templates/src/i18n/messages.ts',
-  'scripts/adapter-templates/src/i18n/posts.ts',
-  'scripts/adapter-templates/src/i18n/runtime.ts',
-  'scripts/adapter-templates/src/types/theme-scripts.d.ts',
-  'scripts/check-about-runtime-config.mjs',
-  'scripts/check-adapter-contract.mjs',
-  'scripts/new-page.mjs',
-  'scripts/new-post.mjs',
-  'scripts/sync-adapters.mjs',
-  'src/config/about.ts',
-  'src/config/site.ts',
-  'src/i18n/config.ts',
-  'src/i18n/messages.ts',
-  'src/i18n/runtime.ts',
-];
 
 function parseArgs(argv) {
   return {

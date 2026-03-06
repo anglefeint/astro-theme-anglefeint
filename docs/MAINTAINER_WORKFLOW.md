@@ -117,10 +117,11 @@ npm run release:starter:push
 ## Starter Sync Policy
 
 - Managed files should be synced from `main` using maintainer tooling.
+- Shared starter/adapters file ownership lives in `scripts/starter-manifest.mjs`.
 - User-facing docs must not tell end users to run maintainer sync scripts.
 - End users should upgrade via package updates and normal checks.
-- When introducing new starter-managed runtime/config files, update `tools/maintainer/sync-starter.mjs` `MANAGED_FILES` in the same change.
-- When introducing starter-consumed runtime/config/script/template files, update `tools/maintainer/sync-starter.mjs` in the same change.
+- When introducing starter-managed runtime/config files, update `scripts/starter-manifest.mjs` in the same change.
+- When introducing starter-consumed runtime/config/script/template files, update `scripts/starter-manifest.mjs` in the same change.
 - `starter` is generated/distribution only. Do not maintain runtime logic or starter package versions there manually.
 
 If `npm run release:starter` fails, return to `main` and fix the sync contract or package-side issue there. Do not patch starter runtime logic manually.
