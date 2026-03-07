@@ -48,7 +48,7 @@ async function main() {
     );
     assert.match(
       pageText,
-      /import \{ SUPPORTED_LOCALES, type Locale \} from '@anglefeint\/site-i18n\/config';/
+      /import \{ ENABLED_LOCALES, type Locale \} from '@anglefeint\/site-i18n\/config';/
     );
     assert.doesNotMatch(pageText, /@anglefeint\/astro-theme\/i18n\/config/);
 

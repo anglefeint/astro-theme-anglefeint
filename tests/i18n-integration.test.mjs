@@ -68,7 +68,7 @@ export function normalizeI18nConfig(config) {
   const localeEntries = { ...config.locales };
   const defaultLocale = config.defaultLocale || 'en';
   if (!localeEntries[defaultLocale]) localeEntries[defaultLocale] = { meta: { label: defaultLocale } };
-  const supportedLocales = new Set(Object.keys(localeEntries));
+    const enabledLocales = new Set(Object.keys(localeEntries));
   const normalizedLocales = {};
   for (const [code, localeConfig] of Object.entries(localeEntries)) {
     const fallbackCandidates =
@@ -80,18 +80,17 @@ export function normalizeI18nConfig(config) {
     const seen = new Set();
     const fallback = [];
     for (const candidate of fallbackCandidates) {
-      if (!candidate || candidate === code || seen.has(candidate) || !supportedLocales.has(candidate)) continue;
+      if (!candidate || candidate === code || seen.has(candidate) || !enabledLocales.has(candidate)) continue;
       seen.add(candidate);
       fallback.push(candidate);
     }
-    if (code !== defaultLocale && !seen.has(defaultLocale) && supportedLocales.has(defaultLocale)) fallback.push(defaultLocale);
+    if (code !== defaultLocale && !seen.has(defaultLocale) && enabledLocales.has(defaultLocale)) fallback.push(defaultLocale);
     normalizedLocales[code] = {
       code,
       meta: {
         label: localeConfig.meta.label || code,
         hreflang: localeConfig.meta.hreflang || code,
         ogLocale: localeConfig.meta.ogLocale,
-        dir: localeConfig.meta.dir || 'ltr',
         enabled: code === defaultLocale ? true : localeConfig.meta.enabled !== false,
         fallback
       },
@@ -248,7 +247,7 @@ export function getMessages(locale: Locale) {
     await writeFile(
       path.join(tempRoot, 'src/config/site.ts'),
       `import { THEME_CONFIG } from '../site.config';
-import { getLocaleConfig, getLocaleResolutionChain, SUPPORTED_LOCALES, type Locale } from '../i18n/config';
+      import { getLocaleConfig, getLocaleResolutionChain, ENABLED_LOCALES, type Locale } from '../i18n/config';
 
 export const SITE_TITLE = THEME_CONFIG.site.title;
 export const SITE_DESCRIPTION = THEME_CONFIG.site.description;
@@ -264,16 +263,6 @@ export function getSiteHero(locale: Locale): string | undefined {
   return undefined;
 }
 
-export const SITE_HERO_BY_LOCALE: Partial<Record<Locale, string>> = SUPPORTED_LOCALES.reduce(
-  (heroes, locale) => {
-    const hero = getSiteHero(locale);
-    if (hero !== undefined) {
-      heroes[locale] = hero;
-    }
-    return heroes;
-  },
-  {} as Partial<Record<Locale, string>>
-);
 `,
       'utf8'
     );
@@ -284,7 +273,7 @@ export const SITE_HERO_BY_LOCALE: Partial<Record<Locale, string>> = SUPPORTED_LO
     const site = await import(pathToFileURL(path.join(tempRoot, 'src/config/site.ts')).href);
     const about = await import(pathToFileURL(path.join(tempRoot, 'src/config/about.ts')).href);
 
-    assert.deepEqual(runtime.SUPPORTED_LOCALES, ['en', 'pt-BR']);
+    assert.deepEqual(runtime.ENABLED_LOCALES, ['en', 'pt-BR']);
     assert.equal(runtime.DEFAULT_LOCALE, 'en');
     assert.equal(runtime.DEFAULT_LOCALE_PREFIX_MODE, 'always');
     assert.equal(runtime.getLocaleLabel('pt-BR'), 'Português (Brasil)');

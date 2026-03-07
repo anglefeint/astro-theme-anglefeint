@@ -15,6 +15,18 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-03-07
+
+### Changed
+
+- Renamed starter/runtime locale exports around enabled locales so the public adapter surface now matches the new `i18n.locales` model instead of carrying older `supported` terminology.
+- Removed `SITE_HERO_BY_LOCALE` in favor of `getSiteHero(locale)` and aligned About-page adapter naming to `ABOUT_PAGE_ENABLED`.
+- Deleted the stale `meta.dir` residue from integration fixtures and updated scaffold, adapter-check, and route consumers to the new selector/export names.
+
+### Notes
+
+- See [`docs/releases/0.2.5.md`](docs/releases/0.2.5.md) for release details and validation summary.
+
 ## [0.2.4] - 2026-03-07
 
 ### Changed

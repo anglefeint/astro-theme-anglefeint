@@ -7,9 +7,9 @@ import LangSwitcher from './LangSwitcher.astro';
 import SocialMenu from './SocialMenu.astro';
 import {
   DEFAULT_LOCALE,
-  LOCALE_LABELS,
+  ENABLED_LOCALE_LABELS,
   type Locale,
-  SUPPORTED_LOCALES,
+  ENABLED_LOCALES,
   alternatePathForLocale,
   isLocale,
   stripLocaleFromPath,
@@ -42,7 +42,7 @@ const labels = {
   statusAria: props.labels?.statusAria ?? 'System status',
   language: props.labels?.language ?? 'Language',
 };
-const showAbout = THEME.ENABLE_ABOUT_PAGE;
+const showAbout = THEME.ABOUT_PAGE_ENABLED;
 const currentSubpath = stripLocaleFromPath(Astro.url.pathname, locale);
 const homeHref = props.homeHref ?? alternatePathForLocale(locale, '/');
 const buildLocaleHref = (targetLocale: Locale) => {
@@ -52,9 +52,9 @@ const buildLocaleHref = (targetLocale: Locale) => {
     currentSubpath.startsWith('/about') && !showAbout ? '/' : currentSubpath || '/';
   return alternatePathForLocale(targetLocale, sectionSubpath);
 };
-const localeOptions = SUPPORTED_LOCALES.map((targetLocale) => ({
+const localeOptions = ENABLED_LOCALES.map((targetLocale) => ({
   locale: targetLocale,
-  label: LOCALE_LABELS[targetLocale],
+  label: ENABLED_LOCALE_LABELS[targetLocale],
   href: props.localeHrefs?.[targetLocale] ?? buildLocaleHref(targetLocale),
 }));
 ---

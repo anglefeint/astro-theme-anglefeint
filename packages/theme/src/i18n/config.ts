@@ -1,13 +1,13 @@
 import {
-  SUPPORTED_LOCALES as SUPPORTED_LOCALES_RUNTIME,
+  ENABLED_LOCALES as ENABLED_LOCALES_RUNTIME,
   DEFAULT_LOCALE as DEFAULT_LOCALE_RUNTIME,
 } from './locales.mjs';
 
 export type Locale = string;
-export const SUPPORTED_LOCALES = SUPPORTED_LOCALES_RUNTIME as readonly string[];
+export const ENABLED_LOCALES = ENABLED_LOCALES_RUNTIME as readonly string[];
 export const DEFAULT_LOCALE: Locale = DEFAULT_LOCALE_RUNTIME;
 
-export const LOCALE_LABELS: Record<string, string> = {
+export const ENABLED_LOCALE_LABELS: Record<string, string> = {
   en: 'English',
   ja: '日本語',
   ko: '한국어',
@@ -16,7 +16,7 @@ export const LOCALE_LABELS: Record<string, string> = {
 };
 
 export function isLocale(value: string): value is Locale {
-  return (SUPPORTED_LOCALES as readonly string[]).includes(value);
+  return (ENABLED_LOCALES as readonly string[]).includes(value);
 }
 
 export function withLeadingSlash(path: string): string {

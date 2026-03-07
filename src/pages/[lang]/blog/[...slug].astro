@@ -6,7 +6,7 @@ import { countWords, deriveMetrics } from '../../../utils/metrics';
 import {
   alternatePathForLocale,
   DEFAULT_LOCALE,
-  SUPPORTED_LOCALES,
+  ENABLED_LOCALES,
   type Locale,
   blogIdToSlugAnyLocale,
   isLocale,
@@ -15,7 +15,7 @@ import { postsForLocale } from '../../../i18n/posts';
 
 export const getStaticPaths = (async () => {
   const all = await getCollection('blog');
-  return SUPPORTED_LOCALES.flatMap((locale) => {
+  return ENABLED_LOCALES.flatMap((locale) => {
     const localizedPosts = postsForLocale(all, locale);
     return localizedPosts.map((post) => {
       const related = localizedPosts
@@ -36,7 +36,7 @@ const { Content } = await render(post);
 const allPosts = await getCollection('blog');
 const currentSlug = blogIdToSlugAnyLocale(post.id);
 const localeHrefs = Object.fromEntries(
-  SUPPORTED_LOCALES.map((targetLocale) => {
+  ENABLED_LOCALES.map((targetLocale) => {
     const targetId = `${targetLocale}/${currentSlug}`;
     const href = allPosts.some((p) => p.id === targetId)
       ? alternatePathForLocale(targetLocale, `/blog/${currentSlug}/`)

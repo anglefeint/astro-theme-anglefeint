@@ -5,7 +5,7 @@ import rss from '@astrojs/rss';
 import { SITE_TITLE, SITE_URL } from '../../config/site';
 import {
   DEFAULT_LOCALE,
-  SUPPORTED_LOCALES,
+  ENABLED_LOCALES,
   blogIdToSlugAnyLocale,
   isLocale,
   localePath,
@@ -14,7 +14,7 @@ import { getMessages } from '../../i18n/messages';
 import { postsForLocale } from '../../i18n/posts';
 
 export function getStaticPaths() {
-  return SUPPORTED_LOCALES.map((lang) => ({ params: { lang } }));
+  return ENABLED_LOCALES.map((lang) => ({ params: { lang } }));
 }
 
 export async function GET(context: APIContext) {

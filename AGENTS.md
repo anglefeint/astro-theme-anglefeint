@@ -107,7 +107,7 @@ Lint and doc metadata checks are configured.
 
 - Build succeeds (`npm run build`)
 - Route behavior remains correct (`/`, `/<default-locale>/`, localized pages)
-- About page toggle still works (`ENABLE_ABOUT_PAGE`)
+- About page toggle still works (`ABOUT_PAGE_ENABLED`)
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)
 - Starter/runtime changes still pass `node scripts/check-scaffold.mjs`

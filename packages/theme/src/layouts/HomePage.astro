@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_DESCRIPTION, SITE_HERO_BY_LOCALE, SITE_TITLE } from '@anglefeint/site-config/site';
+import { SITE_DESCRIPTION, SITE_TITLE, getSiteHero } from '@anglefeint/site-config/site';
 import { type Locale, blogIdToSlugAnyLocale, localePath } from '@anglefeint/site-i18n/config';
 import { getMessages } from '@anglefeint/site-i18n/messages';
 import MatrixShell from './shells/MatrixShell.astro';
@@ -13,7 +13,7 @@ interface Props {
 
 const { locale, latestPosts } = Astro.props;
 const messages = getMessages(locale);
-const heroText = SITE_HERO_BY_LOCALE[locale] ?? messages.home.hero;
+const heroText = getSiteHero(locale) ?? messages.home.hero;
 const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
 ---
 

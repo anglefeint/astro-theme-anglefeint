@@ -7,7 +7,7 @@ import FallbackImage from '../assets/theme/placeholders/theme-placeholder-1.jpg'
 import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '@anglefeint/site-config/site';
 import {
   DEFAULT_LOCALE,
-  SUPPORTED_LOCALES,
+  ENABLED_LOCALES,
   alternatePathForLocale,
   getLocaleHreflang,
   getLocaleOgLocale,
@@ -52,14 +52,14 @@ const currentLocale =
   pathParts.length > 0 && isLocale(pathParts[0]) ? pathParts[0] : DEFAULT_LOCALE;
 const rssURL = new URL(`/${currentLocale}/rss.xml`, siteURL);
 const localeSubpath = stripLocaleFromPath(Astro.url.pathname, currentLocale);
-const alternatePaths = SUPPORTED_LOCALES.map((locale) => ({
+const alternatePaths = ENABLED_LOCALES.map((locale) => ({
   locale,
   hreflang: getLocaleHreflang(locale),
   href: new URL(alternatePathForLocale(locale, localeSubpath), siteURL).toString(),
 }));
 const xDefaultHref = new URL(alternatePathForLocale(DEFAULT_LOCALE, localeSubpath), siteURL);
 const ogLocale = getLocaleOgLocale(currentLocale);
-const ogLocaleAlternates = SUPPORTED_LOCALES.filter((locale) => locale !== currentLocale)
+const ogLocaleAlternates = ENABLED_LOCALES.filter((locale) => locale !== currentLocale)
   .map((locale) => getLocaleOgLocale(locale))
   .filter(Boolean);
 const articleModifiedISO = (modifiedTime ?? publishedTime)?.toISOString();

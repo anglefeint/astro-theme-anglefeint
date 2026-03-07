@@ -1,10 +1,5 @@
 import { THEME_CONFIG } from '../site.config.ts';
-import {
-  getLocaleConfig,
-  getLocaleResolutionChain,
-  SUPPORTED_LOCALES,
-  type Locale,
-} from '../i18n/config.ts';
+import { getLocaleConfig, getLocaleResolutionChain, type Locale } from '../i18n/config.ts';
 
 /**
  * Site identity config. Override via environment variables:
@@ -31,14 +26,3 @@ export function getSiteHero(locale: Locale): string | undefined {
   }
   return undefined;
 }
-
-export const SITE_HERO_BY_LOCALE: Partial<Record<Locale, string>> = SUPPORTED_LOCALES.reduce(
-  (heroes, locale) => {
-    const hero = getSiteHero(locale);
-    if (hero !== undefined) {
-      heroes[locale] = hero;
-    }
-    return heroes;
-  },
-  {} as Partial<Record<Locale, string>>
-);

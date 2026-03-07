@@ -29,7 +29,7 @@ export const THEME = {
   /** Number of latest posts shown on home page */
   HOME_LATEST_COUNT: THEME_CONFIG.theme.homeLatestCount,
   /** Whether to enable the About page (disable to hide from nav/routes if needed) */
-  ENABLE_ABOUT_PAGE: THEME_CONFIG.theme.enableAboutPage,
+  ABOUT_PAGE_ENABLED: THEME_CONFIG.theme.enableAboutPage,
   /** Pagination behavior and style strategy for blog list */
   PAGINATION: {
     WINDOW_SIZE: THEME_CONFIG.theme.pagination.windowSize,
