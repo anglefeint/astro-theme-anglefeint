@@ -46,11 +46,11 @@ Class B: Starter Distribution Changes
 
 - Scope:
   - Starter docs and template defaults distributed to end users
-  - Starter demo content/examples
+  - Starter onboarding content/examples
   - Non-runtime template guidance
 - Examples:
   - README wording
-  - Example posts
+  - Starter guide posts
   - Starter package defaults
 - Required flow:
   1. Implement on `main`
@@ -139,6 +139,7 @@ node scripts/check-scaffold.mjs
 
 - Managed files should be synced from `main` using maintainer tooling.
 - Shared starter/adapters file ownership lives in `scripts/starter-manifest.mjs`.
+- Starter blog content is whitelist-driven. `main` may keep additional demo/editorial posts, but `starter` only receives the localized onboarding post set declared in `scripts/starter-manifest.mjs`.
 - User-facing docs must not tell end users to run maintainer sync scripts.
 - End users should upgrade via package updates and normal checks.
 - When introducing starter-managed runtime/config files, update `scripts/starter-manifest.mjs` in the same change.

@@ -7,6 +7,8 @@ import { promisify } from 'node:util';
 import {
   REQUIRED_STARTER_MANAGED_FILES,
   STARTER_MANAGED_FILES as MANAGED_FILES,
+  STARTER_CONTENT_MANAGED_FILES,
+  STARTER_CONTENT_ROOT,
   STARTER_OBSOLETE_FILES,
 } from '../../scripts/starter-manifest.mjs';
 
@@ -17,6 +19,7 @@ const STARTER_PACKAGE_LOCK = 'package-lock.json';
 const THEME_PACKAGE_JSON = 'packages/theme/package.json';
 const STARTER_SYNC_FILES = [STARTER_PACKAGE_JSON, STARTER_PACKAGE_LOCK];
 const GENERATED_ARTIFACT_PATTERNS = [/^anglefeint-astro-theme-.*\.tgz$/];
+const STARTER_CONTENT_MANAGED_SET = new Set(STARTER_CONTENT_MANAGED_FILES);
 
 function parseArgs(argv) {
   return {
@@ -131,6 +134,51 @@ async function listRepoRootEntries(repoRoot) {
   }
 }
 
+async function listGitTreeFiles(ref, treeRoot) {
+  try {
+    const { stdout } = await runSilent('git', [
+      'ls-tree',
+      '-r',
+      '--name-only',
+      ref,
+      '--',
+      treeRoot,
+    ]);
+    return stdout
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+async function listLocalFiles(rootPath, baseRoot = rootPath) {
+  const { readdir } = await import('node:fs/promises');
+  if (!(await fileExists(rootPath))) return [];
+
+  const entries = await readdir(rootPath, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(rootPath, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await listLocalFiles(fullPath, baseRoot)));
+      continue;
+    }
+    files.push(path.relative(baseRoot, fullPath));
+  }
+
+  return files;
+}
+
+async function collectUnexpectedStarterContentFiles(ref) {
+  const contentFiles = await listGitTreeFiles(ref, STARTER_CONTENT_ROOT);
+  return contentFiles.filter(
+    (relPath) => relPath.endsWith('.md') && !STARTER_CONTENT_MANAGED_SET.has(relPath)
+  );
+}
+
 async function cleanupGeneratedArtifacts(repoRoot) {
   const removed = [];
   for (const entry of await listRepoRootEntries(repoRoot)) {
@@ -155,6 +203,9 @@ async function collectDrift(sourceRef, targetRef) {
   for (const relPath of STARTER_OBSOLETE_FILES) {
     const targetText = await readFromGitOrNull(targetRef, relPath);
     if (targetText !== null) changed.push(relPath);
+  }
+  for (const relPath of await collectUnexpectedStarterContentFiles(targetRef)) {
+    changed.push(relPath);
   }
   const expectedRange = await expectedStarterThemeRange(sourceRef);
   const starterPkg = await readStarterThemeDependency(targetRef);
@@ -186,6 +237,21 @@ async function cleanupObsoleteStarterFiles(repoRoot) {
     await rm(fullPath, { force: true });
     removed.push(relPath);
   }
+  return removed;
+}
+
+async function cleanupUnexpectedStarterContent(repoRoot) {
+  const contentRoot = path.join(repoRoot, STARTER_CONTENT_ROOT);
+  const files = await listLocalFiles(contentRoot, repoRoot);
+  const removed = [];
+
+  for (const relPath of files) {
+    if (!relPath.startsWith(`${STARTER_CONTENT_ROOT}/`) || !relPath.endsWith('.md')) continue;
+    if (STARTER_CONTENT_MANAGED_SET.has(relPath)) continue;
+    await rm(path.join(repoRoot, relPath), { force: true });
+    removed.push(relPath);
+  }
+
   return removed;
 }
 
@@ -254,7 +320,7 @@ async function commitStarterIfNeeded(sourceRef, changedFiles) {
     console.log('[maintainer:sync-starter] starter already up to date.');
     return false;
   }
-  const staged = [...new Set([...MANAGED_FILES, ...STARTER_SYNC_FILES])];
+  const staged = [...new Set([...MANAGED_FILES, ...STARTER_SYNC_FILES, ...changedFiles])];
   if (staged.length > 0) {
     await run('git', ['add', '--', ...staged]);
   }
@@ -291,6 +357,7 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     const removedGenerated = await cleanupGeneratedArtifacts(repoRoot);
     const changedManaged = await writeManagedFilesFromRef(sourceRef, repoRoot);
     const removedObsolete = await cleanupObsoleteStarterFiles(repoRoot);
+    const removedUnexpectedContent = await cleanupUnexpectedStarterContent(repoRoot);
     const sanitized = await sanitizeStarterPackageJson(repoRoot);
     const dependencyUpdated = await syncStarterThemeDependency(repoRoot, expectedRange);
 
@@ -298,7 +365,7 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     await run('npm', ['run', 'check']);
     await run('npm', ['run', 'build']);
 
-    const changed = [...changedManaged, ...removedObsolete];
+    const changed = [...changedManaged, ...removedObsolete, ...removedUnexpectedContent];
     for (const relPath of removedGenerated) changed.push(relPath);
     if (sanitized) changed.push('package.json');
     if (dependencyUpdated && !changed.includes('package.json')) changed.push('package.json');

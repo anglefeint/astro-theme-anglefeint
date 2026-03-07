@@ -15,6 +15,18 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-03-07
+
+### Changed
+
+- Made `site.description` a real site-level default description fallback for the home page and removed the unused locale `meta.dir` surface from the starter config contract.
+- Added a localized starter guide series for site setup, languages/routing, and comments/theme toggles so starter users can learn configuration from in-site content.
+- Switched starter blog distribution to a whitelist-driven sync model so `starter` keeps only the onboarding posts instead of inheriting the full `main` article library.
+
+### Notes
+
+- See [`docs/releases/0.2.4.md`](docs/releases/0.2.4.md) for release details and validation summary.
+
 ## [0.2.3] - 2026-03-07
 
 ### Fixed

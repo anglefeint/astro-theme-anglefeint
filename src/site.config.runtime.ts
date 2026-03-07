@@ -65,7 +65,6 @@ export function normalizeI18nConfig(config: ThemeI18nConfig): NormalizedThemeI18
         label: localeConfig.meta.label || code,
         hreflang: localeConfig.meta.hreflang || code,
         ogLocale: localeConfig.meta.ogLocale,
-        dir: localeConfig.meta.dir || 'ltr',
         enabled: code === defaultLocale ? true : localeConfig.meta.enabled !== false,
         fallback,
       },

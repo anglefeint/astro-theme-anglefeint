@@ -137,7 +137,6 @@ export interface LocaleMetaConfig {
   label: string;
   hreflang?: string;
   ogLocale?: string;
-  dir?: 'ltr' | 'rtl';
   enabled?: boolean;
   fallback?: LocaleCode[];
 }
@@ -167,7 +166,6 @@ export interface NormalizedLocaleConfig {
     label: string;
     hreflang: string;
     ogLocale?: string;
-    dir: 'ltr' | 'rtl';
     enabled: boolean;
     fallback: LocaleCode[];
   };

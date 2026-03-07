@@ -129,6 +129,7 @@ If npm release is not required but starter should still change:
 - `npm run release:starter` is the only supported maintainer path for updating `starter`.
 - It is responsible for:
   - syncing managed files from `main`
+  - syncing only manifest-owned starter blog content (not the full `main` article library)
   - updating starter dependency range for `@anglefeint/astro-theme`
   - reinstalling starter dependencies
   - validating starter via `check` and `build`
