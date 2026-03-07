@@ -54,6 +54,7 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'README.ko.md',
   'src/pages/[lang]/about.astro',
   'src/pages/[lang]/blog/[...page].astro',
+  'src/pages/[lang]/blog/[...slug].astro',
   'src/pages/[lang]/index.astro',
   'src/pages/[lang]/rss.xml.ts',
   'src/scripts/cyber-rain-dust.js',
@@ -61,6 +62,7 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'src/site.config.defaults.ts',
   'src/site.config.runtime.ts',
   'src/site.config.schema.ts',
+  'src/templates/new-page-template.astro',
 ];
 
 export const REQUIRED_STARTER_MANAGED_FILES = [

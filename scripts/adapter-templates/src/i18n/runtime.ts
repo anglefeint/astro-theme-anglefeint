@@ -6,12 +6,12 @@ export type Locale = string;
 
 export const DEFAULT_LOCALE: Locale = I18N.defaultLocale;
 export const DEFAULT_LOCALE_PREFIX_MODE = I18N.routing.defaultLocalePrefix;
-export const SUPPORTED_LOCALES = Object.values(I18N.locales)
+export const ENABLED_LOCALES = Object.values(I18N.locales)
   .filter((locale) => locale.meta.enabled)
   .map((locale) => locale.code) as Locale[];
 
-export const LOCALE_LABELS: Record<Locale, string> = Object.fromEntries(
-  SUPPORTED_LOCALES.map((locale) => [locale, I18N.locales[locale]?.meta.label ?? locale])
+export const ENABLED_LOCALE_LABELS: Record<Locale, string> = Object.fromEntries(
+  ENABLED_LOCALES.map((locale) => [locale, I18N.locales[locale]?.meta.label ?? locale])
 ) as Record<Locale, string>;
 
 export function isLocale(value: string): value is Locale {

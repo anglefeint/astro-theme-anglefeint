@@ -6,7 +6,7 @@ import { SITE_URL } from '../../config/site';
 import { THEME } from '../../config/theme';
 import {
   DEFAULT_LOCALE,
-  SUPPORTED_LOCALES,
+  ENABLED_LOCALES,
   type Locale,
   getDefaultLocaleHomePath,
   isLocale,
@@ -15,7 +15,7 @@ import {
 import { postsForLocale } from '../../i18n/posts';
 
 export const getStaticPaths = (async () =>
-  SUPPORTED_LOCALES.map((lang) => ({
+  ENABLED_LOCALES.map((lang) => ({
     params: { lang },
   }))) satisfies GetStaticPaths;
 

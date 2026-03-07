@@ -1,9 +1,10 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import BasePageLayout from '@anglefeint/astro-theme/layouts/BasePageLayout.astro';
-import { SUPPORTED_LOCALES, type Locale } from '@anglefeint/site-i18n/config';
+import { ENABLED_LOCALES, type Locale } from '@anglefeint/site-i18n/config';
 
-export const getStaticPaths = (() => SUPPORTED_LOCALES.map((lang: Locale) => ({ params: { lang } }))) satisfies GetStaticPaths;
+export const getStaticPaths = (() =>
+  ENABLED_LOCALES.map((lang: Locale) => ({ params: { lang } }))) satisfies GetStaticPaths;
 
 const locale = Astro.params.lang as Locale;
 const pageTitle = 'Projects';
@@ -11,6 +12,6 @@ const pageDescription = 'A custom page built from the default layout.';
 ---
 
 <BasePageLayout locale={locale} title={pageTitle} description={pageDescription}>
-	<h1>Projects</h1>
-	<p>Replace this content with your own page content.</p>
+  <h1>Projects</h1>
+  <p>Replace this content with your own page content.</p>
 </BasePageLayout>
