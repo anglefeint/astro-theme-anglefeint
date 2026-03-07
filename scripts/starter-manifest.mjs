@@ -13,6 +13,21 @@ export const ADAPTER_TEMPLATE_MAP = [
 
 export const ADAPTER_TARGET_FILES = ADAPTER_TEMPLATE_MAP.map(([, targetRel]) => targetRel);
 
+export const STARTER_CONTENT_ROOT = 'src/content/blog';
+
+export const STARTER_CONTENT_LOCALES = ['en', 'es', 'ja', 'ko', 'zh'];
+
+export const STARTER_CONTENT_SLUGS = [
+  'welcome-to-anglefeint',
+  'starter-guide-1-configure-your-site',
+  'starter-guide-2-languages-and-routing',
+  'starter-guide-3-comments-about-and-theme-toggles',
+];
+
+export const STARTER_CONTENT_MANAGED_FILES = STARTER_CONTENT_LOCALES.flatMap((locale) =>
+  STARTER_CONTENT_SLUGS.map((slug) => `${STARTER_CONTENT_ROOT}/${locale}/${slug}.md`)
+);
+
 export const STARTER_OBSOLETE_FILES = [
   'scripts/regenerate-starter.mjs',
   'tools/maintainer/sync-starter.mjs',
@@ -49,12 +64,14 @@ export const STARTER_STATIC_MANAGED_FILES = [
 ];
 
 export const REQUIRED_STARTER_MANAGED_FILES = [
+  ...STARTER_CONTENT_MANAGED_FILES,
   ...STARTER_SUPPORT_SCRIPTS,
   ...ADAPTER_TEMPLATE_MAP.map(([sourceRel]) => sourceRel),
   ...ADAPTER_TARGET_FILES,
 ];
 
 export const STARTER_MANAGED_FILES = [
+  ...STARTER_CONTENT_MANAGED_FILES,
   ...STARTER_STATIC_MANAGED_FILES,
   ...STARTER_SUPPORT_SCRIPTS,
   ...ADAPTER_TEMPLATE_MAP.map(([sourceRel]) => sourceRel),
