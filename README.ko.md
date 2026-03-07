@@ -1,13 +1,3 @@
----
-doc_id: readme_ko
-doc_role: localized-user-guide
-doc_purpose: 한국어 사용자용 설치, 사용, 업그레이드 안내.
-doc_scope: [setup, commands, themes, config, routing]
-update_triggers: [sync-from-readme-en]
-source_of_truth: false
-depends_on: [README.md]
----
-
 <h1 align="center">Anglefeint</h1>
 <p align="center">개인 퍼블리싱을 위한 시네마틱 멀티 무드 Astro 테마입니다.</p>
 

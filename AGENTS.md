@@ -23,6 +23,7 @@ depends_on:
 sync_targets:
   - CLAUDE.md
   - .cursor/rules/00-repo.mdc
+  - docs/DOC_SYNC_WORKFLOW.md
 ---
 
 # AGENTS.md
@@ -60,7 +61,7 @@ This file is the neutral entrypoint for all coding agents working in this reposi
   - npm release + starter sync rules
   - doc-sync entry rules
 - `docs/DOC_METADATA_SPEC.md`
-  - canonical frontmatter contract
+  - canonical metadata contract
   - metadata field semantics
   - doc validation boundaries
 - `docs/ARCHITECTURE.md`
@@ -69,7 +70,7 @@ This file is the neutral entrypoint for all coding agents working in this reposi
   - page visual contracts, effects, script ownership
 - `docs/MAINTAINER_WORKFLOW.md`
   - maintainer release policy details
-- `.cursor/workflows/doc-sync-workflow.md`
+- `docs/DOC_SYNC_WORKFLOW.md`
   - metadata-driven documentation update algorithm
 
 ## Commands
@@ -110,6 +111,7 @@ Lint and doc metadata checks are configured.
 - About page toggle still works (`ABOUT_PAGE_ENABLED`)
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)
+- Public README-like docs may use sidecar metadata instead of visible frontmatter
 - Starter/runtime changes still pass `node scripts/check-scaffold.mjs`
 - If package behavior changed, follow `docs/AI_WORKFLOW.md` release rules before pushing
 - If adding starter-consumed runtime/config/script/template files, update `scripts/starter-manifest.mjs` in the same change

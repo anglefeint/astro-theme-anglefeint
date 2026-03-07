@@ -33,6 +33,6 @@ Then read:
    - `docs/ARCHITECTURE.md`
    - `docs/VISUAL_SYSTEMS.md`
    - `docs/MAINTAINER_WORKFLOW.md`
-   - `.cursor/workflows/doc-sync-workflow.md`
+   - `docs/DOC_SYNC_WORKFLOW.md`
 
 Do not maintain a separate Cursor-only workflow here if the same rule already belongs in `AGENTS.md` or `docs/AI_WORKFLOW.md`.

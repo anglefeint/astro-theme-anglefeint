@@ -97,6 +97,14 @@ const EXCLUDE_PREFIXES = [
 ];
 
 const EXCLUDE_FILES = new Set([]);
+const SIDECAR_ELIGIBLE_DOCS = new Set([
+  'README.md',
+  'README.zh-CN.md',
+  'README.ja.md',
+  'README.es.md',
+  'README.ko.md',
+  'packages/theme/README.md',
+]);
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -130,6 +138,56 @@ function parseDocFrontmatter(file, text) {
       file,
     };
   }
+}
+
+function getSidecarPath(file) {
+  if (!SIDECAR_ELIGIBLE_DOCS.has(file)) return null;
+  return file.replace(/\.md$/u, '.meta.yaml');
+}
+
+function parseSidecarMetadata(file) {
+  const sidecarPath = getSidecarPath(file);
+  if (!sidecarPath || !existsSync(join(ROOT, sidecarPath))) {
+    return { ok: false, reason: 'missing-sidecar' };
+  }
+
+  try {
+    const sidecarText = readFileSync(sidecarPath, 'utf8');
+    const parsed = matter(`---\n${sidecarText}\n---`);
+    if (!parsed.data || Object.keys(parsed.data).length === 0) {
+      return { ok: false, reason: 'empty-sidecar', file: sidecarPath };
+    }
+    return { ok: true, data: parsed.data, source: sidecarPath };
+  } catch (error) {
+    return {
+      ok: false,
+      reason: 'sidecar-parse-error',
+      error: error instanceof Error ? error.message : String(error),
+      file: sidecarPath,
+    };
+  }
+}
+
+function resolveDocMetadata(file, text) {
+  const parsedFrontmatter = parseDocFrontmatter(file, text);
+  if (parsedFrontmatter.ok) {
+    return { ok: true, data: parsedFrontmatter.data, source: 'frontmatter' };
+  }
+
+  if (parsedFrontmatter.reason !== 'missing-frontmatter') {
+    return parsedFrontmatter;
+  }
+
+  const parsedSidecar = parseSidecarMetadata(file);
+  if (parsedSidecar.ok) {
+    return parsedSidecar;
+  }
+
+  if (parsedSidecar.reason === 'sidecar-parse-error' || parsedSidecar.reason === 'empty-sidecar') {
+    return parsedSidecar;
+  }
+
+  return { ok: false, reason: 'missing-metadata' };
 }
 
 function getBranchName() {
@@ -179,7 +237,7 @@ function validateReadmeBranchPolicy(files, branch) {
 
 function main() {
   const files = walk(ROOT).sort();
-  const missingFrontmatter = [];
+  const missingMetadata = [];
   const parseErrors = [];
   const missingFields = [];
   const wrongTypeFields = [];
@@ -190,18 +248,18 @@ function main() {
 
   for (const file of files) {
     const text = readFileSync(file, 'utf8');
-    const parsedFrontmatter = parseDocFrontmatter(file, text);
-    if (!parsedFrontmatter.ok) {
-      if (parsedFrontmatter.reason === 'missing-frontmatter') {
-        missingFrontmatter.push(file);
+    const metadata = resolveDocMetadata(file, text);
+    if (!metadata.ok) {
+      if (metadata.reason === 'missing-metadata') {
+        missingMetadata.push(file);
       } else {
-        parseErrors.push(`${file}: ${parsedFrontmatter.error}`);
+        parseErrors.push(`${file}: ${metadata.error}`);
       }
       continue;
     }
-    const parsed = parsedFrontmatter.data;
+    const parsed = metadata.data;
     if (!parsed || typeof parsed !== 'object') {
-      missingFrontmatter.push(file);
+      missingMetadata.push(file);
       continue;
     }
 
@@ -291,7 +349,7 @@ function main() {
   const branchPolicyIssues = validateReadmeBranchPolicy(files, branch);
 
   const hasError =
-    missingFrontmatter.length > 0 ||
+    missingMetadata.length > 0 ||
     parseErrors.length > 0 ||
     missingFields.length > 0 ||
     wrongTypeFields.length > 0 ||
@@ -307,9 +365,9 @@ function main() {
   }
 
   console.error(`Doc metadata validation failed on branch '${branch}'.`);
-  if (missingFrontmatter.length) {
-    console.error('\nMissing frontmatter:');
-    for (const item of missingFrontmatter) console.error(`- ${item}`);
+  if (missingMetadata.length) {
+    console.error('\nMissing metadata:');
+    for (const item of missingMetadata) console.error(`- ${item}`);
   }
   if (parseErrors.length) {
     console.error('\nFrontmatter parse errors:');

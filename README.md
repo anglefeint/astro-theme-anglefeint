@@ -1,14 +1,3 @@
----
-doc_id: readme_en
-doc_role: user-guide
-doc_purpose: End-user setup, usage, and upgrade guide for the template.
-doc_scope: [setup, commands, themes, config, routing]
-update_triggers: [command-change, theme-naming, config-change, routing-change, i18n-change]
-source_of_truth: true
-depends_on: [docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md]
-sync_targets: [README.zh-CN.md, README.ja.md, README.es.md, README.ko.md]
----
-
 <h1 align="center">Anglefeint</h1>
 <p align="center">A cinematic, multi-atmosphere Astro theme for personal publishing.</p>
 

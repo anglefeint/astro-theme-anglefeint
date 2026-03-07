@@ -22,7 +22,7 @@ Claude Code should treat this file as a thin adapter, not as the canonical workf
    - `docs/ARCHITECTURE.md`
    - `docs/VISUAL_SYSTEMS.md`
    - `docs/MAINTAINER_WORKFLOW.md`
-   - `.cursor/workflows/doc-sync-workflow.md`
+   - `docs/DOC_SYNC_WORKFLOW.md`
 
 ## Claude-Specific Note
 

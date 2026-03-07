@@ -1,13 +1,3 @@
----
-doc_id: readme_ja
-doc_role: localized-user-guide
-doc_purpose: 日本語ユーザー向けの導入・利用・アップグレード手順。
-doc_scope: [setup, commands, themes, config, routing]
-update_triggers: [sync-from-readme-en]
-source_of_truth: false
-depends_on: [README.md]
----
-
 <h1 align="center">Anglefeint</h1>
 <p align="center">映画的な表現と複数の雰囲気を持つ Astro テーマです。</p>
 
