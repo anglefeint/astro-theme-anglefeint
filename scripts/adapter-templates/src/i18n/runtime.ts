@@ -35,10 +35,6 @@ export function getLocaleResolutionChain(locale: string): Locale[] {
   return [resolved.code, ...resolved.meta.fallback] as Locale[];
 }
 
-export function getLocaleDirection(locale: string): 'ltr' | 'rtl' {
-  return getLocaleMeta(locale).dir;
-}
-
 export function getLocaleHreflang(locale: string): string {
   return getLocaleMeta(locale).hreflang;
 }

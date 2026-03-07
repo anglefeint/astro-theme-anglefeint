@@ -191,15 +191,23 @@ npm run new-page -- projects --theme matrix
 
 1. 复制 `.env.example` 为 `.env` 并填写站点信息。
 2. 编辑 `src/site.config.ts`：
+   - `site.title`、`site.description`、`site.url`、`site.author`、`site.tagline`：站点身份信息与默认元数据
    - `i18n.defaultLocale`：设置默认语言
    - `i18n.routing.defaultLocalePrefix`：决定默认语言使用 `/<default-locale>/`（默认）还是 `/`
    - `i18n.locales`：作为单一来源增减站点支持语言
+   - `i18n.locales.<code>.messages`：覆盖该语言的界面文案
+   - `i18n.locales.<code>.site.hero`：覆盖该语言首页 hero 文案
    - `social.links`：社交链接
    - `i18n.locales.<code>.about`：按语言配置 About 页面内容与运行文案
    - `theme.enableAboutPage`：About 页面开关
    - `theme.effects.enableRedQueen`：开启/关闭文章页侧边监视器特效
    - `theme.comments`：开启并配置 Giscus（核心 ID + 行为参数）
 3. 在 `src/content/blog/<locale>/` 替换示例文章。
+
+说明：
+
+- `site.description` 是站点级默认描述。首页会优先使用当前语言的 `messages.siteDescription`，未提供时回退到 `site.description`。
+- 语言元信息当前支持 `label`、`hreflang`、`ogLocale`、`enabled`、`fallback`。
 
 ### 可选：Giscus 评论
 
