@@ -63,13 +63,13 @@ async function runAdapterSmokeCheck(cwd) {
       defaultLocaleMatches:
         defaultLocale === siteConfig.THEME_CONFIG.i18n.defaultLocale &&
         defaultLocale === i18nRuntime.DEFAULT_LOCALE,
-      supportedLocalesValid:
-        Array.isArray(i18nConfig.SUPPORTED_LOCALES) &&
-        i18nConfig.SUPPORTED_LOCALES.length > 0 &&
-        i18nConfig.SUPPORTED_LOCALES.includes(defaultLocale),
-      localeLabelsValid:
-        typeof i18nConfig.LOCALE_LABELS?.[defaultLocale] === 'string' &&
-        i18nConfig.LOCALE_LABELS[defaultLocale].length > 0,
+      enabledLocalesValid:
+        Array.isArray(i18nConfig.ENABLED_LOCALES) &&
+        i18nConfig.ENABLED_LOCALES.length > 0 &&
+        i18nConfig.ENABLED_LOCALES.includes(defaultLocale),
+      enabledLocaleLabelsValid:
+        typeof i18nConfig.ENABLED_LOCALE_LABELS?.[defaultLocale] === 'string' &&
+        i18nConfig.ENABLED_LOCALE_LABELS[defaultLocale].length > 0,
       siteAdapterValid:
         siteAdapter.SITE_TITLE === siteConfig.THEME_CONFIG.site.title &&
         siteAdapter.SITE_DESCRIPTION === siteConfig.THEME_CONFIG.site.description &&
@@ -83,7 +83,7 @@ async function runAdapterSmokeCheck(cwd) {
       themeAdapterValid:
         themeAdapter.THEME.BLOG_PAGE_SIZE === siteConfig.THEME_CONFIG.theme.blogPageSize &&
         themeAdapter.THEME.HOME_LATEST_COUNT === siteConfig.THEME_CONFIG.theme.homeLatestCount &&
-        themeAdapter.THEME.ENABLE_ABOUT_PAGE === siteConfig.THEME_CONFIG.theme.enableAboutPage,
+        themeAdapter.THEME.ABOUT_PAGE_ENABLED === siteConfig.THEME_CONFIG.theme.enableAboutPage,
       socialAdapterValid: Array.isArray(socialAdapter.SOCIAL_LINKS),
       configIndexValid:
         typeof configIndex.SITE_TITLE === 'string' &&
@@ -129,7 +129,7 @@ async function runAdapterSourceFallbackCheck(cwd) {
       aboutSource.includes('export function getAboutConfig') &&
       aboutSource.includes('getLocaleResolutionChain'),
     themeAdapterValid:
-      themeSource.includes('THEME_CONFIG.theme') && themeSource.includes('ENABLE_ABOUT_PAGE'),
+      themeSource.includes('THEME_CONFIG.theme') && themeSource.includes('ABOUT_PAGE_ENABLED'),
     socialAdapterValid: socialSource.includes('THEME_CONFIG.social.links'),
     configIndexValid:
       configIndexSource.includes("export * from './site.ts'") &&
@@ -174,8 +174,8 @@ async function main() {
     ) {
       smoke = {
         defaultLocaleMatches: true,
-        supportedLocalesValid: true,
-        localeLabelsValid: true,
+        enabledLocalesValid: true,
+        enabledLocaleLabelsValid: true,
         ...(await runAdapterSourceFallbackCheck(cwd)),
       };
     } else {
@@ -185,11 +185,11 @@ async function main() {
   if (!smoke.defaultLocaleMatches) {
     issues.push('Adapter smoke check failed: i18n default locale wiring is inconsistent.');
   }
-  if (!smoke.supportedLocalesValid) {
-    issues.push('Adapter smoke check failed: supported locales are not derived from config.');
+  if (!smoke.enabledLocalesValid) {
+    issues.push('Adapter smoke check failed: enabled locales are not derived from config.');
   }
-  if (!smoke.localeLabelsValid) {
-    issues.push('Adapter smoke check failed: locale labels are not exposed correctly.');
+  if (!smoke.enabledLocaleLabelsValid) {
+    issues.push('Adapter smoke check failed: enabled locale labels are not exposed correctly.');
   }
   if (!smoke.siteAdapterValid) {
     issues.push(

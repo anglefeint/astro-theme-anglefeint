@@ -9,7 +9,7 @@ import { SITE_TITLE } from '../../../config/site';
 import { THEME } from '../../../config/theme';
 import {
   DEFAULT_LOCALE,
-  SUPPORTED_LOCALES,
+  ENABLED_LOCALES,
   type Locale,
   blogIdToSlugAnyLocale,
   isLocale,
@@ -21,7 +21,7 @@ import { buildPaginationModel } from '@anglefeint/astro-theme/utils/pagination';
 
 export const getStaticPaths = (async () => {
   const all = await getCollection('blog');
-  return SUPPORTED_LOCALES.flatMap((locale) => {
+  return ENABLED_LOCALES.flatMap((locale) => {
     const localizedPosts = postsForLocale(all, locale);
     const totalPages = Math.max(1, Math.ceil(localizedPosts.length / BLOG_PAGE_SIZE));
 
@@ -61,7 +61,7 @@ const jumpToText = messages.blog.jumpTo || 'Jump to page';
 const jumpInputLabelText = messages.blog.jumpInputLabel || 'Page number';
 const allPosts = await getCollection('blog');
 const localeHrefs = Object.fromEntries(
-  SUPPORTED_LOCALES.map((targetLocale) => {
+  ENABLED_LOCALES.map((targetLocale) => {
     const totalPages = Math.max(
       1,
       Math.ceil(postsForLocale(allPosts, targetLocale).length / BLOG_PAGE_SIZE)

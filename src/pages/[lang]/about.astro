@@ -6,7 +6,7 @@ import { getAboutConfig } from '../../config/about';
 import { THEME } from '../../config/theme';
 import {
   DEFAULT_LOCALE,
-  SUPPORTED_LOCALES,
+  ENABLED_LOCALES,
   type Locale,
   blogIdToSlugAnyLocale,
   isLocale,
@@ -16,8 +16,8 @@ import { getMessages } from '../../i18n/messages';
 import { postsForLocale } from '../../i18n/posts';
 
 export const getStaticPaths = (async () =>
-  THEME.ENABLE_ABOUT_PAGE
-    ? SUPPORTED_LOCALES.map((lang) => ({
+  THEME.ABOUT_PAGE_ENABLED
+    ? ENABLED_LOCALES.map((lang) => ({
         params: { lang },
       }))
     : []) satisfies GetStaticPaths;
