@@ -192,6 +192,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 1. Copy `.env.example` to `.env` and set site identity variables.
 2. Edit `src/site.config.ts`:
+   - `site.title`, `site.description`, `site.url`, `site.author`, `site.tagline` for site identity and default metadata
    - `i18n.defaultLocale` to set the canonical root locale
    - `i18n.routing.defaultLocalePrefix` to choose whether the default locale lives at `/<default-locale>/` (default) or `/`
    - `i18n.locales` to add/remove supported locales from a single source
@@ -204,6 +205,11 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
    - `theme.comments` to enable and configure Giscus (core IDs + behavior options)
 3. Replace starter posts in `src/content/blog/<locale>/`.
 4. Set your real site URL (`PUBLIC_SITE_URL` or `src/site.config.ts`) before production deploy.
+
+Notes:
+
+- `site.description` is the site-level default description. The home page uses localized `messages.siteDescription` when provided and falls back to `site.description`.
+- Locale metadata currently supports `label`, `hreflang`, `ogLocale`, `enabled`, and `fallback`.
 
 ### Optional: Giscus Comments
 

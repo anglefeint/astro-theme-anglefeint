@@ -9,7 +9,6 @@ export {
   blogIdToSlugAnyLocale,
   getDefaultLocaleHomePath,
   getLocaleConfig,
-  getLocaleDirection,
   getLocaleResolutionChain,
   getLocaleHreflang,
   getLocaleLabel,
