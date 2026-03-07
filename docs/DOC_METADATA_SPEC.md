@@ -18,7 +18,7 @@ audience:
 depends_on:
   - AGENTS.md
   - docs/AI_WORKFLOW.md
-  - .cursor/workflows/doc-sync-workflow.md
+  - docs/DOC_SYNC_WORKFLOW.md
 machine_summary: Defines the frontmatter schema, field semantics, and validation boundaries for maintained markdown documents.
 ---
 
@@ -28,7 +28,7 @@ This document defines the canonical metadata contract for maintained markdown fi
 
 Use it to answer three questions:
 
-1. What belongs in frontmatter.
+1. What belongs in frontmatter or sidecar metadata.
 2. What must stay in visible markdown body content.
 3. What `npm run check:docs` is allowed to validate.
 
@@ -62,20 +62,30 @@ Use comments sparingly for short prompts such as:
 
 Do not move core workflow rules or document ownership into HTML comments.
 
+### Public docs may use sidecar metadata
+
+Public-facing markdown such as repository READMEs may keep metadata in sidecar `.meta.yaml` files instead of visible frontmatter.
+
+Use sidecars only when the markdown file is intended to stay clean on GitHub or npm-facing surfaces.
+
 ## Metadata Layers
 
-Maintained markdown in this repository uses a three-layer model:
+Maintained markdown in this repository uses a four-layer model:
 
 1. Frontmatter
    - structured metadata for validators and agents
-2. Markdown body
+2. Sidecar metadata
+   - optional metadata file for approved public-facing markdown
+3. Markdown body
    - canonical human-readable content
-3. HTML comments
+4. HTML comments
    - optional local hints only
 
-## Required Frontmatter Fields
+Default metadata source is frontmatter. Sidecars are an exception for public-facing documents.
 
-These fields are required for maintained technical docs covered by `npm run check:docs`.
+## Required Metadata Fields
+
+These fields are required for maintained technical docs covered by `npm run check:docs`, whether the metadata lives in frontmatter or in an approved sidecar file.
 
 ### `doc_id`
 
@@ -112,7 +122,7 @@ These fields are required for maintained technical docs covered by `npm run chec
 - Purpose: declare which classes of repository changes should trigger document review or update
 - Rule: must use a real YAML array
 
-## Recommended Frontmatter Fields
+## Recommended Metadata Fields
 
 These are not strictly required for every doc, but they are part of the preferred end-state contract.
 
@@ -149,7 +159,7 @@ These are not strictly required for every doc, but they are part of the preferre
 - Purpose: short routing hint for agents
 - Rule: keep it to a single concise sentence
 
-## Optional Frontmatter Fields
+## Optional Metadata Fields
 
 These fields are allowed when they add value, but they are not part of the minimum contract.
 
@@ -159,7 +169,24 @@ These fields are allowed when they add value, but they are not part of the minim
 
 Do not add new metadata keys casually. Prefer extending this spec before introducing repository-wide fields.
 
-## What Must Not Go Into Frontmatter
+## Public Sidecar Metadata
+
+Sidecar metadata is allowed for approved public-facing markdown files, currently intended for README-like surfaces.
+
+Recommended naming pattern:
+
+- `README.md` -> `README.meta.yaml`
+- `README.zh-CN.md` -> `README.zh-CN.meta.yaml`
+- `packages/theme/README.md` -> `packages/theme/README.meta.yaml`
+
+Rules:
+
+- Sidecar schema must match the frontmatter schema.
+- Sidecars are metadata only, not alternate document bodies.
+- Sidecars should be used sparingly and only where visible frontmatter would harm the public reading experience.
+- Internal docs under `docs/` should continue to prefer frontmatter.
+
+## What Must Not Go Into Metadata
 
 Do not place the following in frontmatter:
 
@@ -291,7 +318,7 @@ Tool adapters such as `CLAUDE.md` and `.cursor/rules/00-repo.mdc` should normall
 
 ### It should validate
 
-- frontmatter exists where required
+- metadata exists where required
 - YAML parses successfully
 - required keys are present
 - field types are correct
@@ -344,6 +371,6 @@ machine_summary: Canonical agent workflow. Read before code changes, releases, o
 
 - `AGENTS.md` declares that this metadata contract exists and points here.
 - `docs/AI_WORKFLOW.md` defines when doc updates must be considered during engineering work.
-- `.cursor/workflows/doc-sync-workflow.md` defines the update algorithm that consumes this metadata.
+- `docs/DOC_SYNC_WORKFLOW.md` defines the update algorithm that consumes this metadata.
 
 If these documents drift, this file is the canonical metadata reference.

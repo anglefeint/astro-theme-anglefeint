@@ -22,7 +22,7 @@ depends_on:
   - docs/DOC_METADATA_SPEC.md
   - docs/MAINTAINER_WORKFLOW.md
   - docs/PACKAGE_RELEASE.md
-  - .cursor/workflows/doc-sync-workflow.md
+  - docs/DOC_SYNC_WORKFLOW.md
 sync_targets:
   - CLAUDE.md
   - .cursor/rules/00-repo.mdc
@@ -40,7 +40,7 @@ Use it together with:
 - `docs/ARCHITECTURE.md` for system structure and routing
 - `docs/VISUAL_SYSTEMS.md` for route-specific visual/runtime contracts
 - `docs/MAINTAINER_WORKFLOW.md` for maintainer release policy details
-- `.cursor/workflows/doc-sync-workflow.md` for metadata-driven documentation updates
+- `docs/DOC_SYNC_WORKFLOW.md` for metadata-driven documentation updates
 
 ## Branch Model
 
@@ -63,7 +63,7 @@ Before editing code, read in this order:
    - `src/site.config.ts` for site/theme/about/social customization surface
 5. Workflow-specific docs when relevant:
    - `docs/MAINTAINER_WORKFLOW.md`
-   - `.cursor/workflows/doc-sync-workflow.md`
+   - `docs/DOC_SYNC_WORKFLOW.md`
 
 ## Safe Engineering Workflow
 
@@ -145,16 +145,17 @@ Use `npm run maintainer:sync-starter:check` to detect drift without mutating bra
 
 ## Documentation Workflow Contract
 
-When code/config/theme behavior changes, document sync is not automatic by filename. Follow `.cursor/workflows/doc-sync-workflow.md`.
+When code/config/theme behavior changes, document sync is not automatic by filename. Follow `docs/DOC_SYNC_WORKFLOW.md`.
 
 Core rules:
 
 - discover markdown files
 - validate metadata against `docs/DOC_METADATA_SPEC.md`
-- inspect frontmatter responsibilities
+- inspect metadata responsibilities
 - update only documents whose `doc_scope` / `update_triggers` were actually hit
 - propagate changes only through declared `depends_on` / `sync_targets`
 - avoid user-facing README churn unless the user-facing truth changed
+- use sidecar metadata only for approved public-facing markdown files
 
 ## Tool-Specific Adapters
 

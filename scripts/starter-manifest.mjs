@@ -48,10 +48,15 @@ export const STARTER_SUPPORT_SCRIPTS = [
 
 export const STARTER_STATIC_MANAGED_FILES = [
   'README.md',
+  'README.meta.yaml',
   'README.zh-CN.md',
+  'README.zh-CN.meta.yaml',
   'README.ja.md',
+  'README.ja.meta.yaml',
   'README.es.md',
+  'README.es.meta.yaml',
   'README.ko.md',
+  'README.ko.meta.yaml',
   'src/pages/[lang]/about.astro',
   'src/pages/[lang]/blog/[...page].astro',
   'src/pages/[lang]/blog/[...slug].astro',
