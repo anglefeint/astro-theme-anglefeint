@@ -5,53 +5,51 @@ import SocialMenu from './SocialMenu.astro';
 
 const today = new Date();
 interface Props {
-	tagline?: string;
-	/** Show Blade Runner scanlines overlay on ai-page (header/footer only) */
-	scanlines?: boolean;
+  tagline?: string;
+  /** Show Blade Runner scanlines overlay on ai-page (header/footer only) */
+  scanlines?: boolean;
 }
 
 const { tagline = SITE_TAGLINE, scanlines = false } = Astro.props as Props;
 ---
 
 <footer>
-	&copy; {today.getFullYear()} {SITE_TITLE}. {tagline}
-	<div class="social-links">
-		<SocialMenu links={SOCIAL_LINKS} />
-	</div>
-	{import.meta.env.DEV && SOCIAL_LINKS.length === 0 && (
-		<p class="social-hint">Configure social links in <code>src/site.config.ts</code></p>
-	)}
-	{scanlines && <div class="ai-scanlines" aria-hidden="true"></div>}
+  &copy; {today.getFullYear()}
+  {SITE_TITLE}. {tagline}
+  <div class="social-links">
+    <SocialMenu links={SOCIAL_LINKS} tone="footer" gap="0.85rem" />
+  </div>
+  {
+    import.meta.env.DEV && SOCIAL_LINKS.length === 0 && (
+      <p class="social-hint">
+        Configure social links in <code>src/site.config.ts</code>
+      </p>
+    )
+  }
+  {scanlines && <div class="ai-scanlines" aria-hidden="true" />}
 </footer>
 <style>
-	footer {
-		padding: 2em 1em 3em 1em;
-		background: var(--chrome-bg, var(--bg));
-		border-top: 1px solid var(--chrome-border, rgb(var(--border)));
-		color: var(--chrome-text-muted, rgb(var(--text-muted)));
-		text-align: center;
-	}
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
-	}
-	.social-hint {
-		margin: 0.6rem 0 0;
-		font-size: 0.78rem;
-		color: var(--chrome-text-muted, rgb(var(--text-muted)));
-		opacity: 0.82;
-	}
-	.social-hint code {
-		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-		font-size: 0.75rem;
-	}
-	.social-links a {
-		text-decoration: none;
-		color: var(--chrome-text-muted, rgb(var(--text-muted)));
-	}
-	.social-links a:hover {
-		color: var(--chrome-link-hover, var(--chrome-link, rgb(var(--text))));
-	}
+  footer {
+    padding: 2em 1em 3em 1em;
+    background: var(--chrome-bg, var(--bg));
+    border-top: 1px solid var(--chrome-border, rgb(var(--border)));
+    color: var(--chrome-text-muted, rgb(var(--text-muted)));
+    text-align: center;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+  }
+  .social-hint {
+    margin: 0.6rem 0 0;
+    font-size: 0.78rem;
+    color: var(--chrome-text-muted, rgb(var(--text-muted)));
+    opacity: 0.82;
+  }
+  .social-hint code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.75rem;
+  }
 </style>

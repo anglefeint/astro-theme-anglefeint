@@ -6,12 +6,16 @@ interface Props {
   links?: SocialLink[];
   iconSize?: number;
   showPlaceholdersWhenEmpty?: boolean;
+  tone?: 'header' | 'footer';
+  gap?: string;
 }
 
 const {
   links = SOCIAL_LINKS,
   iconSize = 32,
   showPlaceholdersWhenEmpty = true,
+  tone = 'header',
+  gap = tone === 'header' ? '0.6rem' : '0.85rem',
 } = Astro.props as Props;
 const placeholderLinks: SocialLink[] = [
   { href: '', label: 'Mastodon', icon: 'mastodon' },
@@ -21,26 +25,63 @@ const placeholderLinks: SocialLink[] = [
 const resolvedLinks = links.length > 0 || !showPlaceholdersWhenEmpty ? links : placeholderLinks;
 ---
 
-{
-  resolvedLinks.map((link) =>
-    links.length > 0 ? (
-      <a href={link.href} target="_blank" rel="noopener noreferrer">
-        <span class="sr-only">{link.label}</span>
-        {link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
-      </a>
-    ) : (
-      <span class="social-placeholder" aria-hidden="true">
-        {link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
-      </span>
+<div class:list={['social-menu', `social-menu-${tone}`]} style={`--social-gap:${gap};`}>
+  {
+    resolvedLinks.map((link) =>
+      links.length > 0 ? (
+        <a href={link.href} target="_blank" rel="noopener noreferrer">
+          <span class="sr-only">{link.label}</span>
+          {link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
+        </a>
+      ) : (
+        <span class="social-placeholder" aria-hidden="true">
+          {link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
+        </span>
+      )
     )
-  )
-}
+  }
+</div>
 
 <style>
+  .social-menu {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--social-gap);
+  }
+
+  .social-menu a,
   .social-placeholder {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .social-menu a {
+    color: rgba(188, 220, 242, 0.82);
+    text-decoration: none;
+    line-height: 0;
+    transition:
+      color 0.22s ease,
+      transform 0.22s ease,
+      filter 0.22s ease;
+  }
+
+  .social-menu a:hover {
+    color: rgba(228, 242, 255, 0.98);
+    transform: translateY(-1px);
+    filter: drop-shadow(0 0 12px rgba(132, 214, 255, 0.28));
+  }
+
+  .social-menu-footer a {
+    color: rgba(166, 190, 214, 0.78);
+  }
+
+  .social-menu-footer a:hover {
+    color: rgba(208, 228, 246, 0.94);
+    filter: drop-shadow(0 0 10px rgba(132, 214, 255, 0.2));
+  }
+
+  .social-placeholder {
     opacity: 0.45;
     filter: saturate(0.7);
     cursor: default;
