@@ -1,13 +1,3 @@
----
-doc_id: readme_es
-doc_role: localized-user-guide
-doc_purpose: Guia en espanol para instalacion, uso y actualizacion del tema.
-doc_scope: [setup, commands, themes, config, routing]
-update_triggers: [sync-from-readme-en]
-source_of_truth: false
-depends_on: [README.md]
----
-
 <h1 align="center">Anglefeint</h1>
 <p align="center">Un tema Astro cinematografico con varias atmosferas para publicacion personal.</p>
 
