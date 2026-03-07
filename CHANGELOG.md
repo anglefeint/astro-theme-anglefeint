@@ -15,6 +15,17 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.6] - 2026-03-07
+
+### Changed
+
+- Refined header and footer social icon presentation in the published theme package with clearer group spacing and calmer default icon tones.
+- Moved social icon color/spacing ownership into the shared social menu component so header/footer styling no longer depends on fragile outer-scope link selectors.
+
+### Notes
+
+- See [`docs/releases/0.2.6.md`](docs/releases/0.2.6.md) for release details and validation summary.
+
 ## [0.2.5] - 2026-03-07
 
 ### Changed

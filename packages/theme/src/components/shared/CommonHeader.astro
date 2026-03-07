@@ -81,7 +81,7 @@ const localeOptions = ENABLED_LOCALES.map((targetLocale) => ({
           <span class="nav-status-text">{labels.status}</span>
         </div>
         <div class="social-menu-wrap">
-          <SocialMenu links={SOCIAL_LINKS} />
+          <SocialMenu links={SOCIAL_LINKS} tone="header" gap="0.6rem" />
         </div>
       </div>
     </div>
@@ -140,18 +140,7 @@ const localeOptions = ENABLED_LOCALES.map((targetLocale) => ({
     text-decoration: none;
     border-bottom-color: var(--chrome-active, var(--accent));
   }
-  .social-links a {
-    color: var(--chrome-link, rgb(var(--text)));
-    align-items: center;
-    justify-content: center;
-    padding: 0.6rem 0.35rem;
-    border-bottom: none;
-  }
-  .social-links a:hover {
-    color: var(--chrome-link-hover, var(--chrome-link, rgb(var(--text))));
-  }
-  .social-links,
-  .social-links a {
+  .social-links {
     display: flex;
   }
   .social-links {
@@ -170,6 +159,11 @@ const localeOptions = ENABLED_LOCALES.map((targetLocale) => ({
     --lang-select-focus-ring: rgba(98, 180, 228, 0.18);
     --lang-select-option-text: #ccecfb;
     --lang-select-option-bg: #0b1c32;
+  }
+  .social-menu-wrap {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.45rem;
   }
   .nav-status {
     display: none;
