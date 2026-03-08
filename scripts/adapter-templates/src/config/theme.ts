@@ -1,3 +1,6 @@
+// Generated file. Do not edit directly.
+// Edit scripts/adapter-templates/src/config/theme.ts and run `npm run sync-adapters`.
+
 import { THEME_CONFIG } from '../site.config.ts';
 
 const commentsConfig = THEME_CONFIG.theme.comments;

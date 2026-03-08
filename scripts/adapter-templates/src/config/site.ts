@@ -1,3 +1,6 @@
+// Generated file. Do not edit directly.
+// Edit scripts/adapter-templates/src/config/site.ts and run `npm run sync-adapters`.
+
 import { THEME_CONFIG } from '../site.config.ts';
 import { getLocaleConfig, getLocaleResolutionChain, type Locale } from '../i18n/config.ts';
 

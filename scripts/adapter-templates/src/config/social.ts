@@ -1,3 +1,6 @@
+// Generated file. Do not edit directly.
+// Edit scripts/adapter-templates/src/config/social.ts and run `npm run sync-adapters`.
+
 import { THEME_CONFIG, type SocialLink } from '../site.config.ts';
 
 /**

@@ -40,12 +40,18 @@ async function main() {
   if (check) {
     console.error('Adapter files are out of sync:');
     for (const file of changed) console.error(`- ${file}`);
-    console.error('\nRun: npm run sync-adapters');
+    console.error(
+      '\nThese files are generated from scripts/adapter-templates/* and should not be edited directly.'
+    );
+    console.error('Run: npm run sync-adapters');
     process.exit(1);
   }
 
   console.log('Updated adapter files:');
   for (const file of changed) console.log(`- ${file}`);
+  console.log(
+    '\nNote: these target files are generated from scripts/adapter-templates/*; local edits to them will be overwritten.'
+  );
 }
 
 main().catch((error) => {
