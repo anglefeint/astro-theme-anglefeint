@@ -1,3 +1,6 @@
+// Generated file. Do not edit directly.
+// Edit scripts/adapter-templates/src/i18n/config.ts and run `npm run sync-adapters`.
+
 export {
   I18N,
   DEFAULT_LOCALE,
