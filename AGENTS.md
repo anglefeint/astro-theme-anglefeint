@@ -79,6 +79,7 @@ This file is the neutral entrypoint for all coding agents working in this reposi
 npm run dev
 npm run build
 npm run preview
+npm run suggest:docs
 npm run check
 npm run check:no-build
 npm run check:docs
