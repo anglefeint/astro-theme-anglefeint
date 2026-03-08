@@ -1,3 +1,6 @@
+// Generated file. Do not edit directly.
+// Edit scripts/adapter-templates/src/i18n/messages.ts and run `npm run sync-adapters`.
+
 import type { Messages } from '@anglefeint/theme-default-i18n';
 import { DEFAULT_MESSAGES } from '@anglefeint/theme-default-i18n';
 import { deepMerge } from '@anglefeint/astro-theme/utils/merge';

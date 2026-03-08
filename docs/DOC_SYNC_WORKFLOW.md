@@ -128,40 +128,38 @@ Run this workflow whenever repository changes may alter documentation truth:
 
 ## Execution Chain
 
-1. Discover all markdown files:
-   - `rg --files -g '*.md'`
-2. Read metadata per file:
-   - parse frontmatter if present
-   - otherwise resolve approved sidecar metadata if applicable
-   - fallback to inferred purpose if needed
-3. Build dependency graph:
-   - edge A -> B when B is in A.`sync_targets`
-   - edge A -> B when A is in B.`depends_on`
-4. Analyze current engineering changes:
-   - extract changed domains from code/config/commands/behavior
-5. Per-file decision (must be deterministic):
-   - direct hit if change-domain intersects `doc_scope`/`update_triggers`
-   - otherwise skip with explicit reason
-6. Propagate:
-   - include dependent docs via graph traversal
-   - traversal is transitive and breadth-first until no new dependent docs are discovered
-7. Apply updates in dependency-safe order:
-   - source docs -> derived docs
-8. Validate:
+1. Start with the repository helper:
+   - `npm run suggest:docs`
+   - optional explicit paths:
+     - `npm run suggest:docs -- src/site.config.ts docs/ARCHITECTURE.md`
+2. The helper will:
+   - discover maintained markdown files
+   - read metadata from frontmatter or approved sidecars
+   - infer likely change domains from the changed file set
+   - compute direct-hit docs from `doc_scope` / `update_triggers`
+   - propagate dependent docs via `depends_on` / `sync_targets`
+3. Use the suggested direct-hit and propagated docs as the update set.
+4. Update the required docs directly; do not stop for manual confirmation unless the output is ambiguous.
+5. Validate:
    - `npm run check:docs`
    - run `npm run check` only if the updated docs describe changed behavior, commands, routing, layout, runtime, release flow, or SEO
    - run `npm run build` only if behavior/routing/layout/SEO changed
-9. Report:
-   - discovered docs count
-   - updated docs list
-   - skipped docs list + reason
-   - metadata-missing docs list
+6. Report:
+   - changed files used as input
+   - direct-hit docs
+   - propagated docs
+   - skipped docs
+   - metadata errors, if any
    - validation result
 
 ## Reusable Commands
 
 ```bash
 rg --files -g '*.md'
+```
+
+```bash
+npm run suggest:docs
 ```
 
 ```bash

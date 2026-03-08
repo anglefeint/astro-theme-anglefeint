@@ -20,6 +20,7 @@
     "prepare": "husky",
     "dev": "astro dev",
     "build": "astro build",
+    "suggest:docs": "node scripts/suggest-doc-updates.mjs",
     "check:docs": "node scripts/validate-doc-metadata.mjs",
     "check:fonts": "node scripts/check-font-assets.mjs",
     "check:workspace-link": "node scripts/check-workspace-link.mjs",

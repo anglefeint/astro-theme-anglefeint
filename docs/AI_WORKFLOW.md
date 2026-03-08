@@ -149,6 +149,7 @@ When code/config/theme behavior changes, document sync is not automatic by filen
 
 Core rules:
 
+- start with `npm run suggest:docs` to infer the likely direct-hit and propagated docs from current file changes
 - discover markdown files
 - validate metadata against `docs/DOC_METADATA_SPEC.md`
 - inspect metadata responsibilities
