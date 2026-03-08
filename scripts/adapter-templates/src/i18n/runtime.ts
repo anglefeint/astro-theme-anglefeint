@@ -1,3 +1,6 @@
+// Generated file. Do not edit directly.
+// Edit scripts/adapter-templates/src/i18n/runtime.ts and run `npm run sync-adapters`.
+
 import { THEME_CONFIG } from '../site.config.ts';
 import { normalizeI18nConfig } from '../site.config.runtime.ts';
 

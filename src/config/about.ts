@@ -1,3 +1,6 @@
+// Generated file. Do not edit directly.
+// Edit scripts/adapter-templates/src/config/about.ts and run `npm run sync-adapters`.
+
 import { deepMerge } from '@anglefeint/astro-theme/utils/merge';
 import { DEFAULT_ABOUT_CONFIG } from '../site.config.defaults.ts';
 import type { AboutConfig } from '../site.config.schema.ts';
