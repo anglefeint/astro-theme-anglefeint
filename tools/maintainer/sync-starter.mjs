@@ -354,7 +354,7 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     await run('git', ['checkout', targetBranch]);
     switched = true;
 
-    const removedGenerated = await cleanupGeneratedArtifacts(repoRoot);
+    await cleanupGeneratedArtifacts(repoRoot);
     const changedManaged = await writeManagedFilesFromRef(sourceRef, repoRoot);
     const removedObsolete = await cleanupObsoleteStarterFiles(repoRoot);
     const removedUnexpectedContent = await cleanupUnexpectedStarterContent(repoRoot);
@@ -366,7 +366,6 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     await run('npm', ['run', 'build']);
 
     const changed = [...changedManaged, ...removedObsolete, ...removedUnexpectedContent];
-    for (const relPath of removedGenerated) changed.push(relPath);
     if (sanitized) changed.push('package.json');
     if (dependencyUpdated && !changed.includes('package.json')) changed.push('package.json');
     changed.push(STARTER_PACKAGE_LOCK);
