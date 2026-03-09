@@ -4,16 +4,8 @@
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/theme/placeholders/theme-placeholder-1.jpg';
+import { buildHeadLocaleState, buildJsonLdSchemas } from '../utils/head';
 import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '@anglefeint/site-config/site';
-import {
-  DEFAULT_LOCALE,
-  ENABLED_LOCALES,
-  alternatePathForLocale,
-  getLocaleHreflang,
-  getLocaleOgLocale,
-  isLocale,
-  stripLocaleFromPath,
-} from '@anglefeint/site-i18n/config';
 
 interface Props {
   title: string;
@@ -47,66 +39,25 @@ const {
 const imageURL = new URL(image.src, siteURL).toString();
 const robotsContent = noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 const isArticle = pageType === 'article';
-const pathParts = Astro.url.pathname.split('/').filter(Boolean);
-const currentLocale =
-  pathParts.length > 0 && isLocale(pathParts[0]) ? pathParts[0] : DEFAULT_LOCALE;
+const { currentLocale, alternatePaths, xDefaultHref, ogLocale, ogLocaleAlternates } =
+  buildHeadLocaleState(Astro.url.pathname, siteURL);
 const rssURL = new URL(`/${currentLocale}/rss.xml`, siteURL);
-const localeSubpath = stripLocaleFromPath(Astro.url.pathname, currentLocale);
-const alternatePaths = ENABLED_LOCALES.map((locale) => ({
-  locale,
-  hreflang: getLocaleHreflang(locale),
-  href: new URL(alternatePathForLocale(locale, localeSubpath), siteURL).toString(),
-}));
-const xDefaultHref = new URL(alternatePathForLocale(DEFAULT_LOCALE, localeSubpath), siteURL);
-const ogLocale = getLocaleOgLocale(currentLocale);
-const ogLocaleAlternates = ENABLED_LOCALES.filter((locale) => locale !== currentLocale)
-  .map((locale) => getLocaleOgLocale(locale))
-  .filter(Boolean);
 const articleModifiedISO = (modifiedTime ?? publishedTime)?.toISOString();
-
-const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: SITE_TITLE,
-  url: siteURL.toString(),
+const jsonLdSchemas = buildJsonLdSchemas({
+  siteTitle: SITE_TITLE,
+  siteAuthor: SITE_AUTHOR,
+  siteURL,
+  title,
   description,
-  publisher: {
-    '@type': 'Person',
-    name: SITE_AUTHOR,
-  },
-};
-
-const personSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: SITE_AUTHOR,
-  url: siteURL.toString(),
-};
-
-const articleSchema = isArticle
-  ? {
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: title,
-      description,
-      image: [imageURL],
-      author: {
-        '@type': 'Person',
-        name: author,
-      },
-      publisher: {
-        '@type': 'Person',
-        name: SITE_AUTHOR,
-      },
-      mainEntityOfPage: canonicalURL.toString(),
-      datePublished: publishedTime?.toISOString(),
-      dateModified: (modifiedTime ?? publishedTime)?.toISOString(),
-      keywords: tags?.length ? tags.join(', ') : undefined,
-    }
-  : undefined;
-
-const extraSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
-const jsonLdSchemas = [websiteSchema, personSchema, articleSchema, ...extraSchemas].filter(Boolean);
+  imageURL,
+  canonicalURL,
+  isArticle,
+  author,
+  publishedTime,
+  modifiedTime,
+  tags,
+  schema,
+});
 const serializeJsonLd = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 ---
 
