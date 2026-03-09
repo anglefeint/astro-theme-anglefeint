@@ -42,6 +42,7 @@ export const STARTER_SUPPORT_SCRIPTS = [
   'scripts/check-adapter-contract.mjs',
   'scripts/new-page.mjs',
   'scripts/new-post.mjs',
+  'scripts/resolve-theme-default-i18n-entry.mjs',
   'scripts/starter-manifest.mjs',
   'scripts/sync-adapters.mjs',
 ];
