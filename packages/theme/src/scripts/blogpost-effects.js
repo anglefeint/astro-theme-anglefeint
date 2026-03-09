@@ -4,6 +4,11 @@ import { initPostInteractions } from './blogpost/interactions.js';
 import { initReadProgressAndBackToTop } from './blogpost/read-progress.js';
 import { initRedQueenTv } from './blogpost/red-queen-tv.js';
 
+const NETWORK_FALLBACK_DELAY_MS = 120;
+const RED_QUEEN_FALLBACK_DELAY_MS = 460;
+const NETWORK_IDLE_TIMEOUT_MS = 1200;
+const RED_QUEEN_IDLE_TIMEOUT_MS = 2200;
+
 function prefersReducedMotionEnabled() {
   try {
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -33,8 +38,8 @@ export function initBlogpostEffects() {
   function scheduleDeferredStarts() {
     function fallbackSchedule() {
       function runAfterLoad() {
-        setTimeout(startNetworkCanvas, 120);
-        setTimeout(startRedQueenTv, 460);
+        setTimeout(startNetworkCanvas, NETWORK_FALLBACK_DELAY_MS);
+        setTimeout(startRedQueenTv, RED_QUEEN_FALLBACK_DELAY_MS);
       }
 
       if (document.readyState === 'complete') runAfterLoad();
@@ -46,12 +51,18 @@ export function initBlogpostEffects() {
       return;
     }
 
-    window.requestIdleCallback(function() {
-      startNetworkCanvas();
-      window.requestIdleCallback(function() {
-        startRedQueenTv();
-      }, { timeout: 2200 });
-    }, { timeout: 1200 });
+    window.requestIdleCallback(
+      function () {
+        startNetworkCanvas();
+        window.requestIdleCallback(
+          function () {
+            startRedQueenTv();
+          },
+          { timeout: RED_QUEEN_IDLE_TIMEOUT_MS }
+        );
+      },
+      { timeout: NETWORK_IDLE_TIMEOUT_MS }
+    );
   }
 
   initReadProgressAndBackToTop(prefersReducedMotion);

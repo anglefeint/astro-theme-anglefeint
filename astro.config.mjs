@@ -3,19 +3,12 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
-import { existsSync } from 'node:fs';
 import { URL, fileURLToPath } from 'node:url';
+import { resolveThemeDefaultI18nEntry } from './scripts/resolve-theme-default-i18n-entry.mjs';
 import { SITE_URL } from './src/config/site';
 import { DEFAULT_LOCALE, DEFAULT_LOCALE_PREFIX_MODE } from './src/i18n/config';
 
-const THEME_DEFAULT_I18N_LOCAL = './packages/theme/src/i18n/messages.ts';
-const THEME_DEFAULT_I18N_NODE_MODULES =
-  './node_modules/@anglefeint/astro-theme/src/i18n/messages.ts';
-const themeDefaultI18nEntry = existsSync(
-  fileURLToPath(new URL(THEME_DEFAULT_I18N_LOCAL, import.meta.url))
-)
-  ? THEME_DEFAULT_I18N_LOCAL
-  : THEME_DEFAULT_I18N_NODE_MODULES;
+const themeDefaultI18nEntry = resolveThemeDefaultI18nEntry(import.meta.url);
 
 // https://astro.build/config
 export default defineConfig({

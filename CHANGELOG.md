@@ -15,6 +15,18 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.7] - 2026-03-09
+
+### Changed
+
+- Extracted blog post effect timing values into named constants so deferred canvas startup remains behaviorally identical but easier to tune and review.
+- Moved BaseHead locale/alternate/schema derivation into a small shared helper without changing the rendered SEO output contract.
+- Centralized theme-default i18n entry resolution in `astro.config.mjs` and added explicit generated-file warnings plus clearer overwrite messaging to the adapter sync workflow.
+
+### Notes
+
+- See [`docs/releases/0.2.7.md`](docs/releases/0.2.7.md) for release details and validation summary.
+
 ## [0.2.6] - 2026-03-07
 
 ### Changed
