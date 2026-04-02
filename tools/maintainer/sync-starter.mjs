@@ -314,6 +314,36 @@ async function syncStarterThemeDependency(repoRoot, expectedRange) {
   return false;
 }
 
+/**
+ * Sync runtime dependencies from the source (main) package.json to the starter package.json.
+ * The theme package dep is intentionally skipped here — it is managed by syncStarterThemeDependency.
+ */
+async function syncStarterRuntimeDeps(repoRoot, sourceRef) {
+  const THEME_DEP = '@anglefeint/astro-theme';
+  const mainPkgRaw = await readFromGit(sourceRef, STARTER_PACKAGE_JSON);
+  const mainPkg = JSON.parse(mainPkgRaw);
+  const mainDeps = mainPkg.dependencies || {};
+
+  const pkgPath = path.join(repoRoot, STARTER_PACKAGE_JSON);
+  const raw = await readFile(pkgPath, 'utf8');
+  const pkg = JSON.parse(raw);
+  pkg.dependencies = pkg.dependencies || {};
+
+  let changed = false;
+  for (const [name, version] of Object.entries(mainDeps)) {
+    if (name === THEME_DEP) continue;
+    if (pkg.dependencies[name] !== version) {
+      pkg.dependencies[name] = version;
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    await writeFile(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`, 'utf8');
+  }
+  return changed;
+}
+
 async function commitStarterIfNeeded(sourceRef, changedFiles) {
   const status = await gitStatusPorcelain();
   if (!status) {
@@ -360,6 +390,7 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     const removedUnexpectedContent = await cleanupUnexpectedStarterContent(repoRoot);
     const sanitized = await sanitizeStarterPackageJson(repoRoot);
     const dependencyUpdated = await syncStarterThemeDependency(repoRoot, expectedRange);
+    await syncStarterRuntimeDeps(repoRoot, sourceRef);
 
     await run('npm', ['install']);
     await run('npm', ['run', 'check']);
