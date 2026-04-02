@@ -48,6 +48,7 @@ The following grouped notes backfill the release history that predates the forma
 - [`0.2.5`](./0.2.5.md)
 - [`0.2.6`](./0.2.6.md)
 - [`0.2.7`](./0.2.7.md)
+- [`0.2.8`](./0.2.8.md)
 
 ## Forward Rule
 

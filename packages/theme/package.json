@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -51,6 +51,6 @@
     "./content-schema": "./src/content-schema.ts"
   },
   "peerDependencies": {
-    "astro": "^5.0.0 || ^6.0.0-beta.0"
+    "astro": "^5.0.0 || ^6.0.0"
   }
 }

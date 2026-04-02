@@ -15,6 +15,17 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.8] - 2026-04-02
+
+### Changed
+
+- Published `@anglefeint/astro-theme@0.2.8` with `peerDependencies.astro` widened to `^5.0.0 || ^6.0.0` so stable Astro 6.x installs satisfy peers without relying on the old beta range.
+- Upgraded the root workspace to `astro@^6.1.3` and aligned official integrations (`@astrojs/mdx`, `@astrojs/rss`, `@astrojs/sitemap`, `@astrojs/check`) with the stable Astro 6.1 line.
+
+### Notes
+
+- See [`docs/releases/0.2.8.md`](docs/releases/0.2.8.md) for release details and validation summary.
+
 ## [0.2.7] - 2026-03-09
 
 ### Changed
