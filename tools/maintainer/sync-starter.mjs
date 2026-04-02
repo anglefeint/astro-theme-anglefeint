@@ -57,6 +57,11 @@ async function runSilent(command, args, options = {}) {
   return execFileAsync(command, args, { cwd, maxBuffer: 20 * 1024 * 1024 });
 }
 
+async function runSilentBuffer(command, args, options = {}) {
+  const { cwd } = options;
+  return execFileAsync(command, args, { cwd, maxBuffer: 20 * 1024 * 1024, encoding: 'buffer' });
+}
+
 async function currentBranch() {
   const { stdout } = await runSilent('git', ['branch', '--show-current']);
   return stdout.trim();
@@ -111,6 +116,20 @@ async function readFromGit(ref, filePath) {
 async function readFromGitOrNull(ref, filePath) {
   try {
     return await readFromGit(ref, filePath);
+  } catch {
+    return null;
+  }
+}
+
+/** Binary-safe: returns a Buffer. Use for managed files that may be binary (e.g. images). */
+async function readFromGitBuffer(ref, filePath) {
+  const { stdout } = await runSilentBuffer('git', ['show', `${ref}:${filePath}`]);
+  return stdout;
+}
+
+async function readFromGitOrNullBuffer(ref, filePath) {
+  try {
+    return await readFromGitBuffer(ref, filePath);
   } catch {
     return null;
   }
@@ -192,13 +211,13 @@ async function cleanupGeneratedArtifacts(repoRoot) {
 async function collectDrift(sourceRef, targetRef) {
   const changed = [];
   for (const relPath of MANAGED_FILES) {
-    const sourceText = await readFromGitOrNull(sourceRef, relPath);
-    if (sourceText === null) {
+    const sourceBuf = await readFromGitOrNullBuffer(sourceRef, relPath);
+    if (sourceBuf === null) {
       changed.push(relPath);
       continue;
     }
-    const targetText = await readFromGitOrNull(targetRef, relPath);
-    if (targetText !== sourceText) changed.push(relPath);
+    const targetBuf = await readFromGitOrNullBuffer(targetRef, relPath);
+    if (targetBuf === null || !sourceBuf.equals(targetBuf)) changed.push(relPath);
   }
   for (const relPath of STARTER_OBSOLETE_FILES) {
     const targetText = await readFromGitOrNull(targetRef, relPath);
@@ -218,12 +237,12 @@ async function collectDrift(sourceRef, targetRef) {
 async function writeManagedFilesFromRef(sourceRef, repoRoot) {
   const changed = [];
   for (const relPath of MANAGED_FILES) {
-    const sourceText = await readFromGit(sourceRef, relPath);
+    const sourceBuf = await readFromGitBuffer(sourceRef, relPath);
     const fullPath = path.join(repoRoot, relPath);
-    const existing = (await fileExists(fullPath)) ? await readFile(fullPath, 'utf8') : null;
-    if (existing === sourceText) continue;
+    const existing = (await fileExists(fullPath)) ? await readFile(fullPath) : null;
+    if (existing !== null && existing.equals(sourceBuf)) continue;
     await mkdir(path.dirname(fullPath), { recursive: true });
-    await writeFile(fullPath, sourceText, 'utf8');
+    await writeFile(fullPath, sourceBuf);
     changed.push(relPath);
   }
   return changed;
