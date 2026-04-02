@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.0.0--beta.17-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.1.3-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
@@ -169,7 +169,7 @@ npm run new-page -- projects --theme matrix
 
 ## Caracteristicas
 
-- Salida estatica con Astro 6 (beta)
+- Salida estática con Astro 6
 - Colecciones de contenido Markdown + MDX
 - El starter incluye idiomas de ejemplo: `en`, `ja`, `ko`, `es`, `zh`
 - RSS por idioma
