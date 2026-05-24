@@ -11,6 +11,7 @@ interface Props {
   title: string;
   description: string;
   image?: ImageMetadata;
+  imageAlt?: string;
   pageType?: 'website' | 'article';
   publishedTime?: Date;
   modifiedTime?: Date;
@@ -30,6 +31,7 @@ const {
   title,
   description,
   image,
+  imageAlt,
   pageType,
   publishedTime,
   modifiedTime,
@@ -52,6 +54,7 @@ const messages = getMessages(locale);
       title={title}
       description={description}
       image={image}
+      imageAlt={imageAlt}
       pageType={pageType}
       publishedTime={publishedTime}
       modifiedTime={modifiedTime}
@@ -59,6 +62,7 @@ const messages = getMessages(locale);
       tags={tags}
       schema={schema}
       noindex={noindex}
+      localeHrefs={localeHrefs}
     />
     <slot name="head" />
   </head>

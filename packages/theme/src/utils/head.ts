@@ -6,6 +6,7 @@ import {
   getLocaleOgLocale,
   isLocale,
   stripLocaleFromPath,
+  type Locale,
 } from '@anglefeint/site-i18n/config';
 
 export function resolveCurrentLocale(pathname: string): string {
@@ -13,19 +14,32 @@ export function resolveCurrentLocale(pathname: string): string {
   return pathParts.length > 0 && isLocale(pathParts[0]) ? pathParts[0] : DEFAULT_LOCALE;
 }
 
-export function buildHeadLocaleState(pathname: string, siteURL: URL) {
+function resolveAbsoluteHref(href: string, siteURL: URL): string {
+  return new URL(href, siteURL).toString();
+}
+
+export function buildHeadLocaleState(
+  pathname: string,
+  siteURL: URL,
+  localeHrefs?: Partial<Record<Locale, string>>
+) {
   const currentLocale = resolveCurrentLocale(pathname);
   const localeSubpath = stripLocaleFromPath(pathname, currentLocale);
   const alternatePaths = ENABLED_LOCALES.map((locale) => ({
     locale,
     hreflang: getLocaleHreflang(locale),
-    href: new URL(alternatePathForLocale(locale, localeSubpath), siteURL).toString(),
+    href: resolveAbsoluteHref(
+      localeHrefs?.[locale] ?? alternatePathForLocale(locale, localeSubpath),
+      siteURL
+    ),
   }));
+  const xDefaultPath =
+    localeHrefs?.[DEFAULT_LOCALE] ?? alternatePathForLocale(DEFAULT_LOCALE, localeSubpath);
 
   return {
     currentLocale,
     alternatePaths,
-    xDefaultHref: new URL(alternatePathForLocale(DEFAULT_LOCALE, localeSubpath), siteURL),
+    xDefaultHref: resolveAbsoluteHref(xDefaultPath, siteURL),
     ogLocale: getLocaleOgLocale(currentLocale),
     ogLocaleAlternates: ENABLED_LOCALES.filter((locale) => locale !== currentLocale)
       .map((locale) => getLocaleOgLocale(locale))
