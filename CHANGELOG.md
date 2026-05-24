@@ -285,7 +285,12 @@ All notable changes to this project are documented in this file.
 
 ### Changed
 
-- Added unified publish/lint safety tooling and completed a broad repo/org identity cleanup.
+- Consolidated updates since the previous GitHub release (`0.1.3`) and aligned the public package with `@anglefeint/astro-theme@0.1.25`.
+- Added Giscus comments support on blog post pages and tuned the theme integration.
+- Added the unified `npm run release:npm` publish command.
+- Added Husky/lint-staged guardrails around doc metadata validation and full pre-push checks.
+- Refactored the About modal runtime into focused modules while preserving the public UX.
+- Hardened blog detail effects, Red Queen playback timing, preload/decode behavior, and hashed asset cache headers.
 
 ### Notes
 
@@ -480,12 +485,15 @@ All notable changes to this project are documented in this file.
 
 ### Added
 
-- `npm run new-post -- <slug>` script to scaffold the same post slug across `en`, `ja`, `ko`, `es`, `zh`.
 - Multilingual README sections for post scaffolding command usage.
 - Upgrade guide (`UPGRADING.md`) and changelog links in all README language variants.
 
 ### Changed
 
+- Published `@anglefeint/astro-theme@0.1.3` and moved starter scripts to consume the package CLI entrypoints.
+- Removed package-level alias coupling for better portability and included `src/config/*` in the theme package files.
+- Neutralized theme-review defaults by using `https://example.com` for the default site URL and hiding default social links.
+- Synced starter consumption to `@anglefeint/astro-theme ^0.1.3` and `astro ^5.18.0`.
 - Language switcher now preserves current route by default.
 - Blog detail and blog pagination language switching now use existence-aware fallback:
   - If target-locale page exists, go to that page.
@@ -502,4 +510,6 @@ All notable changes to this project are documented in this file.
 - Multi-atmosphere route design (home/blog/post/about).
 - i18n routes for `en`, `ja`, `ko`, `es`, `zh`.
 - Config-driven customization via `src/config/*`.
-- Astro static output with sitemap, robots, and RSS support.
+- SEO basics: canonical, hreflang, sitemap, robots, RSS, and JSON-LD.
+- Cloudflare Workers deploy-ready baseline.
+- `npm run new-post -- <slug>` scaffolds posts across all locales.

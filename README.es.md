@@ -181,9 +181,12 @@ npm run new-page -- projects --theme matrix
 
 1. Copia `.env.example` a `.env` y define la identidad del sitio.
 2. Edita `src/site.config.ts`:
+   - `site.title`, `site.description`, `site.url`, `site.author`, `site.tagline` para identidad del sitio y metadatos por defecto
    - `i18n.defaultLocale` para definir el idioma por defecto
    - `i18n.routing.defaultLocalePrefix` para elegir si el idioma por defecto vive en `/<default-locale>/` (por defecto) o en `/`
    - `i18n.locales` como fuente unica para agregar o quitar idiomas soportados
+   - `i18n.locales.<code>.messages` para sobrescribir textos de UI por idioma
+   - `i18n.locales.<code>.site.hero` para sobrescribir el hero de la home por idioma
    - `social.links` para enlaces sociales
    - `i18n.locales.<code>.about` para contenido y textos runtime de About por idioma
    - `theme.enableAboutPage` para activar/desactivar About
