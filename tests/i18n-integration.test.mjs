@@ -12,9 +12,14 @@ const execFileAsync = promisify(execFile);
 const repoRoot = process.cwd();
 const syncAdapters = path.join(repoRoot, 'scripts/sync-adapters.mjs');
 const cliNewPost = path.join(repoRoot, 'packages/theme/src/cli-new-post.mjs');
+const isWindows = process.platform === 'win32';
 
 async function runNode(args, cwd) {
   await execFileAsync('node', args, { cwd });
+}
+
+async function linkDirectory(target, linkPath) {
+  await symlink(target, linkPath, isWindows ? 'junction' : 'dir');
 }
 
 test('single-source i18n config drives enabled locales, routing mode, and scaffold output', async () => {
@@ -24,7 +29,7 @@ test('single-source i18n config drives enabled locales, routing mode, and scaffo
     await mkdir(path.join(tempRoot, 'src/content/blog'), { recursive: true });
     await mkdir(path.join(tempRoot, 'src/assets/blog/default-covers'), { recursive: true });
     await cp(path.join(repoRoot, 'scripts'), path.join(tempRoot, 'scripts'), { recursive: true });
-    await symlink(path.join(repoRoot, 'node_modules'), path.join(tempRoot, 'node_modules'), 'dir');
+    await linkDirectory(path.join(repoRoot, 'node_modules'), path.join(tempRoot, 'node_modules'));
     await writeFile(
       path.join(tempRoot, 'src/assets/blog/default-covers/ai-01.webp'),
       'cover',
@@ -165,44 +170,12 @@ export const THEME_CONFIG = defineThemeConfig({
 `,
       'utf8'
     );
-    await symlink(
-      path.join(tempRoot, 'src/site.config.ts'),
-      path.join(tempRoot, 'src/site.config')
-    );
-    await symlink(
-      path.join(tempRoot, 'src/site.config.runtime.ts'),
-      path.join(tempRoot, 'src/site.config.runtime')
-    );
-    await symlink(
-      path.join(tempRoot, 'src/site.config.defaults.ts'),
-      path.join(tempRoot, 'src/site.config.defaults')
-    );
-    await symlink(
-      path.join(tempRoot, 'src/site.config.schema.ts'),
-      path.join(tempRoot, 'src/site.config.schema')
-    );
 
     await runNode([syncAdapters], tempRoot);
-    await symlink(
-      path.join(tempRoot, 'src/i18n/runtime.ts'),
-      path.join(tempRoot, 'src/i18n/runtime')
-    );
-    await symlink(
-      path.join(tempRoot, 'src/i18n/config.ts'),
-      path.join(tempRoot, 'src/i18n/config')
-    );
-    await symlink(
-      path.join(tempRoot, 'src/config/site.ts'),
-      path.join(tempRoot, 'src/config/site')
-    );
-    await symlink(
-      path.join(tempRoot, 'src/config/about.ts'),
-      path.join(tempRoot, 'src/config/about')
-    );
     await writeFile(
       path.join(tempRoot, 'src/i18n/messages.ts'),
       `import { deepMerge } from '@anglefeint/astro-theme/utils/merge';
-import { getLocaleConfig, getLocaleResolutionChain, type Locale } from './runtime';
+import { getLocaleConfig, getLocaleResolutionChain, type Locale } from './runtime.ts';
 
 const DEFAULT_MESSAGES = {
   en: {
@@ -246,8 +219,8 @@ export function getMessages(locale: Locale) {
     );
     await writeFile(
       path.join(tempRoot, 'src/config/site.ts'),
-      `import { THEME_CONFIG } from '../site.config';
-      import { getLocaleConfig, getLocaleResolutionChain, ENABLED_LOCALES, type Locale } from '../i18n/config';
+      `import { THEME_CONFIG } from '../site.config.ts';
+      import { getLocaleConfig, getLocaleResolutionChain, ENABLED_LOCALES, type Locale } from '../i18n/config.ts';
 
 export const SITE_TITLE = THEME_CONFIG.site.title;
 export const SITE_DESCRIPTION = THEME_CONFIG.site.description;
