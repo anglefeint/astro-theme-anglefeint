@@ -15,6 +15,11 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Hardened social metadata by honoring existence-aware locale alternates in page `<head>` output and adding image alt metadata for Open Graph and Twitter cards.
+- Improved Windows-local pre-push validation by making package tarball and i18n integration checks avoid POSIX-only assumptions.
+
 ## [0.2.8] - 2026-04-02
 
 ### Changed

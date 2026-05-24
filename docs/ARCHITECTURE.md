@@ -119,6 +119,8 @@ The project now follows a compositional structure:
 ## SEO and Discovery
 
 - Head metadata and hreflang: `packages/theme/src/components/BaseHead.astro`
+- Page routes can pass `localeHrefs` through `ThemeFrame` so `<head>` alternate links use the same existence-aware locale fallback as the language switcher.
+- Open Graph and Twitter image metadata include alt text, defaulting to the page title when no explicit image alt is supplied.
 - Sitemap integration: `@astrojs/sitemap` in `astro.config.mjs` (follows `defaultLocalePrefix` routing mode)
 - robots.txt route: `src/pages/robots.txt.ts`
 
