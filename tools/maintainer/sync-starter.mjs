@@ -44,7 +44,8 @@ function validateManagedCoverage() {
 
 async function run(command, args, options = {}) {
   const { cwd } = options;
-  const { stdout, stderr } = await execFileAsync(command, args, {
+  const [executable, finalArgs] = resolveCommand(command, args);
+  const { stdout, stderr } = await execFileAsync(executable, finalArgs, {
     cwd,
     maxBuffer: 20 * 1024 * 1024,
   });
@@ -54,12 +55,26 @@ async function run(command, args, options = {}) {
 
 async function runSilent(command, args, options = {}) {
   const { cwd } = options;
-  return execFileAsync(command, args, { cwd, maxBuffer: 20 * 1024 * 1024 });
+  const [executable, finalArgs] = resolveCommand(command, args);
+  return execFileAsync(executable, finalArgs, { cwd, maxBuffer: 20 * 1024 * 1024 });
 }
 
 async function runSilentBuffer(command, args, options = {}) {
   const { cwd } = options;
-  return execFileAsync(command, args, { cwd, maxBuffer: 20 * 1024 * 1024, encoding: 'buffer' });
+  const [executable, finalArgs] = resolveCommand(command, args);
+  return execFileAsync(executable, finalArgs, {
+    cwd,
+    maxBuffer: 20 * 1024 * 1024,
+    encoding: 'buffer',
+  });
+}
+
+function resolveCommand(command, args) {
+  if (process.platform === 'win32' && command === 'npm') {
+    return ['cmd.exe', ['/d', '/s', '/c', 'npm', ...args]];
+  }
+
+  return [command, args];
 }
 
 async function currentBranch() {
