@@ -15,10 +15,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.9] - 2026-05-31
+
 ### Fixed
 
 - Hardened social metadata by honoring existence-aware locale alternates in page `<head>` output and adding image alt metadata for Open Graph and Twitter cards.
 - Improved Windows-local pre-push validation by making package tarball and i18n integration checks avoid POSIX-only assumptions.
+
+### Changed
+
+- Hardened the maintainer npm publish workflow with a registry version guard, temporary npm cache isolation, and clearer dry-run ordering.
+
+### Notes
+
+- See [`docs/releases/0.2.9.md`](docs/releases/0.2.9.md) for release details and validation summary.
 
 ## [0.2.8] - 2026-04-02
 
