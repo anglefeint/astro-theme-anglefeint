@@ -46,8 +46,8 @@
     "e2e:prepare": "node scripts/build-e2e-smoke-config.mjs",
     "e2e": "npm run build && npm run e2e:prepare && playwright test",
     "release:npm": "node scripts/release-npm.mjs",
-    "new-post": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-post.mjs",
-    "new-page": "node ./node_modules/@anglefeint/astro-theme/src/cli-new-page.mjs",
+    "new-post": "node ./scripts/new-post.mjs",
+    "new-page": "node ./scripts/new-page.mjs",
     "astro": "astro",
     "theme:pack": "npm pack --workspace @anglefeint/astro-theme"
   },

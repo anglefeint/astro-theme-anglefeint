@@ -15,6 +15,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed starter `new-post` and `new-page` wrapper scripts so they load the installed theme package from `node_modules` instead of a maintainer-only `packages/theme` workspace path.
+
 ## [0.2.9] - 2026-05-31
 
 ### Fixed
