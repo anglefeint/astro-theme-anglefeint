@@ -181,9 +181,12 @@ npm run new-page -- projects --theme matrix
 
 1. `.env.example` を `.env` にコピーし、サイト情報を設定。
 2. `src/site.config.ts` を編集:
+   - `site.title`、`site.description`、`site.url`、`site.author`、`site.tagline`: サイト identity と既定メタデータ
    - `i18n.defaultLocale`: 既定ロケールを設定
    - `i18n.routing.defaultLocalePrefix`: 既定ロケールを `/<default-locale>/`（デフォルト）に置くか `/` に置くかを設定
    - `i18n.locales`: 単一の設定源として対応ロケールを追加・削除
+   - `i18n.locales.<code>.messages`: ロケール別 UI 文言の上書き
+   - `i18n.locales.<code>.site.hero`: ロケール別ホーム hero 文言の上書き
    - `social.links`: SNS リンク
    - `i18n.locales.<code>.about`: ロケール別 About コンテンツとランタイム文言
    - `theme.enableAboutPage`: About の表示切り替え

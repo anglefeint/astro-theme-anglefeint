@@ -181,9 +181,12 @@ npm run new-page -- projects --theme matrix
 
 1. `.env.example` 를 `.env` 로 복사하고 사이트 정보를 설정합니다.
 2. `src/site.config.ts` 를 수정합니다:
+   - `site.title`, `site.description`, `site.url`, `site.author`, `site.tagline`: 사이트 정체성과 기본 메타데이터
    - `i18n.defaultLocale`: 기본 언어를 설정
    - `i18n.routing.defaultLocalePrefix`: 기본 언어를 `/<default-locale>/`(기본값) 또는 `/` 중 어디에 둘지 설정
    - `i18n.locales`: 지원 언어를 한 곳에서 추가/제거하는 단일 소스
+   - `i18n.locales.<code>.messages`: 로케일별 UI 문구 오버라이드
+   - `i18n.locales.<code>.site.hero`: 로케일별 홈 hero 문구 오버라이드
    - `social.links`: 소셜 링크
    - `i18n.locales.<code>.about`: 로케일별 About 콘텐츠와 런타임 문구
    - `theme.enableAboutPage`: About 노출 제어
