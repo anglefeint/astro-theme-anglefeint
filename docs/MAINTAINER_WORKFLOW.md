@@ -147,6 +147,7 @@ node scripts/check-scaffold.mjs
 - `starter` is generated/distribution only. Do not maintain runtime logic or starter package versions there manually.
 - Starter validation must pass in a real installed-package environment, not only in the workspace-link environment on `main`.
 - `npm run release:npm` removes the generated package tarball after publish/dry-run completion.
+- `npm run release:npm` checks the npm registry and fails early if the workspace package version is not newer than the published latest version.
 - `npm run release:starter` stages starter changes from `scripts/starter-manifest.mjs` plus starter dependency files; it must not rely on `git add -A`.
 
 If `npm run release:starter` fails, return to `main` and fix the sync contract or package-side issue there. Do not patch starter runtime logic manually.

@@ -140,6 +140,7 @@ If npm release is not required but starter should still change:
   - workspace-link development installs on `main`
   - installed-package starter environments where `@anglefeint/astro-theme` resolves from `node_modules`
 - `npm run release:npm` cleans up the generated `anglefeint-astro-theme-<version>.tgz` tarball after publish or dry-run completion.
+- `npm run release:npm` verifies that the local package version is newer than the npm registry version before packing or publishing.
 
 Use `npm run maintainer:sync-starter:check` to detect drift without mutating branches.
 
