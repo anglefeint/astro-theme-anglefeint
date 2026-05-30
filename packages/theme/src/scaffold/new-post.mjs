@@ -8,7 +8,7 @@ import {
 } from './shared.mjs';
 
 export function usageNewPost() {
-  return 'Usage: npm run new-post -- <slug> [--locales en,fr,...]';
+  return 'Usage: anglefeint-new-post <slug> [--locales en,fr,...]';
 }
 
 export function parseNewPostArgs(argv) {

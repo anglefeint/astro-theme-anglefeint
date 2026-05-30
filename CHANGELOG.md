@@ -15,9 +15,16 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.10] - 2026-05-31
+
 ### Fixed
 
 - Fixed starter `new-post` and `new-page` wrapper scripts so they load the installed theme package from `node_modules` instead of a maintainer-only `packages/theme` workspace path.
+- Fixed published scaffold CLI bins so `anglefeint-new-post` and `anglefeint-new-page` execute through Node and support `--help`.
+
+### Notes
+
+- See [`docs/releases/0.2.10.md`](docs/releases/0.2.10.md) for release details and validation summary.
 
 ## [0.2.9] - 2026-05-31
 

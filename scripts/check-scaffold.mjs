@@ -11,7 +11,12 @@ const cliNewPage = path.join(repoRoot, 'packages/theme/src/cli-new-page.mjs');
 const cliNewPost = path.join(repoRoot, 'packages/theme/src/cli-new-post.mjs');
 
 async function runNode(scriptPath, args, cwd) {
-  await execFileAsync('node', [scriptPath, ...args], { cwd });
+  await execFileAsync(process.execPath, [scriptPath, ...args], { cwd });
+}
+
+async function runNodeCapture(scriptPath, args, cwd) {
+  const result = await execFileAsync(process.execPath, [scriptPath, ...args], { cwd });
+  return result.stdout;
 }
 
 async function main() {
@@ -36,6 +41,12 @@ async function main() {
 `,
       'utf8'
     );
+
+    const pageHelp = await runNodeCapture(cliNewPage, ['--help'], tempRoot);
+    assert.match(pageHelp, /anglefeint-new-page <slug>/);
+
+    const postHelp = await runNodeCapture(cliNewPost, ['--help'], tempRoot);
+    assert.match(postHelp, /anglefeint-new-post <slug>/);
 
     await runNode(cliNewPage, ['scaffold-check', '--theme', 'ai'], tempRoot);
     await runNode(cliNewPost, ['scaffold-check-post'], tempRoot);

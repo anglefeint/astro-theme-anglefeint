@@ -33,7 +33,7 @@ export function isValidNewPageTheme(theme) {
 }
 
 export function usageNewPage() {
-  return 'Usage: npm run new-page -- <slug> [--theme <base|cyber|ai|hacker|matrix>]';
+  return 'Usage: anglefeint-new-page <slug> [--theme <base|cyber|ai|hacker|matrix>]';
 }
 
 export function buildNewPageTemplate({ slug, theme }) {

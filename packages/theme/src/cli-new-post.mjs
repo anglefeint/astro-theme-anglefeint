@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { mkdir, writeFile, access } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { execFile as execFileCallback } from 'node:child_process';
@@ -295,6 +297,12 @@ async function resolveProjectLocales() {
 }
 
 async function main() {
+  const rawArgs = process.argv.slice(2);
+  if (rawArgs.includes('--help') || rawArgs.includes('-h') || rawArgs[0] === 'help') {
+    console.log(usageNewPost());
+    process.exit(0);
+  }
+
   const { slug, locales: cliLocales } = parseNewPostArgs(process.argv);
   if (!slug) {
     console.error(usageNewPost());

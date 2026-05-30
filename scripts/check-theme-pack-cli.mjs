@@ -62,11 +62,23 @@ function main() {
     ];
 
     const missing = required.filter((entry) => !list.includes(entry));
+    const missingShebang = ['package/src/cli-new-post.mjs', 'package/src/cli-new-page.mjs'].filter(
+      (entry) => {
+        const packedFile = run('tar', ['-xOf', tarball, entry]).stdout ?? '';
+        return !packedFile.startsWith('#!/usr/bin/env node');
+      }
+    );
     rmSync(tarball, { force: true });
 
     if (missing.length > 0) {
       console.error('Theme tarball CLI check failed. Missing entries:');
       for (const entry of missing) console.error(`- ${entry}`);
+      process.exit(1);
+    }
+
+    if (missingShebang.length > 0) {
+      console.error('Theme tarball CLI check failed. Missing node shebang:');
+      for (const entry of missingShebang) console.error(`- ${entry}`);
       process.exit(1);
     }
 
