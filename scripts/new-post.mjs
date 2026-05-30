@@ -5,4 +5,5 @@ if (args.includes('--help') || args.includes('-h') || args[0] === 'help') {
   console.log('Locales override: --locales en,fr or ANGLEFEINT_LOCALES=en,fr');
   process.exit(0);
 }
-import '../packages/theme/src/cli-new-post.mjs';
+
+await import('../node_modules/@anglefeint/astro-theme/src/cli-new-post.mjs');

@@ -4,4 +4,5 @@ if (args.includes('--help') || args.includes('-h') || args[0] === 'help') {
   console.log('Slug: lowercase letters, numbers, hyphens, optional nested paths.');
   process.exit(0);
 }
-import '../packages/theme/src/cli-new-page.mjs';
+
+await import('../node_modules/@anglefeint/astro-theme/src/cli-new-page.mjs');
