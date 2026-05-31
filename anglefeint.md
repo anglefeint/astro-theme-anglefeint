@@ -55,16 +55,13 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 当前仓库状态：
 
 - 当前开发分支：`main`
-- 当前已发布 npm 包版本：`@anglefeint/astro-theme@0.2.8`
-- 当前 main 上存在未发布的 package 源码改动：
-  - SEO/head metadata hardening
-  - existence-aware locale alternate links for blog pages
-  - Open Graph/Twitter image alt metadata
-  - package-owned music deck 删除
-  - Windows-local pre-push / pack CLI 检查修复
-- 当前没有发布 npm。用户通过 `npm update @anglefeint/astro-theme` 仍只能拿到 npm registry 上的最新发布版本，直到下次 bump version 并执行 release。
+- 当前已发布 npm 包版本：`@anglefeint/astro-theme@0.2.11`
+- 当前 `main` 与 `origin/main` 同步，工作区应保持干净。
+- `0.2.9` 已发布 SEO/social metadata hardening 与 npm release workflow guardrails。
+- `0.2.10` 已发布 scaffold CLI bin 兼容性修复，让 `anglefeint-new-post` / `anglefeint-new-page` 在 Windows、macOS、Linux 上通过 Node shebang 正常执行。
+- `0.2.11` 已发布 starter scaffold script 架构调整：`npm run new-post` / `npm run new-page` 直接调用 package-owned bins，不再依赖 starter-local wrapper 文件。
 
-这不是错误，而是正常的“main 已经准备了未来版本改动，但还没发布 npm”的状态。真正发布时，需要先 bump `packages/theme/package.json` 版本，例如从 `0.2.8` 到 `0.2.9`，再按 release workflow 执行。
+如果未来 `main` 出现新的 package 源码改动但尚未发布，用户通过 `npm update @anglefeint/astro-theme` 只能拿到 npm registry 上的最新发布版本。真正发布时，需要先 bump `packages/theme/package.json` 版本，再按 release workflow 执行。
 
 ## 2. 项目定位
 
@@ -331,6 +328,13 @@ npm run new-post -- my-first-post --locales en,zh
 npm run new-page -- projects --theme ai
 ```
 
+当前 starter 的 `package.json` 直接把这些 npm scripts 映射到 package-owned bins：
+
+- `new-post` -> `anglefeint-new-post`
+- `new-page` -> `anglefeint-new-page`
+
+旧 starter 项目如果还保留 `scripts/new-post.mjs` / `scripts/new-page.mjs` wrapper，应按 `UPGRADING.md` 把 package scripts 迁移到上述 bins。不要让用户手动复制 wrapper 文件。
+
 package CLI：
 
 - `packages/theme/src/cli-new-post.mjs`
@@ -353,12 +357,12 @@ package tarball 检查：
 当前 package：
 
 - name：`@anglefeint/astro-theme`
-- current package version：`0.2.8`
+- current package version：`0.2.11`
 - peer dependency：`astro ^5.0.0 || ^6.0.0`
 
-当前 main 上有 package 源码变更，但还没有发布 npm。
+当前 npm latest、`packages/theme/package.json` 与 `starter` 分支已在 `0.2.11` 对齐。
 
-这意味着：
+如果后续 main 上再次出现 package 源码变更但尚未发布：
 
 - GitHub main / demo 部署会看到最新代码。
 - npm 用户暂时不会拿到 main 上的新 package 源码。
@@ -422,12 +426,9 @@ package tarball 检查：
 - `docs/releases/<version>.md` 是每个 npm publish 的详细 release note。
 - Git commit history 记录每次 push，不需要把每次 push 全部复制进 changelog。
 
-当前 `[Unreleased]` 应包括尚未发布 npm 的重要变化，例如：
+当前已经发布到 `0.2.11`，所以 `[Unreleased]` 可以为空，直到下一次真正面向用户或维护者的变更出现。
 
-- SEO/social metadata hardening
-- Windows-local pre-push validation fix
-
-docs-only cleanup 可以不进 changelog，除非它影响用户升级或公开使用方式。
+docs-only cleanup 可以不进 changelog，除非它影响用户升级、公开使用方式或 release note 的准确性。
 
 ## 15. 验证命令
 
@@ -503,11 +504,24 @@ npm run release:starter:push
 
 ## 17. 近期重要改动
 
-### 删除 package-owned music deck
+### 0.2.11 scaffold scripts 迁移到 package-owned bins
+
+当前 starter 不再分发 `scripts/new-post.mjs` / `scripts/new-page.mjs` wrapper。`npm run new-post` 和 `npm run new-page` 直接调用 package bin：
+
+- `anglefeint-new-post`
+- `anglefeint-new-page`
+
+这样后续 CLI 修复可以跟随 npm package 升级，不再卡在用户项目本地旧 wrapper 文件里。
+
+### 0.2.10 scaffold CLI bin 兼容性修复
+
+package CLI entrypoint 已具备 Node shebang，并支持 `--help`。npm-generated bin shim 与直接 `npx anglefeint-new-post --help` / `npx anglefeint-new-page --help` 在 Windows、macOS、Linux 上都应走 Node 执行。
+
+### 0.2.9 删除 package-owned music deck
 
 当前 main 已删除该功能和 package 打包入口，避免把非核心功能作为主题默认全站 runtime 带给用户。
 
-### SEO/social metadata hardening
+### 0.2.9 SEO/social metadata hardening
 
 当前 BaseHead 支持：
 
@@ -516,7 +530,7 @@ npm run release:starter:push
 - OG/Twitter image alt
 - existence-aware alternate links
 
-### Windows pre-push checks
+### 0.2.9 Windows pre-push checks
 
 当前 Windows 本地检查已增强：
 
@@ -558,4 +572,4 @@ npm run release:starter:push
 
 ## 20. 最短总结
 
-Anglefeint 是一个 Astro 6 多语言静态主题，核心是强视觉发布体验、可升级 npm package、单一配置入口、多语言 SEO、starter 分发和 AI-friendly 文档治理。当前 main 已移除 music deck，并包含未发布的 SEO/head 与 Windows tooling 改进；npm 包仍是 `0.2.8`，未来发布时需要 bump version、写 release note、同步 starter。
+Anglefeint 是一个 Astro 6 多语言静态主题，核心是强视觉发布体验、可升级 npm package、单一配置入口、多语言 SEO、starter 分发和 AI-friendly 文档治理。当前 npm latest 为 `@anglefeint/astro-theme@0.2.11`；starter scaffold scripts 已迁移到 package-owned bins，旧 starter 用户应按 `UPGRADING.md` 用 npm 命令更新 `new-post` / `new-page` scripts。
