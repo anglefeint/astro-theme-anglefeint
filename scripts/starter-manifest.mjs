@@ -30,6 +30,8 @@ export const STARTER_CONTENT_MANAGED_FILES = STARTER_CONTENT_LOCALES.flatMap((lo
 
 export const STARTER_OBSOLETE_FILES = [
   'scripts/regenerate-starter.mjs',
+  'scripts/new-page.mjs',
+  'scripts/new-post.mjs',
   'tools/maintainer/sync-starter.mjs',
   'docs/MAINTAINER_WORKFLOW.md',
   'src/components/pagination/CyberPagination.astro',
@@ -40,8 +42,6 @@ export const STARTER_OBSOLETE_FILES = [
 export const STARTER_SUPPORT_SCRIPTS = [
   'scripts/check-about-runtime-config.mjs',
   'scripts/check-adapter-contract.mjs',
-  'scripts/new-page.mjs',
-  'scripts/new-post.mjs',
   'scripts/resolve-theme-default-i18n-entry.mjs',
   'scripts/starter-manifest.mjs',
   'scripts/sync-adapters.mjs',
