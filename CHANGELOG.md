@@ -15,6 +15,17 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.11] - 2026-05-31
+
+### Changed
+
+- Changed starter scaffold npm scripts to call the package-owned `anglefeint-new-post` and `anglefeint-new-page` bins directly instead of local wrapper files.
+- Marked the old starter scaffold wrapper files as obsolete so future starter syncs remove them from generated projects.
+
+### Notes
+
+- See [`docs/releases/0.2.11.md`](docs/releases/0.2.11.md) for release details and validation summary.
+
 ## [0.2.10] - 2026-05-31
 
 ### Fixed

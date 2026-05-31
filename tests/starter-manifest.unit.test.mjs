@@ -6,6 +6,8 @@ import {
   STARTER_CONTENT_MANAGED_FILES,
   STARTER_CONTENT_ROOT,
   STARTER_CONTENT_SLUGS,
+  STARTER_OBSOLETE_FILES,
+  STARTER_SUPPORT_SCRIPTS,
 } from '../scripts/starter-manifest.mjs';
 
 test('starter content whitelist expands to the expected localized guide files', () => {
@@ -29,4 +31,11 @@ test('starter content whitelist expands to the expected localized guide files', 
       );
     }
   }
+});
+
+test('starter no longer ships local scaffold wrapper scripts', () => {
+  assert.ok(!STARTER_SUPPORT_SCRIPTS.includes('scripts/new-post.mjs'));
+  assert.ok(!STARTER_SUPPORT_SCRIPTS.includes('scripts/new-page.mjs'));
+  assert.ok(STARTER_OBSOLETE_FILES.includes('scripts/new-post.mjs'));
+  assert.ok(STARTER_OBSOLETE_FILES.includes('scripts/new-page.mjs'));
 });

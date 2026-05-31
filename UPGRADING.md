@@ -29,6 +29,40 @@ should upgrade with:
 
 This keeps theme core upgrades package-driven through npm and avoids manual file synchronization.
 
+## Scaffold Command Upgrade
+
+Projects created from older starter versions may still route scaffold commands through local wrapper files:
+
+```txt
+scripts/new-post.mjs
+scripts/new-page.mjs
+```
+
+Those wrappers are no longer the recommended integration point because local project files do not update when the npm package updates. Use package-owned bins instead:
+
+```bash
+npm install @anglefeint/astro-theme@latest
+npm pkg set scripts.new-post="anglefeint-new-post"
+npm pkg set scripts.new-page="anglefeint-new-page"
+npm install
+npm run new-post -- --help
+npm run new-page -- --help
+```
+
+After this migration, users can keep the same daily commands:
+
+```bash
+npm run new-post -- my-post
+npm run new-page -- projects --theme matrix
+```
+
+The direct package commands also remain available:
+
+```bash
+npx anglefeint-new-post my-post
+npx anglefeint-new-page projects --theme matrix
+```
+
 ## Validation Checklist
 
 After every upgrade:
