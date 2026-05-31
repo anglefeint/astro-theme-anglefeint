@@ -14,6 +14,13 @@ npm install @anglefeint/astro-theme
 npm update @anglefeint/astro-theme
 ```
 
+For starter projects, review the repository release notes when scaffold commands change. If an older project still routes `npm run new-post` or `npm run new-page` through local wrapper files, migrate the package scripts to the package-owned bins:
+
+```bash
+npm pkg set scripts.new-post="anglefeint-new-post"
+npm pkg set scripts.new-page="anglefeint-new-page"
+```
+
 ## Usage in Starter/Site
 
 Use the package exports in your pages/layout wiring, for example:
