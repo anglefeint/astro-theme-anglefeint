@@ -60,6 +60,8 @@ Giscus comments are configured from site-side `theme.comments` (core IDs + behav
 - `anglefeint-new-post`
 - `anglefeint-new-page`
 
+The post CLI executes your trusted `src/site.config.ts` with Jiti and uses the merged, enabled locale registry. Configuration failures stop generation before writing posts. `--locales` takes precedence over `ANGLEFEINT_LOCALES`, then configured locales; explicit overrides skip config loading. Missing configuration requires an explicit override. Existing posts are never overwritten.
+
 Examples:
 
 ```bash

@@ -34,11 +34,14 @@ Stable patch example:
 npm version patch --workspace @anglefeint/astro-theme --no-git-tag-version
 git add packages/theme/package.json package-lock.json
 git commit -m "chore(release): bump @anglefeint/astro-theme to <version>"
+git push origin main
 ```
 
 ## 2) Pre-release checks
 
 Run the publish dry-run after committing the release-prep state. The release script checks that the local package version is newer than the npm registry version before packing or publishing.
+
+Include implementation, tests, changelog and release notes in the release-prep commit, not just the two version files in the example. Validate and push `main` before publishing; check any push-triggered automation first.
 
 ```bash
 npm run release:npm -- --dry-run
@@ -60,6 +63,8 @@ npm run check
 
 ## 5) Upgrade flow for users
 
+The release baseline is the latest starter plus its published package. For project-skeleton changes, recommend a fresh template in a new directory and migration of content/personal settings as described in `UPGRADING.md`. The following is only for compatible package-only updates:
+
 ```bash
 npm update @anglefeint/astro-theme
 ```
@@ -80,9 +85,11 @@ After alpha verification:
 npm version patch --workspace @anglefeint/astro-theme --no-git-tag-version
 git add packages/theme/package.json package-lock.json
 git commit -m "chore(release): bump @anglefeint/astro-theme to <version>"
+git push origin main
 npm run release:npm -- --dry-run
 npm run release:npm
 npm run release:starter
+git push origin starter
 ```
 
 ## 8) Release Notes Contract
@@ -109,3 +116,5 @@ Minimum entry content for a new release note:
 - Starter i18n is injected via alias `@anglefeint/site-i18n/*` in `astro.config.mjs` and `tsconfig.json`.
 - Keep release notes explicit about breaking changes and required manual migrations.
 - After a successful publish, sync starter so the dependency range and lockfile move together.
+- Verify the published version from the registry, then test the pushed remote starter with the public create-template command in a temporary directory. Stop its servers and delete it after successful command/runtime checks.
+- If npm succeeds but starter fails, keep the previous remote starter and fix/retry starter without republishing that version.

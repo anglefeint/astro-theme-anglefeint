@@ -4,6 +4,7 @@ import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { pathToFileURL } from 'node:url';
 import {
   REQUIRED_STARTER_MANAGED_FILES,
   STARTER_MANAGED_FILES as MANAGED_FILES,
@@ -11,6 +12,8 @@ import {
   STARTER_CONTENT_ROOT,
   STARTER_OBSOLETE_FILES,
 } from '../../scripts/starter-manifest.mjs';
+
+import { buildStarterPackage, starterPackageDrift } from '../../scripts/starter-package.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -30,6 +33,15 @@ function parseArgs(argv) {
     from: argv.find((arg) => arg.startsWith('--from='))?.slice('--from='.length) || 'main',
     target: argv.find((arg) => arg.startsWith('--target='))?.slice('--target='.length) || 'starter',
   };
+}
+
+export function validateSyncBranches(sourceRef, targetBranch) {
+  const normalize = (ref) => ref.replace(/^refs\/(?:heads|remotes)\//, '').replace(/^origin\//, '');
+  if (normalize(targetBranch) === 'main' || normalize(sourceRef) === normalize(targetBranch)) {
+    throw new Error(
+      '[maintainer:sync-starter] target must be a distribution branch distinct from the source, never main.'
+    );
+  }
 }
 
 function validateManagedCoverage() {
@@ -200,7 +212,7 @@ async function listLocalFiles(rootPath, baseRoot = rootPath) {
       files.push(...(await listLocalFiles(fullPath, baseRoot)));
       continue;
     }
-    files.push(path.relative(baseRoot, fullPath));
+    files.push(path.relative(baseRoot, fullPath).split(path.sep).join('/'));
   }
 
   return files;
@@ -242,11 +254,16 @@ async function collectDrift(sourceRef, targetRef) {
     changed.push(relPath);
   }
   const expectedRange = await expectedStarterThemeRange(sourceRef);
+  const sourcePackage = JSON.parse(await readFromGit(sourceRef, STARTER_PACKAGE_JSON));
+  const targetPackage = JSON.parse(await readFromGit(targetRef, STARTER_PACKAGE_JSON));
+  if (starterPackageDrift(sourcePackage, targetPackage, expectedRange).length) {
+    changed.push(STARTER_PACKAGE_JSON);
+  }
   const starterPkg = await readStarterThemeDependency(targetRef);
   if (starterPkg !== expectedRange) changed.push(STARTER_PACKAGE_JSON);
   const starterLockVersion = await readStarterThemeLockVersion(targetRef);
   if (starterLockVersion !== expectedRange.slice(1)) changed.push(STARTER_PACKAGE_LOCK);
-  return changed;
+  return [...new Set(changed)];
 }
 
 async function writeManagedFilesFromRef(sourceRef, repoRoot) {
@@ -274,7 +291,7 @@ async function cleanupObsoleteStarterFiles(repoRoot) {
   return removed;
 }
 
-async function cleanupUnexpectedStarterContent(repoRoot) {
+export async function cleanupUnexpectedStarterContent(repoRoot) {
   const contentRoot = path.join(repoRoot, STARTER_CONTENT_ROOT);
   const files = await listLocalFiles(contentRoot, repoRoot);
   const removed = [];
@@ -289,15 +306,11 @@ async function cleanupUnexpectedStarterContent(repoRoot) {
   return removed;
 }
 
-async function sanitizeStarterPackageJson(repoRoot) {
+async function sanitizeStarterPackageJson(repoRoot, sourceRef, expectedRange) {
   const pkgPath = path.join(repoRoot, 'package.json');
   const raw = await readFile(pkgPath, 'utf8');
-  const pkg = JSON.parse(raw);
-  pkg.scripts = pkg.scripts || {};
-  delete pkg.scripts['maintainer:sync-starter'];
-  delete pkg.scripts['maintainer:sync-starter:check'];
-  delete pkg.scripts['release:starter'];
-  delete pkg.scripts['release:starter:push'];
+  const source = JSON.parse(await readFromGit(sourceRef, STARTER_PACKAGE_JSON));
+  const pkg = buildStarterPackage(source, JSON.parse(raw), expectedRange);
   const next = `${JSON.stringify(pkg, null, 2)}\n`;
   if (next !== raw) {
     await writeFile(pkgPath, next, 'utf8');
@@ -403,7 +416,37 @@ async function commitStarterIfNeeded(sourceRef, changedFiles) {
   return true;
 }
 
-async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBranch, push }) {
+export async function syncStarter(
+  { sourceRef, targetBranch, originalBranch, allowAnyBranch, push },
+  operations = {
+    run,
+    currentBranch,
+    expectedStarterThemeRange,
+    cleanupGeneratedArtifacts,
+    writeManagedFilesFromRef,
+    cleanupObsoleteStarterFiles,
+    cleanupUnexpectedStarterContent,
+    sanitizeStarterPackageJson,
+    syncStarterThemeDependency,
+    syncStarterRuntimeDeps,
+    commitStarterIfNeeded,
+  }
+) {
+  validateSyncBranches(sourceRef, targetBranch);
+  // Keep external effects injectable so failure/retry paths can be tested without publishing.
+  const {
+    run,
+    currentBranch,
+    expectedStarterThemeRange,
+    cleanupGeneratedArtifacts,
+    writeManagedFilesFromRef,
+    cleanupObsoleteStarterFiles,
+    cleanupUnexpectedStarterContent,
+    sanitizeStarterPackageJson,
+    syncStarterThemeDependency,
+    syncStarterRuntimeDeps,
+    commitStarterIfNeeded,
+  } = operations;
   if (!allowAnyBranch && originalBranch !== sourceRef.replace(/^origin\//, '')) {
     throw new Error(
       `[maintainer:sync-starter] current branch is "${originalBranch}". Run on "${sourceRef.replace(/^origin\//, '')}" or pass --allow-any-branch.`
@@ -422,7 +465,7 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     const changedManaged = await writeManagedFilesFromRef(sourceRef, repoRoot);
     const removedObsolete = await cleanupObsoleteStarterFiles(repoRoot);
     const removedUnexpectedContent = await cleanupUnexpectedStarterContent(repoRoot);
-    const sanitized = await sanitizeStarterPackageJson(repoRoot);
+    const sanitized = await sanitizeStarterPackageJson(repoRoot, sourceRef, expectedRange);
     const dependencyUpdated = await syncStarterThemeDependency(repoRoot, expectedRange);
     await syncStarterRuntimeDeps(repoRoot, sourceRef);
 
@@ -434,11 +477,11 @@ async function syncStarter({ sourceRef, targetBranch, originalBranch, allowAnyBr
     if (sanitized) changed.push('package.json');
     if (dependencyUpdated && !changed.includes('package.json')) changed.push('package.json');
     changed.push(STARTER_PACKAGE_LOCK);
-    const committed = await commitStarterIfNeeded(sourceRef, changed);
+    await commitStarterIfNeeded(sourceRef, changed);
     console.log(
       `[maintainer:sync-starter] starter theme dependency target: ${expectedRange} (lockfile resolved via npm install).`
     );
-    if (committed && push) await run('git', ['push', 'origin', targetBranch]);
+    if (push) await run('git', ['push', 'origin', targetBranch]);
     syncSucceeded = true;
   } finally {
     if (syncSucceeded && switched && (await currentBranch()) !== originalBranch) {
@@ -453,6 +496,7 @@ async function main() {
   const { checkOnly, push, allowAnyBranch, allowDirty, from, target } = parseArgs(
     process.argv.slice(2)
   );
+  validateSyncBranches(from, target);
   validateManagedCoverage();
   const sourceRef = await resolveRefCandidates(from);
   const { localRef: targetLocalRef, compareRef: targetCompareRef } =
@@ -490,10 +534,11 @@ async function main() {
   console.log('[maintainer:sync-starter] sync + validation complete.');
 }
 
-main().catch((error) => {
-  console.error(error.message || error);
-  console.error(
-    '[maintainer:sync-starter] sync failed. If you are left on "starter", inspect the working tree there, then return to "main" to fix the issue before retrying.'
-  );
-  process.exit(1);
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href)
+  main().catch((error) => {
+    console.error(error.message || error);
+    console.error(
+      '[maintainer:sync-starter] sync failed. If you are left on "starter", inspect the working tree there, then return to "main" to fix the issue before retrying.'
+    );
+    process.exit(1);
+  });

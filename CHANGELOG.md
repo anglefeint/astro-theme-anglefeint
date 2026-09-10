@@ -15,6 +15,27 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.2.12] - 2026-09-10
+
+### Fixed
+
+- Load actual TypeScript site config for post scaffolding in installed packages; report config errors instead of silently falling back to English. Explicit language overrides still work independently.
+- Generate starter npm scripts and required dependencies explicitly; include root routing, sitemap config, content schema and CJK metrics in managed output and drift checks.
+- Execute real adapter smoke checks in installed packages instead of accepting a source-text fallback.
+- Validate non-empty string document identifiers and roles; keep purpose metadata optional.
+- Skip the animated side monitor entirely when reduced motion is requested; rendering its animated asset as an image did not stop motion.
+- Normalize starter cleanup paths on Windows, reject source/main sync targets, and retry pushes even when no new sync commit is created.
+
+### Added
+
+- Read-only diagnostics for known legacy starter commands and routing, with an upgrade checklist that preserves user customizations.
+- Independent packed-theme installation tests for CLI commands, migration diagnostics, adapters and a default-locale/prefix-mode build matrix.
+
+### Notes
+
+- The supported release baseline is the latest starter with this theme package. For older project skeletons, creating a fresh template and migrating content/settings is recommended; package updates never rewrite user project files.
+- See `docs/releases/0.2.12.md` for release scope and validation gates.
+
 ## [0.2.11] - 2026-05-31
 
 ### Changed

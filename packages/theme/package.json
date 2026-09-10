@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -44,6 +44,7 @@
     "./styles/*": "./src/styles/*",
     "./assets/*": "./src/assets/*",
     "./utils/merge": "./src/utils/merge.ts",
+    "./utils/project-config": "./src/scaffold/project-config.mjs",
     "./utils/number": "./src/utils/number.ts",
     "./utils/pagination": "./src/utils/pagination.ts",
     "./utils/pagination-style": "./src/utils/pagination-style.ts",
@@ -52,5 +53,8 @@
   },
   "peerDependencies": {
     "astro": "^5.0.0 || ^6.0.0"
+  },
+  "dependencies": {
+    "jiti": "^2.7.0"
   }
 }

@@ -85,6 +85,16 @@ npm run check:workspace-link
 node scripts/check-scaffold.mjs
 ```
 
+Installed distribution gate before publishing package/starter changes:
+
+```bash
+npm run check:installed -- --build
+```
+
+This packs the working theme, overlays current managed files onto the local `starter` snapshot in a temporary directory, installs without workspace links, exercises npm CLI commands and adapters, and builds the English/Chinese default-locale and prefix-mode matrix. It requires the local `starter` ref and registry access for dependencies. It does not publish, commit, or change branches. The legacy snapshot is also checked with the read-only migration diagnostic before the overlay.
+
+`release:npm` runs this gate after the main checks unless checks are explicitly skipped. A passing workspace build alone is not a sufficient package release gate.
+
 Starter branch quality gate:
 
 ```bash
@@ -103,10 +113,13 @@ Use this sequence unless explicitly skipped for a documented reason.
    - add or update `docs/releases/<version>.md`
    - commit the release-prep changes on `main`
 3. Run `npm run maintainer:sync-starter:check` on `main` to confirm the expected starter drift before mutating branches.
-4. If Class A/C affects shipped package behavior, publish npm with `npm run release:npm`.
-5. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
-6. Push `main`.
+4. Push the validated release-prep commit on `main` after checking push-triggered automation.
+5. If Class A/C affects shipped package behavior, publish npm with `npm run release:npm` and verify the registry version.
+6. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
 7. Push `starter`.
+8. Create a temporary project from the remote `#starter` template. Verify install, CLI commands, checks, build, dev and preview; stop servers and remove the temporary project after success.
+
+The latest template and its corresponding npm package are the supported release baseline. Do not add historical compatibility layers at the expense of the new-template experience. When project skeletons change, existing users may create a fresh template and migrate content and configuration into it; automatic in-place upgrades across all historical starters are not guaranteed.
 
 ## Release Decision Gate
 
@@ -141,7 +154,7 @@ node scripts/check-scaffold.mjs
 - Shared starter/adapters file ownership lives in `scripts/starter-manifest.mjs`.
 - Starter blog content is whitelist-driven. `main` may keep additional demo/editorial posts, but `starter` only receives the localized onboarding post set declared in `scripts/starter-manifest.mjs`.
 - User-facing docs must not tell end users to run maintainer sync scripts.
-- End users should upgrade via package updates and normal checks.
+- Package-only compatible updates may use npm updates and normal checks. For starter contract changes, recommend a fresh template and deliberate content/configuration migration.
 - When introducing starter-managed runtime/config files, update `scripts/starter-manifest.mjs` in the same change.
 - When introducing starter-consumed runtime/config/script/template files, update `scripts/starter-manifest.mjs` in the same change.
 - `starter` is generated/distribution only. Do not maintain runtime logic or starter package versions there manually.
@@ -166,6 +179,8 @@ If `npm run release:starter` fails mid-run:
 4. run `npm install` to restore maintainer dependencies and hooks before retrying commits or checks
 5. fix the contract or maintainer-tooling issue on `main`
 6. rerun `npm run release:starter`
+
+If npm was already published successfully, do not publish that version again. Retry only starter generation/validation/push. `release:starter:push` pushes even when no new sync commit is needed, so an earlier unpushed commit can be delivered after recovery. Source and target branches must differ, and `main` cannot be a sync target.
 
 Do not patch starter runtime logic manually as a recovery path.
 

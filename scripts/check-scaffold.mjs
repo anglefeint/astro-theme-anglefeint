@@ -4,11 +4,14 @@ import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { createRequire } from 'node:module';
 
 const execFileAsync = promisify(execFile);
 const repoRoot = process.cwd();
-const cliNewPage = path.join(repoRoot, 'packages/theme/src/cli-new-page.mjs');
-const cliNewPost = path.join(repoRoot, 'packages/theme/src/cli-new-post.mjs');
+const require = createRequire(path.join(repoRoot, 'package.json'));
+const themeRoot = path.dirname(require.resolve('@anglefeint/astro-theme'));
+const cliNewPage = path.join(themeRoot, 'cli-new-page.mjs');
+const cliNewPost = path.join(themeRoot, 'cli-new-post.mjs');
 
 async function runNode(scriptPath, args, cwd) {
   await execFileAsync(process.execPath, [scriptPath, ...args], { cwd });

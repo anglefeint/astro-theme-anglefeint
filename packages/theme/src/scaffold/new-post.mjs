@@ -19,6 +19,9 @@ export function parseNewPostArgs(argv) {
   for (let i = 0; i < args.length; i += 1) {
     const token = args[i];
     if (token === '--locales') {
+      if (!args[i + 1] || args[i + 1].startsWith('--')) {
+        throw new Error('Missing locales. Example: --locales en,fr');
+      }
       locales = args[i + 1] ?? '';
       i += 1;
       continue;

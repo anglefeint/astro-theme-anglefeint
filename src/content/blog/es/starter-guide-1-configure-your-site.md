@@ -18,7 +18,7 @@ Campos que conviene revisar primero:
 - `social.links`
 - `theme.enableAboutPage`
 
-`site.description` es la descripción por defecto del sitio; la home cae a ese valor cuando el locale actual no define `messages.siteDescription`.
+`site.description` es la descripción por defecto del sitio. La home prioriza `messages.siteDescription` resuelto, incluidos los textos integrados y de idiomas de respaldo; solo un valor resuelto vacío usa la descripción del sitio.
 
 Puedes crear un post nuevo con:
 

@@ -51,10 +51,8 @@ npm run preview
 품질 점검 명령:
 
 ```bash
-npm run lint
-npm run format:check
-npm run e2e:install
-npm run e2e
+npm run doctor
+npm run check
 ```
 
 `pnpm` 사용:
@@ -80,7 +78,7 @@ npm run check
 npm run build
 ```
 
-release note 에 starter 쪽 contract 변경이 적혀 있으면 그 변경도 프로젝트에 동기화해야 합니다. `npm update` 는 공개 package 만 업데이트합니다.
+릴리스 노트에 starter 구조 변경이 있으면 새 디렉터리에 최신 템플릿을 만들고 글, 이미지, 개인 설정을 옮기는 것을 권장합니다. 새 설정 보조 파일을 이전 파일로 덮어쓰지 마세요. `npm update`는 패키지만 업데이트하며 모든 이전 starter의 직접 업그레이드를 보장하지 않습니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
 
 커스텀 코드가 `src/consts` 또는 `@anglefeint/astro-theme/consts` 를 참조하고 있다면 `src/config/site.ts` 로 마이그레이션하세요.
 
@@ -217,22 +215,26 @@ npm run new-page -- projects --theme matrix
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-필수 항목이 누락되면 댓글 블록은 렌더링되지 않습니다.
+핵심 ID가 없으면 댓글을 표시하지 않습니다. 댓글 활성화 시 `mapping="specific"`의 `term`이 비어 있거나 `mapping="number"`의 `number`가 양의 정수 문자열이 아니면 설정 오류로 개발 서버 또는 빌드가 중단될 수 있습니다.
+
+CLI는 병합된 설정에서 활성화된 언어를 사용합니다. 설정 오류는 생성을 중단하며, 명시적인 `--locales` 또는 `ANGLEFEINT_LOCALES`는 설정을 읽지 않고 언어를 지정합니다.
 
 ## 설정 표면
 
 - 단일 엔트리: `src/site.config.ts`
+- 홈 설명은 내장 및 대체 언어 문구를 포함한 `messages.siteDescription`을 우선 사용하고, 비어 있을 때만 `site.description`을 사용합니다.
+- 언어 설정은 기본값과 깊게 병합됩니다. 비활성화하려면 `i18n.locales.<code>.meta.enabled = false`를 사용합니다. 기본 언어는 항상 활성화됩니다.
 - 어댑터 레이어(직접 수정 비권장): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - 사이트 정보는 `PUBLIC_*` 환경 변수로도 덮어쓸 수 있습니다
 
 ## 문서
 
-- 아키텍처: `docs/ARCHITECTURE.md`
-- 비주얼 시스템: `docs/VISUAL_SYSTEMS.md`
-- 제출 체크리스트: `docs/THEME_SUBMISSION_CHECKLIST.md`
-- 테마 등록 초안: `ASTRO_THEME_LISTING.md`
-- 업그레이드 가이드: `UPGRADING.md`
-- 변경 이력: `CHANGELOG.md`
+- [아키텍처](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)
+- [비주얼 시스템](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/VISUAL_SYSTEMS.md)
+- [제출 체크리스트](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
+- [테마 등록 초안](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md)
+- [업그레이드 가이드](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
+- [변경 이력](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
 ## 라이선스
 

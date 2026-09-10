@@ -11,6 +11,55 @@ const { siteUrl, defaultLocale, defaultLocaleOgLocale, defaultLocalePrefixMode, 
   smokeConfig;
 const enabledLocales = smokeConfig.enabledLocales;
 
+for (const viewport of [
+  { width: 1440, height: 1000 },
+  { width: 390, height: 844 },
+]) {
+  test(`reading and About interactions at ${viewport.width}px with reduced motion`, async ({
+    page,
+  }, testInfo) => {
+    await page.setViewportSize(viewport);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const errors = [];
+    const mediaRequests = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    page.on('request', (request) => {
+      if (request.url().includes('theme-redqueen')) mediaRequests.push(request.url());
+    });
+    await page.goto('/');
+    await page.locator('a.home-post-title').first().click();
+    await expect(page.locator('body')).toHaveClass(/ai-page/);
+    await expect(page.locator('.rq-tv')).toHaveAttribute('hidden', '');
+    await expect(page.locator('.rq-tv img')).toHaveCount(0);
+    const paragraph = page.locator('.ai-prose-body p').first();
+    // The existing floating panel never becomes geometrically stable; native scrolling still works.
+    await paragraph.evaluate((element) =>
+      element.scrollIntoView({ block: 'center', behavior: 'instant' })
+    );
+    await expect(paragraph).toHaveClass(/ai-para-visible/);
+    await expect(paragraph).toHaveCSS('opacity', '1');
+    await expect(page.locator('.ai-prose-body')).toHaveCSS('opacity', '1');
+    await page.screenshot({ path: testInfo.outputPath('article.png') });
+    expect(mediaRequests).toEqual([]);
+
+    await page.goto(`/${defaultLocale}/about/`);
+    if (viewport.width > 900) {
+      await page.locator('[data-modal="help"]').click();
+      await expect(page.locator('#hacker-modal')).toHaveAttribute('aria-hidden', 'false');
+      await page.screenshot({ path: testInfo.outputPath('about-modal.png') });
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#hacker-modal')).toHaveAttribute('aria-hidden', 'true');
+    } else {
+      await expect(page.locator('.hacker-sidebar')).toBeHidden();
+      const contact = page.locator('main a[href^="mailto:"]');
+      await contact.scrollIntoViewIfNeeded();
+      await expect(contact).toBeVisible();
+      await page.screenshot({ path: testInfo.outputPath('about-mobile.png') });
+    }
+    expect(errors).toEqual([]);
+  });
+}
+
 test('homepage routing keeps default locale canonical and localized default locale redirecting', async ({
   page,
 }) => {

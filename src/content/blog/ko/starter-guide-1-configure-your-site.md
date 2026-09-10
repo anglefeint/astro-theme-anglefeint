@@ -18,7 +18,7 @@ Anglefeint starter를 만들었다면 첫 진입점은 `src/site.config.ts` 입�
 - `social.links`
 - `theme.enableAboutPage`
 
-`site.description` 은 사이트 기본 설명이며, 홈은 `messages.siteDescription` 이 없을 때 여기로 fallback 됩니다.
+`site.description`은 사이트 기본 설명입니다. 홈은 내장 및 대체 언어 문구를 포함한 `messages.siteDescription`을 우선 사용하며, 해석된 값이 비어 있을 때만 사이트 설명을 사용합니다.
 
 새 글은 다음 명령으로 생성할 수 있습니다.
 

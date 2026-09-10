@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import matter from 'gray-matter';
+import { metadataStringIssues } from './doc-metadata-fields.mjs';
 
 const ROOT = process.cwd();
 const REQUIRED_FIELDS = ['doc_id', 'doc_role', 'doc_scope', 'update_triggers'];
@@ -264,6 +265,7 @@ function main() {
     }
 
     const docId = parsed.doc_id;
+    wrongTypeFields.push(...metadataStringIssues(parsed).map((issue) => `${file}: ${issue}`));
     if (typeof docId === 'string' && docId.trim() !== '') {
       const existingFile = docIdToFile.get(docId);
       if (existingFile && existingFile !== file) {

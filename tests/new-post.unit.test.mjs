@@ -14,6 +14,14 @@ test('parseNewPostArgs parses slug and locales override', () => {
   assert.equal(parsed.locales, 'en,ja');
 });
 
+test('missing --locales value is an error, not an implicit config fallback', () => {
+  assert.throws(() => parseNewPostArgs(['node', 'cli', 'post', '--locales']), /Missing locales/);
+  assert.throws(
+    () => parseNewPostArgs(['node', 'cli', 'post', '--locales', '--other']),
+    /Missing locales/
+  );
+});
+
 test('validatePostSlug accepts lowercase-hyphen slugs', () => {
   assert.equal(validatePostSlug('hello-world'), true);
   assert.equal(validatePostSlug('hello_world'), false);

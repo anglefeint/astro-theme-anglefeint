@@ -94,7 +94,7 @@ Lint and doc metadata checks are configured.
 ## Safe Edit Areas
 
 - Theme behavior: `src/site.config.ts` -> `theme`
-- About content/modals: `src/site.config.ts` -> `about`
+- About content/modals: `src/site.config.ts` -> `i18n.locales.<code>.about`
 - Social links: `src/site.config.ts` -> `social.links`
 - Site identity: `src/site.config.ts` -> `site`
 - Content: `src/content/blog/<locale>/`

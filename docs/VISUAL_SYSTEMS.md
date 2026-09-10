@@ -34,6 +34,7 @@ This theme uses four distinct atmospheres by route.
   - Critical UI first (read progress, hero static paint, interactions)
   - Non-critical effects deferred (`requestIdleCallback` / `load` fallback)
 - Left monitor (`.rq-tv`) playback contract:
+  - With reduced motion requested, the monitor is hidden and no playlist media is loaded. A plain image is not a static fallback because the source assets are animated.
   - Auto run once after startup gates are met: `delay + load + idle`.
   - Current base delay uses `OPEN_DELAY_MS = 2000` before gate evaluation.
   - Monitor opens only for playback, then collapses back to a small replay button.

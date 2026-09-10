@@ -112,16 +112,16 @@ If npm release is required:
 3. update `CHANGELOG.md` and create or update the matching release note entry under `docs/releases/`
 4. commit the release-prep changes on `main`
 5. run `npm run maintainer:sync-starter:check`
-6. publish with `npm run release:npm`
-7. then sync starter with `npm run release:starter`
-8. push `main`
+6. push `main` after validation and checking push-triggered automation
+7. publish with `npm run release:npm` and verify the registry version
+8. then sync and validate starter with `npm run release:starter`
 9. push `starter`
 
 If npm release is not required but starter should still change:
 
 - run `npm run maintainer:sync-starter:check`
-- run `npm run release:starter`
 - push `main`
+- run `npm run release:starter`
 - push `starter`
 
 ## Starter Synchronization Contract
@@ -143,6 +143,10 @@ If npm release is not required but starter should still change:
 - `npm run release:npm` verifies that the local package version is newer than the npm registry version before packing or publishing.
 
 Use `npm run maintainer:sync-starter:check` to detect drift without mutating branches.
+
+The release quality gate prioritizes the latest starter paired with its published package. Historical starter upgrade compatibility is not a release requirement. For skeleton changes, recommend creating a fresh template in a new directory and migrating content/configuration deliberately; never overwrite a customized project with maintainer tooling.
+
+After pushing starter, create a temporary project using the public template command and validate installation, CLI commands, checks, build, dev and preview. Remove that temporary project only after successful validation and stopping its servers. If npm succeeds but starter fails, fix and retry starter without republishing the same npm version.
 
 ## Documentation Workflow Contract
 
@@ -187,10 +191,11 @@ For package-affecting changes:
 3. bump package version and update `CHANGELOG.md` plus the matching `docs/releases/` entry
 4. commit the release-prep changes on `main`
 5. `npm run maintainer:sync-starter:check`
-6. `npm run release:npm`
-7. `npm run release:starter`
-8. push `main`
+6. push `main`
+7. `npm run release:npm` and verify registry installation
+8. `npm run release:starter`
 9. push `starter`
+10. validate the remote template in a temporary user project, then clean it up
 
 For docs-only changes:
 
