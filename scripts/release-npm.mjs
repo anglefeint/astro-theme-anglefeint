@@ -5,6 +5,7 @@ import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { verifyPublishedPackage } from './verify-published-package.mjs';
 
 const repoRoot = process.cwd();
 const packageName = '@anglefeint/astro-theme';
@@ -238,7 +239,20 @@ async function main() {
     console.log(`\n[release] Publishing ${packageName}${opts.tag ? ` (${opts.tag})` : ''}...`);
     run('npm', publishArgs, { cwd: `${repoRoot}/packages/theme`, env: npmEnv });
 
-    console.log('\n[release] Done.');
+    if (!opts.dryRun) {
+      await verifyPublishedPackage({
+        name: pkg.name,
+        version: pkg.version,
+        tag: opts.tag || 'latest',
+        capture: (args) => runCapture('npm', args, { env: npmEnv }),
+        destination: cacheDir,
+      });
+      console.log(
+        '\n[release] npm verified. Next: sync/push starter, test the remote template, then publish the source tag and GitHub Release (docs/PACKAGE_RELEASE.md).'
+      );
+    } else {
+      console.log('\n[release] Dry-run complete; nothing was published or registry-verified.');
+    }
   } finally {
     await cleanupTarball(tarballName);
     await rm(cacheDir, { force: true, recursive: true });

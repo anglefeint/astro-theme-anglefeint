@@ -94,6 +94,22 @@ git push origin starter
 
 ## 8) Release Notes Contract
 
+### Registry availability and recovery
+
+After a real publish succeeds, `release:npm` verifies the selected dist-tag (default `latest`) and downloads the exact version with `npm pack`. It retries verification up to 12 times, waiting 10 seconds between attempts; each registry request has a 15-second fetch timeout and no npm fetch retries. Dry-runs do not perform this post-publish check.
+
+If verification times out, publication may already be accepted. Do not republish that version or start starter sync. Check `npm view @anglefeint/astro-theme@latest version` (or the selected tag), then run `npm pack @anglefeint/astro-theme@<version> --ignore-scripts --prefer-online` in a temporary directory. Only resume starter delivery once both match the intended version and the download succeeds. Remove the temporary tarball afterward.
+
+### GitHub closeout
+
+After pushing starter and verifying the remote template:
+
+1. Record the published package source commit, delivered starter commit, actual tests and limitations in the version note. Commit/push documentation-only closeout changes on main; sync starter if managed public docs changed. This does not require another npm release.
+2. Create `v<version>` at the exact source commit used to publish npm, not a later documentation-only commit. Check existing local/remote tags first; never move an existing release tag silently.
+3. Push that tag and create a GitHub Release with `gh release create v<version> --verify-tag --title v<version> --notes-file <notes-file>`. Use `--prerelease` for prereleases; reserve latest status for the current stable release.
+4. Use the version note body without YAML frontmatter as the Release body. Include final main/starter commits and the public `#starter` template command. GitHub source archives are main source, not the generated starter template.
+5. Read back the Release and remote refs. Report the npm version, tag/Release URL, source/starter commits, verification results and remaining limitations. The npm script does not create tags or GitHub Releases automatically.
+
 Treat release notes as part of the release itself.
 
 - `CHANGELOG.md` is the human-facing summary layer

@@ -113,9 +113,10 @@ If npm release is required:
 4. commit the release-prep changes on `main`
 5. run `npm run maintainer:sync-starter:check`
 6. push `main` after validation and checking push-triggered automation
-7. publish with `npm run release:npm` and verify the registry version
+7. publish with `npm run release:npm`; wait for its dist-tag and exact-version tarball verification
 8. then sync and validate starter with `npm run release:starter`
 9. push `starter`
+10. test the remote template, record actual results, then tag the npm source commit and publish the GitHub Release following `docs/PACKAGE_RELEASE.md`
 
 If npm release is not required but starter should still change:
 
@@ -141,6 +142,7 @@ If npm release is not required but starter should still change:
   - installed-package starter environments where `@anglefeint/astro-theme` resolves from `node_modules`
 - `npm run release:npm` cleans up the generated `anglefeint-astro-theme-<version>.tgz` tarball after publish or dry-run completion.
 - `npm run release:npm` verifies that the local package version is newer than the npm registry version before packing or publishing.
+- After a real publish, it retries dist-tag/download verification, never publication. If verification fails, confirm registry availability before syncing starter; do not republish the accepted version.
 
 Use `npm run maintainer:sync-starter:check` to detect drift without mutating branches.
 
@@ -192,10 +194,11 @@ For package-affecting changes:
 4. commit the release-prep changes on `main`
 5. `npm run maintainer:sync-starter:check`
 6. push `main`
-7. `npm run release:npm` and verify registry installation
+7. `npm run release:npm` and wait for dist-tag/download verification
 8. `npm run release:starter`
 9. push `starter`
 10. validate the remote template in a temporary user project, then clean it up
+11. record actual results and limitations; tag the published package source commit and create/read back the GitHub Release as described in `docs/PACKAGE_RELEASE.md`
 
 For docs-only changes:
 

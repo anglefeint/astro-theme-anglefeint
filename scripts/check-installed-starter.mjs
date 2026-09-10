@@ -1,22 +1,13 @@
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import {
-  access,
-  cp,
-  lstat,
-  mkdir,
-  mkdtemp,
-  readFile,
-  readdir,
-  rm,
-  writeFile,
-} from 'node:fs/promises';
+import { cp, lstat, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { buildStarterPackage } from './starter-package.mjs';
 import { STARTER_MANAGED_FILES, STARTER_OBSOLETE_FILES } from './starter-manifest.mjs';
 import { inspectProject } from './doctor.mjs';
+import { checkReadmeLinks } from './check-readme-links.mjs';
 
 const exec = promisify(execFile);
 const root = process.cwd();
@@ -55,13 +46,10 @@ try {
     await cp(path.join(root, file), path.join(project, file));
   }
   for (const file of STARTER_OBSOLETE_FILES) await rm(path.join(project, file), { force: true });
-  for (const file of STARTER_MANAGED_FILES.filter((name) => /^README.*\.md$/.test(name))) {
-    for (const [, href] of (await read(file)).matchAll(/\]\(([^\s)]+)\)/g)) {
-      if (/^(?:[a-z]+:|#)/i.test(href)) continue;
-      const target = decodeURIComponent(href.split('#')[0]);
-      await access(path.resolve(project, target));
-    }
-  }
+  await checkReadmeLinks(
+    project,
+    STARTER_MANAGED_FILES.filter((name) => /^README.*\.md$/.test(name))
+  );
   const source = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8'));
   const packed = JSON.parse(
     (

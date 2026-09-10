@@ -6,7 +6,7 @@
   ·
   <a href="https://github.com/anglefeint/astro-theme-anglefeint">仓库地址</a>
   ·
-  <a href="ASTRO_THEME_LISTING.md">主题提交文案</a>
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md">主题提交文案</a>
 </p>
 
 <p align="center">
@@ -23,16 +23,16 @@
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
-使用 `pnpm`：
+使用 pnpm 时，先用上面的 npm 命令创建模板（跳过依赖安装提示），再进入生成的项目目录执行：
 
 ```bash
-pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
+pnpm install
 ```
 
 ## 环境要求
 
 - Node.js `22.12.0+`（建议 LTS）
-- 包管理器：`npm`、`pnpm`、`yarn` 或 `bun`
+- 已验证的包管理器：`npm` 和 `pnpm 10`（本次发布未验证 yarn/bun）
 
 ## 快速开始
 

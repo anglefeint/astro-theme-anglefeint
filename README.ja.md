@@ -6,7 +6,7 @@
   ·
   <a href="https://github.com/anglefeint/astro-theme-anglefeint">リポジトリ</a>
   ·
-  <a href="ASTRO_THEME_LISTING.md">テーマ掲載文案</a>
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md">テーマ掲載文案</a>
 </p>
 
 <p align="center">
@@ -23,16 +23,16 @@
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
-`pnpm` を使う場合:
+pnpm を使う場合は、上の npm コマンドでテンプレートを作成し（依存関係のインストールはスキップ）、生成されたプロジェクトに移動して実行します:
 
 ```bash
-pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
+pnpm install
 ```
 
 ## 動作要件
 
 - Node.js `22.12.0+`（LTS 推奨）
-- パッケージマネージャー: `npm` / `pnpm` / `yarn` / `bun`
+- 検証済み: `npm` と `pnpm 10`（このリリースでは yarn/bun は未検証）
 
 ## クイックスタート
 

@@ -114,7 +114,7 @@ Use this sequence unless explicitly skipped for a documented reason.
    - commit the release-prep changes on `main`
 3. Run `npm run maintainer:sync-starter:check` on `main` to confirm the expected starter drift before mutating branches.
 4. Push the validated release-prep commit on `main` after checking push-triggered automation.
-5. If Class A/C affects shipped package behavior, publish npm with `npm run release:npm` and verify the registry version.
+5. If Class A/C affects shipped package behavior, publish npm with `npm run release:npm` and wait for its dist-tag and exact-version tarball verification. On verification timeout, confirm availability before syncing starter; never republish the accepted version.
 6. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
 7. Push `starter`.
 8. Create a temporary project from the remote `#starter` template. Verify install, CLI commands, checks, build, dev and preview; stop servers and remove the temporary project after success.
@@ -161,6 +161,7 @@ node scripts/check-scaffold.mjs
 - Starter validation must pass in a real installed-package environment, not only in the workspace-link environment on `main`.
 - `npm run release:npm` removes the generated package tarball after publish/dry-run completion.
 - `npm run release:npm` checks the npm registry and fails early if the workspace package version is not newer than the published latest version.
+- After remote template acceptance, record actual results, tag the published npm source commit, and create/read back the GitHub Release using `docs/PACKAGE_RELEASE.md`. npm publication alone does not complete a release.
 - `npm run release:starter` stages starter changes from `scripts/starter-manifest.mjs` plus starter dependency files; it must not rely on `git add -A`.
 
 If `npm run release:starter` fails, return to `main` and fix the sync contract or package-side issue there. Do not patch starter runtime logic manually.
