@@ -51,10 +51,8 @@ npm run preview
 Quality commands:
 
 ```bash
-npm run lint
-npm run format:check
-npm run e2e:install
-npm run e2e
+npm run doctor
+npm run check
 ```
 
 With `pnpm`:
@@ -80,7 +78,7 @@ npm run check
 npm run build
 ```
 
-If release notes mention starter-side contract changes, pull those changes into your project as well. `npm update` alone only updates the published package.
+If release notes mention starter-side contract changes, create the latest template in a new directory and migrate your content and personal settings. Do not overwrite the new configuration helpers with old files. `npm update` only updates the published package; in-place upgrades across all historical starters are not guaranteed. See the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 If your custom code still imports `src/consts` or `@anglefeint/astro-theme/consts`, migrate to `src/config/site.ts`.
 
@@ -197,7 +195,8 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 Notes:
 
-- `site.description` is the site-level default description. The home page uses localized `messages.siteDescription` when provided and falls back to `site.description`.
+- `site.description` is the site-level default. The home page first uses the resolved `messages.siteDescription`, including built-in and fallback-language messages; only an empty resolved value falls back to `site.description`. Changing `site.description` alone does not replace built-in home descriptions.
+- Locale config is deep-merged with defaults. Disable an unwanted language with `i18n.locales.<code>.meta.enabled = false`; omitting its override does not remove it. The default locale remains enabled.
 - Locale metadata currently supports `label`, `hreflang`, `ogLocale`, `enabled`, and `fallback`.
 
 ### Optional: Giscus Comments
@@ -223,7 +222,9 @@ Comments are disabled by default. To enable:
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-If these required fields are missing, the comments block is not rendered.
+Missing core IDs hides the comments block. When comments are enabled, an empty `term` for `mapping="specific"` or an invalid positive-integer `number` for `mapping="number"` throws a configuration error and can stop dev/build.
+
+The CLI uses enabled locales from the merged config. Config errors stop generation; `--locales` or `ANGLEFEINT_LOCALES` explicitly overrides that lookup.
 
 ## Configuration Surface
 
@@ -233,12 +234,12 @@ If these required fields are missing, the comments block is not rendered.
 
 ## Docs
 
-- Architecture: `docs/ARCHITECTURE.md`
-- Visual systems: `docs/VISUAL_SYSTEMS.md`
-- Submission checklist: `docs/THEME_SUBMISSION_CHECKLIST.md`
-- Theme listing draft: `ASTRO_THEME_LISTING.md`
-- Upgrading guide: `UPGRADING.md`
-- Changelog: `CHANGELOG.md`
+- [Architecture](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)
+- [Visual systems](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/VISUAL_SYSTEMS.md)
+- [Submission checklist](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
+- [Theme listing draft](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md)
+- [Upgrading guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
+- [Changelog](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
 ## Credits
 

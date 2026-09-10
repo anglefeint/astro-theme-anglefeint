@@ -16,20 +16,21 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "preview": "astro preview",
     "check:workspace-link": "node scripts/check-workspace-link.mjs",
     "check:adapters": "node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check",
+    "check:scaffold": "node scripts/check-scaffold.mjs",
     "check:about-runtime": "npm run build && node scripts/check-about-runtime-config.mjs",
-    "check:no-build": "npm run check:adapters && astro check",
+    "check:no-build": "npm run check:adapters && npm run check:scaffold && astro check",
     "sync-adapters": "node scripts/sync-adapters.mjs",
-    "doctor": "npm run check:adapters && npm run check",
+    "doctor": "node scripts/doctor.mjs && npm run check:adapters && npm run check",
     "check": "npm run check:no-build && npm run check:about-runtime",
-    "preview": "astro preview",
-    "new-post": "node ./scripts/new-post.mjs",
-    "new-page": "node ./scripts/new-page.mjs",
+    "new-post": "anglefeint-new-post",
+    "new-page": "anglefeint-new-page",
     "astro": "astro"
   },
   "dependencies": {
-    "@anglefeint/astro-theme": "^0.2.11",
+    "@anglefeint/astro-theme": "^0.2.12",
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
@@ -37,7 +38,7 @@
     "sharp": "^0.34.3"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.7-beta.1",
+    "@astrojs/check": "^0.9.8",
     "typescript": "^5.9.3"
   }
 }

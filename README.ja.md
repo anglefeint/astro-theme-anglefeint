@@ -51,10 +51,8 @@ npm run preview
 品質チェック:
 
 ```bash
-npm run lint
-npm run format:check
-npm run e2e:install
-npm run e2e
+npm run doctor
+npm run check
 ```
 
 `pnpm` を使う場合:
@@ -80,7 +78,7 @@ npm run check
 npm run build
 ```
 
-release note に starter 側 contract の変更がある場合は、その差分もプロジェクトへ取り込んでください。`npm update` だけで更新されるのは公開 package 側だけです。
+リリースノートに starter の構成変更がある場合は、新しいディレクトリに最新テンプレートを作成し、記事・画像・個人設定を移してください。新しい設定補助ファイルを古いファイルで上書きしないでください。`npm update` はパッケージのみを更新し、すべての旧 starter の直接更新は保証しません。[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
 
 カスタムコードが `src/consts` または `@anglefeint/astro-theme/consts` を参照している場合は、`src/config/site.ts` へ移行してください。
 
@@ -217,22 +215,26 @@ npm run new-page -- projects --theme matrix
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-必須項目が不足している場合、コメントブロックは描画されません。
+コア ID が不足するとコメントは表示されません。コメント有効時に `mapping="specific"` の `term` が空、または `mapping="number"` の `number` が正の整数文字列でない場合、設定エラーで開発・ビルドが停止することがあります。
+
+CLI はマージ後の設定で有効な言語を使用します。設定エラーでは生成を停止し、明示的な `--locales` または `ANGLEFEINT_LOCALES` は設定読み込みを省略します。
 
 ## 設定ポイント
 
 - 単一エントリ: `src/site.config.ts`
+- ホームの説明は解決済み `messages.siteDescription`（内蔵・フォールバック言語を含む）を優先し、空の場合のみ `site.description` を使います。
+- 言語設定は既定値と深くマージされます。無効化には `i18n.locales.<code>.meta.enabled = false` を指定します。既定言語は常に有効です。
 - アダプタ層（直接編集は非推奨）: `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - サイト情報は `PUBLIC_*` 環境変数でも上書き可能
 
 ## ドキュメント
 
-- アーキテクチャ: `docs/ARCHITECTURE.md`
-- ビジュアルシステム: `docs/VISUAL_SYSTEMS.md`
-- 提出チェックリスト: `docs/THEME_SUBMISSION_CHECKLIST.md`
-- テーマ掲載文案: `ASTRO_THEME_LISTING.md`
-- アップグレードガイド: `UPGRADING.md`
-- 変更履歴: `CHANGELOG.md`
+- [アーキテクチャ](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)
+- [ビジュアルシステム](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/VISUAL_SYSTEMS.md)
+- [提出チェックリスト](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
+- [テーマ掲載文案](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md)
+- [アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
+- [変更履歴](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
 ## ライセンス
 

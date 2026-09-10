@@ -51,10 +51,8 @@ npm run preview
 Comandos de calidad:
 
 ```bash
-npm run lint
-npm run format:check
-npm run e2e:install
-npm run e2e
+npm run doctor
+npm run check
 ```
 
 Con `pnpm`:
@@ -80,7 +78,7 @@ npm run check
 npm run build
 ```
 
-Si las release notes mencionan cambios de contrato del starter, tambien debes sincronizar esos cambios en tu proyecto. `npm update` solo actualiza el package publicado.
+Si las notas de version incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuracion con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualizacion directa de todos los starters historicos. Consulta la [guia de actualizacion](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 Si tu codigo personalizado aun importa `src/consts` o `@anglefeint/astro-theme/consts`, migralo a `src/config/site.ts`.
 
@@ -217,22 +215,26 @@ Los comentarios vienen desactivados por defecto. Para activarlos:
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-Si falta algun campo requerido, el bloque de comentarios no se renderiza.
+Si faltan los IDs principales, no se muestran comentarios. Con comentarios activos, un `term` vacio para `mapping="specific"` o un `number` que no sea una cadena de entero positivo para `mapping="number"` provoca un error de configuracion y puede detener dev/build.
+
+El CLI usa los idiomas habilitados de la configuracion combinada. Los errores detienen la generacion; `--locales` o `ANGLEFEINT_LOCALES` permite elegir idiomas sin cargar la configuracion.
 
 ## Superficie de configuracion
 
 - Entrada unica: `src/site.config.ts`
+- La descripcion de inicio prioriza `messages.siteDescription` resuelto, incluidos textos integrados y de idiomas de respaldo; solo un valor vacio usa `site.description`.
+- Los idiomas se combinan con los valores predeterminados. Use `i18n.locales.<code>.meta.enabled = false` para desactivar uno; omitirlo no lo elimina. El idioma predeterminado sigue activo.
 - Capa adaptadora (no editar directamente): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - La identidad del sitio tambien se puede sobrescribir con variables `PUBLIC_*`
 
 ## Documentacion
 
-- Arquitectura: `docs/ARCHITECTURE.md`
-- Sistemas visuales: `docs/VISUAL_SYSTEMS.md`
-- Checklist de envio: `docs/THEME_SUBMISSION_CHECKLIST.md`
-- Borrador de listado: `ASTRO_THEME_LISTING.md`
-- Guia de actualizacion: `UPGRADING.md`
-- Historial de cambios: `CHANGELOG.md`
+- [Arquitectura](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)
+- [Sistemas visuales](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/VISUAL_SYSTEMS.md)
+- [Checklist de envio](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
+- [Borrador de listado](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md)
+- [Guia de actualizacion](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
+- [Historial de cambios](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
 ## Licencia
 
