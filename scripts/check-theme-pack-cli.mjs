@@ -59,6 +59,7 @@ function main() {
       'package/src/scaffold/new-post.mjs',
       'package/src/scaffold/new-page.mjs',
       'package/src/scaffold/shared.mjs',
+      'package/src/scaffold/project-config.mjs',
     ];
 
     const missing = required.filter((entry) => !list.includes(entry));

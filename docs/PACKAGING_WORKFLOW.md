@@ -15,7 +15,7 @@ source_of_truth: true
 - Keep current repository with dual roles:
   - `main` for monorepo theme development
   - `starter` branch for end-user template initialization
-- Enable user upgrades via `npm update @anglefeint/astro-theme`.
+- Prioritize the latest starter paired with its published theme package. Compatible package-only updates may use `npm update @anglefeint/astro-theme`; skeleton changes may require a fresh template and content/configuration migration.
 
 ## Phase 1: Baseline and Scaffolding
 
@@ -51,7 +51,7 @@ source_of_truth: true
    Review: new consumer project can install/update package and run successfully.
 
 10. Publish stable release.
-    Review: README and UPGRADING show package-based upgrade flow.
+    Review: README and UPGRADING distinguish compatible package updates from fresh-template migration. Historical in-place compatibility is not a release requirement.
 
 ## Current State
 

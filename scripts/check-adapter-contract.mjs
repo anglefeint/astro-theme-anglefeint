@@ -32,10 +32,10 @@ async function fileExists(filePath) {
 async function runAdapterSmokeCheck(cwd) {
   const smokeSource = `
     import path from 'node:path';
-    import { pathToFileURL } from 'node:url';
+    import { loadProjectModule } from '@anglefeint/astro-theme/utils/project-config';
 
     const root = process.cwd();
-    const importModule = (relPath) => import(pathToFileURL(path.join(root, relPath)).href);
+    const importModule = (relPath) => loadProjectModule(path.join(root, relPath));
 
     const [
       siteConfig,
@@ -96,7 +96,7 @@ async function runAdapterSmokeCheck(cwd) {
 
   const { stdout } = await execFileAsync(
     process.execPath,
-    ['--experimental-strip-types', '--input-type=module', '--eval', smokeSource],
+    ['--input-type=module', '--eval', smokeSource],
     {
       cwd,
       maxBuffer: 20 * 1024 * 1024,
@@ -105,38 +105,6 @@ async function runAdapterSmokeCheck(cwd) {
   );
 
   return JSON.parse(stdout);
-}
-
-async function runAdapterSourceFallbackCheck(cwd) {
-  const [configIndexSource, siteSource, aboutSource, themeSource, socialSource] = await Promise.all(
-    [
-      readFile(path.join(cwd, 'src/config/index.ts'), 'utf8'),
-      readFile(path.join(cwd, 'src/config/site.ts'), 'utf8'),
-      readFile(path.join(cwd, 'src/config/about.ts'), 'utf8'),
-      readFile(path.join(cwd, 'src/config/theme.ts'), 'utf8'),
-      readFile(path.join(cwd, 'src/config/social.ts'), 'utf8'),
-    ]
-  );
-
-  return {
-    siteAdapterValid:
-      siteSource.includes('THEME_CONFIG.site.title') &&
-      siteSource.includes('THEME_CONFIG.site.description') &&
-      siteSource.includes('THEME_CONFIG.site.author') &&
-      siteSource.includes('THEME_CONFIG.site.tagline') &&
-      siteSource.includes('getSiteHero'),
-    aboutAdapterValid:
-      aboutSource.includes('export function getAboutConfig') &&
-      aboutSource.includes('getLocaleResolutionChain'),
-    themeAdapterValid:
-      themeSource.includes('THEME_CONFIG.theme') && themeSource.includes('ABOUT_PAGE_ENABLED'),
-    socialAdapterValid: socialSource.includes('THEME_CONFIG.social.links'),
-    configIndexValid:
-      configIndexSource.includes("export * from './site.ts'") &&
-      configIndexSource.includes("export * from './social.ts'") &&
-      configIndexSource.includes("export * from './theme.ts'") &&
-      configIndexSource.includes("export * from './about.ts'"),
-  };
 }
 
 async function main() {
@@ -163,25 +131,7 @@ async function main() {
       issues.push(`tsconfig.json is missing compilerOptions.paths entry: ${key}`);
   }
 
-  let smoke;
-  try {
-    smoke = await runAdapterSmokeCheck(cwd);
-  } catch (error) {
-    if (
-      String(error?.stderr ?? error?.message ?? '').includes(
-        'ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING'
-      )
-    ) {
-      smoke = {
-        defaultLocaleMatches: true,
-        enabledLocalesValid: true,
-        enabledLocaleLabelsValid: true,
-        ...(await runAdapterSourceFallbackCheck(cwd)),
-      };
-    } else {
-      throw error;
-    }
-  }
+  const smoke = await runAdapterSmokeCheck(cwd);
   if (!smoke.defaultLocaleMatches) {
     issues.push('Adapter smoke check failed: i18n default locale wiring is inconsistent.');
   }

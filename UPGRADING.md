@@ -12,13 +12,26 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 This guide explains the recommended upgrade path for projects created from the starter branch.
 
-## Official Path
+## Recommended Baseline
+
+The latest starter paired with its corresponding theme package is the release baseline. In-place upgrades across all historical starters are not guaranteed. If release notes include routing, configuration, adapter or project-script changes, the recommended path is a fresh template:
+
+1. Commit or back up your existing project.
+2. Create the latest template in a **new directory**, not over the old project.
+3. Migrate your articles and referenced images/assets, preserving locale folders and slugs.
+4. Reapply personal settings to the new `src/site.config.ts`. Do not replace the new schema, defaults, runtime helpers or Astro config wholesale with old copies.
+5. Review custom pages, integrations and deployment settings individually.
+6. Run `npm run doctor`, `npm run check`, and `npm run build`; preview the result before deploying. Keep the old project until the new one is verified.
+
+Do not copy `node_modules`, old lockfiles or maintainer synchronization scripts into the new project.
+
+## Compatible Package Updates
 
 Projects created from:
 
 `npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter`
 
-should upgrade with:
+may use the following for package-only updates whose release notes do not require a new project skeleton:
 
 1. `npm update @anglefeint/astro-theme`
 2. `npm install`
@@ -27,7 +40,7 @@ should upgrade with:
 5. `npm run check`
 6. `npm run build`
 
-This keeps theme core upgrades package-driven through npm and avoids manual file synchronization.
+This updates the theme package, not the local project skeleton. The targeted migration notes below are optional for users choosing to retain an existing project rather than start from the latest template.
 
 ## Scaffold Command Upgrade
 
@@ -85,4 +98,20 @@ After every upgrade:
 - For Astro major-version migrations, follow the official Astro guide first:
   - https://docs.astro.build/en/guides/upgrade-to/
 - `consts` has been removed. If your code imported from `src/consts` or `@anglefeint/astro-theme/consts`,
-  migrate to `src/config/site.ts` fields (`SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_URL`, `SITE_AUTHOR`, `SITE_TAGLINE`, `SITE_HERO_BY_LOCALE`).
+  migrate to `src/config/site.ts` fields (`SITE_TITLE`, `SITE_DESCRIPTION`, `SITE_URL`, `SITE_AUTHOR`, `SITE_TAGLINE`) and `getSiteHero(locale)`.
+
+## Starter Runtime Migration
+
+Updating the npm package does not rewrite your project files. For starters with the old local CLI wrappers or English-only sitemap filter:
+
+1. After installing the fixed theme release, set `scripts.new-post` to `anglefeint-new-post` and `scripts.new-page` to `anglefeint-new-page` in your `package.json`.
+2. Compare `src/pages/index.astro` and the sitemap filter in `astro.config.mjs` with the current starter. Keep your existing `i18n.routing.defaultLocalePrefix` choice, custom content, integrations and deployment settings. Do not replace your entire Astro config.
+3. Review `src/utils/metrics.ts` if you want the current CJK-aware counts. Reading-time and derived metrics may change for existing CJK posts.
+4. Review updated support scripts and adapter templates together with the theme package. `sync-adapters` regenerates from your local templates; it does not download newer templates.
+5. Run `npm run doctor`, `npm run check`, and `npm run build`. Verify the default home URL, canonical links and sitemap in the generated output before deploying.
+
+The updated `scripts/doctor.mjs` detects known legacy command and route patterns without editing files. Existing projects must obtain this script and its npm entry explicitly; installing the theme package alone does not update `doctor`. Custom routing needs manual review even when no known pattern is detected.
+
+Back up or commit your project before applying migration changes. Restore the previous project files and lockfile together if you need to roll back. Never run maintainer starter synchronization against a customized user project.
+
+The post CLI now loads the actual TypeScript config (including imported modules and merged defaults). Invalid configuration fails with an error instead of silently generating English posts. An explicit `--locales en,fr` or `ANGLEFEINT_LOCALES` override can still be used without loading the config.

@@ -18,7 +18,7 @@ Anglefeint starter を使った場合、最初の入口は `src/site.config.ts` 
 - `social.links`
 - `theme.enableAboutPage`
 
-`site.description` はサイト全体のデフォルト説明文で、ホームは `messages.siteDescription` が無いときにここへフォールバックします。
+`site.description` はサイト全体のデフォルト説明文です。ホームは内蔵・フォールバック言語を含む解決済み `messages.siteDescription` を優先し、その値が空の場合のみサイト説明文を使います。
 
 新しい記事は次のコマンドで作成できます。
 

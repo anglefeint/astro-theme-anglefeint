@@ -218,6 +218,7 @@ async function main() {
     if (!opts.skipChecks) {
       console.log('\n[release] Running checks...');
       run('npm', ['run', 'check'], { env: npmEnv });
+      run('npm', ['run', 'check:installed', '--', '--build'], { env: npmEnv });
     }
 
     if (!opts.skipPack) {

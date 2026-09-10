@@ -33,15 +33,14 @@ This repository uses two long-lived branches with different responsibilities.
 
 After each stable package release on `main`:
 
-1. Switch to `starter`.
-2. Update `@anglefeint/astro-theme` dependency to the new version.
-3. Run `npm install`, `npm run check`, `npm run build`.
-4. Update docs if commands or behavior changed.
-5. Push `starter`.
+1. Implement and validate changes on `main`.
+2. Commit and push validated source on `main`, then publish the theme package when shipped package behavior changes.
+3. Run `npm run release:starter` on `main` to generate the managed starter files, npm scripts and dependencies, then validate the installed result.
+4. Push validated `starter` and verify a fresh remote-template installation following `docs/MAINTAINER_WORKFLOW.md`. Do not maintain starter runtime logic manually.
 
 ## Documentation Rule
 
 - README family (`README*.md`) is branch-aware:
   - Installation commands must target `#starter`.
-- `UPGRADING.md` should describe package upgrades for starter users first.
+- `UPGRADING.md` distinguishes compatible package updates from fresh-template migration when the project skeleton changes. Historical in-place upgrades are not guaranteed.
 - Doc validation script (`npm run check:docs`) is the minimum gate before merging documentation changes.

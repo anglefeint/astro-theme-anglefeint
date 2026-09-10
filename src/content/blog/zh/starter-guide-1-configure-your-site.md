@@ -25,7 +25,7 @@ site: {
 当前真实作用：
 
 - `site.title`：header、footer、页面元数据和 RSS 标题
-- `site.description`：站点级默认描述；首页在当前语言没有 `messages.siteDescription` 时会回退到它
+- `site.description`：站点级默认描述；首页优先使用解析后的 `messages.siteDescription`（包括内置与回退语言文案），仅解析结果为空时才回退到它
 - `site.url`：canonical、语言 alternate、RSS 和 robots
 - `site.author`：文章默认作者与 SEO author
 - `site.tagline`：footer 文案

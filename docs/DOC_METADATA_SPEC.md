@@ -104,12 +104,6 @@ These fields are required for maintained technical docs covered by `npm run chec
   - `reference`
   - `adapter-entry`
 
-### `doc_purpose`
-
-- Type: `string`
-- Purpose: one-sentence summary of what the document exists to do
-- Rule: must be concise and human-readable
-
 ### `doc_scope`
 
 - Type: `string[]`
@@ -125,6 +119,12 @@ These fields are required for maintained technical docs covered by `npm run chec
 ## Recommended Metadata Fields
 
 These are not strictly required for every doc, but they are part of the preferred end-state contract.
+
+### `doc_purpose`
+
+- Type: `string`
+- Purpose: one-sentence summary of what the document exists to do
+- Rule: concise and human-readable when provided; missing values use the heading/paragraph fallback described in `docs/DOC_SYNC_WORKFLOW.md`
 
 ### `source_of_truth`
 
