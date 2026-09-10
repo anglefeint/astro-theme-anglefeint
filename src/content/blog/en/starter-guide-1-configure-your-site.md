@@ -27,7 +27,7 @@ site: {
 What they currently affect:
 
 - `site.title`: header, footer, page metadata, and RSS title
-- `site.description`: site-level default description; the home page falls back to it when the current locale does not provide `messages.siteDescription`
+- `site.description`: site-level default description; the home page uses resolved `messages.siteDescription` (including built-in and fallback-language text), and only falls back to it when that resolved value is empty
 - `site.url`: canonical URL, alternate locale URLs, RSS, and robots output
 - `site.author`: default article author and SEO author metadata
 - `site.tagline`: footer copy

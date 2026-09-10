@@ -40,6 +40,10 @@ export const STARTER_OBSOLETE_FILES = [
 ];
 
 export const STARTER_SUPPORT_SCRIPTS = [
+  'scripts/check-scaffold.mjs',
+  'scripts/check-workspace-link.mjs',
+  'scripts/doctor.mjs',
+  'scripts/starter-package.mjs',
   'scripts/check-about-runtime-config.mjs',
   'scripts/check-adapter-contract.mjs',
   'scripts/resolve-theme-default-i18n-entry.mjs',
@@ -48,6 +52,11 @@ export const STARTER_SUPPORT_SCRIPTS = [
 ];
 
 export const STARTER_STATIC_MANAGED_FILES = [
+  'astro.config.mjs',
+  'src/pages/index.astro',
+  'src/pages/robots.txt.ts',
+  'src/content.config.ts',
+  'src/utils/metrics.ts',
   'README.md',
   'README.meta.yaml',
   'README.zh-CN.md',

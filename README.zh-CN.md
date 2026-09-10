@@ -51,10 +51,8 @@ npm run preview
 质量检查命令：
 
 ```bash
-npm run lint
-npm run format:check
-npm run e2e:install
-npm run e2e
+npm run doctor
+npm run check
 ```
 
 使用 `pnpm`：
@@ -80,7 +78,7 @@ npm run check
 npm run build
 ```
 
-如果 release note 提到 starter 侧 contract 变化，还需要把对应 starter 改动同步进你的项目；`npm update` 本身只会更新已发布包。
+如果发布说明涉及 starter 骨架变化，建议在新目录创建最新模板，再迁移文章、资源和个人设置，不要用旧文件整体覆盖新配置辅助文件。`npm update` 只更新主题包，不保证所有历史 starter 都能原地升级。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 如果你的自定义代码还在引用 `src/consts` 或 `@anglefeint/astro-theme/consts`，请迁移到 `src/config/site.ts`。
 
@@ -196,7 +194,8 @@ npm run new-page -- projects --theme matrix
 
 说明：
 
-- `site.description` 是站点级默认描述。首页会优先使用当前语言的 `messages.siteDescription`，未提供时回退到 `site.description`。
+- `site.description` 是站点级默认描述。首页优先使用解析后的 `messages.siteDescription`（含内置与回退语言文案），只有解析结果为空才回退到站点描述；仅修改 `site.description` 不会替换内置首页描述。
+- 语言配置与默认值深合并。禁用语言请设置 `i18n.locales.<code>.meta.enabled = false`，省略覆盖项不代表删除语言；默认语言始终启用。
 - 语言元信息当前支持 `label`、`hreflang`、`ogLocale`、`enabled`、`fallback`。
 
 ### 可选：Giscus 评论
@@ -222,7 +221,9 @@ npm run new-page -- projects --theme matrix
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-若以上必填项缺失，评论区不会渲染。
+核心 ID 缺失时不渲染评论。启用评论后，`mapping="specific"` 缺少 `term`，或 `mapping="number"` 的 `number` 不是有效正整数字符串，会抛出配置错误并可能中止开发启动或构建。
+
+CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 `--locales` 或 `ANGLEFEINT_LOCALES` 可覆盖语言选择，无需加载配置。
 
 ## 配置入口
 
@@ -232,12 +233,12 @@ npm run new-page -- projects --theme matrix
 
 ## 文档
 
-- 架构说明：`docs/ARCHITECTURE.md`
-- 视觉系统：`docs/VISUAL_SYSTEMS.md`
-- 提交检查单：`docs/THEME_SUBMISSION_CHECKLIST.md`
-- 主题提交文案：`ASTRO_THEME_LISTING.md`
-- 升级指南：`UPGRADING.md`
-- 变更日志：`CHANGELOG.md`
+- [架构说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)
+- [视觉系统](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/VISUAL_SYSTEMS.md)
+- [提交检查单](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
+- [主题提交文案](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md)
+- [升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
+- [变更日志](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
 ## 许可证
 
