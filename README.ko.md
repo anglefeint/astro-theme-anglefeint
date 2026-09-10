@@ -6,7 +6,7 @@
   ·
   <a href="https://github.com/anglefeint/astro-theme-anglefeint">저장소</a>
   ·
-  <a href="ASTRO_THEME_LISTING.md">테마 제출 문안</a>
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md">테마 제출 문안</a>
 </p>
 
 <p align="center">
@@ -23,16 +23,16 @@
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
-`pnpm` 사용:
+pnpm을 사용하려면 위의 npm 명령으로 템플릿을 생성하고(의존성 설치는 건너뛰기), 생성된 프로젝트 디렉터리에서 실행하세요:
 
 ```bash
-pnpm create astro@latest --template anglefeint/astro-theme-anglefeint#starter
+pnpm install
 ```
 
 ## 요구 사항
 
 - Node.js `22.12.0+` (LTS 권장)
-- 패키지 매니저: `npm`, `pnpm`, `yarn`, `bun`
+- 검증된 패키지 매니저: `npm`, `pnpm 10` (이번 릴리스에서 yarn/bun은 미검증)
 
 ## 빠른 시작
 
