@@ -15,6 +15,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Corrected outdated social-link comments: empty links show non-clickable placeholders by default, not hidden icons. Runtime behavior is unchanged. Include the package comment in the next normal npm release and the generated adapter comment in the next starter sync; no standalone release is needed.
+
 ## [0.2.12] - 2026-09-10
 
 ### Fixed
