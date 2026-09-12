@@ -8,6 +8,9 @@ export const THEME = {
   HOME_LATEST_COUNT: 3,
   /** Whether to enable the About page (disable to hide from nav/routes if needed) */
   ABOUT_PAGE_ENABLED: true,
+  /** Default for article contents; individual posts may override it. */
+  TOC: { ENABLED: true },
+  SEARCH: { ENABLED: true },
   /** Pagination behavior and style strategy for blog list */
   PAGINATION: {
     WINDOW_SIZE: 7,

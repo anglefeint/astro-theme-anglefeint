@@ -51,6 +51,8 @@ const blog = defineCollection({
       tokenCount: z.number().int().nonnegative().optional(),
       author: z.string().optional(),
       tags: z.array(z.string()).optional(),
+      toc: z.boolean().optional(),
+      search: z.boolean().optional(),
       canonicalTopic: z.string().optional(),
       sourceLinks: z.array(sourceLinkSchema).optional(),
     }),

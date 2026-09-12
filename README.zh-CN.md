@@ -240,6 +240,22 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 - [升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
 - [变更日志](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
+## 文章搜索
+
+默认开启搜索。点击顶部搜索按钮，可搜索当前语言文章的标题和正文。`npm run build` 自动生成索引，随静态网站部署，不需要搜索服务器或账号。
+
+在 `src/site.config.ts` 设置 `theme.search.enabled: false` 可关闭入口和索引生成。单篇文章 frontmatter 设置 `search: false` 可排除该文章。导航、文章目录、相关文章、评论和装饰性状态文字不收录。
+
+本地完整搜索请先运行 `npm run build`，再运行 `npm run preview`。`npm run dev` 显示开发提示，不提供实时搜索；文章修改后重新构建即可更新索引。
+
+## 文章目录
+
+文章页默认从 Markdown 的 `##`、`###` 标题自动生成可折叠目录，宽屏时在正文右侧吸附，窄屏时放在正文开头，初始展开。没有对应标题就不显示，长标题自动换行，不额外添加编号。
+
+在 `src/site.config.ts` 中设置 `theme.toc.enabled` 可修改全站默认值（默认 `true`）。单篇文章 frontmatter 中的 `toc: false` 关闭目录，`toc: true` 开启目录，即使全站默认关闭；省略则继承站点设置。
+
+支持 MDX 中的 Markdown 标题，但不会自动收集组件内部生成的标题或原始 HTML/JSX 标题。自定义文章路由需将 Astro `render(post)` 返回的 `headings` 传给 `BlogPost`，未传时不显示目录。
+
 ## 许可证
 
 MIT License，见 `LICENSE`。

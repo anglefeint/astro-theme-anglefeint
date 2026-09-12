@@ -39,6 +39,16 @@ export { normalizeI18nConfig } from './site.config.runtime.ts';
 export { DEFAULT_ABOUT_CONFIG } from './site.config.defaults.ts';
 export const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});`
       );
+    for (const [value, expected] of [
+      [{}, true],
+      [{ theme: { toc: { enabled: false } } }, false],
+    ]) {
+      await set(value);
+      assert.equal(
+        (await loadProjectModule(path.join(root, 'src/config/theme.ts'))).THEME.TOC.ENABLED,
+        expected
+      );
+    }
     await set({ i18n: { defaultLocale: 'fr', locales: { en: { meta: { enabled: false } } } } });
     assert.deepEqual((await loadProjectLocales(root)).sort(), ['es', 'fr', 'ja', 'ko', 'zh']);
     for (const comments of [

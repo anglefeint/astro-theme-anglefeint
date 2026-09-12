@@ -14,6 +14,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+The unreleased search feature requires registering `@anglefeint/astro-theme/search` in `astro.config.mjs` and synchronizing the `theme.search.enabled` config adapter with the UI. Updating the package alone does not install that registration into an older starter. Use the matching starter when released, or explicitly migrate its integration/configuration changes. Verify full search with build + preview.
+
+The unreleased article contents feature also needs the article route to pass `headings` from `render(post)` to `BlogPost`. Updating the package alone does not update that route or add the starter's `theme.toc.enabled` configuration. Existing custom routes without `headings` keep rendering without a contents panel. Refer to the corresponding release instructions when this feature is published.
+
 The latest starter paired with its corresponding theme package is the release baseline. In-place upgrades across all historical starters are not guaranteed. If release notes include routing, configuration, adapter or project-script changes, the recommended path is a fresh template:
 
 1. Commit or back up your existing project.

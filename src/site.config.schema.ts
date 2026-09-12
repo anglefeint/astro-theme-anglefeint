@@ -91,6 +91,12 @@ export interface ThemeConfig {
     blogPageSize: number;
     homeLatestCount: number;
     enableAboutPage: boolean;
+    toc: {
+      enabled: boolean;
+    };
+    search: {
+      enabled: boolean;
+    };
     pagination: {
       windowSize: number;
       showJumpThreshold: number;

@@ -43,6 +43,8 @@ export { collections } from '@anglefeint/astro-theme/content-schema';
 
 ## Site Config Injection
 
+`BlogPost` accepts optional `headings` from `const { Content, headings } = await render(post)`. Pass these alongside the article data to enable its native, collapsible table of contents for Markdown h2/h3 headings. The panel sticks to the right on wide screens and appears before the body on narrow screens. No headings means no contents. The optional boolean frontmatter field `toc` overrides `THEME.TOC.ENABLED` (default `true`); starter users configure the default with `theme.toc.enabled`. MDX component-generated and raw HTML/JSX headings are not collected automatically.
+
 This package reads site-specific config from alias imports:
 
 - `@anglefeint/site-config/site`
@@ -83,3 +85,9 @@ anglefeint-new-page projects --theme matrix
 ```
 
 Starter projects can invoke these directly (or wrap them in npm scripts). For most users, `#starter` is the recommended installation path.
+
+### Static article search
+
+Register `import search from '@anglefeint/astro-theme/search'` in Astro's integrations with `search({ enabled: THEME.SEARCH.ENABLED })`. After build, the integration writes `pagefind/` into Astro's output directory. The package owns the dependency, indexing hook and dialog; the starter supplies configuration and integration registration. Only `BlogPost` panels marked `data-anglefeint-search` are indexed, limited to title, subtitle and body. Frontmatter `search: false` excludes an article. The default `theme.search.enabled: true` controls both UI and indexing.
+
+Indexes load only after opening search, using the current HTML language. Full search works in build + preview and deployed static output. Dev mode displays instructions. This integration targets static output and requires no search server.

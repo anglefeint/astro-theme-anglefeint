@@ -1,6 +1,20 @@
 export function initReadProgressAndBackToTop(prefersReducedMotion) {
   var progress = document.querySelector('.ai-read-progress');
   var toast = document.querySelector('.ai-stage-toast');
+  var articlePanel = document.querySelector('.ai-article > .prose');
+  function positionStageToast() {
+    if (toast && articlePanel) {
+      toast.style.setProperty(
+        '--article-right',
+        Math.ceil(articlePanel.getBoundingClientRect().right) + 'px'
+      );
+    }
+  }
+  if (toast && articlePanel) {
+    positionStageToast();
+    window.addEventListener('resize', positionStageToast, { passive: true });
+    new ResizeObserver(positionStageToast).observe(articlePanel);
+  }
   var stageSeen = { p10: false, p30: false, p60: false, done: false };
   var toastTimer = 0;
   var hasScrolled = false;
@@ -20,6 +34,7 @@ export function initReadProgressAndBackToTop(prefersReducedMotion) {
 
   function showStageToast(msg) {
     if (!toast) return;
+    positionStageToast();
     toast.textContent = msg;
     toast.classList.add('visible');
     clearTimeout(toastTimer);
