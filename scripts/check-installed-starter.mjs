@@ -122,6 +122,10 @@ try {
   await assert.rejects(npm(['run', 'new-post', '--', 'unsafe-locale', '--locales', '../outside']));
   await writeFile(path.join(project, 'src/site.config.ts'), oldConfig);
   await npm(['run', 'new-post', '--', 'partial-translation', '--locales', 'zh']);
+  await writeFile(
+    path.join(project, 'src/content/blog/en/search-excluded.md'),
+    '---\ntitle: Search exclusion test\ndescription: Excluded article\npubDate: 2026-01-01\nsearch: false\n---\nThis must not be indexed.\n'
+  );
 
   if (process.argv.includes('--build')) {
     for (const locale of ['en', 'zh']) {
@@ -138,6 +142,13 @@ try {
         console.log(`Building installed starter: default=${locale}, prefix=${mode}`);
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
         await npm(['run', 'build']);
+        const searchManifest = JSON.parse(await read('dist/pagefind/anglefeint.json'));
+        assert.ok(searchManifest.languages.includes(locale));
+        assert.match(await read('dist/pagefind/pagefind.js'), /search/);
+        assert.doesNotMatch(
+          await read('dist/en/blog/search-excluded/index.html'),
+          /data-anglefeint-search/
+        );
         const homePath = mode === 'always' ? `${locale}/index.html` : 'index.html';
         const redirectPath = mode === 'always' ? 'index.html' : `${locale}/index.html`;
         const home = await read(`dist/${homePath}`);
@@ -163,6 +174,15 @@ try {
           await assert.rejects(read(`dist/${locale}/about/index.html`), { code: 'ENOENT' });
       }
     }
+    await setConfig({ theme: { search: { enabled: false } } });
+    console.log('Building installed starter with search disabled...');
+    await npm(['run', 'build']);
+    await assert.rejects(read('dist/pagefind/anglefeint.json'), { code: 'ENOENT' });
+    assert.doesNotMatch(await read('dist/en/blog/index.html'), /data-search-open/);
+    assert.doesNotMatch(
+      await read('dist/en/blog/installed-default/index.html'),
+      /data-anglefeint-search/
+    );
   }
   console.log('Installed starter CLI, migration, adapter and requested build checks passed.');
 } catch (error) {

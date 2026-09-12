@@ -1,6 +1,19 @@
 import { DEFAULT_LOCALE, type Locale } from './config';
 
 export type Messages = {
+  search: {
+    label: string;
+    close: string;
+    placeholder: string;
+    hint: string;
+    loading: string;
+    empty: string;
+    error: string;
+    retry: string;
+    more: string;
+    results: string;
+    dev: string;
+  };
   siteTitle: string;
   siteDescription: string;
   langLabel: string;
@@ -41,6 +54,7 @@ export type Messages = {
     backToTop: string;
     related: string;
     comments: string;
+    toc: string;
     responseOutput: string;
     rqBadge: string;
     rqReplayAria: string;
@@ -72,6 +86,19 @@ export type Messages = {
 
 export const DEFAULT_MESSAGES: Record<string, Messages> = {
   en: {
+    search: {
+      label: 'Search',
+      close: 'Close search',
+      placeholder: 'Search articles…',
+      hint: 'Search articles in the current language.',
+      loading: 'Searching…',
+      empty: 'No matching articles.',
+      error: 'Search could not load. Please try again.',
+      retry: 'Retry',
+      more: 'Load more',
+      results: '{count} articles found',
+      dev: 'To test full search locally, run npm run build, then npm run preview.',
+    },
     siteTitle: 'Angle Feint',
     siteDescription: 'Cinematic web interfaces and AI-era engineering essays.',
     langLabel: 'Language',
@@ -112,6 +139,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: 'Back to top',
       related: 'Related',
       comments: 'Comments',
+      toc: 'On this page',
       responseOutput: 'Output',
       rqBadge: 'monitor feed',
       rqReplayAria: 'Replay monitor feed',
@@ -141,6 +169,19 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ja: {
+    search: {
+      label: '検索',
+      close: '検索を閉じる',
+      placeholder: '記事を検索…',
+      hint: '現在の言語の記事を検索します。',
+      loading: '検索中…',
+      empty: '一致する記事がありません。',
+      error: '検索を読み込めませんでした。再試行してください。',
+      retry: '再試行',
+      more: 'もっと見る',
+      results: '{count} 件の記事',
+      dev: 'ローカル検索は npm run build の後、npm run preview で確認できます。',
+    },
     siteTitle: 'Angle Feint',
     siteDescription: '映画的なWebインターフェースとAI時代のエンジニアリング考察。',
     langLabel: '言語',
@@ -181,6 +222,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: '先頭へ戻る',
       related: '関連記事',
       comments: 'コメント',
+      toc: '目次',
       responseOutput: '出力',
       rqBadge: 'モニターフィード',
       rqReplayAria: 'モニターフィードを再生',
@@ -210,6 +252,19 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ko: {
+    search: {
+      label: '검색',
+      close: '검색 닫기',
+      placeholder: '글 검색…',
+      hint: '현재 언어의 글을 검색합니다.',
+      loading: '검색 중…',
+      empty: '일치하는 글이 없습니다.',
+      error: '검색을 불러오지 못했습니다. 다시 시도해 주세요.',
+      retry: '다시 시도',
+      more: '더 보기',
+      results: '글 {count}개',
+      dev: '로컬 검색은 npm run build 실행 후 npm run preview로 확인하세요.',
+    },
     siteTitle: 'Angle Feint',
     siteDescription: '시네마틱 웹 인터페이스와 AI 시대 엔지니어링 에세이.',
     langLabel: '언어',
@@ -250,6 +305,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: '맨 위로',
       related: '관련 글',
       comments: '댓글',
+      toc: '목차',
       responseOutput: '출력',
       rqBadge: '모니터 피드',
       rqReplayAria: '모니터 피드 다시 재생',
@@ -279,6 +335,19 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   es: {
+    search: {
+      label: 'Buscar',
+      close: 'Cerrar búsqueda',
+      placeholder: 'Buscar artículos…',
+      hint: 'Busca artículos en el idioma actual.',
+      loading: 'Buscando…',
+      empty: 'No se encontraron artículos.',
+      error: 'No se pudo cargar la búsqueda. Inténtalo de nuevo.',
+      retry: 'Reintentar',
+      more: 'Cargar más',
+      results: '{count} artículos encontrados',
+      dev: 'Para probar la búsqueda local, ejecuta npm run build y luego npm run preview.',
+    },
     siteTitle: 'Angle Feint',
     siteDescription: 'Interfaces web cinematográficas y ensayos de ingeniería en la era de IA.',
     langLabel: 'Idioma',
@@ -320,6 +389,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: 'Volver arriba',
       related: 'Relacionados',
       comments: 'Comentarios',
+      toc: 'En esta página',
       responseOutput: 'Salida',
       rqBadge: 'monitor de señal',
       rqReplayAria: 'Reproducir monitor de señal',
@@ -349,6 +419,19 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   zh: {
+    search: {
+      label: '搜索',
+      close: '关闭搜索',
+      placeholder: '搜索文章…',
+      hint: '搜索当前语言的文章。',
+      loading: '正在搜索…',
+      empty: '没有找到匹配的文章。',
+      error: '搜索加载失败，请重试。',
+      retry: '重试',
+      more: '加载更多',
+      results: '找到 {count} 篇文章',
+      dev: '本地完整搜索请先运行 npm run build，再运行 npm run preview。',
+    },
     siteTitle: 'Angle Feint',
     siteDescription: '电影感网页界面与 AI 时代工程实践文章。',
     langLabel: '语言',
@@ -389,6 +472,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: '返回顶部',
       related: '相关文章',
       comments: '评论',
+      toc: '文章目录',
       responseOutput: '输出',
       rqBadge: '监视器信号',
       rqReplayAria: '重放监视器信号',

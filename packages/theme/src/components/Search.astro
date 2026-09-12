@@ -1,0 +1,400 @@
+---
+import { getMessages } from '@anglefeint/site-i18n/messages';
+import type { Locale } from '@anglefeint/site-i18n/config';
+import scriptUrl from '../scripts/search.js?url';
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const labels = getMessages(locale).search;
+const bundle = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/pagefind/`;
+---
+
+<div
+  class="angle-search"
+  data-search
+  data-labels={JSON.stringify(labels)}
+  data-bundle={bundle}
+  data-dev={import.meta.env.DEV}
+>
+  <button
+    class="search-trigger"
+    type="button"
+    data-search-open
+    aria-label={labels.label}
+    title={labels.label}
+    aria-haspopup="dialog"
+    aria-controls="article-search"
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+      ><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg
+    >
+  </button>
+  <dialog id="article-search" aria-labelledby="search-title">
+    <div class="search-heading">
+      <h2 id="search-title">
+        <span class="search-signal" aria-hidden="true"></span>{labels.label}
+      </h2><button type="button" data-search-close aria-label={labels.close} title={labels.close}
+        ><span class="search-escape" aria-hidden="true">esc</span><svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg
+        ></button
+      >
+    </div>
+    <form role="search">
+      <label class="search-input-label" for="article-search-input">{labels.placeholder}</label>
+      <div class="search-field">
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+          ><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg
+        >
+        <input
+          id="article-search-input"
+          type="search"
+          autocomplete="off"
+          placeholder={labels.placeholder}
+          aria-describedby="search-status"
+        />
+      </div>
+    </form>
+    <p id="search-status" role="status" aria-live="polite">
+      {import.meta.env.DEV ? labels.dev : labels.hint}
+    </p>
+    <div class="search-scroll">
+      <button type="button" data-search-retry hidden>{labels.retry}</button>
+      <ol class="search-results"></ol>
+      <button type="button" data-search-more hidden>{labels.more}</button>
+    </div>
+  </dialog>
+</div>
+<script is:inline type="module" src={scriptUrl}></script>
+<style>
+  .angle-search {
+    --search-accent: var(--chrome-active, #84d6ff);
+    --search-ink: #e0e7ec;
+    --search-muted: #9caab5;
+    --search-line: color-mix(in srgb, var(--search-accent) 18%, transparent);
+    display: flex;
+    align-items: center;
+  }
+  .angle-search button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    border: 1px solid var(--search-line);
+    border-radius: 6px;
+    background: transparent;
+    padding: 0.45rem 0.7rem;
+    transition:
+      background 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+  .angle-search .search-trigger {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    flex: 0 0 auto;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    color: var(--chrome-link, #c4d8e6);
+  }
+  .angle-search .search-trigger:hover {
+    color: var(--chrome-link-hover, #fff);
+    border-color: var(--search-line);
+    background: color-mix(in srgb, var(--search-accent) 8%, transparent);
+  }
+  .angle-search .search-trigger svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.6;
+  }
+  .angle-search dialog {
+    box-sizing: border-box;
+    width: min(680px, calc(100% - 3rem));
+    max-width: none;
+    max-height: calc(100dvh - clamp(2rem, 12vh, 7rem) - 2rem);
+    margin: clamp(2rem, 12vh, 7rem) auto 2rem;
+    padding: 0;
+    background:
+      radial-gradient(
+        ellipse at 0 0,
+        color-mix(in srgb, var(--search-accent) 7%, transparent),
+        transparent 65%
+      ),
+      #0b1016;
+    color: var(--search-ink);
+    border: 1px solid color-mix(in srgb, var(--search-accent) 28%, #202a32);
+    border-top-color: color-mix(in srgb, var(--search-accent) 65%, #202a32);
+    border-radius: 10px;
+    box-shadow:
+      0 24px 100px #000b,
+      0 0 50px color-mix(in srgb, var(--search-accent) 5%, transparent);
+    font:
+      16px/1.6 system-ui,
+      sans-serif;
+    text-align: left;
+    overflow: hidden;
+  }
+  .angle-search dialog[open] {
+    display: flex;
+    flex-direction: column;
+  }
+  .angle-search dialog::backdrop {
+    background: #020609b8;
+    backdrop-filter: blur(8px);
+  }
+  .search-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 1.4rem 0.4rem;
+    flex-shrink: 0;
+  }
+  .angle-search h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font:
+      500 0.75rem/1.5 ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      monospace;
+    letter-spacing: 0.12em;
+    margin: 0;
+    color: var(--search-muted);
+  }
+  .search-signal {
+    width: 5px;
+    height: 5px;
+    background: var(--search-accent);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--search-accent) 30%, transparent);
+  }
+  .angle-search [data-search-close] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-color: transparent;
+    padding: 0.35rem;
+    color: var(--search-muted);
+    min-height: 36px;
+  }
+  .angle-search [data-search-close]:hover {
+    background: #ffffff08;
+    color: #fff;
+  }
+  .search-escape {
+    font:
+      0.65rem ui-monospace,
+      monospace;
+    border: 1px solid #ffffff18;
+    border-radius: 3px;
+    padding: 0.1rem 0.25rem;
+  }
+  .angle-search form {
+    margin: 0;
+    padding: 0 1.4rem;
+    flex-shrink: 0;
+  }
+  .search-input-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .search-field {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem 0 0.85rem;
+    border-bottom: 1px solid var(--search-line);
+    transition: border-color 0.15s;
+  }
+  .search-field > svg {
+    color: var(--search-accent);
+    flex-shrink: 0;
+  }
+  .search-field:focus-within {
+    border-color: var(--search-accent);
+  }
+  .angle-search input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 0.35rem 0;
+    font:
+      400 1.2rem/1.6 system-ui,
+      sans-serif;
+    background: transparent;
+    color: #f0f4f7;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    caret-color: var(--search-accent);
+  }
+  .angle-search input::placeholder {
+    color: #788894;
+    opacity: 1;
+  }
+  .angle-search #search-status {
+    margin: 0;
+    padding: 0.85rem 1.4rem;
+    color: var(--search-muted);
+    font:
+      0.75rem/1.6 ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      monospace;
+    flex-shrink: 0;
+  }
+  .search-scroll {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--search-line) transparent;
+    padding: 0 0.65rem 0.65rem;
+  }
+  .search-results {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .angle-search :global(.search-results li) {
+    position: relative;
+    margin: 0;
+    padding: 1rem 0.8rem 1rem 1rem;
+    border: 0;
+    border-left: 2px solid transparent;
+    border-radius: 4px;
+    overflow-wrap: anywhere;
+    transition:
+      background 0.15s,
+      border-color 0.15s;
+  }
+  .angle-search :global(.search-results li)::before {
+    content: none;
+  }
+  .angle-search :global(.search-results li + li)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    right: 0.8rem;
+    border-top: 1px solid #ffffff08;
+  }
+  .angle-search :global(.search-results li:hover),
+  .angle-search :global(.search-results li:focus-within) {
+    background: color-mix(in srgb, var(--search-accent) 5%, transparent);
+    border-left-color: var(--search-accent);
+  }
+  .angle-search :global(.search-results a) {
+    display: block;
+    color: var(--search-ink);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .angle-search :global(.search-results a:hover) {
+    color: var(--search-accent);
+  }
+  .angle-search :global(.search-results p) {
+    margin: 0.4rem 0 0;
+    color: #a2afb9;
+    font-size: 0.825rem;
+    line-height: 1.8;
+  }
+  .angle-search :global(mark) {
+    background: color-mix(in srgb, var(--search-accent) 14%, transparent);
+    color: var(--search-ink);
+    box-decoration-break: clone;
+    border-bottom: 1px solid color-mix(in srgb, var(--search-accent) 50%, transparent);
+  }
+  .angle-search :global(button:focus-visible),
+  .angle-search :global(a:focus-visible) {
+    outline: 2px solid var(--search-accent);
+    outline-offset: 3px;
+  }
+  .angle-search [data-search-more],
+  .angle-search [data-search-retry] {
+    display: block;
+    margin: 0.5rem auto;
+    font-size: 0.8rem;
+    color: var(--search-ink);
+  }
+  .angle-search [data-search-more]:hover,
+  .angle-search [data-search-retry]:hover {
+    background: color-mix(in srgb, var(--search-accent) 10%, transparent);
+  }
+  .angle-search [hidden] {
+    display: none;
+  }
+  @media (max-width: 540px) {
+    .angle-search .search-trigger {
+      width: 40px;
+      height: 40px;
+    }
+    .angle-search dialog {
+      width: calc(100% - 1rem);
+      max-height: calc(100dvh - 1rem);
+      margin: 0.5rem auto;
+      border-radius: 8px;
+    }
+    .search-heading {
+      padding: 0.65rem 1rem 0.3rem;
+    }
+    .angle-search form {
+      padding: 0 1rem;
+    }
+    .angle-search #search-status {
+      padding: 0.75rem 1rem;
+    }
+    .angle-search input {
+      font-size: 1rem;
+    }
+    .search-scroll {
+      padding: 0 0.35rem 0.5rem;
+    }
+    .search-escape {
+      display: none;
+    }
+    .angle-search [data-search-close] {
+      min-width: 40px;
+      min-height: 40px;
+      justify-content: center;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .angle-search button,
+    .search-field,
+    .angle-search :global(.search-results li) {
+      transition: none;
+    }
+  }
+</style>

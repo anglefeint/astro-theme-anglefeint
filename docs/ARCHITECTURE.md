@@ -63,6 +63,10 @@ The project now follows a compositional structure:
 
 ## Content Pipeline
 
+- Static search: `packages/theme/src/search.mjs` exports an Astro integration registered by starter `astro.config.mjs`. After build it runs Pagefind on the generated output, limited to article panels with `data-anglefeint-search` and their `data-pagefind-body` regions (title, subtitle, body). Frontmatter `search: false` excludes an article; `theme.search.enabled` disables UI and indexing together. The package owns the Pagefind dependency and exports; no new starter support script is required. A generated manifest lists indexed languages so empty sites and languages return no results. `Search.astro` and `scripts/search.js` own the lazy client UI. Dev mode displays a notice; build + preview tests the deployed behavior.
+
+- Article routes pass `render(post).headings` to `BlogPost`. `ArticleToc.astro` renders Markdown h2/h3 anchors using native details/navigation elements, sticky in the right gutter on wide screens and before the body on narrow screens; it adds no client script. `theme.toc.enabled` is the default, overridden by optional article frontmatter `toc`. Missing headings render no contents, preserving custom layout compatibility.
+
 - Collection schema: `src/content.config.ts`
 - Content location: `src/content/blog/<locale>/`
 - Key required fields: `title`, `description`, `pubDate`

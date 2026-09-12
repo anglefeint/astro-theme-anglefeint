@@ -4,6 +4,8 @@ import type { CollectionEntry } from 'astro:content';
 import themeRedqueen1 from '../assets/theme/red-queen/theme-redqueen1.webp';
 import themeRedqueen2 from '../assets/theme/red-queen/theme-redqueen2.gif';
 import FormattedDate from '../components/FormattedDate.astro';
+import ArticleToc from '../components/ArticleToc.astro';
+import type { MarkdownHeading } from 'astro';
 import Giscus from '../components/Giscus.astro';
 import AiShell from './shells/AiShell.astro';
 import blogPostCssUrl from '../styles/blog-post.css?url';
@@ -21,6 +23,7 @@ import { getMessages } from '@anglefeint/site-i18n/messages';
 type Props = CollectionEntry<'blog'>['data'] & {
   locale?: string;
   related?: CollectionEntry<'blog'>[];
+  headings?: MarkdownHeading[];
   localeHrefs?: Partial<Record<Locale, string>>;
   aiLatencyEstimated?: boolean;
   aiConfidenceEstimated?: boolean;
@@ -46,6 +49,9 @@ const {
   tokenCount,
   author,
   tags,
+  toc,
+  search = true,
+  headings = [],
   locale = DEFAULT_LOCALE,
   related = [],
   localeHrefs,
@@ -196,7 +202,10 @@ const hasCommentsConfig = Boolean(
         </div>
       )
     }
-    <div class="prose">
+    <div
+      class="prose"
+      data-anglefeint-search={search && (THEME.SEARCH?.ENABLED ?? true) ? '' : undefined}
+    >
       <div class="title ai-title">
         <div class="ai-meta-terminal">
           $ {messages.blog.metaPublished}
@@ -247,11 +256,22 @@ const hasCommentsConfig = Boolean(
             </div>
           )
         }
-        <h1 class="ai-title-text">{title}</h1>
-        {subtitle && <p class="ai-subtitle-text">{subtitle}</p>}
+        <h1 class="ai-title-text" data-pagefind-body data-pagefind-meta="title">{title}</h1>
+        {
+          subtitle && (
+            <p class="ai-subtitle-text" data-pagefind-body>
+              {subtitle}
+            </p>
+          )
+        }
         <hr />
         <div class="ai-title-flow" aria-hidden="true"></div>
       </div>
+      <ArticleToc
+        headings={headings}
+        enabled={toc ?? THEME.TOC?.ENABLED ?? true}
+        label={messages.blog.toc}
+      />
       <div class="ai-response-wrap">
         <div class="ai-response-header">
           <div class="ai-response-avatar" aria-hidden="true"></div>
@@ -275,7 +295,7 @@ const hasCommentsConfig = Boolean(
             )
           }
         </div>
-        <div class="ai-prose-body ai-prose-fade">
+        <div class="ai-prose-body ai-prose-fade" data-pagefind-body>
           <slot />
           <span class="ai-block-cursor" aria-hidden="true"></span>
         </div>

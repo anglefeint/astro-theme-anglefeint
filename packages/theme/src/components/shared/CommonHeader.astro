@@ -5,6 +5,7 @@ import { THEME } from '@anglefeint/site-config/theme';
 import HeaderLink from '../HeaderLink.astro';
 import LangSwitcher from './LangSwitcher.astro';
 import SocialMenu from './SocialMenu.astro';
+import Search from '../Search.astro';
 import {
   DEFAULT_LOCALE,
   ENABLED_LOCALE_LABELS,
@@ -75,6 +76,7 @@ const localeOptions = ENABLED_LOCALES.map((targetLocale) => ({
     </div>
     <div class="nav-right">
       <div class="social-links">
+        {(THEME.SEARCH?.ENABLED ?? true) && <Search locale={locale} />}
         <LangSwitcher label={labels.language} currentLocale={locale} options={localeOptions} />
         <div class="nav-status" aria-label={labels.statusAria}>
           <span class="nav-status-dot" aria-hidden="true"></span>

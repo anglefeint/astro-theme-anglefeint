@@ -236,6 +236,22 @@ CLI はマージ後の設定で有効な言語を使用します。設定エラ�
 - [アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
 - [変更履歴](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
+## 記事検索
+
+検索は既定で有効です。ヘッダーから現在の言語の記事タイトルと本文を検索できます。`npm run build` が索引を自動生成し、静的サイトと一緒に配信します。サーバーやアカウントは不要です。
+
+`src/site.config.ts` の `theme.search.enabled: false` で検索と索引生成を無効化できます。記事の frontmatter に `search: false` を指定すると、その記事を除外します。ナビゲーション、目次、関連記事、コメント、装飾文は対象外です。
+
+ローカル検索は `npm run build` の後、`npm run preview` で確認します。`npm run dev` は開発用の案内を表示します。記事更新後は再ビルドしてください。
+
+## 記事の目次
+
+記事ページでは Markdown の `##`、`###` 見出しから折りたたみ可能な目次を自動生成し、広い画面では本文の右側に追従し、狭い画面では本文の前に表示します。初期状態では展開します。該当する見出しがなければ表示しません。長い見出しは折り返し、番号は追加しません。
+
+`src/site.config.ts` の `theme.toc.enabled` でサイトの既定値（初期値 `true`）を変更できます。記事の frontmatter に `toc: false` を指定すると非表示、`toc: true` を指定するとサイトの既定値が無効でも表示します。省略するとサイト設定を継承します。
+
+MDX 内の Markdown 見出しに対応しますが、コンポーネントが生成する見出しや HTML/JSX の見出しは自動収集しません。独自の記事ルートでは `render(post)` の `headings` を `BlogPost` に渡してください。省略時は目次を表示しません。
+
 ## ライセンス
 
 MIT License。`LICENSE` を参照。
