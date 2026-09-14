@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import CyberAtmosphere from '../../../components/CyberAtmosphere.astro';
 import { getCollection } from 'astro:content';
 import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
 import { groupTags } from '@anglefeint/astro-theme/utils/tags';
@@ -27,6 +28,7 @@ const localeHrefs = Object.fromEntries(
   localeHrefs={localeHrefs}
   includeAlternateLinks={false}
 >
+  <CyberAtmosphere slot="body-start" variant="tags" />
   <section class="tag-directory" aria-labelledby="tags-title">
     <a class="tag-back" href={localePath(locale, '/blog/')}
       ><span aria-hidden="true">←</span> {labels.allPosts}</a
@@ -137,15 +139,6 @@ const localeHrefs = Object.fromEntries(
     background: rgba(198, 156, 224, 0.09);
     font-size: 0.75rem;
     font-variant-numeric: tabular-nums;
-  }
-  :global(body:has(.tag-directory) .cyber-spotlight) {
-    opacity: 0.12;
-  }
-  :global(body:has(.tag-directory) .cyber-flicker) {
-    display: none;
-  }
-  :global(body:has(.tag-directory) .cyber-haze) {
-    opacity: 0.25;
   }
   @media (max-width: 720px) {
     .tag-directory {

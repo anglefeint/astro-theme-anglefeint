@@ -32,7 +32,7 @@ pnpm install
 ## Requirements
 
 - Node.js `22.12.0+` (LTS recommended)
-- Verified package managers: `npm` and `pnpm 10` (yarn/bun have not been verified for this release)
+- Package-manager acceptance for 0.3.0 used `npm`. The `pnpm 10` commands below remain documented, but pnpm/yarn/bun were not revalidated for this release.
 
 ## Quick Start
 
@@ -112,6 +112,8 @@ How URL works:
 - Blog list: `/<locale>/blog/`
 - You do not need to add routes manually. Astro generates them from content files at build time.
 
+`--locales` creates article files but does not enable languages. Add/enable each target locale in `src/site.config.ts` for its routes to be generated.
+
 ## Create New Page
 
 `new-post` creates blog content only. For custom pages, use:
@@ -167,7 +169,10 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Features
 
-- Astro 6 static output
+- Pagefind article search in the current language
+- Automatic article contents and static tag archives
+- Code-block copy and article-body image preview
+- Astro 7 static output
 - Markdown + MDX content collections
 - Starter ships sample locales: `en`, `ja`, `ko`, `es`, `zh`
 - Per-locale RSS feeds
@@ -177,7 +182,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
 
 ## Theme Setup
 
-1. Copy `.env.example` to `.env` and set site identity variables.
+1. Optionally copy `.env.example` to `.env` to override site identity; otherwise use `src/site.config.ts`.
 2. Edit `src/site.config.ts`:
    - `site.title`, `site.description`, `site.url`, `site.author`, `site.tagline` for site identity and default metadata
    - `i18n.defaultLocale` to set the canonical root locale
@@ -257,21 +262,29 @@ Set `theme.toc.enabled` in `src/site.config.ts` to change the site default (init
 
 MDX Markdown headings are supported. Headings generated inside components or written as raw HTML/JSX are not automatically collected. Custom layouts using `BlogPost` must pass the `headings` returned by Astro's `render(post)`; omitting them leaves the contents hidden.
 
-## Credits
-
-- Parts of the base typography CSS are adapted from Bear Blog defaults (MIT).  
-  Source note is preserved in `src/styles/global.css`.
-
-## License
-
-MIT License. See `LICENSE`.
-
 ## Tag browsing
 
 Add `tags: ["Astro", "frontend"]` to an article's frontmatter. Builds automatically generate a tag directory and paginated article lists for each enabled language. Blog pages link to the directory; article tags link to matching lists. Untagged articles remain unchanged. Disable browsing with `theme: { tags: { enabled: false } }` in `src/site.config.ts`.
 
 Names are case-sensitive; surrounding spaces and duplicate tags are removed. Lowercase URL-safe names retain readable paths; other names use stable encoded paths, so Chinese and punctuation remain distinct. Renaming a tag changes its URL. No separate tag registry or command is needed.
 
+Open `/<locale>/tags/` directly or use the blog's Tags link. An article tag opens `/<locale>/tags/<tagSlug>/`. With no tags in that language, the directory is empty and its blog navigation entry is hidden.
+
+## Code block copy
+
 Code blocks automatically show a copy button in the upper-right corner. Write ordinary Markdown fenced code; no extra configuration is needed. Clipboard access requires HTTPS or localhost; failures show a manual-copy message.
 
+## Image preview
+
 Unlinked images in article bodies open a larger preview on click or Enter/Space. Close with Escape, the close button, or the backdrop; reading position is preserved. Linked images keep their original navigation.
+
+Preview displays the image source already selected by the browser; it does not retrieve a higher-resolution original. Hero images and images inside links or buttons are excluded.
+
+## Credits
+
+- Parts of the base typography CSS are adapted from Bear Blog defaults (MIT).
+  Source note is preserved in `src/styles/global.css`.
+
+## License
+
+MIT License. See `LICENSE`.

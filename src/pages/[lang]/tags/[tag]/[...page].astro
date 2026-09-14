@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import CyberAtmosphere from '../../../../components/CyberAtmosphere.astro';
 import { getCollection } from 'astro:content';
 import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
 import BlogCards from '@anglefeint/astro-theme/components/BlogCards.astro';
@@ -52,6 +53,7 @@ const title = `${labels.tags}: ${label}${page.currentPage > 1 ? ` · ${labels.pa
   localeHrefs={localeHrefs}
   includeAlternateLinks={false}
 >
+  <CyberAtmosphere slot="body-start" variant="tags" />
   <TagLinks locale={locale} />
   <section>
     <div class="tag-heading">
