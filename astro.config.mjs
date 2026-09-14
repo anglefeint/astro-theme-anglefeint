@@ -2,6 +2,8 @@
 
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import search from '@anglefeint/astro-theme/search';
+import { THEME } from './src/config/theme';
 import { defineConfig } from 'astro/config';
 import { URL, fileURLToPath } from 'node:url';
 import { resolveThemeDefaultI18nEntry } from './scripts/resolve-theme-default-i18n-entry.mjs';
@@ -26,6 +28,7 @@ export default defineConfig({
   },
   integrations: [
     mdx(),
+    search({ enabled: THEME.SEARCH.ENABLED }),
     sitemap({
       filter: (page) => {
         const path = new URL(page).pathname;

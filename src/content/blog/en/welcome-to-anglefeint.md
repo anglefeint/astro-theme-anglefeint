@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Welcome to Anglefeint'
 description: 'A short English sample post to demonstrate multilingual content publishing.'
 pubDate: '2026-02-17'

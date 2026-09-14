@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 2：配置多语言与路由'
 subtitle: '默认语言、fallback 和 URL 结构怎么工作'
 description: '用 src/site.config.ts 里的单一 locale registry 驱动路由、标签、fallback、messages、hero 和 About 内容。'

@@ -236,6 +236,30 @@ El CLI usa los idiomas habilitados de la configuracion combinada. Los errores de
 - [Guia de actualizacion](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
 - [Historial de cambios](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
+## Búsqueda de artículos
+
+La búsqueda está activada por defecto. La cabecera permite buscar títulos y contenido de artículos en el idioma actual. `npm run build` genera el índice automáticamente y lo publica con el sitio estático, sin servidor ni cuenta adicional.
+
+En `src/site.config.ts`, `theme.search.enabled: false` desactiva la búsqueda y el índice. El frontmatter `search: false` excluye un artículo. No se indexan navegación, índices de contenido, artículos relacionados, comentarios ni texto decorativo.
+
+Para probar la búsqueda local, ejecuta `npm run build` y después `npm run preview`. `npm run dev` muestra un aviso de desarrollo. Vuelve a compilar después de editar artículos.
+
+## Índice del artículo
+
+Los artículos generan un índice plegable a partir de los encabezados Markdown `##` y `###`. En pantallas amplias permanece a la derecha del artículo; en pantallas estrechas aparece antes del contenido. Se muestra abierto por defecto y se oculta si no hay encabezados compatibles. Los títulos largos se ajustan al ancho y no se añade numeración.
+
+Configura `theme.toc.enabled` en `src/site.config.ts` para cambiar el valor predeterminado del sitio (inicialmente `true`). En el frontmatter del artículo, `toc: false` oculta el índice y `toc: true` lo muestra incluso si el sitio lo desactiva por defecto. Si se omite, hereda la configuración del sitio.
+
+Se admiten encabezados Markdown en MDX, pero no se recopilan automáticamente los generados por componentes ni los escritos como HTML/JSX. Las rutas personalizadas deben pasar a `BlogPost` los `headings` devueltos por `render(post)`; si se omiten, el índice queda oculto.
+
 ## Licencia
 
 MIT License. Ver `LICENSE`.
+
+## Navegación por etiquetas
+
+Añade `tags: ["Astro", "frontend"]` al frontmatter. La compilación genera un directorio de etiquetas y listas paginadas por idioma. Los artículos sin etiquetas siguen funcionando. Desactiva la función con `theme: { tags: { enabled: false } }` en `src/site.config.ts`. Los nombres distinguen mayúsculas; se eliminan espacios exteriores y duplicados. Los nombres especiales usan rutas codificadas estables; cambiar un nombre cambia su URL. No requiere comandos adicionales.
+
+Los bloques de código incluyen un botón de copia automático. Usa Markdown normal, sin configuración adicional. Requiere HTTPS o localhost; si falla, se indica que selecciones el código manualmente.
+
+Las imágenes sin enlace del artículo se amplían con un clic o Enter/Espacio. Cierra con Esc, el botón o el fondo, conservando la posición de lectura. Las imágenes enlazadas mantienen su navegación.

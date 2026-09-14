@@ -30,7 +30,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@anglefeint/astro-theme": "^0.2.12",
+    "@anglefeint/astro-theme": "^0.3.0",
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",

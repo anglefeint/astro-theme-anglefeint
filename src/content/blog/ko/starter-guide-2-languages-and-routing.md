@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 2: Languages and Routing'
 subtitle: 'default locale, fallback, URL 규칙'
 description: '단일 locale registry로 routing, labels, fallback, messages, hero, About content를 관리합니다.'

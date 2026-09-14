@@ -24,6 +24,11 @@ export { normalizeI18nConfig } from './site.config.runtime.ts';
  * Omitted fields safely fall back to theme defaults.
  */
 export const THEME_CONFIG = defineThemeConfig({
+  // Article contents are enabled by default. Per-post `toc: true/false` overrides this.
+  // theme: { toc: { enabled: false } },
+  // Tag browsing: theme: { tags: { enabled: false } }
+  // Search is enabled by default; builds generate its index automatically.
+  // To disable: theme: { search: { enabled: false } }
   // Example:
   // i18n: {
   //   defaultLocale: 'en',

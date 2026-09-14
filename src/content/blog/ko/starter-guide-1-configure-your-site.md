@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 1: Site Configuration'
 subtitle: 'starter 생성 직후 먼저 바꿔야 할 항목'
 description: '가장 먼저 확인할 사용자 설정은 site 정보, social links, About 토글, starter 글 교체입니다.'
