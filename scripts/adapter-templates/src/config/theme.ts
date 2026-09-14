@@ -33,6 +33,10 @@ export const THEME = {
   HOME_LATEST_COUNT: THEME_CONFIG.theme.homeLatestCount,
   /** Whether to enable the About page (disable to hide from nav/routes if needed) */
   ABOUT_PAGE_ENABLED: THEME_CONFIG.theme.enableAboutPage,
+  /** Default for article contents; individual posts may override it. */
+  TOC: { ENABLED: THEME_CONFIG.theme.toc?.enabled ?? true },
+  SEARCH: { ENABLED: THEME_CONFIG.theme.search?.enabled ?? true },
+  TAGS: { ENABLED: THEME_CONFIG.theme.tags?.enabled ?? true },
   /** Pagination behavior and style strategy for blog list */
   PAGINATION: {
     WINDOW_SIZE: THEME_CONFIG.theme.pagination.windowSize,

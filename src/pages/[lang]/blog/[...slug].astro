@@ -32,7 +32,7 @@ export const getStaticPaths = (async () => {
 const { post, related, locale } = Astro.props;
 const lang = (Astro.params.lang ?? locale ?? DEFAULT_LOCALE) as string;
 const resolvedLocale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const allPosts = await getCollection('blog');
 const currentSlug = blogIdToSlugAnyLocale(post.id);
 const localeHrefs = Object.fromEntries(
@@ -59,6 +59,6 @@ const resolvedData = {
 };
 ---
 
-<BlogPost {...resolvedData} related={related} localeHrefs={localeHrefs}>
+<BlogPost {...resolvedData} headings={headings} related={related} localeHrefs={localeHrefs}>
   <Content />
 </BlogPost>

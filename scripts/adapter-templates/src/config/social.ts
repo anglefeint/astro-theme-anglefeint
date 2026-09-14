@@ -4,8 +4,8 @@
 import { THEME_CONFIG, type SocialLink } from '../site.config.ts';
 
 /**
- * Social links shown in Header + Footer. Set to [] to hide.
- * Replace with your own links when using as a theme.
+ * Social links shown in Header + Footer. Empty links show non-clickable placeholders by default.
+ * Configure your links in src/site.config.ts under social.links.
  */
 export type { SocialLink };
 

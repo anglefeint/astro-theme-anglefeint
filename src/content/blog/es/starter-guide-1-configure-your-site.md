@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 1: Site Configuration'
 subtitle: 'Qué cambiar primero después de crear el starter'
 description: 'Las primeras opciones reales para usuarios son la identidad del sitio, social links, el toggle de About y el reemplazo del contenido inicial.'

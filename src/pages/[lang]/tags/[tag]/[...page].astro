@@ -1,0 +1,108 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
+import BlogCards from '@anglefeint/astro-theme/components/BlogCards.astro';
+import TagLinks from '@anglefeint/astro-theme/components/TagLinks.astro';
+import CyberPagination from '@anglefeint/astro-theme/components/pagination/CyberPagination.astro';
+import { groupTags } from '@anglefeint/astro-theme/utils/tags';
+import { buildPaginationModel } from '@anglefeint/astro-theme/utils/pagination';
+import { THEME } from '../../../../config/theme';
+import { SITE_TITLE } from '../../../../config/site';
+import { ENABLED_LOCALES, localePath, type Locale } from '../../../../i18n/config';
+import { BLOG_PAGE_SIZE, postsForLocale } from '../../../../i18n/posts';
+import { getMessages } from '../../../../i18n/messages';
+export const getStaticPaths = (async ({ paginate }) => {
+  if (!THEME.TAGS.ENABLED) return [];
+  const all = await getCollection('blog');
+  return ENABLED_LOCALES.flatMap((locale) =>
+    groupTags(postsForLocale(all, locale)).flatMap((tag) =>
+      paginate(tag.posts, {
+        pageSize: BLOG_PAGE_SIZE,
+        params: { lang: locale, tag: tag.slug },
+        props: { label: tag.label },
+      })
+    )
+  );
+}) satisfies GetStaticPaths;
+const { page, label } = Astro.props;
+const locale = Astro.params.lang as Locale;
+const labels = getMessages(locale).blog;
+const root = localePath(locale, `/tags/${Astro.params.tag}/`);
+const all = await getCollection('blog');
+const localeHrefs = Object.fromEntries(
+  ENABLED_LOCALES.map((target) => {
+    const tag = groupTags(postsForLocale(all, target)).find((tag) => tag.label === label);
+    return [target, localePath(target, tag ? `/tags/${tag.slug}/` : '/tags/')];
+  })
+);
+const paginationModel = buildPaginationModel({
+  currentPage: page.currentPage,
+  totalPages: page.lastPage,
+  windowSize: THEME.PAGINATION.WINDOW_SIZE,
+  showJumpThreshold: THEME.PAGINATION.SHOW_JUMP_THRESHOLD,
+});
+const title = `${labels.tags}: ${label}${page.currentPage > 1 ? ` · ${labels.pageTitle} ${page.currentPage}` : ''}`;
+---
+
+<CyberShell
+  locale={locale}
+  title={`${title} | ${SITE_TITLE}`}
+  description={`${label} · ${labels.taggedPosts}: ${page.total}`}
+  localeHrefs={localeHrefs}
+  includeAlternateLinks={false}
+>
+  <TagLinks locale={locale} />
+  <section>
+    <div class="tag-heading">
+      <h1>{labels.tags}: {label}</h1><p>{labels.taggedPosts}: {page.total}</p>
+    </div>
+    <BlogCards posts={page.data} locale={locale} />
+  </section>
+  {
+    page.lastPage > 1 && (
+      <CyberPagination
+        model={paginationModel}
+        locale={locale}
+        blogRoot={root}
+        pathname={Astro.url.pathname}
+        labels={{
+          previous: labels.previous,
+          next: labels.next,
+          paginationAria: labels.paginationAria,
+          jumpTo: labels.jumpTo,
+          jumpInputLabel: labels.jumpInputLabel,
+          jumpGo: labels.jumpGo,
+        }}
+        config={{
+          jump: {
+            enabled: THEME.PAGINATION.JUMP.ENABLED,
+            enterToGo: THEME.PAGINATION.JUMP.ENTER_TO_GO,
+          },
+          style: {
+            enabled: THEME.PAGINATION.STYLE.ENABLED,
+            mode: THEME.PAGINATION.STYLE.MODE,
+            variants: THEME.PAGINATION.STYLE.VARIANTS,
+            fixedVariant: THEME.PAGINATION.STYLE.FIXED_VARIANT,
+          },
+        }}
+      />
+    )
+  }
+</CyberShell>
+<style>
+  .tag-heading {
+    margin-bottom: 1.5rem;
+    overflow-wrap: anywhere;
+  }
+  .tag-heading h1 {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    color: #ead7f1;
+    margin: 0 0 0.5rem;
+  }
+  .tag-heading p {
+    color: #b4a1c4;
+    font-size: 0.85rem;
+    margin: 0;
+  }
+</style>

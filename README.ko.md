@@ -236,6 +236,30 @@ CLI는 병합된 설정에서 활성화된 언어를 사용합니다. 설정 오
 - [업그레이드 가이드](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
 - [변경 이력](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
+## 글 검색
+
+검색은 기본적으로 켜져 있습니다. 헤더에서 현재 언어의 글 제목과 본문을 검색합니다. `npm run build`가 색인을 자동 생성하여 정적 사이트와 함께 배포합니다. 별도 서버나 계정은 필요하지 않습니다.
+
+`src/site.config.ts`의 `theme.search.enabled: false`로 검색과 색인 생성을 끕니다. 글 frontmatter의 `search: false`는 해당 글만 제외합니다. 탐색 메뉴, 목차, 관련 글, 댓글과 장식 문구는 수집하지 않습니다.
+
+로컬 검색은 `npm run build` 실행 후 `npm run preview`로 확인하세요. `npm run dev`는 개발 안내를 표시합니다. 글을 수정한 뒤 다시 빌드하면 색인이 갱신됩니다.
+
+## 글 목차
+
+글 페이지는 Markdown `##`, `###` 제목으로 접을 수 있는 목차를 자동 생성하며 넓은 화면에서는 본문 오른쪽에 고정되고 좁은 화면에서는 본문 앞에 표시됩니다. 기본적으로 펼쳐집니다. 해당 제목이 없으면 숨깁니다. 긴 제목은 줄바꿈되며 번호를 추가하지 않습니다.
+
+`src/site.config.ts`의 `theme.toc.enabled`로 사이트 기본값(처음에는 `true`)을 설정합니다. 글 frontmatter의 `toc: false`는 목차를 숨기고, `toc: true`는 사이트 기본값이 꺼져 있어도 표시합니다. 생략하면 사이트 설정을 따릅니다.
+
+MDX의 Markdown 제목은 지원하지만 컴포넌트에서 생성하거나 HTML/JSX로 작성한 제목은 자동 수집하지 않습니다. 사용자 정의 글 라우트는 `render(post)`의 `headings`를 `BlogPost`에 전달해야 합니다. 전달하지 않으면 목차가 표시되지 않습니다.
+
 ## 라이선스
 
 MIT License. `LICENSE` 를 참고하세요.
+
+## 태그 탐색
+
+글 frontmatter에 `tags: ["Astro", "프론트엔드"]`를 추가하면 빌드 시 언어별 태그 목록과 페이지별 글 목록이 생성됩니다. 태그가 없는 글은 그대로 유지됩니다. `src/site.config.ts`에서 `theme: { tags: { enabled: false } }`로 끌 수 있습니다. 대소문자를 구분하며 앞뒤 공백과 중복을 제거합니다. 특수 이름은 안정적인 URL로 인코딩되며 이름 변경 시 URL도 바뀝니다. 추가 명령은 필요하지 않습니다.
+
+코드 블록 오른쪽 위에 복사 버튼이 자동으로 표시됩니다. 일반 Markdown을 사용하면 되며 추가 설정은 없습니다. HTTPS 또는 localhost가 필요하고 실패 시 수동 복사 안내가 표시됩니다.
+
+본문에서 링크가 없는 이미지는 클릭 또는 Enter/Space로 확대할 수 있습니다. Esc, 닫기 버튼 또는 배경으로 닫으며 읽던 위치를 유지합니다. 링크가 있는 이미지는 기존 이동 동작을 유지합니다.

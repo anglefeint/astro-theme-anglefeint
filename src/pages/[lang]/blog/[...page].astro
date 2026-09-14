@@ -1,8 +1,9 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import { Image } from 'astro:assets';
+import BlogCards from '@anglefeint/astro-theme/components/BlogCards.astro';
+import TagLinks from '@anglefeint/astro-theme/components/TagLinks.astro';
+import { groupTags } from '@anglefeint/astro-theme/utils/tags';
 import { getCollection } from 'astro:content';
-import FormattedDate from '@anglefeint/astro-theme/components/FormattedDate.astro';
 import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
 import CyberPagination from '@anglefeint/astro-theme/components/pagination/CyberPagination.astro';
 import { SITE_TITLE } from '../../../config/site';
@@ -11,7 +12,6 @@ import {
   DEFAULT_LOCALE,
   ENABLED_LOCALES,
   type Locale,
-  blogIdToSlugAnyLocale,
   isLocale,
   localePath,
 } from '../../../i18n/config';
@@ -96,37 +96,14 @@ const pageDescription =
     <div class="cyber-rain" data-cyber-rain aria-hidden="true"></div>
     <div class="cyber-dust" data-cyber-dust aria-hidden="true"></div>
   </Fragment>
+  {
+    THEME.TAGS.ENABLED && groupTags(postsForLocale(allPosts, resolvedLocale)).length > 0 && (
+      <TagLinks locale={resolvedLocale} active="posts" />
+    )
+  }
   <section>
     <h2 class="sr-only">{messages.blog.title}</h2>
-    <ul>
-      {
-        posts.map((post, index) => (
-          <li>
-            <a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
-              {post.data.heroImage && (
-                <div class="img-wrapper">
-                  <Image
-                    width={index === 0 ? 1200 : 720}
-                    height={index === 0 ? 600 : 360}
-                    sizes={
-                      index === 0
-                        ? '(max-width: 720px) 100vw, 960px'
-                        : '(max-width: 720px) 100vw, 480px'
-                    }
-                    src={post.data.heroImage}
-                    alt=""
-                  />
-                </div>
-              )}
-              <h2 class="title">{post.data.title}</h2>
-              <p class="date">
-                <FormattedDate date={post.data.pubDate} locale={resolvedLocale} />
-              </p>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <BlogCards posts={posts} locale={resolvedLocale} />
   </section>
   {
     page.lastPage > 1 && (
