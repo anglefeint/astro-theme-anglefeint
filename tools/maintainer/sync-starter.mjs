@@ -469,7 +469,8 @@ export async function syncStarter(
     const dependencyUpdated = await syncStarterThemeDependency(repoRoot, expectedRange);
     await syncStarterRuntimeDeps(repoRoot, sourceRef);
 
-    await run('npm', ['install']);
+    // Refresh compatible transitive versions instead of retaining a vulnerable old lockfile.
+    await run('npm', ['update', '--prefer-online']);
     await run('npm', ['audit', '--audit-level=low', '--prefer-online']);
     await run('npm', ['run', 'check']);
     await run('npm', ['run', 'build']);

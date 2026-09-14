@@ -119,6 +119,9 @@ Use this sequence unless explicitly skipped for a documented reason.
 6. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
 7. Push `starter`.
 8. Create a temporary project from the remote `#starter` template. Verify install, CLI commands, checks, build, dev and preview; stop servers and remove the temporary project after success.
+9. Record delivery evidence, tag the exact npm source commit, create the GitHub Release and read it back. Only then is the release complete.
+
+Starter synchronization uses `npm update --prefer-online` within the source dependency ranges before its blocking audit. This refreshes indirect dependencies retained by older lockfiles; it does not bypass version constraints or vulnerability findings.
 
 The latest template and its corresponding npm package are the supported release baseline. Do not add historical compatibility layers at the expense of the new-template experience. When project skeletons change, existing users may create a fresh template and migrate content and configuration into it; automatic in-place upgrades across all historical starters are not guaranteed.
 
