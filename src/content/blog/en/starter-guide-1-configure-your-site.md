@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 1: Configure Your Site'
 subtitle: 'The first fields to edit after creating a starter project'
 description: 'Start with the real user-facing entry: site identity, social links, the About toggle, and replacing starter posts.'

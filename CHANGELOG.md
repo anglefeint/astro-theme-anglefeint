@@ -15,19 +15,27 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-14
+
 ### Added
 
-- Static article search powered by Pagefind: localized header dialog, lazy loading, highlighted excerpts, global and per-article controls, and automatic build-time indexes. Full local search uses build + preview; dev mode displays a notice. Available in the source workspace; npm release and starter sync are pending.
+- Click-to-preview article images with keyboard access, backdrop/Escape dismissal, and reading-position restoration. Linked images retain navigation.
 
-- Article table of contents for Markdown h2/h3 headings, with a sticky right sidebar on wide screens, inline contents on narrow screens, native collapse, localized labels, a site default (`theme.toc.enabled`) and per-post `toc` overrides. Custom/older article routes must pass `render(post).headings` to `BlogPost`. Available in the source workspace; npm release and starter sync are pending.
+- Automatic article code-block copy buttons with localized clipboard success/failure feedback, keyboard access, and fixed positioning during horizontal code scrolling.
 
-### Delivery status
+- Configurable static tag browsing with localized directories, paginated tag archives, article links, and stable case-sensitive tag URLs.
 
-- This source checkpoint was requested before further tag-browser development. Version preparation, npm publication, and starter distribution are deferred to a separate release; pushing this checkpoint does not update the installed theme package.
+- Static article search powered by Pagefind: localized header dialog, lazy loading, highlighted excerpts, global and per-article controls, and automatic build-time indexes. Full local search uses build + preview; dev mode displays a notice.
+
+- Article table of contents for Markdown h2/h3 headings, with a sticky right sidebar on wide screens, inline contents on narrow screens, native collapse, localized labels, a site default (`theme.toc.enabled`) and per-post `toc` overrides. Custom/older article routes must pass `render(post).headings` to `BlogPost`.
 
 ### Fixed
 
-- Corrected outdated social-link comments: empty links show non-clickable placeholders by default, not hidden icons. Runtime behavior is unchanged. Include the package comment in the next normal npm release and the generated adapter comment in the next starter sync; no standalone release is needed.
+- Corrected outdated social-link comments: empty links show non-clickable placeholders by default, not hidden icons. Runtime behavior is unchanged.
+
+### Migration
+
+- Use the matching starter to get search integration, tag routes and contents configuration. npm updates do not rewrite project-owned routes or config files. See `docs/releases/0.3.0.md` and `UPGRADING.md`.
 
 ## [0.2.12] - 2026-09-10
 

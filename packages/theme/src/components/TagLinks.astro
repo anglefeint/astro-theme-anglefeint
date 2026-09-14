@@ -1,0 +1,92 @@
+---
+import { localePath, type Locale } from '@anglefeint/site-i18n/config';
+import { getMessages } from '@anglefeint/site-i18n/messages';
+import { cleanTags, tagSlug } from '../utils/tags';
+interface Props {
+  locale: Locale;
+  active?: 'posts' | 'tags';
+  article?: boolean;
+  tags?: string[];
+}
+const { locale, active, article = false, tags = [] } = Astro.props;
+const labels = getMessages(locale).blog;
+const items = cleanTags(tags);
+---
+
+{
+  (!article || items.length > 0) && (
+    <nav
+      class:list={['tag-links', { 'article-tags': article }]}
+      aria-label={labels.tags}
+      data-pagefind-ignore
+    >
+      {article ? (
+        items.map((label) => (
+          <a rel="tag" href={localePath(locale, `/tags/${tagSlug(label)}/`)}>
+            {label}
+          </a>
+        ))
+      ) : (
+        <>
+          <a
+            href={localePath(locale, '/blog/')}
+            aria-current={active === 'posts' ? 'page' : undefined}
+          >
+            {labels.allPosts}
+          </a>
+          <a
+            href={localePath(locale, '/tags/')}
+            aria-current={active === 'tags' ? 'page' : undefined}
+          >
+            {labels.tags}
+          </a>
+        </>
+      )}
+    </nav>
+  )
+}
+<style>
+  .tag-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1.5rem;
+  }
+  .tag-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    padding: 0.15rem 0.85rem;
+    border: 1px solid rgba(198, 156, 224, 0.3);
+    border-radius: 6px;
+    background: rgba(126, 67, 142, 0.07);
+    color: var(--chrome-link, #d4c4e8);
+    text-decoration: none;
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .tag-links a:hover,
+  .tag-links a[aria-current] {
+    background: rgba(126, 67, 142, 0.2);
+    border-color: currentColor;
+  }
+  .tag-links a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  .tag-links.article-tags {
+    margin: 0.75rem 0 1.5rem;
+  }
+  .tag-links.article-tags a {
+    border-color: rgba(142, 218, 255, 0.3);
+    background: rgba(14, 34, 54, 0.35);
+    color: #aadcf4;
+  }
+  @media (max-width: 720px) {
+    .tag-links:not(.article-tags) {
+      margin-top: 3.5rem;
+    }
+  }
+</style>

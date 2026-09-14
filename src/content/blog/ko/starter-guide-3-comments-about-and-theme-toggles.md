@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 3: Comments, About, and Toggles'
 subtitle: 'Giscus, About, pagination, post effects'
 description: '현재 실제로 동작하는 확장 설정은 Giscus comments, About content, Red Queen effect, home counts, pagination 입니다.'

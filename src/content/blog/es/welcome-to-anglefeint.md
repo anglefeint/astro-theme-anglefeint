@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Bienvenido a Anglefeint'
 description: 'Un artículo breve en español para mostrar la publicación de contenido multilingüe.'
 pubDate: '2026-02-17'

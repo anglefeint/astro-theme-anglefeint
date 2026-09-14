@@ -91,6 +91,7 @@ export interface ThemeConfig {
     blogPageSize: number;
     homeLatestCount: number;
     enableAboutPage: boolean;
+    tags: { enabled: boolean };
     toc: {
       enabled: boolean;
     };

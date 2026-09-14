@@ -91,3 +91,13 @@ This theme uses four distinct atmospheres by route.
 - Main content widths are constrained with max-width patterns.
 - Mobile breakpoints currently center around `720px`, `840px`, `900px`.
 - Validate pagination and modal layouts when increasing post volume.
+
+### Tag browsing
+
+Tag archives use CyberShell and existing blog card/pagination styling. Directory links are uniform wrapping chips with counts. Blog navigation uses a compact All posts / Tags row only when tags exist. Article tags use the blue article palette, separate from the title's search-indexed text. No extra animation or client-side tag filtering is introduced.
+
+The tag directory uses a centered 680px content column, a text return link, a title/count row with a subtle divider, and compact count badges. Directory-only CSS reduces spotlight and haze intensity and hides flicker; blog and tag article lists keep their existing effects.
+
+Code copy buttons sit at the top-right of a relative wrapper, outside the horizontally scrolling pre. The existing runtime decoration and syntax highlighting remain. Buttons use 44px targets and localized live status messages; failures never show the success checkmark.
+
+Article image preview uses a native top-layer dialog with a dark backdrop, a contained image, alt-text caption and 44px close target. Only unlinked body images receive zoom-in cursors and keyboard activation; hero images and linked images are excluded.

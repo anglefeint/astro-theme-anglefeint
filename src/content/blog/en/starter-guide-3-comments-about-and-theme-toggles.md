@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 3: Configure Comments, About, and Theme Toggles'
 subtitle: 'Giscus, About content, home counts, pagination, and post effects'
 description: 'The verified theme toggles in Anglefeint: Giscus comments, About content, Red Queen effect, home post counts, and blog pagination settings.'

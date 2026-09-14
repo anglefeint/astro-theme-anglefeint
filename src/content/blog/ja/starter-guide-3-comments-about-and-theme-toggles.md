@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 3: Comments, About, and Toggles'
 subtitle: 'Giscus、About、pagination、post effects'
 description: '現在有効な拡張設定は Giscus comments、About content、Red Queen effect、home counts、pagination です。'

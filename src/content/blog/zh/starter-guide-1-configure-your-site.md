@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 1：先配置你的站点'
 subtitle: '从 starter 创建项目后，优先改哪些字段'
 description: '从真正的用户入口开始：站点身份信息、社交链接、About 开关，以及如何替换 starter 示例文章。'

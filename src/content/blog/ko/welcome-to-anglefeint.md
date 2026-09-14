@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint에 오신 것을 환영합니다'
 description: '다국어 콘텐츠 게시를 확인하기 위한 짧은 한국어 샘플 글입니다.'
 pubDate: '2026-02-17'

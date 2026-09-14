@@ -11,6 +11,7 @@ export const THEME = {
   /** Default for article contents; individual posts may override it. */
   TOC: { ENABLED: true },
   SEARCH: { ENABLED: true },
+  TAGS: { ENABLED: true },
   /** Pagination behavior and style strategy for blog list */
   PAGINATION: {
     WINDOW_SIZE: 7,

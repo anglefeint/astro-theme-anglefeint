@@ -55,6 +55,8 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'astro.config.mjs',
   'src/pages/index.astro',
   'src/pages/robots.txt.ts',
+  'src/pages/[lang]/tags/index.astro',
+  'src/pages/[lang]/tags/[tag]/[...page].astro',
   'src/content.config.ts',
   'src/utils/metrics.ts',
   'README.md',

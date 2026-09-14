@@ -1,0 +1,160 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
+import { groupTags } from '@anglefeint/astro-theme/utils/tags';
+import { THEME } from '../../../config/theme';
+import { SITE_TITLE } from '../../../config/site';
+import { ENABLED_LOCALES, localePath, type Locale } from '../../../i18n/config';
+import { postsForLocale } from '../../../i18n/posts';
+import { getMessages } from '../../../i18n/messages';
+export const getStaticPaths = (async () =>
+  THEME.TAGS.ENABLED
+    ? ENABLED_LOCALES.map((locale) => ({ params: { lang: locale } }))
+    : []) satisfies GetStaticPaths;
+const locale = Astro.params.lang as Locale;
+const labels = getMessages(locale).blog;
+const tags = groupTags(postsForLocale(await getCollection('blog'), locale));
+const localeHrefs = Object.fromEntries(
+  ENABLED_LOCALES.map((target) => [target, localePath(target, '/tags/')])
+);
+---
+
+<CyberShell
+  locale={locale}
+  title={`${labels.tags} | ${SITE_TITLE}`}
+  description={labels.archiveDescription}
+  localeHrefs={localeHrefs}
+  includeAlternateLinks={false}
+>
+  <section class="tag-directory" aria-labelledby="tags-title">
+    <a class="tag-back" href={localePath(locale, '/blog/')}
+      ><span aria-hidden="true">←</span> {labels.allPosts}</a
+    >
+    <div class="tag-title-row">
+      <h1 id="tags-title">{labels.tags}</h1>
+      <span class="tag-total" aria-label={`${labels.tags}: ${tags.length}`}>{tags.length}</span>
+    </div>
+    {
+      tags.length ? (
+        <div class="tag-grid">
+          {tags.map((tag) => (
+            <a class="tag-item" href={localePath(locale, `/tags/${tag.slug}/`)}>
+              <span>{tag.label}</span>
+              <span class="tag-count" aria-label={`${labels.taggedPosts}: ${tag.posts.length}`}>
+                {tag.posts.length}
+              </span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p>{labels.noTags}</p>
+      )
+    }
+  </section>
+</CyberShell>
+<style>
+  .tag-directory {
+    max-width: 680px;
+    margin: clamp(1rem, 4vh, 3rem) auto 3rem;
+  }
+  .tag-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    color: #b9abc8;
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+  .tag-back:hover {
+    color: #edd8f6;
+  }
+  .tag-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin: 1rem 0 1.75rem;
+    padding-bottom: 1.35rem;
+    border-bottom: 1px solid rgba(198, 156, 224, 0.16);
+  }
+  .tag-directory h1 {
+    font-size: clamp(1.65rem, 4vw, 2.2rem);
+    margin: 0;
+    color: #ead7f1;
+    letter-spacing: 0.02em;
+  }
+  .tag-total {
+    font-size: 0.85rem;
+    color: #b9abc8;
+    font-variant-numeric: tabular-nums;
+  }
+  .tag-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+  .tag-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-height: 46px;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid rgba(198, 156, 224, 0.22);
+    border-radius: 7px;
+    color: #dbc9e6;
+    background: rgba(126, 67, 142, 0.07);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    font-size: 0.9rem;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .tag-item:hover {
+    border-color: #bc8ccb;
+    background: rgba(126, 67, 142, 0.2);
+    color: #f0dcf8;
+  }
+  .tag-item:focus-visible,
+  .tag-back:focus-visible {
+    outline: 2px solid #d4a5e0;
+    outline-offset: 4px;
+  }
+  .tag-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.6rem;
+    height: 1.6rem;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    border-radius: 4px;
+    color: #b9abc8;
+    background: rgba(198, 156, 224, 0.09);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+  }
+  :global(body:has(.tag-directory) .cyber-spotlight) {
+    opacity: 0.12;
+  }
+  :global(body:has(.tag-directory) .cyber-flicker) {
+    display: none;
+  }
+  :global(body:has(.tag-directory) .cyber-haze) {
+    opacity: 0.25;
+  }
+  @media (max-width: 720px) {
+    .tag-directory {
+      margin-top: 3.5rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tag-item {
+      transition: none;
+    }
+  }
+</style>

@@ -5,6 +5,7 @@ import themeRedqueen1 from '../assets/theme/red-queen/theme-redqueen1.webp';
 import themeRedqueen2 from '../assets/theme/red-queen/theme-redqueen2.gif';
 import FormattedDate from '../components/FormattedDate.astro';
 import ArticleToc from '../components/ArticleToc.astro';
+import TagLinks from '../components/TagLinks.astro';
 import type { MarkdownHeading } from 'astro';
 import Giscus from '../components/Giscus.astro';
 import AiShell from './shells/AiShell.astro';
@@ -267,6 +268,7 @@ const hasCommentsConfig = Boolean(
         <hr />
         <div class="ai-title-flow" aria-hidden="true"></div>
       </div>
+      {THEME.TAGS.ENABLED && <TagLinks locale={resolvedLocale} tags={tags ?? []} article />}
       <ArticleToc
         headings={headings}
         enabled={toc ?? THEME.TOC?.ENABLED ?? true}
@@ -295,7 +297,12 @@ const hasCommentsConfig = Boolean(
             )
           }
         </div>
-        <div class="ai-prose-body ai-prose-fade" data-pagefind-body>
+        <div
+          class="ai-prose-body ai-prose-fade"
+          data-code-copy={JSON.stringify(messages.codeCopy)}
+          data-image-preview={JSON.stringify(messages.imagePreview)}
+          data-pagefind-body
+        >
           <slot />
           <span class="ai-block-cursor" aria-hidden="true"></span>
         </div>

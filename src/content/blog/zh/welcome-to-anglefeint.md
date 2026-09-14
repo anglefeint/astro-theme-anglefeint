@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: '欢迎使用 Anglefeint'
 description: '一篇简短的中文示例文章，用于展示多语言内容发布。'
 pubDate: '2026-02-17'

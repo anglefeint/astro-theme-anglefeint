@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint Starter Guide 2: Configure Languages and Routing'
 subtitle: 'How locales, fallback, and default-locale URLs work'
 description: 'Use the single locale registry in src/site.config.ts to drive routing, labels, fallback behavior, messages, hero copy, and About content.'
