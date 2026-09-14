@@ -59,6 +59,16 @@ export const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});`
       await set({ theme: { comments } });
       await assert.rejects(loadProjectModule(path.join(root, 'src/config/theme.ts')), /requires/);
     }
+    await set({ theme: { tags: { enabled: false } } });
+    assert.equal(
+      (await loadProjectModule(path.join(root, 'src/config/theme.ts'))).THEME.TAGS.ENABLED,
+      false
+    );
+    await set({ theme: { tags: { enabled: true } } });
+    assert.equal(
+      (await loadProjectModule(path.join(root, 'src/config/theme.ts'))).THEME.TAGS.ENABLED,
+      true
+    );
     await set({ theme: { comments: { enabled: false, mapping: 'specific', term: '' } } });
     assert.equal(
       (await loadProjectModule(path.join(root, 'src/config/theme.ts'))).THEME.COMMENTS.ENABLED,

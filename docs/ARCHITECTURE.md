@@ -191,3 +191,13 @@ npm run preview
 npm run lint
 npm run format:check
 ```
+
+### Tag archives
+
+Starter routes `src/pages/[lang]/tags/index.astro` and `src/pages/[lang]/tags/[tag]/[...page].astro` use content collections and static pagination. `packages/theme/src/utils/tags.ts` owns case-sensitive normalization, deterministic filesystem-safe slug encoding, counting and grouping. Existing locale filtering/date ordering and page size are reused. `BlogCards.astro` preserves the blog list markup. `TagLinks.astro` owns directory/article navigation.
+
+The `theme.tags.enabled` contract is mapped through the generated adapter. Disabled tags produce no archive routes or navigation. Empty locales retain an empty directory without a blog entry. Tag pages remain outside the Pagefind article root. Language navigation can fall back to another language's directory; tag archives pass `includeAlternateLinks=false` through CyberShell/ThemeFrame to BaseHead, avoiding unsupported translation claims while keeping canonical metadata. Other routes retain the previous default.
+
+Article code copying is initialized by `blogpost/code-copy.js` before the existing post interactions. Labels come from `messages.codeCopy` on the prose root. Each pre/code pair is wrapped once; buttons and live statuses are siblings excluded from Pagefind. Clipboard text comes exclusively from code.textContent.
+
+Article image preview is owned by `blogpost/image-preview.js`, initialized once per prose root. It creates a native modal dialog only when unlinked images exist, copies the current image source and alt text, locks document scrolling while open, and restores focus without scrolling on close. Labels use `messages.imagePreview`.

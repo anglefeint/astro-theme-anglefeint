@@ -91,3 +91,11 @@ Starter projects can invoke these directly (or wrap them in npm scripts). For mo
 Register `import search from '@anglefeint/astro-theme/search'` in Astro's integrations with `search({ enabled: THEME.SEARCH.ENABLED })`. After build, the integration writes `pagefind/` into Astro's output directory. The package owns the dependency, indexing hook and dialog; the starter supplies configuration and integration registration. Only `BlogPost` panels marked `data-anglefeint-search` are indexed, limited to title, subtitle and body. Frontmatter `search: false` excludes an article. The default `theme.search.enabled: true` controls both UI and indexing.
 
 Indexes load only after opening search, using the current HTML language. Full search works in build + preview and deployed static output. Dev mode displays instructions. This integration targets static output and requires no search server.
+
+### Tag browsing
+
+Version 0.3.0 supports `theme.tags.enabled` (default `true`) and article `tags: string[]`. Starter-owned `/[lang]/tags/` routes generate static per-language archives using package tag utilities and shared blog cards. Include the new routes when adopting this feature; updating the npm package alone does not install routes. Use the matching 0.3.0 starter.
+
+Article code blocks include an automatic copy button with localized success/failure feedback; no additional dependency or author markup is required.
+
+Unlinked article-body images include a native modal preview with keyboard/backdrop dismissal and localized labels. No additional dependency or author markup is required.

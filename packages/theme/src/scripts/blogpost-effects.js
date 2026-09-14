@@ -1,4 +1,6 @@
 import { initHeroCanvas } from './blogpost/hero-canvas.js';
+import { initCodeCopy } from './blogpost/code-copy.js';
+import { initImagePreview } from './blogpost/image-preview.js';
 import { initNetworkCanvas } from './blogpost/network-canvas.js';
 import { initPostInteractions } from './blogpost/interactions.js';
 import { initReadProgressAndBackToTop } from './blogpost/read-progress.js';
@@ -18,6 +20,8 @@ function prefersReducedMotionEnabled() {
 }
 
 export function initBlogpostEffects() {
+  initCodeCopy();
+  initImagePreview();
   var prefersReducedMotion = prefersReducedMotionEnabled();
   var networkStarted = false;
   var redQueenStarted = false;

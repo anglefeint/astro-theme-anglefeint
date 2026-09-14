@@ -255,3 +255,11 @@ Se admiten encabezados Markdown en MDX, pero no se recopilan automáticamente lo
 ## Licencia
 
 MIT License. Ver `LICENSE`.
+
+## Navegación por etiquetas
+
+Añade `tags: ["Astro", "frontend"]` al frontmatter. La compilación genera un directorio de etiquetas y listas paginadas por idioma. Los artículos sin etiquetas siguen funcionando. Desactiva la función con `theme: { tags: { enabled: false } }` en `src/site.config.ts`. Los nombres distinguen mayúsculas; se eliminan espacios exteriores y duplicados. Los nombres especiales usan rutas codificadas estables; cambiar un nombre cambia su URL. No requiere comandos adicionales.
+
+Los bloques de código incluyen un botón de copia automático. Usa Markdown normal, sin configuración adicional. Requiere HTTPS o localhost; si falla, se indica que selecciones el código manualmente.
+
+Las imágenes sin enlace del artículo se amplían con un clic o Enter/Espacio. Cierra con Esc, el botón o el fondo, conservando la posición de lectura. Las imágenes enlazadas mantienen su navegación.

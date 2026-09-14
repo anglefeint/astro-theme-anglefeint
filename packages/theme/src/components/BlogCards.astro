@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import { localePath, blogIdToSlugAnyLocale, type Locale } from '@anglefeint/site-i18n/config';
+interface Props {
+  posts: CollectionEntry<'blog'>[];
+  locale: Locale;
+}
+const { posts, locale: resolvedLocale } = Astro.props;
+---
+
+<ul>
+  {
+    posts.map((post, index) => (
+      <li>
+        <a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
+          {post.data.heroImage && (
+            <div class="img-wrapper">
+              <Image
+                width={index === 0 ? 1200 : 720}
+                height={index === 0 ? 600 : 360}
+                sizes={
+                  index === 0
+                    ? '(max-width: 720px) 100vw, 960px'
+                    : '(max-width: 720px) 100vw, 480px'
+                }
+                src={post.data.heroImage}
+                alt=""
+              />
+            </div>
+          )}
+          <h2 class="title">{post.data.title}</h2>
+          <p class="date">
+            <FormattedDate date={post.data.pubDate} locale={resolvedLocale} />
+          </p>
+        </a>
+      </li>
+    ))
+  }
+</ul>

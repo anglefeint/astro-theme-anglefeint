@@ -1,6 +1,8 @@
 import { DEFAULT_LOCALE, type Locale } from './config';
 
 export type Messages = {
+  imagePreview: { open: string; close: string };
+  codeCopy: { copy: string; copied: string; failed: string };
   search: {
     label: string;
     close: string;
@@ -54,6 +56,10 @@ export type Messages = {
     backToTop: string;
     related: string;
     comments: string;
+    tags: string;
+    allPosts: string;
+    noTags: string;
+    taggedPosts: string;
     toc: string;
     responseOutput: string;
     rqBadge: string;
@@ -86,6 +92,12 @@ export type Messages = {
 
 export const DEFAULT_MESSAGES: Record<string, Messages> = {
   en: {
+    imagePreview: { open: 'View image', close: 'Close image preview' },
+    codeCopy: {
+      copy: 'Copy code',
+      copied: 'Copied',
+      failed: 'Copy failed. Select the code manually.',
+    },
     search: {
       label: 'Search',
       close: 'Close search',
@@ -139,6 +151,10 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: 'Back to top',
       related: 'Related',
       comments: 'Comments',
+      tags: 'Tags',
+      allPosts: 'All posts',
+      noTags: 'No tags yet.',
+      taggedPosts: 'Posts',
       toc: 'On this page',
       responseOutput: 'Output',
       rqBadge: 'monitor feed',
@@ -169,6 +185,12 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ja: {
+    imagePreview: { open: '画像を拡大', close: '画像を閉じる' },
+    codeCopy: {
+      copy: 'コードをコピー',
+      copied: 'コピーしました',
+      failed: 'コピーできません。手動で選択してください。',
+    },
     search: {
       label: '検索',
       close: '検索を閉じる',
@@ -222,6 +244,10 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: '先頭へ戻る',
       related: '関連記事',
       comments: 'コメント',
+      tags: 'タグ',
+      allPosts: 'すべての記事',
+      noTags: 'タグはまだありません。',
+      taggedPosts: '記事',
       toc: '目次',
       responseOutput: '出力',
       rqBadge: 'モニターフィード',
@@ -252,6 +278,12 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ko: {
+    imagePreview: { open: '이미지 확대', close: '이미지 닫기' },
+    codeCopy: {
+      copy: '코드 복사',
+      copied: '복사됨',
+      failed: '복사하지 못했습니다. 코드를 직접 선택해 주세요.',
+    },
     search: {
       label: '검색',
       close: '검색 닫기',
@@ -305,6 +337,10 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: '맨 위로',
       related: '관련 글',
       comments: '댓글',
+      tags: '태그',
+      allPosts: '전체 글',
+      noTags: '아직 태그가 없습니다.',
+      taggedPosts: '글',
       toc: '목차',
       responseOutput: '출력',
       rqBadge: '모니터 피드',
@@ -335,6 +371,12 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   es: {
+    imagePreview: { open: 'Ampliar imagen', close: 'Cerrar imagen' },
+    codeCopy: {
+      copy: 'Copiar código',
+      copied: 'Copiado',
+      failed: 'No se pudo copiar. Selecciona el código manualmente.',
+    },
     search: {
       label: 'Buscar',
       close: 'Cerrar búsqueda',
@@ -389,6 +431,10 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: 'Volver arriba',
       related: 'Relacionados',
       comments: 'Comentarios',
+      tags: 'Etiquetas',
+      allPosts: 'Todos los artículos',
+      noTags: 'Todavía no hay etiquetas.',
+      taggedPosts: 'Artículos',
       toc: 'En esta página',
       responseOutput: 'Salida',
       rqBadge: 'monitor de señal',
@@ -419,6 +465,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   zh: {
+    imagePreview: { open: '查看大图', close: '关闭图片预览' },
+    codeCopy: { copy: '复制代码', copied: '已复制', failed: '复制失败，请手动选择代码。' },
     search: {
       label: '搜索',
       close: '关闭搜索',
@@ -472,6 +520,10 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       backToTop: '返回顶部',
       related: '相关文章',
       comments: '评论',
+      tags: '标签',
+      allPosts: '全部文章',
+      noTags: '暂无标签',
+      taggedPosts: '文章',
       toc: '文章目录',
       responseOutput: '输出',
       rqBadge: '监视器信号',

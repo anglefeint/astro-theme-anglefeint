@@ -36,6 +36,7 @@ export const THEME = {
   /** Default for article contents; individual posts may override it. */
   TOC: { ENABLED: THEME_CONFIG.theme.toc?.enabled ?? true },
   SEARCH: { ENABLED: THEME_CONFIG.theme.search?.enabled ?? true },
+  TAGS: { ENABLED: THEME_CONFIG.theme.tags?.enabled ?? true },
   /** Pagination behavior and style strategy for blog list */
   PAGINATION: {
     WINDOW_SIZE: THEME_CONFIG.theme.pagination.windowSize,

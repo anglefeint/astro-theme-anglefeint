@@ -111,6 +111,7 @@ const defaultThemeConfig: ThemeConfig = {
     blogPageSize: 9,
     homeLatestCount: 3,
     enableAboutPage: true,
+    tags: { enabled: true },
     toc: { enabled: true },
     search: { enabled: true },
     pagination: {

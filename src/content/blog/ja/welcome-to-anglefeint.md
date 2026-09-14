@@ -1,4 +1,5 @@
 ---
+tags: ['anglefeint', 'starter']
 title: 'Anglefeint へようこそ'
 description: '多言語コンテンツ公開を確認するための短い日本語サンプル記事です。'
 pubDate: '2026-02-17'

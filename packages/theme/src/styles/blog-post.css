@@ -421,3 +421,82 @@ body.ai-page .date {
 body.ai-page .last-updated-on {
   font-style: italic;
 }
+
+/* Native top-layer image preview; limited to article-body images. */
+.image-preview-trigger {
+  cursor: zoom-in;
+}
+.image-preview-trigger:focus-visible {
+  outline: 2px solid #9bd9f5;
+  outline-offset: 4px;
+}
+.article-image-preview {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 64px 24px 24px;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  color: #d0e9f5;
+  overflow: auto;
+}
+.article-image-preview[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.article-image-preview::backdrop {
+  background: rgba(3, 8, 15, 0.94);
+}
+.article-image-preview > img {
+  display: block;
+  flex-shrink: 1;
+  min-height: 0;
+  max-width: 100%;
+  max-height: calc(100dvh - 150px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.article-image-preview > p {
+  margin: 0;
+  max-width: 800px;
+  max-height: 3em;
+  overflow: auto;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.article-image-preview .image-preview-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #557486;
+  border-radius: 6px;
+  background: #0c1823;
+  color: #d0e9f5;
+  font-size: 28px;
+  cursor: pointer;
+}
+.image-preview-close:focus-visible {
+  outline: 2px solid #9bd9f5;
+  outline-offset: 3px;
+}
+@media (max-width: 720px) {
+  .article-image-preview {
+    padding-inline: 12px;
+  }
+}

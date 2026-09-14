@@ -128,6 +128,10 @@ try {
   );
 
   if (process.argv.includes('--build')) {
+    await writeFile(
+      path.join(project, 'src/content/blog/en/tag-special.md'),
+      '---\ntitle: Special tag fixture\ndescription: Tag routing fixture\npubDate: 2026-01-01\ntags: ["C++", "C#", "中文", "Astro", "astro", "anglefeint"]\n---\nTag fixture.\n'
+    );
     for (const locale of ['en', 'zh']) {
       for (const mode of ['always', 'never']) {
         await setConfig({
@@ -135,9 +139,12 @@ try {
           i18n: {
             defaultLocale: locale,
             routing: { defaultLocalePrefix: mode },
-            locales: { zh: { messages: { siteDescription: 'CUSTOM_ZH_DESCRIPTION' } } },
+            locales: {
+              zh: { messages: { siteDescription: 'CUSTOM_ZH_DESCRIPTION' } },
+              fr: { meta: { label: 'French', enabled: true } },
+            },
           },
-          theme: { enableAboutPage: mode === 'always' },
+          theme: { enableAboutPage: mode === 'always', blogPageSize: 2 },
         });
         console.log(`Building installed starter: default=${locale}, prefix=${mode}`);
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
@@ -149,6 +156,22 @@ try {
           await read('dist/en/blog/search-excluded/index.html'),
           /data-anglefeint-search/
         );
+        const tagDirectory = await read(`dist/${locale}/tags/index.html`);
+        assert.match(tagDirectory, /anglefeint/);
+        assert.doesNotMatch(tagDirectory, /hreflang=/);
+        const tagPage = await read(`dist/${locale}/tags/anglefeint/2/index.html`);
+        assert.ok(tagPage.includes(`href="/${locale}/tags/anglefeint/"`));
+        assert.doesNotMatch(tagPage, /data-anglefeint-search|hreflang=/);
+        for (const slug of ['~432b2b', '~4323', '~e4b8ade69687', '~417374726f', 'astro']) {
+          assert.match(await read(`dist/en/tags/${slug}/index.html`), /Special tag fixture/);
+        }
+        assert.ok(
+          (await read('dist/fr/tags/index.html')).includes(
+            locale === 'zh' ? '暂无标签' : 'No tags yet'
+          )
+        );
+        assert.match(tagPage, /<option value="\/fr\/tags\/"/);
+        assert.doesNotMatch(await read('dist/fr/blog/index.html'), /class="tag-links/);
         const homePath = mode === 'always' ? `${locale}/index.html` : 'index.html';
         const redirectPath = mode === 'always' ? 'index.html' : `${locale}/index.html`;
         const home = await read(`dist/${homePath}`);
@@ -174,9 +197,13 @@ try {
           await assert.rejects(read(`dist/${locale}/about/index.html`), { code: 'ENOENT' });
       }
     }
-    await setConfig({ theme: { search: { enabled: false } } });
-    console.log('Building installed starter with search disabled...');
+    await setConfig({ theme: { search: { enabled: false }, tags: { enabled: false } } });
+    console.log('Building installed starter with search and tags disabled...');
     await npm(['run', 'build']);
+    await assert.rejects(read('dist/en/tags/index.html'), { code: 'ENOENT' });
+    await assert.rejects(read('dist/en/tags/anglefeint/index.html'), { code: 'ENOENT' });
+    assert.doesNotMatch(await read('dist/en/blog/index.html'), /class="tag-links/);
+    assert.doesNotMatch(await read('dist/en/blog/tag-special/index.html'), /rel="tag"/);
     await assert.rejects(read('dist/pagefind/anglefeint.json'), { code: 'ENOENT' });
     assert.doesNotMatch(await read('dist/en/blog/index.html'), /data-search-open/);
     assert.doesNotMatch(

@@ -5,30 +5,45 @@ import themeCyberCssUrl from '../../styles/theme-cyber.css?url';
 import blogListCssUrl from '../../styles/blog-list.css?url';
 
 interface Props {
-	locale?: Locale;
-	title: string;
-	description: string;
-	localeHrefs?: Partial<Record<Locale, string>>;
+  locale?: Locale;
+  title: string;
+  description: string;
+  includeAlternateLinks?: boolean;
+  localeHrefs?: Partial<Record<Locale, string>>;
 }
 
-const { locale, title, description, localeHrefs } = Astro.props as Props;
+const {
+  locale,
+  title,
+  description,
+  localeHrefs,
+  includeAlternateLinks = true,
+} = Astro.props as Props;
 ---
 
-<ThemeFrame locale={locale} title={title} description={description} bodyClass="cyber-page" mainClass="page-main cyber-content" localeHrefs={localeHrefs}>
-	<link slot="head" rel="stylesheet" href={themeCyberCssUrl} />
-	<link slot="head" rel="stylesheet" href={blogListCssUrl} />
-	<Fragment slot="body-start">
-		<div class="cyber-load-glitch" aria-hidden="true"></div>
-		<div class="cyber-spotlight" aria-hidden="true">
-			<div class="cyber-spotlight-tr"></div>
-			<div class="cyber-spotlight-tl"></div>
-		</div>
-		<div class="cyber-flicker" aria-hidden="true"></div>
-		<div class="cyber-haze" aria-hidden="true"></div>
-		<div class="cyber-vignette" aria-hidden="true"></div>
-		<slot name="body-start" />
-	</Fragment>
-	<slot name="head" slot="head" />
-	<slot />
-	<slot name="body-end" slot="body-end" />
+<ThemeFrame
+  includeAlternateLinks={includeAlternateLinks}
+  locale={locale}
+  title={title}
+  description={description}
+  bodyClass="cyber-page"
+  mainClass="page-main cyber-content"
+  localeHrefs={localeHrefs}
+>
+  <link slot="head" rel="stylesheet" href={themeCyberCssUrl} />
+  <link slot="head" rel="stylesheet" href={blogListCssUrl} />
+  <Fragment slot="body-start">
+    <div class="cyber-load-glitch" aria-hidden="true"></div>
+    <div class="cyber-spotlight" aria-hidden="true">
+      <div class="cyber-spotlight-tr"></div>
+      <div class="cyber-spotlight-tl"></div>
+    </div>
+    <div class="cyber-flicker" aria-hidden="true"></div>
+    <div class="cyber-haze" aria-hidden="true"></div>
+    <div class="cyber-vignette" aria-hidden="true"></div>
+    <slot name="body-start" />
+  </Fragment>
+  <slot name="head" slot="head" />
+  <slot />
+  <slot name="body-end" slot="body-end" />
 </ThemeFrame>

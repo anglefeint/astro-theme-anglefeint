@@ -14,9 +14,9 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
-The unreleased search feature requires registering `@anglefeint/astro-theme/search` in `astro.config.mjs` and synchronizing the `theme.search.enabled` config adapter with the UI. Updating the package alone does not install that registration into an older starter. Use the matching starter when released, or explicitly migrate its integration/configuration changes. Verify full search with build + preview.
+The 0.3.0 search feature requires registering `@anglefeint/astro-theme/search` in `astro.config.mjs` and synchronizing the `theme.search.enabled` config adapter with the UI. Updating the package alone does not install that registration into an older starter. Use the matching starter, or explicitly migrate its integration/configuration changes. Verify full search with build + preview.
 
-The unreleased article contents feature also needs the article route to pass `headings` from `render(post)` to `BlogPost`. Updating the package alone does not update that route or add the starter's `theme.toc.enabled` configuration. Existing custom routes without `headings` keep rendering without a contents panel. Refer to the corresponding release instructions when this feature is published.
+The 0.3.0 article contents feature also needs the article route to pass `headings` from `render(post)` to `BlogPost`. Updating the package alone does not update that route or add the starter's `theme.toc.enabled` configuration. Existing custom routes without `headings` keep rendering without a contents panel. See `docs/releases/0.3.0.md` for the release instructions.
 
 The latest starter paired with its corresponding theme package is the release baseline. In-place upgrades across all historical starters are not guaranteed. If release notes include routing, configuration, adapter or project-script changes, the recommended path is a fresh template:
 
@@ -119,3 +119,7 @@ The updated `scripts/doctor.mjs` detects known legacy command and route patterns
 Back up or commit your project before applying migration changes. Restore the previous project files and lockfile together if you need to roll back. Never run maintainer starter synchronization against a customized user project.
 
 The post CLI now loads the actual TypeScript config (including imported modules and merged defaults). Invalid configuration fails with an error instead of silently generating English posts. An explicit `--locales en,fr` or `ANGLEFEINT_LOCALES` override can still be used without loading the config.
+
+### Tag browsing (0.3.0)
+
+Tag browsing requires both the package components/utilities and the new starter-owned `src/pages/[lang]/tags/` routes, plus the updated theme config adapter. Package installation alone cannot add these routes. The new routes are managed by the starter manifest; use the normal starter release flow or deliberately migrate the corresponding files. Existing articles may omit `tags`.
