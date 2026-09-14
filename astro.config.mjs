@@ -14,6 +14,7 @@ const themeDefaultI18nEntry = resolveThemeDefaultI18nEntry(import.meta.url);
 
 // https://astro.build/config
 export default defineConfig({
+  compressHTML: true,
   site: SITE_URL,
   vite: {
     resolve: {

@@ -32,7 +32,7 @@ pnpm install
 ## 环境要求
 
 - Node.js `22.12.0+`（建议 LTS）
-- 已验证的包管理器：`npm` 和 `pnpm 10`（本次发布未验证 yarn/bun）
+- 0.3.0 的包管理器验收使用 `npm`。下方保留 `pnpm 10` 使用命令，但本次未复验 pnpm/yarn/bun。
 
 ## 快速开始
 
@@ -112,6 +112,8 @@ URL 规则：
 - 博客列表：`/zh/blog/`
 - 不需要手动加路由，Astro 会在构建时根据内容文件自动生成。
 
+`--locales` 只生成文章文件，不会启用语言。还需要在 `src/site.config.ts` 中添加或启用对应语言，构建时才会生成其路由。
+
 ## 新建页面
 
 `new-post` 只创建博客文章。自定义页面请使用：
@@ -167,7 +169,10 @@ npm run new-page -- projects --theme matrix
 
 ## 功能特性
 
-- Astro 6 静态输出
+- 当前语言的 Pagefind 文章全文搜索
+- 自动文章目录与静态标签归档
+- 代码块一键复制与正文图片预览
+- Astro 7 静态输出
 - Markdown + MDX 内容集合
 - Starter 内置示例语言：`en`、`ja`、`ko`、`es`、`zh`
 - 按语言生成 RSS
@@ -177,7 +182,7 @@ npm run new-page -- projects --theme matrix
 
 ## 主题配置
 
-1. 复制 `.env.example` 为 `.env` 并填写站点信息。
+1. 如需通过环境变量覆盖站点信息，可复制 `.env.example` 为 `.env`；否则直接使用 `src/site.config.ts`。
 2. 编辑 `src/site.config.ts`：
    - `site.title`、`site.description`、`site.url`、`site.author`、`site.tagline`：站点身份信息与默认元数据
    - `i18n.defaultLocale`：设置默认语言
@@ -256,16 +261,24 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 
 支持 MDX 中的 Markdown 标题，但不会自动收集组件内部生成的标题或原始 HTML/JSX 标题。自定义文章路由需将 Astro `render(post)` 返回的 `headings` 传给 `BlogPost`，未传时不显示目录。
 
-## 许可证
-
-MIT License，见 `LICENSE`。
-
 ## 标签浏览
 
 在文章 frontmatter 中填写 `tags: ["Astro", "前端"]`，构建时会自动生成各语言的标签目录和分页文章列表。博客页提供标签入口，正文显示可点击标签；未填写标签的旧文章不受影响。可在 `src/site.config.ts` 中设置 `theme: { tags: { enabled: false } }` 关闭入口及标签页面生成。
 
 标签区分大小写，自动去除首尾空格及同篇重复项。小写安全名称直接用于网址，其他名称采用稳定编码，避免中文和特殊符号冲突。重命名标签会改变其网址，无须维护标签清单或运行额外命令。
 
+可以直接访问 `/<locale>/tags/`，也可以从博客的标签入口进入；点击文章标签会打开 `/<locale>/tags/<tagSlug>/`。该语言没有标签时目录显示空状态，博客不显示标签入口。
+
+## 代码块复制
+
 正文代码块右上角自动显示复制按钮，保留缩进和换行；继续使用普通 Markdown 代码块即可，无须额外配置。剪贴板访问需要 HTTPS 或 localhost；复制失败时会提示手动选择代码。
 
+## 正文图片预览
+
 正文中未设置链接的图片支持点击或按 Enter/空格打开大图预览；按 Esc、点击关闭按钮或蒙版可收起，并保留阅读位置。已有链接的图片保持原来的跳转行为。
+
+预览使用浏览器已选中的图片源，不会自动获取更高清的原图。文章封面以及链接或按钮内部的图片不参与预览。
+
+## 许可证
+
+MIT License，见 `LICENSE`。
