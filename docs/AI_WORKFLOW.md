@@ -156,7 +156,10 @@ When code/config/theme behavior changes, document sync is not automatic by filen
 
 Core rules:
 
+- code is authoritative for implemented behavior; read actual defaults, routes, package/starter wiring and tests before correcting prose
+- document ownership metadata does not override implementation; do not modify runtime merely to satisfy stale descriptions
 - start with `npm run suggest:docs` to infer the likely direct-hit and propagated docs from current file changes
+- for committed work, pass paths from a reviewed commit range; the helper otherwise sees only the working tree
 - discover markdown files
 - validate metadata against `docs/DOC_METADATA_SPEC.md`
 - inspect metadata responsibilities
@@ -164,6 +167,7 @@ Core rules:
 - propagate changes only through declared `depends_on` / `sync_targets`
 - avoid user-facing README churn unless the user-facing truth changed
 - use sidecar metadata only for approved public-facing markdown files
+- verify code-to-document correspondence manually; helper suggestions and metadata validation are not semantic correctness checks
 
 ## Tool-Specific Adapters
 
@@ -185,6 +189,8 @@ Do not maintain separate, conflicting workflow copies in those adapter files.
 - Do not bypass manifest-driven starter staging with full-worktree git adds.
 
 ## End-to-End Release Sequence
+
+A package release is complete only after npm download verification, starter delivery and remote-template acceptance, and creation/read-back of the GitHub Release. Do not stop at npm publish or a pushed tag. Dependency audits must pass for main, the isolated installed starter and the delivered starter; audit failure or registry errors block publication/delivery rather than becoming a known limitation. `release:npm` always audits main and the isolated starter, including with `--skip-checks`; starter sync audits after installation before committing.
 
 For package-affecting changes:
 

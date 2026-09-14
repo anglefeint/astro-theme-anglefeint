@@ -15,6 +15,14 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-09-14
+
+### Changed
+
+- Upgrade the dependency baseline to Astro 7.3.2 and Sharp 0.35.4 to address the AVIF image-processing advisory GHSA-26w7-cxv4-gfx2, with matching official integrations. Require Astro `^7.3.2` in the theme peer range and explicitly preserve the previous HTML whitespace behavior.
+
+- Tag directories and archives now share the blog's rain/dust effects, with softer ice-blue/lavender lighting, slower spotlight sweeps, retained flicker and a static reduced-motion background. The shared atmosphere component and route wiring are starter-owned; updating the npm package alone does not install them.
+
 ## [0.3.0] - 2026-09-14
 
 ### Added

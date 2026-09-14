@@ -69,6 +69,11 @@ try {
   await rm(path.join(project, 'package-lock.json'), { force: true });
   console.log('Installing packed theme into an independent starter (no workspace links)...');
   await npm(['install', '--ignore-scripts', '--no-audit', '--no-fund', '--prefer-offline']);
+  if (process.argv.includes('--audit')) {
+    const audit = JSON.parse((await npm(['audit', '--json', '--prefer-online'])).stdout);
+    assert.equal(audit.metadata.vulnerabilities.total, 0);
+    console.log('Independent installed starter audit: 0 known vulnerabilities.');
+  }
   assert.equal(
     (await lstat(path.join(project, 'node_modules/@anglefeint/astro-theme'))).isSymbolicLink(),
     false

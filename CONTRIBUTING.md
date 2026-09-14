@@ -35,7 +35,8 @@ npm run e2e:install
 npm run e2e
 ```
 
-4. Commit with clear scope and push.
+4. Review documentation against the implementation using `docs/DOC_SYNC_WORKFLOW.md`. Run `npm run suggest:docs` (or pass changed paths explicitly for committed work), trace configuration/routes/scripts to their responsible guides, and run `npm run check:docs`. Metadata validation alone does not prove descriptions match code.
+5. Commit with clear scope and push.
 
 ## Adapter Changes (Important)
 

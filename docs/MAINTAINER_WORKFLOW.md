@@ -40,7 +40,7 @@ Class A: Theme Runtime Changes
   1. Implement on `main`
   2. Run quality checks
   3. Publish npm package (if runtime/package behavior changed)
-  4. Sync `starter`
+  4. Sync and push `starter`, verify the remote template, then create and read back the source tag and GitHub Release
 
 Class B: Starter Distribution Changes
 
@@ -55,8 +55,9 @@ Class B: Starter Distribution Changes
 - Required flow:
   1. Implement on `main`
   2. Run `npm run check:docs` for docs-only starter changes, or `npm run check` if starter runtime/config behavior also changed
-  3. Run `npm run release:starter`
-  4. Push `starter`
+  3. Commit and push the validated main changes; sync reads committed main files and requires a clean worktree
+  4. Run `npm run release:starter`
+  5. Push `starter`
 
 Class C: Cross-layer Contract Changes
 
@@ -88,12 +89,12 @@ node scripts/check-scaffold.mjs
 Installed distribution gate before publishing package/starter changes:
 
 ```bash
-npm run check:installed -- --build
+npm run check:installed -- --build --audit
 ```
 
 This packs the working theme, overlays current managed files onto the local `starter` snapshot in a temporary directory, installs without workspace links, exercises npm CLI commands and adapters, and builds the English/Chinese default-locale and prefix-mode matrix. It requires the local `starter` ref and registry access for dependencies. It does not publish, commit, or change branches. The legacy snapshot is also checked with the read-only migration diagnostic before the overlay.
 
-`release:npm` runs this gate after the main checks unless checks are explicitly skipped. A passing workspace build alone is not a sufficient package release gate.
+`release:npm` runs this gate after the main checks. `--skip-checks` omits the main checks and installed build matrix, but retains main and isolated-starter audits and installed CLI checks. Starter sync audits after installation. Audit findings or audit errors block delivery; a passing workspace build alone is not sufficient.
 
 Starter branch quality gate:
 
@@ -123,14 +124,16 @@ The latest template and its corresponding npm package are the supported release 
 
 ## Release Decision Gate
 
-Before running `npm run release:npm`, verify whether `packages/theme/**` changed in this delivery.
+Before running `npm run release:npm`, inspect what changed under `packages/theme/**` and whether it affects shipped runtime, exports, dependencies, schema or CLI behavior.
 
-- If changed:
+- If shipped package behavior changed:
   - publish npm package
   - then run `npm run release:starter` so starter package range and lockfile move together
-- If not changed:
+- If only documentation changed or the change is outside the shipped package:
   - do **not** publish npm
   - do **not** update starter dependency only for release cadence
+
+Editing `packages/theme/README.md` alone does not require a feature release; the already-published tarball retains its old README until another package version is published. Starter-managed README changes can be delivered through starter sync without changing the package version. This is a maintainer decision, not a path-based rule enforced by the npm release script.
 
 Maintainer entry commands (run on `main`):
 

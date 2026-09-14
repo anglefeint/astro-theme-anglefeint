@@ -81,6 +81,7 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'src/pages/[lang]/index.astro',
   'src/pages/[lang]/rss.xml.ts',
   'src/scripts/cyber-rain-dust.js',
+  'src/components/CyberAtmosphere.astro',
   'src/site.config.ts',
   'src/site.config.defaults.ts',
   'src/site.config.runtime.ts',

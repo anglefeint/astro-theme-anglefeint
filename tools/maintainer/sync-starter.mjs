@@ -470,6 +470,7 @@ export async function syncStarter(
     await syncStarterRuntimeDeps(repoRoot, sourceRef);
 
     await run('npm', ['install']);
+    await run('npm', ['audit', '--audit-level=low', '--prefer-online']);
     await run('npm', ['run', 'check']);
     await run('npm', ['run', 'build']);
 

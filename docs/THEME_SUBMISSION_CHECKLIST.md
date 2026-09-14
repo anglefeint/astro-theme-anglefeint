@@ -57,3 +57,8 @@ Use this before submitting to an Astro theme listing/review.
   - collapses after playback
   - replay button works repeatedly
 - About route behavior follows `theme.enableAboutPage`
+- Verify search on build + preview, including current-language results, empty/error feedback and backdrop/Escape dismissal; dev intentionally shows an indexing notice.
+- Verify article contents beside the body on wide screens and before it on narrow screens, including no-heading and per-article disabled cases.
+- Verify tag directory/archive links, empty locales and disabled routes; tag pages keep canonical metadata but intentionally omit hreflang links.
+- Verify code copy success/failure in an allowed Clipboard API context and that image preview restores reading position and preserves linked-image navigation.
+- Verify wide-screen reading notifications stay outside the article border and do not overlap the TOC or return-to-top control. Existing browser coverage is indexed in `docs/ARCHITECTURE.md`.

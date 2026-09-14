@@ -1,0 +1,98 @@
+---
+doc_id: code_doc_audit
+doc_role: reference
+doc_purpose: Dated evidence and dispositions for the code-first documentation audit after the 0.3.0 feature release.
+doc_scope: [docs, architecture, config, routing, visual-system, validation]
+update_triggers:
+  [doc-process-change, architecture-change, config-change, routing-change, script-change]
+source_of_truth: false
+audience: [agent, maintainer]
+depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEMS.md, anglefeint.md]
+---
+
+# 代码与文档核对记录：2026-09-14
+
+这是一次审阅快照，不是持续自动运行的审计结果。当前功能入口由 [架构对应表](ARCHITECTURE.md#code-to-documentation-map) 维护，中文总览见 [项目地图](../anglefeint.md)。后续代码变化不能据此直接声称文档仍然一致。
+
+## 输入与方法
+
+- 审阅开始时源码为 `54738b51ea37784a1500c8b63f31d6768ee218f7`，main 工作区干净。
+- 回顾范围为 `cb54464..54738b5`，覆盖目录、Pagefind、标签、复制、图片预览、阅读状态布局和 0.3.0 发布；同时核对变更涉及的既有配置、路由、SEO、CLI 与 starter 边界。
+- 通过 `git diff --name-only cb54464..HEAD` 获得路径，显式传给 `scripts/suggest-doc-updates.mjs --json`。也读取了 `git log`：临时图片文章先添加后删除，在最终净差异中可能不可见。
+- helper 直接命中原有 43 份维护文档，传播命中 0，元数据读取错误 0。广泛命中只是审阅候选，不代表 43 份都需要改写。
+- 对照代码中的配置默认值、collection schema、adapter、页面路由、构建集成、组件 DOM、客户端脚本、CSS 和测试断言。没有为了符合旧文档而修改运行时。
+
+## 发现与修正
+
+| 文档偏移或遗漏                                              | 代码/证据                                                                                                                                                 | 本次处理                                                               |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | --- | --------------------------------------------------------------- |
+| 项目地图仍称版本为 0.2.11，并把 TOC、copy 当作未来建议      | [包版本与导出](../packages/theme/package.json)、[文章初始化](../packages/theme/src/scripts/blogpost-effects.js)、[0.3.0 交付记录](releases/0.3.0.md)      | 重写当前功能地图，用链接承载发布快照，不把历史建议写成当前状态         |
+| 文档 helper 被容易误解为内容同步或正确性验证                | [建议脚本](../scripts/suggest-doc-updates.mjs)、[元数据校验器](../scripts/validate-doc-metadata.mjs)                                                      | 明确仅推荐候选/校验元数据，增加已提交代码的显式输入与人工语义核对步骤  |
+| 搜索只写成文章页说明，复制/图片说明混在标签末尾             | [共享 Header](../packages/theme/src/components/shared/CommonHeader.astro)、[BlogPost](../packages/theme/src/layouts/BlogPost.astro)                       | 按全站搜索、文章目录、标签、复制、图片、阅读反馈整理章节               |
+| 配置/路由/包边界缺乏可追踪入口                              | [默认值](../src/site.config.defaults.ts)、[adapter 模板](../scripts/adapter-templates/src/config/theme.ts)、[manifest](../scripts/starter-manifest.mjs)   | 新增代码→文档→既有测试表；说明 npm 更新不会创建 starter 路由和搜索注册 |
+| 标签目录访问、排序/编码、空状态和语言切换边界不完整         | [标签工具](../packages/theme/src/utils/tags.ts)、[目录](../src/pages/[lang]/tags/index.astro)、[分页路由](../src/pages/[lang]/tags/[tag]/[...page].astro) | 记录直接访问 URL、大小写、编码、排序、空语言、禁用路由及跳转第一页规则 |
+| 总览把所有页面的语言导航与 hreflang 视为相同                | 标签路由传递 `includeAlternateLinks=false`；[BaseHead](../packages/theme/src/components/BaseHead.astro)                                                   | 明确标签页保留 canonical/语言导航但不输出 hreflang                     |
+| “点击放大”可能被理解为自动获取高清原图或完整图库            | [图片预览脚本](../packages/theme/src/scripts/blogpost/image-preview.js)                                                                                   | 记录 `currentSrc                                                       |     | src`、排除 hero/链接/按钮图片、初始化范围、无图库/手势/独立开关 |
+| 滚动提示容易被当作内容加载状态                              | [阅读进度脚本](../packages/theme/src/scripts/blogpost/read-progress.js)、[样式](../packages/theme/src/styles/blog-post.css)                               | 说明依据文档滚动距离和阶段阈值计算，与加载无关；位置不依赖 TOC 开关    |
+| README 暗示本次 pnpm 验收已执行                             | [0.3.0 验证记录](releases/0.3.0.md#known-limitations)                                                                                                     | 五种语言一致注明本次仅验收 npm，未复验 pnpm/yarn/bun                   |
+| 升级说明中的“正常 starter 发布流程”可能误导用户运行维护工具 | [同步工具](../tools/maintainer/sync-starter.mjs)操作上游 main/starter 分支                                                                                | 用户迁移与维护者分发流程明确分开                                       |
+
+## 文档处置
+
+更新原有 18 份文档，并新增本记录：
+
+- `AGENTS.md`、`docs/AI_WORKFLOW.md`、`docs/DOC_SYNC_WORKFLOW.md`、`docs/DOC_METADATA_SPEC.md`：代码优先、工具边界、已提交变化的核对流程。
+- `anglefeint.md`、`docs/ARCHITECTURE.md`、`docs/VISUAL_SYSTEMS.md`：当前工程地图、实现边界、源码与测试对应点。
+- 五种语言的 `README*.md`、`packages/theme/README.md`：功能入口、复制/图片独立章节、使用边界与验证范围。
+- `UPGRADING.md`、`docs/PACKAGING_WORKFLOW.md`：package/starter 分工与迁移边界。
+- `ASTRO_THEME_LISTING.md`、`docs/THEME_SUBMISSION_CHECKLIST.md`：已实现功能摘要及相应人工验收点。
+- `CONTRIBUTING.md`：贡献步骤接入现有文档工作流。
+
+第一轮以下 25 份候选保留原文；第二轮又修正了其中的 MAINTAINER_WORKFLOW 和 PACKAGE_RELEASE，见后面的复核记录：
+
+- `CLAUDE.md`、`.cursor/rules/00-repo.mdc`：已指向中立入口与规范，不复制新的独立规则。
+- `docs/BRANCH_POLICY.md`、`docs/MAINTAINER_WORKFLOW.md`、`docs/PACKAGE_RELEASE.md`：本轮没有修改分支同步或发布脚本；当前运行顺序与刚完成的发布证据一致。
+- `CHANGELOG.md`：已有本轮用户功能，不把纯文档整理包装成新功能或新版本。
+- `docs/releases/` 的 19 份记录（含索引）：保留历史发布事实。0.3.0 的 npm/starter 源码、远程验收、测试修正与依赖告警已经记录；本轮没有新增发布证据。
+
+sidecar 元数据继续复用，职责和关联路径没有变化。普通博客内容不属于维护文档元数据检查范围；本轮仅核对其 tags 和测试关键词等输入，没有重写教程或重新引入已删除的图片文章。
+
+## 验证与交付边界
+
+本轮验证仅针对文档：`npm run check:docs` 扫描 44 份维护文档通过；19 份本轮修改/新增文档的 142 个本地链接及对应章节锚点已验证存在。Prettier 对本轮全部文档的检查和 `git diff --check` 均通过。最终 helper 复查直接命中 44 份、传播命中 0、元数据错误 0。运行时代码和配置未变化，因此不重复执行构建和浏览器验收。
+
+上一轮的 46 项单元/集成测试、24 项浏览器测试和远程模板验收是 [0.3.0 的历史证据](releases/0.3.0.md)，不算本轮重新执行。依赖安全告警仍未修复，也没有因文档更新而变成通过。
+
+上述文档审计阶段只更新 main 工作区中的文档，不修改功能代码、包版本或已发布标签。README 属于 starter 管理文件，包 README 也已存在于已发布 tarball 中：本地修正文档不会自动更新远程 starter 或 npm 页面。分发变更按已有维护流程另行交付，本记录不声称已同步远端。
+
+## 第二轮细查
+
+再次核对上一轮新增文字以及既有运行时、维护文档，补充修正：
+
+| 偏移                                                                                   | 实现依据                                                                      | 修正                                                                                          |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| CSS 被描述为 CSS Modules，以及不存在的 `base/layout/components/states/responsive` 分层 | `packages/theme/src/styles/theme-ai.css`、`about-page.css` 只有普通 `@import` | 列出两个入口各自真实导入顺序，明确无 `@layer` 和 `.module.css` 隔离                           |
+| 标签归档被概括为拥有博客全部特效                                                       | CyberShell 没有雨滴/尘埃节点；只有博客列表路由引用 `cyber-rain-dust.js`       | 区分共享 CSS 氛围和页面专属脚本                                                               |
+| Red Queen 保证每段动画完整播放一遍；延迟被说成从 load 后开始                           | `red-queen-tv.js` 的 decoder/fallback 两条路径和 `queueAutoPlay()`            | fallback 按 hold 时间展示；delay/load/idle 是独立门槛                                         |
+| 首页重定向没有说明静态实现                                                             | 两个首页路由输出 meta refresh                                                 | 明确不是主题服务端 301/302                                                                    |
+| 新语言 CLI 参数易被理解为同时开通路由                                                  | `resolveLocales()` 与 `ENABLED_LOCALES` 路由生成分别处理                      | 五语 README、包说明和总览补充“只生成文件，配置另行启用”                                       |
+| README 把 `.env` 当作必须步骤                                                          | site adapter 优先环境变量，然后回退 `THEME_CONFIG.site`                       | 五语改为可选覆盖方式                                                                          |
+| fallback 配置被误解为无需 alias 的自动降级                                             | 包组件仍导入 `@anglefeint/site-config/*` 等别名                               | 明确手工集成必须设置别名                                                                      |
+| Class B 流程遗漏提交；任意 package 目录变化被视为必须发布                              | sync 读取 Git main、检查干净工作区；npm 脚本不分类变更                        | 补齐提交步骤，文档更新和运行时变更区别处理                                                    |
+| npm 脚本保障范围描述不足                                                               | `release-npm.mjs`、`verify-published-package.mjs`                             | 明确不检查 Git 分支/干净状态/推送/CI；说明 skip 参数、发布来源及下载验证不比对源码 SHA 的边界 |
+
+累计修改原有 20 份文档，新增本记录；保留 23 份历史或无需改变的候选。此次仍未改动运行时代码和发布脚本，发布事实记录保持原样。上一节的 142 个链接是第一轮检查结果，不代表第二轮自动复用为新的检查结果。
+
+第二轮重新检查结果：`check:docs` 扫描 44 份维护文档通过；累计 21 份修改/新增文档的 142 个本地文件链接及章节锚点重新验证通过；Prettier 和 `git diff --check` 通过。这里的“通过”限于这些检查和上表所列语义核对，不保证未覆盖的所有行为都已验证，也不改变尚未提交、推送和分发的状态。
+
+## 审计后的标签视觉调整
+
+用户随后授权保留光柱、雨滴和闪烁并调整标签背景。当前工作区新增 [CyberAtmosphere](../src/components/CyberAtmosphere.astro)，让博客列表与两个标签路由共用雨滴/尘埃初始化，标签使用冰蓝/淡紫配色和较慢扫光，并遵循减少动态效果设置。上表“只有博客列表挂载雨滴”的结论属于 `54738b5` 审计基线，已被这次代码调整替代；当前行为已同步到视觉系统、架构和工程总览。组件加入 starter 清单，尚未提交或分发。
+
+## 2026-09-14 本地依赖安全升级
+
+针对 [Astro AVIF 公告](https://github.com/withastro/astro/security/advisories/GHSA-26w7-cxv4-gfx2)，用户授权升级依赖。工作区使用 Astro 7.3.2、Sharp 0.35.4、MDX 8.0.1、RSS 4.0.19、sitemap 3.7.4，更新检查工具、Wrangler 和锁文件中的相关间接依赖。主题 peer 改为 `^7.3.2`；Astro 配置显式保留 `compressHTML: true`。Playwright 为其预览子进程设置 `ASTRO_PREVIEW_BACKGROUND=1`，避免 Astro 在代理环境下自动分离进程，保证测试工具能够管理服务器生命周期。
+
+独立 `npm audit --json` 确认主工作区为 0 个已知漏洞；`check:installed -- --audit` 确认按新依赖生成的独立 starter 为 0 个已知漏洞。完整工程检查、46 项单元/集成测试、lint、24 项浏览器测试和独立 starter 的五组构建配置通过。另用程序生成的正常 AVIF 在 Sharp 0.35.4/libheif 1.23.2 下完成解码、缩放和 PNG 输出检查。这是版本和正常功能验证，不是恶意样本利用复现，也不是绝对安全保证。
+
+本地修复尚未提交、推送或发布。公开 0.3.0、starter 与历史发布说明保持原样；其风险不会因本地升级自动消失。后续分发必须采用新版本并重新验证远程模板，不得把上述本地结果表述为已发布修复。

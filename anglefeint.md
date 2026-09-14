@@ -38,538 +38,137 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 # Anglefeint 项目全景说明
 
-这份文档是 `astro-theme-anglefeint` 仓库的中文项目地图，面向维护者和 AI coding agent。它不替代 `README.md`、`AGENTS.md` 或 `docs/*`，而是把当前代码真相整理成一份可快速理解项目的总览。
-
-重要原则：
-
-- **代码是真相，文档跟随代码。**
-- `main` 是运行时、架构、文档和 release 准备的 source of truth。
-- `starter` 是生成/分发分支，不直接手改运行时逻辑。
-- 主题包源码在 `packages/theme/src/**`。
-- starter/demo 站点源码在根目录 `src/**`。
-- 用户配置入口集中在 `src/site.config.ts`。
-- `src/config/*` 和 `src/i18n/*` 是由模板同步生成/维护的 adapter，不建议直接手改。
-
-## 1. 当前状态速记
-
-当前仓库状态：
-
-- 当前开发分支：`main`
-- 当前已发布 npm 包版本：`@anglefeint/astro-theme@0.2.11`
-- 当前 `main` 与 `origin/main` 同步，工作区应保持干净。
-- `0.2.9` 已发布 SEO/social metadata hardening 与 npm release workflow guardrails。
-- `0.2.10` 已发布 scaffold CLI bin 兼容性修复，让 `anglefeint-new-post` / `anglefeint-new-page` 在 Windows、macOS、Linux 上通过 Node shebang 正常执行。
-- `0.2.11` 已发布 starter scaffold script 架构调整：`npm run new-post` / `npm run new-page` 直接调用 package-owned bins，不再依赖 starter-local wrapper 文件。
-
-如果未来 `main` 出现新的 package 源码改动但尚未发布，用户通过 `npm update @anglefeint/astro-theme` 只能拿到 npm registry 上的最新发布版本。真正发布时，需要先 bump `packages/theme/package.json` 版本，再按 release workflow 执行。
-
-## 2. 项目定位
-
-Anglefeint 是一个基于 Astro 的多语言静态发布主题。它不是传统极简技术博客模板，而是一个偏个人品牌、AI/cyber publishing、作品展示与社交传播入口的主题系统。
-
-它的核心价值不是“代码教程工具功能”，而是：
-
-- 让站点有强烈视觉记忆点。
-- 让文章、项目、AI/技术思考更适合分享传播。
-- 让多语言、SEO、RSS、sitemap、canonical、hreflang 这些基础设施默认专业。
-- 让主题以 npm package 形式可升级。
-- 让 starter 保留清晰、低成本的用户配置入口。
-
-## 3. 技术栈
-
-- Framework：Astro 6
-- 内容系统：Astro Content Collections，支持 Markdown 和 MDX
-- 静态输出：`astro build`
-- MDX：`@astrojs/mdx`
-- RSS：`@astrojs/rss`
-- Sitemap：`@astrojs/sitemap`
-- 图片：Astro assets pipeline
-- 前端运行时：轻量 vanilla scripts
-- 测试：Node.js test runner、Playwright smoke test
-- 文档元数据解析：`gray-matter`
-- 代码质量：ESLint、Prettier、Astro check
-
-## 4. 仓库角色
-
-这个仓库同时承担两个角色：
-
-1. **主题包**
-   - package name：`@anglefeint/astro-theme`
-   - 位置：`packages/theme`
-   - 内容：layouts、components、styles、scripts、assets、utils、content schema、CLI scaffold。
-   - 发布到 npm 后，starter 用户通过 `npm update @anglefeint/astro-theme` 获取 package 侧更新。
-
-2. **starter/demo 站点**
-   - 位置：根目录 `src`
-   - 内容：站点配置、页面路由、内容集合、demo posts、adapter 文件。
-   - `starter` 分支由维护脚本从 `main` 同步生成。
-
-## 5. 页面体验
-
-Anglefeint 的视觉体验按路由分层：
-
-### Home
-
-- 路径：`/:lang/`
-- 默认情况下 `/` 会重定向到 `/<default-locale>/`。
-- 风格：Matrix-inspired terminal landing。
-- 主要文件：
-  - `src/pages/[lang]/index.astro`
-  - `packages/theme/src/layouts/HomePage.astro`
-  - `packages/theme/src/layouts/shells/MatrixShell.astro`
-  - `packages/theme/src/styles/home-page.css`
-  - `packages/theme/src/scripts/home-matrix.js`
-
-### Blog List
-
-- 路径：`/:lang/blog/`，分页为 `/:lang/blog/N/`
-- 风格：cyberpunk archive。
-- 支持分页、跳页、多种分页视觉变体。
-- 主要文件：
-  - `src/pages/[lang]/blog/[...page].astro`
-  - `packages/theme/src/layouts/shells/CyberShell.astro`
-  - `packages/theme/src/components/pagination/CyberPagination.astro`
-  - `packages/theme/src/styles/theme-cyber.css`
-  - `packages/theme/src/styles/blog-list.css`
-  - `src/scripts/cyber-rain-dust.js`
-
-### Blog Post
-
-- 路径：`/:lang/blog/[slug]/`
-- 风格：AI-interface reading layout。
-- 支持文章 hero 图、AI 视觉背景、阅读进度、related posts、Giscus comments、Red Queen side monitor。
-- 主要文件：
-  - `src/pages/[lang]/blog/[...slug].astro`
-  - `packages/theme/src/layouts/BlogPost.astro`
-  - `packages/theme/src/layouts/shells/AiShell.astro`
-  - `packages/theme/src/styles/theme-ai.css`
-  - `packages/theme/src/styles/blog-post.css`
-  - `packages/theme/src/styles/ai/*`
-  - `packages/theme/src/scripts/blogpost-effects.js`
-  - `packages/theme/src/scripts/blogpost/*`
-
-### About
-
-- 路径：`/:lang/about/`
-- 风格：hacker terminal profile。
-- 受 `theme.enableAboutPage` 控制。
-- 内容来自 `src/site.config.ts -> i18n.locales.<code>.about`。
-- 主要文件：
-  - `src/pages/[lang]/about.astro`
-  - `packages/theme/src/layouts/shells/HackerShell.astro`
-  - `packages/theme/src/styles/about-page.css`
-  - `packages/theme/src/styles/about/*`
-  - `packages/theme/src/scripts/about-effects.js`
-  - `packages/theme/src/scripts/about/*`
-
-## 6. 当前没有 music deck
-
-历史上曾经尝试过 package-owned music deck，但当前 main 已删除该功能。
-
-当前 tracked 代码中不应存在：
-
-- `packages/theme/src/components/shared/MusicDeck.astro`
-- `packages/theme/src/scripts/music-deck.js`
-- `packages/theme/src/styles/music-deck.css`
-- `packages/theme/src/music/**`
-- `packages/theme/package.json -> files -> src/music`
-
-如果搜索到 music deck，大概率是旧笔记、历史 commit 或未跟踪文件，不是当前产品能力。
-
-## 7. 路由与 i18n
-
-核心配置来自 `src/site.config.ts -> i18n`。
-
-关键字段：
-
-- `i18n.defaultLocale`
-- `i18n.routing.defaultLocalePrefix`
-- `i18n.locales`
-- `i18n.locales.<code>.meta.label`
-- `i18n.locales.<code>.meta.hreflang`
-- `i18n.locales.<code>.meta.ogLocale`
-- `i18n.locales.<code>.meta.enabled`
-- `i18n.locales.<code>.meta.fallback`
-- `i18n.locales.<code>.messages`
-- `i18n.locales.<code>.site.hero`
-- `i18n.locales.<code>.about`
+这份中文项目地图解释当前工程的功能和代码入口，面向维护者和 coding agent。**代码定义已实现行为，文档负责记录它。** 遇到差异先读实现、配置、调用方和测试，再修正文档；不为了让旧文档成立而修改代码。
 
-默认语言首页模式：
+本次核对基线为 `54738b5`，覆盖 `cb54464..54738b5` 的阅读、搜索、标签和发布改动。具体交付版本与验证结果见 [0.3.0 发布记录](docs/releases/0.3.0.md)；当前源码版本读取 [package.json](packages/theme/package.json)，不要把这里的快照当作实时 npm 状态。
 
-- `always`：`/` 重定向到 `/<default-locale>/`。
-- `never`：`/` 是默认语言 canonical，`/<default-locale>/` 重定向回 `/`。
+## 1. 工程边界
 
-语言切换：
+- `main` 保存主题实现、站点骨架、维护工具和文档。
+- `packages/theme/src/` 是 npm 主题包：组件、布局、样式、脚本、内容 schema、工具函数和 CLI。
+- 根目录 `src/` 是 starter/demo：站点配置、路由、内容和适配器。
+- `starter` 是由 [starter manifest](scripts/starter-manifest.mjs) 和 [同步工具](tools/maintainer/sync-starter.mjs) 生成的分发分支；不是独立手改的实现源。
+- 用户修改 `src/site.config.ts`。schema/defaults/runtime 位于同级文件；`src/config/*`、`src/i18n/*` 的适配器实现来自 `scripts/adapter-templates/`。
+- 当前工作区升级到 Astro 7.3.2，包 peer 范围为 `^7.3.2`，Sharp 为 `^0.35.4`。0.4.0 的迁移与实际分发验证见 [发布记录](docs/releases/0.4.0.md)。旧用户工程不会自动更新。
 
-- 普通页面尽量保持当前 path。
-- blog detail 如果目标语言没有同 slug 文章，回落到目标语言 blog index。
-- blog pagination 如果目标语言没有对应页码，回落到目标语言 blog index。
-- `localeHrefs` 会同时传给 header language switcher 和 `<head>` hreflang alternate，避免 UI 与 SEO alternate 不一致。
+## 2. 页面与静态生成
 
-## 8. SEO 与分享传播
+| 页面         | 路由与代码入口                                                                                                | 当前行为                                                                           |
+| ------------ | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| 首页         | [首页路由](src/pages/[lang]/index.astro)、[HomePage](packages/theme/src/layouts/HomePage.astro)               | Matrix 终端视觉，展示最新文章                                                      |
+| 博客列表     | [列表路由](src/pages/[lang]/blog/[...page].astro)、[BlogCards](packages/theme/src/components/BlogCards.astro) | Cyber 卡片列表，分页及可选跳页；有标签时显示“全部文章 / 标签”导航                  |
+| 文章详情     | [文章路由](src/pages/[lang]/blog/[...slug].astro)、[BlogPost](packages/theme/src/layouts/BlogPost.astro)      | AI 阅读布局，目录、标签、代码复制、正文图片预览、阅读状态、相关文章和可选评论/侧屏 |
+| 标签目录     | [目录路由](src/pages/[lang]/tags/index.astro)                                                                 | 每个启用语言的 `/:lang/tags/`，标签文章数量，680px 紧凑内容列                      |
+| 标签文章列表 | [标签分页路由](src/pages/[lang]/tags/[tag]/[...page].astro)                                                   | `/:lang/tags/<slug>/` 及后续页，复用博客卡片和分页                                 |
+| 关于         | [About 路由](src/pages/[lang]/about.astro)                                                                    | Hacker 风格；配置控制路由和导航，侧栏模态内容按语言读取                            |
 
-核心文件：
+构建采用 Astro 默认静态输出，内容来自 Markdown/MDX collections。不需要全文搜索后端或 SSR 服务。搜索、目录、标签都使用已有文章内容生成；不是手工给示例文章单独搭建的页面功能。
 
-- `packages/theme/src/components/BaseHead.astro`
-- `packages/theme/src/utils/head.ts`
-- `packages/theme/src/components/shared/ThemeFrame.astro`
-- `src/pages/[lang]/blog/[...slug].astro`
-- `src/pages/[lang]/blog/[...page].astro`
-- `astro.config.mjs`
-- `src/pages/robots.txt.ts`
-- `src/pages/[lang]/rss.xml.ts`
+默认语言首页由 `i18n.routing.defaultLocalePrefix` 控制：`always` 时 `/` 重定向到 `/<default-locale>/`；`never` 时反向。这个设置不移除博客、标签等路由的语言前缀。
 
-当前 head 输出包括：
+这里的首页跳转是静态 HTML meta refresh，并带 canonical 和 noindex，不是主题实现的服务端 301/302。博客列表与两个标签路由通过 [CyberAtmosphere](src/components/CyberAtmosphere.astro) 共用雨滴/尘埃初始化；标签页保留光柱和闪烁，使用更柔和的冰蓝/淡紫配色与较慢扫光。系统减少动态效果时，标签页保留静态背景，隐藏雨滴/尘埃/故障闪烁并停止背景动画。
 
-- `<title>`
-- description
-- canonical
-- hreflang alternates
-- `x-default`
-- RSS discovery
-- sitemap link
-- robots
-- Open Graph
-- Twitter Card
-- `og:image:alt`
-- `twitter:image:alt`
-- Open Graph locale / locale alternates
-- article published/modified time
-- JSON-LD WebSite / Person / BlogPosting
+## 3. 阅读与内容发现
 
-当前 SEO 优化重点：
+### 全文搜索
 
-- blog detail / blog pagination 的 `<head>` alternate links 使用 existence-aware `localeHrefs`。
-- OG/Twitter image alt 默认使用页面 title。
-- SEO 链路从 route 传入 layout，再传到 `ThemeFrame` 和 `BaseHead`。
+[Astro 配置](astro.config.mjs) 注册包导出的 [Pagefind 集成](packages/theme/src/search.mjs)。`npm run build` 自动写出 `dist/pagefind/`，包含索引和语言 manifest，随静态网站部署。包持有 Pagefind 依赖；用户不需要另外执行索引命令。
 
-当前还没有动态 OG image 生成系统。未来如果做，应优先保持 package/config 解耦，不要把站点 identity 或视觉设计硬编码到单篇文章逻辑里。
+[BlogPost](packages/theme/src/layouts/BlogPost.astro) 使用 `data-anglefeint-search` 标记可索引文章，`data-pagefind-body` 限定标题、副标题和正文。目录、标签导航、相关文章、评论和装饰状态不进入正文索引。`theme.search.enabled` 默认开启；`search: false` 排除一篇文章，不能通过 `search: true` 绕过全站关闭。
 
-## 9. 用户配置入口
+[Search 组件](packages/theme/src/components/Search.astro) 提供右上角图标和原生 dialog；[客户端脚本](packages/theme/src/scripts/search.js) 在打开时懒加载搜索资源，根据页面语言搜索，每批显示 8 条。支持输入法组合输入、200ms 防抖、失败重试、旧查询结果抑制及同源结果链接。点击蒙版、关闭按钮或 Escape 收起；从弹窗内部拖到蒙版不误关闭。
 
-主入口：
+`npm run dev` 显示开发提示，不提供实时全文搜索。验证搜索要 build 后 preview；编辑文章后重建索引。空语言索引返回空结果，不回退搜索其他语言。
 
-- `src/site.config.ts`
+### 文章目录
 
-配套文件：
+文章路由把 Astro `render(post)` 返回的 `headings` 传给 [ArticleToc](packages/theme/src/components/ArticleToc.astro)。[目录工具](packages/theme/src/utils/article-toc.ts) 只收集 h2/h3，保留编译器文本和 slug；没有上级 h2 的 h3 显示在根层级。
 
-- `src/site.config.schema.ts`
-- `src/site.config.defaults.ts`
-- `src/site.config.runtime.ts`
+目录只在文章详情中生效，不产生独立页面。1360px 及以上位于正文右侧边框外，sticky 并受文章高度限制；小屏位于正文之前。原生 details 默认展开，可键盘折叠；不自动编号，也没有随滚动高亮当前标题的逻辑。没有 headings 就不渲染；MDX 组件内部或原始 HTML 标题不会自动进入 Astro Markdown headings。
 
-adapter 文件：
+`theme.toc.enabled` 默认开启，文章 `toc: true/false` 覆盖全站默认。自定义文章路由必须传递 headings。
 
-- `src/config/site.ts`
-- `src/config/theme.ts`
-- `src/config/about.ts`
-- `src/config/social.ts`
-- `src/i18n/config.ts`
-- `src/i18n/runtime.ts`
-- `src/i18n/messages.ts`
-- `src/i18n/posts.ts`
+### 标签
 
-adapter 模板：
+[标签工具](packages/theme/src/utils/tags.ts) 去除首尾空格、空标签和同一文章的重复标签，保留大小写差异；每种标签按文章数降序排列，同数量按标签文本比较。标签文章顺序和页大小复用现有博客逻辑。
 
-- `scripts/adapter-templates/src/config/*`
-- `scripts/adapter-templates/src/i18n/*`
-- `scripts/adapter-templates/src/types/theme-scripts.d.ts`
+小写安全标签保留可读 URL；其他标签编码为稳定路径，Windows 保留名称和超长标签也有处理。重命名会换 URL，没有自动重定向或多语言标签翻译系统。
 
-规则：
+`theme.tags.enabled` 默认开启，关闭后不生成标签路由和导航。没有标签的语言仍有空目录，但博客不显示标签入口。没有标签的文章正常阅读。用户可以从博客标签导航、正文标签或直接 URL 访问，并不要求必须先点击某篇文章的标签。
 
-- 改 adapter 行为时先改模板，再运行 `npm run sync-adapters`。
-- 不要只手改生成后的 adapter 文件。
-- starter/runtime/config/script/template 文件变化时，检查 `scripts/starter-manifest.mjs` 是否需要同步更新。
+### 代码块复制
 
-## 10. 内容模型
+[复制脚本](packages/theme/src/scripts/blogpost/code-copy.js) 在正文初始化时处理 `pre > code`，添加右上角按钮和状态提示。按钮在水平滚动容器外，复制的只有 `code.textContent`，保留代码缩进和换行。行内代码不加按钮。
 
-内容目录：
+使用浏览器 Clipboard API；HTTPS/localhost 且权限允许时复制成功，失败显示手动复制提示。状态 2 秒后恢复，可重试。不需要额外 Markdown 标记、第三方复制包或配置开关。
 
-- `src/content/blog/<locale>/`
+### 正文图片预览
 
-内容 schema：
+[图片脚本](packages/theme/src/scripts/blogpost/image-preview.js) 给初始化时已有的正文图片绑定鼠标与 Enter/空格操作。链接或按钮内部的图片、hero 图片不处理。没有符合条件的图片就不创建弹窗。
 
-- `packages/theme/src/content-schema.ts`
-- `src/content.config.ts`
+预览使用同一张图片的 `currentSrc || src`，不自动找高清原图、不增加图片清晰度，不包含画廊切换或手势缩放。原生 dialog 展示图片和 alt 描述，支持关闭按钮、Escape 和蒙版关闭，恢复页面滚动与图片焦点。无独立开关。
 
-核心 frontmatter：
+临时 `article-image-preview` 演示文章及三张测试图片已删除。现有 [浏览器测试](tests/e2e/image-preview.spec.mjs) 注入图片 fixture，不依赖对外发布测试文章。
 
-- `title`
-- `description`
-- `pubDate`
+### 阅读状态和回到顶部
 
-可选字段：
+[进度脚本](packages/theme/src/scripts/blogpost/read-progress.js) 根据整个文档可滚动距离计算进度，10%、30%、60%、90% 各显示一次短暂阶段提示。这是阅读装饰反馈，不是文章下载/加载状态。
 
-- `updatedDate`
-- `heroImage`
-- `subtitle`
-- `context`
-- `readMinutes`
-- `wordCount`
-- `tokenCount`
-- `aiModel`
-- `aiMode`
-- `aiState`
-- `aiLatencyMs`
-- `aiConfidence`
-- `author`
-- `tags`
-- `sourceLinks`
-- `canonicalTopic`
+宽屏阶段提示位于正文右边框外 12px、视口底部上方 1rem；与目录是否开启无关。回到顶部滚动超过 400px 出现；有宽屏目录时向左、向上留出距离。细节和样式入口见 [视觉说明](docs/VISUAL_SYSTEMS.md#reading-feedback)。
 
-`sourceLinks` 支持标准 `http(s)` URL，也支持裸域名，schema 解析时会规范化为 `https://...`。
+## 4. 用户输入和实现对应
 
-## 11. CLI scaffold
+| 用户输入                       | 代码处理                                                        | 范围                             |
+| ------------------------------ | --------------------------------------------------------------- | -------------------------------- |
+| `theme.search.enabled`         | defaults → theme adapter → Search 组件与 Astro 集成             | 全站 UI 和构建索引               |
+| `search: false`                | collection schema → BlogPost 索引标记                           | 单篇文章                         |
+| `theme.toc.enabled` / `toc`    | defaults/schema → adapter → BlogPost → ArticleToc               | 全站默认 / 单篇覆盖              |
+| `theme.tags.enabled` / `tags`  | defaults/schema → adapter → 标签工具、路由、TagLinks            | 全站路由开关 / 单篇归类          |
+| 普通代码块、普通正文图片       | BlogPost prose data 属性 → initBlogpostEffects → 对应初始化脚本 | 正文；无需新开关                 |
+| `i18n.locales.<code>.messages` | 合并后的 `getMessages`                                          | 搜索、目录、标签、复制和预览文案 |
 
-用户命令：
+[内容 schema](packages/theme/src/content-schema.ts) 必填 `title`、`description`、`pubDate`；`tags`、`toc`、`search` 均可省略。其他可选字段包括 hero、AI 元数据、更新时间、字数、作者和 sourceLinks。不要把没有实现的 draft、图片开关或播放器开关写成现有配置。
 
-```bash
-npm run new-post -- my-first-post
-npm run new-post -- my-first-post --locales en,zh
-npm run new-page -- projects --theme ai
-```
+完整的“代码 → 文档 → 测试”入口见 [架构对应表](docs/ARCHITECTURE.md#code-to-documentation-map)。
 
-当前 starter 的 `package.json` 直接把这些 npm scripts 映射到 package-owned bins：
+## 5. 多语言与 SEO
 
-- `new-post` -> `anglefeint-new-post`
-- `new-page` -> `anglefeint-new-page`
+- 配置经 `site.config.runtime.ts` 归一化；省略默认语言配置不等于禁用，显式 `meta.enabled: false` 用于禁用非默认语言。
+- 博客详情与分页的语言切换使用存在性判断，不存在时回到目标语言博客首页。
+- 标签语言切换匹配同名标签的第一页，否则进入目标语言标签目录，不保留分页序号。
+- [BaseHead](packages/theme/src/components/BaseHead.astro) 负责 canonical、分享元数据、RSS discovery 和结构化数据。
+- 普通页面可用 `localeHrefs` 同时提供导航与 hreflang；标签页明确 `includeAlternateLinks=false`，保留 canonical，但不声称标签页面互为翻译。
+- RSS 是 `/:lang/rss.xml`；sitemap 由 Astro 集成生成，`robots.txt` 来自站点路由。
+- 当前没有动态 OG 图片生成器。
 
-旧 starter 项目如果还保留 `scripts/new-post.mjs` / `scripts/new-page.mjs` wrapper，应按 `UPGRADING.md` 把 package scripts 迁移到上述 bins。不要让用户手动复制 wrapper 文件。
+## 6. CLI 与分发
 
-package CLI：
+`npm run new-post -- slug` 调用 package bin，根据可信 TypeScript 配置的启用语言创建文章；`--locales` 优先于环境变量 `ANGLEFEINT_LOCALES`，两者都优先于配置。显式指定语言会跳过配置加载。重复创建跳过既有文章。
 
-- `packages/theme/src/cli-new-post.mjs`
-- `packages/theme/src/cli-new-page.mjs`
+显式语言参数只生成文件，不修改语言配置；例如创建 `fr` 文章后，仍需在站点配置中启用 `fr`，对应路由才会生成。
 
-scaffold helpers：
+`npm run new-page -- projects --theme base` 创建本地多语言页面。主题变体包括 base、ai、cyber、hacker、matrix；重复页面报错。CLI 实现和 config loader 位于 `packages/theme/src/cli-*.mjs`、`packages/theme/src/scaffold/`。
 
-- `packages/theme/src/scaffold/new-post.mjs`
-- `packages/theme/src/scaffold/new-page.mjs`
-- `packages/theme/src/scaffold/shared.mjs`
+0.3.0 的搜索注册、目录 headings 接线和标签路由属于项目骨架；只更新 npm 包不会添加这些文件。用户迁移按 [UPGRADING](UPGRADING.md) 创建新模板并迁移个人内容/设置；维护者按 [发布工作流](docs/AI_WORKFLOW.md#end-to-end-release-sequence) 从 main 同步 starter，不对用户的定制工程执行该工具。
 
-package tarball 检查：
+发布顺序是：代码/验证/版本准备提交 → 推送 main → npm 发布和下载核验 → starter 同步、验证和推送 → 远程模板验收 → 发布记录收尾 → 标签指向 npm 源码提交并创建 GitHub Release。逐步命令以 [发布 runbook](docs/PACKAGE_RELEASE.md) 为准。
 
-- `scripts/check-theme-pack-cli.mjs`
+## 7. 文档工作流与验证边界
 
-该脚本会 `npm pack` theme package，并检查 CLI/scaffold 文件是否被包含。Windows 下会使用临时 npm cache 和 `cmd.exe /d /s /c npm ...`，避免 POSIX-only 或 Windows cache 权限问题。
+工程已有 [文档同步工作流](docs/DOC_SYNC_WORKFLOW.md)，对应脚本是 [suggest-doc-updates.mjs](scripts/suggest-doc-updates.mjs) 和 [validate-doc-metadata.mjs](scripts/validate-doc-metadata.mjs)。
 
-## 12. Package 与发布状态
+- `npm run suggest:docs` 按变化路径、metadata scope/trigger 和依赖关系推荐审阅文档，不生成说明。
+- 默认只读取工作区变化；代码已提交时要把选定 commit range 的路径显式传入。
+- `npm run check:docs` 检查元数据和已编码的仓库规则，不证明说明符合实现。
+- 逐项核对配置默认、入口/输出、边界、样式脚本、测试，然后更新相应文档；没有变化的文档注明跳过原因。
+- 历史 release notes 保留当时事实，当前参考文档不能把历史计划当作待做功能。
 
-当前 package：
+常用验证命令包括 `npm run test`、`npm run lint`、`npm run check`、`npm run e2e` 和 `npm run check:installed -- --build`。测试覆盖入口见架构对应表；发布验收的具体运行环境、数量和未修复事项留在发布记录中。本轮文档审阅不等同于重新发布或重新通过安全审计。
 
-- name：`@anglefeint/astro-theme`
-- current package version：`0.2.11`
-- peer dependency：`astro ^5.0.0 || ^6.0.0`
+## 8. 已实现与未实现的边界
 
-当前 npm latest、`packages/theme/package.json` 与 `starter` 分支已在 `0.2.11` 对齐。
+文章目录、全文搜索、标签浏览、代码块复制和正文图片预览已经实现，不能再列为待开发建议。
 
-如果后续 main 上再次出现 package 源码变更但尚未发布：
+当前 tracked runtime 没有 MusicDeck 组件、music-deck 脚本或播放器配置；历史上讨论的音乐播放器没有在本轮移植。也没有新增首次建站引导弹窗、专用引导 CLI、Expressive Code、代码文件名标记、目录 scroll-spy、图片画廊或动态 OG 功能。后续需求应从真实用户需要出发，不能由旧讨论或本文件中的提及自动变成产品承诺。
 
-- GitHub main / demo 部署会看到最新代码。
-- npm 用户暂时不会拿到 main 上的新 package 源码。
-- 未来发布 npm 时，需要先 bump package version。
-- 不要在未 bump version 时执行真实 publish。
-
-发布时遵循：
-
-1. 确认 `main` 干净。
-2. bump `packages/theme/package.json` 版本。
-3. 更新 `CHANGELOG.md`。
-4. 创建 `docs/releases/<version>.md`。
-5. `npm run maintainer:sync-starter:check`
-6. `npm run release:npm`
-7. `npm run release:starter`
-8. push `main`
-9. push `starter`
-
-## 13. 文档体系
-
-入口文档：
-
-- `AGENTS.md`
-
-用户文档：
-
-- `README.md`
-- `README.zh-CN.md`
-- `README.ja.md`
-- `README.es.md`
-- `README.ko.md`
-- `packages/theme/README.md`
-- `UPGRADING.md`
-- `CHANGELOG.md`
-
-维护文档：
-
-- `docs/AI_WORKFLOW.md`
-- `docs/DOC_METADATA_SPEC.md`
-- `docs/DOC_SYNC_WORKFLOW.md`
-- `docs/ARCHITECTURE.md`
-- `docs/VISUAL_SYSTEMS.md`
-- `docs/MAINTAINER_WORKFLOW.md`
-- `docs/PACKAGING_WORKFLOW.md`
-- `docs/PACKAGE_RELEASE.md`
-- `docs/THEME_SUBMISSION_CHECKLIST.md`
-- `docs/releases/*`
-
-文档规则：
-
-- public README 可使用 sidecar metadata。
-- internal docs 优先使用 visible frontmatter。
-- 运行 `npm run check:docs` 验证文档元数据。
-- 行为变化后运行 `npm run suggest:docs` 推断需要同步的文档，但最终以代码真相和 metadata scope 判断是否修改。
-
-## 14. Changelog 与 release notes
-
-当前规则：
-
-- `CHANGELOG.md -> [Unreleased]` 记录下一次 release 会带出去的用户/维护者可见变化。
-- `docs/releases/<version>.md` 是每个 npm publish 的详细 release note。
-- Git commit history 记录每次 push，不需要把每次 push 全部复制进 changelog。
-
-当前已经发布到 `0.2.11`，所以 `[Unreleased]` 可以为空，直到下一次真正面向用户或维护者的变更出现。
-
-docs-only cleanup 可以不进 changelog，除非它影响用户升级、公开使用方式或 release note 的准确性。
-
-## 15. 验证命令
-
-常用：
-
-```bash
-npm run dev
-npm run build
-npm run preview
-npm run lint
-npm run format:check
-npm run check:docs
-npm run check:no-build
-npm run check
-```
-
-测试：
-
-```bash
-npm run test
-npm run e2e:install
-npm run e2e
-```
-
-adapter / package：
-
-```bash
-npm run sync-adapters
-npm run check:adapters
-npm run check:workspace-link
-npm run check:pack-cli
-npm run check:scaffold
-npm run theme:pack
-```
-
-release / starter：
-
-```bash
-npm run maintainer:sync-starter:check
-npm run release:npm -- --dry-run
-npm run release:npm
-npm run release:starter
-npm run release:starter:push
-```
-
-## 16. 高风险区域
-
-高风险文件：
-
-- `packages/theme/src/components/BaseHead.astro`
-- `packages/theme/src/utils/head.ts`
-- `packages/theme/src/components/shared/ThemeFrame.astro`
-- `src/i18n/runtime.ts`
-- `src/i18n/config.ts`
-- `scripts/adapter-templates/src/i18n/*`
-- `src/pages/[lang]/blog/[...slug].astro`
-- `src/pages/[lang]/blog/[...page].astro`
-- `src/pages/index.astro`
-- `src/pages/[lang]/index.astro`
-- `astro.config.mjs`
-- `scripts/starter-manifest.mjs`
-- `tools/maintainer/sync-starter.mjs`
-
-高风险行为：
-
-- canonical / hreflang / x-default 改动
-- default locale routing 改动
-- i18n fallback 改动
-- package exports / files 改动
-- starter manifest 改动
-- generated adapter 改动
-- npm publish / starter sync
-
-## 17. 近期重要改动
-
-### 0.2.11 scaffold scripts 迁移到 package-owned bins
-
-当前 starter 不再分发 `scripts/new-post.mjs` / `scripts/new-page.mjs` wrapper。`npm run new-post` 和 `npm run new-page` 直接调用 package bin：
-
-- `anglefeint-new-post`
-- `anglefeint-new-page`
-
-这样后续 CLI 修复可以跟随 npm package 升级，不再卡在用户项目本地旧 wrapper 文件里。
-
-### 0.2.10 scaffold CLI bin 兼容性修复
-
-package CLI entrypoint 已具备 Node shebang，并支持 `--help`。npm-generated bin shim 与直接 `npx anglefeint-new-post --help` / `npx anglefeint-new-page --help` 在 Windows、macOS、Linux 上都应走 Node 执行。
-
-### 0.2.9 删除 package-owned music deck
-
-当前 main 已删除该功能和 package 打包入口，避免把非核心功能作为主题默认全站 runtime 带给用户。
-
-### 0.2.9 SEO/social metadata hardening
-
-当前 BaseHead 支持：
-
-- `localeHrefs`
-- `imageAlt`
-- OG/Twitter image alt
-- existence-aware alternate links
-
-### 0.2.9 Windows pre-push checks
-
-当前 Windows 本地检查已增强：
-
-- package tarball check 使用临时 npm cache。
-- Windows 下 npm 通过 `cmd.exe` 执行。
-- i18n integration test 中目录 symlink 在 Windows 下使用 junction。
-
-### Changelog 与 public config docs 对齐
-
-近期补齐了：
-
-- GitHub Release 历史与 `CHANGELOG.md` 的对齐。
-- 日/西/韩 README 中当前真实配置面的缺口。
-- packaging workflow 中 RSS/sitemap/robots 的真实路径描述。
-
-## 18. 给 AI agent 的工作方式
-
-每次进入项目：
-
-1. 先读 `AGENTS.md`。
-2. 再读 `docs/AI_WORKFLOW.md`。
-3. 根据任务读 `README.md`、`docs/ARCHITECTURE.md`、`docs/VISUAL_SYSTEMS.md`、`src/site.config.ts`。
-4. 先查代码真相，再判断文档是否漂移。
-5. 不因为文档写了什么就让代码跟着文档走。
-6. package/runtime/config 变更后，确认是否需要 npm release。
-7. 用户明确说“先别发布”时，不执行 `npm run release:npm`。
-
-## 19. 当前维护判断
-
-当前项目的 P0 方向更偏：
-
-- 分享传播体验
-- SEO 基础设施
-- 搜索/归档/发现能力
-- 主题辨识度
-- 用户升级成本可控
-
-代码 copy、TOC、heading anchor、filename badge、Expressive Code 等更像技术博客工具功能，可以以后作为 P3 或按真实内容需求补，不应抢在传播和发现能力之前。
-
-## 20. 最短总结
-
-Anglefeint 是一个 Astro 6 多语言静态主题，核心是强视觉发布体验、可升级 npm package、单一配置入口、多语言 SEO、starter 分发和 AI-friendly 文档治理。当前 npm latest 为 `@anglefeint/astro-theme@0.2.11`；starter scaffold scripts 已迁移到 package-owned bins，旧 starter 用户应按 `UPGRADING.md` 用 npm 命令更新 `new-post` / `new-page` scripts。
+本轮核对记录见 [代码与文档审阅记录](docs/CODE_DOC_AUDIT.md)。

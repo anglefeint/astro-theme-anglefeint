@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import CyberAtmosphere from '../../../components/CyberAtmosphere.astro';
 import BlogCards from '@anglefeint/astro-theme/components/BlogCards.astro';
 import TagLinks from '@anglefeint/astro-theme/components/TagLinks.astro';
 import { groupTags } from '@anglefeint/astro-theme/utils/tags';
@@ -93,8 +94,7 @@ const pageDescription =
 >
   <Fragment slot="body-start">
     <h1 class="sr-only">{pageTitle}</h1>
-    <div class="cyber-rain" data-cyber-rain aria-hidden="true"></div>
-    <div class="cyber-dust" data-cyber-dust aria-hidden="true"></div>
+    <CyberAtmosphere />
   </Fragment>
   {
     THEME.TAGS.ENABLED && groupTags(postsForLocale(allPosts, resolvedLocale)).length > 0 && (
@@ -135,8 +135,4 @@ const pageDescription =
       />
     )
   }
-  <script>
-    import { initCyberRainAndDust } from '../../../scripts/cyber-rain-dust.js';
-    initCyberRainAndDust();
-  </script>
 </CyberShell>

@@ -131,6 +131,7 @@ These are not strictly required for every doc, but they are part of the preferre
 - Type: `boolean`
 - Purpose: marks the document as canonical within its scope
 - Guidance: keep `true` limited to genuinely authoritative docs
+- Boundary: authority is within the document's explanation or workflow scope. For implemented behavior, configuration defaults and exported APIs, code takes precedence; correct stale documentation rather than changing code to satisfy prose.
 
 ### `audience`
 

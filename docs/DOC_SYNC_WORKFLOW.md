@@ -34,6 +34,10 @@ This workflow defines the update algorithm, not the metadata schema itself.
 - The workflow must never hardcode which specific docs are "always updated."
 - Decision chain: discover -> read metadata -> compare against current code changes -> update or skip per file.
 
+Implemented code is the authority for current feature behavior. Read the implementation, configuration defaults, callers and tests before rewriting its explanation. When prose disagrees with the implementation, correct the prose; do not change working code just to match old documentation. Record suspected code defects separately. `source_of_truth: true` identifies the canonical document within its documentation scope; it does not give prose precedence over code.
+
+`suggest:docs` suggests review candidates from file paths and metadata. It does not read implementation semantics, generate documentation or prove that prose is accurate. `check:docs` validates metadata and explicitly encoded repository policies, not code/document agreement. Both can pass while a feature description is stale.
+
 ## Metadata Source
 
 Use `docs/DOC_METADATA_SPEC.md` as the canonical metadata specification.
@@ -132,25 +136,45 @@ Run this workflow whenever repository changes may alter documentation truth:
    - `npm run suggest:docs`
    - optional explicit paths:
      - `npm run suggest:docs -- src/site.config.ts docs/ARCHITECTURE.md`
+   - Default input is the current Git working tree, not the conversation or commit history. For already committed work, inspect a deliberately chosen commit range and pass its changed paths explicitly. A clean worktree does not mean historical changes have been documented.
 2. The helper will:
    - discover maintained markdown files
    - read metadata from frontmatter or approved sidecars
    - infer likely change domains from the changed file set
    - compute direct-hit docs from `doc_scope` / `update_triggers`
    - propagate dependent docs via `depends_on` / `sync_targets`
-3. Use the suggested direct-hit and propagated docs as the update set.
-4. Update the required docs directly; do not stop for manual confirmation unless the output is ambiguous.
-5. Validate:
+3. Use the suggested direct-hit and propagated docs as the review set. Broad domains may select every maintained document; a match is not an instruction to rewrite it.
+4. Traverse each affected feature from user input/configuration through schema/adapter, route or build hook, component/script/style, generated output and relevant tests. Record concrete source paths and the observed behavior, including defaults, disabled/empty states and package-versus-starter ownership.
+5. Compare those observations with the candidate documents. Update the responsible guide, architecture/visual reference and any public translations whose claims changed. Separate shipped features, proposals and release-time evidence. Keep historical release notes historical; do not rewrite an old release to describe today's code. Record why reviewed documents need no change.
+6. Maintain a code-to-document map in the relevant architecture/project reference, with paths to the implementation and existing checks. Prefer extending existing references over creating a second implementation manual. For a broad retrospective audit, record the reviewed source revision/range and dispositions in a dated audit record.
+7. Validate:
    - `npm run check:docs`
-   - run `npm run check` only if the updated docs describe changed behavior, commands, routing, layout, runtime, release flow, or SEO
-   - run `npm run build` only if behavior/routing/layout/SEO changed
-6. Report:
+   - check added source/document links and compare examples against actual configuration/types/commands
+   - docs-only corrections do not require runtime changes or a fresh build; run broader checks when behavior or executable commands were also modified, as defined in `docs/AI_WORKFLOW.md`
+   - distinguish newly run checks from evidence reused from an earlier release
+8. Report:
    - changed files used as input
    - direct-hit docs
    - propagated docs
    - skipped docs
    - metadata errors, if any
    - validation result
+   - code/document mismatches corrected and any remaining uncertainty
+
+### Reviewing committed changes in PowerShell
+
+Choose the last reviewed source commit as the baseline; do not blindly use only the last commit (which may contain release notes alone):
+
+```powershell
+$docBaseline = '<last-reviewed-commit>'
+$docInputs = @(git diff --name-only "$docBaseline..HEAD")
+if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve documentation review baseline' }
+if ($docInputs.Count -gt 0) {
+  npm run suggest:docs -- @docInputs
+}
+```
+
+Review `git log` as well when an addition and later removal cancel out in the net diff. Removed experiments must not remain listed as current capabilities. Runtime facts belong in current references; exact package versions, publication commits and per-release test results belong in `docs/releases/` and should be linked instead of repeatedly copied into living overviews.
 
 ## Reusable Commands
 

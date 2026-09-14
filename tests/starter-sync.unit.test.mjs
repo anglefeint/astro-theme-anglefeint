@@ -43,7 +43,7 @@ test('starter cleanup keeps onboarding and removes extra posts on native paths',
   }
 });
 
-function fixture({ failPush = false, committed = false } = {}) {
+function fixture({ failPush = false, failAudit = false, committed = false } = {}) {
   const calls = [];
   let branch = 'main';
   return {
@@ -53,6 +53,7 @@ function fixture({ failPush = false, committed = false } = {}) {
         calls.push([cmd, ...args].join(' '));
         if (cmd === 'git' && args[0] === 'checkout') branch = args[1];
         if (failPush && cmd === 'git' && args[0] === 'push') throw new Error('push failed');
+        if (failAudit && cmd === 'npm' && args[0] === 'audit') throw new Error('audit failed');
       },
       currentBranch: async () => branch,
       expectedStarterThemeRange: async () => '^0.2.12',
@@ -75,6 +76,20 @@ const options = {
   allowAnyBranch: false,
   push: true,
 };
+
+test('security audit failure prevents starter commit and push', async () => {
+  const { calls, operations } = fixture({ failAudit: true });
+  let committed = false;
+  operations.commitStarterIfNeeded = async () => {
+    committed = true;
+  };
+  await assert.rejects(syncStarter(options, operations), /audit failed/);
+  assert.equal(committed, false);
+  assert.equal(
+    calls.some((call) => call.startsWith('git push')),
+    false
+  );
+});
 
 test('sync pushes an already committed starter and restores main dependencies', async () => {
   const { calls, operations } = fixture();
