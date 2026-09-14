@@ -74,7 +74,8 @@ for (const locale of ['en', 'ja', 'ko', 'es']) {
   test(`search stays in the ${locale} index`, async ({ page }) => {
     await page.goto(`/${locale}/blog/`);
     await page.locator('[data-search-open]').click();
-    await page.getByRole('searchbox').fill('Astro');
+    // Every starter locale includes this term in its configuration guide body.
+    await page.getByRole('searchbox').fill('Anglefeint');
     await expect(page.locator('.search-results a').first()).toBeVisible();
     const paths = await page
       .locator('.search-results a')
