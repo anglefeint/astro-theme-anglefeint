@@ -216,11 +216,18 @@ async function main() {
       verifyRegistryVersion(pkg, npmEnv);
     }
 
+    console.log('\n[release] Auditing dependencies (cannot be skipped)...');
+    run('npm', ['audit', '--audit-level=low', '--prefer-online'], { env: npmEnv });
+
     if (!opts.skipChecks) {
       console.log('\n[release] Running checks...');
       run('npm', ['run', 'check'], { env: npmEnv });
-      run('npm', ['run', 'check:installed', '--', '--build'], { env: npmEnv });
     }
+    run(
+      'npm',
+      ['run', 'check:installed', '--', '--audit', ...(!opts.skipChecks ? ['--build'] : [])],
+      { env: npmEnv }
+    );
 
     if (!opts.skipPack) {
       console.log('\n[release] Packing workspace package...');

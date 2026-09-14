@@ -1,0 +1,82 @@
+---
+interface Props {
+  variant?: 'blog' | 'tags';
+}
+const { variant = 'blog' } = Astro.props;
+---
+
+<div class="cyber-rain" data-cyber-rain data-atmosphere={variant} aria-hidden="true"></div>
+<div class="cyber-dust" data-cyber-dust aria-hidden="true"></div>
+
+<script>
+  import { initCyberRainAndDust } from '../scripts/cyber-rain-dust.js';
+  initCyberRainAndDust();
+</script>
+
+<style is:global>
+  /* Both tag routes share this palette; the blog keeps its original atmosphere. */
+  body:has([data-atmosphere='tags']) {
+    .cyber-spotlight {
+      opacity: 0.42;
+      filter: hue-rotate(18deg) saturate(0.7);
+    }
+    .cyber-spotlight-tl {
+      animation-duration: 18s;
+    }
+    .cyber-spotlight-tr {
+      animation-duration: 30s;
+    }
+    .cyber-rain {
+      opacity: 0.7;
+    }
+    .cyber-rain-drop {
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(177, 204, 231, 0.4) 40%,
+        rgba(197, 186, 224, 0.55) 70%,
+        transparent
+      );
+    }
+    .cyber-dust {
+      opacity: 0.45;
+    }
+    .cyber-dust-particle {
+      background: rgba(195, 197, 234, 0.6);
+      box-shadow: 0 0 8px rgba(158, 186, 225, 0.24);
+    }
+    .cyber-flicker {
+      background:
+        radial-gradient(ellipse 25% 30% at 85% 20%, rgba(190, 150, 218, 0.09), transparent),
+        radial-gradient(ellipse 20% 24% at 20% 68%, rgba(113, 176, 224, 0.16), transparent),
+        radial-gradient(ellipse 28% 35% at 70% 85%, rgba(184, 150, 218, 0.11), transparent);
+      animation-duration: 10s;
+    }
+    .cyber-haze {
+      background:
+        radial-gradient(ellipse 80% 55% at 22% 40%, rgba(99, 136, 183, 0.06), transparent),
+        radial-gradient(ellipse 65% 60% at 80% 65%, rgba(170, 135, 198, 0.05), transparent);
+    }
+    .cyber-load-glitch {
+      background: linear-gradient(135deg, rgba(184, 150, 218, 0.05), rgba(113, 176, 224, 0.06));
+      animation-duration: 18s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body:has([data-atmosphere='tags']) {
+      &::after,
+      .cyber-spotlight-tl,
+      .cyber-spotlight-tr,
+      .cyber-flicker,
+      .cyber-haze {
+        animation: none;
+      }
+      .cyber-rain,
+      .cyber-dust,
+      .cyber-load-glitch {
+        display: none;
+      }
+    }
+  }
+</style>

@@ -32,7 +32,7 @@ pnpm install
 ## Requisitos
 
 - Node.js `22.12.0+` (LTS recomendado)
-- Gestores verificados: `npm` y `pnpm 10` (yarn/bun no verificados en esta version)
+- La aceptación de gestores de paquetes de 0.3.0 se realizó con `npm`. Se conservan los comandos de `pnpm 10` abajo, pero pnpm/yarn/bun no se volvieron a validar en esta versión.
 
 ## Inicio rapido
 
@@ -112,6 +112,8 @@ Como funciona la URL:
 - Lista del blog: `/es/blog/`
 - No necesitas crear rutas a mano. Astro las genera automaticamente en build.
 
+`--locales` solo crea archivos de artículos; no habilita idiomas. Añade o habilita cada idioma en `src/site.config.ts` para generar sus rutas.
+
 ## Crear nueva pagina
 
 `new-post` solo crea contenido del blog. Para paginas personalizadas usa:
@@ -167,7 +169,10 @@ npm run new-page -- projects --theme matrix
 
 ## Caracteristicas
 
-- Salida estática con Astro 6
+- Búsqueda de artículos con Pagefind en el idioma actual
+- Índice automático del artículo y archivos estáticos por etiqueta
+- Copia de código y vista previa de imágenes del artículo
+- Salida estática con Astro 7
 - Colecciones de contenido Markdown + MDX
 - El starter incluye idiomas de ejemplo: `en`, `ja`, `ko`, `es`, `zh`
 - RSS por idioma
@@ -177,7 +182,7 @@ npm run new-page -- projects --theme matrix
 
 ## Configuracion del tema
 
-1. Copia `.env.example` a `.env` y define la identidad del sitio.
+1. Copia opcionalmente `.env.example` a `.env` para sobrescribir la identidad con variables de entorno; en otro caso, usa `src/site.config.ts`.
 2. Edita `src/site.config.ts`:
    - `site.title`, `site.description`, `site.url`, `site.author`, `site.tagline` para identidad del sitio y metadatos por defecto
    - `i18n.defaultLocale` para definir el idioma por defecto
@@ -252,14 +257,22 @@ Configura `theme.toc.enabled` en `src/site.config.ts` para cambiar el valor pred
 
 Se admiten encabezados Markdown en MDX, pero no se recopilan automáticamente los generados por componentes ni los escritos como HTML/JSX. Las rutas personalizadas deben pasar a `BlogPost` los `headings` devueltos por `render(post)`; si se omiten, el índice queda oculto.
 
-## Licencia
-
-MIT License. Ver `LICENSE`.
-
 ## Navegación por etiquetas
 
 Añade `tags: ["Astro", "frontend"]` al frontmatter. La compilación genera un directorio de etiquetas y listas paginadas por idioma. Los artículos sin etiquetas siguen funcionando. Desactiva la función con `theme: { tags: { enabled: false } }` en `src/site.config.ts`. Los nombres distinguen mayúsculas; se eliminan espacios exteriores y duplicados. Los nombres especiales usan rutas codificadas estables; cambiar un nombre cambia su URL. No requiere comandos adicionales.
 
+Puedes abrir `/<locale>/tags/` directamente o desde el enlace de etiquetas del blog. Una etiqueta del artículo abre `/<locale>/tags/<tagSlug>/`. Si el idioma no tiene etiquetas, el directorio queda vacío y el blog oculta ese enlace.
+
+## Copiar código
+
 Los bloques de código incluyen un botón de copia automático. Usa Markdown normal, sin configuración adicional. Requiere HTTPS o localhost; si falla, se indica que selecciones el código manualmente.
 
+## Vista previa de imágenes
+
 Las imágenes sin enlace del artículo se amplían con un clic o Enter/Espacio. Cierra con Esc, el botón o el fondo, conservando la posición de lectura. Las imágenes enlazadas mantienen su navegación.
+
+La vista previa usa la fuente de imagen ya seleccionada por el navegador; no descarga un original de mayor resolución. Excluye la portada y las imágenes dentro de enlaces o botones.
+
+## Licencia
+
+MIT License. Ver `LICENSE`.

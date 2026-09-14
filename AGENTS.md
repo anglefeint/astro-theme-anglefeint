@@ -40,6 +40,8 @@ This file is the neutral entrypoint for all coding agents working in this reposi
 
 ## Priority
 
+Implemented behavior is defined by code. Documentation records it; when they disagree, inspect the implementation and correct the documentation without changing runtime merely to match prose. Use `docs/DOC_SYNC_WORKFLOW.md` to trace code, configuration and tests to their responsible documents, including already committed changes.
+
 1. Preserve the public theme UX.
 2. Keep changes config-driven.
 3. Avoid regressions in i18n routes and SEO tags.

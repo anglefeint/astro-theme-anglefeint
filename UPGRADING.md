@@ -14,6 +14,8 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+Version 0.4.0 targets Astro `^7.3.2` and Sharp `^0.35.4`, with matching MDX/RSS/sitemap integrations. The theme peer range now requires Astro `^7.3.2`; Astro 5/6 are no longer supported by version 0.4.0. Preserve `compressHTML: true` in Astro config to retain the prior whitespace behavior. Projects created from the 0.3.0 starter retain the older dependencies until explicitly migrated. Updating only the theme package or running `npm update` within the old Astro 6 range does not complete this migration. See the [Astro security advisory](https://github.com/withastro/astro/security/advisories/GHSA-26w7-cxv4-gfx2) and [v7 migration guide](https://docs.astro.build/en/guides/upgrade-to/v7/).
+
 The 0.3.0 search feature requires registering `@anglefeint/astro-theme/search` in `astro.config.mjs` and synchronizing the `theme.search.enabled` config adapter with the UI. Updating the package alone does not install that registration into an older starter. Use the matching starter, or explicitly migrate its integration/configuration changes. Verify full search with build + preview.
 
 The 0.3.0 article contents feature also needs the article route to pass `headings` from `render(post)` to `BlogPost`. Updating the package alone does not update that route or add the starter's `theme.toc.enabled` configuration. Existing custom routes without `headings` keep rendering without a contents panel. See `docs/releases/0.3.0.md` for the release instructions.
@@ -122,4 +124,8 @@ The post CLI now loads the actual TypeScript config (including imported modules 
 
 ### Tag browsing (0.3.0)
 
-Tag browsing requires both the package components/utilities and the new starter-owned `src/pages/[lang]/tags/` routes, plus the updated theme config adapter. Package installation alone cannot add these routes. The new routes are managed by the starter manifest; use the normal starter release flow or deliberately migrate the corresponding files. Existing articles may omit `tags`.
+Tag browsing requires both the package components/utilities and the new starter-owned `src/pages/[lang]/tags/` routes, plus the updated theme config adapter. Package installation alone cannot add these routes. For users, create the matching template in a separate directory or deliberately migrate those route/configuration files. The manifest-driven starter release flow is for upstream maintainers, not customized user projects. Existing articles may omit `tags`.
+
+### Article copy and image preview (0.3.0)
+
+The package-owned `BlogPost` layout and scripts provide both features with no new author markup or configuration switch. Custom layouts that do not use that article layout do not automatically gain them. Verify fenced code copying under HTTPS/localhost and click an unlinked body image in preview; linked images retain navigation and hero images are excluded. Preview displays the existing selected image source, not a higher-resolution original. The temporary public image demonstration article is not part of the starter.

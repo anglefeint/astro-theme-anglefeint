@@ -11,6 +11,8 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
+    // Let Playwright own the process even when Astro detects an agent environment.
+    env: { ASTRO_PREVIEW_BACKGROUND: '1' },
     command: 'npm run preview -- --host 127.0.0.1 --port 4321',
     port: 4321,
     reuseExistingServer: true,

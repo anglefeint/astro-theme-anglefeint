@@ -42,7 +42,10 @@ Anglefeint 是一个具备电影感叙事节奏的 Astro 主题系统，将不�
 
 ## Key Features (EN)
 
-- Astro 6 static output
+- Pagefind full-text article search, generated with the static build and scoped to the current language
+- Automatic Markdown article contents and per-language tag directories with paginated archives
+- Code-block copy buttons and keyboard-accessible article image previews
+- Astro 7 static output
 - MD + MDX content collections
 - Locale routes (`en`, `ja`, `ko`, `es`, `zh`)
 - Route-specific atmosphere system
@@ -52,7 +55,10 @@ Anglefeint 是一个具备电影感叙事节奏的 Astro 主题系统，将不�
 
 ## 核心特性 (ZH)
 
-- 基于 Astro 6 静态输出
+- 构建时自动生成 Pagefind 全文索引，搜索当前语言文章
+- Markdown 自动文章目录、各语言标签目录和分页归档
+- 代码块一键复制、支持键盘操作的正文图片预览
+- 基于 Astro 7 静态输出
 - 支持 MD + MDX 内容集合
 - 多语言路由（`en`、`ja`、`ko`、`es`、`zh`）
 - 按路由切换视觉氛围系统

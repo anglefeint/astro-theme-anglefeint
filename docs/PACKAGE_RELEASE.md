@@ -16,7 +16,7 @@ depends_on:
 
 - Name: `@anglefeint/astro-theme`
 - Latest version: check npm registry before release (`npm view @anglefeint/astro-theme version`)
-- Current prerelease tag: `alpha` (optional track)
+- Optional prerelease tag example: `alpha`; query npm dist-tags to inspect actual registry state
 
 ## 1) Prepare release state
 
@@ -39,6 +39,10 @@ git push origin main
 
 ## 2) Pre-release checks
 
+Dependency audits are blocking: `release:npm` runs `npm audit --audit-level=low --prefer-online` for main and `check:installed -- --audit` for an isolated starter. Reported vulnerabilities or audit errors stop the run, even with `--skip-checks`. Starter synchronization also audits its installation before committing. Re-run an audit on the actual remote-template installation before GitHub closeout.
+
+`scripts/release-npm.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or completed CI. Those are maintainer workflow requirements: inspect them before running it. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
+
 Run the publish dry-run after committing the release-prep state. The release script checks that the local package version is newer than the npm registry version before packing or publishing.
 
 Include implementation, tests, changelog and release notes in the release-prep commit, not just the two version files in the example. Validate and push `main` before publishing; check any push-triggered automation first.
@@ -46,6 +50,8 @@ Include implementation, tests, changelog and release notes in the release-prep c
 ```bash
 npm run release:npm -- --dry-run
 ```
+
+By default this runs main checks, dependency audits, the independent installed-starter build matrix, `theme:pack` and `npm publish --dry-run`. Dry-run skips `npm whoami` and post-publication verification. A real run adds those steps. `--skip-checks` skips main checks and the installed build matrix, but retains main audit and isolated-starter installation/CLI checks/audit. `--skip-pack` skips the separate `theme:pack` step (npm publish still packs the package), and `--skip-registry-check` bypasses the initial newer-than-latest check. Skips must be justified in the release record.
 
 ## 3) Publish alpha/beta
 
@@ -94,9 +100,13 @@ git push origin starter
 
 ## 8) Release Notes Contract
 
+**Mandatory completion:** after remote starter acceptance, create and read back the GitHub Release as described below. A pushed npm package or Git tag alone is not a completed release.
+
 ### Registry availability and recovery
 
 After a real publish succeeds, `release:npm` verifies the selected dist-tag (default `latest`) and downloads the exact version with `npm pack`. It retries verification up to 12 times, waiting 10 seconds between attempts; each registry request has a 15-second fetch timeout and no npm fetch retries. Dry-runs do not perform this post-publish check.
+
+The verification helper checks the dist-tag version, downloaded package name/version and presence of integrity metadata. It does not compare the download's hash with the preparation tarball or prove correspondence with a Git SHA. Preserve the clean source revision and compare package hashes separately when recording source/package identity.
 
 If verification times out, publication may already be accepted. Do not republish that version or start starter sync. Check `npm view @anglefeint/astro-theme@latest version` (or the selected tag), then run `npm pack @anglefeint/astro-theme@<version> --ignore-scripts --prefer-online` in a temporary directory. Only resume starter delivery once both match the intended version and the download succeeds. Remove the temporary tarball afterward.
 
