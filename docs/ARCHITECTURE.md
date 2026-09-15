@@ -67,7 +67,7 @@ The collection implementation is [packages/theme/src/content-schema.ts](../packa
 
 ### Article share images
 
-This implementation is pending release after 0.4.0. The complete bundled font is approximately 16.4 MB; no font download, system-font lookup or dynamic subsetting is performed during generation.
+This implementation is included in 0.5.0 with its matching starter. The complete bundled font is approximately 16.4 MB; no font download, system-font lookup or dynamic subsetting is performed during generation.
 
 `packages/theme/src/social-image.mjs` injects the prerendered `social/endpoint.ts` route at `/_social/[key].png` and provides the resolved public directory via a virtual module. Starter `astro.config.mjs` registers the integration. `theme.socialImage.enabled` defaults to true and maps through the generated theme adapter. The endpoint includes configured-locale blog entries without `ogImage`; identical render inputs share a file. `social/model.mjs` hashes template version, title, author, site and locale. Template/font changes must bump that version.
 

@@ -275,7 +275,7 @@ La vista previa usa la fuente de imagen ya seleccionada por el navegador; no des
 
 ## Imágenes para compartir artículos
 
-Esta función está implementada en el código actual, pero aún no está incluida en la versión publicada 0.4.0.
+Disponible desde 0.5.0 con el starter correspondiente; 0.4.0 no incluye esta función.
 
 `npm run build` genera un PNG de 1200×630 con el título, autor y nombre del sitio para artículos sin `ogImage`. No cambia `heroImage`. Usa `ogImage: ./share.png` para una imagen junto al artículo, o `ogImage: /images/share.png` para `public/images/share.png`. También admite HTTPS; la disponibilidad y caché dependen del proveedor. Los archivos locales inexistentes producen un error.
 

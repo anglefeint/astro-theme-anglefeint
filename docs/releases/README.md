@@ -27,6 +27,8 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
+Latest feature release: [0.5.0](./0.5.0.md), including migration and delivery evidence.
+
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.
 - Historical gaps may be backfilled as grouped milestone notes.

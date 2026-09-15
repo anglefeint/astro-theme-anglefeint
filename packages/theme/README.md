@@ -25,7 +25,7 @@ npm pkg set scripts.new-page="anglefeint-new-page"
 
 ## Usage in Starter/Site
 
-Article share images require the matching starter's `theme.socialImage.enabled` config/adapter and `socialImage()` from `@anglefeint/astro-theme/social-image` in Astro's integrations. The package owns the prerendered PNG endpoint, Satori/Sharp rendering and offline font assets. Article `ogImage` overrides generation independently of `heroImage`; see the repository README for image paths and the disable switch. This capability is pending release after 0.4.0; installing 0.4.0 does not include it.
+Article share images require the matching starter's `theme.socialImage.enabled` config/adapter and `socialImage()` from `@anglefeint/astro-theme/social-image` in Astro's integrations. The package owns the prerendered PNG endpoint, Satori/Sharp rendering and offline font assets. Article `ogImage` overrides generation independently of `heroImage`; see the repository README for image paths and the disable switch. This capability requires 0.5.0 and its matching starter; 0.4.0 does not include it.
 
 Use the package exports in your pages/layout wiring, for example:
 
