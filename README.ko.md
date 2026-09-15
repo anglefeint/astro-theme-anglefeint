@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.1.3-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.2-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
@@ -272,6 +272,16 @@ MDX의 Markdown 제목은 지원하지만 컴포넌트에서 생성하거나 HTM
 본문에서 링크가 없는 이미지는 클릭 또는 Enter/Space로 확대할 수 있습니다. Esc, 닫기 버튼 또는 배경으로 닫으며 읽던 위치를 유지합니다. 링크가 있는 이미지는 기존 이동 동작을 유지합니다.
 
 브라우저가 이미 선택한 이미지 소스를 표시하며 더 높은 해상도의 원본을 별도로 가져오지 않습니다. 대표 이미지와 링크 또는 버튼 안의 이미지는 제외됩니다.
+
+## 글 공유 이미지
+
+현재 소스에 구현된 기능이며, 배포된 0.4.0에는 아직 포함되지 않습니다.
+
+`npm run build`는 `ogImage`가 없는 글에 제목·작성자·사이트 이름을 담은 1200×630 PNG를 생성합니다. 본문의 `heroImage`는 바뀌지 않습니다. 글 옆 이미지는 `ogImage: ./share.png`, public 이미지는 `ogImage: /images/share.png`로 지정합니다. HTTPS 주소도 지원하지만 가용성과 캐시는 제공자에게 달려 있습니다. 로컬 파일이 없으면 오류가 발생합니다.
+
+`src/site.config.ts`에서 `theme: { socialImage: { enabled: false } }`로 자동 생성을 끌 수 있습니다. 직접 지정한 이미지는 항상 우선하며, 나머지는 기존 표지 또는 기본 이미지로 돌아갑니다. 변경 후 다시 빌드하고 배포하세요. 생성 파일은 `dist/_social/`에 있으며 글 HTML의 `og:image`에서 정확한 URL을 확인할 수 있습니다. 외부 플랫폼의 링크 캐시는 바로 갱신되지 않을 수 있습니다.
+
+내장 폰트로 기본 5개 언어를 지원하며 이미지 API나 브라우저 JS는 필요 없습니다. 긴 제목은 이미지에서만 줄입니다. 모든 이모지와 문자 체계를 보장하지는 않습니다. 빌드 시간과 설치 용량은 늘지만 글 페이지에서 이 폰트를 추가로 다운로드하지 않습니다.
 
 ## 라이선스
 

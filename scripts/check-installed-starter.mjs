@@ -133,6 +133,24 @@ try {
   );
 
   if (process.argv.includes('--build')) {
+    const customCover = 'public/share-test.jpg';
+    await cp(
+      path.join(root, 'packages/theme/src/assets/theme/placeholders/theme-placeholder-1.jpg'),
+      path.join(project, customCover)
+    );
+    await cp(
+      path.join(project, customCover),
+      path.join(project, 'src/content/blog/en/share-test.jpg')
+    );
+    for (const [slug, ogImage] of [
+      ['share-public', '/share-test.jpg'],
+      ['share-local', './share-test.jpg'],
+    ]) {
+      await writeFile(
+        path.join(project, `src/content/blog/en/${slug}.md`),
+        `---\ntitle: Custom share image\ndescription: Custom image fixture\npubDate: 2026-01-01\nogImage: ${ogImage}\n---\nTest body.\n`
+      );
+    }
     await writeFile(
       path.join(project, 'src/content/blog/en/tag-special.md'),
       '---\ntitle: Special tag fixture\ndescription: Tag routing fixture\npubDate: 2026-01-01\ntags: ["C++", "C#", "中文", "Astro", "astro", "anglefeint"]\n---\nTag fixture.\n'
@@ -154,6 +172,25 @@ try {
         console.log(`Building installed starter: default=${locale}, prefix=${mode}`);
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
         await npm(['run', 'build']);
+        for (const lang of ['en', 'zh', 'ja', 'ko', 'es']) {
+          const html = await read(`dist/${lang}/blog/installed-default/index.html`);
+          const og = html.match(/property="og:image" content="([^"]+)"/)?.[1];
+          assert.ok(og && new URL(og).pathname.startsWith('/_social/'));
+          const png = await readFile(path.join(project, 'dist', new URL(og).pathname));
+          assert.equal(png.subarray(1, 4).toString(), 'PNG');
+          assert.equal(png.readUInt32BE(16), 1200);
+          assert.equal(png.readUInt32BE(20), 630);
+          assert.ok(html.includes(`name="twitter:image" content="${og}"`));
+          assert.ok(html.includes(`"image":["${og}"]`));
+        }
+        assert.match(
+          await read('dist/en/blog/share-public/index.html'),
+          /property="og:image" content="[^"]+\/share-test.jpg\?v=/
+        );
+        assert.match(
+          await read('dist/en/blog/share-local/index.html'),
+          /property="og:image" content="[^"]+\/_astro\/share-test\./
+        );
         const searchManifest = JSON.parse(await read('dist/pagefind/anglefeint.json'));
         assert.ok(searchManifest.languages.includes(locale));
         assert.match(await read('dist/pagefind/pagefind.js'), /search/);
@@ -202,9 +239,21 @@ try {
           await assert.rejects(read(`dist/${locale}/about/index.html`), { code: 'ENOENT' });
       }
     }
-    await setConfig({ theme: { search: { enabled: false }, tags: { enabled: false } } });
+    await setConfig({
+      theme: {
+        search: { enabled: false },
+        tags: { enabled: false },
+        socialImage: { enabled: false },
+      },
+    });
     console.log('Building installed starter with search and tags disabled...');
     await npm(['run', 'build']);
+    assert.doesNotMatch(await read('dist/en/blog/installed-default/index.html'), /\/_social\//);
+    await assert.rejects(readdir(path.join(project, 'dist/_social')), { code: 'ENOENT' });
+    assert.match(
+      await read('dist/en/blog/share-public/index.html'),
+      /property="og:image" content="[^"]+\/share-test.jpg\?v=/
+    );
     await assert.rejects(read('dist/en/tags/index.html'), { code: 'ENOENT' });
     await assert.rejects(read('dist/en/tags/anglefeint/index.html'), { code: 'ENOENT' });
     assert.doesNotMatch(await read('dist/en/blog/index.html'), /class="tag-links/);

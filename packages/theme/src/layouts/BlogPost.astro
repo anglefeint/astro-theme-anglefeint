@@ -10,7 +10,10 @@ import type { MarkdownHeading } from 'astro';
 import Giscus from '../components/Giscus.astro';
 import AiShell from './shells/AiShell.astro';
 import blogPostCssUrl from '../styles/blog-post.css?url';
-import { SITE_AUTHOR } from '@anglefeint/site-config/site';
+import { SITE_AUTHOR, SITE_TITLE } from '@anglefeint/site-config/site';
+import { publicDir } from 'virtual:anglefeint-social';
+import { resolveSocialImage } from '../social/resolve.mjs';
+import { imageData } from '../social/model.mjs';
 import { THEME } from '@anglefeint/site-config/theme';
 import {
   DEFAULT_LOCALE,
@@ -37,6 +40,7 @@ const {
   pubDate,
   updatedDate,
   heroImage,
+  ogImage,
   context,
   readMinutes,
   aiModel,
@@ -59,6 +63,14 @@ const {
 } = Astro.props;
 const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
 const messages = getMessages(resolvedLocale);
+const shareImage = await resolveSocialImage({
+  override: ogImage,
+  enabled: THEME.SOCIAL_IMAGE.ENABLED,
+  data: imageData(title, author ?? SITE_AUTHOR, SITE_TITLE, resolvedLocale),
+  fallback: heroImage,
+  publicDir,
+  base: import.meta.env.BASE_URL,
+});
 
 // 终端风格日期
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
@@ -95,7 +107,7 @@ const hasCommentsConfig = Boolean(
   locale={resolvedLocale}
   title={title}
   description={description}
-  image={heroImage}
+  image={shareImage}
   pageType="article"
   publishedTime={pubDate}
   modifiedTime={updatedDate}

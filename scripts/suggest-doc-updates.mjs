@@ -28,6 +28,7 @@ function normalizePath(value) {
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
+    if (name === 'node_modules') continue;
     const abs = join(dir, name);
     const rel = normalizePath(relative(ROOT, abs));
     if (EXCLUDE_PREFIXES.some((prefix) => rel.startsWith(prefix))) continue;

@@ -25,6 +25,14 @@ This theme uses four distinct atmospheres by route.
 - `src/components/CyberAtmosphere.astro` mounts the rain/dust layers and initializes their distribution through `src/scripts/cyber-rain-dust.js`. The blog variant retains the original CSS appearance.
 - Paginated card grid for posts
 
+## Article share image template
+
+`packages/theme/src/social/render.mjs` produces a static 1200×630 dark blue card with a subtle grid, title, site name and author. It is independent of the page hero and does not add navigation or client effects. Titles scale with length; beyond 120 grapheme clusters they are shortened only on the image. Site/author labels are also bounded. Bundled Noto CJK covers the default Latin/CJK languages; arbitrary emoji and other scripts are not guaranteed.
+
+## Shared header language selector
+
+`packages/theme/src/components/shared/LangSwitcher.astro` groups the localized label and native select in a transparent, borderless layout wrapper. Only the select has a rounded border and background; its focus highlight remains visible. `CommonHeader.astro` supplies the select color variables.
+
 ## Shared header search
 
 - Shared header search uses a native modal dialog with scoped `.angle-search` styles and a single client script. Its top-layer placement avoids page effects and fixed navigation overlays; the header uses a compact icon-only trigger. The dialog inherits route chrome accents (green on Home, purple on Blog List, blue on Blog Post), with a terminal-style caption, an underlined search field, subtle result separators and tinted highlights. Only the result region scrolls; mobile expands the dialog within the viewport. Keyboard focus enters the input and returns to the trigger on close. Clicking the backdrop closes search; clicks inside and drags starting inside do not dismiss it. Search resources load only on opening; request revisions suppress stale results. Current-language results show titles and safe excerpt highlights, with eight results loaded per batch. Loading, empty, retry and dev-only states are localized. The global switch omits the component and its script.

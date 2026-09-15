@@ -110,6 +110,12 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 临时 `article-image-preview` 演示文章及三张测试图片已删除。现有 [浏览器测试](tests/e2e/image-preview.spec.mjs) 注入图片 fixture，不依赖对外发布测试文章。
 
+### 文章分享图（待发布）
+
+默认在构建时生成 1200×630 PNG；[生成器](packages/theme/src/social/render.mjs) 使用 Satori、Sharp 和内置完整 Noto Sans CJK SC 字体，不联网获取或裁剪字体。约 16.4 MB 的字库只用于生成图片，不作为网页字体分发。超长标题仅在图片中缩略。
+
+文章 `ogImage` 优先于自动图，支持文章相对图片、public 路径及 HTTPS URL；`theme.socialImage.enabled: false` 只关闭自动生成，手动图仍生效，其他文章回退到 hero 或默认图。正文封面独立。[构建集成](packages/theme/src/social-image.mjs) 和 theme adapter 必须与包一起迁移；发布的 0.4.0 尚不包含此功能。配置和测试对应见 [架构说明](docs/ARCHITECTURE.md#article-share-images)。
+
 ### 阅读状态和回到顶部
 
 [进度脚本](packages/theme/src/scripts/blogpost/read-progress.js) 根据整个文档可滚动距离计算进度，10%、30%、60%、90% 各显示一次短暂阶段提示。这是阅读装饰反馈，不是文章下载/加载状态。

@@ -109,6 +109,7 @@ const SIDECAR_ELIGIBLE_DOCS = new Set([
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
+    if (name === 'node_modules') continue;
     const abs = join(dir, name);
     const rel = relative(ROOT, abs).replaceAll('\\', '/');
     if (EXCLUDE_PREFIXES.some((prefix) => rel.startsWith(prefix))) continue;

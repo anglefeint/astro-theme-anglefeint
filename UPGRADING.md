@@ -14,6 +14,12 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### Pending release: article share images
+
+The working-tree implementation adds `socialImage()` from `@anglefeint/astro-theme/social-image` to `astro.config.mjs`, and `theme.socialImage.enabled` to config defaults/schema and the generated theme adapter. These changes must travel together with the package; they are not in published 0.4.0. Existing customized starters should follow the fresh-template migration below once released. The default generates per-article images, changing share previews but not article heroes. Explicit `ogImage` wins; disabling automatic generation retains the previous hero/default fallback. Bundled offline fonts increase installation size and rendering adds build time.
+
+### Published baseline
+
 Version 0.4.0 targets Astro `^7.3.2` and Sharp `^0.35.4`, with matching MDX/RSS/sitemap integrations. The theme peer range now requires Astro `^7.3.2`; Astro 5/6 are no longer supported by version 0.4.0. Preserve `compressHTML: true` in Astro config to retain the prior whitespace behavior. Projects created from the 0.3.0 starter retain the older dependencies until explicitly migrated. Updating only the theme package or running `npm update` within the old Astro 6 range does not complete this migration. See the [Astro security advisory](https://github.com/withastro/astro/security/advisories/GHSA-26w7-cxv4-gfx2) and [v7 migration guide](https://docs.astro.build/en/guides/upgrade-to/v7/).
 
 The 0.3.0 search feature requires registering `@anglefeint/astro-theme/search` in `astro.config.mjs` and synchronizing the `theme.search.enabled` config adapter with the UI. Updating the package alone does not install that registration into an older starter. Use the matching starter, or explicitly migrate its integration/configuration changes. Verify full search with build + preview.

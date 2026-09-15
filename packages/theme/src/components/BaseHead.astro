@@ -11,7 +11,7 @@ import type { Locale } from '@anglefeint/site-i18n/config';
 interface Props {
   title: string;
   description: string;
-  image?: ImageMetadata;
+  image?: ImageMetadata | { src: string; width?: number; height?: number };
   imageAlt?: string;
   pageType?: 'website' | 'article';
   publishedTime?: Date;
