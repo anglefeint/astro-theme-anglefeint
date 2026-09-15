@@ -14,6 +14,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.5.1: Chinese language menu label
+
+The new starter defaults to `简体中文`. Existing 0.5.0 projects remain compatible; no route or schema migration is needed. Updating npm does not rewrite local starter defaults. To adopt the display name in an existing project, merge `i18n: { locales: { zh: { meta: { label: '简体中文' } } } }` into the existing `defineThemeConfig()` object in `src/site.config.ts`. Preserve other settings and any preferred custom label. `/zh/`, `hreflang` and `ogLocale` remain unchanged.
+
 ### 0.5.0: article share images
 
 Version 0.5.0 adds `socialImage()` from `@anglefeint/astro-theme/social-image` to `astro.config.mjs`, and `theme.socialImage.enabled` to config defaults/schema and the generated theme adapter. These changes must travel together with the package; 0.4.0 does not include them. Existing customized starters should follow the fresh-template migration below. The default generates per-article images, changing share previews but not article heroes. Explicit `ogImage` wins; disabling automatic generation retains the previous hero/default fallback. Bundled offline fonts increase installation size and rendering adds build time.

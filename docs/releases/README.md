@@ -29,6 +29,8 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 Latest feature release: [0.5.0](./0.5.0.md), including migration and delivery evidence.
 
+Latest patch release: [0.5.1](./0.5.1.md), clarifying the Chinese language menu label.
+
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.
 - Historical gaps may be backfilled as grouped milestone notes.

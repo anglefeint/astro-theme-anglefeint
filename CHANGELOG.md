@@ -15,6 +15,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-09-16
+
+- Use `简体中文` as the default Chinese language menu label in the starter and package fallback. Keep custom `meta.label` overrides, `/zh/` routes and SEO locale metadata unchanged.
+- Document language menu label customization in the user config example and all five READMEs.
+
+Existing starter defaults are local files; npm updates do not rewrite them. See [release notes](docs/releases/0.5.1.md) for the optional label override and delivery evidence.
+
 ## [0.5.0] - 2026-09-16
 
 - Add automatic article share PNGs generated with Satori and Sharp, using a bundled offline Noto CJK font. Explicit `ogImage` overrides generation independently of the hero; `theme.socialImage.enabled` controls automatic generation. Requires the matching Astro integration and config adapter. The font adds approximately 16.4 MB uncompressed to installation, not to browser page downloads.
