@@ -95,6 +95,7 @@ This implementation is included in 0.5.0 with its matching starter. The complete
 - `'always'`: `/<default-locale>/` is canonical and `/` redirects to it (noindex)
 - These homepage redirects are generated HTML documents with meta refresh, canonical and `noindex, follow`, not server-side HTTP 301/302 responses implemented by the theme.
 - Other locales are explicit via `/:lang/`
+- Language menu labels come from `i18n.locales.<code>.meta.label`. The default `zh` label is `简体中文`; users can override it in `src/site.config.ts` without changing the `zh` route key or SEO locale metadata.
 - Blog list: `/:lang/blog` (paginated)
 - Blog post: `/:lang/blog/[slug]`
 - Tag directory: `/:lang/tags/`; tag archive: `/:lang/tags/<tagSlug>/`, subsequent pages `/:lang/tags/<tagSlug>/N/` (only when tags are enabled)

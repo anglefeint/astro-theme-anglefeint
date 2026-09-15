@@ -32,6 +32,9 @@ export const THEME_CONFIG = defineThemeConfig({
   // Search is enabled by default; builds generate its index automatically.
   // To disable: theme: { search: { enabled: false } }
   // Example:
+  // Language menu names use i18n.locales.<code>.meta.label.
+  // Chinese defaults to 简体中文. To customize only its display name:
+  // i18n: { locales: { zh: { meta: { label: '中文' } } } },
   // i18n: {
   //   defaultLocale: 'en',
   //   locales: {

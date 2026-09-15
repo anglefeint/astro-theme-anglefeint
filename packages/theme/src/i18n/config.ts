@@ -12,7 +12,7 @@ export const ENABLED_LOCALE_LABELS: Record<string, string> = {
   ja: '日本語',
   ko: '한국어',
   es: 'Español',
-  zh: '中文',
+  zh: '简体中文',
 };
 
 export function isLocale(value: string): value is Locale {
