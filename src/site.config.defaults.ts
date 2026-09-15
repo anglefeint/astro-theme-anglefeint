@@ -203,7 +203,7 @@ const defaultThemeConfig: ThemeConfig = {
       },
       zh: {
         meta: {
-          label: '中文',
+          label: '简体中文',
           hreflang: 'zh-CN',
           ogLocale: 'zh_CN',
           fallback: ['en'],

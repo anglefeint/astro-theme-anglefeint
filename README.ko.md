@@ -189,6 +189,7 @@ npm run new-page -- projects --theme matrix
    - `i18n.routing.defaultLocalePrefix`: 기본 언어를 `/<default-locale>/`(기본값) 또는 `/` 중 어디에 둘지 설정
    - `i18n.locales`: 지원 언어를 한 곳에서 추가/제거하는 단일 소스
    - `i18n.locales.<code>.messages`: 로케일별 UI 문구 오버라이드
+   - `i18n.locales.<code>.meta.label`: 언어 메뉴 표시 이름 (`zh` 기본값은 `简体中文`). 이름을 바꿔도 URL은 변경되지 않습니다
    - `i18n.locales.<code>.site.hero`: 로케일별 홈 hero 문구 오버라이드
    - `social.links`: 소셜 링크
    - `i18n.locales.<code>.about`: 로케일별 About 콘텐츠와 런타임 문구

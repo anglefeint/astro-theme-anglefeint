@@ -189,6 +189,7 @@ npm run new-page -- projects --theme matrix
    - `i18n.routing.defaultLocalePrefix`：决定默认语言使用 `/<default-locale>/`（默认）还是 `/`
    - `i18n.locales`：作为单一来源增减站点支持语言
    - `i18n.locales.<code>.messages`：覆盖该语言的界面文案
+   - `i18n.locales.<code>.meta.label`：语言菜单显示名称（`zh` 默认为“简体中文”），修改名称不会改变网址
    - `i18n.locales.<code>.site.hero`：覆盖该语言首页 hero 文案
    - `social.links`：社交链接
    - `i18n.locales.<code>.about`：按语言配置 About 页面内容与运行文案
