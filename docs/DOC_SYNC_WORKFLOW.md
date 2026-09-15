@@ -113,6 +113,8 @@ Fallback when `doc_purpose` is missing:
 
 ## Exclusions (by pattern, not by fixed filename list)
 
+Documentation discovery skips `node_modules` directories at every depth, including nested workspace dependencies. Dependency READMEs are not repository-owned documentation.
+
 Exclude these from strict metadata enforcement unless explicitly requested:
 
 - content markdown used as data (for example blog posts under `src/content/**`)

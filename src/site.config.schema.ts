@@ -92,6 +92,7 @@ export interface ThemeConfig {
     homeLatestCount: number;
     enableAboutPage: boolean;
     tags: { enabled: boolean };
+    socialImage: { enabled: boolean };
     toc: {
       enabled: boolean;
     };

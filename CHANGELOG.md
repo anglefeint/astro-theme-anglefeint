@@ -15,6 +15,12 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Add automatic article share PNGs generated with Satori and Sharp, using a bundled offline Noto CJK font. Explicit `ogImage` overrides generation independently of the hero; `theme.socialImage.enabled` controls automatic generation. Requires the matching Astro integration and config adapter. The font adds approximately 16.4 MB uncompressed to installation, not to browser page downloads.
+- Simplify the header language selector to a single visible border, preserving native selection and keyboard focus feedback.
+- Exclude nested workspace `node_modules` from documentation discovery.
+
+These changes are source-only and are not included in published 0.4.0. Package publishing, starter delivery and GitHub Release remain pending.
+
 ## [0.4.0] - 2026-09-15
 
 ### Changed

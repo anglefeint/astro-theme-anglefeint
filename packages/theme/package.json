@@ -31,7 +31,10 @@
     "src/cli-new-post.mjs",
     "src/cli-new-page.mjs",
     "src/search.mjs",
-    "src/search.d.mts"
+    "src/search.d.mts",
+    "src/social-image.mjs",
+    "src/social-image.d.mts",
+    "src/social"
   ],
   "bin": {
     "anglefeint-new-post": "src/cli-new-post.mjs",
@@ -53,6 +56,10 @@
     "./utils/pagination-style": "./src/utils/pagination-style.ts",
     "./utils/*": "./src/utils/*",
     "./content-schema": "./src/content-schema.ts",
+    "./social-image": {
+      "types": "./src/social-image.d.mts",
+      "default": "./src/social-image.mjs"
+    },
     "./search": {
       "types": "./src/search.d.mts",
       "default": "./src/search.mjs"
@@ -63,6 +70,8 @@
   },
   "dependencies": {
     "jiti": "^2.7.0",
-    "pagefind": "^1.5.2"
+    "pagefind": "^1.5.2",
+    "satori": "0.32.0",
+    "sharp": "^0.35.4"
   }
 }

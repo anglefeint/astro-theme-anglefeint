@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.1.3-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.2-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
@@ -272,6 +272,16 @@ Los bloques de código incluyen un botón de copia automático. Usa Markdown nor
 Las imágenes sin enlace del artículo se amplían con un clic o Enter/Espacio. Cierra con Esc, el botón o el fondo, conservando la posición de lectura. Las imágenes enlazadas mantienen su navegación.
 
 La vista previa usa la fuente de imagen ya seleccionada por el navegador; no descarga un original de mayor resolución. Excluye la portada y las imágenes dentro de enlaces o botones.
+
+## Imágenes para compartir artículos
+
+Esta función está implementada en el código actual, pero aún no está incluida en la versión publicada 0.4.0.
+
+`npm run build` genera un PNG de 1200×630 con el título, autor y nombre del sitio para artículos sin `ogImage`. No cambia `heroImage`. Usa `ogImage: ./share.png` para una imagen junto al artículo, o `ogImage: /images/share.png` para `public/images/share.png`. También admite HTTPS; la disponibilidad y caché dependen del proveedor. Los archivos locales inexistentes producen un error.
+
+En `src/site.config.ts`, `theme: { socialImage: { enabled: false } }` desactiva la generación. Las imágenes explícitas siguen teniendo prioridad; los demás artículos usan su portada o la imagen predeterminada. Reconstruye y despliega tras cambiar contenido. Los PNG están en `dist/_social/`; `og:image` del HTML indica la URL exacta. Las plataformas pueden conservar vistas previas en caché.
+
+Las fuentes incluidas cubren los cinco idiomas iniciales, sin API de imágenes ni JS de navegador. Los títulos largos se abrevian solo en la imagen. No se garantizan todos los emojis ni otros sistemas de escritura. Aumentan el tiempo de compilación y el tamaño de instalación, pero las páginas no descargan estas fuentes adicionales.
 
 ## Licencia
 

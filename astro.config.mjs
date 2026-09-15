@@ -3,6 +3,7 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import search from '@anglefeint/astro-theme/search';
+import socialImage from '@anglefeint/astro-theme/social-image';
 import { THEME } from './src/config/theme';
 import { defineConfig } from 'astro/config';
 import { URL, fileURLToPath } from 'node:url';
@@ -29,6 +30,7 @@ export default defineConfig({
   },
   integrations: [
     mdx(),
+    socialImage(),
     search({ enabled: THEME.SEARCH.ENABLED }),
     sitemap({
       filter: (page) => {

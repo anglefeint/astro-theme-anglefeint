@@ -24,7 +24,7 @@ sync_targets: [README.md, CLAUDE.md]
   - `packages/theme/src/scripts/` (theme-shared runtime)
   - `src/scripts/` (starter-owned page runtime)
     (bundled via Vite modules).
-- No API routes and no SSR runtime required.
+- No production API server or SSR runtime is required. Share-image endpoints are prerendered to static PNG files.
 - Blog post side monitor runtime is stateful and event-driven in `packages/theme/src/scripts/blogpost/red-queen-tv.js` (`initRedQueenTv`), called by `packages/theme/src/scripts/blogpost-effects.js`.
 
 ## Layered Theme Architecture
@@ -64,6 +64,16 @@ The project now follows a compositional structure:
 ## Content Pipeline
 
 The collection implementation is [packages/theme/src/content-schema.ts](../packages/theme/src/content-schema.ts), re-exported by the starter's [src/content.config.ts](../src/content.config.ts). Article schema fields `tags?: string[]`, `toc?: boolean` and `search?: boolean` feed the capabilities below. Their global defaults are enabled in `src/site.config.defaults.ts` and mapped to `THEME.TAGS/TOC/SEARCH.ENABLED` by the theme adapter. Tags are trimmed/deduplicated by tag utilities when consumed, not rewritten by the collection schema.
+
+### Article share images
+
+This implementation is pending release after 0.4.0. The complete bundled font is approximately 16.4 MB; no font download, system-font lookup or dynamic subsetting is performed during generation.
+
+`packages/theme/src/social-image.mjs` injects the prerendered `social/endpoint.ts` route at `/_social/[key].png` and provides the resolved public directory via a virtual module. Starter `astro.config.mjs` registers the integration. `theme.socialImage.enabled` defaults to true and maps through the generated theme adapter. The endpoint includes configured-locale blog entries without `ogImage`; identical render inputs share a file. `social/model.mjs` hashes template version, title, author, site and locale. Template/font changes must bump that version.
+
+`BlogPost.astro` resolves explicit `ogImage` (article-relative Astro image, public path, or HTTPS URL) before generation, then falls back to `heroImage` when disabled. This only changes head imagery; the visible hero remains independent. `AiShell -> ThemeFrame -> BaseHead` passes the result to Open Graph, Twitter and article JSON-LD. Public paths are checked for containment/existence and use a byte-derived query revision. Remote URLs are not fetched or validated by the generator. Local imported images use Astro's asset pipeline.
+
+`social/render.mjs` uses Satori and Sharp with a package-bundled Noto CJK font and its license, resolved from package exports. No browser font or generator script is added. The font increases install size; per-article PNG generation increases build time. `tests/social-image.unit.test.mjs` covers rendering and resolver behavior; `scripts/check-installed-starter.mjs --build --audit` validates packed assets, all default locales, metadata, custom images and disabled output. Custom article layouts using BlogPost should correspond to blog collection entries or supply `ogImage` explicitly.
 
 ### Article search
 

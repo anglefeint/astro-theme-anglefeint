@@ -10,7 +10,7 @@ interface Props {
   locale?: Locale;
   title: string;
   description: string;
-  image?: ImageMetadata;
+  image?: ImageMetadata | { src: string; width?: number; height?: number };
   imageAlt?: string;
   pageType?: 'website' | 'article';
   publishedTime?: Date;

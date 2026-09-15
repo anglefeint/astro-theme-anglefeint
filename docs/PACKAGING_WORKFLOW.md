@@ -59,6 +59,8 @@ The phase outline below records the package extraction approach already implemen
 
 ## Current State
 
+Pending after 0.4.0: automatic share images add the package export `@anglefeint/astro-theme/social-image`, package-owned `src/social/`, and the full Noto CJK font/license under `src/assets/theme/social/`. Existing starter-managed Astro config, defaults/schema and theme adapter register and configure the feature; no new starter-owned file is required. These source changes need a future coordinated package/starter release, not a docs-only starter sync.
+
 - Theme package is published and upgradeable from npm.
 - `starter` branch is wired to registry dependency (`@anglefeint/astro-theme`) for user projects.
 - `main` remains monorepo for core development and release workflows.

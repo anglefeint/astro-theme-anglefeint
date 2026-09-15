@@ -1,7 +1,7 @@
 ---
 doc_id: code_doc_audit
 doc_role: reference
-doc_purpose: Dated evidence and dispositions for the code-first documentation audit after the 0.3.0 feature release.
+doc_purpose: Dated evidence and dispositions for code-first documentation audits and subsequent feature changes.
 doc_scope: [docs, architecture, config, routing, visual-system, validation]
 update_triggers:
   [doc-process-change, architecture-change, config-change, routing-change, script-change]
@@ -11,6 +11,18 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 ---
 
 # 代码与文档核对记录：2026-09-14
+
+## 2026-09-16 分享图与语言选择器核对
+
+输入为 `cd7007e179d762ba6858d6cf17059c2b0530432a` 之后的工作区变更：分享图生成器、字体资产、构建集成、文章 schema、head 传递链、配置与 adapter、相关测试，以及上一轮语言选择器单层边框调整。文档工具的嵌套 node_modules 排除也在核对范围。
+
+按 `suggest:docs` 的候选核对实际源码。已更新五种语言 README、包 README、UPGRADING、CHANGELOG、项目地图、ARCHITECTURE、VISUAL_SYSTEMS、PACKAGING_WORKFLOW、THEME_SUBMISSION_CHECKLIST 和 DOC_SYNC_WORKFLOW。架构的分享图章节记录代码到测试的对应关系。明确使用完整本地 Noto 字体（约 16.4 MB）、无需构建联网取字体、手动图优先、关闭回退、长标题限制和 package/starter 共同迁移要求。
+
+AGENTS、工具入口、通用发布/元数据规则没有因本功能改变，保留；历史 release 文件保持历史事实；ASTRO_THEME_LISTING 暂不增加尚未发布的功能卖点。README 的 Astro 6.1.3 徽章与当前 Astro 7.3.2 依赖不一致，一并修正。
+
+复用本次开发中已完成的验证：50 项测试、24 项浏览器测试、154 个 Astro 文件检查、主工程构建、独立已安装主题的五组构建配置与审计通过；之后专项测试再次通过，打包预览确认包含字体与许可证，主工程审计为零已知漏洞。本轮另执行文档校验和推送 hook 要求的完整工程检查，实际结果以命令输出为准。
+
+本次用户要求文档同步并推送源码，因此仅交付 main，按维护流程允许的已记录原因暂缓完整发布：CHANGELOG 标为 Unreleased，版本仍为 0.4.0，不执行 npm 发布、starter 同步、tag 或 GitHub Release。正式分发仍须版本升级及完整安全发布流程；不能将本次源码推送称为发布完成。
 
 这是一次审阅快照，不是持续自动运行的审计结果。当前功能入口由 [架构对应表](ARCHITECTURE.md#code-to-documentation-map) 维护，中文总览见 [项目地图](../anglefeint.md)。后续代码变化不能据此直接声称文档仍然一致。
 

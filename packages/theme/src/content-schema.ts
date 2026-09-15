@@ -40,6 +40,18 @@ const blog = defineCollection({
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       heroImage: image().optional(),
+      ogImage: z
+        .union([
+          z
+            .string()
+            .trim()
+            .regex(
+              /^(?:\/(?!\/)|https:\/\/)/,
+              'ogImage must be a local image, a /public-path, or an HTTPS URL.'
+            ),
+          image(),
+        ])
+        .optional(),
       context: z.string().optional(),
       readMinutes: z.number().int().positive().optional(),
       aiModel: z.string().optional(),
