@@ -37,6 +37,7 @@ export const THEME = {
   TOC: { ENABLED: THEME_CONFIG.theme.toc?.enabled ?? true },
   SEARCH: { ENABLED: THEME_CONFIG.theme.search?.enabled ?? true },
   TAGS: { ENABLED: THEME_CONFIG.theme.tags?.enabled ?? true },
+  SOCIAL_IMAGE: { ENABLED: THEME_CONFIG.theme.socialImage?.enabled ?? true },
   /** Pagination behavior and style strategy for blog list */
   PAGINATION: {
     WINDOW_SIZE: THEME_CONFIG.theme.pagination.windowSize,

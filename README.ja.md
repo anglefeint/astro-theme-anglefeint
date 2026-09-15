@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.1.3-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.2-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
@@ -272,6 +272,16 @@ MDX 内の Markdown 見出しに対応しますが、コンポーネントが生
 本文のリンクなし画像はクリックまたは Enter/Space で拡大できます。Esc、閉じるボタン、背景で閉じ、読書位置を維持します。リンク付き画像の動作は変わりません。
 
 ブラウザーが選択済みの画像ソースを表示し、高解像度の原本を別途取得しません。記事のカバー画像とリンク・ボタン内の画像は対象外です。
+
+## 記事の共有画像
+
+この機能は 0.5.0 と対応する starter で利用できます。0.4.0 には含まれていません。
+
+`npm run build` は `ogImage` 未指定の記事に、タイトル・著者・サイト名を含む 1200×630 PNG を自動生成します。`heroImage` は変更しません。記事の隣の画像は `ogImage: ./share.png`、public 内は `ogImage: /images/share.png` で指定できます。HTTPS URL も使えますが、可用性とキャッシュは提供元に依存します。ローカル画像がない場合はエラーになります。
+
+`src/site.config.ts` の `theme: { socialImage: { enabled: false } }` で自動生成を停止できます。手動画像は常に優先され、それ以外は既存のカバーまたは既定画像に戻ります。変更後は再ビルド・デプロイしてください。生成先は `dist/_social/`、正確な URL は記事 HTML の `og:image` にあります。共有先のキャッシュは即時更新されない場合があります。
+
+同梱フォントで標準の5言語に対応し、画像 API やブラウザー JS は不要です。長いタイトルは画像内のみ省略します。すべての絵文字や文字体系は保証しません。ビルド時間とインストール容量は増えますが、記事ページへのフォント追加配信はありません。
 
 ## ライセンス
 
