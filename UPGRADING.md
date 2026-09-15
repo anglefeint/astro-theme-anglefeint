@@ -14,9 +14,9 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
-### Pending release: article share images
+### 0.5.0: article share images
 
-The working-tree implementation adds `socialImage()` from `@anglefeint/astro-theme/social-image` to `astro.config.mjs`, and `theme.socialImage.enabled` to config defaults/schema and the generated theme adapter. These changes must travel together with the package; they are not in published 0.4.0. Existing customized starters should follow the fresh-template migration below once released. The default generates per-article images, changing share previews but not article heroes. Explicit `ogImage` wins; disabling automatic generation retains the previous hero/default fallback. Bundled offline fonts increase installation size and rendering adds build time.
+Version 0.5.0 adds `socialImage()` from `@anglefeint/astro-theme/social-image` to `astro.config.mjs`, and `theme.socialImage.enabled` to config defaults/schema and the generated theme adapter. These changes must travel together with the package; 0.4.0 does not include them. Existing customized starters should follow the fresh-template migration below. The default generates per-article images, changing share previews but not article heroes. Explicit `ogImage` wins; disabling automatic generation retains the previous hero/default fallback. Bundled offline fonts increase installation size and rendering adds build time.
 
 ### Published baseline
 

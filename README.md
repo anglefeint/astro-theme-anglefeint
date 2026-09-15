@@ -282,7 +282,7 @@ Preview displays the image source already selected by the browser; it does not r
 
 ## Article share images
 
-This feature is available in the current source and is pending release; published 0.4.0 does not include it.
+Available in 0.5.0 with its matching starter; 0.4.0 does not include this feature.
 
 `npm run build` automatically creates a 1200×630 PNG for each article without an `ogImage`, using its title, author and site name. Generation uses bundled fonts, with no image API or browser JavaScript. The article's `heroImage` is independent.
 

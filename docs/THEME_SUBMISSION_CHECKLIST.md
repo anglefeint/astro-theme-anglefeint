@@ -50,7 +50,7 @@ Use this before submitting to an Astro theme listing/review.
 
 ## Project-Specific Risk Checks
 
-- For the pending share-image feature, verify generated PNGs and OG/Twitter/JSON-LD URLs, explicit local/public overrides and the disabled fallback in the installed starter. Do not advertise this as available in 0.4.0; wait for coordinated package/starter delivery.
+- For 0.5.0 share images, verify generated PNGs and OG/Twitter/JSON-LD URLs, explicit local/public overrides and the disabled fallback in the installed starter. Verify coordinated package/starter delivery before updating external listings.
 
 - Blog post effects do not break content readability on low-end devices
 - Left monitor playback:
