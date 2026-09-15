@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-6.1.3-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.2-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
@@ -278,6 +278,18 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 正文中未设置链接的图片支持点击或按 Enter/空格打开大图预览；按 Esc、点击关闭按钮或蒙版可收起，并保留阅读位置。已有链接的图片保持原来的跳转行为。
 
 预览使用浏览器已选中的图片源，不会自动获取更高清的原图。文章封面以及链接或按钮内部的图片不参与预览。
+
+## 文章分享图
+
+此功能从 0.5.0 起提供，需要配套 starter；0.4.0 不包含它。
+
+照常执行 `npm run build`，即可为没有设置 `ogImage` 的文章生成 1200×630 PNG，内容取自文章标题、作者和站点名称。生成使用随主题提供的字体，不调用图片 API、不增加浏览器 JS，也不会改变正文 `heroImage`。
+
+自定义图片：文章 frontmatter 写 `ogImage: ./share.png`（图片放文章旁边），或 `ogImage: /images/share.png`（对应 `public/images/share.png`）。也支持 HTTPS 图片地址，其可用性与缓存由图片提供方负责。本地图片不存在时会报错。
+
+在 `src/site.config.ts` 设置 `theme: { socialImage: { enabled: false } }` 可关闭自动生成。手动 `ogImage` 始终优先，其他文章回退到正文封面或原有默认图。修改后重新构建、部署；自动图片位于 `dist/_social/`，文章 HTML 的 `og:image` 给出准确地址。图片地址随内容变化，但外部平台仍可能缓存链接预览。
+
+内置字体覆盖默认的中、英、日、韩、西班牙语；超长标题仅在图片中缩略，不修改文章标题。不保证所有 emoji 和其他文字系统。生成会增加构建时间与安装体积，字体不会因此被文章页面下载。
 
 ## 许可证
 

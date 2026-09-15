@@ -114,6 +114,7 @@ const defaultThemeConfig: ThemeConfig = {
     tags: { enabled: true },
     toc: { enabled: true },
     search: { enabled: true },
+    socialImage: { enabled: true },
     pagination: {
       windowSize: 7,
       showJumpThreshold: 12,

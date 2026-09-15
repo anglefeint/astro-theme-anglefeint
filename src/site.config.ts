@@ -27,6 +27,8 @@ export const THEME_CONFIG = defineThemeConfig({
   // Article contents are enabled by default. Per-post `toc: true/false` overrides this.
   // theme: { toc: { enabled: false } },
   // Tag browsing: theme: { tags: { enabled: false } }
+  // Automatic article share images: theme: { socialImage: { enabled: false } }
+  // Per-post `ogImage` always takes priority and does not change the hero image.
   // Search is enabled by default; builds generate its index automatically.
   // To disable: theme: { search: { enabled: false } }
   // Example:
