@@ -189,6 +189,7 @@ English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.
    - `i18n.routing.defaultLocalePrefix` to choose whether the default locale lives at `/<default-locale>/` (default) or `/`
    - `i18n.locales` to add/remove supported locales from a single source
    - `i18n.locales.<code>.messages` for localized UI copy overrides
+   - `i18n.locales.<code>.meta.label` for the language menu name (`zh` defaults to `简体中文`); changing it does not change URLs
    - `i18n.locales.<code>.site.hero` for localized home hero copy
    - `i18n.locales.<code>.about` for localized About content/runtime text
    - `social.links` for header/footer links

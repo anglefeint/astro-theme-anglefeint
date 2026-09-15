@@ -189,6 +189,7 @@ npm run new-page -- projects --theme matrix
    - `i18n.routing.defaultLocalePrefix`: 既定ロケールを `/<default-locale>/`（デフォルト）に置くか `/` に置くかを設定
    - `i18n.locales`: 単一の設定源として対応ロケールを追加・削除
    - `i18n.locales.<code>.messages`: ロケール別 UI 文言の上書き
+   - `i18n.locales.<code>.meta.label`: 言語メニューの表示名（`zh` の既定値は `简体中文`）。変更しても URL は変わりません
    - `i18n.locales.<code>.site.hero`: ロケール別ホーム hero 文言の上書き
    - `social.links`: SNS リンク
    - `i18n.locales.<code>.about`: ロケール別 About コンテンツとランタイム文言
