@@ -19,7 +19,9 @@ Inicialización:
 
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
-Actualización:
+Actualizaciones compatibles solo del paquete:
+
+`npm update` actualiza el paquete del tema, no la configuración local, las rutas, los adaptadores ni las integraciones de Astro. Si las notas de versión requieren cambios de estructura, crea el starter más reciente en un directorio nuevo y migra tus artículos y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 npm update @anglefeint/astro-theme
 npm install

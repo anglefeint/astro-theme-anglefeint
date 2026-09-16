@@ -32,7 +32,7 @@ pnpm install
 ## 요구 사항
 
 - Node.js `22.12.0+` (LTS 권장)
-- 0.3.0 패키지 매니저 검증은 `npm`으로 수행했습니다. 아래에 `pnpm 10` 명령을 안내하지만 이번 릴리스에서 pnpm/yarn/bun은 재검증하지 않았습니다.
+- 0.5.1 starter의 문서 명령은 Linux에서 npm + Node 22, pnpm 10 + Node 24로 검증했습니다. yarn/bun은 테스트하지 않았습니다. [검증 기록](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/CODE_DOC_AUDIT.md)을 참고하세요.
 
 ## 빠른 시작
 

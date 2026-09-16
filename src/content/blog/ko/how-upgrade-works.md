@@ -19,7 +19,9 @@ tokenCount: 1040
 
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
-업그레이드:
+호환되는 패키지만 업데이트:
+
+`npm update`는 테마 패키지만 업데이트하며 로컬 설정, 라우트, 어댑터, Astro 통합 파일은 변경하지 않습니다. 릴리스 노트에서 프로젝트 구조 변경을 요구하면 새 디렉터리에 최신 starter를 만들고 글과 개인 설정을 옮기세요. 새 설정 보조 파일을 이전 파일로 덮어쓰지 마세요. [업그레이드 가이드](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
 
 npm update @anglefeint/astro-theme
 npm install
