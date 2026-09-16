@@ -1,0 +1,40 @@
+name: Documented starter commands
+on:
+  push:
+    branches: [codex/starter-cloud-acceptance-051]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  documented:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - node: '22'
+            pm: npm
+          - node: '24'
+            pm: pnpm
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      - if: matrix.pm == 'pnpm'
+        run: npm install --global pnpm@10
+      - name: Exercise documented consumer commands
+        env:
+          ASTRO_TELEMETRY_DISABLED: '1'
+          TEST_PM: ${{ matrix.pm }}
+        run: node tools/documented-commands.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: documented-${{ matrix.pm }}-node-${{ matrix.node }}
+          path: command-evidence/
+          retention-days: 14
