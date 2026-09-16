@@ -52,7 +52,7 @@ async function serve(mode,port) {
     await page.goto(base+'/en/blog/cloud-acceptance/');
     await page.locator('#lang-select').selectOption({label:'简体中文'});
     await page.waitForURL('**/zh/blog/cloud-acceptance/');
-    assert.equal(await page.locator('#lang-select option:checked').innerText(),'简体中文');
+    assert.equal((await page.locator('#lang-select option:checked').innerText()).trim(),'简体中文');
     assert.equal(await page.locator('.ai-article-toc a').count(),3);
     await page.locator('.code-copy').click();
     await page.waitForFunction(()=>document.querySelector('.code-copy')?.classList.contains('is-copied'));
