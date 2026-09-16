@@ -18,7 +18,7 @@ async function command(bin,args,{cwd=project,env={},failure=false}={}) {
   try {result=await exec(bin,args,{cwd,env:{...process.env,...env},timeout:600000,maxBuffer:50*1024*1024});}
   catch(error) {result=error;}
   await writeFile(path.join(evidence,`${results.length}.log`),(result.stdout||'')+'\n'+(result.stderr||''));
-  const code=result.code ?? 0;
+  const code=result instanceof Error ? (result.code ?? result.signal ?? 'process-error') : 0;
   const ok=failure ? Number.isInteger(code)&&code!==0 : code===0;
   results.push({command:label,env,status:ok?(failure?'expected-rejection':'passed'):'failed',exitCode:code});
   assert.ok(ok,label+'\n'+result.stdout+'\n'+result.stderr);
@@ -104,6 +104,7 @@ try {
   await run('check:adapters',[],{failure:true});await run('doctor',[],{failure:true});
   await run('sync-adapters');assert.equal(await readFile(adapter,'utf8'),original);
   for(const name of ['check:adapters','check:scaffold','check:no-build','check:about-runtime','check','doctor','build']) await run(name);
+  if(pm==='pnpm') await command('pnpm',['build']);
   assert.match(await run('check:workspace-link'),/skipped/);
   results.push({command:'check:workspace-link',status:'not-applicable',reason:'consumer mode: guard intentionally skips workspace validation'});
   await run('astro',['--version']);
@@ -118,6 +119,7 @@ try {
     await command('npm',['install']);
     assert.equal(JSON.parse(await readFile(file('node_modules/@anglefeint/astro-theme/package.json'),'utf8')).version,version);
     await command('npm',['install','@anglefeint/astro-theme@latest']);
+    await command('npm',['install','@anglefeint/astro-theme']);
     await command('npm',['pkg','set','scripts.new-post=anglefeint-new-post']);
     await command('npm',['pkg','set','scripts.new-page=anglefeint-new-page']);
     await command('npm',['install']);
