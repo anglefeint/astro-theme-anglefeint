@@ -19,7 +19,9 @@ tokenCount: 1040
 
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
-升级：
+兼容的纯包更新：
+
+`npm update` 只更新主题包，不会改写本地 starter 的配置、路由、适配器或 Astro 集成。如果发布说明要求更新工程结构，应在新目录创建最新 starter，再迁移文章和个人设置，不要用旧配置辅助文件覆盖新文件。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 npm update @anglefeint/astro-theme
 npm install

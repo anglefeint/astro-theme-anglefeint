@@ -78,23 +78,23 @@ Examples:
 
 ```bash
 # create one post slug in all default locales
-anglefeint-new-post my-first-post
+npx anglefeint-new-post my-first-post
 
 # create post only for selected locales
-anglefeint-new-post my-first-post --locales en,fr
+npx anglefeint-new-post my-first-post --locales en,fr
 
 # or via environment variable
-ANGLEFEINT_LOCALES=en,fr anglefeint-new-post my-first-post
+ANGLEFEINT_LOCALES=en,fr npx anglefeint-new-post my-first-post
 
 # create a custom page with theme variant
-anglefeint-new-page projects --theme base
-anglefeint-new-page projects --theme ai
-anglefeint-new-page projects --theme cyber
-anglefeint-new-page projects --theme hacker
-anglefeint-new-page projects --theme matrix
+npx anglefeint-new-page projects --theme base
+npx anglefeint-new-page projects --theme ai
+npx anglefeint-new-page projects --theme cyber
+npx anglefeint-new-page projects --theme hacker
+npx anglefeint-new-page projects --theme matrix
 ```
 
-Starter projects can invoke these directly (or wrap them in npm scripts). For most users, `#starter` is the recommended installation path.
+Run these inside a project with the theme installed. `npx` resolves the package's local binaries; a local npm installation does not put them on your ordinary terminal's PATH. Starter projects already provide `npm run new-post -- ...` and `npm run new-page -- ...`. The environment-variable example uses POSIX shell syntax. For most users, `#starter` is the recommended installation path.
 
 ## Static article search
 

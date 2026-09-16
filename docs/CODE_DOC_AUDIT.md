@@ -12,6 +12,26 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-16 Current package and command acceptance
+
+本轮基准为 main `623c4eb161e691add874fd0874db51b1cf691ff5`，主题包为 0.5.1。以当前实现为准审阅，不按历史文档修改运行时。
+
+- 已运行 `suggest:docs`，显式输入 defaults、包 i18n、两个 CLI、搜索及分享图集成路径。直接候选包括五语 README、包 README、UPGRADING、ARCHITECTURE；传播候选包括工作流、发布记录和元数据说明。候选仅用于定位责任文档。
+- 核对 defaults → theme adapter → `astro.config.mjs` → `BlogPost.astro`、TOC/tag utilities、图片预览脚本与 `CyberAtmosphere.astro`。搜索、目录、标签、分享图的默认开关，图片预览源，标签特效以及语言名称说明与当前实现一致；保留架构和视觉说明。
+- 五语 README 的包管理器验收说明停留在 0.3.0；更新为本轮 0.5.1 Linux 验证范围。包 README 的裸 CLI 示例改用 `npx`，避免让用户误以为本地安装会自动加入普通终端 PATH。
+- 五语 `how-upgrade-works.md` 示例遗漏 starter 文件不会随 npm 更新的边界；补充与 CLI/包发布边界一致的迁移说明。UPGRADING 已正确说明该边界，保留。
+- 修正 0.5.1 发布记录中被写成代码块标签语句的配置片段，给出有效的 `defineThemeConfig({...})` 对象示例。原发布时仅 npm、无浏览器目视验收的历史记录保留，并链接后续证据。
+- AGENTS、AI_WORKFLOW、DOC_SYNC_WORKFLOW 和元数据规则无需因验收新增而改变；其他历史版本不改写为当前状态。独立云端脚本尚未合入 main，不能把它描述为 main 的自动发布门禁。
+
+### 后续验收证据（复用已完成运行，本轮未重跑）
+
+- [文档命令验收](https://github.com/anglefeint/astro-theme-anglefeint/actions/runs/35074441939)：Linux npm + Node 22.23.2、pnpm 10.34.5 + Node 24.20.0 均成功，主题解析为 0.5.1，依赖审计零已知漏洞。
+- [固定版本的脚本](https://github.com/anglefeint/astro-theme-anglefeint/blob/c5fc3f87ff3ecb641bc382ea8629bd364386d9bd/tools/documented-commands.mjs) 覆盖 starter 14 个脚本入口；文章默认语言、显式参数、环境变量和优先级；五种页面模板与五语路由；帮助、npx/本地 bin；重复创建保护和非法输入；adapter 偏移检测及修复；开发和预览的 HTTP 检查。
+- `check:workspace-link` 在消费者工程中按设计跳过；不计为 workspace 链接验证。pnpm 跳过 esbuild 安装脚本的提示未阻断本轮 Linux 检查和构建。
+- 包更新仅验证当前 starter 结构下 0.5.0 → 0.5.1、配置与文章保持不变，不证明任意历史 starter 可原地升级。创建模板使用非交互参数，未测试交互式安装向导。裸 bin 通过本地可执行路径测试，不代表全局 PATH 可直接调用。
+- [Chromium 回归](https://github.com/anglefeint/astro-theme-anglefeint/actions/runs/35074441897) 在 Node 22/24 均通过：语言切换、目录链接数、复制与剪贴板、图片打开/Escape、分享图、preview 搜索和标签。390px 仅为首页语言选择器窄屏检查，不是真机手机测试；未覆盖 Firefox/Safari。
+- 没有修改主题运行时，也没有重新发布 npm。本文记录源码审阅与验收证据，不宣称所有参数组合、设备和历史升级路径已覆盖。
+
 ## 2026-09-16 分享图与语言选择器核对
 
 输入为 `cd7007e179d762ba6858d6cf17059c2b0530432a` 之后的工作区变更：分享图生成器、字体资产、构建集成、文章 schema、head 传递链、配置与 adapter、相关测试，以及上一轮语言选择器单层边框调整。文档工具的嵌套 node_modules 排除也在核对范围。
