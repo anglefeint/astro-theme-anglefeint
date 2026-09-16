@@ -32,7 +32,7 @@ pnpm install
 ## Requisitos
 
 - Node.js `22.12.0+` (LTS recomendado)
-- La aceptación de gestores de paquetes de 0.3.0 se realizó con `npm`. Se conservan los comandos de `pnpm 10` abajo, pero pnpm/yarn/bun no se volvieron a validar en esta versión.
+- Los comandos documentados del starter 0.5.1 pasaron las pruebas en Linux con npm + Node 22 y pnpm 10 + Node 24. No se probaron yarn/bun. Consulta el [registro de validación](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/CODE_DOC_AUDIT.md).
 
 ## Inicio rapido
 
