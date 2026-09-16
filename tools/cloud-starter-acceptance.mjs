@@ -57,7 +57,12 @@ async function serve(mode,port) {
     await page.locator('.code-copy').click();
     await page.waitForFunction(()=>document.querySelector('.code-copy')?.classList.contains('is-copied'));
     assert.match(await page.evaluate(()=>navigator.clipboard.readText()),/cloud acceptance/);
-    await page.locator('.ai-prose-body img').click();
+    const articleImage=page.locator('.ai-prose-body img');
+    await articleImage.waitFor({state:'visible'});
+    await articleImage.evaluate(img=>img.scrollIntoView({block:'center',behavior:'instant'}));
+    const imageBox=await articleImage.boundingBox();
+    assert.ok(imageBox);
+    await page.mouse.click(imageBox.x+imageBox.width/2,imageBox.y+imageBox.height/2);
     await page.locator('dialog.article-image-preview[open]').waitFor();
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('dialog.article-image-preview[open]').count(),0);
