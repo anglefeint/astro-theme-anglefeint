@@ -54,7 +54,12 @@ async function serve(mode,port) {
     await page.waitForURL('**/zh/blog/cloud-acceptance/');
     assert.equal((await page.locator('#lang-select option:checked').innerText()).trim(),'简体中文');
     assert.equal(await page.locator('.ai-article-toc a').count(),3);
-    await page.locator('.code-copy').click();
+    const copyButton=page.locator('.code-copy');
+    await copyButton.waitFor({state:'visible'});
+    await copyButton.evaluate(button=>button.scrollIntoView({block:'center',behavior:'instant'}));
+    const copyBox=await copyButton.boundingBox();
+    assert.ok(copyBox);
+    await page.mouse.click(copyBox.x+copyBox.width/2,copyBox.y+copyBox.height/2);
     await page.waitForFunction(()=>document.querySelector('.code-copy')?.classList.contains('is-copied'));
     assert.match(await page.evaluate(()=>navigator.clipboard.readText()),/cloud acceptance/);
     const articleImage=page.locator('.ai-prose-body img');
