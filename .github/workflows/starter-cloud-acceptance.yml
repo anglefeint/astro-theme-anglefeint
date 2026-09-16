@@ -1,0 +1,38 @@
+name: Starter cloud acceptance
+on:
+  push:
+    branches: [codex/starter-cloud-acceptance-051]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fresh-starter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '24']
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      - name: Install isolated browser test tools
+        run: |
+          npm install --prefix "$RUNNER_TEMP/browser-harness" --no-save playwright@1.58.2
+          "$RUNNER_TEMP/browser-harness/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Create public starter and exercise every command
+        env:
+          ASTRO_TELEMETRY_DISABLED: '1'
+        run: node tools/cloud-starter-acceptance.mjs
+      - name: Preserve report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: starter-acceptance-node-${{ matrix.node }}
+          path: cloud-evidence/
+          retention-days: 14
