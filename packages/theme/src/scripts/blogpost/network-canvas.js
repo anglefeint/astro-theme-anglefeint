@@ -16,7 +16,7 @@ export function initNetworkCanvas(prefersReducedMotion) {
 
   function seededRandom(seed) {
     var s = seed >>> 0;
-    return function() {
+    return function () {
       s = (1664525 * s + 1013904223) >>> 0;
       return s / 4294967296;
     };
@@ -31,7 +31,7 @@ export function initNetworkCanvas(prefersReducedMotion) {
 
     var w = rect.width;
     var h = rect.height;
-    var rand = seededRandom(0xA13F09);
+    var rand = seededRandom(0xa13f09);
     var count = Math.max(20, Math.min(36, Math.round((w * h) / 32000)));
     var connectDist = Math.min(160, Math.max(90, Math.min(w, h) * 0.18));
     var maxEdges = 120;
@@ -77,7 +77,7 @@ export function initNetworkCanvas(prefersReducedMotion) {
       var e = edges[i];
       var p1 = points[e[0]];
       var p2 = points[e[1]];
-      var alpha = (1 - e[2]) * (prefersReducedMotion ? 0.2 : (0.18 + 0.06 * Math.sin(t * 0.9 + i)));
+      var alpha = (1 - e[2]) * (prefersReducedMotion ? 0.2 : 0.18 + 0.06 * Math.sin(t * 0.9 + i));
       ctx.strokeStyle = 'rgba(190, 236, 255,' + Math.max(0.06, alpha).toFixed(3) + ')';
       ctx.lineWidth = 0.6;
       ctx.beginPath();
@@ -88,11 +88,51 @@ export function initNetworkCanvas(prefersReducedMotion) {
 
     for (var j = 0; j < points.length; j++) {
       var p = points[j];
-      var pulse = prefersReducedMotion ? 1 : (1 + 0.18 * Math.sin(t * 1.5 + p.p));
+      var pulse = prefersReducedMotion ? 1 : 1 + 0.18 * Math.sin(t * 1.5 + p.p);
       ctx.fillStyle = 'rgba(228, 251, 255,' + (0.58 * p.a).toFixed(3) + ')';
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r * pulse, 0, Math.PI * 2);
       ctx.fill();
+    }
+
+    // Reuse the existing graph and frame loop; at most six signal paths.
+    if (!prefersReducedMotion && edges.length) {
+      var signalCount = Math.min(6, edges.length);
+      for (var s = 0; s < signalCount; s++) {
+        var phase = t * 0.42 + s * 0.73;
+        var cycle = Math.floor(phase);
+        var progress = phase - cycle;
+        var edge = edges[(cycle + Math.floor((s * edges.length) / signalCount)) % edges.length];
+        var from = points[edge[0]];
+        var to = points[edge[1]];
+        if (progress < 0.8) {
+          var travel = progress / 0.8;
+          var tail = Math.max(0, travel - 0.18);
+          ctx.strokeStyle = 'rgba(98, 220, 255, 0.8)';
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(from.x + (to.x - from.x) * tail, from.y + (to.y - from.y) * tail);
+          ctx.lineTo(from.x + (to.x - from.x) * travel, from.y + (to.y - from.y) * travel);
+          ctx.stroke();
+          ctx.fillStyle = '#d9fbff';
+          ctx.beginPath();
+          ctx.arc(
+            from.x + (to.x - from.x) * travel,
+            from.y + (to.y - from.y) * travel,
+            2,
+            0,
+            Math.PI * 2
+          );
+          ctx.fill();
+        } else {
+          var arrival = (progress - 0.8) / 0.2;
+          ctx.strokeStyle = 'rgba(98, 220, 255,' + (0.8 * (1 - arrival)).toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(to.x, to.y, 3 + arrival * 11, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
     }
 
     if (!prefersReducedMotion) rafId = requestAnimationFrame(render);
@@ -108,7 +148,7 @@ export function initNetworkCanvas(prefersReducedMotion) {
   render(performance.now());
 
   window.addEventListener('resize', resize, { passive: true });
-  document.addEventListener('visibilitychange', function() {
+  document.addEventListener('visibilitychange', function () {
     if (prefersReducedMotion) return;
     if (document.hidden) stop();
     else if (!rafId) rafId = requestAnimationFrame(render);

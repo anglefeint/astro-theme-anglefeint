@@ -12,11 +12,31 @@ sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
 
 This theme uses four distinct atmospheres by route.
 
+## Design Intent and Change Principles
+
+The product positioning is defined in [AGENTS.md](../AGENTS.md#product-identity-and-design-intent): lightweight, simple publishing with conspicuous cinematic character. The following describes creative intent; the route sections below describe implemented behavior.
+
+| Atmosphere | Creative reference                          | Identity to preserve                                                                             |
+| ---------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Matrix     | Matrix films                                | Green code rain, luminous terminal text and the sense of entering a digital world                |
+| Cyberpunk  | Cyberpunk cinema, particularly Blade Runner | Clearly visible rain, sweeping light beams, halos, neon and Japanese night-market/street imagery |
+| Hacker     | Hacker culture                              | Terminal typography, commands, files and tool-like interactions                                  |
+| AI         | AI-product interfaces                       | Network visuals, monitors, system feedback and a futuristic reading environment                  |
+
+The four scenes should remain distinct while sharing usable navigation and publishing features. Film-like impact is a core reason to choose this theme. "More cool" should mean stronger scene identity, expressive light/motion and cohesive interaction, rather than automatically making all effects quieter.
+
+- Treat cyber rain, light beams and neon as signature scene elements. Do not reduce their visibility as a generic polish pass. The historical CSS explicitly names Blade Runner and describes its rain as dirty white rather than amber or cold cyan.
+- Keep lightweight implementation and strong visual presence as simultaneous goals. Prefer efficient rendering, bounded resources and appropriate lifecycle management over erasing the visual identity. Do not assume an effect is expensive without checking its implementation or measuring it.
+- Resolve concrete reading or interaction problems locally. Preserve accessible controls, mobile usability and reduced-motion alternatives; strong default atmosphere does not require forcing motion on every visitor.
+- Compare visual changes in motion, including mobile, since a still screenshot cannot establish rain density, sweep timing or flicker rhythm. Explain any deliberate reduction in a signature effect before treating it as an improvement.
+- Keep configuration and setup straightforward. Creative references guide design; they do not require adding every referenced motif, film asset or a new dependency.
+
 ## 1) Home (`body.page-home`)
 
 - Matrix-style terminal landing
 - Canvas character rain (`packages/theme/src/scripts/home-matrix.js`)
 - Green-tinted glass panel with scanline overlays
+- The existing canvas gives each column a 14–23 glyph trail and a 0.75–1.3 speed multiplier. Pale green-white leading glyphs have an 8px glow; green trail glyphs avoid per-glyph blur. Column spacing, configured FPS/DPR caps, pointer glow, visibility pause and reduced-motion opt-out are retained.
 
 ## 2) Blog List (`body.cyber-page`)
 
@@ -24,6 +44,7 @@ This theme uses four distinct atmospheres by route.
 - Most effects are CSS-driven in `packages/theme/src/styles/theme-cyber.css`
 - `src/components/CyberAtmosphere.astro` mounts the rain/dust layers and initializes their distribution through `src/scripts/cyber-rain-dust.js`. The blog variant retains the original CSS appearance.
 - Paginated card grid for posts
+- Card covers have blue/pink reflected-light gradients at their bottom corners and a luminous lower edge, using the existing image overlay. Reflection strengthens on hover or keyboard focus. Rain, spotlight, ambient flicker and particle parameters retain their original values.
 
 ## Article share image template
 
@@ -43,6 +64,7 @@ This theme uses four distinct atmospheres by route.
 
 - AI-interface reading environment
 - AI network background, reading progress, reveal effects
+- The existing network canvas carries up to six simultaneous signal paths. Each bright signal travels along a graph edge, then creates an expanding ring at the destination. It reuses the 30fps loop and existing graph rather than adding a canvas or timer. Reduced motion omits signals; the existing hidden-tab pause remains.
 - Hero canvas processing + side monitor effects via `packages/theme/src/scripts/blogpost-effects.js`
 - Effect startup is phased:
   - Critical UI first (code copy and image preview, then read progress, hero static paint and interactions)
@@ -65,6 +87,7 @@ This theme uses four distinct atmospheres by route.
 - Modal-driven right sidebar tools
 - Runtime text and modal content from `src/site.config.ts -> i18n.locales.<code>.about` (selected via `src/config/about.ts`)
 - Interaction script: `packages/theme/src/scripts/about-effects.js`
+- Opening a tool resolves its modal title from decorative scrambled glyphs in 360ms and briefly lights the window edge. The real title stays available to assistive technology and reserves layout space; the animated duplicate is aria-hidden. Grapheme segmentation preserves localized text. Closing, reopening or reinitializing cancels the title timer; hidden documents finish on the next tick. Reduced motion and labels over 64 graphemes display immediately. Tool contents and controls are available without waiting for the decoration.
 
 ## Naming Consistency
 
@@ -90,6 +113,7 @@ This theme uses four distinct atmospheres by route.
 
 ## Performance Notes
 
+- `tests/e2e/cinematic-effects.spec.mjs` verifies rapid modal close/reopen, stable accessible titles and final decoded text, moving canvases in normal mode, and static/omitted effects under reduced motion. These are behavioral regression checks, not frame-rate or GPU benchmarks.
 - Heavy effects are concentrated on post/about pages.
 - Large media assets (e.g. Red Queen visuals) may impact low-end devices.
 - Keep `prefers-reduced-motion` support consistent when adding new animations.
@@ -120,6 +144,8 @@ Code copy buttons sit at the top-right of a relative wrapper, outside the horizo
 Article image preview uses a native top-layer dialog with a dark backdrop, a contained image, alt-text caption and 44px close target. Only body images outside links/buttons receive zoom-in cursors and Enter/Space activation; hero images are excluded. Escape, close button and a primary click starting on the backdrop dismiss it; clicking the image or dragging from it onto the backdrop does not. It restores document overflow and focuses the source image without scrolling. The same selected image source is displayed; there is no original-resolution lookup, gallery navigation or zoom gesture implementation. No images means no preview dialog is created.
 
 ## Reading feedback
+
+About's `.hacker-toast` follows the same wide-screen placement as the article status: at 1360px and above, it sits 12px outside `.about-shell > .prose` and 1rem above the viewport bottom, with text wrapping within the gutter. `about/reading-ui.js` measures the panel on initialization, display, window resize and panel resize. Narrower viewports retain the right-corner position. Its existing 30/60/90% scroll milestones, localized messages and 1800ms display duration are unchanged; it is reading feedback, not loading status.
 
 `blogpost/read-progress.js` calculates progress from document scroll height, not article loading or a network request. Once the scroll position exceeds 6px, each 10%, 30%, 60% and 90% milestone can display its localized stage message once per page initialization, for 1800ms. A restored scroll position can also pass this gate. The final message says output is finalized at the 90% threshold; it is decorative reading feedback.
 

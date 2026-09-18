@@ -27,4 +27,5 @@ Claude Code should treat this file as a thin adapter, not as the canonical workf
 ## Claude-Specific Note
 
 - Prefer the repository-neutral rules in `AGENTS.md` over maintaining Claude-only workflow variants here.
+- For visual work, read `AGENTS.md`'s Product Identity and Design Intent and `docs/VISUAL_SYSTEMS.md`'s design principles before proposing changes.
 - If this file and `AGENTS.md` ever conflict, `AGENTS.md` and `docs/AI_WORKFLOW.md` win.

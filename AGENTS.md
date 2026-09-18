@@ -38,6 +38,21 @@ This file is the neutral entrypoint for all coding agents working in this reposi
 - Then follow its document map to the deeper workflow and architecture sources.
 - Tool-specific files such as `CLAUDE.md` or `.cursor/rules/*.mdc` should point here instead of duplicating repository rules.
 
+## Product Identity and Design Intent
+
+Anglefeint's core selling point is **lightweight, easy-to-use publishing with four vivid cinematic atmospheres: Matrix / Cyberpunk / Hacker / AI**. Cool, immediately recognizable visuals are central product value, not optional decoration to optimize away. Favor high visual impact with modest implementation and maintenance cost.
+
+- **Matrix / Home:** inspired by the Matrix films; unmistakable green code rain and terminal atmosphere.
+- **Cyberpunk / Blog and tags:** inspired by cyberpunk cinema, especially Blade Runner; prominent sweeping light beams, halos, rain, neon and Japanese night-market/street imagery create a rain-soaked city mood.
+- **Hacker / About:** hacker culture, command-line terminals, files and interactive tools.
+- **AI / Articles:** AI-product interfaces, network imagery, monitors and dynamic system feedback.
+
+These are creative references and design intent, not a claim that every motif is implemented on every page. Code remains authoritative for current behavior. See [Visual Systems](docs/VISUAL_SYSTEMS.md#design-intent-and-change-principles) for visual-change guidance.
+
+When asked to make the theme cooler, strengthen these identities and their cinematic presence. Do not interpret "lightweight", "polished" or "readable" as blanket permission to dim rain, narrow light beams, remove glow, slow all animation or turn the theme into a generic minimalist blog. Improve efficiency through asset budgets, suitable CSS/canvas techniques and runtime lifecycle management; evaluate readability locally while retaining the atmosphere. Preserve accessibility, reduced-motion behavior and usable mobile layouts.
+
+Before changing signature effects, identify the intended visual gain, compare against the existing effect in motion, and explain any tradeoff that reduces its presence. Do not introduce feature/configuration complexity merely to make the theme seem more capable. Keep setup simple and defaults expressive.
+
 ## Priority
 
 Implemented behavior is defined by code. Documentation records it; when they disagree, inspect the implementation and correct the documentation without changing runtime merely to match prose. Use `docs/DOC_SYNC_WORKFLOW.md` to trace code, configuration and tests to their responsible documents, including already committed changes.

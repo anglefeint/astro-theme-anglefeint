@@ -13,6 +13,51 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
   const closeButton = document.querySelector('.hacker-modal-close');
   if (!modalOverlay || !modalBody || !modalTitle) return;
   let lastFocusedElement = null;
+  let titleTimer = 0;
+  let resolvedTitle = '';
+
+  function stopTitleReveal() {
+    window.clearTimeout(titleTimer);
+    titleTimer = 0;
+    modalTitle.textContent = resolvedTitle;
+  }
+
+  function revealTitle(title) {
+    stopTitleReveal();
+    resolvedTitle = String(title ?? '');
+    modalTitle.textContent = resolvedTitle;
+    if (prefersReducedMotion || document.hidden || !resolvedTitle) return;
+    const glyphs = Array.from(
+      new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(resolvedTitle),
+      (part) => part.segment
+    );
+    // Long customized labels stay immediate; keep the accessible name stable.
+    if (glyphs.length > 64) return;
+    const label = document.createElement('span');
+    label.className = 'hacker-title-source';
+    label.textContent = resolvedTitle;
+    const visual = document.createElement('span');
+    visual.className = 'hacker-title-decode';
+    visual.setAttribute('aria-hidden', 'true');
+    modalTitle.replaceChildren(label, visual);
+    const noise = '01/<>_#';
+    let frame = 0;
+    function tick() {
+      if (document.hidden || frame >= 10) {
+        stopTitleReveal();
+        return;
+      }
+      const count = Math.floor((glyphs.length * frame) / 10);
+      visual.textContent = glyphs
+        .map((glyph, index) =>
+          index < count || /^\s+$/u.test(glyph) ? glyph : noise[(index + frame) % noise.length]
+        )
+        .join('');
+      frame += 1;
+      titleTimer = window.setTimeout(tick, 36);
+    }
+    tick();
+  }
 
   function getFocusableElements() {
     return Array.from(
@@ -38,6 +83,7 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
   if (!modalContent || typeof modalContent !== 'object') return;
 
   const closeModal = () => {
+    stopTitleReveal();
     decryptor.stop();
     if (cleanupKeyboard) {
       cleanupKeyboard();
@@ -67,7 +113,7 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
     const modalEl = modalOverlay.querySelector('.hacker-modal');
     if (modalEl) modalEl.classList.remove('hacker-modal-wide');
 
-    modalTitle.textContent = data.title;
+    revealTitle(data.title);
     modalBody.innerHTML = data.body;
     modalBody.className =
       'hacker-modal-body' +
@@ -165,6 +211,7 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion) {
   document.addEventListener('keydown', onDocumentKeydown);
 
   cleanupAboutModals = () => {
+    stopTitleReveal();
     decryptor.stop();
     if (cleanupKeyboard) {
       cleanupKeyboard();

@@ -421,14 +421,19 @@ body.cyber-page .img-wrapper::after {
   position: absolute;
   inset: 0;
   z-index: 2;
+  background:
+    radial-gradient(ellipse 55% 28% at 12% 100%, rgba(38, 202, 255, 0.38), transparent 75%),
+    radial-gradient(ellipse 50% 24% at 88% 100%, rgba(255, 72, 148, 0.32), transparent 75%);
+  border-bottom: 2px solid rgba(140, 215, 255, 0.48);
   box-shadow:
     inset 0 0 25px rgba(108, 190, 255, 0.16),
     inset 0 0 50px rgba(224, 148, 212, 0.1);
   pointer-events: none;
-  opacity: 0;
+  opacity: 0.65;
   transition: opacity 0.4s ease;
 }
-body.cyber-page ul li a:hover .img-wrapper::after {
+body.cyber-page ul li a:hover .img-wrapper::after,
+body.cyber-page ul li a:focus-visible .img-wrapper::after {
   opacity: 1;
 }
 body.cyber-page ul li img {
