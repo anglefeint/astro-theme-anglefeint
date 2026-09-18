@@ -89,7 +89,7 @@ npm run build
 
 ## 新建文章
 
-一次为全部语言（`en`、`ja`、`ko`、`es`、`zh`）创建同名 slug：
+一次为配置中已启用的语言创建同名 slug：
 
 ```bash
 npm run new-post -- my-first-post
