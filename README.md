@@ -89,7 +89,7 @@ For Astro major-version migrations, follow the official Astro guide first:
 
 ## Create New Post
 
-Create the same slug in all configured locales:
+Create the same slug in all enabled locales:
 
 ```bash
 npm run new-post -- my-first-post
