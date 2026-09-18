@@ -217,6 +217,7 @@ try {
         const homePath = mode === 'always' ? `${locale}/index.html` : 'index.html';
         const redirectPath = mode === 'always' ? 'index.html' : `${locale}/index.html`;
         const home = await read(`dist/${homePath}`);
+        assert.doesNotMatch(home, /data-music-deck|music-deck\.css|music\/controller/);
         const redirect = await read(`dist/${redirectPath}`);
         assert.doesNotMatch(home, /name="robots" content="noindex/);
         assert.ok(!home.includes('content="SITE_DESCRIPTION_SENTINEL"'));
@@ -264,6 +265,24 @@ try {
       await read('dist/en/blog/installed-default/index.html'),
       /data-anglefeint-search/
     );
+    await setConfig({
+      theme: {
+        socialImage: { enabled: false },
+        music: { enabled: true, tracks: [{ title: 'Install test', src: '/music/test.mp3' }] },
+      },
+    });
+    console.log('Building installed starter with optional music enabled...');
+    await npm(['run', 'build']);
+    for (const route of ['en', 'zh', 'en/blog', 'en/about']) {
+      const html = await read(`dist/${route}/index.html`);
+      assert.match(html, /data-music-deck/);
+      assert.match(html, /Install test/);
+      for (const attribute of ['data-core', 'data-storage']) {
+        const asset = html.match(new RegExp(`${attribute}="([^"]+)"`))?.[1];
+        assert.ok(asset, `Missing ${attribute}`);
+        assert.ok((await read(`dist${asset}`)).length > 0);
+      }
+    }
   }
   console.log('Installed starter CLI, migration, adapter and requested build checks passed.');
 } catch (error) {

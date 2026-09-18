@@ -1,4 +1,6 @@
 ---
+import MusicDeck from './MusicDeck.astro';
+import { THEME } from '@anglefeint/site-config/theme';
 import BaseHead from '../BaseHead.astro';
 import CommonHeader from './CommonHeader.astro';
 import CommonFooter from './CommonFooter.astro';
@@ -88,6 +90,7 @@ const messages = getMessages(locale);
       <slot />
     </main>
     <CommonFooter scanlines={scanlines} />
+    {THEME.MUSIC?.enabled && <MusicDeck tracks={THEME.MUSIC.tracks} labels={messages.music} />}
     <slot name="body-end" />
   </body>
 </html>

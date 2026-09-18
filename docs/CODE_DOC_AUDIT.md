@@ -12,6 +12,12 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-18 Optional music release review
+
+Reviewed the music feature changes against `c700d40`, following config/schema/defaults → adapter/normalizer → conditional mount → controller/core/storage → CSS and installed output. The site now inherits `music.enabled: false` and an empty playlist; the local demonstration MP3 has been removed. Five-language README examples describe the actual public-path/HTTPS inputs, lazy audio loading and navigation/resume limitation. Architecture records source/test links; Visual Systems records lower-left placement, desktop session preference, mobile compact entry and return-to-top avoidance. UPGRADING and the package README explicitly require the matching starter configuration files.
+
+`suggest:docs` returned broad direct candidates and no propagated-only candidates. Updated responsible configuration, architecture, visual, upgrade and release documents. Agent entrypoints, metadata/doc-sync/release algorithms, existing CLI commands, routing/SEO and theme-listing claims need no change for this optional feature; historical release evidence remains historical. Added an explicit `utils/music` package export and installed-starter enabled/disabled checks to cover the npm resolution boundary. Validation and delivery results are recorded in [0.7.0](releases/0.7.0.md), without treating earlier runs as new release evidence.
+
 ## 2026-09-16 Current package and command acceptance
 
 本轮基准为 main `623c4eb161e691add874fd0874db51b1cf691ff5`，主题包为 0.5.1。以当前实现为准审阅，不按历史文档修改运行时。

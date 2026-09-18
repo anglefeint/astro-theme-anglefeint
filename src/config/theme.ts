@@ -1,6 +1,7 @@
 // Generated file. Do not edit directly.
 // Edit scripts/adapter-templates/src/config/theme.ts and run `npm run sync-adapters`.
 
+import { normalizeMusic } from '@anglefeint/astro-theme/utils/music';
 import { THEME_CONFIG } from '../site.config.ts';
 
 const commentsConfig = THEME_CONFIG.theme.comments;
@@ -27,6 +28,7 @@ if (commentsConfig.enabled) {
  * Theme behavior config.
  */
 export const THEME = {
+  MUSIC: normalizeMusic(THEME_CONFIG.theme.music),
   /** Posts per page on blog list */
   BLOG_PAGE_SIZE: THEME_CONFIG.theme.blogPageSize,
   /** Number of latest posts shown on home page */

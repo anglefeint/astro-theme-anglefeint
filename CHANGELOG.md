@@ -15,6 +15,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-09-18
+
+- Add an optional, default-off music player with independent native-audio core, guarded session storage and localized accessible controls.
+- Restore the luminous glass deck, progress seeking, playlist, mute/volume and compact mode; place it at the lower left with mobile return-to-top avoidance.
+- Load audio only after user interaction. No bundled songs or new runtime dependencies. Ordinary page navigation pauses music and requires an explicit resume.
+- Add music configuration defaults/schema and adapter mapping; use the matching starter to enable the feature. See [release notes](docs/releases/0.7.0.md).
+
 ## [0.6.0] - 2026-09-18
 
 - Enhance Matrix rain with luminous pale heads and varied trail lengths/speeds, preserving green rain and existing frame-rate limits.

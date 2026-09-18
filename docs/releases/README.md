@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release: [0.6.0](./0.6.0.md), cinematic effects and About reading status placement; includes verified npm/starter delivery and public-template acceptance results.
+Latest feature release entry: [0.7.0](./0.7.0.md), optional default-off music player. See its delivery section for publication status and validation evidence.
 
 Latest patch release: [0.5.1](./0.5.1.md), clarifying the Chinese language menu label.
 

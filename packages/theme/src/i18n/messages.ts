@@ -1,6 +1,26 @@
 import { DEFAULT_LOCALE, type Locale } from './config';
 
 export type Messages = {
+  music: {
+    mute: string;
+    unmute: string;
+    label: string;
+    play: string;
+    pause: string;
+    prev: string;
+    next: string;
+    open: string;
+    close: string;
+    progress: string;
+    volume: string;
+    queue: string;
+    idle: string;
+    loading: string;
+    playing: string;
+    paused: string;
+    error: string;
+    noScript: string;
+  };
   imagePreview: { open: string; close: string };
   codeCopy: { copy: string; copied: string; failed: string };
   search: {
@@ -92,6 +112,26 @@ export type Messages = {
 
 export const DEFAULT_MESSAGES: Record<string, Messages> = {
   en: {
+    music: {
+      mute: 'Mute',
+      unmute: 'Unmute',
+      label: 'Music player',
+      play: 'Play',
+      pause: 'Pause',
+      prev: 'Previous',
+      next: 'Next',
+      open: 'Open player',
+      close: 'Collapse player',
+      progress: 'Progress',
+      volume: 'Volume',
+      queue: 'Playlist',
+      idle: 'Ready',
+      loading: 'Loading',
+      playing: 'Playing',
+      paused: 'Paused',
+      error: 'Unable to play. Try again or select another track.',
+      noScript: 'Enable JavaScript to use the player.',
+    },
     imagePreview: { open: 'View image', close: 'Close image preview' },
     codeCopy: {
       copy: 'Copy code',
@@ -185,6 +225,26 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ja: {
+    music: {
+      mute: 'ミュート',
+      unmute: 'ミュート解除',
+      label: '音楽プレーヤー',
+      play: '再生',
+      pause: '一時停止',
+      prev: '前の曲',
+      next: '次の曲',
+      open: 'プレーヤーを開く',
+      close: 'プレーヤーを折りたたむ',
+      progress: '再生位置',
+      volume: '音量',
+      queue: 'プレイリスト',
+      idle: '準備完了',
+      loading: '読み込み中',
+      playing: '再生中',
+      paused: '一時停止中',
+      error: '再生できません。再試行するか別の曲を選んでください。',
+      noScript: 'プレーヤーを使うには JavaScript を有効にしてください。',
+    },
     imagePreview: { open: '画像を拡大', close: '画像を閉じる' },
     codeCopy: {
       copy: 'コードをコピー',
@@ -278,6 +338,26 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ko: {
+    music: {
+      mute: '음소거',
+      unmute: '음소거 해제',
+      label: '음악 플레이어',
+      play: '재생',
+      pause: '일시 정지',
+      prev: '이전 곡',
+      next: '다음 곡',
+      open: '플레이어 열기',
+      close: '플레이어 접기',
+      progress: '재생 위치',
+      volume: '음량',
+      queue: '재생 목록',
+      idle: '준비됨',
+      loading: '불러오는 중',
+      playing: '재생 중',
+      paused: '일시 정지됨',
+      error: '재생할 수 없습니다. 다시 시도하거나 다른 곡을 선택하세요.',
+      noScript: '플레이어를 사용하려면 JavaScript를 활성화하세요.',
+    },
     imagePreview: { open: '이미지 확대', close: '이미지 닫기' },
     codeCopy: {
       copy: '코드 복사',
@@ -371,6 +451,26 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   es: {
+    music: {
+      mute: 'Silenciar',
+      unmute: 'Activar sonido',
+      label: 'Reproductor de música',
+      play: 'Reproducir',
+      pause: 'Pausar',
+      prev: 'Anterior',
+      next: 'Siguiente',
+      open: 'Abrir reproductor',
+      close: 'Contraer reproductor',
+      progress: 'Progreso',
+      volume: 'Volumen',
+      queue: 'Lista de reproducción',
+      idle: 'Listo',
+      loading: 'Cargando',
+      playing: 'Reproduciendo',
+      paused: 'En pausa',
+      error: 'No se puede reproducir. Reintenta o selecciona otra pista.',
+      noScript: 'Activa JavaScript para usar el reproductor.',
+    },
     imagePreview: { open: 'Ampliar imagen', close: 'Cerrar imagen' },
     codeCopy: {
       copy: 'Copiar código',
@@ -465,6 +565,26 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   zh: {
+    music: {
+      mute: '静音',
+      unmute: '取消静音',
+      label: '音乐播放器',
+      play: '播放',
+      pause: '暂停',
+      prev: '上一首',
+      next: '下一首',
+      open: '展开播放器',
+      close: '收起播放器',
+      progress: '播放进度',
+      volume: '音量',
+      queue: '歌单',
+      idle: '就绪',
+      loading: '加载中',
+      playing: '播放中',
+      paused: '已暂停',
+      error: '播放失败，请重试或切换歌曲。',
+      noScript: '请启用 JavaScript 使用播放器。',
+    },
     imagePreview: { open: '查看大图', close: '关闭图片预览' },
     codeCopy: { copy: '复制代码', copied: '已复制', failed: '复制失败，请手动选择代码。' },
     search: {
