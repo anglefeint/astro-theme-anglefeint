@@ -14,6 +14,12 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.6.0: cinematic effects
+
+The visual enhancements are package-owned and compatible with the 0.5.x starter. Use `npm install @anglefeint/astro-theme@^0.6.0`, then run `npm run doctor` and preview your site. `npm update` respects the existing dependency range: `^0.5.1` does not include `0.6.0`.
+
+The new starter also uses literal `replaceAll` calls in the About route's `escapeHtml` function to avoid a parsing error in `@astrojs/language-server@2.17.0`. If an existing starter reports syntax errors in `src/pages/[lang]/about.astro` after a fresh dependency install, replace the chained `replace(/&/g, '&amp;')`, `replace(/</g, '&lt;')`, `replace(/>/g, '&gt;')` and `replace(/"/g, '&quot;')` calls with `replaceAll('&', '&amp;')`, `replaceAll('<', '&lt;')`, `replaceAll('>', '&gt;')` and `replaceAll('"', '&quot;')`, respectively. Keep ampersand replacement first and preserve all four escapes. This keeps the rendered HTML unchanged; updating npm alone does not edit the local route.
+
 ### 0.5.1: Chinese language menu label
 
 The new starter defaults to `简体中文`. Existing 0.5.0 projects remain compatible; no route or schema migration is needed. Updating npm does not rewrite local starter defaults. To adopt the display name in an existing project, merge `i18n: { locales: { zh: { meta: { label: '简体中文' } } } }` into the existing `defineThemeConfig()` object in `src/site.config.ts`. Preserve other settings and any preferred custom label. `/zh/`, `hreflang` and `ogLocale` remain unchanged.
