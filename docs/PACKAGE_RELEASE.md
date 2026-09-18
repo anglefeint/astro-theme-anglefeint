@@ -47,6 +47,8 @@ Run the publish dry-run after committing the release-prep state. The release scr
 
 Include implementation, tests, changelog and release notes in the release-prep commit, not just the two version files in the example. Validate and push `main` before publishing; check any push-triggered automation first.
 
+For the public demo, use the [production demo deployment checks](MAINTAINER_WORKFLOW.md#production-demo-deployment): only `main` may deploy to production. After the final branch push, verify the live blog inventory, older articles and pagination as well as the changed pages. Starter template acceptance and a successful Cloudflare build check are not substitutes for this check.
+
 ```bash
 npm run release:npm -- --dry-run
 ```

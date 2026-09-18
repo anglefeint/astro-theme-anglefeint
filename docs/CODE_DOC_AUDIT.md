@@ -12,6 +12,20 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-19 教程交付与演示站部署复核
+
+核对 main `75402b4` 与其前序 `0f12176`、starter `b7b0d75` 与其前序 `8b503c7`：main 的 70 篇文章（每语言 14 篇）未删除，本次仅重写五语言的三篇教程。starter 在更新前后都只有 20 篇（每语言四篇），对应 [starter 内容清单](../scripts/starter-manifest.mjs) 中的欢迎文章及三篇指南。该清单不代表演示站完整文章库。
+
+此前教程交付验证通过：45 段 TypeScript 示例按实际配置类型、默认合并及归一化函数检查；15 篇构建页面及系列链接验证；main 推送检查、隔离 starter 构建/审计、公开模板安装和 CLI/doctor/dev/preview 验收通过，审计为 0 个已知漏洞。这些是前一轮交付证据，不算本轮重新执行，也不能证明生产演示站内容完整。
+
+随后复查线上 `/en/blog/` 仅列四篇，`/en/blog/2/`、`/en/blog/hello-world/` 和 `/en/blog/neon-archive-blog-list/` 返回 404。GitHub 上 Cloudflare 检查显示 main `75402b4` 于 2026-09-18 15:32:30 UTC 构建成功，starter `b7b0d75` 于 16:26:29 UTC 构建成功。线上内容与 starter 一致，且后者构建更晚，指向演示站被 starter 内容替换；仅凭检查记录不能确定后台具体部署命令或活动版本。最初把“教程可访问”当成整体上线成功，遗漏了最后一次推送后的完整文章库复查。
+
+用户于 2026-09-19 告知已在 Cloudflare 修改设置；此处记录为用户报告，不声称代理已读取并确认后台设置。本轮补充 [维护者部署规则](MAINTAINER_WORKFLOW.md#production-demo-deployment)，并在 AI 工作流、分支政策和包发布流程中接入：生产站只部署 main，starter 分发与演示站验收分开，最后一次推送后必须复查旧文章、各语言与分页。修复部署来源不需要恢复未删除的文件或发布 npm。
+
+文档工作流以发布/AI 工作流路径为输入，直接候选包含维护流程、分支政策、审计记录和代理入口，传播候选包含 README/升级说明及历史发布记录。本轮只修改五份负责维护流程的文档；README 和五语教程的用户功能说明、运行时架构/视觉说明、元数据与文档同步算法无需改变，历史版本记录保持历史事实。代理入口已指向 AI 工作流，无需重复整套部署规则。这五份文档不在 starter 分发清单内，因此本轮只提交 main，不需要同步 starter 或创建 npm/GitHub 新版本。
+
+本记录写于恢复部署之前，不预先声称线上已恢复。文档提交推送 main 后，需按完整文章库进行线上验收并报告实际结果。
+
 ## 2026-09-18 Optional music release review
 
 Reviewed the music feature changes against `c700d40`, following config/schema/defaults → adapter/normalizer → conditional mount → controller/core/storage → CSS and installed output. The site now inherits `music.enabled: false` and an empty playlist; the local demonstration MP3 has been removed. Five-language README examples describe the actual public-path/HTTPS inputs, lazy audio loading and navigation/resume limitation. Architecture records source/test links; Visual Systems records lower-left placement, desktop session preference, mobile compact entry and return-to-top avoidance. UPGRADING and the package README explicitly require the matching starter configuration files.
