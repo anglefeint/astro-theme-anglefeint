@@ -4,7 +4,7 @@ title: '使用指南 2：写文章与管理内容'
 subtitle: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 description: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -46,6 +46,8 @@ tags: ['astro', 'notes']
 必填项是 `title`、`description`、`pubDate`。可选 `subtitle`、`updatedDate`、`author`；没有写 `author` 时使用站点作者。列表按 `pubDate` 从新到旧排序。当前没有草稿或定时发布过滤：不要靠 `draft: true` 或未来日期隐藏文章，未完成内容先放在内容目录之外。
 
 封面用 `heroImage: ./cover.jpg`，文件放在文章旁边；也可以保留新建命令分配的本地封面路径。命令只在 `src/assets/blog/default-covers/` 有图片时自动分配封面，不会下载图片。`heroImage` 可省略。阅读时长和字数等指标已有自动计算，普通文章不用手工填写。
+
+这些是估算值，不是连接 AI 服务后测得的数据。frontmatter 中的 `readMinutes`、`wordCount`、`tokenCount`、`aiLatencyMs`、`aiConfidence` 会优先于自动计算；不填写就使用估算值。部分演示文章为了展示效果填有固定值。
 
 ## 3. 用标题自动生成目录
 

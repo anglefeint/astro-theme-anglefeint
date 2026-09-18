@@ -4,7 +4,7 @@ title: 'Guía 1: Configura tu blog'
 subtitle: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 description: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -63,6 +63,8 @@ export const THEME_CONFIG = defineThemeConfig({
 La presentación bajo el título principal de inicio se configura mediante `site.hero` del idioma actual. `site.description` es la descripción general predeterminada, mientras que la metadescripción de inicio da prioridad a `messages.siteDescription` del idioma. Cambiar solo `site.description` no sustituye la presentación visible.
 
 Los iconos sociales admiten `github`, `twitter` y `mastodon`. Usa `social: { links: [] }` para quitar todos los enlaces. Las variables de entorno como `PUBLIC_SITE_TITLE` y `PUBLIC_SITE_URL` tienen prioridad sobre el archivo; compruébalas si un cambio no se refleja.
+
+Define `PUBLIC_SITE_URL=https://your-domain.example` en el archivo `.env` de la raíz del proyecto o en el entorno de compilación del alojamiento para reemplazar `site.url`. Reinicia el servidor de desarrollo o vuelve a compilar tras cambiarlo. Comprueba que los enlaces canonical, RSS, sitemap y las URL absolutas de imágenes sociales utilicen ese dominio. Se necesitan el `astro.config.mjs` y el script de resolución de URL correspondientes del starter; actualizar solo el paquete npm del tema no actualiza estos archivos.
 
 ## 3. Conserva los idiomas que necesites
 

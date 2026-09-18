@@ -4,7 +4,7 @@ title: '사용 가이드 2: 글 작성과 콘텐츠 관리'
 subtitle: '글 작성, 표지와 태그, 목차, 이미지 미리보기, 코드 복사, 검색, 공유 이미지를 설명합니다.'
 description: '글 작성, 표지와 태그, 목차, 이미지 미리보기, 코드 복사, 검색, 공유 이미지를 설명합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -46,6 +46,8 @@ tags: ['astro', 'notes']
 `title`, `description`, `pubDate`는 필수입니다. `subtitle`, `updatedDate`, `author`는 선택이며 작성자를 생략하면 사이트 작성자를 사용합니다. 목록은 `pubDate` 최신순입니다. 현재 초안이나 예약 발행 필터는 없습니다. `draft: true`나 미래 날짜로 숨길 수 없으므로 미완성 글은 콘텐츠 디렉터리 밖에 보관하세요.
 
 표지는 글 옆에 이미지를 놓고 `heroImage: ./cover.jpg`로 지정하거나 생성 명령이 배정한 로컬 경로를 유지합니다. 자동 배정은 `src/assets/blog/default-covers/`에 이미지가 있을 때만 작동하며 이미지를 다운로드하지 않습니다. `heroImage`는 생략할 수 있습니다. 읽기 시간과 글자 수 등의 지표는 자동 계산하므로 일반 글에서는 직접 입력할 필요가 없습니다.
+
+이 값은 추정치이며 AI 서비스에서 측정한 데이터가 아닙니다. frontmatter의 `readMinutes`, `wordCount`, `tokenCount`, `aiLatencyMs`, `aiConfidence` 값이 자동 계산보다 우선하며, 생략하면 추정치를 사용합니다. 일부 데모 글에는 표시 예시를 위한 고정값이 있습니다.
 
 ## 3. 제목으로 목차 생성하기
 

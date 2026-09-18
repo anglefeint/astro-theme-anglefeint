@@ -151,6 +151,7 @@ This implementation is included in 0.5.0 with its matching starter. The complete
 
 ## SEO and Discovery
 
+- Build-time origin: `astro.config.mjs` calls `scripts/resolve-site-url.mjs` before Astro resolves `site`. It uses Vite `loadEnv` for the CLI mode (`dev`: development; build/preview/sync: production; `--mode` overrides it), rooted beside the config. `PUBLIC_SITE_URL` from the process environment takes precedence over dotenv files, then the configured site URL is used. This is necessary because `import.meta.env` is not populated during Astro config evaluation. Vite is a direct starter dependency for this build-time helper; no browser dependency is added. `tests/site-url.unit.test.mjs` covers fallback, dotenv modes and process precedence. Custom programmatic Astro invocations should pass their intended `site` explicitly rather than relying on CLI argument detection.
 - Head metadata and hreflang: `packages/theme/src/components/BaseHead.astro`
 - Page routes can pass `localeHrefs` through `ThemeFrame` so `<head>` alternate links use the same existence-aware locale fallback as the language switcher.
 - Tag routes explicitly pass `includeAlternateLinks={false}` through `CyberShell` and `ThemeFrame` to `BaseHead`. They keep canonical metadata and UI language navigation, but omit hreflang links; tag label equality is not treated as proof of translated content.
