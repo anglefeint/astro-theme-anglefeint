@@ -15,6 +15,17 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-09-18
+
+- Enhance Matrix rain with luminous pale heads and varied trail lengths/speeds, preserving green rain and existing frame-rate limits.
+- Add blue/pink reflected light to cyber card covers without weakening rain or spotlights.
+- Animate bounded signal paths and arrival pulses on the existing AI network canvas.
+- Add accessible, localized tool-title decoding and a brief window-edge glow to Hacker modals.
+- Place About reading feedback outside the content panel on wide screens, matching article status positioning.
+- Clarify the four cinematic identities in agent guidance and add focused browser regression coverage.
+
+Compatible package update for the current starter; no new configuration or dependencies. See [release notes](docs/releases/0.6.0.md).
+
 ## [0.5.1] - 2026-09-16
 
 - Use `简体中文` as the default Chinese language menu label in the starter and package fallback. Keep custom `meta.label` overrides, `/zh/` routes and SEO locale metadata unchanged.

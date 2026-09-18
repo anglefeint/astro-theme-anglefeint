@@ -1,6 +1,20 @@
 export function initAboutReadingUi(runtimeConfig, prefersReducedMotion) {
   var progress = document.querySelector('.hacker-progress');
   var toast = document.querySelector('.hacker-toast');
+  var articlePanel = document.querySelector('.about-shell > .prose');
+  function positionToast() {
+    if (toast && articlePanel) {
+      toast.style.setProperty(
+        '--about-right',
+        Math.ceil(articlePanel.getBoundingClientRect().right) + 'px'
+      );
+    }
+  }
+  if (toast && articlePanel) {
+    positionToast();
+    window.addEventListener('resize', positionToast, { passive: true });
+    new ResizeObserver(positionToast).observe(articlePanel);
+  }
   var fallbackToasts = {
     p30: 'context parsed',
     p60: 'inference stable',
@@ -16,6 +30,7 @@ export function initAboutReadingUi(runtimeConfig, prefersReducedMotion) {
 
   function showToast(msg) {
     if (!toast) return;
+    positionToast();
     toast.textContent = '> ' + msg;
     toast.classList.add('visible');
     clearTimeout(toastTimer);

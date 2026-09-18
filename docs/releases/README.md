@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release: [0.5.0](./0.5.0.md), including migration and delivery evidence.
+Latest feature release: [0.6.0](./0.6.0.md), cinematic effects and About reading status placement; see its delivery status.
 
 Latest patch release: [0.5.1](./0.5.1.md), clarifying the Chinese language menu label.
 

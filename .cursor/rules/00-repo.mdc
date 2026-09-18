@@ -24,6 +24,8 @@ alwaysApply: true
 
 Start with `AGENTS.md`.
 
+For visual work, read its Product Identity and Design Intent and the design principles in `docs/VISUAL_SYSTEMS.md` before proposing changes.
+
 Then read:
 
 1. `docs/AI_WORKFLOW.md`
