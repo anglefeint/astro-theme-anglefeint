@@ -1,5 +1,5 @@
 <h1 align="center">Anglefeint</h1>
-<p align="center">Un tema Astro cinematografico con varias atmosferas para publicacion personal.</p>
+<p align="center">Un tema Astro cinematográfico con varias atmósferas para publicación personal.</p>
 
 <p align="center">
   <a href="https://demo.anglefeint.com/">Demo en vivo</a>
@@ -17,13 +17,13 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Instalacion con plantilla
+## Instalación con plantilla
 
 ```bash
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
-Para pnpm, crea la plantilla con el comando npm anterior (omite la instalacion de dependencias), entra en el proyecto generado y ejecuta:
+Para pnpm, crea la plantilla con el comando npm anterior (omite la instalación de dependencias), entra en el proyecto generado y ejecuta:
 
 ```bash
 pnpm install
@@ -34,7 +34,7 @@ pnpm install
 - Node.js `22.12.0+` (LTS recomendado)
 - Los comandos documentados del starter 0.5.1 pasaron las pruebas en Linux con npm + Node 22 y pnpm 10 + Node 24. No se probaron yarn/bun. Consulta el [registro de validación](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/CODE_DOC_AUDIT.md).
 
-## Inicio rapido
+## Inicio rápido
 
 ```bash
 npm install
@@ -66,7 +66,7 @@ pnpm preview
 
 ## Actualizar tema
 
-Para proyectos creados desde `#starter`, empieza asi cuando solo actualizas el package:
+Para proyectos creados desde `#starter`, empieza así cuando solo actualizas el package:
 
 ```bash
 npm update @anglefeint/astro-theme
@@ -78,25 +78,25 @@ npm run check
 npm run build
 ```
 
-Si las notas de version incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuracion con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualizacion directa de todos los starters historicos. Consulta la [guia de actualizacion](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+Si las notas de versión incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualización directa de todos los starters históricos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
-Si tu codigo personalizado aun importa `src/consts` o `@anglefeint/astro-theme/consts`, migralo a `src/config/site.ts`.
+Si tu código personalizado aún importa `src/consts` o `@anglefeint/astro-theme/consts`, mígralo a `src/config/site.ts`.
 
-Para migraciones de versiones mayores de Astro, revisa primero la guia oficial:
+Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
 
 - https://docs.astro.build/en/guides/upgrade-to/
 - luego ejecuta `npm run check` y `npm run build` en este proyecto.
 
 ## Crear nuevo post
 
-Crea el mismo slug para todos los idiomas (`en`, `ja`, `ko`, `es`, `zh`):
+Crea el mismo slug para todos los idiomas habilitados en la configuración:
 
 ```bash
 npm run new-post -- my-first-post
 ```
 
-Regla del slug: usa solo minusculas, numeros y guiones (ejemplo: `my-first-post`).
-Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` despues).
+Regla del slug: usa solo minúsculas, números y guiones (ejemplo: `my-first-post`).
+Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` después).
 Override opcional de idiomas:
 
 ```bash
@@ -105,18 +105,18 @@ npm run new-post -- my-first-post --locales en,fr
 ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
 ```
 
-Como funciona la URL:
+Cómo funciona la URL:
 
 - Archivo: `src/content/blog/es/my-first-post.md`
 - URL: `/es/blog/my-first-post/`
 - Lista del blog: `/es/blog/`
-- No necesitas crear rutas a mano. Astro las genera automaticamente en build.
+- No necesitas crear rutas a mano. Astro las genera automáticamente en build.
 
 `--locales` solo crea archivos de artículos; no habilita idiomas. Añade o habilita cada idioma en `src/site.config.ts` para generar sus rutas.
 
-## Crear nueva pagina
+## Crear nueva página
 
-`new-post` solo crea contenido del blog. Para paginas personalizadas usa:
+`new-post` solo crea contenido del blog. Para páginas personalizadas usa:
 
 ```bash
 npm run new-page -- projects --theme base
@@ -124,7 +124,7 @@ npm run new-page -- projects --theme base
 
 Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
 El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
-Regla de slug: solo minusculas, numeros y guiones; se permiten rutas anidadas (ejemplo: `projects/labs`). `_` y mayusculas no son validos.
+Regla de slug: solo minúsculas, números y guiones; se permiten rutas anidadas (ejemplo: `projects/labs`). `_` y mayúsculas no son válidos.
 
 Ejemplos:
 
@@ -138,7 +138,7 @@ npm run new-page -- projects --theme matrix
 
 ## Idiomas
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · Espanol (este archivo) · [한국어](README.ko.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · Español (este archivo) · [한국어](README.ko.md)
 
 ## Vista previa
 
@@ -156,18 +156,18 @@ npm run new-page -- projects --theme matrix
 
 ## Ambiente por ruta
 
-- `/<default-locale>/` (por defecto `/` redirige aqui): portada tipo terminal Matrix
+- `/<default-locale>/` (por defecto `/` redirige aquí): portada tipo terminal Matrix
 - `/:lang/blog`: ambiente de archivo cyberpunk
 - `/:lang/blog/[slug]`: lectura estilo interfaz de IA
-- `/:lang/about`: pagina About opcional con estilo hacker
+- `/:lang/about`: página About opcional con estilo hacker
 
 ## Contrato de nombres del tema
 
 - Variantes de tema: `base`, `ai`, `cyber`, `hacker`, `matrix`
 - Prefijos internos en selectores y scripts: `ai-*`, `cyber-*`, `hacker-*`
-- Composicion base: `ThemeFrame -> Shell -> Layout -> Page`
+- Composición base: `ThemeFrame -> Shell -> Layout -> Page`
 
-## Caracteristicas
+## Características
 
 - Búsqueda de artículos con Pagefind en el idioma actual
 - Índice automático del artículo y archivos estáticos por etiqueta
@@ -177,17 +177,17 @@ npm run new-page -- projects --theme matrix
 - El starter incluye idiomas de ejemplo: `en`, `ja`, `ko`, `es`, `zh`
 - RSS por idioma
 - Soporte para sitemap + robots
-- Personalizacion orientada a configuracion
-- Footer fijo abajo en paginas cortas
+- Personalización orientada a configuración
+- Footer fijo abajo en páginas cortas
 
-## Configuracion del tema
+## Configuración del tema
 
 1. Copia opcionalmente `.env.example` a `.env` para sobrescribir la identidad con variables de entorno; en otro caso, usa `src/site.config.ts`.
 2. Edita `src/site.config.ts`:
    - `site.title`, `site.description`, `site.url`, `site.author`, `site.tagline` para identidad del sitio y metadatos por defecto
    - `i18n.defaultLocale` para definir el idioma por defecto
    - `i18n.routing.defaultLocalePrefix` para elegir si el idioma por defecto vive en `/<default-locale>/` (por defecto) o en `/`
-   - `i18n.locales` como fuente unica para agregar o quitar idiomas soportados
+   - `i18n.locales` como fuente única para agregar o quitar idiomas soportados
    - `i18n.locales.<code>.messages` para sobrescribir textos de UI por idioma
    - `i18n.locales.<code>.meta.label` para el nombre del menú de idiomas (`zh` usa `简体中文` por defecto); cambiarlo no modifica las URL
    - `i18n.locales.<code>.site.hero` para sobrescribir el hero de la home por idioma
@@ -195,7 +195,7 @@ npm run new-page -- projects --theme matrix
    - `i18n.locales.<code>.about` para contenido y textos runtime de About por idioma
    - `theme.enableAboutPage` para activar/desactivar About
    - `theme.effects.enableRedQueen` para activar/desactivar el monitor lateral en posts
-   - `theme.comments` para activar y configurar Giscus (IDs base + parametros de comportamiento)
+   - `theme.comments` para activar y configurar Giscus (IDs base + parámetros de comportamiento)
 3. Reemplaza posts de ejemplo en `src/content/blog/<locale>/`.
 
 ### Opcional: comentarios con Giscus
@@ -221,25 +221,25 @@ Los comentarios vienen desactivados por defecto. Para activarlos:
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-Si faltan los IDs principales, no se muestran comentarios. Con comentarios activos, un `term` vacio para `mapping="specific"` o un `number` que no sea una cadena de entero positivo para `mapping="number"` provoca un error de configuracion y puede detener dev/build.
+Si faltan los IDs principales, no se muestran comentarios. Con comentarios activos, un `term` vacío para `mapping="specific"` o un `number` que no sea una cadena de entero positivo para `mapping="number"` provoca un error de configuración y puede detener dev/build.
 
-El CLI usa los idiomas habilitados de la configuracion combinada. Los errores detienen la generacion; `--locales` o `ANGLEFEINT_LOCALES` permite elegir idiomas sin cargar la configuracion.
+El CLI usa los idiomas habilitados de la configuración combinada. Los errores detienen la generación; `--locales` o `ANGLEFEINT_LOCALES` permite elegir idiomas sin cargar la configuración.
 
-## Superficie de configuracion
+## Superficie de configuración
 
-- Entrada unica: `src/site.config.ts`
-- La descripcion de inicio prioriza `messages.siteDescription` resuelto, incluidos textos integrados y de idiomas de respaldo; solo un valor vacio usa `site.description`.
+- Entrada única: `src/site.config.ts`
+- La descripción de inicio prioriza `messages.siteDescription` resuelto, incluidos textos integrados y de idiomas de respaldo; solo un valor vacío usa `site.description`.
 - Los idiomas se combinan con los valores predeterminados. Use `i18n.locales.<code>.meta.enabled = false` para desactivar uno; omitirlo no lo elimina. El idioma predeterminado sigue activo.
 - Capa adaptadora (no editar directamente): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
-- La identidad del sitio tambien se puede sobrescribir con variables `PUBLIC_*`
+- La identidad del sitio también se puede sobrescribir con variables `PUBLIC_*`
 
-## Documentacion
+## Documentación
 
 - [Arquitectura](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)
 - [Sistemas visuales](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/VISUAL_SYSTEMS.md)
-- [Checklist de envio](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
+- [Checklist de envío](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
 - [Borrador de listado](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md)
-- [Guia de actualizacion](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
+- [Guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
 - [Historial de cambios](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
 
 ## Búsqueda de artículos
