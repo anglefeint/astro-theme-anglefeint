@@ -175,6 +175,8 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 文章目录、全文搜索、标签浏览、代码块复制和正文图片预览已经实现，不能再列为待开发建议。
 
-当前 tracked runtime 没有 MusicDeck 组件、music-deck 脚本或播放器配置；历史上讨论的音乐播放器没有在本轮移植。也没有新增首次建站引导弹窗、专用引导 CLI、Expressive Code、代码文件名标记、目录 scroll-spy、图片画廊或动态 OG 功能。后续需求应从真实用户需要出发，不能由旧讨论或本文件中的提及自动变成产品承诺。
+当前提供默认关闭的 MusicDeck：在 `src/site.config.ts` 的 `theme.music` 中启用并配置曲目。播放器组件、样式、播放核心和会话存储独立；未启用或空歌单不挂载，点击播放后才加载音频，不内置歌曲。桌面位于左下角，手机默认收起，展开时避让回到顶部。切页会暂停，下一页需点击播放恢复，不支持跨页无缝播放。配置与安装边界见 [架构说明](docs/ARCHITECTURE.md#optional-music-player) 和 [升级指南](UPGRADING.md)。
+
+没有新增首次建站引导弹窗、专用引导 CLI、Expressive Code、代码文件名标记、目录 scroll-spy、图片画廊或动态 OG 功能。后续需求应从真实用户需要出发，不能由旧讨论或本文件中的提及自动变成产品承诺。
 
 本轮核对记录见 [代码与文档审阅记录](docs/CODE_DOC_AUDIT.md)。
