@@ -89,7 +89,7 @@ Astro 메이저 버전 마이그레이션은 먼저 공식 가이드를 확인�
 
 ## 새 글 만들기
 
-모든 로케일(`en`, `ja`, `ko`, `es`, `zh`)에 같은 slug 글을 한 번에 생성합니다:
+설정에서 활성화된 모든 로케일에 같은 slug 글을 한 번에 생성합니다:
 
 ```bash
 npm run new-post -- my-first-post
