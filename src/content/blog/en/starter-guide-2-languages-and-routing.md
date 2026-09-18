@@ -4,7 +4,7 @@ title: 'User Guide 2: Write and Organize Content'
 subtitle: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 description: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -46,6 +46,8 @@ tags: ['astro', 'notes']
 `title`, `description`, and `pubDate` are required. `subtitle`, `updatedDate`, and `author` are optional; the author falls back to the site author. Lists sort by `pubDate`, newest first. There is currently no draft or scheduled-publication filter: neither `draft: true` nor a future date hides a post. Keep unfinished content outside the content directory.
 
 For a cover, use `heroImage: ./cover.jpg` with the image beside the post, or keep the local cover path assigned by the creation command. Automatic assignment happens only when images exist in `src/assets/blog/default-covers/`; no image is downloaded. `heroImage` is optional. Reading time and related content metrics are calculated automatically, so ordinary posts need no manual values.
+
+These are estimates, not measurements from an AI service. Frontmatter values for `readMinutes`, `wordCount`, `tokenCount`, `aiLatencyMs`, and `aiConfidence` override the calculated values; omit them to use estimates. Some demonstration posts deliberately contain fixed values.
 
 ## 3. Generate a table of contents with headings
 

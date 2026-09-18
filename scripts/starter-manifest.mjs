@@ -47,6 +47,7 @@ export const STARTER_SUPPORT_SCRIPTS = [
   'scripts/check-about-runtime-config.mjs',
   'scripts/check-adapter-contract.mjs',
   'scripts/resolve-theme-default-i18n-entry.mjs',
+  'scripts/resolve-site-url.mjs',
   'scripts/starter-manifest.mjs',
   'scripts/sync-adapters.mjs',
 ];

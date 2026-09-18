@@ -4,7 +4,7 @@ title: '使用指南 1：搭建你的博客'
 subtitle: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 description: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -63,6 +63,8 @@ export const THEME_CONFIG = defineThemeConfig({
 首页大标题下的介绍由当前语言的 `site.hero` 控制。`site.description` 是站点级默认描述，而首页元描述优先使用该语言的 `messages.siteDescription`。只改 `site.description` 不会替换首页可见介绍。
 
 社交链接支持 `github`、`twitter`、`mastodon` 图标；用 `social: { links: [] }` 清空链接。若 `.env` 中已有 `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` 等站点覆盖值，它们会优先于配置文件；修改没有生效时也检查这些变量。
+
+可在项目根目录的 `.env` 或托管平台的构建环境中设置 `PUBLIC_SITE_URL=https://your-domain.example`，覆盖 `site.url`。修改后重启开发服务或重新构建，并检查 canonical、RSS、sitemap 和分享图绝对地址是否使用该域名。这需要配套 starter 的 `astro.config.mjs` 和域名解析辅助脚本；只更新 npm 主题包不会更新这些文件。
 
 ## 3. 只保留你会使用的语言
 
