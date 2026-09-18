@@ -295,3 +295,18 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 ## 许可证
 
 MIT License，见 `LICENSE`。
+
+## 可选音乐播放器
+
+默认关闭。将音频放在 `public/music/`，把以下配置合并到 `src/site.config.ts`：
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+每首歌填写 `title`、`src`，`artist` 可选，也支持 HTTPS 音频直链。空歌单不显示播放器。点击播放后才加载音频；同一标签页会话内记住曲目、进度和音量，切页后需要再次点击播放，不支持跨页面无缝播放。

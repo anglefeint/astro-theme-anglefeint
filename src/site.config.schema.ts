@@ -88,6 +88,7 @@ export interface ThemeConfig {
     tagline: string;
   };
   theme: {
+    music: { enabled: boolean; tracks: { title: string; artist?: string; src: string }[] };
     blogPageSize: number;
     homeLatestCount: number;
     enableAboutPage: boolean;

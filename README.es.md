@@ -287,3 +287,18 @@ Las fuentes incluidas cubren los cinco idiomas iniciales, sin API de imágenes n
 ## Licencia
 
 MIT License. Ver `LICENSE`.
+
+## Reproductor de música opcional
+
+Desactivado por defecto. Coloca el audio en `public/music/` y combina esta configuración con la de `src/site.config.ts`:
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+Cada pista acepta `title`, `src` y un `artist` opcional. También admite URL HTTPS de audio. Una lista vacía oculta el reproductor. El audio se carga al pulsar Reproducir. Se recuerdan pista, posición y volumen durante la sesión de la pestaña; tras navegar, pulsa Reproducir para continuar. No ofrece reproducción ininterrumpida entre páginas.
