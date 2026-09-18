@@ -23,6 +23,7 @@ All notable changes to this project are documented in this file.
 - Add accessible, localized tool-title decoding and a brief window-edge glow to Hacker modals.
 - Place About reading feedback outside the content panel on wide screens, matching article status positioning.
 - Clarify the four cinematic identities in agent guidance and add focused browser regression coverage.
+- Use equivalent literal HTML escaping in the starter About route for compatibility with the newer Astro language checker.
 
 Compatible package update for the current starter; no new configuration or dependencies. See [release notes](docs/releases/0.6.0.md).
 
