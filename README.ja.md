@@ -287,3 +287,18 @@ MDX 内の Markdown 見出しに対応しますが、コンポーネントが生
 ## ライセンス
 
 MIT License。`LICENSE` を参照。
+
+## 任意の音楽プレーヤー
+
+既定では無効です。音声ファイルを `public/music/` に置き、次の設定を `src/site.config.ts` に追加します：
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+各曲に `title` と `src` を指定し、`artist` は任意です。HTTPS の音声 URL も利用できます。空のリストでは表示されません。再生を押して初めて音声を読み込みます。同じタブのセッション内で曲・再生位置・音量を保存しますが、ページ移動後は再生を押す必要があり、途切れない再生には対応しません。

@@ -287,3 +287,18 @@ MDX의 Markdown 제목은 지원하지만 컴포넌트에서 생성하거나 HTM
 ## 라이선스
 
 MIT License. `LICENSE` 를 참고하세요.
+
+## 선택적 음악 플레이어
+
+기본적으로 비활성화되어 있습니다. 오디오를 `public/music/`에 넣고 다음 설정을 `src/site.config.ts`에 병합하세요:
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+각 곡에 `title`, `src`를 지정하며 `artist`는 선택 사항입니다. HTTPS 오디오 URL도 지원합니다. 목록이 비어 있으면 표시하지 않습니다. 재생을 눌러야 오디오를 불러옵니다. 같은 탭 세션에서 곡, 재생 위치, 음량을 기억하지만 페이지 이동 후에는 다시 재생을 눌러야 합니다. 페이지 간 끊김 없는 재생은 지원하지 않습니다.

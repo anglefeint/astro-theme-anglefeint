@@ -108,6 +108,7 @@ const defaultThemeConfig: ThemeConfig = {
     tagline: 'Built with Astro.',
   },
   theme: {
+    music: { enabled: false, tracks: [] },
     blogPageSize: 9,
     homeLatestCount: 3,
     enableAboutPage: true,

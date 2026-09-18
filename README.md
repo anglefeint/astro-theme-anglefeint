@@ -301,3 +301,18 @@ The bundled font covers the starter's Latin, Chinese, Japanese and Korean text. 
 ## License
 
 MIT License. See `LICENSE`.
+
+## Optional music player
+
+Disabled by default. Put audio files in `public/music/` and merge this into `src/site.config.ts`:
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+Each track accepts `title`, `src` and optional `artist`. HTTPS audio URLs are also supported. An empty playlist hides the player. Audio loads only after clicking Play. The player remembers the track, position and volume within the tab session; after navigation, click Play to resume. It does not provide uninterrupted playback across pages.
