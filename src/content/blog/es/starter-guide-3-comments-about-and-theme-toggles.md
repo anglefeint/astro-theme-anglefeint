@@ -4,7 +4,7 @@ title: 'Guía 3: Activa y personaliza funciones opcionales'
 subtitle: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 description: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -39,7 +39,7 @@ La URL no incluye `public`. Cada pista necesita `title` y `src`; `artist` es opc
 
 Una lista vacía oculta el reproductor. Si está activo, un título o formato de dirección incorrecto provoca un error de configuración. Aparece en páginas con el diseño compartido del tema; no hay un interruptor por página. En escritorio está abajo a la izquierda. En móvil, cada página empieza con el reproductor contraído; al expandirlo se oculta temporalmente el botón de volver arriba.
 
-Abre primero `/music/my-song.mp3` para comprobar el acceso y pulsa PLAY en la página. El audio se carga tras la interacción y no se reproduce automáticamente. Pista, posición y volumen se guardan durante la sesión de la misma pestaña. Cambiar de página pausa la reproducción; pulsa reproducir en la siguiente para continuar. No hay reproducción ininterrumpida entre páginas. Sin almacenamiento disponible se puede reproducir, pero no se garantiza recordar el estado. `enabled: false` lo desactiva.
+Abre primero `/music/my-song.mp3` para comprobar el acceso y pulsa PLAY en la página. El audio se carga al realizar una acción de reproducción; abrir una página no inicia la música. Una vez iniciada, al terminar una pista se reproduce automáticamente la siguiente y, después de la última, se vuelve a la primera. Pista, posición y volumen se guardan durante la sesión de la misma pestaña. Cambiar de página pausa la reproducción; pulsa reproducir en la siguiente para continuar. No hay reproducción ininterrumpida entre páginas. Sin almacenamiento disponible se puede reproducir, pero no se garantiza recordar el estado. `enabled: false` lo desactiva.
 
 ## 2. Activa los comentarios Giscus
 

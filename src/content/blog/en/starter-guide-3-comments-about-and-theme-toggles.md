@@ -4,7 +4,7 @@ title: 'User Guide 3: Enable and Customize Optional Features'
 subtitle: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 description: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -39,7 +39,7 @@ The URL omits `public`. Each track requires `title` and `src`; `artist` is optio
 
 An empty playlist hides the player. With music enabled, invalid titles or URL formats cause configuration errors. The player mounts on pages using the shared theme layout; there is no per-page visibility switch. It sits at the lower left on desktop. On mobile, each page starts collapsed; expanding it temporarily hides back-to-top.
 
-First open `/music/my-song.mp3` directly to confirm access, then click PLAY on the page. Audio loads after interaction and never autoplays. Track, position, and volume are saved within the same tab session. Navigation pauses playback; click play on the next page to resume. Playback is not seamless across pages. If storage is unavailable, playback still works without reliable memory. Set `enabled: false` to turn it off.
+First open `/music/my-song.mp3` directly to confirm access, then click PLAY on the page. Audio loads after a playback action; opening a page does not start playback. Once playing, the next track starts automatically when the current one ends, returning to the first track after the last. Track, position, and volume are saved within the same tab session. Navigation pauses playback; click play on the next page to resume. Playback is not seamless across pages. If storage is unavailable, playback still works without reliable memory. Set `enabled: false` to turn it off.
 
 ## 2. Enable Giscus comments
 

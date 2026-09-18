@@ -9,6 +9,7 @@ import { defineConfig } from 'astro/config';
 import { URL, fileURLToPath } from 'node:url';
 import { resolveThemeDefaultI18nEntry } from './scripts/resolve-theme-default-i18n-entry.mjs';
 import { SITE_URL } from './src/config/site';
+import { resolveSiteUrl } from './scripts/resolve-site-url.mjs';
 import { DEFAULT_LOCALE, DEFAULT_LOCALE_PREFIX_MODE } from './src/i18n/config';
 
 const themeDefaultI18nEntry = resolveThemeDefaultI18nEntry(import.meta.url);
@@ -16,7 +17,7 @@ const themeDefaultI18nEntry = resolveThemeDefaultI18nEntry(import.meta.url);
 // https://astro.build/config
 export default defineConfig({
   compressHTML: true,
-  site: SITE_URL,
+  site: resolveSiteUrl(SITE_URL, fileURLToPath(new URL('.', import.meta.url))),
   vite: {
     resolve: {
       alias: {

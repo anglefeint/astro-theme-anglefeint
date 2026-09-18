@@ -4,7 +4,7 @@ title: '利用ガイド 2：記事を書く・コンテンツを整理する'
 subtitle: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 description: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -46,6 +46,8 @@ tags: ['astro', 'notes']
 必須は `title`、`description`、`pubDate` です。`subtitle`、`updatedDate`、`author` は任意で、著者を省略するとサイトの著者が使われます。一覧は `pubDate` の新しい順です。現在、下書きや予約公開のフィルターはありません。`draft: true` や未来の日付では非公開にならないため、未完成の記事はコンテンツディレクトリの外に置いてください。
 
 カバーは記事の隣に画像を置いて `heroImage: ./cover.jpg` と指定するか、作成コマンドが割り当てたローカルのパスを使います。`src/assets/blog/default-covers/` に画像がある場合のみ自動割り当てされ、画像のダウンロードは行いません。`heroImage` は省略できます。読了時間や文字数などは自動計算され、通常の記事で手入力する必要はありません。
+
+これらは推定値であり、AI サービスから取得した測定値ではありません。frontmatter の `readMinutes`、`wordCount`、`tokenCount`、`aiLatencyMs`、`aiConfidence` は自動計算より優先され、省略すると推定値が使われます。一部のデモ記事には表示例として固定値が入っています。
 
 ## 3. 見出しから目次を作る
 

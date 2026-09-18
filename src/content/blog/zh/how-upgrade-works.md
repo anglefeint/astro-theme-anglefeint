@@ -3,6 +3,7 @@ title: '主题升级模型：starter 初始化，npm 持续更新'
 subtitle: '初始化一次，后续走包升级'
 description: '这篇文章说明 Anglefeint 的推荐升级路径，以及如何处理 Astro 大版本迁移。'
 pubDate: '2026-03-03'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
@@ -17,16 +18,22 @@ tokenCount: 1040
 
 初始化：
 
+```bash
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+```
 
 兼容的纯包更新：
 
 `npm update` 只更新主题包，不会改写本地 starter 的配置、路由、适配器或 Astro 集成。如果发布说明要求更新工程结构，应在新目录创建最新 starter，再迁移文章和个人设置，不要用旧配置辅助文件覆盖新文件。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
+`npm update` 只在 `package.json` 声明的版本范围内更新，例如 `^0.6.0` 不包含 `0.7.0`。跨范围升级前先阅读发布说明和升级指南；调整版本范围也不会更新本地 starter 文件。
+
+```bash
 npm update @anglefeint/astro-theme
 npm install
 npm run check
 npm run build
+```
 
 这样主题核心可以通过包分发持续更新。
 

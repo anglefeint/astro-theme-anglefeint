@@ -3,6 +3,7 @@ title: 'Modelo de actualización: iniciar con starter y actualizar con npm'
 subtitle: 'Ruta única para operar el tema'
 description: 'Flujo recomendado para iniciar y actualizar proyectos con Anglefeint.'
 pubDate: '2026-03-03'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
@@ -17,16 +18,22 @@ Un problema típico en temas es que iniciar es fácil pero actualizar es costoso
 
 Inicialización:
 
+```bash
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+```
 
 Actualizaciones compatibles solo del paquete:
 
 `npm update` actualiza el paquete del tema, no la configuración local, las rutas, los adaptadores ni las integraciones de Astro. Si las notas de versión requieren cambios de estructura, crea el starter más reciente en un directorio nuevo y migra tus artículos y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
+`npm update` respeta el rango de versiones de `package.json`. Por ejemplo, `^0.6.0` no incluye `0.7.0`. Antes de cambiar el rango, consulta las notas de versión y la guía de actualización; esto tampoco actualiza los archivos locales del starter.
+
+```bash
 npm update @anglefeint/astro-theme
 npm install
 npm run check
 npm run build
+```
 
 Así, el núcleo evoluciona vía paquete npm.
 

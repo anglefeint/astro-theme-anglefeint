@@ -4,7 +4,7 @@ title: '利用ガイド 1：ブログを立ち上げる'
 subtitle: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 description: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -63,6 +63,8 @@ export const THEME_CONFIG = defineThemeConfig({
 トップページの大きな見出しの下に出る紹介文は、その言語の `site.hero` で設定します。`site.description` はサイトの既定の説明ですが、トップページのメタ説明では言語別の `messages.siteDescription` が優先されます。`site.description` だけを変えても、画面の紹介文は変わりません。
 
 ソーシャルアイコンは `github`、`twitter`、`mastodon` に対応します。`social: { links: [] }` でリンクを空にできます。`.env` の `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` などの上書き値は設定ファイルより優先されます。変更が反映されない場合はこちらも確認してください。
+
+プロジェクト直下の `.env` またはホスティング先のビルド環境で `PUBLIC_SITE_URL=https://your-domain.example` を設定すると、`site.url` を上書きできます。変更後は開発サーバーを再起動するか再ビルドし、canonical、RSS、サイトマップ、共有画像の絶対 URL がそのドメインを使うか確認してください。対応する starter の `astro.config.mjs` と URL 解決スクリプトが必要です。npm テーマパッケージの更新だけではこれらのファイルは更新されません。
 
 ## 3. 使用する言語だけを残す
 

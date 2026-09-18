@@ -14,6 +14,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### Starter-side site URL override fix (2026-09-19, not yet published)
+
+The local fix makes `PUBLIC_SITE_URL` override Astro's build-time `site`, including canonical URLs, RSS and sitemap output. It changes `astro.config.mjs`, adds `scripts/resolve-site-url.mjs` and declares Vite as a direct build dependency. Updating the theme npm package alone cannot install these starter changes. Until the corrected starter is delivered, set `site.url` directly in `src/site.config.ts` and remove conflicting `PUBLIC_SITE_URL` values. After adopting the corrected starter, rebuild and inspect canonical, RSS, sitemap and social-image URLs with your deployment domain. The theme package remains 0.7.0.
+
 ### 0.7.0: optional music player
 
 Use the matching 0.7.0 starter when adopting music: `src/site.config.schema.ts`, `src/site.config.defaults.ts`, `scripts/adapter-templates/src/config/theme.ts` and its generated `src/config/theme.ts` supply the new `theme.music` contract. Updating the npm package alone does not install these local files. Follow the fresh-template migration below and reapply personal settings. `npm update` within `^0.6.0` will not select `0.7.0`.

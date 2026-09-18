@@ -12,6 +12,31 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-19 多语言文章逐项核对与站点域名修复（本地未发布）
+
+基准：main `ebbf7ecc64db5edbeadd89712a139ce44327eef0`，五种语言各 14 篇，共 70 篇。重点检查 15 篇使用指南的命令、配置片段、默认值、关闭状态、路由和升级边界；同时复核旧文章的视觉及架构描述。旧叙事文章篇幅不完全相同，不把设计理念视为功能保证。本轮不删除文章，不改变 slug 和 `pubDate`，25 篇修订文章的 `updatedDate` 更新为 2026-09-19。
+
+| 文章 / 事项                                                | 对照的实际实现                                                                                                                                                       | 处理                                                                                                    |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 三篇使用指南的安装、配置、语言和创建命令                   | `package.json`、`scripts/starter-package.mjs`、`src/site.config.schema.ts`、defaults/runtime、`packages/theme/src/cli-new-post.mjs`、`cli-new-page.mjs`、`scaffold/` | 45 个 TS 示例通过真实类型及默认值/归一化逻辑验证；保留现有命令与翻译结构                                |
+| `how-upgrade-works` 五语                                   | npm 版本范围及 starter 文件所有权、`UPGRADING.md`                                                                                                                    | 命令改为可复制代码块，补充 `npm update` 不跨声明范围；保留 starter 文件不随包更新的边界                 |
+| `route-visual-system-design` 五语                          | `src/pages/index.astro`、`src/pages/[lang]/index.astro`、`src/i18n/config.ts`、`CyberAtmosphere.astro`                                                               | 修正默认首页地址，说明 `i18n.routing.defaultLocalePrefix` 只影响默认语言首页，以及 About 和标签页面条件 |
+| 使用指南 2 五语                                            | `src/utils/metrics.ts`、`src/pages/[lang]/blog/[...slug].astro`                                                                                                      | 说明指标是估算或 frontmatter 覆盖值，不是 AI 服务实测数据                                               |
+| 使用指南 3 五语                                            | 音乐 core/controller/storage、`MusicDeck.astro`                                                                                                                      | 区分打开页面不自动播放与曲目结束后自动切歌、循环回第一首；保留跨页暂停与同标签页恢复说明                |
+| 搜索、目录、标签、图片预览、代码复制、分享图、评论和 About | 包内 search/social-image 集成、BlogPost、相关组件/脚本/工具，starter 路由和配置适配器                                                                                | 默认值、单篇覆盖、构建时生成、浏览器交互及手动图片优先级等说明与代码相符，未因此修改功能                |
+| 使用指南 1 五语的环境变量说明                              | `astro.config.mjs` → `src/config/site.ts` → `BaseHead.astro` / RSS / sitemap / robots                                                                                | 发现实际代码缺陷，先报告并取得用户允许，再修复；补充五语操作与 starter 升级边界                         |
+
+缺陷证据：修复前以进程环境变量 `PUBLIC_SITE_URL=https://audit-public-site.example` 进行真实隔离构建，首页 canonical 和 sitemap 仍指向 `https://example.com`。配置求值阶段没有正常取得 `import.meta.env`，而页面优先使用已确定的 `Astro.site`。修复在 starter 的 `astro.config.mjs` 调用 `scripts/resolve-site-url.mjs`，使用 Vite 的 `loadEnv`，支持项目 dotenv、CLI mode 和进程变量优先级；新增脚本已加入 starter manifest，Vite 声明为直接构建依赖，锁文件未升级其他依赖。包内运行时没有改动。
+
+本轮新跑的验证：
+
+- `npm run check` 通过：文档、workspace 链接、字体、适配器、打包 CLI、56 项单元测试、scaffold、164 个 Astro 文件检查（零错误/警告）及完整构建、五语言 About 配置验证。
+- `npm run lint` 通过；45 个教程 TS 配置示例、YAML、封面路径、45 个系列链接及五语章节/示例顺序验证通过。15 个构建后教程的 HTML、目录锚点、分享图与五语言搜索索引检查通过。
+- 分别用进程环境变量和临时 `.env.<mode>` 文件做真实隔离构建；每次遍历 106 个 HTML 页面的 canonical 和存在的 `og:image`，并检查五语 RSS、两个 sitemap 文件和 robots sitemap 地址，全部使用各自的测试域名。测试文件及隔离构建产物已清理。
+- 依赖锁文件更新审计：零已知漏洞。本轮没有重新执行所有用户 CLI 的云端验收或播放器浏览器交互测试，不以历史结果冒充新测试。
+
+文档流程：`suggest:docs` 产生广泛的架构、SEO、工作流候选；实际更新文章、ARCHITECTURE、UPGRADING 和本记录。README 的环境变量说明由代码修复实现，无需重写；视觉规范、发布算法、代理入口和历史发布记录无需改动。当前修复仅在本地，未 commit/push、未同步公开 starter；主题包仍为 0.7.0，无需为本次 starter/文章修复发布 npm。后续交付须按既有流程提交 main，再生成并验证 starter。
+
 ## 2026-09-19 教程交付与演示站部署复核
 
 核对 main `75402b4` 与其前序 `0f12176`、starter `b7b0d75` 与其前序 `8b503c7`：main 的 70 篇文章（每语言 14 篇）未删除，本次仅重写五语言的三篇教程。starter 在更新前后都只有 20 篇（每语言四篇），对应 [starter 内容清单](../scripts/starter-manifest.mjs) 中的欢迎文章及三篇指南。该清单不代表演示站完整文章库。

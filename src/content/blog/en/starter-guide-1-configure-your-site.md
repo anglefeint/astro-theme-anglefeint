@@ -4,7 +4,7 @@ title: 'User Guide 1: Set Up Your Blog'
 subtitle: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 description: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-18'
+updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -63,6 +63,8 @@ export const THEME_CONFIG = defineThemeConfig({
 The introduction beneath the homepage heading comes from the current locale’s `site.hero`. `site.description` is the default site description, while the homepage meta description prefers the locale’s `messages.siteDescription`. Changing only `site.description` does not replace the visible introduction.
 
 Social icons support `github`, `twitter`, and `mastodon`. Use `social: { links: [] }` to remove all links. Existing environment overrides such as `PUBLIC_SITE_TITLE` and `PUBLIC_SITE_URL` take priority over the config file; check them if a change seems ineffective.
+
+Set `PUBLIC_SITE_URL=https://your-domain.example` in the project-root `.env` file or your hosting build environment to override `site.url`. Restart development or rebuild after changing it. The resulting canonical links, RSS, sitemap, and absolute social image URLs should use that domain. This requires the matching starter-side `astro.config.mjs` and URL resolver; an npm theme update alone does not update these files.
 
 ## 3. Keep the languages you need
 
