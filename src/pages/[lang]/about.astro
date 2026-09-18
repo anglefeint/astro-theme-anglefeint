@@ -36,7 +36,11 @@ const blogPosts = postsForLocale(allPosts, locale).map((p) => ({
 }));
 
 const escapeHtml = (value: string): string =>
-  value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
 
 const aiBody = `<pre>${ABOUT_CONFIG.modals.ai.lines.map(escapeHtml).join('\n')}</pre>`;
 const decryptorBody = `<pre class="hacker-decryptor-pre">${escapeHtml(ABOUT_CONFIG.modals.decryptor.header)}
