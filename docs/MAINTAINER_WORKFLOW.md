@@ -27,6 +27,8 @@ This document defines the release and synchronization rules for maintainers.
 
 ## Change Classes
 
+Production demo delivery is a separate concern from npm publication and starter distribution. Apply the [demo deployment checks](#production-demo-deployment) even when only documentation is pushed.
+
 Class A: Theme Runtime Changes
 
 - Scope:
@@ -124,6 +126,26 @@ Use this sequence unless explicitly skipped for a documented reason.
 Starter synchronization uses `npm update --prefer-online` within the source dependency ranges before its blocking audit. This refreshes indirect dependencies retained by older lockfiles; it does not bypass version constraints or vulnerability findings.
 
 The latest template and its corresponding npm package are the supported release baseline. Do not add historical compatibility layers at the expense of the new-template experience. When project skeletons change, existing users may create a fresh template and migrate content and configuration into it; automatic in-place upgrades across all historical starters are not guaranteed.
+
+## Production Demo Deployment
+
+The public demo at `https://demo.anglefeint.com/` must deploy from `main`. `starter` is a distribution template with only the onboarding posts selected by `scripts/starter-manifest.mjs`; deploying it to the demo removes the rest of the demo article library from the served output, even though its source files remain on `main`.
+
+Before pushing branches that trigger Cloudflare Workers Builds:
+
+1. Inspect the Worker's **Settings → Builds** configuration. Set the production branch to `main`; for this demo, disable non-production branch builds. If previews are introduced later, ensure they cannot deploy to the production Worker.
+2. Inspect the actual deploy commands and trigger branches. Cloudflare's default non-production command, `wrangler versions upload`, creates a preview version; `wrangler deploy` promotes a deployment. A successful GitHub build check alone does not identify the version currently serving the production domain.
+3. Treat branch controls as Cloudflare-side build settings, not fields in `wrangler.jsonc`. The current repository file specifies the Worker name, compatibility date and static asset directory; it does not enforce Git branch isolation. Repository release/check scripts also do not validate Cloudflare account settings. If settings cannot be inspected, record that limitation instead of claiming they were verified.
+
+See Cloudflare's [build branch controls](https://developers.cloudflare.com/workers/ci-cd/builds/build-branches/) and [build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
+
+After the final push, including a starter push when applicable, wait for deployment completion and verify the live production domain against the intended `main` revision:
+
+- Compare localized blog links across all list pages with the source article inventory, not just the updated tutorial URLs. Derive expected counts and pagination from current content and configuration rather than hard-coding a historical count.
+- Check older non-starter article URLs, pagination, all enabled languages, and the new or updated tutorial pages. A successful starter installation does not verify the full demo library.
+- Read the active production deployment's source revision when available; distinguish that evidence from a successful build check. Report any remaining uncertainty.
+
+If the demo serves starter content, first correct the branch/deploy settings, then rebuild and deploy the intended `main` revision. Do not restore unchanged articles, republish npm, or modify starter's content whitelist to repair a hosting configuration problem. A substantive maintenance-document commit on `main` can trigger that deployment; it does not require a package version bump.
 
 ## Release Decision Gate
 

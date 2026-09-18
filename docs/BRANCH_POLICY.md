@@ -19,10 +19,12 @@ This repository uses two long-lived branches with different responsibilities.
 - Contains the monorepo workspace (`packages/theme` + starter app code).
 - All theme implementation work should happen here first.
 - Package releases are published from `packages/theme` on this branch.
+- The public demo deploys from this branch and should retain its complete article library.
 
 ## `starter` Branch
 
 - Purpose: user-facing template branch.
+- Contains only the onboarding article whitelist from `scripts/starter-manifest.mjs`. It must not replace the production demo deployment. See the [demo deployment checks](MAINTAINER_WORKFLOW.md#production-demo-deployment) for Cloudflare branch isolation and post-push validation.
 - Must not contain the monorepo workspace folder (`packages/`).
 - Must depend on registry package version:
   - `@anglefeint/astro-theme` (for example: `^0.1.0`).

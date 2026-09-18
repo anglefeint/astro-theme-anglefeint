@@ -48,6 +48,7 @@ Use it together with:
 - `starter` is a generated/distribution branch for template consumers.
 - Do not manually patch runtime logic in `starter`.
 - Any change that should reach `starter` must land in `main` first, then be propagated through the maintainer sync flow.
+- The production demo must deploy from `main`, not `starter`. Check Cloudflare branch/deploy settings before push-triggered delivery and recheck the full live article library after the final push, following [Production Demo Deployment](MAINTAINER_WORKFLOW.md#production-demo-deployment). Neither a successful build check nor remote starter acceptance proves the demo is serving the intended main content.
 
 ## Required Read Order
 
