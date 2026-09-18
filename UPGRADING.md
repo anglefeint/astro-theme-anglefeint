@@ -14,6 +14,12 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.7.0: optional music player
+
+Use the matching 0.7.0 starter when adopting music: `src/site.config.schema.ts`, `src/site.config.defaults.ts`, `scripts/adapter-templates/src/config/theme.ts` and its generated `src/config/theme.ts` supply the new `theme.music` contract. Updating the npm package alone does not install these local files. Follow the fresh-template migration below and reapply personal settings. `npm update` within `^0.6.0` will not select `0.7.0`.
+
+Music is off by default and no audio files are bundled. Put your own audio under `public/music/`, then configure `theme.music.enabled` and `theme.music.tracks` as shown in the README. Page navigation is not seamless playback: click Play to resume the remembered position.
+
 ### 0.6.0: cinematic effects
 
 The visual enhancements are package-owned and compatible with the 0.5.x starter. Use `npm install @anglefeint/astro-theme@^0.6.0`, then run `npm run doctor` and preview your site. `npm update` respects the existing dependency range: `^0.5.1` does not include `0.6.0`.

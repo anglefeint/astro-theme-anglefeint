@@ -1,0 +1,168 @@
+---
+import controllerUrl from '../../scripts/music/controller.js?url';
+import coreUrl from '../../scripts/music/core.js?url';
+import storageUrl from '../../scripts/music/storage.js?url';
+import styleUrl from '../../styles/music-deck.css?url';
+import type { MusicTrack } from '../../utils/music';
+import type { Messages } from '../../i18n/messages';
+interface Props {
+  tracks: MusicTrack[];
+  labels: Messages['music'];
+}
+const { tracks, labels } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const resolvedTracks = tracks.map((track) => ({
+  ...track,
+  src: track.src.startsWith('/') ? `${base}${track.src}` : track.src,
+}));
+---
+
+<link rel="stylesheet" href={styleUrl} />
+<aside
+  class="music-deck"
+  data-music-deck
+  data-collapsed="false"
+  data-core={coreUrl}
+  data-storage={storageUrl}
+  data-tracks={JSON.stringify(resolvedTracks)}
+  data-labels={JSON.stringify(labels)}
+  aria-label={labels.label}
+  data-pagefind-ignore
+>
+  <div class="music-deck__topbar">
+    <div class="music-deck__chrome" aria-hidden="true">
+      <span class="music-deck__led"></span><span class="music-deck__led music-deck__led--alt"
+      ></span>
+    </div>
+    <button
+      type="button"
+      class="music-deck__collapse"
+      data-action="expand"
+      disabled
+      aria-expanded="true"
+      aria-label={labels.close}>MIN</button
+    >
+  </div>
+  <div class="music-deck__header">
+    <p class="music-deck__eyebrow" data-eyebrow>AUDIO CHANNEL</p>
+  </div>
+  <div class="music-deck__body">
+    <div class="music-deck__status-row">
+      <span class="music-deck__status-label">STATE</span><span
+        class="music-deck__status-value"
+        data-state>STANDBY</span
+      >
+    </div>
+    <div class="music-deck__track">
+      <p class="music-deck__title" data-title>{tracks[0].title}</p><p
+        class="music-deck__artist"
+        data-artist
+      >
+        {tracks[0].artist}
+      </p><p class="music-deck__timer" data-time>0:00 / --:--</p>
+    </div>
+    <div class="music-deck__progress">
+      <input
+        data-seek
+        type="range"
+        min="0"
+        max="100"
+        value="0"
+        step="0.1"
+        disabled
+        aria-label={labels.progress}
+      />
+    </div>
+    <div class="music-deck__signal-row">
+      <span class="music-deck__signal-label">SIGNAL</span><span
+        class="music-deck__signal-value"
+        data-status
+        role="status">{labels.idle}</span
+      >
+    </div>
+    <div class="music-deck__controls">
+      <button
+        type="button"
+        class="music-deck__btn"
+        data-action="prev"
+        disabled
+        aria-label={labels.prev}>PREV</button
+      >
+      <button
+        type="button"
+        class="music-deck__btn music-deck__btn--primary"
+        data-action="play"
+        disabled
+        aria-label={labels.play}>PLAY</button
+      >
+      <button
+        type="button"
+        class="music-deck__btn"
+        data-action="next"
+        disabled
+        aria-label={labels.next}>NEXT</button
+      >
+    </div>
+    <div class="music-deck__playlist" data-expanded="false">
+      <button
+        type="button"
+        class="music-deck__playlist-toggle"
+        data-action="queue"
+        disabled
+        aria-expanded="false"
+        aria-controls="music-deck-queue"
+        aria-label={labels.queue}
+        ><span class="music-deck__signal-label">QUEUE</span><span class="music-deck__playlist-meta"
+          >{tracks.length} TRACKS</span
+        ><span class="music-deck__playlist-toggle-label" data-queue-label>SHOW</span></button
+      >
+      <ol id="music-deck-queue" class="music-deck__playlist-list" hidden>
+        {
+          tracks.map((track, index) => (
+            <li>
+              <button
+                type="button"
+                class="music-deck__track-chip"
+                data-track={index}
+                data-active={index === 0 ? 'true' : 'false'}
+                aria-pressed={index === 0}
+              >
+                <>
+                  <span class="music-deck__track-index">{String(index + 1).padStart(2, '0')}</span>
+                  <span class="music-deck__track-copy">
+                    <>
+                      <span class="music-deck__track-name">{track.title}</span>
+                      <span class="music-deck__track-artist-line">{track.artist}</span>
+                    </>
+                  </span>
+                </>
+              </button>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+    <div class="music-deck__footer">
+      <button
+        type="button"
+        class="music-deck__btn music-deck__btn--ghost"
+        data-action="mute"
+        disabled
+        aria-pressed="false"
+        aria-label={labels.mute}>MUTE</button
+      ><label class="music-deck__volume"
+        ><span>LVL</span><input
+          aria-label={labels.volume}
+          data-volume
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.5"
+        /></label
+      >
+    </div>
+  </div>
+  <noscript>{labels.noScript}</noscript>
+</aside>
+<script is:inline type="module" src={controllerUrl}></script>

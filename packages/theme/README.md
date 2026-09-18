@@ -25,6 +25,8 @@ npm pkg set scripts.new-page="anglefeint-new-page"
 
 ## Usage in Starter/Site
 
+Optional music (0.7.0) requires the matching starter schema/defaults and theme adapter. It is disabled by default and ships no songs. Configure `theme.music` in `src/site.config.ts` with `enabled: true` and `tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }]`; place the file in `public/music/` or use an HTTPS audio URL. Audio loads after Play, and navigation requires manually resuming playback. See the repository README and upgrade guide before updating an older starter.
+
 Article share images require the matching starter's `theme.socialImage.enabled` config/adapter and `socialImage()` from `@anglefeint/astro-theme/social-image` in Astro's integrations. The package owns the prerendered PNG endpoint, Satori/Sharp rendering and offline font assets. Article `ogImage` overrides generation independently of `heroImage`; see the repository README for image paths and the disable switch. This capability requires 0.5.0 and its matching starter; 0.4.0 does not include it.
 
 Use the package exports in your pages/layout wiring, for example:
