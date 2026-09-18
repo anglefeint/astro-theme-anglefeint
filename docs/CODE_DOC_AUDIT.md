@@ -12,7 +12,15 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
-## 2026-09-19 多语言文章逐项核对与站点域名修复（本地未发布）
+## 2026-09-19 文章与域名修复交付验收
+
+- 修复提交 `c123f75b1db250dbe25022bfa45b2a873e8f5f67` 已推送 main；生成的 starter `b2071b661c81b7f31f02da28861d2a78fc6868f8` 已推送并读回远程确认。`maintainer:sync-starter:check` 同步后无偏移。本次没有 npm 包代码改动，未发布 npm、未新建版本标签或 GitHub Release；注册表仍为 0.7.0。
+- 文档工作流重新检查当前修改，责任文档保持代码到配置、路由和文章的对应关系。主分支推送钩子的完整 `check` 通过。`check:installed -- --build --audit` 通过独立安装、CLI/迁移/适配器、en/zh × always/never 构建矩阵，以及搜索/标签关闭和音乐开启场景。main、隔离安装、同步后的 starter 和公开模板安装均审计零已知漏洞。
+- 使用公开 `npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter` 新建临时工程，确认全部 15 篇教程、Astro 配置及域名解析脚本与 main 一致。通过新建文章、重复创建保护、新建 AI 页面、doctor（包含 check/build）、dev 与 preview HTTP 验收。五语教程、系列链接、RSS、搜索产物和 1200×630 分享图检查通过。
+- 公开模板构建设置 `PUBLIC_SITE_URL=https://remote-accept.example` 后，五语言首页 canonical、RSS 及 sitemap 均使用测试域名。测试服务器已停止，临时工程已清理；原本的本地 4323 开发服务已恢复。
+- Cloudflare 对 main `c123f75` 的 Workers Builds 检查成功；starter `b2071b6` 当时没有 GitHub check run。用户此前已确认修改分支部署设置，本轮未直接读取 Cloudflare 后台设置或生产活动版本 ID，不以 check run 代替这些证据。starter 推送后实测生产站：五语言各 14 篇、各 2 页列表，70 篇旧/新文章均 HTTP 200、标题与 main 一致；新版域名教程内容已经上线。后续仅推送本验收记录和升级说明，不改变运行时或文章库存。
+
+## 2026-09-19 多语言文章逐项核对与站点域名修复（审阅时本地未发布）
 
 基准：main `ebbf7ecc64db5edbeadd89712a139ce44327eef0`，五种语言各 14 篇，共 70 篇。重点检查 15 篇使用指南的命令、配置片段、默认值、关闭状态、路由和升级边界；同时复核旧文章的视觉及架构描述。旧叙事文章篇幅不完全相同，不把设计理念视为功能保证。本轮不删除文章，不改变 slug 和 `pubDate`，25 篇修订文章的 `updatedDate` 更新为 2026-09-19。
 
