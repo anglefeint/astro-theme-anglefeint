@@ -2,6 +2,7 @@ import { execFile as execFileCallback } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { resolveSiteUrl } from './resolve-site-url.mjs';
 
 const execFile = promisify(execFileCallback);
 const repoRoot = process.cwd();
@@ -46,7 +47,9 @@ async function main() {
   );
 
   await mkdir(path.dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, `${stdout}\n`, 'utf8');
+  const payload = JSON.parse(stdout);
+  payload.siteUrl = resolveSiteUrl(payload.siteUrl, repoRoot, ['build']);
+  await writeFile(outputPath, `${JSON.stringify(payload)}\n`, 'utf8');
 }
 
 main().catch((error) => {

@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
 
+// The old hyphenated probe matched the word "no". Use one absent token.
+const absentQuery = 'qxzvnonexistentresultkwjz';
+
 for (const width of [1440, 390]) {
   test(`full-text search is lazy, accessible and localized at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -39,7 +42,7 @@ for (const width of [1440, 390]) {
     const bounds = await dialog.boundingBox();
     expect(bounds.x).toBeGreaterThanOrEqual(0);
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
-    await input.fill('no-such-article-719286');
+    await input.fill(absentQuery);
     await expect(dialog.getByRole('status')).toHaveText('没有找到匹配的文章。');
     await input.fill('mastodon');
     await expect(dialog.locator('.search-results a').first()).toBeVisible();
@@ -65,7 +68,7 @@ test('search retries failed resources and does not show stale results', async ({
   await dialog.getByRole('button', { name: 'Retry', exact: true }).click();
   await expect(dialog.locator('.search-results a').first()).toBeVisible();
   await dialog.getByRole('searchbox').fill('astro');
-  await dialog.getByRole('searchbox').fill('no-such-article-719286');
+  await dialog.getByRole('searchbox').fill(absentQuery);
   await expect(dialog.getByRole('status')).toHaveText('No matching articles.');
   await expect(dialog.locator('.search-results a')).toHaveCount(0);
 });

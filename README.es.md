@@ -105,6 +105,8 @@ npm run new-post -- my-first-post --locales en,fr
 ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
 ```
 
+La sintaxis `ANGLEFEINT_LOCALES=...` es para Bash y shells POSIX. En PowerShell, usa el comando con `--locales` de arriba.
+
 Cómo funciona la URL:
 
 - Archivo: `src/content/blog/es/my-first-post.md`
@@ -126,7 +128,7 @@ Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.
 El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
 Regla de slug: solo minúsculas, números y guiones; se permiten rutas anidadas (ejemplo: `projects/labs`). `_` y mayúsculas no son válidos.
 
-Ejemplos:
+Ejemplos (elige uno para `projects`; si ejecutas los cinco, fallarán a partir del segundo porque el archivo ya existe):
 
 ```bash
 npm run new-page -- projects --theme base

@@ -1,0 +1,45 @@
+name: Template acceptance
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  consumer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - node: 22
+            manager: npm
+            args: ''
+          - node: 24
+            manager: pnpm
+            args: '--pnpm'
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Maintainer browser tests
+        if: matrix.manager == 'npm'
+        run: npm run e2e
+      - name: Public starter commands and configuration
+        run: npm run check:template -- ${{ matrix.args }}
+      - uses: actions/upload-artifact@v7.0.1
+        if: always()
+        with:
+          name: acceptance-${{ matrix.manager }}-node-${{ matrix.node }}
+          path: |
+            acceptance-results/
+            test-results/
+          retention-days: 14

@@ -12,8 +12,9 @@ test('tool title decoding survives rapid close/reopen and keeps its accessible n
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto(`/${defaultLocale}/about/`);
-  await page.clock.install();
-  await page.clock.pauseAt(new Date());
+  const clockStart = new Date('2026-01-01T00:00:00Z');
+  await page.clock.install({ time: clockStart });
+  await page.clock.pauseAt(new Date(clockStart.getTime() + 1000));
   const ai = page.locator('[data-modal="ai"]');
   const help = page.locator('[data-modal="help"]');
   const title = page.locator('#hacker-modal-title');

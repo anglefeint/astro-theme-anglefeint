@@ -2,6 +2,7 @@
 dist/
 playwright-report/
 test-results/
+acceptance-results/
 # generated types
 .astro/
 tests/e2e/.generated-smoke-config.json
