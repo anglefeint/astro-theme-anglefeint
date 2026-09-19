@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 
 ## 先做最少的配置
 
-这套教程面向配套的 0.7.0 starter。三篇分别讲建站、写作和可选功能。你不需要先读懂所有配置：先把站点身份和内容换成自己的，其他功能保留默认即可。教程本身就是普通博客文章，能直接体验目录、代码复制和搜索。
+这套教程面向配套的 0.8.0 starter。三篇分别讲建站、写作和可选功能。你不需要先读懂所有配置：先把站点身份和内容换成自己的，其他功能保留默认即可。教程本身就是普通博客文章，能直接体验目录、代码复制和搜索。
 
 ## 1. 安装并在本地打开
 
@@ -62,7 +62,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 首页大标题下的介绍由当前语言的 `site.hero` 控制。`site.description` 是站点级默认描述，而首页元描述优先使用该语言的 `messages.siteDescription`。只改 `site.description` 不会替换首页可见介绍。
 
-社交链接支持 `github`、`twitter`、`mastodon` 图标；用 `social: { links: [] }` 清空链接。若 `.env` 中已有 `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` 等站点覆盖值，它们会优先于配置文件；修改没有生效时也检查这些变量。
+社交链接支持 `github`、`twitter`、`mastodon` 图标；用 `social: { links: [] }` 清空链接。空列表仍会在顶部和页脚显示 Mastodon、Twitter、GitHub 三个不可点击的占位图标；列表非空时只显示已配置的条目。若 `.env` 中已有 `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` 等站点覆盖值，它们会优先于配置文件；修改没有生效时也检查这些变量。
 
 可在项目根目录的 `.env` 或托管平台的构建环境中设置 `PUBLIC_SITE_URL=https://your-domain.example`，覆盖 `site.url`。修改后重启开发服务或重新构建，并检查 canonical、RSS、sitemap 和分享图绝对地址是否使用该域名。这需要配套 starter 的 `astro.config.mjs` 和域名解析辅助脚本；只更新 npm 主题包不会更新这些文件。
 

@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 
 ## Start with the essentials
 
-This series covers the accompanying 0.7.0 starter: setup, writing, and optional features. You do not need to understand every setting first. Replace the site identity and content, and keep the other defaults. These tutorials are ordinary blog posts, so you can try their table of contents, code copying, and search.
+This series covers the accompanying 0.8.0 starter: setup, writing, and optional features. You do not need to understand every setting first. Replace the site identity and content, and keep the other defaults. These tutorials are ordinary blog posts, so you can try their table of contents, code copying, and search.
 
 ## 1. Install and open locally
 
@@ -62,7 +62,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 The introduction beneath the homepage heading comes from the current locale’s `site.hero`. `site.description` is the default site description, while the homepage meta description prefers the locale’s `messages.siteDescription`. Changing only `site.description` does not replace the visible introduction.
 
-Social icons support `github`, `twitter`, and `mastodon`. Use `social: { links: [] }` to remove all links. Existing environment overrides such as `PUBLIC_SITE_TITLE` and `PUBLIC_SITE_URL` take priority over the config file; check them if a change seems ineffective.
+Social icons support `github`, `twitter`, and `mastodon`. Use `social: { links: [] }` to remove all links. An empty list still shows three non-clickable placeholder icons (Mastodon, Twitter, GitHub) in the header and footer; a non-empty list shows only the configured entries. Existing environment overrides such as `PUBLIC_SITE_TITLE` and `PUBLIC_SITE_URL` take priority over the config file; check them if a change seems ineffective.
 
 Set `PUBLIC_SITE_URL=https://your-domain.example` in the project-root `.env` file or your hosting build environment to override `site.url`. Restart development or rebuild after changing it. The resulting canonical links, RSS, sitemap, and absolute social image URLs should use that domain. This requires the matching starter-side `astro.config.mjs` and URL resolver; an npm theme update alone does not update these files.
 

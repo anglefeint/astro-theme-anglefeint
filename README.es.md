@@ -32,7 +32,7 @@ pnpm install
 ## Requisitos
 
 - Node.js `22.12.0+` (LTS recomendado)
-- Los comandos documentados del starter 0.5.1 pasaron las pruebas en Linux con npm + Node 22 y pnpm 10 + Node 24. No se probaron yarn/bun. Consulta el [registro de validación](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/CODE_DOC_AUDIT.md).
+- Los comandos documentados del starter 0.8.0 pasaron las pruebas en Linux con npm + Node 22 y pnpm 10 + Node 24. No se probaron yarn/bun. Consulta el [registro de validación](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md).
 
 ## Inicio rápido
 
