@@ -66,17 +66,16 @@ pnpm preview
 
 ## Actualizar tema
 
-Para proyectos creados desde `#starter`, empieza así cuando solo actualizas el package:
+En proyectos creados desde `#starter`, ejecuta lo siguiente solo si la versión de destino es compatible con tu starter y Astro y no requiere cambios de estructura local:
 
 ```bash
 npm update @anglefeint/astro-theme
-npm install
 npm run doctor
-# si doctor reporta drift de adapters:
-# npm run sync-adapters
-npm run check
-npm run build
 ```
+
+`npm update` respeta el rango de `package.json`: `^0.5.1` no incluye `0.6.0`. Para una actualización compatible fuera del rango, sigue las notas de versión e instala una versión de destino explícita, no `@latest` sin comprobarla. Verifica las versiones con `npm ls @anglefeint/astro-theme astro`.
+
+En el starter actual, `doctor` ya incluye las comprobaciones y la compilación. Cuando termine correctamente, revisa el sitio con `npm run preview`. Solo si informa de diferencias entre los adaptadores generados y las plantillas locales, ejecuta `npm run sync-adapters` y repite `npm run doctor`; esto no descarga plantillas del repositorio original. Los proyectos antiguos pueden tener otros scripts: consulta su `package.json` y la guía de actualización.
 
 Si las notas de versión incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualización directa de todos los starters históricos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
@@ -85,7 +84,7 @@ Si tu código personalizado aún importa `src/consts` o `@anglefeint/astro-theme
 Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
 
 - https://docs.astro.build/en/guides/upgrade-to/
-- luego ejecuta `npm run check` y `npm run build` en este proyecto.
+- después sigue la lista de verificación de la guía de actualización enlazada arriba.
 
 ## Crear nuevo post
 
