@@ -121,6 +121,7 @@ This implementation is included in 0.5.0 with its matching starter. The complete
 - `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle, effect switches such as `enableRedQueen`)
 - `src/config/about.ts`: About adapter selector (`getAboutConfig(locale)` from `src/site.config.ts -> i18n.locales`)
 - `src/config/social.ts`: social adapter (header/footer social links)
+- `packages/theme/src/components/shared/SocialMenu.astro`: both header and footer show Mastodon/Twitter/GitHub non-clickable placeholders when the social list is empty; a non-empty list renders only its configured links. Main's demo config leaves the list empty, like the neutral starter. About contact links and footer theme/Astro credits are configured separately.
 - `packages/theme/src/config/*.ts`: package fallback defaults for non-starter/manual consumers
 
 ### Config Ownership Contract

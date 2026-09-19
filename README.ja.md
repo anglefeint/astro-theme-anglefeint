@@ -32,7 +32,7 @@ pnpm install
 ## 動作要件
 
 - Node.js `22.12.0+`（LTS 推奨）
-- 0.5.1 starter の記載コマンドは Linux 上の npm + Node 22、pnpm 10 + Node 24 で検証済みです。yarn/bun は未検証です。[検証記録](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/CODE_DOC_AUDIT.md)を参照してください。
+- 0.8.0 starter の記載コマンドは Linux 上の npm + Node 22、pnpm 10 + Node 24 で検証済みです。yarn/bun は未検証です。[検証記録](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)を参照してください。
 
 ## クイックスタート
 

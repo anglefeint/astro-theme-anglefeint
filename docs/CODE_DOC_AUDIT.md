@@ -12,6 +12,17 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-19 自用前文档收尾核对
+
+检查开始时 main `e11954c` 工作区干净。对已提交范围 `595e000..e11954c` 的变更路径运行 `suggest:docs`，避免将干净工作区误认为无需核对。候选覆盖配置、架构、用户说明和维护/发布文档；对照实际 defaults/schema、site/theme/social adapters、CommonFooter、SocialMenu、内容 schema、Astro 集成和 starter source mapping，重点复核本轮发布及随后恢复社交占位图标的影响。
+
+- 五语言指南 1、3 开头仍写 0.7.0，但指南 3 已包含 0.8.0 页脚配置：统一改为配套 0.8.0 starter。历史升级文章中的版本范围示例仍正确，不替换。
+- 五语言指南 1 原本只写清空 `social.links`，没有说明空状态：补充顶部/页脚仍显示 Mastodon、Twitter、GitHub 三个不可点击占位图标，非空时只显示配置条目。架构参考同步记录；About 联系入口和页脚技术署名与此列表独立。未修改组件行为。
+- 五语言 README 的 0.5.1 Linux 验收陈述属于真实历史证据，但未反映当前版本：更新为已完成的 0.8.0 验收，并直接链接其发布记录。保留 README 结构和命令。
+- 页脚开关默认值、旧 tagline 去重、demo/starter 配置隔离、空邮箱处理与现有架构/视觉/升级说明一致，不再改写。指南 2 的内容字段、搜索/分享图构建入口和功能配置说明未发现本次变更引起的偏移。既有发布流程、元数据规则、代理入口和历史发布记录保持不变。
+
+本轮仅更新说明文字；未修改运行时代码、配置、依赖或版本。运行文档元数据检查和 diff 空白检查；不重复功能构建或冒称重跑 Linux/浏览器验收，0.8.0 的测试证据见 [发布记录](releases/0.8.0.md)。默认 `suggest:docs` 在沙箱中读取 Git 子进程失败，正常权限下重试成功；未将此环境问题改写为产品缺陷。文档交付需要提交 main，并按维护流程同步包含 README/指南的 starter；无需发布 npm。本节记录的是本地修订，不表示已推送或部署。
+
 ## 2026-09-19 页脚与演示配置核对（0.8.0）
 
 按配置 schema/defaults → 生成 adapter → CommonFooter → 构建 HTML/浏览器逐项核对：`theme.footer.showCredits` 默认 true；false 移除两条技术署名链接，保留年份、站名及自定义 tagline。旧默认 `Built with Astro.` 归入内置署名防止重复。没有加入 All rights reserved，没有修改雨滴、光柱、代码雨或其他视觉特效。
