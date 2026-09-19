@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 ## 既定の状態を見て必要なものだけ変更する
 
-対応する 0.7.0 starter 向けの説明です。TypeScript の例はすべて `src/site.config.ts` の `defineThemeConfig({...})` に統合します。変更したい項目だけを設定してください。
+対応する 0.8.0 starter 向けの説明です。TypeScript の例はすべて `src/site.config.ts` の `defineThemeConfig({...})` に統合します。変更したい項目だけを設定してください。
 
 | 機能                                         | 既定の状態     |
 | -------------------------------------------- | -------------- |

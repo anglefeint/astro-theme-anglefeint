@@ -32,7 +32,7 @@ pnpm install
 ## 环境要求
 
 - Node.js `22.12.0+`（建议 LTS）
-- 0.5.1 starter 的文档命令已在 Linux 下通过 npm + Node 22、pnpm 10 + Node 24 验收；未测试 yarn/bun。详见[验收记录](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/CODE_DOC_AUDIT.md)。
+- 0.8.0 starter 的文档命令已在 Linux 下通过 npm + Node 22、pnpm 10 + Node 24 验收；未测试 yarn/bun。详见[验收记录](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)。
 
 ## 快速开始
 
