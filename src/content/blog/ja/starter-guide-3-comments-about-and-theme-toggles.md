@@ -180,6 +180,24 @@ theme: {
 
 開発画面で機能を確認後、`npm run check` と `npm run build` を実行します。検索はビルド後の `npm run preview` で確認します。プロジェクトや更新の問題を診断するときだけ、より広い検査を含む `npm run doctor` を使います。公開には新しい成果物の再デプロイが必要です。
 
+## 8. フッターのクレジットを表示・非表示にする
+
+フッターにはビルド時の年と `site.title` が表示されます。既定ではテーマと Astro へのリンクも表示されます：`© 2026 My Blog · Theme by Anglefeint · Built with Astro`。年はビルド時に生成され、固定値ではありません。
+
+両方の技術クレジットを非表示にするには、次の設定を `src/site.config.ts` に統合します：
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  theme: {
+    footer: { showCredits: false },
+  },
+});
+```
+
+`showCredits: true` で再表示できます。非表示にすると両方のリンクが削除され、著作権表示は残ります。任意の `site.tagline` は、このスイッチとは独立したプレーンテキストです。既定値は空です。旧既定値の `Built with Astro.` は重複を避けるため組み込みクレジットとして扱います。`All rights reserved` は追加しません。
+
+公開デモは専用のサイト名、ドメイン、翻訳済みの紹介文を使います。新しい starter は汎用の既定値を使い、ユーザーは引き続き `src/site.config.ts` だけで設定できます。古い starter の更新では、アップグレードガイドに従って対応する設定ファイルも移行してください。npm パッケージだけの更新では、古いアダプターにこの設定は追加されません。
+
 ## このガイドの構成
 
 - [利用ガイド 1：ブログを立ち上げる](/ja/blog/starter-guide-1-configure-your-site/)

@@ -51,7 +51,9 @@ for (const viewport of [
       await expect(page.locator('#hacker-modal')).toHaveAttribute('aria-hidden', 'true');
     } else {
       await expect(page.locator('.hacker-sidebar')).toBeHidden();
-      const contact = page.locator('main a[href^="mailto:"]');
+      const contact = page
+        .locator('main a[href^="mailto:"], main a[href^="https://github.com/"]')
+        .first();
       await contact.scrollIntoViewIfNeeded();
       await expect(contact).toBeVisible();
       await page.screenshot({ path: testInfo.outputPath('about-mobile.png') });

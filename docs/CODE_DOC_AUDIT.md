@@ -12,6 +12,16 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-19 页脚与演示配置核对（0.8.0）
+
+按配置 schema/defaults → 生成 adapter → CommonFooter → 构建 HTML/浏览器逐项核对：`theme.footer.showCredits` 默认 true；false 移除两条技术署名链接，保留年份、站名及自定义 tagline。旧默认 `Built with Astro.` 归入内置署名防止重复。没有加入 All rights reserved，没有修改雨滴、光柱、代码雨或其他视觉特效。
+
+main 的五语言首页/About 现在是 demo 专用内容；starter 的 `src/site.config.ts` 经 manifest 的 `starterSourcePath()` 从通用模板生成。同步、偏移检查和独立安装使用同一映射；用户配置入口不变。About 空邮箱不再输出无效 mailto，demo 使用项目 GitHub 联系入口。
+
+五语言第三篇指南补充同一开关、tagline 边界、构建年份和升级限制。更新架构、视觉、维护流程、升级说明、包 README、验收说明及版本记录；根 README 现有配置入口及指南链接仍成立，无需重写。代理入口、元数据算法和历史发布记录不变。
+
+本地 56 项单元测试、Astro 检查、lint 与文档元数据检查通过；完整 Chromium 回归 30 项通过，包括五语言页脚、390px/1440px 布局和空邮箱。首轮旧 smoke 测试固定寻找邮件链接，在 demo 改用 GitHub 后失败，已改为验证实际可用的联系链接。独立安装/审计及 en/zh × always/never 构建矩阵通过，新增署名开关与自定义 tagline 输出断言，验证通用配置未带入 demo 域名。发布和远端模板验收结果见 [0.8.0](releases/0.8.0.md)，不将准备阶段视为发布完成。
+
 ## 2026-09-19 GitHub Linux 模板验收完成
 
 测试设施提交 `e2067623b50e257768588ae6bfaf0c0a805bddbe` 已推送 main。[Template acceptance 运行 35421636489](https://github.com/anglefeint/astro-theme-anglefeint/actions/runs/35421636489) 在 GitHub 托管 Ubuntu runner 上手动启动，两组任务最终均为 success：Node 22.23.2 / npm 10.9.8，以及 Node 24.20.0 / pnpm 10.34.5。

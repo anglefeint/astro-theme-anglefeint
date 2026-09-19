@@ -5,7 +5,11 @@ import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { buildStarterPackage } from './starter-package.mjs';
-import { STARTER_MANAGED_FILES, STARTER_OBSOLETE_FILES } from './starter-manifest.mjs';
+import {
+  STARTER_MANAGED_FILES,
+  STARTER_OBSOLETE_FILES,
+  starterSourcePath,
+} from './starter-manifest.mjs';
 import { inspectProject } from './doctor.mjs';
 import { checkReadmeLinks } from './check-readme-links.mjs';
 
@@ -43,9 +47,14 @@ try {
 
   for (const file of STARTER_MANAGED_FILES) {
     await mkdir(path.dirname(path.join(project, file)), { recursive: true });
-    await cp(path.join(root, file), path.join(project, file));
+    await cp(path.join(root, starterSourcePath(file)), path.join(project, file));
   }
   for (const file of STARTER_OBSOLETE_FILES) await rm(path.join(project, file), { force: true });
+  assert.equal(
+    await read('src/site.config.ts'),
+    await readFile(path.join(root, starterSourcePath('src/site.config.ts')), 'utf8')
+  );
+  assert.doesNotMatch(await read('src/site.config.ts'), /demo\.anglefeint\.com/);
   await checkReadmeLinks(
     project,
     STARTER_MANAGED_FILES.filter((name) => /^README.*\.md$/.test(name))
@@ -158,7 +167,7 @@ try {
     for (const locale of ['en', 'zh']) {
       for (const mode of ['always', 'never']) {
         await setConfig({
-          site: { description: 'SITE_DESCRIPTION_SENTINEL' },
+          site: { description: 'SITE_DESCRIPTION_SENTINEL', tagline: 'CUSTOM_FOOTER_SENTINEL' },
           i18n: {
             defaultLocale: locale,
             routing: { defaultLocalePrefix: mode },
@@ -167,13 +176,21 @@ try {
               fr: { meta: { label: 'French', enabled: true } },
             },
           },
-          theme: { enableAboutPage: mode === 'always', blogPageSize: 2 },
+          theme: {
+            footer: { showCredits: mode === 'always' },
+            enableAboutPage: mode === 'always',
+            blogPageSize: 2,
+          },
         });
         console.log(`Building installed starter: default=${locale}, prefix=${mode}`);
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
         await npm(['run', 'build']);
         for (const lang of ['en', 'zh', 'ja', 'ko', 'es']) {
           const html = await read(`dist/${lang}/blog/installed-default/index.html`);
+          const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0];
+          assert(footer?.includes('CUSTOM_FOOTER_SENTINEL'));
+          assert.equal(footer.includes('Theme by'), mode === 'always');
+          assert.equal(footer.includes('href="https://astro.build/"'), mode === 'always');
           const og = html.match(/property="og:image" content="([^"]+)"/)?.[1];
           assert.ok(og && new URL(og).pathname.startsWith('/_social/'));
           const png = await readFile(path.join(project, 'dist', new URL(og).pathname));

@@ -158,6 +158,7 @@ async function browserCheck(base, customized = false) {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(base + '/en/');
+    await expect(page.locator('footer .footer-credits')).toHaveCount(customized ? 0 : 1);
     if (customized) {
       await expect(page.locator('body')).toContainText('Acceptance hero');
       await expect(page.locator('#lang-select option')).toHaveCount(2);
@@ -346,6 +347,7 @@ try {
         },
       },
       theme: {
+        footer: { showCredits: false },
         homeLatestCount: 1,
         blogPageSize: 2,
         enableAboutPage: false,

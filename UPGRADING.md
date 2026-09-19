@@ -14,6 +14,12 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.8.0: footer credits and separate demo configuration
+
+The footer now links to Anglefeint and Astro by default. Set `theme.footer.showCredits: false` to hide both links while keeping your site copyright and custom tagline. This requires the matching starter schema, defaults and theme adapter; npm alone does not update those files. Use the fresh-template migration below and preserve personal settings. A `^0.7.0` dependency range does not include 0.8.0.
+
+`site.tagline` defaults to an empty string. A custom value remains independent of the credits switch; the former default `Built with Astro.` is treated as the built-in credit instead of repeated. No all-rights-reserved notice is added. The published starter keeps generic identity settings; main's demo identity and translated introduction are not copied into it.
+
 ### Starter-side site URL override fix (2026-09-19)
 
 The corrected starter makes `PUBLIC_SITE_URL` override Astro's build-time `site`, including canonical URLs, RSS and sitemap output. It changes `astro.config.mjs`, adds `scripts/resolve-site-url.mjs` and declares Vite as a direct build dependency. Updating the theme npm package alone cannot install these starter changes. In older starters, set `site.url` directly in `src/site.config.ts` and remove conflicting `PUBLIC_SITE_URL` values, or follow the fresh-template migration below. After adopting the corrected starter, rebuild and inspect canonical, RSS, sitemap and social-image URLs with your deployment domain. The theme package remains 0.7.0; the corrected starter was delivered as `b2071b6`.

@@ -19,6 +19,10 @@ sync_targets: [README.md, CLAUDE.md]
 
 ## Runtime Model
 
+The main checkout's `src/site.config.ts` configures the public demo. `starterSourcePath()` in `scripts/starter-manifest.mjs` maps the distribution destination `src/site.config.ts` to `scripts/starter-templates/site.config.ts.template`. Both maintainer synchronization (including drift detection) and independent installed-starter checks use that mapping. Other managed files retain their source paths; consumers still edit only `src/site.config.ts`, with neutral title/domain/author defaults. The template source itself is not distributed.
+
+`CommonFooter.astro` reads `THEME.FOOTER.SHOW_CREDITS`, normalized from `theme.footer.showCredits` (default true). Disabling it omits theme/Astro links, retaining build-year/site-title copyright and any custom `site.tagline`. The default tagline is empty; the former default `Built with Astro.` is treated as built-in credit to avoid duplication. The optional About email link is omitted when `contact.email` is empty.
+
 - Most pages are statically generated at build time.
 - Interactivity is implemented with lightweight vanilla scripts in:
   - `packages/theme/src/scripts/` (theme-shared runtime)

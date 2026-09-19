@@ -50,6 +50,10 @@ The four scenes should remain distinct while sharing usable navigation and publi
 
 `packages/theme/src/social/render.mjs` produces a static 1200×630 dark blue card with a subtle grid, title, site name and author. It is independent of the page hero and does not add navigation or client effects. Titles scale with length; beyond 120 grapheme clusters they are shortened only on the image. Site/author labels are also bounded. Bundled Noto CJK covers the default Latin/CJK languages; arbitrary emoji and other scripts are not guaranteed.
 
+## Shared footer
+
+The shared footer uses understated inherited-color Anglefeint and Astro links, separated by middle dots after the build year and site title. Text wraps naturally on narrow screens and links retain visible keyboard focus. `theme.footer.showCredits: false` removes both credits without hiding copyright or custom tagline text. There is no mandatory attribution banner or added animation.
+
 ## Shared header language selector
 
 `packages/theme/src/components/shared/LangSwitcher.astro` groups the localized label and native select in a transparent, borderless layout wrapper. Only the select has a rounded border and background; its focus highlight remains visible. `CommonHeader.astro` supplies the select color variables.

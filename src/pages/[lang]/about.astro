@@ -301,10 +301,16 @@ const aboutRuntimeConfig = {
           <h2 class="about-section-title">05 / {messages.about.contact}</h2>
           <p>
             {ABOUT_CONFIG.sections.contactLead}
-            {ABOUT_CONFIG.labels.contactEmailLead}
-            <a href={`mailto:${ABOUT_CONFIG.contact.email}`}
-              >{ABOUT_CONFIG.labels.contactEmailLabel}</a
-            >
+            {
+              ABOUT_CONFIG.contact.email.trim() && (
+                <>
+                  {ABOUT_CONFIG.labels.contactEmailLead}
+                  <a href={`mailto:${ABOUT_CONFIG.contact.email}`}>
+                    {ABOUT_CONFIG.labels.contactEmailLabel}
+                  </a>
+                </>
+              )
+            }
             {ABOUT_CONFIG.labels.contactConnectLead}
             <a href={ABOUT_CONFIG.contact.githubUrl} target="_blank" rel="noopener noreferrer"
               >{ABOUT_CONFIG.contact.githubLabel}</a

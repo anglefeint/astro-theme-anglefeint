@@ -1,6 +1,7 @@
 ---
 import { SITE_TAGLINE, SITE_TITLE } from '@anglefeint/site-config/site';
 import { SOCIAL_LINKS } from '@anglefeint/site-config/social';
+import { THEME } from '@anglefeint/site-config/theme';
 import SocialMenu from './SocialMenu.astro';
 
 const today = new Date();
@@ -11,11 +12,24 @@ interface Props {
 }
 
 const { tagline = SITE_TAGLINE, scanlines = false } = Astro.props as Props;
+// The former default is now represented by the configurable linked credits.
+const customTagline = tagline.trim() === 'Built with Astro.' ? '' : tagline.trim();
+const showCredits = THEME.FOOTER?.SHOW_CREDITS ?? true;
 ---
 
 <footer>
   &copy; {today.getFullYear()}
-  {SITE_TITLE}. {tagline}
+  {SITE_TITLE}
+  {
+    showCredits && (
+      <span class="footer-credits">
+        {' '}
+        · Theme by <a href="https://github.com/anglefeint/astro-theme-anglefeint">Anglefeint</a> ·
+        Built with <a href="https://astro.build/">Astro</a>
+      </span>
+    )
+  }
+  {customTagline && <span class="footer-tagline"> · {customTagline}</span>}
   <div class="social-links">
     <SocialMenu links={SOCIAL_LINKS} tone="footer" gap="0.85rem" />
   </div>
@@ -29,6 +43,14 @@ const { tagline = SITE_TAGLINE, scanlines = false } = Astro.props as Props;
   {scanlines && <div class="ai-scanlines" aria-hidden="true" />}
 </footer>
 <style>
+  .footer-credits a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
+  .footer-credits a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
   footer {
     padding: 2em 1em 3em 1em;
     background: var(--chrome-bg, var(--bg));

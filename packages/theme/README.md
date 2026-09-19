@@ -108,6 +108,10 @@ Indexes load only after opening search, using the current HTML language. Full se
 
 Version 0.3.0 supports `theme.tags.enabled` (default `true`) and article `tags: string[]`. Starter-owned `/[lang]/tags/` routes generate static per-language archives using package tag utilities and shared blog cards. Include the new routes when adopting this feature; updating the npm package alone does not install routes. Use the matching current starter.
 
+## Footer credits
+
+The footer displays the build year and site title, with linked Anglefeint/Astro credits by default. With the matching 0.8.0 starter configuration, set `theme.footer.showCredits: false` to omit both credit links. Copyright and custom `site.tagline` remain; the former default tagline `Built with Astro.` is represented by the built-in credit to avoid duplication. The new tagline default is empty. See User Guide 3 and UPGRADING before updating an older starter.
+
 ## Code block copy
 
 Article-body `pre > code` blocks include an automatic upper-right copy button with localized success/failure feedback. Copy uses `code.textContent` and the browser Clipboard API; HTTPS/localhost and browser permission are required. Inline code is excluded. No additional dependency, configuration switch or author markup is required.
