@@ -21,11 +21,11 @@ Run from the maintainer checkout, not from a user's starter. These tools do not 
 
 ## Three complementary checks
 
-| Command                                      | Source under test                                      | Purpose                                                                                                                                                         |
-| -------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run e2e`                                | Current local main build                               | 28 Chromium tests: desktop/mobile navigation, SEO, search, tags, TOC, clipboard, image preview, About interactions, effects and reduced motion                  |
-| `npm run check:installed -- --build --audit` | Locally packed theme and current managed starter files | Independent package installation; CLI/config/adapter checks; en/zh × homepage prefix matrix; feature switches; security audit                                   |
-| `npm run check:template`                     | Public GitHub `#starter` and npm package               | Fresh consumer installation, all starter script entries, documented command scenarios, configuration changes, dev/preview HTTP checks and Chromium interactions |
+| Command                                      | Source under test                                      | Purpose                                                                                                                                                                   |
+| -------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run e2e`                                | Current local main build                               | 30 Chromium tests (including footer credits): desktop/mobile navigation, SEO, search, tags, TOC, clipboard, image preview, About interactions, effects and reduced motion |
+| `npm run check:installed -- --build --audit` | Locally packed theme and current managed starter files | Independent package installation; CLI/config/adapter checks; en/zh × homepage prefix matrix; feature switches; security audit                                             |
+| `npm run check:template`                     | Public GitHub `#starter` and npm package               | Fresh consumer installation, all starter script entries, documented command scenarios, configuration changes, dev/preview HTTP checks and Chromium interactions           |
 
 The public-template check deliberately does not overlay local changes. Use it after starter delivery; use `check:installed` before delivery. Do not interpret a passing public-template run as verification of unpublished runtime changes.
 

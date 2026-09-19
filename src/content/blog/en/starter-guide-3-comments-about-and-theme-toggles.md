@@ -180,6 +180,24 @@ Keep existing settings such as `theme.comments` in that same object. Do not over
 
 Check the feature in development, then run `npm run check` and `npm run build`. Test search with `npm run preview` after building. Use `npm run doctor` when diagnosing project or upgrade problems; it performs broader checks. Deploy the new output to publish changes.
 
+## 8. Show or hide footer credits
+
+The footer displays the current build year and your `site.title`. By default it also links to the theme and Astro: `© 2026 My Blog · Theme by Anglefeint · Built with Astro`. The year is generated during the build, not hard-coded.
+
+To hide both technical credits, merge this setting into `src/site.config.ts`:
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  theme: {
+    footer: { showCredits: false },
+  },
+});
+```
+
+Set `showCredits: true` to restore them. Hiding credits removes both links; it keeps the copyright line. An optional `site.tagline` adds your own plain text independently of this switch. Its default is empty; the former default `Built with Astro.` is treated as the built-in credit to avoid duplication. No `All rights reserved` text is added.
+
+The public demo uses its own name, domain and translated introduction. A fresh starter keeps generic defaults, and you still configure your site only in `src/site.config.ts`. If you upgrade an older starter, use the matching configuration files described in the upgrade guide; updating only the npm package does not add this option to old adapters.
+
 ## In this series
 
 - [User Guide 1: Set Up Your Blog](/en/blog/starter-guide-1-configure-your-site/)

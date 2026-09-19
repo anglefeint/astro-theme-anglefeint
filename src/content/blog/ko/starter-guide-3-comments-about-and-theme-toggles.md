@@ -180,6 +180,24 @@ theme: {
 
 개발 화면에서 기능을 확인하고 `npm run check`, `npm run build`를 실행합니다. 검색은 빌드 후 `npm run preview`로 확인합니다. `npm run doctor`는 더 넓은 검사를 포함하므로 프로젝트나 업그레이드 문제를 진단할 때 사용하세요. 변경 사항 공개에는 빌드 결과물 재배포가 필요합니다.
 
+## 8. 푸터 출처 표시 또는 숨기기
+
+푸터에는 빌드 시점의 연도와 `site.title`이 표시됩니다. 기본적으로 테마와 Astro 링크도 표시됩니다: `© 2026 My Blog · Theme by Anglefeint · Built with Astro`. 연도는 고정값이 아니라 빌드 시 생성됩니다.
+
+두 기술 출처를 모두 숨기려면 다음 설정을 `src/site.config.ts`에 병합하세요:
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  theme: {
+    footer: { showCredits: false },
+  },
+});
+```
+
+`showCredits: true`로 다시 표시할 수 있습니다. 숨기면 두 링크가 모두 제거되고 저작권 줄은 유지됩니다. 선택 사항인 `site.tagline`은 이 스위치와 별개로 사용자 지정 일반 텍스트를 추가합니다. 기본값은 빈 문자열이며, 이전 기본값인 `Built with Astro.`는 중복을 방지하기 위해 내장 출처로 처리합니다. `All rights reserved`는 추가하지 않습니다.
+
+공개 데모는 별도의 사이트 이름, 도메인, 번역된 소개를 사용합니다. 새 starter는 일반 기본값을 유지하며, 사용자는 계속 `src/site.config.ts`에서 설정합니다. 이전 starter를 업그레이드할 때는 업그레이드 안내에 따라 해당 설정 파일도 이전하세요. npm 패키지만 업데이트하면 이전 어댑터에 이 옵션이 추가되지 않습니다.
+
 ## 이 가이드 시리즈
 
 - [사용 가이드 1: 블로그 시작하기](/ko/blog/starter-guide-1-configure-your-site/)

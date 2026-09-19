@@ -11,6 +11,7 @@ import {
   STARTER_CONTENT_MANAGED_FILES,
   STARTER_CONTENT_ROOT,
   STARTER_OBSOLETE_FILES,
+  starterSourcePath,
 } from '../../scripts/starter-manifest.mjs';
 
 import { buildStarterPackage, starterPackageDrift } from '../../scripts/starter-package.mjs';
@@ -238,7 +239,7 @@ async function cleanupGeneratedArtifacts(repoRoot) {
 async function collectDrift(sourceRef, targetRef) {
   const changed = [];
   for (const relPath of MANAGED_FILES) {
-    const sourceBuf = await readFromGitOrNullBuffer(sourceRef, relPath);
+    const sourceBuf = await readFromGitOrNullBuffer(sourceRef, starterSourcePath(relPath));
     if (sourceBuf === null) {
       changed.push(relPath);
       continue;
@@ -269,7 +270,7 @@ async function collectDrift(sourceRef, targetRef) {
 async function writeManagedFilesFromRef(sourceRef, repoRoot) {
   const changed = [];
   for (const relPath of MANAGED_FILES) {
-    const sourceBuf = await readFromGitBuffer(sourceRef, relPath);
+    const sourceBuf = await readFromGitBuffer(sourceRef, starterSourcePath(relPath));
     const fullPath = path.join(repoRoot, relPath);
     const existing = (await fileExists(fullPath)) ? await readFile(fullPath) : null;
     if (existing !== null && existing.equals(sourceBuf)) continue;

@@ -180,6 +180,24 @@ theme: {
 
 修改后先在开发页面检查对应功能，再运行 `npm run check` 和 `npm run build`。搜索用构建后的 `npm run preview` 验证。只有需要诊断工程或升级问题时再运行 `npm run doctor`；它包含更完整的检查。上线必须重新部署构建产物。
 
+## 8. 显示或隐藏页脚署名
+
+页脚显示本次构建时的年份与 `site.title`，默认还提供主题和 Astro 链接：`© 2026 My Blog · Theme by Anglefeint · Built with Astro`。年份在构建时生成，不写死。
+
+要隐藏两项技术署名，把以下设置合并到 `src/site.config.ts`：
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  theme: {
+    footer: { showCredits: false },
+  },
+});
+```
+
+设置 `showCredits: true` 可恢复显示。关闭后两条署名链接都移除，版权行保留。可选的 `site.tagline` 独立追加自定义纯文字，不受此开关控制；默认为空，旧默认值 `Built with Astro.` 视为内置署名，避免重复。不会追加 `All rights reserved`。
+
+公开 demo 使用专用站名、域名和翻译后的介绍；新安装的 starter 保持通用默认配置，用户仍只需编辑 `src/site.config.ts`。升级旧 starter 时，请按升级指南迁移配套配置文件；仅更新 npm 包不会为旧适配器补上这个开关。
+
 ## 这套教程
 
 - [使用指南 1：搭建你的博客](/zh/blog/starter-guide-1-configure-your-site/)

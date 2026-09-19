@@ -15,6 +15,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-09-19
+
+- Add linked footer credits with `theme.footer.showCredits` (default true); keep copyright and optional custom tagline when hidden.
+- Give the public demo a named identity and five-language homepage/About introductions; omit an empty About email link.
+- Generate starter configuration from a neutral template, shared by synchronization, drift detection and installed-package validation.
+- Document footer configuration in all five User Guide 3 translations. The matching starter configuration is required; see [release notes](docs/releases/0.8.0.md).
+
 ## [0.7.0] - 2026-09-18
 
 - Add an optional, default-off music player with independent native-audio core, guarded session storage and localized accessible controls.
