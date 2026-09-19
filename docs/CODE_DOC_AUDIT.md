@@ -12,6 +12,17 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-19 GitHub Linux 模板验收完成
+
+测试设施提交 `e2067623b50e257768588ae6bfaf0c0a805bddbe` 已推送 main。[Template acceptance 运行 35421636489](https://github.com/anglefeint/astro-theme-anglefeint/actions/runs/35421636489) 在 GitHub 托管 Ubuntu runner 上手动启动，两组任务最终均为 success：Node 22.23.2 / npm 10.9.8，以及 Node 24.20.0 / pnpm 10.34.5。
+
+- 两组分别从公开 `#starter` 创建工程，实际安装主题 0.7.0；各执行全部 14 个消费者脚本入口，各产生 46 条报告记录。安全审计、命令与参数边界、兼容范围内更新、适配器检测与修复、dev/preview 路由检查均通过；`check:workspace-link` 在消费者环境仍明确记为不适用。
+- 两组的默认及修改配置浏览器验收均通过，覆盖语言、首页数量、分页、功能开关、域名，以及音乐按需加载/播放和移动端展开。Node 22 任务另外执行主工程完整 Chromium 回归：28 项通过；Node 24 任务按工作流设计跳过这套重复回归，但执行自己的模板浏览器验收。
+- GitHub 保存命令日志、报告和截图，artifact 保留 14 天；两组 artifact 已下载至本地忽略目录 `acceptance-results/linux-35421636489/` 核对。此为新执行结果，不复用 0.5.1 旧测试；未修改主题运行时或发布 npm，未同步 starter。
+- main 推送后复查线上演示站，五语言各 14 篇文章、各两页列表、共 70 篇文章的响应与标题匹配 main。没有读取 Cloudflare 后台活动版本 ID，故仅证明实际访问的文章库正常，不据此声称后台部署设置或活动提交已核实。
+
+下方本地验收段落中的“Linux 尚未运行 / 未提交”描述是当时状态，由本节记录后续交付结果。平台范围仍限于实际运行的 Windows、Linux 和 Chromium，不扩大为全部浏览器或第三方服务保证。
+
 ## 2026-09-19 公开模板命令与配置全链路验收
 
 基准为 main `50787375c41569a2b149c1647e17fc82abdc58e1`、公开 starter `b2071b661c81b7f31f02da28861d2a78fc6868f8`、npm 主题 0.7.0。本轮在 Windows / Node 24.14.1 本地执行；新增 Linux 手动工作流尚未推送或运行，不以本地结果代替 Linux 验收。
