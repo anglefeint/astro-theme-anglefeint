@@ -66,17 +66,16 @@ pnpm preview
 
 ## 升级主题
 
-对于 `#starter` 创建的项目，包层更新可先执行：
+对于 `#starter` 创建的项目，仅在目标版本明确兼容现有 starter 和 Astro、且无需本地结构迁移时执行：
 
 ```bash
 npm update @anglefeint/astro-theme
-npm install
 npm run doctor
-# 如果 doctor 提示 adapter 漂移：
-# npm run sync-adapters
-npm run check
-npm run build
 ```
+
+`npm update` 只在 `package.json` 声明的范围内更新：`^0.5.1` 不包含 `0.6.0`。兼容但跨范围的更新，应按发布说明安装明确的目标版本，不要直接安装 `@latest`。用 `npm ls @anglefeint/astro-theme astro` 确认实际版本。
+
+当前 starter 的 `doctor` 已包含检查和构建，成功后用 `npm run preview` 人工检查站点。只有明确报告生成适配文件与本地模板不同步时，才运行 `npm run sync-adapters`，然后重跑 `npm run doctor`；它不会下载上游模板。旧工程的脚本可能不同，请查看本地 `package.json` 并遵循升级指南。
 
 如果发布说明涉及 starter 骨架变化，建议在新目录创建最新模板，再迁移文章、资源和个人设置，不要用旧文件整体覆盖新配置辅助文件。`npm update` 只更新主题包，不保证所有历史 starter 都能原地升级。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
@@ -85,7 +84,7 @@ npm run build
 如需进行 Astro 大版本升级，请先参考官方升级文档：
 
 - https://docs.astro.build/en/guides/upgrade-to/
-- 然后再执行本项目的 `npm run check` 和 `npm run build`。
+- 然后按上方升级指南的验证清单检查。
 
 ## 新建文章
 

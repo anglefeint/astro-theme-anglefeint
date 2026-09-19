@@ -219,15 +219,14 @@ Do not patch starter runtime logic manually as a recovery path.
 
 ## End-user Upgrade Guidance (for docs)
 
-Keep user docs limited to:
+For compatible package-only updates within the declared version range, use:
 
 ```bash
 npm update @anglefeint/astro-theme
-npm install
 npm run doctor
-npm run check
-npm run build
 ```
+
+The current starter's `doctor` includes checks and a build. After success, use `npm run preview` for manual verification. If generated adapters differ from local templates, run `npm run sync-adapters` and rerun `doctor`; this does not fetch upstream templates. Older project scripts may differ. Follow `UPGRADING.md` for explicit compatible targets outside the current range or fresh-template migration when local contracts/Astro versions change. Do not recommend unconditional `@latest` for legacy projects.
 
 Do not include maintainer-only sync commands in user README.
 

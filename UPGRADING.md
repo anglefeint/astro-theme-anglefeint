@@ -12,6 +12,12 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 This guide explains the recommended upgrade path for projects created from the starter branch.
 
+## Choose an Upgrade Path First
+
+- If the target release explicitly supports your existing starter and Astro version and changes only the package, use [Compatible Package Updates](#compatible-package-updates). You do not need to recreate the project for every update.
+- If the target changes the Astro major version, local routes, configuration contracts or build integrations, use the fresh-template migration below. Create it in a new directory and migrate content and personal settings; do not overwrite your existing project.
+- If compatibility is unclear, check the target release notes and package peer dependencies before installing. Do not use `@latest` as a migration shortcut. Theme 0.8.0 requires Astro `^7.3.2`; installing it alone does not migrate an Astro 6 project.
+
 ## Recommended Baseline
 
 ### 0.8.0: footer credits and separate demo configuration
@@ -59,7 +65,7 @@ The latest starter paired with its corresponding theme package is the release ba
 3. Migrate your articles and referenced images/assets, preserving locale folders and slugs.
 4. Reapply personal settings to the new `src/site.config.ts`. Do not replace the new schema, defaults, runtime helpers or Astro config wholesale with old copies.
 5. Review custom pages, integrations and deployment settings individually.
-6. Run `npm run doctor`, `npm run check`, and `npm run build`; preview the result before deploying. Keep the old project until the new one is verified.
+6. Follow the [Validation Checklist](#validation-checklist): with the current starter, run `npm run doctor`, then `npm run preview` after it succeeds. Keep the old project until the new one is verified.
 
 Do not copy `node_modules`, old lockfiles or maintainer synchronization scripts into the new project.
 
@@ -72,11 +78,9 @@ Projects created from:
 may use the following for package-only updates whose release notes do not require a new project skeleton:
 
 1. `npm update @anglefeint/astro-theme`
-2. `npm install`
-3. `npm run doctor`
-4. If `doctor` reports adapter drift: `npm run sync-adapters`
-5. `npm run check`
-6. `npm run build`
+2. Follow the [Validation Checklist](#validation-checklist).
+
+`npm update` installs within the range declared in `package.json`: `^0.5.1` does not include `0.6.0`, even if that release is compatible. To cross the range, follow the relevant release notes and install an explicit compatible target version. A successful update command does not prove you reached the intended version; check `npm ls @anglefeint/astro-theme astro`. Changing the range does not migrate local starter files.
 
 This updates the theme package, not the local project skeleton. The targeted migration notes below are optional for users choosing to retain an existing project rather than start from the latest template.
 
@@ -89,13 +93,11 @@ scripts/new-post.mjs
 scripts/new-page.mjs
 ```
 
-Those wrappers are no longer the recommended integration point because local project files do not update when the npm package updates. Use package-owned bins instead:
+Those wrappers are no longer the recommended integration point because local project files do not update when the npm package updates. Only after confirming compatibility, installing a compatible theme version that provides both CLI bins, and completing its required starter migrations, adjust the commands below. This step changes command wiring only; it does not migrate Astro or configuration files.
 
 ```bash
-npm install @anglefeint/astro-theme@latest
 npm pkg set scripts.new-post="anglefeint-new-post"
 npm pkg set scripts.new-page="anglefeint-new-page"
-npm install
 npm run new-post -- --help
 npm run new-page -- --help
 ```
@@ -116,12 +118,15 @@ npx anglefeint-new-page projects --theme matrix
 
 ## Validation Checklist
 
-After every upgrade:
+For the current starter, after dependencies are installed:
 
-1. `npm install`
-2. `npm run doctor`
-3. `npm run build`
-4. Check routes:
+1. Run `npm run doctor`. It runs migration diagnostics, adapter checks and `check`; `check` includes a build and About output verification. After success, running `check` and `build` again is unnecessary unless files changed.
+2. If it specifically reports generated adapters out of sync with local templates, run `npm run sync-adapters`, then rerun `npm run doctor`. This copies **local** templates and overwrites generated adapters; it does not download upstream templates or resolve all migration errors. Handle other failures according to their messages.
+3. After success, run `npm run preview` and inspect your content, images, custom pages, canonical URLs and sitemap domain before deploying. Passing diagnostics alone is not proof that all custom behavior is correct.
+
+Older projects may lack `doctor` or have different scripts. Inspect their local `package.json` and follow the matching migration instructions; installing the theme package does not update those scripts. Run `npm install` if dependencies have not yet been installed for the migrated project.
+
+Check routes:
 
 - `/`
 - `/<default-locale>/`
@@ -146,7 +151,7 @@ Updating the npm package does not rewrite your project files. For starters with 
 2. Compare `src/pages/index.astro` and the sitemap filter in `astro.config.mjs` with the current starter. Keep your existing `i18n.routing.defaultLocalePrefix` choice, custom content, integrations and deployment settings. Do not replace your entire Astro config.
 3. Review `src/utils/metrics.ts` if you want the current CJK-aware counts. Reading-time and derived metrics may change for existing CJK posts.
 4. Review updated support scripts and adapter templates together with the theme package. `sync-adapters` regenerates from your local templates; it does not download newer templates.
-5. Run `npm run doctor`, `npm run check`, and `npm run build`. Verify the default home URL, canonical links and sitemap in the generated output before deploying.
+5. Follow the [Validation Checklist](#validation-checklist), using the scripts actually present in your project. Verify the default home URL, canonical links and sitemap in the generated output before deploying.
 
 The updated `scripts/doctor.mjs` detects known legacy command and route patterns without editing files. Existing projects must obtain this script and its npm entry explicitly; installing the theme package alone does not update `doctor`. Custom routing needs manual review even when no known pattern is detected.
 

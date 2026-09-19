@@ -12,6 +12,14 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-19 升级路径与验证命令复核
+
+基准 main `d7f131c`、starter `257b0ab`。对照 starter 的 `package.json`、`scripts/doctor.mjs`、`scripts/sync-adapters.mjs` 及 0.8.0 包的 Astro peer 要求，修正此前遗漏的升级说明：旧脚手架不能无条件安装 `@latest`，当前 starter 成功执行 `doctor` 已包含 `check` 和构建。
+
+更新 UPGRADING、五语言 README 和五语言 `how-upgrade-works` 文章：先确认兼容性，区分包内更新与新模板迁移；说明 `npm update` 的版本范围和明确目标版本；仅在本地模板与生成适配文件不同步时运行 `sync-adapters` 后重跑 `doctor`，并明确不下载上游模板。旧工程须检查自己的脚本。验证成功后用 preview 人工检查，不重复构建。维护文档中的用户命令示例同步收敛，防止后续重新引入旧建议。
+
+通过 `suggest:docs` 追踪升级、命令及配置相关文档。未改运行时代码、依赖、日常开发命令、历史发布记录或视觉规范；无需新 npm 版本。文档检查及提交/推送钩子按正常流程运行，starter 通过维护脚本同步并核对实际文档与命令。此项不代表对任意旧用户工程进行了真实跨版本迁移测试。
+
 ## 2026-09-19 自用前文档收尾核对
 
 检查开始时 main `e11954c` 工作区干净。对已提交范围 `595e000..e11954c` 的变更路径运行 `suggest:docs`，避免将干净工作区误认为无需核对。候选覆盖配置、架构、用户说明和维护/发布文档；对照实际 defaults/schema、site/theme/social adapters、CommonFooter、SocialMenu、内容 schema、Astro 集成和 starter source mapping，重点复核本轮发布及随后恢复社交占位图标的影响。
