@@ -32,7 +32,7 @@ pnpm install
 ## Requirements
 
 - Node.js `22.12.0+` (LTS recommended)
-- The 0.5.1 starter's documented commands passed Linux acceptance with npm on Node 22 and pnpm 10 on Node 24. Yarn/bun were not tested. See the [dated acceptance record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/CODE_DOC_AUDIT.md).
+- The 0.8.0 starter's documented commands passed Linux acceptance with npm on Node 22 and pnpm 10 on Node 24. Yarn/bun were not tested. See the [dated acceptance record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md).
 
 ## Quick Start
 

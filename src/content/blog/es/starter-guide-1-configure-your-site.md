@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 
 ## Empieza por lo esencial
 
-Esta serie corresponde al starter 0.7.0 y explica la puesta en marcha, la escritura y las funciones opcionales. No necesitas conocer todos los ajustes para empezar. Sustituye la identidad del sitio y el contenido, y conserva los demás valores predeterminados. Estas guías son artículos normales: puedes probar su índice, la copia de código y la búsqueda.
+Esta serie corresponde al starter 0.8.0 y explica la puesta en marcha, la escritura y las funciones opcionales. No necesitas conocer todos los ajustes para empezar. Sustituye la identidad del sitio y el contenido, y conserva los demás valores predeterminados. Estas guías son artículos normales: puedes probar su índice, la copia de código y la búsqueda.
 
 ## 1. Instala y abre el sitio localmente
 
@@ -62,7 +62,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 La presentación bajo el título principal de inicio se configura mediante `site.hero` del idioma actual. `site.description` es la descripción general predeterminada, mientras que la metadescripción de inicio da prioridad a `messages.siteDescription` del idioma. Cambiar solo `site.description` no sustituye la presentación visible.
 
-Los iconos sociales admiten `github`, `twitter` y `mastodon`. Usa `social: { links: [] }` para quitar todos los enlaces. Las variables de entorno como `PUBLIC_SITE_TITLE` y `PUBLIC_SITE_URL` tienen prioridad sobre el archivo; compruébalas si un cambio no se refleja.
+Los iconos sociales admiten `github`, `twitter` y `mastodon`. Usa `social: { links: [] }` para quitar todos los enlaces. Una lista vacía sigue mostrando tres iconos de muestra sin enlace (Mastodon, Twitter y GitHub) en la cabecera y el pie de página; si la lista contiene elementos, solo se muestran los configurados. Las variables de entorno como `PUBLIC_SITE_TITLE` y `PUBLIC_SITE_URL` tienen prioridad sobre el archivo; compruébalas si un cambio no se refleja.
 
 Define `PUBLIC_SITE_URL=https://your-domain.example` en el archivo `.env` de la raíz del proyecto o en el entorno de compilación del alojamiento para reemplazar `site.url`. Reinicia el servidor de desarrollo o vuelve a compilar tras cambiarlo. Comprueba que los enlaces canonical, RSS, sitemap y las URL absolutas de imágenes sociales utilicen ese dominio. Se necesitan el `astro.config.mjs` y el script de resolución de URL correspondientes del starter; actualizar solo el paquete npm del tema no actualiza estos archivos.
 

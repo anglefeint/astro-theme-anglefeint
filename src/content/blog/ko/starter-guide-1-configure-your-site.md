@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 
 ## 최소한의 설정부터 시작하세요
 
-이 가이드는 함께 제공되는 0.7.0 starter를 기준으로 사이트 시작, 글 작성, 선택 기능을 설명합니다. 처음부터 모든 설정을 알 필요는 없습니다. 사이트 정보와 콘텐츠를 바꾸고 나머지는 기본값으로 시작하세요. 이 가이드도 일반 블로그 글이므로 목차, 코드 복사, 검색을 직접 확인할 수 있습니다.
+이 가이드는 함께 제공되는 0.8.0 starter를 기준으로 사이트 시작, 글 작성, 선택 기능을 설명합니다. 처음부터 모든 설정을 알 필요는 없습니다. 사이트 정보와 콘텐츠를 바꾸고 나머지는 기본값으로 시작하세요. 이 가이드도 일반 블로그 글이므로 목차, 코드 복사, 검색을 직접 확인할 수 있습니다.
 
 ## 1. 설치하고 로컬에서 열기
 
@@ -62,7 +62,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 홈의 큰 제목 아래 소개는 현재 언어의 `site.hero`로 설정합니다. `site.description`은 사이트 기본 설명이며 홈 메타 설명에는 해당 언어의 `messages.siteDescription`이 우선합니다. `site.description`만 바꿔서는 화면의 소개가 바뀌지 않습니다.
 
-소셜 아이콘은 `github`, `twitter`, `mastodon`을 지원합니다. `social: { links: [] }`로 링크를 비울 수 있습니다. `.env`의 `PUBLIC_SITE_TITLE`, `PUBLIC_SITE_URL` 같은 재정의 값이 설정 파일보다 우선하므로 변경이 반영되지 않으면 확인하세요.
+소셜 아이콘은 `github`, `twitter`, `mastodon`을 지원합니다. `social: { links: [] }`로 링크를 비울 수 있습니다. 목록이 비어 있어도 헤더와 푸터에는 클릭할 수 없는 Mastodon, Twitter, GitHub 자리 표시자 아이콘 세 개가 표시됩니다. 목록에 항목을 넣으면 설정한 항목만 표시됩니다. `.env`의 `PUBLIC_SITE_TITLE`, `PUBLIC_SITE_URL` 같은 재정의 값이 설정 파일보다 우선하므로 변경이 반영되지 않으면 확인하세요.
 
 프로젝트 루트의 `.env` 또는 호스팅 플랫폼의 빌드 환경에서 `PUBLIC_SITE_URL=https://your-domain.example`를 설정하면 `site.url`을 재정의합니다. 변경 후 개발 서버를 다시 시작하거나 다시 빌드하고 canonical, RSS, 사이트맵, 공유 이미지의 절대 URL이 해당 도메인을 사용하는지 확인하세요. 이에 맞는 starter의 `astro.config.mjs`와 URL 해석 스크립트가 필요하며 npm 테마 패키지만 업데이트하면 이 파일들은 갱신되지 않습니다.
 

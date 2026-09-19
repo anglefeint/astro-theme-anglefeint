@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 ## 기본 상태부터 보고 필요한 것만 변경
 
-함께 제공되는 0.7.0 starter를 기준으로 설명합니다. 모든 TypeScript 예제는 `src/site.config.ts`의 `defineThemeConfig({...})` 객체에 합칩니다. 변경할 항목만 설정하세요.
+함께 제공되는 0.8.0 starter를 기준으로 설명합니다. 모든 TypeScript 예제는 `src/site.config.ts`의 `defineThemeConfig({...})` 객체에 합칩니다. 변경할 항목만 설정하세요.
 
 | 기능                                  | 기본 상태              |
 | ------------------------------------- | ---------------------- |
