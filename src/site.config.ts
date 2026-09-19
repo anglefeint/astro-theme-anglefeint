@@ -25,15 +25,6 @@ export const THEME_CONFIG = defineThemeConfig({
       'A lightweight Astro theme with four cinematic atmospheres: Matrix, Cyberpunk, Hacker and AI.',
     tagline: '',
   },
-  social: {
-    links: [
-      {
-        href: 'https://github.com/anglefeint/astro-theme-anglefeint',
-        label: 'GitHub',
-        icon: 'github',
-      },
-    ],
-  },
   i18n: {
     locales: {
       en: {
