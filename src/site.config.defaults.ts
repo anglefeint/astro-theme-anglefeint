@@ -105,9 +105,10 @@ const defaultThemeConfig: ThemeConfig = {
       'Cinematic web interfaces, AI-era engineering notes, and system architecture essays.',
     url: 'https://example.com',
     author: 'Your Name',
-    tagline: 'Built with Astro.',
+    tagline: '',
   },
   theme: {
+    footer: { showCredits: true },
     music: { enabled: false, tracks: [] },
     blogPageSize: 9,
     homeLatestCount: 3,

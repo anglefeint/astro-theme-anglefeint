@@ -180,6 +180,24 @@ Conserva ajustes existentes como `theme.comments` en ese mismo objeto. No sobres
 
 Comprueba la función en desarrollo y ejecuta `npm run check` y `npm run build`. Verifica la búsqueda con `npm run preview` tras compilar. Usa `npm run doctor` para diagnosticar problemas del proyecto o de actualización; incluye comprobaciones más amplias. Para publicar los cambios debes desplegar el nuevo resultado.
 
+## 8. Mostrar u ocultar los créditos del pie de página
+
+El pie muestra el año de la compilación y `site.title`. De forma predeterminada también enlaza al tema y a Astro: `© 2026 My Blog · Theme by Anglefeint · Built with Astro`. El año se genera al compilar; no es un valor fijo.
+
+Para ocultar ambos créditos técnicos, combina este ajuste con tu configuración en `src/site.config.ts`:
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  theme: {
+    footer: { showCredits: false },
+  },
+});
+```
+
+Usa `showCredits: true` para volver a mostrarlos. Al ocultarlos se eliminan ambos enlaces, pero se mantiene la línea de copyright. El campo opcional `site.tagline` añade texto propio independientemente de este interruptor. Está vacío por defecto; el valor anterior `Built with Astro.` se trata como el crédito integrado para evitar duplicados. No se añade `All rights reserved`.
+
+La demo pública utiliza su propio nombre, dominio e introducciones traducidas. Un starter nuevo conserva valores genéricos y se sigue configurando en `src/site.config.ts`. Al actualizar un starter antiguo, migra también los archivos de configuración indicados en la guía de actualización; actualizar solo el paquete npm no añade esta opción a los adaptadores antiguos.
+
 ## En esta serie
 
 - [Guía 1: Configura tu blog](/es/blog/starter-guide-1-configure-your-site/)

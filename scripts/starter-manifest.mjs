@@ -1,3 +1,11 @@
+// Distribution destinations may use a neutral source instead of demo configuration.
+export const STARTER_SOURCE_OVERRIDES = {
+  'src/site.config.ts': 'scripts/starter-templates/site.config.ts.template',
+};
+
+export const starterSourcePath = (destination) =>
+  STARTER_SOURCE_OVERRIDES[destination] ?? destination;
+
 export const ADAPTER_TEMPLATE_MAP = [
   ['scripts/adapter-templates/src/config/site.ts', 'src/config/site.ts'],
   ['scripts/adapter-templates/src/config/theme.ts', 'src/config/theme.ts'],
