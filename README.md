@@ -66,17 +66,16 @@ pnpm preview
 
 ## Upgrade Theme
 
-For package updates in projects created from `#starter`, start with:
+For projects created from `#starter`, use the following only when the target release supports your existing starter and Astro version and requires no local structure changes:
 
 ```bash
 npm update @anglefeint/astro-theme
-npm install
 npm run doctor
-# if doctor reports adapter drift:
-# npm run sync-adapters
-npm run check
-npm run build
 ```
+
+`npm update` stays within the range in `package.json`: `^0.5.1` does not include `0.6.0`. For a compatible update outside that range, follow the release notes and install an explicit target version, not blindly `@latest`. Check the installed versions with `npm ls @anglefeint/astro-theme astro`.
+
+In the current starter, `doctor` already includes checks and a build. After it succeeds, use `npm run preview` to inspect the site. Only if it reports generated adapters out of sync with local templates, run `npm run sync-adapters`, then rerun `npm run doctor`; this does not download upstream templates. Older projects may have different scripts: inspect their `package.json` and follow the upgrade guide.
 
 If release notes mention starter-side contract changes, create the latest template in a new directory and migrate your content and personal settings. Do not overwrite the new configuration helpers with old files. `npm update` only updates the published package; in-place upgrades across all historical starters are not guaranteed. See the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
@@ -85,7 +84,7 @@ If your custom code still imports `src/consts` or `@anglefeint/astro-theme/const
 For Astro major-version migrations, follow the official Astro guide first:
 
 - https://docs.astro.build/en/guides/upgrade-to/
-- then re-run this project's `npm run check` and `npm run build`.
+- then follow the validation checklist in the upgrade guide linked above.
 
 ## Create New Post
 

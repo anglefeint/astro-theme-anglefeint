@@ -66,17 +66,16 @@ pnpm preview
 
 ## テーマのアップグレード
 
-`#starter` から作成したプロジェクトで package 側の更新を取り込むときは、まず次を実行します:
+`#starter` から作成したプロジェクトでは、対象リリースが既存の starter と Astro に対応し、ローカル構成の移行が不要な場合にのみ実行します:
 
 ```bash
 npm update @anglefeint/astro-theme
-npm install
 npm run doctor
-# doctor が adapter 差分を報告した場合:
-# npm run sync-adapters
-npm run check
-npm run build
 ```
+
+`npm update` は `package.json` の範囲内で更新します。`^0.5.1` に `0.6.0` は含まれません。互換性のある範囲外の更新では、リリースノートに従って対象バージョンを明示し、無条件に `@latest` を使わないでください。`npm ls @anglefeint/astro-theme astro` で実際のバージョンを確認できます。
+
+現在の starter では `doctor` にチェックとビルドが含まれます。成功後、`npm run preview` でサイトを確認してください。生成アダプターとローカルテンプレートの不一致が報告された場合に限り、`npm run sync-adapters` を実行し、`npm run doctor` を再実行します。上流のテンプレートは取得しません。旧プロジェクトではスクリプトが異なる場合があるため、ローカルの `package.json` と更新ガイドを確認してください。
 
 リリースノートに starter の構成変更がある場合は、新しいディレクトリに最新テンプレートを作成し、記事・画像・個人設定を移してください。新しい設定補助ファイルを古いファイルで上書きしないでください。`npm update` はパッケージのみを更新し、すべての旧 starter の直接更新は保証しません。[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
 
@@ -85,7 +84,7 @@ npm run build
 Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
 
 - https://docs.astro.build/en/guides/upgrade-to/
-- その後、このプロジェクトで `npm run check` と `npm run build` を実行します。
+- その後、上記の更新ガイドの検証チェックリストに従ってください。
 
 ## 新しい記事を作成
 
