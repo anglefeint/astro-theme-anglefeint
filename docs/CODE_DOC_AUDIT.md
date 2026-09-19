@@ -12,6 +12,19 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-19 公开模板命令与配置全链路验收
+
+基准为 main `50787375c41569a2b149c1647e17fc82abdc58e1`、公开 starter `b2071b661c81b7f31f02da28861d2a78fc6868f8`、npm 主题 0.7.0。本轮在 Windows / Node 24.14.1 本地执行；新增 Linux 手动工作流尚未推送或运行，不以本地结果代替 Linux 验收。
+
+- `npm run check` 通过：56 项单元测试、165 个 Astro 文件零错误/警告、106 页构建及文档、字体、适配器、CLI、scaffold 等检查。`check:installed -- --build --audit` 通过独立安装、CLI/适配器、en/zh × 首页前缀矩阵及功能开关构建；审计零已知漏洞。
+- Chromium 完整回归最终 28 项通过，包含桌面与窄屏、搜索、目录、复制、图片预览、标签、About 和 reduced-motion。初次运行的四个失败来自两类测试问题：不存在结果的测试词包含真实可匹配的 `no`，以及动画时钟暂停时间可能早于安装时间；只修正测试，不修改搜索或动效实现。E2E 预期配置生成器同步使用实际域名解析器，修改后另跑四项 smoke 测试通过。
+- 新增 `check:template` 从公开 GitHub starter 创建临时工程，验证 npm 注册表安装，执行全部 14 个消费者脚本入口。覆盖文章语言参数及优先级、五类页面和嵌套路由、重复/非法输入保护、适配器偏移检测与修复、兼容范围内更新、dev/preview HTTP 与浏览器交互。消费者 `check:workspace-link` 按设计跳过，明确标注不适用。
+- 最终 npm 11.11.0 与 pnpm 10.34.5 两轮均通过，各有 46 条报告记录（不是 46 个独立测试用例）、14 个脚本入口、零已知漏洞；报告分别保存于本地忽略目录 `acceptance-results/template-npm-1789791917758/` 和 `acceptance-results/template-pnpm-1789791972522/`。两轮成功工程及开发测试期间保留的三个失败工程均已清理。最终 lint 与 50 份文档元数据检查通过。
+- 修改临时工程配置后验证启用语言及显示名、首页介绍和文章数量、分页、关闭 About/搜索/标签/目录、`.env` 域名在页面/RSS/sitemap 生效，以及音乐不预加载、点击播放和移动端展开。音乐使用临时生成的静音 WAV，不加入主题示例资源。未测试真实 Giscus 提交、所有音频格式、Firefox/Safari 或托管平台部署。
+- 新增维护者验收指南与仅手动触发的 GitHub Linux 矩阵，保存命令日志、报告、截图及失败 trace；成功后自动删除临时工程。验收脚本开发期间修正了日志目录与 Playwright 清理冲突、选择器和状态断言错误；失败报告保留，不将其记为产品缺陷或通过结果。
+
+文档按实现沉淀：五语 README 仅补充 Bash/POSIX 环境变量语法边界与同名页面示例五选一；维护流程链接 [模板验收指南](TEMPLATE_ACCEPTANCE.md)。架构、视觉、发布算法、历史版本记录和教程功能说明无需随测试设施重写。本轮没有修改包内运行时、依赖版本或真实站点配置，无需发布 npm；当前测试设施与文档改动尚未提交推送。
+
 ## 2026-09-19 文章与域名修复交付验收
 
 - 修复提交 `c123f75b1db250dbe25022bfa45b2a873e8f5f67` 已推送 main；生成的 starter `b2071b661c81b7f31f02da28861d2a78fc6868f8` 已推送并读回远程确认。`maintainer:sync-starter:check` 同步后无偏移。本次没有 npm 包代码改动，未发布 npm、未新建版本标签或 GitHub Release；注册表仍为 0.7.0。

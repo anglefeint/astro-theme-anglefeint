@@ -105,6 +105,8 @@ npm run new-post -- my-first-post --locales en,fr
 ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
 ```
 
+`ANGLEFEINT_LOCALES=...` 写法适用于 Bash/POSIX shell；PowerShell 请使用上面的 `--locales` 命令。
+
 URL 规则：
 
 - 文件：`src/content/blog/zh/my-first-post.md`
@@ -126,7 +128,7 @@ npm run new-page -- projects --theme base
 命令会生成 `src/pages/[lang]/projects.astro`，并通过 `getStaticPaths()` 输出全部语言路由。
 Slug 规则：只允许小写字母、数字和连字符；支持嵌套路由（例如 `projects/labs`）。不支持下划线或大写。
 
-示例：
+示例（为 `projects` 五选一；连续执行时，从第二条起会因文件已存在而失败）：
 
 ```bash
 npm run new-page -- projects --theme base

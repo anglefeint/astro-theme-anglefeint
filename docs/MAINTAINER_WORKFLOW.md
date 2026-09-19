@@ -79,6 +79,8 @@ Class C: Cross-layer Contract Changes
 
 ## Mandatory Commands
 
+For repeatable public-starter command/configuration acceptance, local headless browser checks and the manual Linux Actions workflow, see [Template acceptance](TEMPLATE_ACCEPTANCE.md). These maintainer tools remain outside the generated starter.
+
 Main branch quality gate:
 
 ```bash
