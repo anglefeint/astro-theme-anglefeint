@@ -105,6 +105,8 @@ npm run new-post -- my-first-post --locales en,fr
 ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
 ```
 
+`ANGLEFEINT_LOCALES=...` は Bash/POSIX シェル用の構文です。PowerShell では上の `--locales` コマンドを使ってください。
+
 URL のルール:
 
 - ファイル: `src/content/blog/ja/my-first-post.md`
@@ -126,7 +128,7 @@ npm run new-page -- projects --theme base
 `src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
 slug ルール: 小文字・数字・ハイフンのみ（例: `projects/labs` のようなネストは可）。`_` と大文字は不可です。
 
-例:
+例（`projects` 用に 1 つだけ選んでください。続けて実行すると、2 回目以降はファイルが存在するため失敗します）:
 
 ```bash
 npm run new-page -- projects --theme base

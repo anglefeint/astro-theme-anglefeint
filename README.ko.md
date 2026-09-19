@@ -105,6 +105,8 @@ npm run new-post -- my-first-post --locales en,fr
 ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
 ```
 
+`ANGLEFEINT_LOCALES=...` 문법은 Bash/POSIX 셸용입니다. PowerShell에서는 위의 `--locales` 명령을 사용하세요.
+
 URL 규칙:
 
 - 파일: `src/content/blog/ko/my-first-post.md`
@@ -126,7 +128,7 @@ npm run new-page -- projects --theme base
 명령은 `src/pages/[lang]/projects.astro` 를 만들고 `getStaticPaths()` 로 모든 로케일 라우트를 생성합니다.
 slug 규칙: 소문자, 숫자, 하이픈만 허용하며 중첩 경로(예: `projects/labs`)를 지원합니다. `_` 와 대문자는 허용되지 않습니다.
 
-예시:
+예시 (`projects`에 사용할 명령 하나만 선택하세요. 연속 실행하면 두 번째부터 파일이 이미 있어 실패합니다):
 
 ```bash
 npm run new-page -- projects --theme base

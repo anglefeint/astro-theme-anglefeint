@@ -28,6 +28,7 @@ if (commentsConfig.enabled) {
  * Theme behavior config.
  */
 export const THEME = {
+  FOOTER: { SHOW_CREDITS: THEME_CONFIG.theme.footer?.showCredits ?? true },
   MUSIC: normalizeMusic(THEME_CONFIG.theme.music),
   /** Posts per page on blog list */
   BLOG_PAGE_SIZE: THEME_CONFIG.theme.blogPageSize,

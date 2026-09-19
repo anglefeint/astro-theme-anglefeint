@@ -24,6 +24,8 @@ export { normalizeI18nConfig } from './site.config.runtime.ts';
  * Omitted fields safely fall back to theme defaults.
  */
 export const THEME_CONFIG = defineThemeConfig({
+  // Hide theme and Astro credits; copyright and custom site.tagline remain.
+  // theme: { footer: { showCredits: false } },
   // Optional music: put your audio in public/music/, then enable a playlist.
   // theme: { music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] } },
   // Article contents are enabled by default. Per-post `toc: true/false` overrides this.
