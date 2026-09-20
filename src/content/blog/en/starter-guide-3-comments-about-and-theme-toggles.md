@@ -4,13 +4,13 @@ title: 'User Guide 3: Enable and Customize Optional Features'
 subtitle: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 description: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-09-21'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 ## Check the defaults before changing anything
 
-This guide covers the accompanying 0.8.0 starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
+This guide covers the accompanying 0.8.1 starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
 
 | Feature                                                  | Default                     |
 | -------------------------------------------------------- | --------------------------- |
@@ -39,7 +39,7 @@ The URL omits `public`. Each track requires `title` and `src`; `artist` is optio
 
 An empty playlist hides the player. With music enabled, invalid titles or URL formats cause configuration errors. The player mounts on pages using the shared theme layout; there is no per-page visibility switch. It sits at the lower left on desktop. On mobile, each page starts collapsed; expanding it temporarily hides back-to-top.
 
-First open `/music/my-song.mp3` directly to confirm access, then click PLAY on the page. Audio loads after a playback action; opening a page does not start playback. Once playing, the next track starts automatically when the current one ends, returning to the first track after the last. Track, position, and volume are saved within the same tab session. Navigation pauses playback; click play on the next page to resume. Playback is not seamless across pages. If storage is unavailable, playback still works without reliable memory. Set `enabled: false` to turn it off.
+On the first visit, audio loads only after clicking PLAY. The tab session remembers the track, position and volume. If playback was active, navigating, reloading or returning with Back/Forward attempts to resume at the saved position; manual pause stays paused. A short gap is expected, not seamless playback. If the browser blocks automatic playback, click PLAY to continue. A removed track is not replaced automatically. Without storage, manual playback still works but session resume is unavailable. First check that `/music/my-song.mp3` is accessible. When a track ends, the next starts automatically; after the last, playback returns to the first. Set `enabled: false` to disable the player.
 
 ## 2. Enable Giscus comments
 
