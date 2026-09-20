@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 ## 先看默认状态，再决定改什么
 
-本文适用于配套的 0.8.0 starter；所有 TypeScript 片段都合并到 `src/site.config.ts` 的 `defineThemeConfig({...})` 对象中。只配置你需要改变的项目。
+本文适用于配套的 0.8.1 starter；所有 TypeScript 片段都合并到 `src/site.config.ts` 的 `defineThemeConfig({...})` 对象中。只配置你需要改变的项目。
 
 | 功能                             | 默认状态           |
 | -------------------------------- | ------------------ |
