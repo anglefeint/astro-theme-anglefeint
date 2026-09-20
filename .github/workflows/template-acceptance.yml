@@ -33,6 +33,9 @@ jobs:
       - name: Maintainer browser tests
         if: matrix.manager == 'npm'
         run: npm run e2e
+      - name: Music session browser tests
+        if: matrix.manager == 'npm'
+        run: node scripts/check-music-browser.mjs
       - name: Public starter commands and configuration
         run: npm run check:template -- ${{ matrix.args }}
       - uses: actions/upload-artifact@v7.0.1

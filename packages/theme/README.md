@@ -25,7 +25,7 @@ npm pkg set scripts.new-page="anglefeint-new-page"
 
 ## Usage in Starter/Site
 
-Optional music (0.7.0) requires the matching starter schema/defaults and theme adapter. It is disabled by default and ships no songs. Configure `theme.music` in `src/site.config.ts` with `enabled: true` and `tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }]`; place the file in `public/music/` or use an HTTPS audio URL. Audio loads after Play, and navigation requires manually resuming playback. See the repository README and upgrade guide before updating an older starter.
+Optional music (0.7.0) requires the matching starter schema/defaults and theme adapter. It is disabled by default and ships no songs. Configure `theme.music` in `src/site.config.ts` with `enabled: true` and `tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }]`; place the file in `public/music/` or use an HTTPS audio URL. First visits load audio after Play; version 0.8.1 attempts to resume active tab sessions after navigation, with a click required when the browser blocks playback. See the repository README and upgrade guide before updating an older starter.
 
 Article share images require the matching starter's `theme.socialImage.enabled` config/adapter and `socialImage()` from `@anglefeint/astro-theme/social-image` in Astro's integrations. The package owns the prerendered PNG endpoint, Satori/Sharp rendering and offline font assets. Article `ogImage` overrides generation independently of `heroImage`; see the repository README for image paths and the disable switch. This capability requires 0.5.0 and its matching starter; 0.4.0 does not include it.
 
@@ -107,6 +107,10 @@ Indexes load only after opening search, using the current HTML language. Full se
 ## Tag browsing
 
 Version 0.3.0 supports `theme.tags.enabled` (default `true`) and article `tags: string[]`. Starter-owned `/[lang]/tags/` routes generate static per-language archives using package tag utilities and shared blog cards. Include the new routes when adopting this feature; updating the npm package alone does not install routes. Use the matching current starter.
+
+## Music session resume
+
+With the existing `theme.music` configuration, 0.8.1 attempts to resume active tab sessions after navigation or reload. Manual pause stays paused. First visits do not autoplay; blocked attempts show a localized click-to-continue message. Brief interruptions are possible. No ClientRouter, new dependency or configuration field is required. See the main README for configuration and UPGRADING for compatible starter requirements.
 
 ## Footer credits
 

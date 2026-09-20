@@ -12,6 +12,12 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-09-21 音乐会话续播（0.8.1）
+
+对照旧提交 `8dbe3b5` 和当前 music core/controller/storage：采用普通页面跳转后的会话续播，没有引入客户端路由，也没有调整页面特效。新增 `shouldResume`，旧记录默认不续播；页面离开先保存再暂停，缓存恢复重新读取最新记录。浏览器拒绝播放与音源错误分开显示，失败取消自动重试，手动播放仍可恢复进度。
+
+五语言 README 和指南 3、ARCHITECTURE、VISUAL_SYSTEMS、包 README、UPGRADING 同步实际行为。历史 0.7.0 发布说明保持原样。既有配置、适配文件、路由、电影感效果和默认关闭策略未变，因此不改配置指南或架构入口规则。新增隔离音乐浏览器验收脚本及手动触发的 Linux workflow 步骤，验证范围和局限记录在 TEMPLATE_ACCEPTANCE。发布结果见 0.8.1 版本记录，不把本地通过当成已发布。
+
 ## 2026-09-19 升级路径与验证命令复核
 
 基准 main `d7f131c`、starter `257b0ab`。对照 starter 的 `package.json`、`scripts/doctor.mjs`、`scripts/sync-adapters.mjs` 及 0.8.0 包的 Astro peer 要求，修正此前遗漏的升级说明：旧脚手架不能无条件安装 `@latest`，当前 starter 成功执行 `doctor` 已包含 `check` 和构建。

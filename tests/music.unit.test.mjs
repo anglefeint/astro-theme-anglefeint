@@ -92,6 +92,7 @@ test('music restores seek lazily and errors do not skip the playlist', async () 
   });
   player.selectTrack(1, 42);
   await player.play();
+  assert.equal(a.currentTime, 42, 'resume position is set before playback starts');
   a.dispatchEvent(new Event('loadedmetadata'));
   assert.equal(a.currentTime, 42);
   a.dispatchEvent(new Event('error'));
@@ -139,4 +140,43 @@ test('music configuration and storage handle disabled, malformed and denied inpu
     readMusicState(() => ({ getItem: () => '{' })),
     null
   );
+});
+
+test('blocked playback retains progress and can be retried without replacing audio', async () => {
+  const audio = new AudioStub();
+  audio.play = () =>
+    Promise.reject(Object.assign(new Error('blocked'), { name: 'NotAllowedError' }));
+  let created = 0;
+  const player = createPlayer(tracks, () => {
+    created++;
+    return audio;
+  });
+  let state;
+  player.subscribe((value) => {
+    state = value;
+  });
+  player.selectTrack(0, 32);
+  await player.play();
+  assert.equal(state.status, 'blocked');
+  assert.equal(state.currentTime, 32);
+  audio.play = AudioStub.prototype.play;
+  await player.play();
+  assert.equal(state.status, 'playing');
+  assert.equal(created, 1);
+  player.destroy();
+});
+
+test('session resume defaults off and only accepts boolean true', () => {
+  for (const [input, expected] of [
+    [undefined, false],
+    ['true', false],
+    [true, true],
+    [false, false],
+  ]) {
+    const value = readMusicState(() => ({
+      getItem: () => JSON.stringify({ src: '/one.mp3', time: 12, shouldResume: input }),
+    }));
+    assert.equal(value.shouldResume, expected);
+    assert.equal(value.time, 12);
+  }
 });

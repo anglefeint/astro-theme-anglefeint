@@ -22,6 +22,9 @@ async function init(root) {
   const narrowScreen = window.matchMedia('(max-width: 720px)');
   let collapsed = narrowScreen.matches || (saved?.collapsed ?? false);
   let state;
+  let suspended = false;
+  let restoring = true;
+  let shouldResume = false;
   let lastWrite = 0;
   const abort = new AbortController();
   const q = (selector) => root.querySelector(selector);
@@ -35,12 +38,13 @@ async function init(root) {
   const time = (seconds) =>
     `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
   const persist = () => {
-    if (state)
+    if (state && !suspended && !restoring)
       writeMusicState(storage, {
         src: tracks[state.trackIndex].src,
         time: state.currentTime,
         volume: state.volume,
         collapsed,
+        shouldResume,
       });
   };
   const renderCollapse = () => {
@@ -60,7 +64,11 @@ async function init(root) {
   player.selectTrack(selected < 0 ? 0 : selected, selected < 0 ? 0 : saved.time);
   if (saved) player.setVolume(saved.volume);
   player.subscribe((next) => {
+    const statusChanged = state?.status !== next.status || state?.trackIndex !== next.trackIndex;
     state = next;
+    if (!suspended && !restoring) {
+      shouldResume = state.status === 'playing' || state.status === 'loading';
+    }
     root.dataset.status = state.status;
     q('[data-title]').textContent = tracks[state.trackIndex].title;
     q('[data-artist]').textContent = tracks[state.trackIndex].artist;
@@ -73,6 +81,7 @@ async function init(root) {
       playing: 'STREAMING',
       paused: 'STANDBY',
       error: 'OFFLINE',
+      blocked: 'LOCKED',
     }[state.status];
     const mute = q('[data-action="mute"]');
     mute.textContent = state.volume === 0 ? 'UNMUTE' : 'MUTE';
@@ -102,7 +111,7 @@ async function init(root) {
         String(Number(button.dataset.track) === state.trackIndex)
       );
     }
-    if (Date.now() - lastWrite > 1000) {
+    if (statusChanged || Date.now() - lastWrite > 1000) {
       persist();
       lastWrite = Date.now();
     }
@@ -164,15 +173,40 @@ async function init(root) {
   });
   on(window, 'pagehide', () => {
     persist();
+    suspended = true;
     player.pause();
+  });
+  on(window, 'pageshow', (event) => {
+    if (!event.persisted) return;
+    // BFCache may restore a controller older than the session saved by the next page.
+    const latest = readMusicState(storage);
+    restoring = true;
+    const index = tracks.findIndex((track) => track.src === latest?.src);
+    player.selectTrack(index < 0 ? 0 : index, index < 0 ? 0 : latest.time);
+    if (latest) {
+      player.setVolume(latest.volume);
+      collapsed = narrowScreen.matches || latest.collapsed;
+      previousVolume = latest.volume || 0.5;
+    }
+    suspended = false;
+    restoring = false;
+    shouldResume = index >= 0 && latest.shouldResume;
+    renderCollapse();
+    persist();
+    if (shouldResume) void player.play();
   });
   // BFCache retains the controller; ordinary navigation discards it with the document.
   renderCollapse();
   for (const button of root.querySelectorAll('button')) button.disabled = false;
+  restoring = false;
+  shouldResume = selected >= 0 && saved.shouldResume;
+  persist();
+  if (shouldResume) void player.play();
   root.addEventListener(
     'music:destroy',
     () => {
       persist();
+      suspended = true;
       abort.abort();
       player.destroy();
     },

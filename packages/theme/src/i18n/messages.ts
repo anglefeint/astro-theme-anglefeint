@@ -18,6 +18,7 @@ export type Messages = {
     loading: string;
     playing: string;
     paused: string;
+    blocked: string;
     error: string;
     noScript: string;
   };
@@ -129,6 +130,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       loading: 'Loading',
       playing: 'Playing',
       paused: 'Paused',
+      blocked: 'Click Play to continue. Your browser blocked automatic playback.',
       error: 'Unable to play. Try again or select another track.',
       noScript: 'Enable JavaScript to use the player.',
     },
@@ -242,6 +244,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       loading: '読み込み中',
       playing: '再生中',
       paused: '一時停止中',
+      blocked: 'ブラウザーが自動再生をブロックしました。PLAY を押して再開してください。',
       error: '再生できません。再試行するか別の曲を選んでください。',
       noScript: 'プレーヤーを使うには JavaScript を有効にしてください。',
     },
@@ -355,6 +358,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       loading: '불러오는 중',
       playing: '재생 중',
       paused: '일시 정지됨',
+      blocked: '브라우저가 자동 재생을 차단했습니다. PLAY를 눌러 계속 재생하세요.',
       error: '재생할 수 없습니다. 다시 시도하거나 다른 곡을 선택하세요.',
       noScript: '플레이어를 사용하려면 JavaScript를 활성화하세요.',
     },
@@ -468,6 +472,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       loading: 'Cargando',
       playing: 'Reproduciendo',
       paused: 'En pausa',
+      blocked: 'El navegador bloqueó la reproducción automática. Pulsa PLAY para continuar.',
       error: 'No se puede reproducir. Reintenta o selecciona otra pista.',
       noScript: 'Activa JavaScript para usar el reproductor.',
     },
@@ -582,6 +587,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       loading: '加载中',
       playing: '播放中',
       paused: '已暂停',
+      blocked: '浏览器阻止了自动播放，请点击 PLAY 继续播放。',
       error: '播放失败，请重试或切换歌曲。',
       noScript: '请启用 JavaScript 使用播放器。',
     },

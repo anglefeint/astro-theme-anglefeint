@@ -4,7 +4,7 @@ title: 'Guía 3: Activa y personaliza funciones opcionales'
 subtitle: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 description: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-09-21'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -39,7 +39,7 @@ La URL no incluye `public`. Cada pista necesita `title` y `src`; `artist` es opc
 
 Una lista vacía oculta el reproductor. Si está activo, un título o formato de dirección incorrecto provoca un error de configuración. Aparece en páginas con el diseño compartido del tema; no hay un interruptor por página. En escritorio está abajo a la izquierda. En móvil, cada página empieza con el reproductor contraído; al expandirlo se oculta temporalmente el botón de volver arriba.
 
-Abre primero `/music/my-song.mp3` para comprobar el acceso y pulsa PLAY en la página. El audio se carga al realizar una acción de reproducción; abrir una página no inicia la música. Una vez iniciada, al terminar una pista se reproduce automáticamente la siguiente y, después de la última, se vuelve a la primera. Pista, posición y volumen se guardan durante la sesión de la misma pestaña. Cambiar de página pausa la reproducción; pulsa reproducir en la siguiente para continuar. No hay reproducción ininterrumpida entre páginas. Sin almacenamiento disponible se puede reproducir, pero no se garantiza recordar el estado. `enabled: false` lo desactiva.
+En la primera visita, el audio solo se carga al pulsar PLAY. La sesión de la pestaña recuerda pista, posición y volumen. Si se estaba reproduciendo, al navegar, recargar o usar Atrás/Adelante se intenta continuar desde la posición guardada; una pausa manual se mantiene. Puede haber una breve interrupción: no es reproducción continua entre páginas. Si el navegador bloquea la reproducción automática, pulsa PLAY. Si se elimina la pista, no se reproduce otra automáticamente. Sin almacenamiento, la reproducción manual sigue funcionando, pero no se puede reanudar la sesión. Comprueba primero que `/music/my-song.mp3` sea accesible. Al terminar una pista se reproduce la siguiente; después de la última se vuelve a la primera. Usa `enabled: false` para desactivar el reproductor.
 
 ## 2. Activa los comentarios Giscus
 

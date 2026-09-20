@@ -8,6 +8,7 @@ export function readMusicState(storage) {
       time: Number.isFinite(value.time) ? Math.max(0, value.time) : 0,
       volume: Number.isFinite(value.volume) ? Math.max(0, Math.min(1, value.volume)) : 0.5,
       collapsed: value.collapsed !== false,
+      shouldResume: value.shouldResume === true,
     };
   } catch {
     return null;
