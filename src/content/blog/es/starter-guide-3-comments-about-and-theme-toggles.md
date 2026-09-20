@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 ## Consulta los valores predeterminados antes de cambiar
 
-Esta guía corresponde al starter 0.8.0. Integra todos los fragmentos TypeScript en el objeto `defineThemeConfig({...})` de `src/site.config.ts`. Configura solo aquello que quieras cambiar.
+Esta guía corresponde al starter 0.8.1. Integra todos los fragmentos TypeScript en el objeto `defineThemeConfig({...})` de `src/site.config.ts`. Configura solo aquello que quieras cambiar.
 
 | Función                                                          | Estado predeterminado          |
 | ---------------------------------------------------------------- | ------------------------------ |

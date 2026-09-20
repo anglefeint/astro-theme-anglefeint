@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 ## Check the defaults before changing anything
 
-This guide covers the accompanying 0.8.0 starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
+This guide covers the accompanying 0.8.1 starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
 
 | Feature                                                  | Default                     |
 | -------------------------------------------------------- | --------------------------- |
