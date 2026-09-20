@@ -15,6 +15,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.8.2] - 2026-09-21
+
+- Keep music deck and playlist scrollbars teal instead of inheriting the article page's pink scrollbar color.
+
 ## [0.8.1] - 2026-09-21
 
 - Attempt to resume active music sessions after ordinary navigation/reload; preserve manual pause and reconcile browser-history restores.

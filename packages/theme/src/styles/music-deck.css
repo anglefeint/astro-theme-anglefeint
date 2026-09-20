@@ -538,6 +538,28 @@
 }
 
 /* Scoped integration: legacy dimensions, native input semantics. */
+.music-deck,
+.music-deck__playlist-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(116, 255, 215, 0.5) transparent;
+}
+.music-deck::-webkit-scrollbar,
+.music-deck__playlist-list::-webkit-scrollbar {
+  width: 6px;
+}
+.music-deck::-webkit-scrollbar-track,
+.music-deck__playlist-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.music-deck::-webkit-scrollbar-thumb,
+.music-deck__playlist-list::-webkit-scrollbar-thumb {
+  background: rgba(116, 255, 215, 0.5);
+  border-radius: 3px;
+}
+.music-deck::-webkit-scrollbar-thumb:hover,
+.music-deck__playlist-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(116, 255, 215, 0.8);
+}
 .music-deck {
   isolation: isolate;
   max-height: calc(100dvh - 2rem);
