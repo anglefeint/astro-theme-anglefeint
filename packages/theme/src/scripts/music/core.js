@@ -71,6 +71,9 @@ export function createPlayer(tracks, createAudio = () => new Audio()) {
         void play();
       });
       current.src = tracks[state.trackIndex].src;
+      // Before metadata exists this sets the media's default playback start position.
+      // Do not start audibly at zero while waiting for loadedmetadata to seek.
+      if (state.currentTime > 0) current.currentTime = state.currentTime;
     }
     const token = revision;
     const attempt = ++playAttempt;
@@ -78,9 +81,9 @@ export function createPlayer(tracks, createAudio = () => new Audio()) {
     emit();
     try {
       await audio.play();
-    } catch {
+    } catch (error) {
       if (!disposed && token === revision && attempt === playAttempt && state.status !== 'paused') {
-        state.status = 'error';
+        state.status = error?.name === 'NotAllowedError' ? 'blocked' : 'error';
         emit();
       }
     }

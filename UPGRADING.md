@@ -20,6 +20,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.8.1: music session resume
+
+This package-only update supports the matching 0.8.0 starter and its Astro range. Run `npm update @anglefeint/astro-theme`, then `npm run doctor`; no configuration or adapter migration is needed. Verify the installed version with `npm ls @anglefeint/astro-theme`. Active music sessions attempt to resume after navigation/reload; manual pause stays paused. Browser restrictions can require clicking PLAY. Brief interruptions remain possible. Existing session records without resume intent stay paused until you play. Older starters must first satisfy the baseline requirements below.
+
 ### 0.8.0: footer credits and separate demo configuration
 
 The footer now links to Anglefeint and Astro by default. Set `theme.footer.showCredits: false` to hide both links while keeping your site copyright and custom tagline. This requires the matching starter schema, defaults and theme adapter; npm alone does not update those files. Use the fresh-template migration below and preserve personal settings. A `^0.7.0` dependency range does not include 0.8.0.
@@ -34,7 +38,7 @@ The corrected starter makes `PUBLIC_SITE_URL` override Astro's build-time `site`
 
 Use the matching 0.7.0 starter when adopting music: `src/site.config.schema.ts`, `src/site.config.defaults.ts`, `scripts/adapter-templates/src/config/theme.ts` and its generated `src/config/theme.ts` supply the new `theme.music` contract. Updating the npm package alone does not install these local files. Follow the fresh-template migration below and reapply personal settings. `npm update` within `^0.6.0` will not select `0.7.0`.
 
-Music is off by default and no audio files are bundled. Put your own audio under `public/music/`, then configure `theme.music.enabled` and `theme.music.tracks` as shown in the README. Page navigation is not seamless playback: click Play to resume the remembered position.
+Music is off by default and no audio files are bundled. Put your own audio under `public/music/`, then configure `theme.music.enabled` and `theme.music.tracks` as shown in the README. In 0.7.0/0.8.0, page navigation requires clicking Play to resume. Version 0.8.1 adds automatic session resume attempts, still without seamless playback.
 
 ### 0.6.0: cinematic effects
 

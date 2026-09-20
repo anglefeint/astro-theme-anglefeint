@@ -15,6 +15,12 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.8.1] - 2026-09-21
+
+- Attempt to resume active music sessions after ordinary navigation/reload; preserve manual pause and reconcile browser-history restores.
+- Keep saved progress when autoplay is blocked, with localized click-to-continue feedback in five languages. Brief page-transition interruptions remain possible.
+- Keep the existing music configuration, styles and page navigation. Compatible package-only update for the matching 0.8.0 starter; see [release notes](docs/releases/0.8.1.md).
+
 ## [0.8.0] - 2026-09-19
 
 - Add linked footer credits with `theme.footer.showCredits` (default true); keep copyright and optional custom tagline when hidden.
