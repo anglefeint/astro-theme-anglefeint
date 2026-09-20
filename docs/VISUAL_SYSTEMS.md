@@ -164,3 +164,5 @@ The default-off music deck restores the legacy terminal panel: layered teal/blue
 Scoped music-deck selectors isolate the chrome from page styles, including home-page list markers. The panel scrolls within the viewport on short screens; mobile controls retain the legacy padding and progress rail dimensions. Twin LEDs breathe continuously, with a reduced-motion opt-out. Playback/core/storage remain independent of this presentation and do not call page-effect scripts.
 
 The music deck displays `LOCKED` with a localized click-to-continue message when automatic session resume is blocked; media errors remain `OFFLINE`. Session resume does not change navigation or page-effect lifecycles.
+
+Both the deck's overflow area and its playlist use thin teal scrollbars with transparent tracks, explicitly overriding inherited page scrollbar colors. Scoped WebKit scrollbar rules provide a fallback for browsers without standard scrollbar styling support.
