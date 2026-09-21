@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 ## Consulta los valores predeterminados antes de cambiar
 
-Esta guía corresponde al starter 0.8.1. Integra todos los fragmentos TypeScript en el objeto `defineThemeConfig({...})` de `src/site.config.ts`. Configura solo aquello que quieras cambiar.
+Esta guía corresponde al starter 0.8.3. Integra todos los fragmentos TypeScript en el objeto `defineThemeConfig({...})` de `src/site.config.ts`. Configura solo aquello que quieras cambiar.
 
 | Función                                                          | Estado predeterminado          |
 | ---------------------------------------------------------------- | ------------------------------ |
@@ -40,6 +40,8 @@ La URL no incluye `public`. Cada pista necesita `title` y `src`; `artist` es opc
 Una lista vacía oculta el reproductor. Si está activo, un título o formato de dirección incorrecto provoca un error de configuración. Aparece en páginas con el diseño compartido del tema; no hay un interruptor por página. En escritorio está abajo a la izquierda. En móvil, cada página empieza con el reproductor contraído; al expandirlo se oculta temporalmente el botón de volver arriba.
 
 En la primera visita, el audio solo se carga al pulsar PLAY. La sesión de la pestaña recuerda pista, posición y volumen. Si se estaba reproduciendo, al navegar, recargar o usar Atrás/Adelante se intenta continuar desde la posición guardada; una pausa manual se mantiene. Puede haber una breve interrupción: no es reproducción continua entre páginas. Si el navegador bloquea la reproducción automática, pulsa PLAY. Si se elimina la pista, no se reproduce otra automáticamente. Sin almacenamiento, la reproducción manual sigue funcionando, pero no se puede reanudar la sesión. Comprueba primero que `/music/my-song.mp3` sea accesible. Al terminar una pista se reproduce la siguiente; después de la última se vuelve a la primera. Usa `enabled: false` para desactivar el reproductor.
+
+Antes de reproducir, se descarga la pista completa y se convierte en un Blob del navegador, por lo que el salto de posición no depende de HTTP Range. Los archivos grandes o las conexiones lentas aumentan la espera y el uso de memoria. Pausar y continuar reutiliza la pista cargada; cambiar de pista libera la anterior. Al navegar se vuelve a cargar, aunque la caché HTTP del navegador puede ayudar. Los servidores de audio externos deben permitir descargas entre orígenes (CORS); los archivos del mismo sitio en `public/music/` no requieren esa configuración.
 
 ## 2. Activa los comentarios Giscus
 
