@@ -317,3 +317,5 @@ theme: {
 ```
 
 Each track accepts `title`, `src` and optional `artist`. HTTPS audio URLs are also supported. An empty playlist hides the player. On the first visit, audio loads only after clicking PLAY. The tab session remembers the track, position and volume. If playback was active, navigating, reloading or returning with Back/Forward attempts to resume at the saved position; manual pause stays paused. A short gap is expected, not seamless playback. If the browser blocks automatic playback, click PLAY to continue. A removed track is not replaced automatically. Without storage, manual playback still works but session resume is unavailable.
+
+Playback downloads the complete track into a browser Blob before starting, so seeking does not require HTTP Range support. Large files or slow connections increase startup time and memory use. Pause/resume reuses the loaded track; changing tracks releases it. Navigation loads the track again (the browser HTTP cache may help). External audio hosts must allow cross-origin fetch (CORS); putting files in `public/music/` avoids this requirement.

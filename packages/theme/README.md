@@ -112,6 +112,8 @@ Version 0.3.0 supports `theme.tags.enabled` (default `true`) and article `tags: 
 
 With the existing `theme.music` configuration, 0.8.1 attempts to resume active tab sessions after navigation or reload. Manual pause stays paused. First visits do not autoplay; blocked attempts show a localized click-to-continue message. Brief interruptions are possible. No ClientRouter, new dependency or configuration field is required. See the main README for configuration and UPGRADING for compatible starter requirements.
 
+Audio is fully downloaded into a browser Blob before playback, making seeking independent of HTTP Range support. Large tracks and slow connections increase startup time and memory use. External audio hosts must allow cross-origin fetch (CORS); same-origin files in `public/music/` need no CORS configuration. Pause/resume reuses the loaded track; switching tracks releases it. Page navigation loads the track again, subject to browser HTTP caching.
+
 ## Footer credits
 
 The footer displays the build year and site title, with linked Anglefeint/Astro credits by default. With the matching 0.8.0 starter configuration, set `theme.footer.showCredits: false` to omit both credit links. Copyright and custom `site.tagline` remain; the former default tagline `Built with Astro.` is represented by the built-in credit to avoid duplication. The new tagline default is empty. See User Guide 3 and UPGRADING before updating an older starter.

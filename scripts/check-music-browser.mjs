@@ -66,6 +66,10 @@ try {
   server = await preview(config);
   browser = await chromium.launch(); // No autoplay-policy override.
   const context = await browser.newContext();
+  // Reproduce a static host that returns the entire file and never supports Range.
+  await context.route('**/music/tone.wav', (route) =>
+    route.fulfill({ status: 200, contentType: 'audio/wav', body: wav })
+  );
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -99,6 +103,37 @@ try {
   await page.locator('[data-action="play"]').click();
   await status('playing');
   await page.waitForFunction(() => window['__audio'].duration > 0);
+  assert.match(await page.evaluate(() => window['__audio'].src), /^blob:/);
+  const seek = page.locator('[data-seek]');
+  const seekBox = await seek.boundingBox();
+  await page.mouse.click(seekBox.x + seekBox.width * 0.7, seekBox.y + seekBox.height / 2);
+  await page.waitForFunction(() => window['__audio'].currentTime > 18, null, { timeout: 3000 });
+  await page.locator('[data-action="play"]').click();
+  await status('paused');
+  await page.mouse.click(seekBox.x + seekBox.width * 0.25, seekBox.y + seekBox.height / 2);
+  await page.waitForFunction(() => window['__audio'].currentTime < 10, null, { timeout: 3000 });
+  assert.equal(await page.evaluate(() => window['__audio'].paused), true);
+  await seek.press('ArrowRight');
+  const beforeDrag = await page.evaluate(() => window['__audio'].currentTime);
+  await page.mouse.move(seekBox.x + seekBox.width * 0.25, seekBox.y + seekBox.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(seekBox.x + seekBox.width * 0.6, seekBox.y + seekBox.height / 2, {
+    steps: 10,
+  });
+  await page.mouse.up();
+  assert.ok(
+    await page.evaluate((before) => window['__audio'].currentTime > before + 5, beforeDrag)
+  );
+  await page.locator('[data-action="expand"]').click();
+  const compactBox = await seek.boundingBox();
+  await page.mouse.click(
+    compactBox.x + compactBox.width * 0.4,
+    compactBox.y + compactBox.height / 2
+  );
+  await page.waitForFunction(() => window['__audio'].currentTime < 14, null, { timeout: 3000 });
+  await page.locator('[data-action="play"]').click();
+  await status('playing');
+  checks.push('HTTP 200 without Range: Blob playback, real pointer/paused/drag/compact seeking');
   await page.locator('[data-seek]').evaluate((el) => {
     el.value = '12';
     el.dispatchEvent(new Event('input'));

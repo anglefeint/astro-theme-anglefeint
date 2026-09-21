@@ -15,6 +15,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.8.3] - 2026-09-21
+
+- Download each selected music track into a Blob before playback, fixing seek-to-zero on hosts that do not honor HTTP Range requests.
+- Cancel obsolete downloads and release Blob URLs on track changes/destruction; preserve pause, retry and session-resume behavior.
+- External audio now requires CORS. Playback waits for the full file; same-origin `public/music/` remains the simplest setup. See [upgrade notes](docs/releases/0.8.3.md).
+- Synchronize all five README/tutorial translations and add browser coverage for HTTP 200 audio without Range support.
+
 ## [0.8.2] - 2026-09-21
 
 - Keep music deck and playlist scrollbars teal instead of inheriting the article page's pink scrollbar color.
