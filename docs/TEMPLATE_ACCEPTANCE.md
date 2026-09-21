@@ -31,7 +31,7 @@ The public-template check deliberately does not overlay local changes. Use it af
 
 ## Local execution
 
-`node scripts/check-music-browser.mjs` builds an isolated Astro fixture with the real MusicDeck component and generated test audio, then checks session resume, manual pause, reload/browser-policy fallback, five-language blocked messages, mobile storage denial and missing sources in Chromium. It does not alter demo configuration or disable autoplay policy. Back navigation is exercised and BFCache persisted events are additionally simulated; this is not a Safari/Firefox or subjective listening check. Results are saved in ignored `acceptance-results/music-browser.json`; successful fixtures are removed and failed fixtures retained for diagnosis.
+`node scripts/check-music-browser.mjs` builds an isolated Astro fixture with the real MusicDeck component and generated test audio, serves the audio as HTTP 200 without Range support, then checks Blob playback and real pointer seeking while playing/paused, dragging, compact seeking, session resume, manual pause, reload/browser-policy fallback, five-language blocked messages, mobile storage denial and missing sources in Chromium. It does not alter demo configuration or disable autoplay policy. Back navigation is exercised and BFCache persisted events are additionally simulated; this is not a Safari/Firefox or subjective listening check. This fixture verifies independence from HTTP Range; it does not validate external-host CORS, every media format or every browser. Results are saved in ignored `acceptance-results/music-browser.json`; successful fixtures are removed and failed fixtures retained for diagnosis.
 
 ```bash
 npm install

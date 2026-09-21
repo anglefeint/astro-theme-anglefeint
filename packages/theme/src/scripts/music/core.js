@@ -1,6 +1,9 @@
 // No DOM, site config or storage dependencies. Each selected source owns its audio instance.
-export function createPlayer(tracks, createAudio = () => new Audio()) {
+export function createPlayer(tracks, createAudio = () => new Audio(), fetchAudio = fetch) {
   let audio;
+  let sourceReady;
+  let download;
+  let objectUrl;
   let revision = 0;
   let playAttempt = 0;
   let disposed = false;
@@ -12,12 +15,17 @@ export function createPlayer(tracks, createAudio = () => new Audio()) {
   const stopAudio = () => {
     revision++;
     playAttempt++;
+    download?.abort();
+    download = undefined;
+    sourceReady = undefined;
     if (audio) {
       audio.pause();
       audio.removeAttribute('src');
       audio.load();
       audio = undefined;
     }
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    objectUrl = undefined;
   };
   const selectTrack = (index, time = 0) => {
     if (disposed || !tracks[index]) return;
@@ -70,16 +78,28 @@ export function createPlayer(tracks, createAudio = () => new Audio()) {
         selectTrack((state.trackIndex + 1) % tracks.length);
         void play();
       });
-      current.src = tracks[state.trackIndex].src;
-      // Before metadata exists this sets the media's default playback start position.
-      // Do not start audibly at zero while waiting for loadedmetadata to seek.
-      if (state.currentTime > 0) current.currentTime = state.currentTime;
+      download = new AbortController();
+      // A complete local Blob remains seekable even when the host ignores Range requests.
+      sourceReady = (async () => {
+        const response = await fetchAudio(tracks[state.trackIndex].src, {
+          signal: download.signal,
+        });
+        if (!response.ok) throw new Error(`Audio download failed: ${response.status}`);
+        const blob = await response.blob();
+        if (disposed || token !== revision) return;
+        objectUrl = URL.createObjectURL(blob);
+        current.src = objectUrl;
+        // Restore the default start position before playback begins.
+        if (state.currentTime > 0) current.currentTime = state.currentTime;
+      })();
     }
     const token = revision;
     const attempt = ++playAttempt;
     state.status = 'loading';
     emit();
     try {
+      await sourceReady;
+      if (disposed || token !== revision || attempt !== playAttempt) return;
       await audio.play();
     } catch (error) {
       if (!disposed && token === revision && attempt === playAttempt && state.status !== 'paused') {

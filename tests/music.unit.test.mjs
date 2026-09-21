@@ -1,9 +1,17 @@
-/* global EventTarget, Event */
+/* global EventTarget, Event, Blob, Response, fetch */
+import { setImmediate } from 'node:timers';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPlayer } from '../packages/theme/src/scripts/music/core.js';
+import { createPlayer as createCorePlayer } from '../packages/theme/src/scripts/music/core.js';
 import { readMusicState, writeMusicState } from '../packages/theme/src/scripts/music/storage.js';
 import { normalizeMusic } from '../packages/theme/src/utils/music.ts';
+
+const createPlayer = (
+  tracks,
+  createAudio,
+  fetchAudio = async () => ({ ok: true, blob: async () => new Blob(['audio']) })
+) => createCorePlayer(tracks, createAudio, fetchAudio);
+const settle = () => new Promise((resolve) => setImmediate(resolve));
 
 class AudioStub extends EventTarget {
   currentTime = 0;
@@ -28,6 +36,92 @@ const tracks = [
   { title: 'One', src: '/one.mp3' },
   { title: 'Two', src: '/two.mp3' },
 ];
+test('complete download uses a Blob; pause retains it, selection and destroy revoke it', async () => {
+  const audios = [];
+  let downloads = 0;
+  const player = createPlayer(
+    tracks,
+    () => {
+      const audio = new AudioStub();
+      audios.push(audio);
+      return audio;
+    },
+    async () => {
+      downloads++;
+      return new Response(new Blob(['complete song']));
+    }
+  );
+  assert.equal(downloads, 0);
+  await player.play();
+  const firstUrl = audios[0].src;
+  assert.match(firstUrl, /^blob:/);
+  assert.equal(await (await fetch(firstUrl)).text(), 'complete song');
+  player.pause();
+  await player.play();
+  assert.equal(downloads, 1);
+  player.selectTrack(1);
+  await assert.rejects(fetch(firstUrl));
+  await player.play();
+  player.destroy();
+  await assert.rejects(fetch(audios[1].src));
+});
+
+test('pause during download prevents late playback; switching aborts and ignores stale downloads', async () => {
+  const pending = [];
+  const audios = [];
+  const player = createPlayer(
+    tracks,
+    () => {
+      const audio = new AudioStub();
+      audios.push(audio);
+      return audio;
+    },
+    (src, { signal }) => new Promise((resolve) => pending.push({ src, signal, resolve }))
+  );
+  const first = player.play();
+  player.pause();
+  pending[0].resolve(new Response(new Blob(['first'])));
+  await first;
+  assert.equal(audios[0].paused, true);
+  await player.play();
+  assert.equal(audios[0].paused, false);
+  player.selectTrack(1);
+  const second = player.play();
+  player.selectTrack(0);
+  assert.equal(pending[1].signal.aborted, true);
+  pending[1].resolve(new Response(new Blob(['stale'])));
+  await second;
+  assert.equal(audios[1].src, undefined);
+  assert.equal(audios[1].paused, true);
+  player.destroy();
+});
+
+test('failed download is retryable and destroy cancels an in-flight download', async () => {
+  let calls = 0;
+  let signal;
+  const player = createPlayer(
+    tracks,
+    () => new AudioStub(),
+    async (_src, options) => {
+      signal = options.signal;
+      return ++calls === 1 ? new Response('', { status: 404 }) : new Response(new Blob(['ok']));
+    }
+  );
+  let state;
+  player.subscribe((value) => {
+    state = value;
+  });
+  await player.play();
+  assert.equal(state.status, 'error');
+  await player.play();
+  assert.equal(state.status, 'playing');
+  player.selectTrack(1);
+  const pending = player.play();
+  player.destroy();
+  assert.equal(signal.aborted, true);
+  await pending;
+});
+
 test('late play rejection cannot corrupt a new track, and ended advances once', async () => {
   let rejectOld;
   const first = new AudioStub();
@@ -43,6 +137,7 @@ test('late play rejection cannot corrupt a new track, and ended advances once', 
     state = s;
   });
   const pending = player.play();
+  await settle();
   player.selectTrack(1);
   await player.play();
   rejectOld(new Error('stale'));
@@ -112,6 +207,7 @@ test('rapid pause and resume ignores the interrupted play promise', async () => 
     state = s;
   });
   const pending = player.play();
+  await settle();
   player.pause();
   a.play = AudioStub.prototype.play;
   await player.play();

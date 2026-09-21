@@ -29,7 +29,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 Latest feature release: [0.8.0](./0.8.0.md), configurable footer credits and separate public-demo/starter identity. See its delivery and acceptance record.
 
-Latest patch release: [0.8.2](./0.8.2.md), isolated teal music-player scrollbars. See its delivery status and validation record.
+Latest patch release: [0.8.3](./0.8.3.md), Blob-backed music loading for reliable seeking without HTTP Range support. See its delivery status and validation record.
 
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.
