@@ -10,7 +10,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 ## Check the defaults before changing anything
 
-This guide covers the accompanying 0.8.1 starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
+This guide covers the accompanying 0.8.3 starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
 
 | Feature                                                  | Default                     |
 | -------------------------------------------------------- | --------------------------- |
@@ -40,6 +40,8 @@ The URL omits `public`. Each track requires `title` and `src`; `artist` is optio
 An empty playlist hides the player. With music enabled, invalid titles or URL formats cause configuration errors. The player mounts on pages using the shared theme layout; there is no per-page visibility switch. It sits at the lower left on desktop. On mobile, each page starts collapsed; expanding it temporarily hides back-to-top.
 
 On the first visit, audio loads only after clicking PLAY. The tab session remembers the track, position and volume. If playback was active, navigating, reloading or returning with Back/Forward attempts to resume at the saved position; manual pause stays paused. A short gap is expected, not seamless playback. If the browser blocks automatic playback, click PLAY to continue. A removed track is not replaced automatically. Without storage, manual playback still works but session resume is unavailable. First check that `/music/my-song.mp3` is accessible. When a track ends, the next starts automatically; after the last, playback returns to the first. Set `enabled: false` to disable the player.
+
+Playback downloads the complete track into a browser Blob before starting, so seeking does not require HTTP Range support. Large files or slow connections increase startup time and memory use. Pause/resume reuses the loaded track; changing tracks releases it. Navigation loads the track again (the browser HTTP cache may help). External audio hosts must allow cross-origin fetch (CORS); putting files in `public/music/` avoids this requirement.
 
 ## 2. Enable Giscus comments
 
