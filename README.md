@@ -64,6 +64,35 @@ pnpm build
 pnpm preview
 ```
 
+## First Setup: Site Identity and Home URL
+
+Before publishing, edit the existing `defineThemeConfig({...})` object in `src/site.config.ts`. Merge these fields into your settings; keep the file's imports/exports and any existing locale or feature configuration. Replace the example title, author and `https://your-domain.example` with your own values.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: 'My Personal Blog',
+    author: 'Your Name',
+    url: 'https://your-domain.example',
+  },
+  i18n: {
+    defaultLocale: 'en',
+    routing: {
+      defaultLocalePrefix: 'never',
+    },
+  },
+});
+```
+
+**Choose how visitors reach your homepage:**
+
+- `'always'` (the theme default): `/` redirects to `/<default-locale>/`, initially `/en/`. Visitors may briefly see **“Redirecting to home…”** before reaching the homepage.
+- `'never'` (the example above): `/` directly displays the default-language homepage, avoiding that intermediate page when visiting the root URL. `/<default-locale>/` redirects back to `/`.
+
+Choose an enabled locale such as `en`, `zh`, `ja`, `ko` or `es` for `defaultLocale`. This setting changes the default-language **homepage** only; blog/article routes still have language prefixes, such as `/en/blog/`.
+
+Set `site.url` to your real production origin so canonical links, feeds and sitemap URLs use the correct domain. If you have set `PUBLIC_SITE_URL` in an environment file or your hosting build settings, it overrides `site.url`; update it too. After changing configuration, rebuild and redeploy (`npm run build`, or let your connected hosting build run). Editing the local file alone does not update the live site.
+
 ## Upgrade Theme
 
 For projects created from `#starter`, use the following only when the target release supports your existing starter and Astro version and requires no local structure changes:
