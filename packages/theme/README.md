@@ -49,6 +49,8 @@ export { collections } from '@anglefeint/astro-theme/content-schema';
 
 ## Article contents
 
+Since 0.8.4, `BlogPost` accepts optional `seoLocaleHrefs` for actual article translations, separately from language-menu `localeHrefs`. The matching starter supplies enabled, existing same-slug article URLs automatically. Explicit maps control hreflang and OG alternate locales; an empty map emits none. `x-default` is omitted if the default-language translation is absent. Custom routes that omit the prop retain legacy behavior. Upgrading npm alone does not modify the starter article route; merge that route change or migrate to the matching template.
+
 `BlogPost` accepts optional `headings` from `const { Content, headings } = await render(post)`. Pass these alongside the article data to enable its native, collapsible table of contents for Markdown h2/h3 headings. The panel sticks to the right on wide screens and appears before the body on narrow screens. No headings means no contents. The optional boolean frontmatter field `toc` overrides `THEME.TOC.ENABLED` (default `true`); starter users configure the default with `theme.toc.enabled`. MDX component-generated and raw HTML/JSX headings are not collected automatically.
 
 ## Site Config Injection

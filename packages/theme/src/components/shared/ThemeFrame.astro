@@ -26,6 +26,7 @@ interface Props {
   scanlines?: boolean;
   includeAlternateLinks?: boolean;
   localeHrefs?: Partial<Record<Locale, string>>;
+  seoLocaleHrefs?: Partial<Record<Locale, string>>;
 }
 
 const rawLocale = Astro.props.locale ?? DEFAULT_LOCALE;
@@ -47,6 +48,7 @@ const {
   scanlines = false,
   includeAlternateLinks = true,
   localeHrefs,
+  seoLocaleHrefs,
 } = Astro.props as Props;
 const messages = getMessages(locale);
 ---
@@ -67,6 +69,7 @@ const messages = getMessages(locale);
       schema={schema}
       noindex={noindex}
       localeHrefs={localeHrefs}
+      seoLocaleHrefs={seoLocaleHrefs}
       includeAlternateLinks={includeAlternateLinks}
     />
     <slot name="head" />

@@ -29,6 +29,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
   related?: CollectionEntry<'blog'>[];
   headings?: MarkdownHeading[];
   localeHrefs?: Partial<Record<Locale, string>>;
+  seoLocaleHrefs?: Partial<Record<Locale, string>>;
   aiLatencyEstimated?: boolean;
   aiConfidenceEstimated?: boolean;
 };
@@ -60,6 +61,7 @@ const {
   locale = DEFAULT_LOCALE,
   related = [],
   localeHrefs,
+  seoLocaleHrefs,
 } = Astro.props;
 const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
 const messages = getMessages(resolvedLocale);
@@ -114,6 +116,7 @@ const hasCommentsConfig = Boolean(
   author={author ?? SITE_AUTHOR}
   tags={tags}
   localeHrefs={localeHrefs}
+  seoLocaleHrefs={seoLocaleHrefs}
 >
   <link slot="head" rel="stylesheet" href={blogPostCssUrl} />
   <Fragment slot="body-start">

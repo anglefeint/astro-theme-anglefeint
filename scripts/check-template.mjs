@@ -15,6 +15,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import { chromium, expect } from '@playwright/test';
 import { checkReadmeLinks } from './check-readme-links.mjs';
+import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
 
 const exec = promisify(execFile);
 const root = process.cwd();
@@ -274,6 +275,8 @@ try {
   await run('new-post', ['default-locales']);
   assert.equal(await read(article), originalArticle);
   const routes = ['/en/', '/zh/', '/en/blog/default-locales/'];
+  for (const [slug, locales] of articleAlternateFixtures)
+    await run('new-post', [slug, '--locales', locales.join(',')]);
   for (const theme of ['base', 'ai', 'cyber', 'hacker', 'matrix']) {
     await run('new-page', [`projects-${theme}`, '--theme', theme]);
     for (const locale of ['en', 'zh', 'ja', 'ko', 'es'])
@@ -315,6 +318,8 @@ try {
   ])
     await run(name);
   assert.match(await run('check:workspace-link'), /skipped/);
+  await checkArticleAlternates(project, 'en');
+  results.push({ check: 'partial translation SEO and language menus', status: 'passed' });
   results.push({
     check: 'workspace link',
     status: 'not-applicable',

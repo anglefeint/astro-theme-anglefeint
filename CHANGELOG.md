@@ -15,6 +15,11 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.8.4] - 2026-10-01
+
+- Separate article SEO translation URLs from language-menu fallbacks. Only existing enabled translations appear in hreflang and OG alternate locales; omit `x-default` when the default-language article is missing.
+- Requires the matching starter article route as well as the updated package. Existing custom routes without `seoLocaleHrefs` retain previous behavior; see [UPGRADING](UPGRADING.md).
+
 ## [0.8.3] - 2026-09-21
 
 - Download each selected music track into a Blob before playback, fixing seek-to-zero on hosts that do not honor HTTP Range requests.

@@ -20,6 +20,14 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.8.4: article translation metadata
+
+The matching starter separates language-menu fallbacks from article SEO alternates. Missing translations no longer advertise a blog listing as a translated article. If the default language has no translation, `x-default` is omitted. Menu navigation and canonical URLs keep their existing behavior.
+
+Updating npm alone does not edit `src/pages/[lang]/blog/[...slug].astro`. For an existing 0.8.x starter on Astro `^7.3.2`, upgrade the theme to `^0.8.4` and merge the matching starter's article-route change: collect enabled locales with an existing same-slug article, build `seoLocaleHrefs` from their article URLs, and pass it to `BlogPost` alongside the existing menu `localeHrefs`. Preserve custom route behavior. Routes that omit the new prop retain the old metadata behavior. If the route has diverged substantially, use the fresh-template migration below. Run `npm run doctor` and inspect a partially translated article's head and language menu.
+
+The new starter does this automatically; authors need no new frontmatter or configuration. Translation matching continues to use the same slug across language directories.
+
 ### 0.8.3: music download and external audio requirements
 
 This package-only update supports the matching 0.8.x starter without configuration or adapter changes. The player now downloads the complete selected track into a browser Blob before playback, so seeking does not depend on HTTP Range support. Large tracks and slow connections increase startup time and memory use.

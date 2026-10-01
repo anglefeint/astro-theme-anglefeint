@@ -21,27 +21,41 @@ function resolveAbsoluteHref(href: string, siteURL: URL): string {
 export function buildHeadLocaleState(
   pathname: string,
   siteURL: URL,
-  localeHrefs?: Partial<Record<Locale, string>>
+  localeHrefs?: Partial<Record<Locale, string>>,
+  seoLocaleHrefs?: Partial<Record<Locale, string>>
 ) {
   const currentLocale = resolveCurrentLocale(pathname);
   const localeSubpath = stripLocaleFromPath(pathname, currentLocale);
-  const alternatePaths = ENABLED_LOCALES.map((locale) => ({
+  // An explicit SEO map is authoritative, including an empty map. Menu fallbacks
+  // must never manufacture translations that the route did not supply.
+  const alternateLocales =
+    seoLocaleHrefs === undefined
+      ? ENABLED_LOCALES
+      : ENABLED_LOCALES.filter((locale) => Boolean(seoLocaleHrefs[locale]));
+  const alternatePaths = alternateLocales.map((locale) => ({
     locale,
     hreflang: getLocaleHreflang(locale),
     href: resolveAbsoluteHref(
-      localeHrefs?.[locale] ?? alternatePathForLocale(locale, localeSubpath),
+      seoLocaleHrefs === undefined
+        ? (localeHrefs?.[locale] ?? alternatePathForLocale(locale, localeSubpath))
+        : seoLocaleHrefs[locale]!,
       siteURL
     ),
   }));
   const xDefaultPath =
-    localeHrefs?.[DEFAULT_LOCALE] ?? alternatePathForLocale(DEFAULT_LOCALE, localeSubpath);
+    seoLocaleHrefs === undefined
+      ? (localeHrefs?.[DEFAULT_LOCALE] ?? alternatePathForLocale(DEFAULT_LOCALE, localeSubpath))
+      : alternateLocales.includes(DEFAULT_LOCALE)
+        ? seoLocaleHrefs[DEFAULT_LOCALE]
+        : undefined;
 
   return {
     currentLocale,
     alternatePaths,
-    xDefaultHref: resolveAbsoluteHref(xDefaultPath, siteURL),
+    xDefaultHref: xDefaultPath ? resolveAbsoluteHref(xDefaultPath, siteURL) : undefined,
     ogLocale: getLocaleOgLocale(currentLocale),
-    ogLocaleAlternates: ENABLED_LOCALES.filter((locale) => locale !== currentLocale)
+    ogLocaleAlternates: alternateLocales
+      .filter((locale) => locale !== currentLocale)
       .map((locale) => getLocaleOgLocale(locale))
       .filter(Boolean),
   };

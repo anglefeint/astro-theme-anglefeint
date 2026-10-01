@@ -12,6 +12,7 @@ import {
 } from './starter-manifest.mjs';
 import { inspectProject } from './doctor.mjs';
 import { checkReadmeLinks } from './check-readme-links.mjs';
+import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
 
 const exec = promisify(execFile);
 const root = process.cwd();
@@ -136,6 +137,8 @@ try {
   await assert.rejects(npm(['run', 'new-post', '--', 'unsafe-locale', '--locales', '../outside']));
   await writeFile(path.join(project, 'src/site.config.ts'), oldConfig);
   await npm(['run', 'new-post', '--', 'partial-translation', '--locales', 'zh']);
+  for (const [slug, locales] of articleAlternateFixtures)
+    await npm(['run', 'new-post', '--', slug, '--locales', locales.join(',')]);
   await writeFile(
     path.join(project, 'src/content/blog/en/search-excluded.md'),
     '---\ntitle: Search exclusion test\ndescription: Excluded article\npubDate: 2026-01-01\nsearch: false\n---\nThis must not be indexed.\n'
@@ -252,7 +255,8 @@ try {
         assert.ok(!sitemap.includes(`<loc>${excluded}</loc>`));
         assert.match(await read(`dist/${locale}/rss.xml`), /<rss/);
         const partial = await read('dist/zh/blog/partial-translation/index.html');
-        assert.match(partial, /hreflang="en" href="[^"]+\/en\/blog\/"/);
+        assert.doesNotMatch(partial, /hreflang="en"/);
+        await checkArticleAlternates(project, locale);
         if (mode === 'never')
           await assert.rejects(read(`dist/${locale}/about/index.html`), { code: 'ENOENT' });
       }
