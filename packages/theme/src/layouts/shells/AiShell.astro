@@ -17,6 +17,7 @@ interface Props {
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
   localeHrefs?: Partial<Record<Locale, string>>;
+  seoLocaleHrefs?: Partial<Record<Locale, string>>;
 }
 
 const {
@@ -32,6 +33,7 @@ const {
   schema,
   noindex,
   localeHrefs,
+  seoLocaleHrefs,
 } = Astro.props as Props;
 ---
 
@@ -51,6 +53,7 @@ const {
   mainClass="page-main ai-content"
   scanlines
   localeHrefs={localeHrefs}
+  seoLocaleHrefs={seoLocaleHrefs}
 >
   <link slot="head" rel="stylesheet" href={themeAiCssUrl} />
   <slot name="head" slot="head" />

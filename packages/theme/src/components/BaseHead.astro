@@ -22,6 +22,7 @@ interface Props {
   noindex?: boolean;
   includeAlternateLinks?: boolean;
   localeHrefs?: Partial<Record<Locale, string>>;
+  seoLocaleHrefs?: Partial<Record<Locale, string>>;
 }
 
 const siteURL = Astro.site ?? new URL(SITE_URL);
@@ -41,13 +42,14 @@ const {
   noindex = false,
   includeAlternateLinks = true,
   localeHrefs,
+  seoLocaleHrefs,
 } = Astro.props;
 
 const imageURL = new URL(image.src, siteURL).toString();
 const robotsContent = noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 const isArticle = pageType === 'article';
 const { currentLocale, alternatePaths, xDefaultHref, ogLocale, ogLocaleAlternates } =
-  buildHeadLocaleState(Astro.url.pathname, siteURL, localeHrefs);
+  buildHeadLocaleState(Astro.url.pathname, siteURL, localeHrefs, seoLocaleHrefs);
 const rssURL = new URL(`/${currentLocale}/rss.xml`, siteURL);
 const articleModifiedISO = (modifiedTime ?? publishedTime)?.toISOString();
 const jsonLdSchemas = buildJsonLdSchemas({
@@ -91,7 +93,11 @@ const serializeJsonLd = (value: unknown) => JSON.stringify(value).replace(/</g, 
       <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
     ))
 }
-{includeAlternateLinks && <link rel="alternate" hreflang="x-default" href={xDefaultHref} />}
+{
+  includeAlternateLinks && xDefaultHref && (
+    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+  )
+}
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>

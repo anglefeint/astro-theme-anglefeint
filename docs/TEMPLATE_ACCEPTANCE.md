@@ -62,6 +62,8 @@ The command list is maintained explicitly rather than blindly executing prose sc
 
 ## Configuration and browser coverage
 
+Article SEO checks parse built HTML for Chinese-only, Chinese/Japanese, English/Chinese and five-language fixtures. They verify self-canonical URLs, exact reciprocal hreflang sets, conditional `x-default`, OG alternate locales and language-menu fallbacks. The installed matrix exercises English/Chinese defaults with both homepage prefix modes; public-template acceptance checks the delivered default-English starter. `tests/head-locales.unit.test.mjs` additionally covers an empty explicit map, omitted-map compatibility and exclusion of unenabled locale keys.
+
 The temporary project is first tested with defaults. Search must return current-language results at desktop and mobile widths; article TOC and copy controls must render, and music must be absent. The local main E2E suite separately exercises copying, image-preview dismissal, search retry/backdrop handling, tag navigation and other interactions.
 
 Next, the consumer test changes site title/author/URL, homepage introduction, enabled languages and a language label, home/article page sizes, About, search, tags, TOC, social images, Red Queen and music settings. It asserts a representative set of their outputs: two menu languages, custom label/hero, one home article, paginated blog output, omitted About/disabled-language/tag/search routes, absent article TOC and `.env` domain in generated metadata/feed/sitemap. The installed build matrix provides additional disabled social-image and custom-image checks.
