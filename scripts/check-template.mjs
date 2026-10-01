@@ -32,6 +32,9 @@ const results = [];
 const scripts = new Set();
 const env = {
   ...process.env,
+  // create-astro may silently reuse a cached archive when its download fails.
+  // A fresh cache makes remote acceptance fail instead of testing an old starter.
+  XDG_CACHE_HOME: path.join(temporary, 'cache'),
   ANGLEFEINT_LOCALES: '',
   NODE_OPTIONS: '',
   NODE_PATH: '',

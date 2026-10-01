@@ -29,6 +29,8 @@ Run from the maintainer checkout, not from a user's starter. These tools do not 
 
 The public-template check deliberately does not overlay local changes. Use it after starter delivery; use `check:installed` before delivery. Do not interpret a passing public-template run as verification of unpublished runtime changes.
 
+Each public-template run gives the downloader a fresh `XDG_CACHE_HOME` inside its temporary directory. This prevents create-astro's archive downloader from silently substituting an older cached starter after a network failure. The normal public template command remains unchanged; failed downloads must be diagnosed and retried rather than accepted as current-template evidence.
+
 ## Local execution
 
 `node scripts/check-music-browser.mjs` builds an isolated Astro fixture with the real MusicDeck component and generated test audio, serves the audio as HTTP 200 without Range support, then checks Blob playback and real pointer seeking while playing/paused, dragging, compact seeking, session resume, manual pause, reload/browser-policy fallback, five-language blocked messages, mobile storage denial and missing sources in Chromium. It does not alter demo configuration or disable autoplay policy. Back navigation is exercised and BFCache persisted events are additionally simulated; this is not a Safari/Firefox or subjective listening check. This fixture verifies independence from HTTP Range; it does not validate external-host CORS, every media format or every browser. Results are saved in ignored `acceptance-results/music-browser.json`; successful fixtures are removed and failed fixtures retained for diagnosis.
