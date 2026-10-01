@@ -19,7 +19,7 @@ depends_on:
 
 Run from the maintainer checkout, not from a user's starter. These tools do not publish, push or alter the real site's configuration. They need network access and installed maintainer dependencies. A passing run covers the recorded scenarios and versions, not every browser, hosting provider or possible user configuration.
 
-## Three complementary checks
+## Complementary checks
 
 | Command                                      | Source under test                                      | Purpose                                                                                                                                                                   |
 | -------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -30,6 +30,8 @@ Run from the maintainer checkout, not from a user's starter. These tools do not 
 The public-template check deliberately does not overlay local changes. Use it after starter delivery; use `check:installed` before delivery. Do not interpret a passing public-template run as verification of unpublished runtime changes.
 
 Each public-template run gives the downloader a fresh `XDG_CACHE_HOME` inside its temporary directory. This prevents create-astro's archive downloader from silently substituting an older cached starter after a network failure. The normal public template command remains unchanged; failed downloads must be diagnosed and retried rather than accepted as current-template evidence.
+
+`npm run check:upgrade` adds a targeted package-only regression check against frozen real 0.8.3 and 0.8.4 starter commits. It installs the locally packed theme without overlaying current routes, audits dependencies, creates partial/full translation fixtures, and runs each old project's checks/build. It asserts canonical, hreflang, OG and menu behavior and hashes source files before/after installation and build to detect rewrites. Evidence is stored in ignored `acceptance-results/upgrade-*`; successful temporary projects are removed. This is a bounded compatibility test, not a guarantee for every historical or customized starter. The referenced commits must exist in local Git history.
 
 ## Local execution
 

@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { resolveArticleLocaleHrefs } from '../utils/article-locales';
 import themeRedqueen1 from '../assets/theme/red-queen/theme-redqueen1.webp';
 import themeRedqueen2 from '../assets/theme/red-queen/theme-redqueen2.gif';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -64,6 +65,12 @@ const {
   seoLocaleHrefs,
 } = Astro.props;
 const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
+const articleLocaleHrefs = await resolveArticleLocaleHrefs({
+  pathname: Astro.url.pathname,
+  locale: resolvedLocale,
+  seoLocaleHrefs,
+  loadPosts: () => getCollection('blog'),
+});
 const messages = getMessages(resolvedLocale);
 const shareImage = await resolveSocialImage({
   override: ogImage,
@@ -116,7 +123,7 @@ const hasCommentsConfig = Boolean(
   author={author ?? SITE_AUTHOR}
   tags={tags}
   localeHrefs={localeHrefs}
-  seoLocaleHrefs={seoLocaleHrefs}
+  seoLocaleHrefs={articleLocaleHrefs}
 >
   <link slot="head" rel="stylesheet" href={blogPostCssUrl} />
   <Fragment slot="body-start">

@@ -20,7 +20,23 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.8.5: automatic article translation metadata
+
+Existing standard 0.8.3/0.8.4 starters on Astro `^7.3.2` only need the package update:
+
+```bash
+npm update @anglefeint/astro-theme
+npm ls @anglefeint/astro-theme
+npm run doctor
+```
+
+Confirm version 0.8.5 or later within the compatible 0.8.x range, then rebuild and deploy. No route edit, new frontmatter or configuration is required. `BlogPost` automatically finds existing same-slug translations in the blog collection for standard `/<locale>/blog/<slug>/` routes. Missing translations are omitted from SEO alternates; language-menu fallbacks remain available. An existing 0.8.4 `seoLocaleHrefs` mapping continues to work and need not be removed.
+
+Custom article URLs outside the standard route are not guessed: supply the optional `seoLocaleHrefs` mapping when needed, otherwise automatic alternates are omitted. Canonical URLs remain unchanged. Frozen 0.8.3 and 0.8.4 starter snapshots are tested with only the package replaced and original source files preserved.
+
 ### 0.8.4: article translation metadata
+
+Historical instructions for 0.8.4 only: prefer 0.8.5 above to avoid the manual route edit. Version 0.8.4 remains published.
 
 The matching starter separates language-menu fallbacks from article SEO alternates. Missing translations no longer advertise a blog listing as a translated article. If the default language has no translation, `x-default` is omitted. Menu navigation and canonical URLs keep their existing behavior.
 

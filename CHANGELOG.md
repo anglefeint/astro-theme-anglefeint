@@ -15,6 +15,12 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [0.8.5] - 2026-10-01
+
+- Standard article routes now discover real translations inside the theme package. Existing 0.8.3/0.8.4 starters get the correction through npm update without editing routes or adding settings.
+- Preserve explicit `seoLocaleHrefs` overrides from 0.8.4; unknown custom routes omit automatic alternates. Language-menu fallbacks remain unchanged.
+- Add package-only upgrade acceptance against frozen 0.8.3/0.8.4 starters, checking partial translations and source-file preservation.
+
 ## [0.8.4] - 2026-10-01
 
 - Separate article SEO translation URLs from language-menu fallbacks. Only existing enabled translations appear in hreflang and OG alternate locales; omit `x-default` when the default-language article is missing.

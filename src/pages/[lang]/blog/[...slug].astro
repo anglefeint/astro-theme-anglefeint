@@ -35,15 +35,6 @@ const resolvedLocale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
 const { Content, headings } = await render(post);
 const allPosts = await getCollection('blog');
 const currentSlug = blogIdToSlugAnyLocale(post.id);
-const translatedLocales = ENABLED_LOCALES.filter((targetLocale) =>
-  allPosts.some((p) => p.id === `${targetLocale}/${currentSlug}`)
-);
-const seoLocaleHrefs = Object.fromEntries(
-  translatedLocales.map((targetLocale) => [
-    targetLocale,
-    alternatePathForLocale(targetLocale, `/blog/${currentSlug}/`),
-  ])
-) as Partial<Record<Locale, string>>;
 const localeHrefs = Object.fromEntries(
   ENABLED_LOCALES.map((targetLocale) => {
     const targetId = `${targetLocale}/${currentSlug}`;
@@ -68,12 +59,6 @@ const resolvedData = {
 };
 ---
 
-<BlogPost
-  {...resolvedData}
-  headings={headings}
-  related={related}
-  localeHrefs={localeHrefs}
-  seoLocaleHrefs={seoLocaleHrefs}
->
+<BlogPost {...resolvedData} headings={headings} related={related} localeHrefs={localeHrefs}>
   <Content />
 </BlogPost>
