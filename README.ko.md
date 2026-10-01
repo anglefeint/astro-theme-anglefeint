@@ -64,6 +64,35 @@ pnpm build
 pnpm preview
 ```
 
+## 첫 설정: 사이트 정보와 홈 주소
+
+배포 전에 `src/site.config.ts`의 기존 `defineThemeConfig({...})` 객체를 편집하세요. 아래 항목을 기존 설정에 합치고, 파일의 import/export와 기존 언어 및 기능 설정은 유지하세요. 예시 제목, 작성자와 `https://your-domain.example`을 자신의 정보로 바꾸세요.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: '나의 블로그',
+    author: '작성자 이름',
+    url: 'https://your-domain.example',
+  },
+  i18n: {
+    defaultLocale: 'ko',
+    routing: {
+      defaultLocalePrefix: 'never',
+    },
+  },
+});
+```
+
+**도메인을 열었을 때 홈에 진입하는 방식을 선택하세요:**
+
+- `'always'`(테마 기본값): `/`에서 `/<기본 언어>/`로 이동합니다. 초기 설정에서는 `/en/`이며, 홈이 표시되기 전에 **“Redirecting to home…”**가 잠깐 보일 수 있습니다.
+- `'never'`(위 예시): `/`에서 기본 언어 홈을 바로 표시하므로 루트 URL에서는 중간 이동 화면을 거치지 않습니다. `/<기본 언어>/`는 `/`로 돌아갑니다. 예시의 기본 언어는 한국어입니다.
+
+`defaultLocale`은 활성화된 언어인 `ko`, `en`, `zh`, `ja`, `es` 등에서 선택하세요. 이 설정은 기본 언어의 **홈 주소만** 바꾸며, 블로그와 글 주소에는 `/ko/blog/`처럼 언어 접두사가 유지됩니다.
+
+canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url`을 실제 운영 사이트 주소로 설정하세요. 환경 파일이나 호스팅 빌드 설정에 `PUBLIC_SITE_URL`이 있으면 이 값이 `site.url`보다 우선하므로 함께 확인하세요. 변경 후에는 다시 빌드하고 배포해야 합니다(`npm run build` 또는 연결된 호스팅의 빌드). 로컬 파일만 수정해도 운영 사이트가 바로 바뀌지는 않습니다.
+
 ## 테마 업그레이드
 
 `#starter`로 만든 프로젝트에서는 대상 릴리스가 기존 starter 및 Astro와 호환되고 로컬 구조를 변경할 필요가 없을 때만 실행하세요:

@@ -64,6 +64,35 @@ pnpm build
 pnpm preview
 ```
 
+## 首次配置：站点信息与首页地址
+
+发布前，编辑 `src/site.config.ts` 中已有的 `defineThemeConfig({...})` 对象。把以下字段合并到现有配置中，保留文件的导入、导出及已有语言和功能设置；将示例标题、作者和 `https://your-domain.example` 换成自己的信息。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: '我的博客',
+    author: '你的名字',
+    url: 'https://your-domain.example',
+  },
+  i18n: {
+    defaultLocale: 'zh',
+    routing: {
+      defaultLocalePrefix: 'never',
+    },
+  },
+});
+```
+
+**选择打开域名时如何进入首页：**
+
+- `'always'`（主题默认）：`/` 跳转到 `/<默认语言>/`，初始配置下是 `/en/`。访客可能短暂看到 **“Redirecting to home…”**，然后进入首页。
+- `'never'`（上面的示例）：`/` 直接显示默认语言首页，访问根域名时不再经过这个跳转页；`/<默认语言>/` 则跳回 `/`。示例将中文设为默认语言。
+
+`defaultLocale` 可选择已启用的 `zh`、`en`、`ja`、`ko`、`es` 等语言。这个设置只改变默认语言的**首页**地址，博客和文章仍保留语言前缀，例如 `/zh/blog/`。
+
+`site.url` 应填写真实生产域名，确保 canonical、订阅源和 sitemap 使用正确地址。如果环境文件或托管平台构建设置中配置了 `PUBLIC_SITE_URL`，它会覆盖 `site.url`，也需要一起核对。修改后须重新构建并部署（运行 `npm run build`，或由已连接的托管平台执行构建）；只修改本地文件不会更新线上站点。
+
 ## 升级主题
 
 对于 `#starter` 创建的项目，仅在目标版本明确兼容现有 starter 和 Astro、且无需本地结构迁移时执行：
