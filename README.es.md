@@ -64,6 +64,35 @@ pnpm build
 pnpm preview
 ```
 
+## Primera configuración: identidad del sitio y URL de inicio
+
+Antes de publicar, edita el objeto `defineThemeConfig({...})` que ya existe en `src/site.config.ts`. Integra estos campos en tus ajustes y conserva los import/export del archivo y la configuración de idiomas y funciones existente. Sustituye el título, el autor y `https://your-domain.example` por tus propios datos.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: 'Mi blog personal',
+    author: 'Tu nombre',
+    url: 'https://your-domain.example',
+  },
+  i18n: {
+    defaultLocale: 'es',
+    routing: {
+      defaultLocalePrefix: 'never',
+    },
+  },
+});
+```
+
+**Elige cómo se accede a la página de inicio:**
+
+- `'always'` (valor predeterminado del tema): `/` redirige a `/<idioma-predeterminado>/`, inicialmente `/en/`. Puede aparecer brevemente **«Redirecting to home…»** antes de llegar al inicio.
+- `'never'` (el ejemplo anterior): `/` muestra directamente el inicio en el idioma predeterminado, sin esa página intermedia al visitar la raíz. `/<idioma-predeterminado>/` redirige a `/`. El ejemplo usa español como idioma predeterminado.
+
+Elige un idioma habilitado, como `es`, `en`, `zh`, `ja` o `ko`, para `defaultLocale`. Este ajuste solo cambia la **página de inicio** del idioma predeterminado; el blog y los artículos conservan su prefijo de idioma, por ejemplo `/es/blog/`.
+
+Configura `site.url` con la URL real de producción para que los enlaces canonical, los feeds y el sitemap usen el dominio correcto. Si defines `PUBLIC_SITE_URL` en un archivo de entorno o en la configuración de compilación del alojamiento, ese valor tiene prioridad sobre `site.url`; revísalo también. Tras cambiar la configuración, vuelve a compilar y desplegar (`npm run build` o la compilación del alojamiento conectado). Editar solo el archivo local no actualiza el sitio publicado.
+
 ## Actualizar tema
 
 En proyectos creados desde `#starter`, ejecuta lo siguiente solo si la versión de destino es compatible con tu starter y Astro y no requiere cambios de estructura local:
