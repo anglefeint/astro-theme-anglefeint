@@ -88,6 +88,7 @@ const ALLOWED_UPDATE_TRIGGERS = new Set([
 const ALLOWED_AUDIENCES = new Set(['agent', 'maintainer', 'user']);
 
 const EXCLUDE_PREFIXES = [
+  'acceptance-results/',
   'src/content/blog/',
   'public/images/',
   '.cursor/workflows/',

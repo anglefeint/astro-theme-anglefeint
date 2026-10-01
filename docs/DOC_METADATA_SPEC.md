@@ -229,6 +229,7 @@ Prefer the existing vocabulary below before inventing new scope values:
 - `agent-guidance`
 - `workflow`
 - `release`
+- `starter`
 - `starter-sync`
 - `doc-sync`
 - `validation`
@@ -277,7 +278,9 @@ Prefer the existing trigger vocabulary below:
 - `adapter-change`
 - `validation-change`
 - `script-change`
+- `export-change`
 - `routing-change`
+- `seo-change`
 - `i18n-change`
 - `theme-naming`
 - `visual-change`

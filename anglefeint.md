@@ -133,7 +133,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 | 普通代码块、普通正文图片       | BlogPost prose data 属性 → initBlogpostEffects → 对应初始化脚本 | 正文；无需新开关                 |
 | `i18n.locales.<code>.messages` | 合并后的 `getMessages`                                          | 搜索、目录、标签、复制和预览文案 |
 
-[内容 schema](packages/theme/src/content-schema.ts) 必填 `title`、`description`、`pubDate`；`tags`、`toc`、`search` 均可省略。其他可选字段包括 hero、AI 元数据、更新时间、字数、作者和 sourceLinks。不要把没有实现的 draft、图片开关或播放器开关写成现有配置。
+[内容 schema](packages/theme/src/content-schema.ts) 必填 `title`、`description`、`pubDate`；`tags`、`toc`、`search` 均可省略。其他可选字段包括 hero、AI 元数据、更新时间、字数、作者和 sourceLinks。文章 frontmatter 没有 `draft`、图片预览开关或单篇播放器开关；全站播放器由 `src/site.config.ts` 中已有的 `theme.music.enabled` 控制，不能混淆两者的配置范围。
 
 完整的“代码 → 文档 → 测试”入口见 [架构对应表](docs/ARCHITECTURE.md#code-to-documentation-map)。
 

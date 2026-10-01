@@ -115,6 +115,8 @@ Fallback when `doc_purpose` is missing:
 
 Documentation discovery skips `node_modules` directories at every depth, including nested workspace dependencies. Dependency READMEs are not repository-owned documentation.
 
+Both `suggest:docs` and `check:docs` also skip the repository-root `acceptance-results/` tree. It contains local acceptance reports, logs and release drafts; keep those artifacts for traceability without treating them as maintained documentation. This is an explicit directory exclusion, not general `.gitignore` support.
+
 Exclude these from strict metadata enforcement unless explicitly requested:
 
 - content markdown used as data (for example blog posts under `src/content/**`)

@@ -12,6 +12,21 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-01 文档工作流与当前实现复核
+
+核对基线为 main `8cf8fbc`，另含本地两个文档工具新增的 `acceptance-results/` 排除规则。按代码 → 文档方向检查配置默认、首页路由、文章功能、音乐播放、检查命令和发布脚本；没有按旧描述修改运行逻辑。
+
+- 将 `.cursor/skills/document-project-readme/SKILL.md` 收敛为主文档工作流入口，移除旧路径、旧特效示例和向 README 填入内部实现细节的固定模板。README 保持面向用户，内部结构与视觉细节仍由架构和视觉文档负责。
+- UPGRADING 补充音乐完整下载、外部音源 CORS 和自定义 CSP 的 0.8.3 升级影响，链接现有发布记录。五语 README、包 README 和发布记录已有这些事实，不重复改写。
+- DOC_SYNC_WORKFLOW 记录两个工具明确排除本地验收产物目录，不宣称工具自动遵循全部 `.gitignore` 规则。
+- TEMPLATE_ACCEPTANCE 修正开发端口描述：普通 dev 默认 4321，与 E2E 固定端口可能冲突；4323 仅作为显式指定的示例。
+- CONTRIBUTING 区分外部 fork/PR 与维护者、仓库代理在 main 上的工作方式，按当前 npm 脚本说明 `check` 已包含构建，去掉重复命令，并引用正式发布流程。
+- 后续复核补齐 DOC_METADATA_SPEC 中代码已接受的 `starter` scope 和 `export-change`、`seo-change` triggers；提交检查单说明 `site.url` 与环境变量覆盖的选择，并改为运行已有类型检查；项目全景说明区分文章 frontmatter 与全站音乐开关。
+
+本轮通过显式源码路径运行 `suggest:docs`：41 个直接候选、13 个传播候选、零元数据错误。候选不是强制修改清单；核心配置、路由、架构和视觉说明在本次核对范围内与实现相符，历史发布证据保留。实际测试清单为 30 项 Chromium E2E；列举测试不表示重新执行了浏览器验收。
+
+这次修订补齐文档，并纳入同会话两个扫描工具各一行的排除规则。文档元数据、相关相对链接及 diff 空白检查通过。同会话已对扫描改动完成定向验证、61 项测试、lint、`check:no-build` 和构建；未将这些结果冒充新浏览器或 Linux 验收。全部修改均在 npm 包和 starter 受管同步清单之外，交付目标为提交并推送 main，不发布 npm、不同步 starter、不修改版本。部署状态以推送后的实际检查为准。
+
 ## 2026-09-21 音乐会话续播（0.8.1）
 
 对照旧提交 `8dbe3b5` 和当前 music core/controller/storage：采用普通页面跳转后的会话续播，没有引入客户端路由，也没有调整页面特效。新增 `shouldResume`，旧记录默认不续播；页面离开先保存再暂停，缓存恢复重新读取最新记录。浏览器拒绝播放与音源错误分开显示，失败取消自动重试，手动播放仍可恢复进度。

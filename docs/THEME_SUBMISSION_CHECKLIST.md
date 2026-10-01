@@ -21,11 +21,11 @@ Use this before submitting to an Astro theme listing/review.
 - Repository URL points to this theme
 - No placeholder listing fields remain (e.g. `<YOUR_DEMO_URL>`)
 - Theme screenshots meet portal constraints (combined max 5MB, 16:9 ratio, width >= 1280px)
-- `PUBLIC_SITE_URL` is set to your real domain (no placeholder URL in canonical/hreflang)
+- Set your real domain through `site.url` in `src/site.config.ts` or the `PUBLIC_SITE_URL` override, then verify generated canonical/hreflang URLs contain no placeholder domain.
 
 ## Recommended
 
-- Add type check support (`astro check`) and run once before submit
+- Run the existing type checks before submission: `npm run check:no-build` includes `astro check`; `npm run check` also includes the build.
 - Include preview screenshots for:
   - Home
   - Blog list
