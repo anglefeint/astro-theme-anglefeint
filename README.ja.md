@@ -64,6 +64,35 @@ pnpm build
 pnpm preview
 ```
 
+## 初期設定：サイト情報とホームの URL
+
+公開前に、`src/site.config.ts` 内の既存の `defineThemeConfig({...})` オブジェクトを編集してください。以下の項目を既存の設定に統合し、ファイルの import/export、言語設定、機能設定は残します。タイトル、著者名、`https://your-domain.example` は自分の情報に置き換えてください。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: '私のブログ',
+    author: 'あなたの名前',
+    url: 'https://your-domain.example',
+  },
+  i18n: {
+    defaultLocale: 'ja',
+    routing: {
+      defaultLocalePrefix: 'never',
+    },
+  },
+});
+```
+
+**ホームへのアクセス方法を選びます：**
+
+- `'always'`（テーマの既定値）：`/` から `/<既定の言語>/`（初期設定では `/en/`）へ移動します。ホームが表示される前に **「Redirecting to home…」** が一瞬見える場合があります。
+- `'never'`（上の例）：`/` に既定言語のホームを直接表示するため、ルート URL では中間のリダイレクト画面を経由しません。`/<既定の言語>/` は `/` に戻ります。この例の既定言語は日本語です。
+
+`defaultLocale` には、有効な言語（`ja`、`en`、`zh`、`ko`、`es` など）を指定します。この設定が変えるのは既定言語の**ホーム**だけです。ブログや記事には引き続き `/ja/blog/` のような言語プレフィックスが付きます。
+
+canonical、フィード、サイトマップに正しいドメインを使うため、`site.url` に本番サイトの URL を設定してください。環境ファイルやホスティングのビルド設定に `PUBLIC_SITE_URL` がある場合は、そちらが優先されるため併せて確認します。変更後は再ビルドしてデプロイしてください（`npm run build`、または連携済みホスティングのビルド）。ローカルファイルの編集だけでは公開サイトは更新されません。
+
 ## テーマのアップグレード
 
 `#starter` から作成したプロジェクトでは、対象リリースが既存の starter と Astro に対応し、ローカル構成の移行が不要な場合にのみ実行します:
