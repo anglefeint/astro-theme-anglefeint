@@ -5,6 +5,7 @@ import matter from 'gray-matter';
 
 const ROOT = process.cwd();
 const EXCLUDE_PREFIXES = [
+  'acceptance-results/',
   'src/content/blog/',
   'public/images/',
   '.cursor/workflows/',

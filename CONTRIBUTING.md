@@ -19,14 +19,16 @@ npm run check
 
 ## Daily Workflow
 
-1. Create a working branch from `main`.
-2. Make focused changes.
-3. Run validation:
+1. For external contributions, create a branch from `main` in your fork and submit a pull request targeting `main`. Maintainer and repository-agent implementation follows `docs/AI_WORKFLOW.md` on `main`; `starter` is generated output, never a development target.
+2. Make focused changes based on the actual implementation.
+3. For code changes, run:
 
 ```bash
+npm run lint
 npm run check
-npm run build
 ```
+
+In this maintainer checkout, `check` already includes unit tests, documentation and adapter checks, Astro diagnostics, and a build through `check:about-runtime`. Do not repeat `build` for the same unchanged source. For documentation-only edits, run `npm run check:docs` and verify the described behavior against code.
 
 For routing, SEO, or browser-level behavior changes, also run:
 
@@ -66,12 +68,4 @@ Do not merge `starter` into `main`.
 
 ## Release Safety
 
-Before release:
-
-```bash
-npm run check
-npm run build
-npm run check:docs
-```
-
-If package internals changed, follow packaging docs in `docs/PACKAGING_WORKFLOW.md` and `docs/PACKAGE_RELEASE.md`.
+Follow `docs/MAINTAINER_WORKFLOW.md` and `docs/PACKAGE_RELEASE.md` for release validation, package publication and starter delivery. The daily checks above do not replace independent installed-starter checks or post-delivery acceptance. For package/starter ownership, see `docs/PACKAGING_WORKFLOW.md`.

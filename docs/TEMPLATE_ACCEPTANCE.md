@@ -42,7 +42,7 @@ npm run check:template
 npm run check:template -- --pnpm
 ```
 
-The pnpm variant runs pnpm 10 through `npm exec --package=pnpm@10`; no global pnpm installation is required. Both variants create a new project with the README's npm template command, then use their chosen package manager. The `dev` and `preview` servers use ports 4381 (npm) and 4382 (pnpm); do not run two instances of the same variant simultaneously. The existing E2E suite owns port 4321 and refuses to reuse an unrelated server. It does not use the normal development server on 4323.
+The pnpm variant runs pnpm 10 through `npm exec --package=pnpm@10`; no global pnpm installation is required. Both variants create a new project with the README's npm template command, then use their chosen package manager. The `dev` and `preview` servers use ports 4381 (npm) and 4382 (pnpm); do not run two instances of the same variant simultaneously. The existing E2E suite owns port 4321 and refuses to reuse an unrelated server. Plain `npm run dev` also defaults to 4321; stop a development server using that port before E2E, or start development on another port with `npm run dev -- --port 4323`.
 
 The environment-variable CLI example is exercised through the child process environment, which also works on Windows. The literal `ANGLEFEINT_LOCALES=... command` README example requires a POSIX shell; PowerShell users can use `--locales`. Page theme examples are alternatives: duplicate page creation is tested as an expected rejection and must preserve the original file.
 

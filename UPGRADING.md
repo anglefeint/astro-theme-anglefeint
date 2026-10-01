@@ -20,6 +20,12 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.8.3: music download and external audio requirements
+
+This package-only update supports the matching 0.8.x starter without configuration or adapter changes. The player now downloads the complete selected track into a browser Blob before playback, so seeking does not depend on HTTP Range support. Large tracks and slow connections increase startup time and memory use.
+
+External audio hosts must permit cross-origin fetch (CORS), even if their URLs previously played directly in the browser. Configure the audio host or move tracks into your site's `public/music/` directory. If your site sets a Content Security Policy, allow the audio source in `connect-src` and `blob:` in `media-src`. Follow [Compatible Package Updates](#compatible-package-updates) and verify your configured tracks in preview. See the [0.8.3 release notes](docs/releases/0.8.3.md) for delivery evidence and tested limitations.
+
 ### 0.8.1: music session resume
 
 This package-only update supports the matching 0.8.0 starter and its Astro range. Run `npm update @anglefeint/astro-theme`, then `npm run doctor`; no configuration or adapter migration is needed. Verify the installed version with `npm ls @anglefeint/astro-theme`. Active music sessions attempt to resume after navigation/reload; manual pause stays paused. Browser restrictions can require clicking PLAY. Brief interruptions remain possible. Existing session records without resume intent stay paused until you play. Older starters must first satisfy the baseline requirements below.
