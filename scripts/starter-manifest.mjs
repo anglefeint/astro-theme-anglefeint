@@ -23,7 +23,17 @@ export const ADAPTER_TARGET_FILES = ADAPTER_TEMPLATE_MAP.map(([, targetRel]) => 
 
 export const STARTER_CONTENT_ROOT = 'src/content/blog';
 
-export const STARTER_CONTENT_LOCALES = ['en', 'es', 'ja', 'ko', 'zh'];
+export const STARTER_CONTENT_LOCALES = [
+  'en',
+  'es',
+  'ja',
+  'ko',
+  'zh',
+  'pt-br',
+  'de',
+  'ru',
+  'zh-hant',
+];
 
 export const STARTER_CONTENT_SLUGS = [
   'welcome-to-anglefeint',
@@ -68,6 +78,14 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'src/pages/[lang]/tags/[tag]/[...page].astro',
   'src/content.config.ts',
   'src/utils/metrics.ts',
+  'README.pt-BR.md',
+  'README.pt-BR.meta.yaml',
+  'README.de.md',
+  'README.de.meta.yaml',
+  'README.ru.md',
+  'README.ru.meta.yaml',
+  'README.zh-Hant.md',
+  'README.zh-Hant.meta.yaml',
   'README.md',
   'README.meta.yaml',
   'README.zh-CN.md',
