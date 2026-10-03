@@ -11,7 +11,17 @@ import {
 } from '../scripts/starter-manifest.mjs';
 
 test('starter content whitelist expands to the expected localized guide files', () => {
-  assert.deepEqual(STARTER_CONTENT_LOCALES, ['en', 'es', 'ja', 'ko', 'zh']);
+  assert.deepEqual(STARTER_CONTENT_LOCALES, [
+    'en',
+    'es',
+    'ja',
+    'ko',
+    'zh',
+    'pt-br',
+    'de',
+    'ru',
+    'zh-hant',
+  ]);
   assert.deepEqual(STARTER_CONTENT_SLUGS, [
     'welcome-to-anglefeint',
     'starter-guide-1-configure-your-site',

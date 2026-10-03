@@ -27,6 +27,123 @@ export const THEME_CONFIG = defineThemeConfig({
   },
   i18n: {
     locales: {
+      'pt-br': {
+        site: {
+          hero: 'Escreva seu blog em um mundo cinematográfico. Chuva de código Matrix, noites de neon Cyberpunk, terminais Hacker e interfaces de IA em um tema Astro leve.',
+        },
+        about: {
+          metaLine: '$ anglefeint --mode cinematic --output static',
+          sections: {
+            who: 'Anglefeint é um tema Astro de código aberto para blogs pessoais com identidade cinematográfica.',
+            what: 'Quatro atmosferas e um único fluxo de publicação: Matrix no início, Cyberpunk na navegação, Hacker na página Sobre e IA na leitura.',
+            ethos: [
+              'Preserve a atmosfera e mantenha a implementação leve.',
+              'Simplifique a escrita e a publicação.',
+              'Ative os recursos conforme a necessidade e mantenha a configuração clara.',
+              'Desenvolva em público e evolua com o uso real.',
+            ],
+            now: 'Busca, tags, sumário, cópia de código, visualização de imagens e imagens de compartilhamento estão incluídos. Música e comentários são opcionais.',
+            contactLead: 'Dúvidas, ideias ou trabalhos para compartilhar? Visite o projeto no ',
+            signature: '> Quatro atmosferas. Suas histórias.',
+          },
+          contact: {
+            email: '',
+            githubUrl: 'https://github.com/anglefeint/astro-theme-anglefeint',
+            githubLabel: 'GitHub',
+          },
+          labels: {
+            contactConnectLead: '',
+          },
+        },
+      },
+      de: {
+        site: {
+          hero: 'Dein Blog in einer filmischen Welt: Matrix-Coderegen, Cyberpunk-Neonnächte, Hacker-Terminals und KI-Oberflächen in einem schlanken Astro-Theme.',
+        },
+        about: {
+          metaLine: '$ anglefeint --mode cinematic --output static',
+          sections: {
+            who: 'Anglefeint ist ein quelloffenes Astro-Theme für persönliche Blogs mit filmischer Identität.',
+            what: 'Vier Atmosphären, ein Veröffentlichungsablauf: Matrix auf der Startseite, Cyberpunk beim Stöbern, Hacker im Profil und KI beim Lesen.',
+            ethos: [
+              'Eine lebendige Atmosphäre mit schlanker Umsetzung verbinden.',
+              'Schreiben und Veröffentlichen einfach machen.',
+              'Optionale Funktionen bei Bedarf aktivieren und Einstellungen verständlich halten.',
+              'Offen entwickeln und aus der tatsächlichen Nutzung lernen.',
+            ],
+            now: 'Suche, Tags, Inhaltsverzeichnis, Code-Kopieren, Bildvorschau und automatisch erzeugte Vorschaubilder sind integriert. Musik und Kommentare lassen sich bei Bedarf aktivieren.',
+            contactLead: 'Fragen, Ideen oder eigene Projekte? Besuche das Projekt auf ',
+            signature: '> Vier Atmosphären. Deine Geschichten.',
+          },
+          contact: {
+            email: '',
+            githubUrl: 'https://github.com/anglefeint/astro-theme-anglefeint',
+            githubLabel: 'GitHub',
+          },
+          labels: {
+            contactConnectLead: '',
+          },
+        },
+      },
+      ru: {
+        site: {
+          hero: 'Превратите блог в кинематографичный мир: дождь кода Matrix, неоновые ночи Cyberpunk, терминалы Hacker и интерфейсы ИИ в одной лёгкой теме Astro.',
+        },
+        about: {
+          metaLine: '$ anglefeint --mode cinematic --output static',
+          sections: {
+            who: 'Anglefeint — открытая тема Astro для личных блогов с кинематографичным характером.',
+            what: 'Четыре атмосферы, один процесс публикации: Matrix на главной, Cyberpunk в списках, Hacker на странице автора и ИИ в статьях.',
+            ethos: [
+              'Сохранять выразительную атмосферу и лёгкую реализацию.',
+              'Делать написание и публикацию простыми.',
+              'Включать дополнительные функции по необходимости и сохранять понятные настройки.',
+              'Разрабатывать открыто и улучшать на основе реального использования.',
+            ],
+            now: 'Встроены поиск, теги, оглавление, копирование кода, просмотр изображений и автоматические изображения для ссылок. Музыка и комментарии включаются по желанию.',
+            contactLead:
+              'Есть вопросы, идеи или работы, которыми хочется поделиться? Откройте проект на ',
+            signature: '> Четыре атмосферы. Ваши истории.',
+          },
+          contact: {
+            email: '',
+            githubUrl: 'https://github.com/anglefeint/astro-theme-anglefeint',
+            githubLabel: 'GitHub',
+          },
+          labels: {
+            contactConnectLead: '',
+          },
+        },
+      },
+      'zh-hant': {
+        site: {
+          hero: '把你的部落格寫進電影裡。Matrix 的程式碼雨、Cyberpunk 的霓虹雨夜、Hacker 終端與 AI 介面，盡在一個輕量的 Astro 主題。',
+        },
+        about: {
+          metaLine: '$ anglefeint --mode cinematic --output static',
+          sections: {
+            who: 'Anglefeint 是開源的 Astro 主題，為個人部落格帶來電影感與鮮明個性。',
+            what: '四種氛圍，一套發布流程：首頁是 Matrix，文章列表是 Cyberpunk，關於頁是 Hacker，閱讀介面是 AI。',
+            ethos: [
+              '保留鮮明氛圍，讓實作保持輕量。',
+              '讓寫作與發布簡單直接。',
+              '需要時才開啟選用功能，讓設定清楚易懂。',
+              '公開開發，根據實際使用經驗持續改善。',
+            ],
+            now: '內建搜尋、標籤、文章目錄、程式碼複製、圖片預覽與自動分享圖。音樂與留言可依需要啟用。',
+            contactLead: '有問題、建議或作品想分享？歡迎前往專案的 ',
+            signature: '> 四種氛圍，你的故事。',
+          },
+          contact: {
+            email: '',
+            githubUrl: 'https://github.com/anglefeint/astro-theme-anglefeint',
+            githubLabel: 'GitHub',
+          },
+          labels: {
+            contactConnectLead: '',
+          },
+        },
+      },
       en: {
         site: {
           hero: 'Write your blog into a cinematic world. Matrix code rain, Cyberpunk neon nights, Hacker terminals and AI interfaces — one lightweight Astro theme.',

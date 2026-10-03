@@ -1,4 +1,7 @@
 <h1 align="center">Anglefeint</h1>
+
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+
 <p align="center">一个具有电影感、多氛围切换的 Astro 个人发布主题。</p>
 
 <p align="center">
@@ -12,10 +15,14 @@
 <p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.2-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
-  <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+## 选择需要的语言
+
+默认启用九种语言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`，默认语言仍为英语。在 `src/site.config.ts` 中为不需要的语言设置 `i18n.locales.<code>.meta.enabled: false`；省略配置不会禁用，默认语言始终启用。`new-post` 初始会创建九份文章骨架，不会自动翻译。只创建简体中文：`npm run new-post -- my-post --locales zh`。
 
 ## 模板安装
 

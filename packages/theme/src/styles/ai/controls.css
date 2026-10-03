@@ -27,11 +27,7 @@
   left: 0;
   height: 4px;
   width: calc(var(--read-progress, 0) * 100%);
-  background: linear-gradient(
-    90deg,
-    rgba(132, 214, 255, 0.92),
-    rgba(94, 196, 255, 0.94)
-  );
+  background: linear-gradient(90deg, rgba(132, 214, 255, 0.92), rgba(94, 196, 255, 0.94));
   box-shadow: 0 0 14px rgba(104, 204, 255, 0.45);
   z-index: 100;
   transition: width 0.08s ease-out;
@@ -43,11 +39,7 @@
   height: 300px;
   left: calc(var(--mouse-x, -9999px) - 150px);
   top: calc(var(--mouse-y, -9999px) - 150px);
-  background: radial-gradient(
-    circle,
-    rgba(124, 210, 248, 0.1) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle, rgba(124, 210, 248, 0.1) 0%, transparent 70%);
   pointer-events: none;
   z-index: 1;
   transition: opacity 0.3s;
@@ -61,13 +53,7 @@ body.ai-page:not(:hover) .ai-mouse-glow {
   inset: 0;
   pointer-events: none;
   z-index: 15;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 15%,
-    black 85%,
-    transparent 100%
-  );
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
@@ -79,19 +65,13 @@ body.ai-page:not(:hover) .ai-mouse-glow {
   transition: backdrop-filter 0.3s;
 }
 .ai-depth-blur::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background: transparent;
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-  mask-image: linear-gradient(
-    to bottom,
-    black 0%,
-    transparent 12%,
-    transparent 88%,
-    black 100%
-  );
+  mask-image: linear-gradient(to bottom, black 0%, transparent 12%, transparent 88%, black 100%);
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
@@ -190,6 +170,7 @@ body.ai-page .ai-content .prose a.ai-link-preview {
   position: relative;
 }
 body.ai-page .ai-content .prose a.ai-link-preview::after {
+  display: none;
   content: attr(data-preview);
   position: absolute;
   bottom: 100%;
@@ -203,6 +184,7 @@ body.ai-page .ai-content .prose a.ai-link-preview::after {
   color: rgba(180, 255, 220, 0.9);
   white-space: nowrap;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transition:
     opacity 0.2s,
@@ -210,6 +192,8 @@ body.ai-page .ai-content .prose a.ai-link-preview::after {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
+  display: block;
+  visibility: visible;
   opacity: 1;
   transform: translateX(-50%) translateY(-12px);
 }
@@ -263,11 +247,7 @@ body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
 .ai-response-wrap {
   position: relative;
   border: 1px solid rgba(152, 222, 255, 0.2);
-  background: linear-gradient(
-    180deg,
-    rgba(10, 16, 28, 0.54),
-    rgba(16, 8, 16, 0.4)
-  );
+  background: linear-gradient(180deg, rgba(10, 16, 28, 0.54), rgba(16, 8, 16, 0.4));
   border-radius: 8px;
   padding: 0.75rem 0.9rem 0.45rem;
   box-shadow:
@@ -284,11 +264,7 @@ body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(
-    145deg,
-    rgba(118, 204, 244, 0.62),
-    rgba(132, 214, 255, 0.42)
-  );
+  background: linear-gradient(145deg, rgba(118, 204, 244, 0.62), rgba(132, 214, 255, 0.42));
   border: 1px solid rgba(136, 208, 242, 0.42);
   box-shadow:
     0 0 0 2px rgba(10, 18, 28, 0.64),
@@ -363,11 +339,7 @@ body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
   }
 }
 /* 首字放大 */
-body.ai-page
-  .ai-content
-  .prose
-  .ai-prose-body
-  > p:first-of-type::first-letter {
+body.ai-page .ai-content .prose .ai-prose-body > p:first-of-type::first-letter {
   float: left;
   font-size: 3.2em;
   line-height: 0.9;
@@ -393,4 +365,3 @@ body.ai-page
   opacity: 1;
   transform: translateY(0);
 }
-

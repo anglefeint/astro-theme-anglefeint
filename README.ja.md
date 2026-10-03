@@ -1,4 +1,7 @@
 <h1 align="center">Anglefeint</h1>
+
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+
 <p align="center">映画的な表現と複数の雰囲気を持つ Astro テーマです。</p>
 
 <p align="center">
@@ -12,10 +15,14 @@
 <p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.2-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
-  <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+## 使用する言語を選ぶ
+
+標準で9言語が有効です：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。既定は英語です。不要な言語は `src/site.config.ts` で `i18n.locales.<code>.meta.enabled: false` にします。設定の省略では無効にならず、既定言語は常に有効です。`new-post` は初期状態で9ファイルを作成しますが、自動翻訳はしません。日本語だけ作成する場合：`npm run new-post -- my-post --locales ja`。
 
 ## テンプレートの導入
 
@@ -204,7 +211,7 @@ npm run new-page -- projects --theme matrix
 - コードのコピーと本文画像のプレビュー
 - Astro 7 の静的出力
 - Markdown + MDX コンテンツコレクション
-- スターター同梱のサンプルロケール: `en`, `ja`, `ko`, `es`, `zh`
+- スターター同梱のサンプルロケール: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`
 - ロケール別 RSS
 - Sitemap + robots 対応
 - 設定駆動のカスタマイズ
@@ -312,7 +319,7 @@ MDX 内の Markdown 見出しに対応しますが、コンポーネントが生
 
 `src/site.config.ts` の `theme: { socialImage: { enabled: false } }` で自動生成を停止できます。手動画像は常に優先され、それ以外は既存のカバーまたは既定画像に戻ります。変更後は再ビルド・デプロイしてください。生成先は `dist/_social/`、正確な URL は記事 HTML の `og:image` にあります。共有先のキャッシュは即時更新されない場合があります。
 
-同梱フォントで標準の5言語に対応し、画像 API やブラウザー JS は不要です。長いタイトルは画像内のみ省略します。すべての絵文字や文字体系は保証しません。ビルド時間とインストール容量は増えますが、記事ページへのフォント追加配信はありません。
+同梱フォントで標準の9言語に対応し、画像 API やブラウザー JS は不要です。長いタイトルは画像内のみ省略します。すべての絵文字や文字体系は保証しません。ビルド時間とインストール容量は増えますが、記事ページへのフォント追加配信はありません。
 
 ## ライセンス
 

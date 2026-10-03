@@ -25,6 +25,10 @@ machine_summary: Use this index to find grouped historical release notes and the
 
 This directory is the structured release-notes ledger for `@anglefeint/astro-theme`.
 
+## Pending
+
+- [0.9.0 — Nine languages (unreleased; dependency audit blocked)](0.9.0.md)
+
 ## Contract
 
 Latest feature release: [0.8.0](./0.8.0.md), configurable footer credits and separate public-demo/starter identity. See its delivery and acceptance record.

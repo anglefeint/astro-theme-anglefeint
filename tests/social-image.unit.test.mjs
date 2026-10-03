@@ -58,6 +58,10 @@ test('offline rendering produces distinct 1200x630 PNGs for all starter language
     'Astroで自分のブログを作る',
     'Astro로 나만의 블로그 만들기',
     'Cómo crear tu blog: programación y diseño',
+    'Programação e publicação: ação, coração, São Paulo',
+    'Größe und Übersicht: zuverlässige Veröffentlichung',
+    'Русский блог: инженерия, ёж и щука',
+    '繁體中文：閱讀、搜尋與開發筆記',
     '非常长的文章标题'.repeat(40),
   ];
   const signatures = new Set();

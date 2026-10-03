@@ -4,13 +4,13 @@ title: '使用指南 1：搭建你的博客'
 subtitle: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 description: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-10-03'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
 ## 先做最少的配置
 
-这套教程面向配套的 0.8.0 starter。三篇分别讲建站、写作和可选功能。你不需要先读懂所有配置：先把站点身份和内容换成自己的，其他功能保留默认即可。教程本身就是普通博客文章，能直接体验目录、代码复制和搜索。
+这套教程面向配套的 0.9.0 starter。三篇分别讲建站、写作和可选功能。你不需要先读懂所有配置：先把站点身份和内容换成自己的，其他功能保留默认即可。教程本身就是普通博客文章，能直接体验目录、代码复制和搜索。
 
 ## 1. 安装并在本地打开
 
@@ -68,7 +68,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 ## 3. 只保留你会使用的语言
 
-默认启用 `en`、`ja`、`ko`、`es`、`zh`。第一份示例把默认语言设为 `zh`，但不会自动关闭其他语言。若只想使用简体中文，将以下内容合并到已有的 `i18n` 中，并保留上一步的首页文案：
+默认启用 `en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。第一份示例把默认语言设为 `zh`，但不会自动关闭其他语言。若只想使用简体中文，将以下内容合并到已有的 `i18n` 中，并保留上一步的首页文案：
 
 ```ts
 i18n: {
@@ -79,6 +79,10 @@ i18n: {
     ko: { meta: { enabled: false } },
     es: { meta: { enabled: false } },
     zh: { meta: { enabled: true } },
+    'pt-br': { meta: { enabled: false } },
+    de: { meta: { enabled: false } },
+    ru: { meta: { enabled: false } },
+    'zh-hant': { meta: { enabled: false } },
   },
 },
 ```

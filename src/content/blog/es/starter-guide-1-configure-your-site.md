@@ -4,13 +4,13 @@ title: 'Guía 1: Configura tu blog'
 subtitle: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 description: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-10-03'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
 ## Empieza por lo esencial
 
-Esta serie corresponde al starter 0.8.0 y explica la puesta en marcha, la escritura y las funciones opcionales. No necesitas conocer todos los ajustes para empezar. Sustituye la identidad del sitio y el contenido, y conserva los demás valores predeterminados. Estas guías son artículos normales: puedes probar su índice, la copia de código y la búsqueda.
+Esta serie corresponde al starter 0.9.0 y explica la puesta en marcha, la escritura y las funciones opcionales. No necesitas conocer todos los ajustes para empezar. Sustituye la identidad del sitio y el contenido, y conserva los demás valores predeterminados. Estas guías son artículos normales: puedes probar su índice, la copia de código y la búsqueda.
 
 ## 1. Instala y abre el sitio localmente
 
@@ -68,7 +68,7 @@ Define `PUBLIC_SITE_URL=https://your-domain.example` en el archivo `.env` de la 
 
 ## 3. Conserva los idiomas que necesites
 
-Por defecto están activos `en`, `ja`, `ko`, `es` y `zh`. El primer ejemplo establece `es` como idioma predeterminado, pero no desactiva los demás. Para usar solo español, integra lo siguiente en tu `i18n` existente y conserva los textos de inicio anteriores:
+Por defecto están activos `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru` y `zh-hant`. El primer ejemplo establece `es` como idioma predeterminado, pero no desactiva los demás. Para usar solo español, integra lo siguiente en tu `i18n` existente y conserva los textos de inicio anteriores:
 
 ```ts
 i18n: {
@@ -79,6 +79,10 @@ i18n: {
     ko: { meta: { enabled: false } },
     es: { meta: { enabled: true } },
     zh: { meta: { enabled: false } },
+    'pt-br': { meta: { enabled: false } },
+    de: { meta: { enabled: false } },
+    ru: { meta: { enabled: false } },
+    'zh-hant': { meta: { enabled: false } },
   },
 },
 ```

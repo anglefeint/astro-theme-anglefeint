@@ -4,13 +4,13 @@ title: 'User Guide 1: Set Up Your Blog'
 subtitle: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 description: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-10-03'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
 ## Start with the essentials
 
-This series covers the accompanying 0.8.0 starter: setup, writing, and optional features. You do not need to understand every setting first. Replace the site identity and content, and keep the other defaults. These tutorials are ordinary blog posts, so you can try their table of contents, code copying, and search.
+This series covers the accompanying 0.9.0 starter: setup, writing, and optional features. You do not need to understand every setting first. Replace the site identity and content, and keep the other defaults. These tutorials are ordinary blog posts, so you can try their table of contents, code copying, and search.
 
 ## 1. Install and open locally
 
@@ -68,7 +68,7 @@ Set `PUBLIC_SITE_URL=https://your-domain.example` in the project-root `.env` fil
 
 ## 3. Keep the languages you need
 
-The defaults enable `en`, `ja`, `ko`, `es`, and `zh`. The first example sets the default language to `en`, but does not disable the others. For English only, merge the following into your existing `i18n`, preserving the homepage text above:
+The defaults enable `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. The first example sets the default language to `en`, but does not disable the others. For English only, merge the following into your existing `i18n`, preserving the homepage text above:
 
 ```ts
 i18n: {
@@ -79,6 +79,10 @@ i18n: {
     ko: { meta: { enabled: false } },
     es: { meta: { enabled: false } },
     zh: { meta: { enabled: false } },
+    'pt-br': { meta: { enabled: false } },
+    de: { meta: { enabled: false } },
+    ru: { meta: { enabled: false } },
+    'zh-hant': { meta: { enabled: false } },
   },
 },
 ```

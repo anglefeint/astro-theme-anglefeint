@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { loadProjectModule } from '../packages/theme/src/scaffold/project-config.mjs';
 import { execFile } from 'node:child_process';
 import { cp, lstat, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -92,7 +93,7 @@ try {
   await npm(['run', 'new-post', '--', '--help']);
   await npm(['run', 'new-page', '--', '--help']);
   await npm(['run', 'new-post', '--', 'installed-default']);
-  for (const locale of ['en', 'es', 'ja', 'ko', 'zh']) {
+  for (const locale of ['en', 'es', 'ja', 'ko', 'zh', 'pt-br', 'de', 'ru', 'zh-hant']) {
     assert.match(await read(`src/content/blog/${locale}/installed-default.md`), /pubDate:/);
   }
   const before = await read('src/content/blog/en/installed-default.md');
@@ -110,6 +111,10 @@ try {
       locales: {
         en: { meta: { enabled: false } },
         es: { meta: { enabled: false } },
+        'pt-br': { meta: { enabled: false } },
+        de: { meta: { enabled: false } },
+        ru: { meta: { enabled: false } },
+        'zh-hant': { meta: { enabled: false } },
         ja: { meta: { enabled: false } },
         ko: { meta: { enabled: false } },
         zh: { meta: { enabled: false } },
@@ -167,7 +172,7 @@ try {
       path.join(project, 'src/content/blog/en/tag-special.md'),
       '---\ntitle: Special tag fixture\ndescription: Tag routing fixture\npubDate: 2026-01-01\ntags: ["C++", "C#", "中文", "Astro", "astro", "anglefeint"]\n---\nTag fixture.\n'
     );
-    for (const locale of ['en', 'zh']) {
+    for (const locale of ['en', 'zh', 'pt-br', 'de', 'ru', 'zh-hant']) {
       for (const mode of ['always', 'never']) {
         await setConfig({
           site: { description: 'SITE_DESCRIPTION_SENTINEL', tagline: 'CUSTOM_FOOTER_SENTINEL' },
@@ -188,7 +193,7 @@ try {
         console.log(`Building installed starter: default=${locale}, prefix=${mode}`);
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
         await npm(['run', 'build']);
-        for (const lang of ['en', 'zh', 'ja', 'ko', 'es']) {
+        for (const lang of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
           const html = await read(`dist/${lang}/blog/installed-default/index.html`);
           const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0];
           assert(footer?.includes('CUSTOM_FOOTER_SENTINEL'));
@@ -212,7 +217,15 @@ try {
           /property="og:image" content="[^"]+\/_astro\/share-test\./
         );
         const searchManifest = JSON.parse(await read('dist/pagefind/anglefeint.json'));
-        assert.ok(searchManifest.languages.includes(locale));
+        assert.ok(
+          searchManifest.languages.some(
+            (l) =>
+              l.toLowerCase() ===
+              (
+                { zh: 'zh-CN', 'pt-br': 'pt-BR', 'zh-hant': 'zh-Hant' }[locale] || locale
+              ).toLowerCase()
+          )
+        );
         assert.match(await read('dist/pagefind/pagefind.js'), /search/);
         assert.doesNotMatch(
           await read('dist/en/blog/search-excluded/index.html'),
@@ -229,7 +242,8 @@ try {
         }
         assert.ok(
           (await read('dist/fr/tags/index.html')).includes(
-            locale === 'zh' ? '暂无标签' : 'No tags yet'
+            (await loadProjectModule(path.join(root, 'packages/theme/src/i18n/messages.ts')))
+              .DEFAULT_MESSAGES[locale].blog.noTags
           )
         );
         assert.match(tagPage, /<option value="\/fr\/tags\/"/);

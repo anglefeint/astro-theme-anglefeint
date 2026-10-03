@@ -10,6 +10,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## Pending nine-language release
+
+The local 0.9.0 preparation adds four enabled languages in starter-owned defaults, alongside package UI and CLI translations. It is not yet published; see [release status](docs/releases/0.9.0.md). After delivery, use a fresh matching starter and migrate personal content/settings for the complete experience. An npm update alone does not add local locale defaults, translated guides or README files. Existing custom article files must not be overwritten. New projects create nine article skeletons by default; disable unwanted locales explicitly with `meta.enabled: false` or select files with `--locales`.
+
 This guide explains the recommended upgrade path for projects created from the starter branch.
 
 ## Choose an Upgrade Path First
