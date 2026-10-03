@@ -18,6 +18,10 @@ depends_on:
   - docs/ARCHITECTURE.md
   - docs/VISUAL_SYSTEMS.md
 sync_targets:
+  - README.pt-BR.md
+  - README.de.md
+  - README.ru.md
+  - README.zh-Hant.md
   - README.zh-CN.md
   - README.ja.md
   - README.es.md

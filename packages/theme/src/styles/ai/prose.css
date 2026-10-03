@@ -1,4 +1,15 @@
 /* AI prose layer: article typography and content presentation rules. */
+/* Localized words and paths must wrap without widening the reading panel. */
+.ai-prose-body {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  body.ai-page .ai-content .prose {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+}
 /* GPU 风格：散热鳍片 + PCB 底 + 金属边框 */
 body.ai-page .ai-content .prose {
   position: relative;

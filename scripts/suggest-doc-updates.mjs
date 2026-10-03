@@ -20,6 +20,10 @@ const SIDECAR_ELIGIBLE_DOCS = new Set([
   'README.ja.md',
   'README.es.md',
   'README.ko.md',
+  'README.pt-BR.md',
+  'README.de.md',
+  'README.ru.md',
+  'README.zh-Hant.md',
   'packages/theme/README.md',
 ]);
 

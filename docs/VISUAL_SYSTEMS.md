@@ -12,6 +12,10 @@ sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
 
 This theme uses four distinct atmospheres by route.
 
+## Nine-language layout validation
+
+The built-in locales use horizontal LTR. Narrow article panels include padding and borders in their width, long prose paths can wrap, and inactive link-preview pseudo-elements do not create horizontal overflow. These local layout fixes retain the scene effects. New-language browser coverage exercises Home, Blog, About and article pages at 1280, 390 and 320 pixels.
+
 ## Design Intent and Change Principles
 
 The product positioning is defined in [AGENTS.md](../AGENTS.md#product-identity-and-design-intent): lightweight, simple publishing with conspicuous cinematic character. The following describes creative intent; the route sections below describe implemented behavior.

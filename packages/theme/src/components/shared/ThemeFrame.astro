@@ -4,7 +4,12 @@ import { THEME } from '@anglefeint/site-config/theme';
 import BaseHead from '../BaseHead.astro';
 import CommonHeader from './CommonHeader.astro';
 import CommonFooter from './CommonFooter.astro';
-import { type Locale, DEFAULT_LOCALE, isLocale } from '@anglefeint/site-i18n/config';
+import {
+  type Locale,
+  DEFAULT_LOCALE,
+  isLocale,
+  getLocaleHreflang,
+} from '@anglefeint/site-i18n/config';
 import { getMessages } from '@anglefeint/site-i18n/messages';
 import type { ImageMetadata } from 'astro';
 
@@ -54,7 +59,7 @@ const messages = getMessages(locale);
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={getLocaleHreflang(locale)}>
   <head>
     <BaseHead
       title={title}

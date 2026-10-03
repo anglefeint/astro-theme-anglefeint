@@ -57,6 +57,10 @@ export function resolveLocales({ cliLocales, envLocales, defaultLocales }) {
 
 export function buildNewPostTemplate(locale, slug, pubDate, heroImage) {
   const titleByLocale = {
+    'pt-br': 'Título do novo artigo',
+    de: 'Titel des neuen Beitrags',
+    ru: 'Заголовок новой статьи',
+    'zh-hant': '新文章標題',
     en: toTitleFromSlug(slug),
     ja: '新しい記事タイトル',
     ko: '새 글 제목',
@@ -64,6 +68,10 @@ export function buildNewPostTemplate(locale, slug, pubDate, heroImage) {
     zh: '新文章标题',
   };
   const descriptionByLocale = {
+    'pt-br': 'Um modelo de artigo em português brasileiro.',
+    de: 'Eine Vorlage für einen deutschsprachigen Beitrag.',
+    ru: 'Шаблон статьи на русском языке.',
+    'zh-hant': '繁體中文文章範本。',
     en: `A short EN post scaffold for "${slug}".`,
     ja: `「${slug}」用の短い日本語記事テンプレートです。`,
     ko: `"${slug}"용 한국어 글 템플릿입니다.`,
@@ -71,6 +79,10 @@ export function buildNewPostTemplate(locale, slug, pubDate, heroImage) {
     zh: `“${slug}”的中文文章模板。`,
   };
   const bodyByLocale = {
+    'pt-br': 'Escreva aqui o conteúdo do seu artigo.',
+    de: 'Schreibe hier deinen Beitrag.',
+    ru: 'Напишите здесь текст своей статьи.',
+    'zh-hant': '請在這裡撰寫文章內容。',
     en: `Write your EN content for "${slug}" here.`,
     ja: `ここに「${slug}」の日本語本文を書いてください。`,
     ko: `여기에 "${slug}" 한국어 본문을 작성하세요.`,

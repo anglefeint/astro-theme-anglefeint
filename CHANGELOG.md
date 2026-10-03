@@ -15,6 +15,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+- Add Brazilian Portuguese, German, Russian and Traditional Chinese as enabled defaults, with UI, About, article skeletons, starter guides, demo content and README translations.
+- Validate nine-language metadata, search, share-image glyphs and narrow-screen article layout; preserve existing routes and real-translation-only article alternates.
+- Requires the matching starter; package updates do not overwrite user configuration or create translations. Planned 0.9.0 delivery is blocked by an upstream dependency audit; see [release preparation](docs/releases/0.9.0.md).
+
 ## [0.8.5] - 2026-10-01
 
 - Standard article routes now discover real translations inside the theme package. Existing 0.8.3/0.8.4 starters get the correction through npm update without editing routes or adding settings.

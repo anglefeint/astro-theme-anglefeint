@@ -262,7 +262,7 @@ try {
   await command(['audit', '--audit-level=low']);
   for (const name of ['new-post', 'new-page']) assert.match(await run(name, ['--help']), /Usage:/i);
   await run('new-post', ['default-locales']);
-  await locales('default-locales', ['en', 'zh', 'ja', 'ko', 'es']);
+  await locales('default-locales', ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']);
   for (const [slug, args, overrides, expected] of [
     ['explicit-locales', ['--locales', 'en,fr'], {}, ['en', 'fr']],
     ['environment-locales', [], { ANGLEFEINT_LOCALES: 'en,fr' }, ['en', 'fr']],
@@ -277,12 +277,14 @@ try {
   await writeFile(file(article), originalArticle);
   await run('new-post', ['default-locales']);
   assert.equal(await read(article), originalArticle);
-  const routes = ['/en/', '/zh/', '/en/blog/default-locales/'];
+  const routes = ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant'].flatMap(
+    (locale) => [`/${locale}/`, `/${locale}/blog/default-locales/`]
+  );
   for (const [slug, locales] of articleAlternateFixtures)
     await run('new-post', [slug, '--locales', locales.join(',')]);
   for (const theme of ['base', 'ai', 'cyber', 'hacker', 'matrix']) {
     await run('new-page', [`projects-${theme}`, '--theme', theme]);
-    for (const locale of ['en', 'zh', 'ja', 'ko', 'es'])
+    for (const locale of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant'])
       routes.push(`/${locale}/projects-${theme}/`);
   }
   await run('new-page', ['projects/labs']);
@@ -352,6 +354,10 @@ try {
           ja: { meta: { enabled: false } },
           ko: { meta: { enabled: false } },
           es: { meta: { enabled: false } },
+          'pt-br': { meta: { enabled: false } },
+          de: { meta: { enabled: false } },
+          ru: { meta: { enabled: false } },
+          'zh-hant': { meta: { enabled: false } },
         },
       },
       theme: {

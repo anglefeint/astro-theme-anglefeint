@@ -27,6 +27,8 @@ const normalizedCommentTerm = comments.TERM.trim();
 const normalizedCommentNumber = comments.NUMBER.trim();
 const GISCUS_LOCALE_MAP: Record<string, string> = {
   zh: 'zh-CN',
+  'zh-hant': 'zh-TW',
+  'pt-br': 'pt',
 };
 const giscusLocale = comments.LANG || GISCUS_LOCALE_MAP[resolvedLocale] || resolvedLocale;
 ---

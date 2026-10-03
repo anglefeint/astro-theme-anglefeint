@@ -29,7 +29,17 @@ test('real config merge and adapters retain locale, comments and metadata semant
       path.join(root, 'node_modules'),
       process.platform === 'win32' ? 'junction' : 'dir'
     );
-    assert.deepEqual((await loadProjectLocales(root)).sort(), ['en', 'es', 'ja', 'ko', 'zh']);
+    assert.deepEqual((await loadProjectLocales(root)).sort(), [
+      'de',
+      'en',
+      'es',
+      'ja',
+      'ko',
+      'pt-br',
+      'ru',
+      'zh',
+      'zh-hant',
+    ]);
     const entry = path.join(root, 'src/site.config.ts');
     const set = (value) =>
       writeFile(
@@ -50,7 +60,17 @@ export const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});`
       );
     }
     await set({ i18n: { defaultLocale: 'fr', locales: { en: { meta: { enabled: false } } } } });
-    assert.deepEqual((await loadProjectLocales(root)).sort(), ['es', 'fr', 'ja', 'ko', 'zh']);
+    assert.deepEqual((await loadProjectLocales(root)).sort(), [
+      'de',
+      'es',
+      'fr',
+      'ja',
+      'ko',
+      'pt-br',
+      'ru',
+      'zh',
+      'zh-hant',
+    ]);
     for (const comments of [
       { enabled: true, mapping: 'specific', term: '' },
       { enabled: true, mapping: 'number', number: '0' },
