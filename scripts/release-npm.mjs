@@ -6,6 +6,7 @@ import { rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { verifyPublishedPackage } from './verify-published-package.mjs';
+import { auditDependencies } from './audit-dependencies.mjs';
 
 const repoRoot = process.cwd();
 const packageName = '@anglefeint/astro-theme';
@@ -217,7 +218,7 @@ async function main() {
     }
 
     console.log('\n[release] Auditing dependencies (cannot be skipped)...');
-    run('npm', ['audit', '--audit-level=low', '--prefer-online'], { env: npmEnv });
+    auditDependencies(repoRoot, npmEnv);
 
     if (!opts.skipChecks) {
       console.log('\n[release] Running checks...');

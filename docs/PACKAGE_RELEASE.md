@@ -39,7 +39,7 @@ git push origin main
 
 ## 2) Pre-release checks
 
-Dependency audits are blocking: `release:npm` runs `npm audit --audit-level=low --prefer-online` for main and `check:installed -- --audit` for an isolated starter. Reported vulnerabilities or audit errors stop the run, even with `--skip-checks`. Starter synchronization also audits its installation before committing. Re-run an audit on the actual remote-template installation before GitHub closeout.
+Dependency audits are blocking: `release:npm` uses `scripts/audit-dependencies.mjs` for main and `check:installed -- --audit` for an isolated starter. Unreviewed vulnerabilities or audit errors stop the run, even with `--skip-checks`. Starter synchronization uses the same policy before committing. Before GitHub closeout, run `node scripts/audit-dependencies.mjs <temporary-project-path>` from main against the actual remote-template installation. Raw `npm audit` findings remain visible; the policy does not claim zero vulnerabilities when accepting the scoped exception below.
 
 `scripts/release-npm.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or completed CI. Those are maintainer workflow requirements: inspect them before running it. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
 
@@ -56,6 +56,14 @@ npm run release:npm -- --dry-run
 By default this runs main checks, dependency audits, the independent installed-starter build matrix, `theme:pack` and `npm publish --dry-run`. Dry-run skips `npm whoami` and post-publication verification. A real run adds those steps. `--skip-checks` skips main checks and the installed build matrix, but retains main audit and isolated-starter installation/CLI checks/audit. `--skip-pack` skips the separate `theme:pack` step (npm publish still packs the package), and `--skip-registry-check` bypasses the initial newer-than-latest check. Skips must be justified in the release record.
 
 ## 3) Publish alpha/beta
+
+### Temporary static-cache advisory review (2026-10-03)
+
+The maintainer authorized impact-based release after reviewing [GHSA-ch52-4w7c-c8xp](https://github.com/advisories/GHSA-ch52-4w7c-c8xp). `http-cache-semantics@4.2.0` remains affected upstream; no patched release was available during this review. This is risk acceptance for the current static template, not a vulnerability fix or a blanket exemption for Astro consumers.
+
+Astro 7.3.5 is the only installed consumer. Its `dist/assets/build/remote.js` constructs requests for build-time remote images and calls `storable()` / `timeToLive()`. It does not call the vulnerable `satisfiesWithoutRevalidation()` method or forward visitor `max-stale` headers. The reviewed Astro config generates static output without a server adapter; the Cloudflare config serves `dist` assets. We found no shared personalized-response cache path in this template.
+
+The maintainer-only audit helper accepts this exact advisory and its reported dependency ancestors, verifies Astro 7.3.5 / cache library 4.2.0, and checks normalized SHA-256 fingerprints of the reviewed Astro config and remote-image caller. It fails on new advisories, unexpected dependencies, changed reviewed files/versions, invalid registry responses, or on/after **2026-11-03 UTC**. Main, packed-starter and delivered-starter checks use the same helper. It is not shipped as a user command and does not modify npm audit output. Reassess if deployment, dependencies or cache usage changes; remove the exception when an upstream fix is available. Do not apply `npm audit fix --force` to downgrade Astro merely to silence this finding.
 
 ```bash
 npm run release:npm -- --tag alpha

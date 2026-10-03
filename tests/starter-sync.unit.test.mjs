@@ -49,11 +49,14 @@ function fixture({ failPush = false, failAudit = false, committed = false } = {}
   return {
     calls,
     operations: {
+      auditDependencies: async () => {
+        calls.push('dependency audit');
+        if (failAudit) throw new Error('audit failed');
+      },
       run: async (cmd, args) => {
         calls.push([cmd, ...args].join(' '));
         if (cmd === 'git' && args[0] === 'checkout') branch = args[1];
         if (failPush && cmd === 'git' && args[0] === 'push') throw new Error('push failed');
-        if (failAudit && cmd === 'npm' && args[0] === 'audit') throw new Error('audit failed');
       },
       currentBranch: async () => branch,
       expectedStarterThemeRange: async () => '^0.2.12',

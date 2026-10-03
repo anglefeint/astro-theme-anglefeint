@@ -15,6 +15,7 @@ import {
 } from '../../scripts/starter-manifest.mjs';
 
 import { buildStarterPackage, starterPackageDrift } from '../../scripts/starter-package.mjs';
+import { auditDependencies } from '../../scripts/audit-dependencies.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -420,6 +421,7 @@ async function commitStarterIfNeeded(sourceRef, changedFiles) {
 export async function syncStarter(
   { sourceRef, targetBranch, originalBranch, allowAnyBranch, push },
   operations = {
+    auditDependencies,
     run,
     currentBranch,
     expectedStarterThemeRange,
@@ -436,6 +438,7 @@ export async function syncStarter(
   validateSyncBranches(sourceRef, targetBranch);
   // Keep external effects injectable so failure/retry paths can be tested without publishing.
   const {
+    auditDependencies,
     run,
     currentBranch,
     expectedStarterThemeRange,
@@ -472,7 +475,7 @@ export async function syncStarter(
 
     // Refresh compatible transitive versions instead of retaining a vulnerable old lockfile.
     await run('npm', ['update', '--prefer-online']);
-    await run('npm', ['audit', '--audit-level=low', '--prefer-online']);
+    await auditDependencies(repoRoot);
     await run('npm', ['run', 'check']);
     await run('npm', ['run', 'build']);
 

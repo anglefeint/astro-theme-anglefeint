@@ -13,11 +13,13 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
-## [Unreleased]
+## [0.9.0] - 2026-10-03
 
 - Add Brazilian Portuguese, German, Russian and Traditional Chinese as enabled defaults, with UI, About, article skeletons, starter guides, demo content and README translations.
 - Validate nine-language metadata, search, share-image glyphs and narrow-screen article layout; preserve existing routes and real-translation-only article alternates.
-- Requires the matching starter; package updates do not overwrite user configuration or create translations. Planned 0.9.0 delivery is blocked by an upstream dependency audit; see [release preparation](docs/releases/0.9.0.md).
+- Requires the matching starter; package updates do not overwrite user configuration or create translations. See [release notes](docs/releases/0.9.0.md) for migration and delivery status.
+
+- Refresh compatible dependencies, including Astro 7.3.5, MDX 8.0.2, Sharp 0.35.5 and Vite 8.3.2; resolve fixable dependency advisories. One upstream cache advisory remains under a scoped, expiring static-usage review.
 
 ## [0.8.5] - 2026-10-01
 
