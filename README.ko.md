@@ -1,4 +1,7 @@
 <h1 align="center">Anglefeint</h1>
+
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+
 <p align="center">개인 퍼블리싱을 위한 시네마틱 멀티 무드 Astro 테마입니다.</p>
 
 <p align="center">
@@ -10,12 +13,16 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.2-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
-  <img alt="Locales" src="https://img.shields.io/badge/i18n-en%20%7C%20ja%20%7C%20ko%20%7C%20es%20%7C%20zh-0A7EA4" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+## 사용할 언어 선택
+
+기본으로 9개 언어가 활성화됩니다: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. 기본 언어는 영어입니다. `src/site.config.ts`에서 불필요한 언어의 `i18n.locales.<code>.meta.enabled: false`를 설정하세요. 생략만으로는 비활성화되지 않으며 기본 언어는 항상 활성화됩니다. `new-post`는 처음에 파일 9개를 만들지만 자동 번역하지 않습니다. 한국어만 만들려면: `npm run new-post -- my-post --locales ko`.
 
 ## 템플릿 설치
 
@@ -204,7 +211,7 @@ npm run new-page -- projects --theme matrix
 - 코드 복사와 본문 이미지 미리보기
 - Astro 7 정적 출력
 - Markdown + MDX 콘텐츠 컬렉션
-- 스타터에 포함된 예시 로케일: `en`, `ja`, `ko`, `es`, `zh`
+- 스타터에 포함된 예시 로케일: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`
 - 로케일별 RSS 피드
 - sitemap + robots 지원
 - 설정 중심의 커스터마이징
@@ -312,7 +319,7 @@ MDX의 Markdown 제목은 지원하지만 컴포넌트에서 생성하거나 HTM
 
 `src/site.config.ts`에서 `theme: { socialImage: { enabled: false } }`로 자동 생성을 끌 수 있습니다. 직접 지정한 이미지는 항상 우선하며, 나머지는 기존 표지 또는 기본 이미지로 돌아갑니다. 변경 후 다시 빌드하고 배포하세요. 생성 파일은 `dist/_social/`에 있으며 글 HTML의 `og:image`에서 정확한 URL을 확인할 수 있습니다. 외부 플랫폼의 링크 캐시는 바로 갱신되지 않을 수 있습니다.
 
-내장 폰트로 기본 5개 언어를 지원하며 이미지 API나 브라우저 JS는 필요 없습니다. 긴 제목은 이미지에서만 줄입니다. 모든 이모지와 문자 체계를 보장하지는 않습니다. 빌드 시간과 설치 용량은 늘지만 글 페이지에서 이 폰트를 추가로 다운로드하지 않습니다.
+내장 폰트로 기본 9개 언어를 지원하며 이미지 API나 브라우저 JS는 필요 없습니다. 긴 제목은 이미지에서만 줄입니다. 모든 이모지와 문자 체계를 보장하지는 않습니다. 빌드 시간과 설치 용량은 늘지만 글 페이지에서 이 폰트를 추가로 다운로드하지 않습니다.
 
 ## 라이선스
 
