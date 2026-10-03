@@ -2,7 +2,7 @@
 
 Core package for the Anglefeint Astro theme.
 
-Version 0.4.0 requires Astro `^7.3.2`. Its matching starter uses Sharp `^0.35.4` and updated official integrations for the AVIF image-processing security fix. Astro 5/6 are no longer supported; migrate the site dependencies together with the theme.
+Version 0.9.0 requires Astro `^7.3.5`. Its matching starter uses Sharp `^0.35.5` and refreshed official integrations. Astro 5/6 are no longer supported; migrate the site dependencies together with the theme.
 
 ## Install
 

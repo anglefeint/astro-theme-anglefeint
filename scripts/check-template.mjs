@@ -16,6 +16,7 @@ import { promisify } from 'node:util';
 import { chromium, expect } from '@playwright/test';
 import { checkReadmeLinks } from './check-readme-links.mjs';
 import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
+import { auditDependencies } from './audit-dependencies.mjs';
 
 const exec = promisify(execFile);
 const root = process.cwd();
@@ -258,8 +259,16 @@ try {
     'README.ja.md',
     'README.ko.md',
     'README.es.md',
+    'README.pt-BR.md',
+    'README.de.md',
+    'README.ru.md',
+    'README.zh-Hant.md',
   ]);
-  await command(['audit', '--audit-level=low']);
+  const audit = auditDependencies(project, env);
+  results.push({
+    audit: 'policy passed',
+    reportedVulnerabilities: audit.metadata.vulnerabilities.total,
+  });
   for (const name of ['new-post', 'new-page']) assert.match(await run(name, ['--help']), /Usage:/i);
   await run('new-post', ['default-locales']);
   await locales('default-locales', ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']);

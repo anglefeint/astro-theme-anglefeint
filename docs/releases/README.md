@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Pending
 
-- [0.9.0 — Nine languages (unreleased; dependency audit blocked)](0.9.0.md)
+- [0.9.0 — Nine languages (release preparation)](0.9.0.md)
 
 ## Contract
 

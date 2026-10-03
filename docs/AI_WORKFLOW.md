@@ -191,7 +191,7 @@ Do not maintain separate, conflicting workflow copies in those adapter files.
 
 ## End-to-End Release Sequence
 
-A package release is complete only after npm download verification, starter delivery and remote-template acceptance, and creation/read-back of the GitHub Release. Do not stop at npm publish or a pushed tag. Dependency audits must pass for main, the isolated installed starter and the delivered starter; audit failure or registry errors block publication/delivery rather than becoming a known limitation. `release:npm` always audits main and the isolated starter, including with `--skip-checks`; starter sync audits after installation before committing.
+A package release is complete only after npm download verification, starter delivery and remote-template acceptance, and creation/read-back of the GitHub Release. Do not stop at npm publish or a pushed tag. Dependency audit policy must pass for main, the isolated installed starter and the delivered starter. Unreviewed findings and registry errors block delivery. The only temporary, maintainer-approved exception is the verified static Astro usage documented in `docs/PACKAGE_RELEASE.md`; it remains visible and is not a clean raw npm audit. `release:npm` always audits main and the isolated starter, including with `--skip-checks`; starter sync audits after installation before committing.
 
 For package-affecting changes:
 

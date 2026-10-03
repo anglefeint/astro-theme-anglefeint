@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.8.5",
+  "version": "0.9.0",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -67,12 +67,12 @@
     }
   },
   "peerDependencies": {
-    "astro": "^7.3.2"
+    "astro": "^7.3.5"
   },
   "dependencies": {
     "jiti": "^2.7.0",
     "pagefind": "^1.5.2",
     "satori": "0.32.0",
-    "sharp": "^0.35.4"
+    "sharp": "^0.35.5"
   }
 }
