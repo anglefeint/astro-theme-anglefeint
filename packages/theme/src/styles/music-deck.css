@@ -1,12 +1,18 @@
+/* Resolve the shell palette locally so derived colors follow page and mood overrides. */
 .music-deck {
-  --music-border: rgba(96, 255, 214, 0.36);
-  --music-border-strong: rgba(135, 255, 224, 0.72);
-  --music-panel: linear-gradient(180deg, rgba(8, 17, 19, 0.94), rgba(4, 9, 11, 0.94));
-  --music-glow: rgba(88, 255, 210, 0.26);
-  --music-text: rgba(218, 255, 244, 0.94);
-  --music-muted: rgba(155, 220, 203, 0.72);
-  --music-accent: #74ffd7;
-  --music-accent-alt: #7ba6ff;
+  --music-accent: var(--chrome-active, #74ffd7);
+  --music-accent-alt: var(--chrome-link-hover, #7ba6ff);
+  --music-surface: color-mix(in srgb, var(--chrome-bg, #081113) 10%, #030607);
+  --music-border: color-mix(in srgb, var(--music-accent) 36%, transparent);
+  --music-border-strong: color-mix(in srgb, var(--music-accent) 72%, transparent);
+  --music-panel: linear-gradient(
+    180deg,
+    var(--music-surface),
+    color-mix(in srgb, var(--music-surface) 85%, black)
+  );
+  --music-glow: color-mix(in srgb, var(--music-accent) 26%, transparent);
+  --music-text: var(--chrome-link, rgba(218, 255, 244, 0.94));
+  --music-muted: var(--chrome-text-muted, rgba(155, 220, 203, 0.72));
   --music-progress: 0%;
   position: fixed;
   left: max(1rem, env(safe-area-inset-left));
@@ -16,8 +22,17 @@
   border: 1px solid var(--music-border);
   border-radius: 1rem;
   background:
-    linear-gradient(180deg, rgba(116, 255, 215, 0.08), transparent 28%),
-    linear-gradient(135deg, rgba(123, 166, 255, 0.08), transparent 42%), var(--music-panel);
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--music-accent) 8%, transparent),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--music-accent-alt) 8%, transparent),
+      transparent 42%
+    ),
+    var(--music-panel);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.04) inset,
     0 0 26px var(--music-glow),
@@ -25,6 +40,32 @@
   color: var(--music-text);
   backdrop-filter: blur(20px);
   overflow: hidden;
+}
+
+/* Hacker chrome uses a neutral active link; keep its terminal-green highlight. */
+:where(body.hacker-page) .music-deck {
+  --music-accent: var(--chrome-link-hover, #00ff64);
+  --music-accent-alt: var(--chrome-link, #e6e6e6);
+  --music-border: var(--chrome-border, rgba(255, 255, 255, 0.2));
+  --music-glow: color-mix(in srgb, var(--music-text) 6%, transparent);
+  --music-surface: rgba(0, 0, 0, 0.94);
+  background: var(--music-panel);
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+:where(body.hacker-page) .music-deck :is(.music-deck__btn, .music-deck__collapse) {
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+:where(body.hacker-page) .music-deck :is(.music-deck__playlist-toggle, .music-deck__track-chip) {
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+:where(body.cyber-page) .music-deck {
+  --music-accent-alt: var(--chrome-link, #c4e2ff);
 }
 
 .music-deck::before {
@@ -146,12 +187,16 @@
 .music-deck__btn:hover {
   transform: translateY(-1px);
   border-color: var(--music-border-strong);
-  box-shadow: 0 0 16px rgba(116, 255, 215, 0.18);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--music-accent) 18%, transparent);
 }
 
 .music-deck__btn--primary {
-  background: linear-gradient(180deg, rgba(116, 255, 215, 0.2), rgba(116, 255, 215, 0.08));
-  border-color: rgba(116, 255, 215, 0.42);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--music-accent) 20%, transparent),
+    color-mix(in srgb, var(--music-accent) 8%, transparent)
+  );
+  border-color: color-mix(in srgb, var(--music-accent) 42%, transparent);
 }
 
 .music-deck__btn--ghost {
@@ -199,6 +244,16 @@
   font-size: 0.83rem;
 }
 
+/* Home has broad paragraph colors; keep the deck's text hierarchy local. */
+.music-deck .music-deck__title {
+  color: var(--music-text);
+}
+
+.music-deck .music-deck__artist,
+.music-deck .music-deck__timer {
+  color: var(--music-muted);
+}
+
 .music-deck__progress {
   position: relative;
   height: 0.58rem;
@@ -208,7 +263,7 @@
     rgba(255, 255, 255, 0.06);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-    0 0 0 1px rgba(116, 255, 215, 0.08);
+    0 0 0 1px color-mix(in srgb, var(--music-accent) 8%, transparent);
   overflow: hidden;
   cursor: pointer;
 }
@@ -219,7 +274,7 @@
   inset: 0;
   width: var(--music-progress);
   background: linear-gradient(90deg, var(--music-accent), rgba(255, 255, 255, 0.92));
-  box-shadow: 0 0 18px rgba(116, 255, 215, 0.36);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--music-accent) 36%, transparent);
 }
 
 .music-deck__progress::after {
@@ -234,11 +289,11 @@
     circle,
     rgba(255, 255, 255, 0.96) 0 28%,
     var(--music-accent) 36%,
-    rgba(116, 255, 215, 0.2) 100%
+    color-mix(in srgb, var(--music-accent) 20%, transparent) 100%
   );
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.16),
-    0 0 18px rgba(116, 255, 215, 0.42);
+    0 0 18px color-mix(in srgb, var(--music-accent) 42%, transparent);
   transform: translate(-50%, -50%);
 }
 
@@ -246,7 +301,7 @@
 .music-deck__progress:focus-visible::after {
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.2),
-    0 0 22px rgba(116, 255, 215, 0.56);
+    0 0 22px color-mix(in srgb, var(--music-accent) 56%, transparent);
 }
 
 .music-deck__progress:focus-visible {
@@ -276,7 +331,7 @@
   border-radius: 0.82rem;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
-    rgba(9, 16, 18, 0.72);
+    var(--music-surface);
   padding: 0.46rem 0.65rem;
   color: inherit;
   font: inherit;
@@ -290,8 +345,8 @@
 
 .music-deck__playlist-toggle:hover {
   transform: translateY(-1px);
-  border-color: rgba(116, 255, 215, 0.24);
-  box-shadow: 0 0 14px rgba(116, 255, 215, 0.1);
+  border-color: color-mix(in srgb, var(--music-accent) 24%, transparent);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--music-accent) 10%, transparent);
 }
 
 .music-deck__playlist-toggle:focus-visible {
@@ -307,10 +362,14 @@
 }
 
 .music-deck__playlist[data-expanded='true'] .music-deck__playlist-toggle {
-  border-color: rgba(116, 255, 215, 0.26);
+  border-color: color-mix(in srgb, var(--music-accent) 26%, transparent);
   background:
-    linear-gradient(180deg, rgba(116, 255, 215, 0.08), rgba(116, 255, 215, 0.02)),
-    rgba(9, 16, 18, 0.8);
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--music-accent) 8%, transparent),
+      color-mix(in srgb, var(--music-accent) 2%, transparent)
+    ),
+    var(--music-surface);
 }
 
 .music-deck__playlist-list {
@@ -332,7 +391,7 @@
   border-radius: 0.82rem;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
-    rgba(9, 16, 18, 0.78);
+    var(--music-surface);
   padding: 0.5rem 0.65rem;
   color: var(--music-text);
   text-align: left;
@@ -346,18 +405,22 @@
 
 .music-deck__track-chip:hover {
   transform: translateY(-1px);
-  border-color: rgba(116, 255, 215, 0.32);
-  box-shadow: 0 0 18px rgba(116, 255, 215, 0.12);
+  border-color: color-mix(in srgb, var(--music-accent) 32%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--music-accent) 12%, transparent);
 }
 
 .music-deck__track-chip[data-active='true'] {
-  border-color: rgba(116, 255, 215, 0.42);
+  border-color: color-mix(in srgb, var(--music-accent) 42%, transparent);
   background:
-    linear-gradient(180deg, rgba(116, 255, 215, 0.12), rgba(116, 255, 215, 0.03)),
-    rgba(10, 19, 21, 0.88);
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--music-accent) 12%, transparent),
+      color-mix(in srgb, var(--music-accent) 3%, transparent)
+    ),
+    var(--music-surface);
   box-shadow:
-    0 0 0 1px rgba(116, 255, 215, 0.08) inset,
-    0 0 18px rgba(116, 255, 215, 0.14);
+    0 0 0 1px color-mix(in srgb, var(--music-accent) 8%, transparent) inset,
+    0 0 18px color-mix(in srgb, var(--music-accent) 14%, transparent);
 }
 
 .music-deck__track-chip:focus-visible {
@@ -380,7 +443,7 @@
 }
 
 .music-deck__track-chip[data-active='true'] .music-deck__track-index {
-  border-color: rgba(116, 255, 215, 0.3);
+  border-color: color-mix(in srgb, var(--music-accent) 30%, transparent);
   color: var(--music-accent);
 }
 
@@ -541,7 +604,7 @@
 .music-deck,
 .music-deck__playlist-list {
   scrollbar-width: thin;
-  scrollbar-color: rgba(116, 255, 215, 0.5) transparent;
+  scrollbar-color: color-mix(in srgb, var(--music-accent) 50%, transparent) transparent;
 }
 .music-deck::-webkit-scrollbar,
 .music-deck__playlist-list::-webkit-scrollbar {
@@ -553,12 +616,12 @@
 }
 .music-deck::-webkit-scrollbar-thumb,
 .music-deck__playlist-list::-webkit-scrollbar-thumb {
-  background: rgba(116, 255, 215, 0.5);
+  background: color-mix(in srgb, var(--music-accent) 50%, transparent);
   border-radius: 3px;
 }
 .music-deck::-webkit-scrollbar-thumb:hover,
 .music-deck__playlist-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(116, 255, 215, 0.8);
+  background: color-mix(in srgb, var(--music-accent) 80%, transparent);
 }
 .music-deck {
   isolation: isolate;
@@ -586,7 +649,7 @@
 .music-deck__progress:focus-within::after {
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.2),
-    0 0 22px rgba(116, 255, 215, 0.56);
+    0 0 22px color-mix(in srgb, var(--music-accent) 56%, transparent);
 }
 .music-deck__progress:has(input:disabled) input {
   cursor: default;

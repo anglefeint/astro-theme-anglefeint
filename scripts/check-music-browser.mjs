@@ -19,12 +19,17 @@ await writeFile(
   `---
 import MusicDeck from '${source('packages/theme/src/components/shared/MusicDeck.astro')}';
 import { getMessages } from '${source('packages/theme/src/i18n/messages.ts')}';
-export function getStaticPaths() { return ['en','zh','ja','ko','es','off','empty','removed'].map(slug => ({params:{slug}})); }
+import homeCss from '${source('packages/theme/src/styles/home-page.css')}?url';
+import cyberCss from '${source('packages/theme/src/styles/theme-cyber.css')}?url';
+import aiCss from '${source('packages/theme/src/styles/theme-ai.css')}?url';
+import hackerCss from '${source('packages/theme/src/styles/about-page.css')}?url';
+const palettes: Record<string, [string, string]> = {home:['page-home',homeCss],list:['cyber-page',cyberCss],detail:['ai-page',aiCss],about:['hacker-page',hackerCss]};
+export function getStaticPaths() { return ['en','zh','ja','ko','es','off','empty','removed','home','list','detail','about'].map(slug => ({params:{slug}})); }
 const slug = Astro.params.slug;
 const labels = getMessages(['en','zh','ja','ko','es'].includes(slug) ? slug : 'en').music;
 const tracks = [{title:'Test tone',src: slug === 'removed' ? '/music/other.wav' : '/music/tone.wav'}];
 ---
-<!doctype html><html lang={slug}><head><meta charset="utf-8"/><title>Music fixture</title></head><body>
+<!doctype html><html lang={slug}><head><meta charset="utf-8"/><title>Music fixture</title>{palettes[slug] && <link rel="stylesheet" href={palettes[slug][1]} />}</head><body class={palettes[slug]?.[0]}>
 <a href="/en/">English</a><a href="/zh/">中文</a><a href="/ja/">日本語</a>
 {!['off','empty'].includes(slug) && <MusicDeck tracks={tracks} labels={labels}/>}
 </body></html>`
@@ -248,6 +253,54 @@ try {
   );
   await denied.close();
   checks.push('mobile compact controls work without storage; missing source reports media error');
+  const colors = [];
+  for (const route of ['home', 'list', 'detail', 'about']) {
+    const themeContext = await browser.newContext();
+    const themed = await themeContext.newPage();
+    await themed.goto('http://127.0.0.1:4397/' + route + '/');
+    await themed.waitForFunction(
+      () => document.querySelector('[data-music-deck]')?.dataset.ready === 'true'
+    );
+    const color = await themed
+      .locator('.music-deck__led')
+      .first()
+      .evaluate((el) => getComputedStyle(el).backgroundColor);
+    colors.push(color);
+    const frame = await themed.locator('[data-music-deck]').evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { radius: style.borderRadius, border: style.borderColor, font: style.fontFamily };
+    });
+    assert.equal(frame.radius, route === 'about' ? '8px' : '16px');
+    if (route === 'about') {
+      assert.equal(frame.border, 'rgba(255, 255, 255, 0.2)');
+      assert.match(frame.font, /monospace/);
+    }
+    // Changing the inherited shell token must propagate to the LED, including Hacker's override.
+    await themed.evaluate(() => {
+      document.body.style.setProperty('--chrome-active', 'rgb(230, 100, 40)');
+      document.body.style.setProperty('--chrome-link-hover', 'rgb(230, 100, 40)');
+    });
+    assert.equal(
+      await themed
+        .locator('.music-deck__led')
+        .first()
+        .evaluate((el) => getComputedStyle(el).backgroundColor),
+      'rgb(230, 100, 40)'
+    );
+    await themed.setViewportSize({ width: 390, height: 844 });
+    await themed.waitForFunction(
+      () => document.querySelector('[data-music-deck]')?.dataset.collapsed === 'true'
+    );
+    assert.equal(await themed.locator('[data-music-deck]').getAttribute('data-collapsed'), 'true');
+    await themed.locator('[data-action="expand"]').click();
+    const bounds = await themed.locator('[data-music-deck]').boundingBox();
+    assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= 391);
+    await themeContext.close();
+  }
+  assert.equal(new Set(colors).size, 4);
+  checks.push(
+    'four real shell styles: distinct palettes, live CSS inheritance and mobile expansion'
+  );
   assert.deepEqual(errors, []);
   success = true;
   console.log(

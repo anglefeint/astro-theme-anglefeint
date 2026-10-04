@@ -12,6 +12,17 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-04 最近改动与播放器配色复核
+
+核对已提交范围 `9ab1554..71e4aac`（九语言和 0.9.0 依赖/审计发布），以及随后本地 music-deck.css、check-music-browser.mjs 和视觉文档改动。显式提交路径和工作区分别交给 suggest:docs；以实际 locale registry、scaffold、组件样式、installed/template 检查代码为准。
+
+- 九语言配置、README、包说明和 0.9.0 发布事实已有记录；历史验收证据保留，不改写为本轮结果。
+- VISUAL_SYSTEMS 补全四种 shell 配色继承与 About 中性边框、等宽字体和圆角；ARCHITECTURE 补上 body token 来源及浏览器验证入口。
+- TEMPLATE_ACCEPTANCE 补上播放器配色回归，修正遗漏的 34 项浏览器测试、九语 README、六种默认语言构建矩阵和已存在的审计例外规则。
+- 直接候选中的入口/工作流/元数据/贡献/打包文档无需修改：命令、配置 API、路由和同步规则未改变。传播候选 README 和现有升级指南的使用方式仍成立；不向九语用户指南加入维护者 CSS 细节。历史发布记录保持原样。CHANGELOG 和发布索引新增 0.9.1，交付结果统一记录在对应版本说明。
+
+本次为包内视觉修改，0.9.0 用户更新包即可获得，不需要 starter 迁移。发布时仍同步 starter 的依赖范围和锁文件。验证结果与已知平台局限见 [0.9.1](releases/0.9.1.md)。
+
 ## 2026-10-01 文档工作流与当前实现复核
 
 核对基线为 main `8cf8fbc`，另含本地两个文档工具新增的 `acceptance-results/` 排除规则。按代码 → 文档方向检查配置默认、首页路由、文章功能、音乐播放、检查命令和发布脚本；没有按旧描述修改运行逻辑。
@@ -183,18 +194,18 @@ AGENTS、工具入口、通用发布/元数据规则没有因本功能改变，�
 
 ## 发现与修正
 
-| 文档偏移或遗漏                                              | 代码/证据                                                                                                                                                 | 本次处理                                                               |
+| 文档偏移或遗漏 | 代码/证据 | 本次处理 |
 | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | --- | --------------------------------------------------------------- |
-| 项目地图仍称版本为 0.2.11，并把 TOC、copy 当作未来建议      | [包版本与导出](../packages/theme/package.json)、[文章初始化](../packages/theme/src/scripts/blogpost-effects.js)、[0.3.0 交付记录](releases/0.3.0.md)      | 重写当前功能地图，用链接承载发布快照，不把历史建议写成当前状态         |
-| 文档 helper 被容易误解为内容同步或正确性验证                | [建议脚本](../scripts/suggest-doc-updates.mjs)、[元数据校验器](../scripts/validate-doc-metadata.mjs)                                                      | 明确仅推荐候选/校验元数据，增加已提交代码的显式输入与人工语义核对步骤  |
-| 搜索只写成文章页说明，复制/图片说明混在标签末尾             | [共享 Header](../packages/theme/src/components/shared/CommonHeader.astro)、[BlogPost](../packages/theme/src/layouts/BlogPost.astro)                       | 按全站搜索、文章目录、标签、复制、图片、阅读反馈整理章节               |
-| 配置/路由/包边界缺乏可追踪入口                              | [默认值](../src/site.config.defaults.ts)、[adapter 模板](../scripts/adapter-templates/src/config/theme.ts)、[manifest](../scripts/starter-manifest.mjs)   | 新增代码→文档→既有测试表；说明 npm 更新不会创建 starter 路由和搜索注册 |
-| 标签目录访问、排序/编码、空状态和语言切换边界不完整         | [标签工具](../packages/theme/src/utils/tags.ts)、[目录](../src/pages/[lang]/tags/index.astro)、[分页路由](../src/pages/[lang]/tags/[tag]/[...page].astro) | 记录直接访问 URL、大小写、编码、排序、空语言、禁用路由及跳转第一页规则 |
-| 总览把所有页面的语言导航与 hreflang 视为相同                | 标签路由传递 `includeAlternateLinks=false`；[BaseHead](../packages/theme/src/components/BaseHead.astro)                                                   | 明确标签页保留 canonical/语言导航但不输出 hreflang                     |
-| “点击放大”可能被理解为自动获取高清原图或完整图库            | [图片预览脚本](../packages/theme/src/scripts/blogpost/image-preview.js)                                                                                   | 记录 `currentSrc                                                       |     | src`、排除 hero/链接/按钮图片、初始化范围、无图库/手势/独立开关 |
-| 滚动提示容易被当作内容加载状态                              | [阅读进度脚本](../packages/theme/src/scripts/blogpost/read-progress.js)、[样式](../packages/theme/src/styles/blog-post.css)                               | 说明依据文档滚动距离和阶段阈值计算，与加载无关；位置不依赖 TOC 开关    |
-| README 暗示本次 pnpm 验收已执行                             | [0.3.0 验证记录](releases/0.3.0.md#known-limitations)                                                                                                     | 五种语言一致注明本次仅验收 npm，未复验 pnpm/yarn/bun                   |
-| 升级说明中的“正常 starter 发布流程”可能误导用户运行维护工具 | [同步工具](../tools/maintainer/sync-starter.mjs)操作上游 main/starter 分支                                                                                | 用户迁移与维护者分发流程明确分开                                       |
+| 项目地图仍称版本为 0.2.11，并把 TOC、copy 当作未来建议 | [包版本与导出](../packages/theme/package.json)、[文章初始化](../packages/theme/src/scripts/blogpost-effects.js)、[0.3.0 交付记录](releases/0.3.0.md) | 重写当前功能地图，用链接承载发布快照，不把历史建议写成当前状态 |
+| 文档 helper 被容易误解为内容同步或正确性验证 | [建议脚本](../scripts/suggest-doc-updates.mjs)、[元数据校验器](../scripts/validate-doc-metadata.mjs) | 明确仅推荐候选/校验元数据，增加已提交代码的显式输入与人工语义核对步骤 |
+| 搜索只写成文章页说明，复制/图片说明混在标签末尾 | [共享 Header](../packages/theme/src/components/shared/CommonHeader.astro)、[BlogPost](../packages/theme/src/layouts/BlogPost.astro) | 按全站搜索、文章目录、标签、复制、图片、阅读反馈整理章节 |
+| 配置/路由/包边界缺乏可追踪入口 | [默认值](../src/site.config.defaults.ts)、[adapter 模板](../scripts/adapter-templates/src/config/theme.ts)、[manifest](../scripts/starter-manifest.mjs) | 新增代码→文档→既有测试表；说明 npm 更新不会创建 starter 路由和搜索注册 |
+| 标签目录访问、排序/编码、空状态和语言切换边界不完整 | [标签工具](../packages/theme/src/utils/tags.ts)、[目录](../src/pages/[lang]/tags/index.astro)、[分页路由](../src/pages/[lang]/tags/[tag]/[...page].astro) | 记录直接访问 URL、大小写、编码、排序、空语言、禁用路由及跳转第一页规则 |
+| 总览把所有页面的语言导航与 hreflang 视为相同 | 标签路由传递 `includeAlternateLinks=false`；[BaseHead](../packages/theme/src/components/BaseHead.astro) | 明确标签页保留 canonical/语言导航但不输出 hreflang |
+| “点击放大”可能被理解为自动获取高清原图或完整图库 | [图片预览脚本](../packages/theme/src/scripts/blogpost/image-preview.js) | 记录 `currentSrc` 或 `src`、排除 hero/链接/按钮图片、初始化范围、无图库/手势/独立开关 |
+| 滚动提示容易被当作内容加载状态 | [阅读进度脚本](../packages/theme/src/scripts/blogpost/read-progress.js)、[样式](../packages/theme/src/styles/blog-post.css) | 说明依据文档滚动距离和阶段阈值计算，与加载无关；位置不依赖 TOC 开关 |
+| README 暗示本次 pnpm 验收已执行 | [0.3.0 验证记录](releases/0.3.0.md#known-limitations) | 五种语言一致注明本次仅验收 npm，未复验 pnpm/yarn/bun |
+| 升级说明中的“正常 starter 发布流程”可能误导用户运行维护工具 | [同步工具](../tools/maintainer/sync-starter.mjs)操作上游 main/starter 分支 | 用户迁移与维护者分发流程明确分开 |
 
 ## 文档处置
 

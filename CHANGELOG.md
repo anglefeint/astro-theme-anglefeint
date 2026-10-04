@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.9.1] - 2026-10-04
+
+- Music colors automatically follow Home, Blog, Article and About shells, including controls, progress and scrollbars.
+- Match About terminal framing, compact corners and monospace controls; preserve green status accents.
+- Package-only update for the matching 0.9.0 starter; no configuration or route edits required. See [release notes](docs/releases/0.9.1.md).
+
 ## [0.9.0] - 2026-10-03
 
 - Add Brazilian Portuguese, German, Russian and Traditional Chinese as enabled defaults, with UI, About, article skeletons, starter guides, demo content and README translations.
