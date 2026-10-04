@@ -39,7 +39,7 @@ git push origin main
 
 ## 2) Pre-release checks
 
-Dependency audits are blocking: `release:npm` uses `scripts/audit-dependencies.mjs` for main and `check:installed -- --audit` for an isolated starter. Unreviewed vulnerabilities or audit errors stop the run, even with `--skip-checks`. Starter synchronization uses the same policy before committing. Before GitHub closeout, run `node scripts/audit-dependencies.mjs <temporary-project-path>` from main against the actual remote-template installation. Raw `npm audit` findings remain visible; the policy does not claim zero vulnerabilities when accepting the scoped exception below.
+Dependency audits are blocking: main, isolated starter and delivered starter use `scripts/audit-dependencies.mjs`. All reported vulnerabilities and registry errors block delivery, including with `--skip-checks`. The former static-cache exception was retired on 2026-10-04 after updating main to `http-cache-semantics@4.3.0`; the delivered starter already resolved that version.
 
 `scripts/release-npm.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or completed CI. Those are maintainer workflow requirements: inspect them before running it. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
 
@@ -59,9 +59,11 @@ By default this runs main checks, dependency audits, the independent installed-s
 
 The maintainer authorized impact-based release after reviewing [GHSA-ch52-4w7c-c8xp](https://github.com/advisories/GHSA-ch52-4w7c-c8xp). `http-cache-semantics@4.2.0` remains affected upstream; no patched release was available during this review. This is risk acceptance for the current static template, not a vulnerability fix or a blanket exemption for Astro consumers.
 
-Astro 7.3.5 is the only installed consumer. Its `dist/assets/build/remote.js` constructs requests for build-time remote images and calls `storable()` / `timeToLive()`. It does not call the vulnerable `satisfiesWithoutRevalidation()` method or forward visitor `max-stale` headers. The reviewed Astro config generates static output without a server adapter; the Cloudflare config serves `dist` assets. We found no shared personalized-response cache path in this template.
+At the time of that review, Astro 7.3.5 was the only installed consumer. Its `dist/assets/build/remote.js` constructs requests for build-time remote images and calls `storable()` / `timeToLive()`. It does not call the vulnerable `satisfiesWithoutRevalidation()` method or forward visitor `max-stale` headers. The reviewed Astro config generates static output without a server adapter; the Cloudflare config serves `dist` assets. We found no shared personalized-response cache path in this template.
 
-The maintainer-only audit helper accepts this exact advisory and its reported dependency ancestors, verifies Astro 7.3.5 / cache library 4.2.0, and checks normalized SHA-256 fingerprints of the reviewed Astro config and remote-image caller. It fails on new advisories, unexpected dependencies, changed reviewed files/versions, invalid registry responses, or on/after **2026-11-03 UTC**. Main, packed-starter and delivered-starter checks use the same helper. It is not shipped as a user command and does not modify npm audit output. Reassess if deployment, dependencies or cache usage changes; remove the exception when an upstream fix is available. Do not apply `npm audit fix --force` to downgrade Astro merely to silence this finding.
+This was a historical, narrowly scoped exception for Astro 7.3.5 / cache library 4.2.0, guarded by source/config fingerprints and an expiry. It is no longer accepted by the audit helper.
+
+On 2026-10-04, main was updated to cache library 4.3.0 and raw npm audit reported zero vulnerabilities. The [maintainer disputes the original report](https://github.com/kornelski/http-cache-semantics/issues/56#issuecomment-5975759591); the advisory still listed no patched version when reviewed. Version 4.3.0 includes a [separate Vary-matching fix for CVE-2026-93750](https://github.com/kornelski/http-cache-semantics/commit/9fb520be70eff3ff502fe965d9c3265ca2c64e26). Audit clearance is not evidence that the disputed advisory was fixed. No theme package version bump is required for this main lockfile/maintainer-gate update; the 0.9.1 starter already uses 4.3.0.
 
 ## 3) Publish alpha/beta
 

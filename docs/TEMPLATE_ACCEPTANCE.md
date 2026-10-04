@@ -60,7 +60,7 @@ The environment-variable CLI example is exercised through the child process envi
 - Compatible package update and reinstall preserve site configuration and article content. This tests the current starter's version range, not migration from an arbitrary historical starter.
 - Each consumer `package.json` script is executed; a new untested script makes coverage fail. This includes `check:no-build`, `check:about-runtime`, `check`, `doctor`, `build`, `astro`, `dev` and `preview`.
 - `check:workspace-link` intentionally skips in an installed consumer; the report marks this as not applicable, not a workspace-link validation.
-- Security audit blocks unreviewed findings and audit errors; the narrowly scoped, expiring static-cache exception in [Package Release](PACKAGE_RELEASE.md#temporary-static-cache-advisory-review-2026-10-03) remains visible in the report.
+- Security audit blocks all findings and audit errors. The former static-cache exception has been retired; see the historical review in [Package Release](PACKAGE_RELEASE.md#temporary-static-cache-advisory-review-2026-10-03).
 
 The command list is maintained explicitly rather than blindly executing prose scraped from README. Review changes to the nine READMEs and tutorials against this list; a script-coverage assertion alone cannot prove that every documented command variant is covered.
 
