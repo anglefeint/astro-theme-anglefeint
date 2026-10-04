@@ -100,7 +100,7 @@ npm run check:installed -- --build --audit
 
 This packs the working theme, overlays current managed files onto the local `starter` snapshot in a temporary directory, installs without workspace links, exercises npm CLI commands and adapters, and builds the English/Chinese/Portuguese/German/Russian/Traditional-Chinese default-locale and prefix-mode matrix. It requires the local `starter` ref and registry access for dependencies. It does not publish, commit, or change branches. The legacy snapshot is also checked with the read-only migration diagnostic before the overlay.
 
-`release:npm` runs this gate after the main checks. `--skip-checks` omits the main checks and installed build matrix, but retains main and isolated-starter audits and installed CLI checks. Starter sync audits after installation. Unreviewed audit findings or audit errors block delivery; the sole time-limited static-cache exception is documented in `docs/PACKAGE_RELEASE.md` and enforced by `scripts/audit-dependencies.mjs`. A passing workspace build alone is not sufficient.
+`release:npm` runs this gate after the main checks. `--skip-checks` omits the main checks and installed build matrix, but retains main and isolated-starter audits and installed CLI checks. Starter sync audits after installation. All audit findings or audit errors block delivery; `scripts/audit-dependencies.mjs` no longer accepts the historical static-cache exception documented in `docs/PACKAGE_RELEASE.md`. A passing workspace build alone is not sufficient.
 
 Starter branch quality gate:
 

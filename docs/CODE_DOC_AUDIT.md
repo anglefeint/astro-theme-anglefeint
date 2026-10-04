@@ -12,6 +12,12 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-04 缓存依赖与审计例外收尾
+
+在 `fd0955a` 基线上，将 main 锁文件中的 `http-cache-semantics` 从 4.2.0 更新为 4.3.0，Astro 保持 7.3.5。原始 npm audit 和维护者审计门禁均报告零漏洞，撤销旧静态缓存例外，新增验证旧 advisory、其他漏洞和不完整响应均被阻断的测试。当前 PACKAGE_RELEASE、AI_WORKFLOW、MAINTAINER_WORKFLOW、TEMPLATE_ACCEPTANCE 同步为无例外审计；历史 0.9.0/0.9.1 发布结果保留。
+
+上游对原报告提出异议，4.3.0 的明确修复提交对应另一项 Vary 漏洞，因此不把审计归零描述成原 advisory 已获官方修复确认。源码和讨论链接见 PACKAGE_RELEASE。修改不涉及 npm 包内容或 starter 模板；已交付 starter 锁定 4.3.0，无需发布 0.9.2 或重新同步 starter。
+
 ## 2026-10-04 最近改动与播放器配色复核
 
 核对已提交范围 `9ab1554..71e4aac`（九语言和 0.9.0 依赖/审计发布），以及随后本地 music-deck.css、check-music-browser.mjs 和视觉文档改动。显式提交路径和工作区分别交给 suggest:docs；以实际 locale registry、scaffold、组件样式、installed/template 检查代码为准。
