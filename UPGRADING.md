@@ -24,6 +24,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.9.2: cinematic article share cards
+
+Package-only patch for matching 0.9.0/0.9.1 starters. Run `npm update @anglefeint/astro-theme`, then `npm run doctor`, preview and redeploy. No route, adapter or content migration is required. Automatically generated cards gain a bundled background and a small `Theme by Anglefeint` credit. The existing `theme.footer.showCredits: false` setting now hides both footer credits and this image credit. Custom `ogImage` remains untouched. Generated image URLs change; sharing platforms may retain cached previews until they fetch the page again. See [0.9.2 release notes](docs/releases/0.9.2.md).
+
 ### 0.8.5: automatic article translation metadata
 
 Existing standard 0.8.3/0.8.4 starters on Astro `^7.3.2` only need the package update:

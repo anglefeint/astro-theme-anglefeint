@@ -198,6 +198,8 @@ export const THEME_CONFIG = defineThemeConfig({
 
 Set `showCredits: true` to restore them. Hiding credits removes both links; it keeps the copyright line. An optional `site.tagline` adds your own plain text independently of this switch. Its default is empty; the former default `Built with Astro.` is treated as the built-in credit to avoid duplication. No `All rights reserved` text is added.
 
+Automatic cards use a bundled code-rain, terminal and neon-network background, with your own site name, title and author. The small `Theme by Anglefeint` credit at the bottom right follows `theme.footer.showCredits` (default `true`); set it to `false` to hide both footer credits and this image credit. Rebuild and redeploy after changing it. Custom `ogImage` files are never modified. The artwork works offline and adds no browser JavaScript.
+
 The public demo uses its own name, domain and translated introduction. A fresh starter keeps generic defaults, and you still configure your site only in `src/site.config.ts`. If you upgrade an older starter, use the matching configuration files described in the upgrade guide; updating only the npm package does not add this option to old adapters.
 
 ## In this series

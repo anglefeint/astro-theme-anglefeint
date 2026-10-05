@@ -161,6 +161,8 @@ Führe npm run build und npm run preview aus. Gesucht werden Titel und Text in d
 
 Ohne ogImage erzeugt der Build ein PNG mit 1200×630 Pixeln aus Titel, Autor und Website-Name. heroImage bleibt unabhängig. Eigene Bilder: ogImage: ./share.png oder /images/share.png; HTTPS funktioniert ebenfalls. Fehlende lokale Dateien führen zu Fehlern, externe Bilder hängen vom Anbieter ab.
 
+Automatische Vorschaubilder verwenden einen mitgelieferten Hintergrund aus Code-Regen, Terminals und Neon-Netzwerken mit deinem Website-Namen, Titel und Autor. Der kleine Hinweis `Theme by Anglefeint` unten rechts folgt `theme.footer.showCredits` (Standard `true`); `false` blendet die Hinweise im Footer und im Bild aus. Danach neu bauen und veröffentlichen. Eigene `ogImage`-Dateien bleiben unverändert. Der Hintergrund funktioniert offline und fügt kein Browser-JavaScript hinzu.
+
 Ein explizites ogImage hat Vorrang. theme.socialImage.enabled: false stoppt nur die Erzeugung; sonst dienen Titelbild oder Standardbild als Ersatz. Prüfe og:image im HTML und dist/\_social/. Plattformen können alte Vorschauen zwischenspeichern. Nicht alle Emojis und Schriftsysteme sind abgedeckt.
 
 ### Eigenständige Seiten

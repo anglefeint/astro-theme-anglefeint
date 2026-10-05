@@ -345,6 +345,8 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 
 照常执行 `npm run build`，即可为没有设置 `ogImage` 的文章生成 1200×630 PNG，内容取自文章标题、作者和站点名称。生成使用随主题提供的字体，不调用图片 API、不增加浏览器 JS，也不会改变正文 `heroImage`。
 
+自动分享图使用随主题提供的代码雨、终端与霓虹网络背景，站点名、标题和作者仍取自你的内容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（默认 `true`）；设为 `false` 会同时隐藏页脚署名和图片署名，修改后重新构建部署。不会修改自定义的 `ogImage`。背景离线使用，不增加浏览器 JavaScript。
+
 自定义图片：文章 frontmatter 写 `ogImage: ./share.png`（图片放文章旁边），或 `ogImage: /images/share.png`（对应 `public/images/share.png`）。也支持 HTTPS 图片地址，其可用性与缓存由图片提供方负责。本地图片不存在时会报错。
 
 在 `src/site.config.ts` 设置 `theme: { socialImage: { enabled: false } }` 可关闭自动生成。手动 `ogImage` 始终优先，其他文章回退到正文封面或原有默认图。修改后重新构建、部署；自动图片位于 `dist/_social/`，文章 HTML 的 `og:image` 给出准确地址。图片地址随内容变化，但外部平台仍可能缓存链接预览。

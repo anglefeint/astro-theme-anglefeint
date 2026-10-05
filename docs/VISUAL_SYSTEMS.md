@@ -52,7 +52,7 @@ The four scenes should remain distinct while sharing usable navigation and publi
 
 ## Article share image template
 
-`packages/theme/src/social/render.mjs` produces a static 1200×630 dark blue card with a subtle grid, title, site name and author. It is independent of the page hero and does not add navigation or client effects. Titles scale with length; beyond 120 grapheme clusters they are shortened only on the image. Site/author labels are also bounded. Bundled Noto CJK covers the default Latin/CJK languages; arbitrary emoji and other scripts are not guaranteed.
+`packages/theme/src/social/render.mjs` produces a static 1200×630 card with bundled code rain, terminal planes and a cyan/pink network core over a dark blue grid. Site name, title and author are generated from user content. A localized reading-area gradient protects wrapped titles while keeping the artwork vivid below; its extent estimates glyph width, including CJK. The bottom-right `Theme by Anglefeint` label follows `theme.footer.showCredits` (default true), and is omitted when false. The artwork itself contains no editorial text or brand signature. It is independent of the page hero and does not add navigation or client effects. Titles scale with length; beyond 120 grapheme clusters they are shortened only on the image. Site/author labels are also bounded. Bundled Noto CJK covers the default Latin/CJK languages; arbitrary emoji and other scripts are not guaranteed.
 
 ## Shared footer
 

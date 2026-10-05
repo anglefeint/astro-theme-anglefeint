@@ -15,6 +15,7 @@ import { inspectProject } from './doctor.mjs';
 import { checkReadmeLinks } from './check-readme-links.mjs';
 import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
 import { auditDependencies } from './audit-dependencies.mjs';
+import sharp from 'sharp';
 
 const exec = promisify(execFile);
 const root = process.cwd();
@@ -172,6 +173,7 @@ try {
       '---\ntitle: Special tag fixture\ndescription: Tag routing fixture\npubDate: 2026-01-01\ntags: ["C++", "C#", "中文", "Astro", "astro", "anglefeint"]\n---\nTag fixture.\n'
     );
     for (const locale of ['en', 'zh', 'pt-br', 'de', 'ru', 'zh-hant']) {
+      const creditedImages = new Map();
       for (const mode of ['always', 'never']) {
         await setConfig({
           site: { description: 'SITE_DESCRIPTION_SENTINEL', tagline: 'CUSTOM_FOOTER_SENTINEL' },
@@ -204,6 +206,16 @@ try {
           assert.equal(png.subarray(1, 4).toString(), 'PNG');
           assert.equal(png.readUInt32BE(16), 1200);
           assert.equal(png.readUInt32BE(20), 630);
+          if (mode === 'always') creditedImages.set(lang, { og, png });
+          else {
+            const credited = creditedImages.get(lang);
+            assert.notEqual(og, credited.og, 'credit toggle must change the generated URL');
+            const pixels = (image, region) => sharp(image).extract(region).raw().toBuffer();
+            const top = { left: 0, top: 0, width: 1200, height: 490 };
+            const credit = { left: 850, top: 520, width: 300, height: 65 };
+            assert.deepEqual(await pixels(png, top), await pixels(credited.png, top));
+            assert.notDeepEqual(await pixels(png, credit), await pixels(credited.png, credit));
+          }
           assert.ok(html.includes(`name="twitter:image" content="${og}"`));
           assert.ok(html.includes(`"image":["${og}"]`));
         }

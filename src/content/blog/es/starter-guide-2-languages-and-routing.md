@@ -117,6 +117,8 @@ No es una opción de privacidad ni de borrador: el artículo sigue accesible por
 
 Por defecto, la compilación genera un PNG de 1200×630 para artículos sin `ogImage`, usando el título, el autor del artículo (o del sitio) y el nombre del sitio. No necesitas una API de imágenes ni diseñar cada una. Esto no cambia la portada `heroImage`.
 
+Las tarjetas automáticas usan un fondo incluido de lluvia de código, terminales y redes de neón, con tu propio nombre de sitio, título y autor. El pequeño crédito `Theme by Anglefeint` abajo a la derecha sigue `theme.footer.showCredits` (por defecto `true`); con `false` se ocultan los créditos del pie y de la imagen. Vuelve a compilar y desplegar tras cambiarlo. Los archivos `ogImage` personalizados no se modifican. El fondo funciona sin conexión y no añade JavaScript al navegador.
+
 Para elegir tu imagen, coloca `share.png` junto al artículo y añade al frontmatter:
 
 ```yaml
