@@ -1,6 +1,10 @@
-<h1 align="center">Anglefeint</h1>
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+
+<p align="center">
+  <a href="https://demo.anglefeint.com/ko/">
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+  </a>
+</p>
 
 <p align="center">개인 퍼블리싱을 위한 시네마틱 멀티 무드 Astro 테마입니다.</p>
 
@@ -13,6 +17,10 @@
 </p>
 
 <p align="center">
+  <a href="#installation">설치</a> · <a href="#setup">설정 가이드</a>
+</p>
+
+<p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
@@ -20,9 +28,12 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## 사용할 언어 선택
+## 요구 사항
 
-기본으로 9개 언어가 활성화됩니다: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. 기본 언어는 영어입니다. `src/site.config.ts`에서 불필요한 언어의 `i18n.locales.<code>.meta.enabled: false`를 설정하세요. 생략만으로는 비활성화되지 않으며 기본 언어는 항상 활성화됩니다. `new-post`는 처음에 파일 9개를 만들지만 자동 번역하지 않습니다. 한국어만 만들려면: `npm run new-post -- my-post --locales ko`.
+- Node.js `22.12.0+` (LTS 권장)
+- 0.8.0 starter의 문서 명령은 Linux에서 npm + Node 22, pnpm 10 + Node 24로 검증했습니다. yarn/bun은 테스트하지 않았습니다. [검증 기록](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)을 참고하세요.
+
+<a id="installation"></a>
 
 ## 템플릿 설치
 
@@ -35,11 +46,6 @@ pnpm을 사용하려면 위의 npm 명령으로 템플릿을 생성하고(의존
 ```bash
 pnpm install
 ```
-
-## 요구 사항
-
-- Node.js `22.12.0+` (LTS 권장)
-- 0.8.0 starter의 문서 명령은 Linux에서 npm + Node 22, pnpm 10 + Node 24로 검증했습니다. yarn/bun은 테스트하지 않았습니다. [검증 기록](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)을 참고하세요.
 
 ## 빠른 시작
 
@@ -71,6 +77,8 @@ pnpm build
 pnpm preview
 ```
 
+<a id="setup"></a>
+
 ## 첫 설정: 사이트 정보와 홈 주소
 
 배포 전에 `src/site.config.ts`의 기존 `defineThemeConfig({...})` 객체를 편집하세요. 아래 항목을 기존 설정에 합치고, 파일의 import/export와 기존 언어 및 기능 설정은 유지하세요. 예시 제목, 작성자와 `https://your-domain.example`을 자신의 정보로 바꾸세요.
@@ -99,6 +107,10 @@ export const THEME_CONFIG = defineThemeConfig({
 `defaultLocale`은 활성화된 언어인 `ko`, `en`, `zh`, `ja`, `es` 등에서 선택하세요. 이 설정은 기본 언어의 **홈 주소만** 바꾸며, 블로그와 글 주소에는 `/ko/blog/`처럼 언어 접두사가 유지됩니다.
 
 canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url`을 실제 운영 사이트 주소로 설정하세요. 환경 파일이나 호스팅 빌드 설정에 `PUBLIC_SITE_URL`이 있으면 이 값이 `site.url`보다 우선하므로 함께 확인하세요. 변경 후에는 다시 빌드하고 배포해야 합니다(`npm run build` 또는 연결된 호스팅의 빌드). 로컬 파일만 수정해도 운영 사이트가 바로 바뀌지는 않습니다.
+
+## 사용할 언어 선택
+
+기본으로 9개 언어가 활성화됩니다: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. 기본 언어는 영어입니다. `src/site.config.ts`에서 불필요한 언어의 `i18n.locales.<code>.meta.enabled: false`를 설정하세요. 생략만으로는 비활성화되지 않으며 기본 언어는 항상 활성화됩니다. `new-post`는 처음에 파일 9개를 만들지만 자동 번역하지 않습니다. 한국어만 만들려면: `npm run new-post -- my-post --locales ko`.
 
 ## 테마 업그레이드
 
@@ -321,10 +333,6 @@ MDX의 Markdown 제목은 지원하지만 컴포넌트에서 생성하거나 HTM
 
 내장 폰트로 기본 9개 언어를 지원하며 이미지 API나 브라우저 JS는 필요 없습니다. 긴 제목은 이미지에서만 줄입니다. 모든 이모지와 문자 체계를 보장하지는 않습니다. 빌드 시간과 설치 용량은 늘지만 글 페이지에서 이 폰트를 추가로 다운로드하지 않습니다.
 
-## 라이선스
-
-MIT License. `LICENSE` 를 참고하세요.
-
 ## 선택적 음악 플레이어
 
 기본적으로 비활성화되어 있습니다. 오디오를 `public/music/`에 넣고 다음 설정을 `src/site.config.ts`에 병합하세요:
@@ -341,3 +349,7 @@ theme: {
 각 곡에 `title`, `src`를 지정하며 `artist`는 선택 사항입니다. HTTPS 오디오 URL도 지원합니다. 목록이 비어 있으면 표시하지 않습니다. 첫 방문에서는 PLAY를 눌러야 음원을 불러옵니다. 같은 탭 세션에서 곡, 위치, 음량을 기억합니다. 재생 중이었다면 페이지 이동, 새로고침, 뒤로 또는 앞으로 이동할 때 저장 위치에서 이어 재생을 시도하며, 직접 일시 정지했다면 정지 상태를 유지합니다. 잠시 끊길 수 있으며 끊김 없는 재생은 아닙니다. 브라우저가 자동 재생을 차단하면 PLAY를 누르세요. 기존 곡이 삭제되어도 다른 곡을 자동 재생하지 않습니다. 저장소를 사용할 수 없으면 수동 재생은 가능하지만 세션 이어 재생은 불가능합니다.
 
 재생 전에 곡 전체를 다운로드하여 브라우저 Blob으로 변환하므로 탐색에 서버의 HTTP Range 지원이 필요하지 않습니다. 파일이 크거나 네트워크가 느리면 대기 시간과 메모리 사용량이 늘어납니다. 일시 정지 후 재생할 때는 불러온 곡을 재사용하고, 곡을 바꾸면 이전 곡을 해제합니다. 페이지 이동 후에는 다시 불러오며 브라우저 HTTP 캐시가 도움이 될 수 있습니다. 외부 음원 서버는 교차 출처 다운로드(CORS)를 허용해야 합니다. 같은 사이트의 `public/music/`에 두면 별도의 CORS 설정이 필요 없습니다.
+
+## 라이선스
+
+MIT License. `LICENSE` 를 참고하세요.

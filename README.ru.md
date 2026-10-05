@@ -1,18 +1,32 @@
-# Anglefeint
-
-Кинематографичная тема Astro для личного блога.
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
 
+<p align="center">
+  <a href="https://demo.anglefeint.com/ru/">
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+  </a>
+</p>
+
+<p align="center">Кинематографичная тема Astro для личного блога.</p>
+
 [Demo](https://demo.anglefeint.com/ru/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
+
+<p align="center">
+  <a href="#installation">Установка</a> · <a href="#setup">Настройка</a>
+</p>
+
+<p align="center">
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
+</p>
+
+<a id="installation"></a>
 
 ```bash
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
-## Языки
-
-Изначально включены девять языков: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. `new-post` создаёт девять файлов, но не переводит текст. Отключайте ненужные языки через `meta.enabled: false` в `src/site.config.ts`; пропуска записи недостаточно. Основной язык остаётся активным. Только русский: `npm run new-post -- my-post --locales ru`.
+<a id="setup"></a>
 
 ## Руководство 1: Настройка блога
 
@@ -95,6 +109,10 @@ doctor выполняет проверки и сборку. preview показы
 Оставляйте по одному объекту theme и i18n. Объединяйте параметры; массивы заменяются целиком. Не редактируйте созданные адаптеры в src/config/. Обновление npm не обновляет локальные файлы starter. Перед миграцией прочитайте [руководство по обновлению](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 - [Руководство 2: Статьи и организация контента](https://demo.anglefeint.com/ru/blog/starter-guide-2-languages-and-routing/)
+
+## Языки
+
+Изначально включены девять языков: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. `new-post` создаёт девять файлов, но не переводит текст. Отключайте ненужные языки через `meta.enabled: false` в `src/site.config.ts`; пропуска записи недостаточно. Основной язык остаётся активным. Только русский: `npm run new-post -- my-post --locales ru`.
 
 ## Руководство 2: Статьи и организация контента
 

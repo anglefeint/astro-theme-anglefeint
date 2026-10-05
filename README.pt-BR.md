@@ -1,18 +1,32 @@
-# Anglefeint
-
-Um tema Astro cinematográfico para publicar com personalidade.
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
 
+<p align="center">
+  <a href="https://demo.anglefeint.com/pt-br/">
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+  </a>
+</p>
+
+<p align="center">Um tema Astro cinematográfico para publicar com personalidade.</p>
+
 [Demo](https://demo.anglefeint.com/pt-br/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
+
+<p align="center">
+  <a href="#installation">Instalação</a> · <a href="#setup">Guia de configuração</a>
+</p>
+
+<p align="center">
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
+</p>
+
+<a id="installation"></a>
 
 ```bash
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
-## Idiomas
-
-Nove idiomas ativos por padrão: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. `new-post` cria nove arquivos inicialmente, sem traduzir o texto. Desative os idiomas desnecessários com `meta.enabled: false` em `src/site.config.ts`; omitir uma entrada não a desativa. O idioma padrão permanece ativo. Para criar só português: `npm run new-post -- my-post --locales pt-br`.
+<a id="setup"></a>
 
 ## Guia 1: Configure seu blog
 
@@ -95,6 +109,10 @@ doctor inclui verificações e compilação. preview exibe o resultado localment
 Mantenha um único objeto theme e um único i18n. Mescle opções; listas substituem listas anteriores. Não edite os adaptadores gerados em src/config/. Atualizar o pacote npm não atualiza arquivos locais do starter. Consulte o [guia de atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) antes de migrar.
 
 - [Guia 2: Escreva e organize conteúdo](https://demo.anglefeint.com/pt-br/blog/starter-guide-2-languages-and-routing/)
+
+## Idiomas
+
+Nove idiomas ativos por padrão: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. `new-post` cria nove arquivos inicialmente, sem traduzir o texto. Desative os idiomas desnecessários com `meta.enabled: false` em `src/site.config.ts`; omitir uma entrada não a desativa. O idioma padrão permanece ativo. Para criar só português: `npm run new-post -- my-post --locales pt-br`.
 
 ## Guia 2: Escreva e organize conteúdo
 
