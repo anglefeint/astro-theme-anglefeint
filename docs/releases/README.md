@@ -29,7 +29,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 Latest feature release: [0.9.0](./0.9.0.md), nine built-in languages and compatible dependency refresh. See its delivery and acceptance record.
 
-Latest patch release: [0.9.1](./0.9.1.md), shell-aware music colors and About terminal styling. See its delivery status and validation record.
+Latest patch entry: [0.9.2](./0.9.2.md), cinematic article share cards and shared credit visibility. See its delivery status and validation record.
 
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.

@@ -161,6 +161,8 @@ tags: ['astro', 'notes'] 會產生 /zh-hant/tags/ 等頁面。標籤區分大小
 
 未指定 ogImage 時，建置會用標題、作者與網站名稱產生 1200×630 PNG，不影響 heroImage。自訂圖片可使用 ogImage: ./share.png 或 /images/share.png，也支援 HTTPS。缺少本機檔案會報錯，外部圖片則依賴外部服務。
 
+自動分享圖使用主題內附的代碼雨、終端與霓虹網路背景，網站名稱、標題和作者仍使用你的內容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（預設 `true`）；設為 `false` 會同時隱藏頁尾與圖片署名，修改後請重新建置部署。自訂 `ogImage` 不會被修改。背景離線使用，不增加瀏覽器 JavaScript。
+
 明確設定的 ogImage 優先。theme.socialImage.enabled: false 只停用自動產生，其他文章回退到封面或預設圖。檢查 HTML 的 og:image 與 dist/\_social/。分享平台可能快取舊圖，不保證支援所有 emoji 與文字系統。
 
 ### 獨立頁面

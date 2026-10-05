@@ -6,7 +6,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 import { imageData, socialKey, socialPath } from '../packages/theme/src/social/model.mjs';
 import { resolveSocialImage } from '../packages/theme/src/social/resolve.mjs';
-import { renderSocialImage } from '../packages/theme/src/social/render.mjs';
+import { renderSocialImage, socialTemplate } from '../packages/theme/src/social/render.mjs';
 
 const data = imageData('A title', 'Author', 'My site', 'en');
 test('share image URLs change with visible metadata and respect base paths', () => {
@@ -15,6 +15,20 @@ test('share image URLs change with visible metadata and respect base paths', () 
     assert.notEqual(socialKey(data), socialKey({ ...data, [key]: 'changed' }));
   }
   assert.equal(socialPath(data, '/blog/'), `/blog/_social/${socialKey(data)}.png`);
+  assert.notEqual(socialKey(data), socialKey({ ...data, showCredits: false }));
+});
+
+test('credits follow the existing switch without baking branding into the background', async () => {
+  const hidden = imageData('A title', 'Author', 'My site', 'en', false);
+  assert.match(JSON.stringify(socialTemplate(data)), /Theme by Anglefeint/);
+  assert.doesNotMatch(JSON.stringify(socialTemplate(hidden)), /Theme by Anglefeint/);
+  const visiblePng = await renderSocialImage(data);
+  const hiddenPng = await renderSocialImage(hidden);
+  assert.notDeepEqual(visiblePng, hiddenPng);
+  // The shared artwork and article text stay unchanged outside the footer.
+  const aboveFooter = (png) =>
+    sharp(png).extract({ left: 0, top: 0, width: 1200, height: 490 }).raw().toBuffer();
+  assert.deepEqual(await aboveFooter(visiblePng), await aboveFooter(hiddenPng));
 });
 
 test('custom images take priority, disabled mode keeps the hero, missing files fail clearly', async () => {

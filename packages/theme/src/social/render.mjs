@@ -6,6 +6,7 @@ import { WIDTH, HEIGHT } from './model.mjs';
 
 const require = createRequire(import.meta.url);
 let font;
+let background;
 const div = (children, style) => ({
   type: 'div',
   props: { children, style: { display: 'flex', ...style } },
@@ -19,9 +20,22 @@ function shorten(text, limit) {
   return chars.length > limit ? chars.slice(0, limit - 1).join('') + '…' : text;
 }
 
-export function socialTemplate({ title, author, site }) {
+export function socialTemplate({ title, author, site, showCredits = true }) {
   const displayTitle = shorten(title, 120);
   const length = Array.from(displayTitle).length;
+  const fontSize = length > 65 ? 44 : length > 35 ? 56 : 70;
+  // Estimate visual width rather than character count: CJK glyphs take more
+  // space than Latin letters. Keep the artwork vivid below the reading area.
+  const units = Array.from(displayTitle).reduce(
+    (sum, char) =>
+      sum +
+      (/\p{Script=Han}|\p{Script=Hiragana}|\p{Script=Katakana}|\p{Script=Hangul}/u.test(char)
+        ? 1
+        : 0.6),
+    0
+  );
+  const rows = Math.max(1, Math.ceil((units * fontSize) / 1020));
+  const fadeStart = Math.min(77, Math.ceil(((129 + rows * fontSize * 1.32) / HEIGHT) * 100));
   return div(
     [
       div('', {
@@ -30,28 +44,10 @@ export function socialTemplate({ title, author, site }) {
         top: 0,
         width: WIDTH,
         height: HEIGHT,
-        backgroundImage: 'linear-gradient(135deg, #080f1c 25%, #172544 100%)',
+        // Long titles can extend over the artwork; protect their contrast without
+        // shrinking the illustration or changing the title/author hierarchy.
+        backgroundImage: `linear-gradient(180deg, #080f1c60 0%, #080f1cbf ${fadeStart}%, #080f1c00 ${fadeStart + 9}%)`,
       }),
-      ...Array.from({ length: 15 }, (_, i) =>
-        div('', {
-          position: 'absolute',
-          left: i * 90,
-          top: 0,
-          width: 1,
-          height: HEIGHT,
-          backgroundColor: '#91b9e00c',
-        })
-      ),
-      ...Array.from({ length: 8 }, (_, i) =>
-        div('', {
-          position: 'absolute',
-          left: 0,
-          top: i * 90,
-          width: WIDTH,
-          height: 1,
-          backgroundColor: '#91b9e00c',
-        })
-      ),
       div(
         [
           div('', { width: 10, height: 10, backgroundColor: '#80deea', marginRight: 16 }),
@@ -60,7 +56,7 @@ export function socialTemplate({ title, author, site }) {
         { alignItems: 'center' }
       ),
       div(displayTitle, {
-        fontSize: length > 65 ? 44 : length > 35 ? 56 : 70,
+        fontSize,
         lineHeight: 1.32,
         color: '#edf6ff',
         width: 1020,
@@ -72,11 +68,19 @@ export function socialTemplate({ title, author, site }) {
       div(
         [
           div(shorten(author, 32), { fontSize: 23, color: '#a5b9d0' }),
-          div('', {
-            width: 150,
-            height: 3,
-            backgroundImage: 'linear-gradient(90deg, #78dce8, #9981e8)',
-          }),
+          div(
+            [
+              ...(showCredits
+                ? [div('Theme by Anglefeint', { fontSize: 18, color: '#a3b8cc', marginBottom: 8 })]
+                : []),
+              div('', {
+                width: 150,
+                height: 3,
+                backgroundImage: 'linear-gradient(90deg, #78dce8, #9981e8)',
+              }),
+            ],
+            { flexDirection: 'column', alignItems: 'flex-end' }
+          ),
         ],
         {
           position: 'absolute',
@@ -94,7 +98,6 @@ export function socialTemplate({ title, author, site }) {
       width: WIDTH,
       height: HEIGHT,
       padding: '55px 72px',
-      backgroundColor: '#080f1c',
       position: 'relative',
       flexDirection: 'column',
       fontFamily: 'Noto',
@@ -107,10 +110,16 @@ export async function renderSocialImage(data) {
   font ??= readFile(
     require.resolve('@anglefeint/astro-theme/assets/theme/social/NotoSansCJKsc-Regular.otf')
   );
+  background ??= readFile(
+    require.resolve('@anglefeint/astro-theme/assets/theme/social/network-core.webp')
+  );
   const svg = await satori(socialTemplate(data), {
     width: WIDTH,
     height: HEIGHT,
     fonts: [{ name: 'Noto', data: await font, weight: 400, style: 'normal' }],
   });
-  return sharp(Buffer.from(svg)).png().toBuffer();
+  return sharp(await background)
+    .composite([{ input: Buffer.from(svg) }])
+    .png()
+    .toBuffer();
 }

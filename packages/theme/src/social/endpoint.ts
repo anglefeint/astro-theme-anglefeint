@@ -14,7 +14,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   for (const post of posts) {
     const locale = post.id.split('/')[0];
     if (!ENABLED_LOCALES.includes(locale) || post.data.ogImage) continue;
-    const data = imageData(post.data.title, post.data.author ?? SITE_AUTHOR, SITE_TITLE, locale);
+    const data = imageData(
+      post.data.title,
+      post.data.author ?? SITE_AUTHOR,
+      SITE_TITLE,
+      locale,
+      THEME.FOOTER?.SHOW_CREDITS ?? true
+    );
     const key = socialKey(data);
     paths.set(key, { params: { key }, props: { data } });
   }

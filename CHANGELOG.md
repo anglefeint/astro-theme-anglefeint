@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.9.2] - 2026-10-06
+
+- Give automatic article share cards a bundled cinematic code-rain, terminal and neon-network background, retaining the user's title, site name and author.
+- Add a discreet `Theme by Anglefeint` image credit controlled by the existing `theme.footer.showCredits` setting; custom `ogImage` remains untouched.
+- Protect multilingual/long-title readability and refresh generated image URLs. Package-only update for matching 0.9.0/0.9.1 starters; rebuild and redeploy. See [release notes](docs/releases/0.9.2.md).
+
 ## [0.9.1] - 2026-10-04
 
 - Music colors automatically follow Home, Blog, Article and About shells, including controls, progress and scrollbars.
