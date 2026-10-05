@@ -1,6 +1,10 @@
-<h1 align="center">Anglefeint</h1>
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+
+<p align="center">
+  <a href="https://demo.anglefeint.com/en/">
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+  </a>
+</p>
 
 <p align="center">A cinematic, multi-atmosphere Astro theme for personal publishing.</p>
 
@@ -13,6 +17,10 @@
 </p>
 
 <p align="center">
+  <a href="#installation">Install</a> · <a href="#setup">Setup guide</a>
+</p>
+
+<p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
@@ -20,9 +28,12 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Choose your languages
+## Requirements
 
-Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. English remains the default. In `src/site.config.ts`, set `i18n.locales.<code>.meta.enabled: false` for each unwanted language; omitting an override does not disable it, and the default locale stays enabled. `new-post` initially creates nine article skeletons, not automatic translations. To create only one: `npm run new-post -- my-post --locales en`.
+- Node.js `22.12.0+` (LTS recommended)
+- The 0.8.0 starter's documented commands passed Linux acceptance with npm on Node 22 and pnpm 10 on Node 24. Yarn/bun were not tested. See the [dated acceptance record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md).
+
+<a id="installation"></a>
 
 ## Template Install
 
@@ -35,11 +46,6 @@ For pnpm, use the npm command above to create the template (skip its dependency-
 ```bash
 pnpm install
 ```
-
-## Requirements
-
-- Node.js `22.12.0+` (LTS recommended)
-- The 0.8.0 starter's documented commands passed Linux acceptance with npm on Node 22 and pnpm 10 on Node 24. Yarn/bun were not tested. See the [dated acceptance record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md).
 
 ## Quick Start
 
@@ -71,6 +77,8 @@ pnpm build
 pnpm preview
 ```
 
+<a id="setup"></a>
+
 ## First Setup: Site Identity and Home URL
 
 Before publishing, edit the existing `defineThemeConfig({...})` object in `src/site.config.ts`. Merge these fields into your settings; keep the file's imports/exports and any existing locale or feature configuration. Replace the example title, author and `https://your-domain.example` with your own values.
@@ -99,6 +107,10 @@ export const THEME_CONFIG = defineThemeConfig({
 Choose an enabled locale such as `en`, `zh`, `ja`, `ko` or `es` for `defaultLocale`. This setting changes the default-language **homepage** only; blog/article routes still have language prefixes, such as `/en/blog/`.
 
 Set `site.url` to your real production origin so canonical links, feeds and sitemap URLs use the correct domain. If you have set `PUBLIC_SITE_URL` in an environment file or your hosting build settings, it overrides `site.url`; update it too. After changing configuration, rebuild and redeploy (`npm run build`, or let your connected hosting build run). Editing the local file alone does not update the live site.
+
+## Choose your languages
+
+Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. English remains the default. In `src/site.config.ts`, set `i18n.locales.<code>.meta.enabled: false` for each unwanted language; omitting an override does not disable it, and the default locale stays enabled. `new-post` initially creates nine article skeletons, not automatic translations. To create only one: `npm run new-post -- my-post --locales en`.
 
 ## Upgrade Theme
 
@@ -335,10 +347,6 @@ The bundled font covers the starter's Latin, Cyrillic, simplified/traditional Ch
 - Parts of the base typography CSS are adapted from Bear Blog defaults (MIT).
   Source note is preserved in `src/styles/global.css`.
 
-## License
-
-MIT License. See `LICENSE`.
-
 ## Optional music player
 
 Disabled by default. Put audio files in `public/music/` and merge this into `src/site.config.ts`:
@@ -355,3 +363,7 @@ theme: {
 Each track accepts `title`, `src` and optional `artist`. HTTPS audio URLs are also supported. An empty playlist hides the player. On the first visit, audio loads only after clicking PLAY. The tab session remembers the track, position and volume. If playback was active, navigating, reloading or returning with Back/Forward attempts to resume at the saved position; manual pause stays paused. A short gap is expected, not seamless playback. If the browser blocks automatic playback, click PLAY to continue. A removed track is not replaced automatically. Without storage, manual playback still works but session resume is unavailable.
 
 Playback downloads the complete track into a browser Blob before starting, so seeking does not require HTTP Range support. Large files or slow connections increase startup time and memory use. Pause/resume reuses the loaded track; changing tracks releases it. Navigation loads the track again (the browser HTTP cache may help). External audio hosts must allow cross-origin fetch (CORS); putting files in `public/music/` avoids this requirement.
+
+## License
+
+MIT License. See `LICENSE`.

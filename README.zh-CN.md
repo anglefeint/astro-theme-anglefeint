@@ -1,6 +1,10 @@
-<h1 align="center">Anglefeint</h1>
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+
+<p align="center">
+  <a href="https://demo.anglefeint.com/zh/">
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+  </a>
+</p>
 
 <p align="center">一个具有电影感、多氛围切换的 Astro 个人发布主题。</p>
 
@@ -13,6 +17,10 @@
 </p>
 
 <p align="center">
+  <a href="#installation">安装</a> · <a href="#setup">配置指南</a>
+</p>
+
+<p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
@@ -20,9 +28,12 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## 选择需要的语言
+## 环境要求
 
-默认启用九种语言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`，默认语言仍为英语。在 `src/site.config.ts` 中为不需要的语言设置 `i18n.locales.<code>.meta.enabled: false`；省略配置不会禁用，默认语言始终启用。`new-post` 初始会创建九份文章骨架，不会自动翻译。只创建简体中文：`npm run new-post -- my-post --locales zh`。
+- Node.js `22.12.0+`（建议 LTS）
+- 0.8.0 starter 的文档命令已在 Linux 下通过 npm + Node 22、pnpm 10 + Node 24 验收；未测试 yarn/bun。详见[验收记录](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)。
+
+<a id="installation"></a>
 
 ## 模板安装
 
@@ -35,11 +46,6 @@ npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```bash
 pnpm install
 ```
-
-## 环境要求
-
-- Node.js `22.12.0+`（建议 LTS）
-- 0.8.0 starter 的文档命令已在 Linux 下通过 npm + Node 22、pnpm 10 + Node 24 验收；未测试 yarn/bun。详见[验收记录](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)。
 
 ## 快速开始
 
@@ -71,6 +77,8 @@ pnpm build
 pnpm preview
 ```
 
+<a id="setup"></a>
+
 ## 首次配置：站点信息与首页地址
 
 发布前，编辑 `src/site.config.ts` 中已有的 `defineThemeConfig({...})` 对象。把以下字段合并到现有配置中，保留文件的导入、导出及已有语言和功能设置；将示例标题、作者和 `https://your-domain.example` 换成自己的信息。
@@ -99,6 +107,10 @@ export const THEME_CONFIG = defineThemeConfig({
 `defaultLocale` 可选择已启用的 `zh`、`en`、`ja`、`ko`、`es` 等语言。这个设置只改变默认语言的**首页**地址，博客和文章仍保留语言前缀，例如 `/zh/blog/`。
 
 `site.url` 应填写真实生产域名，确保 canonical、订阅源和 sitemap 使用正确地址。如果环境文件或托管平台构建设置中配置了 `PUBLIC_SITE_URL`，它会覆盖 `site.url`，也需要一起核对。修改后须重新构建并部署（运行 `npm run build`，或由已连接的托管平台执行构建）；只修改本地文件不会更新线上站点。
+
+## 选择需要的语言
+
+默认启用九种语言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`，默认语言仍为英语。在 `src/site.config.ts` 中为不需要的语言设置 `i18n.locales.<code>.meta.enabled: false`；省略配置不会禁用，默认语言始终启用。`new-post` 初始会创建九份文章骨架，不会自动翻译。只创建简体中文：`npm run new-post -- my-post --locales zh`。
 
 ## 升级主题
 
@@ -329,10 +341,6 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 
 内置字体覆盖默认的中、英、日、韩、西班牙语；超长标题仅在图片中缩略，不修改文章标题。不保证所有 emoji 和其他文字系统。生成会增加构建时间与安装体积，字体不会因此被文章页面下载。
 
-## 许可证
-
-MIT License，见 `LICENSE`。
-
 ## 可选音乐播放器
 
 默认关闭。将音频放在 `public/music/`，把以下配置合并到 `src/site.config.ts`：
@@ -349,3 +357,7 @@ theme: {
 每首歌填写 `title`、`src`，`artist` 可选，也支持 HTTPS 音频直链。空歌单不显示播放器。首次访问时，点击 PLAY 后才加载音频。同一标签页会话内记住曲目、进度和音量；此前正在播放时，切页、刷新或前进后退会尝试从保存位置续播，主动暂停后仍保持暂停。切页可能短暂停顿，不是无缝播放。浏览器阻止自动播放时，点击 PLAY 继续。原曲目被删除时不会自动播放替代曲目。存储不可用时仍可手动播放，但无法会话续播。
 
 播放前会完整下载当前歌曲，转成浏览器 Blob 后再播放，因此进度跳转不依赖服务器的 HTTP Range 支持。大文件或慢网络会增加等待时间和内存占用。暂停后继续会复用已加载的歌曲，切歌会释放旧歌曲；切页后重新加载，浏览器 HTTP 缓存可能减少下载。外部音频服务器必须允许跨域下载（CORS）；放在 `public/music/` 中的同站点文件不需要跨域配置。
+
+## 许可证
+
+MIT License，见 `LICENSE`。
