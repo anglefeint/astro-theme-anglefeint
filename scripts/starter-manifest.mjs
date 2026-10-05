@@ -97,6 +97,7 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'README.ko.md',
   'README.ko.meta.yaml',
   'public/images/theme-previews/README.md',
+  'public/images/theme-previews/anglefeint-brand.webp',
   'public/images/theme-previews/preview-about.png',
   'public/images/theme-previews/preview-blog-list.png',
   'public/images/theme-previews/preview-blog-post-collapsed.png',

@@ -1,6 +1,10 @@
-<h1 align="center">Anglefeint</h1>
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+
+<p align="center">
+  <a href="https://demo.anglefeint.com/es/">
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+  </a>
+</p>
 
 <p align="center">Un tema Astro cinematográfico con varias atmósferas para publicación personal.</p>
 
@@ -13,6 +17,10 @@
 </p>
 
 <p align="center">
+  <a href="#installation">Instalación</a> · <a href="#setup">Guía de configuración</a>
+</p>
+
+<p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
@@ -20,9 +28,12 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Elegir idiomas
+## Requisitos
 
-Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`; inglés sigue siendo el predeterminado. Desactiva cada idioma innecesario con `i18n.locales.<code>.meta.enabled: false` en `src/site.config.ts`. Omitirlo no lo desactiva; el idioma predeterminado permanece activo. `new-post` crea inicialmente nueve plantillas, sin traducir el contenido. Para crear solo español: `npm run new-post -- my-post --locales es`.
+- Node.js `22.12.0+` (LTS recomendado)
+- Los comandos documentados del starter 0.8.0 pasaron las pruebas en Linux con npm + Node 22 y pnpm 10 + Node 24. No se probaron yarn/bun. Consulta el [registro de validación](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md).
+
+<a id="installation"></a>
 
 ## Instalación con plantilla
 
@@ -35,11 +46,6 @@ Para pnpm, crea la plantilla con el comando npm anterior (omite la instalación 
 ```bash
 pnpm install
 ```
-
-## Requisitos
-
-- Node.js `22.12.0+` (LTS recomendado)
-- Los comandos documentados del starter 0.8.0 pasaron las pruebas en Linux con npm + Node 22 y pnpm 10 + Node 24. No se probaron yarn/bun. Consulta el [registro de validación](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md).
 
 ## Inicio rápido
 
@@ -71,6 +77,8 @@ pnpm build
 pnpm preview
 ```
 
+<a id="setup"></a>
+
 ## Primera configuración: identidad del sitio y URL de inicio
 
 Antes de publicar, edita el objeto `defineThemeConfig({...})` que ya existe en `src/site.config.ts`. Integra estos campos en tus ajustes y conserva los import/export del archivo y la configuración de idiomas y funciones existente. Sustituye el título, el autor y `https://your-domain.example` por tus propios datos.
@@ -99,6 +107,10 @@ export const THEME_CONFIG = defineThemeConfig({
 Elige un idioma habilitado, como `es`, `en`, `zh`, `ja` o `ko`, para `defaultLocale`. Este ajuste solo cambia la **página de inicio** del idioma predeterminado; el blog y los artículos conservan su prefijo de idioma, por ejemplo `/es/blog/`.
 
 Configura `site.url` con la URL real de producción para que los enlaces canonical, los feeds y el sitemap usen el dominio correcto. Si defines `PUBLIC_SITE_URL` en un archivo de entorno o en la configuración de compilación del alojamiento, ese valor tiene prioridad sobre `site.url`; revísalo también. Tras cambiar la configuración, vuelve a compilar y desplegar (`npm run build` o la compilación del alojamiento conectado). Editar solo el archivo local no actualiza el sitio publicado.
+
+## Elegir idiomas
+
+Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`; inglés sigue siendo el predeterminado. Desactiva cada idioma innecesario con `i18n.locales.<code>.meta.enabled: false` en `src/site.config.ts`. Omitirlo no lo desactiva; el idioma predeterminado permanece activo. `new-post` crea inicialmente nueve plantillas, sin traducir el contenido. Para crear solo español: `npm run new-post -- my-post --locales es`.
 
 ## Actualizar tema
 
@@ -321,10 +333,6 @@ En `src/site.config.ts`, `theme: { socialImage: { enabled: false } }` desactiva 
 
 Las fuentes incluidas cubren los nueve idiomas incluidos, sin API de imágenes ni JS de navegador. Los títulos largos se abrevian solo en la imagen. No se garantizan todos los emojis ni otros sistemas de escritura. Aumentan el tiempo de compilación y el tamaño de instalación, pero las páginas no descargan estas fuentes adicionales.
 
-## Licencia
-
-MIT License. Ver `LICENSE`.
-
 ## Reproductor de música opcional
 
 Desactivado por defecto. Coloca el audio en `public/music/` y combina esta configuración con la de `src/site.config.ts`:
@@ -341,3 +349,7 @@ theme: {
 Cada pista acepta `title`, `src` y un `artist` opcional. También admite URL HTTPS de audio. Una lista vacía oculta el reproductor. En la primera visita, el audio solo se carga al pulsar PLAY. La sesión de la pestaña recuerda pista, posición y volumen. Si se estaba reproduciendo, al navegar, recargar o usar Atrás/Adelante se intenta continuar desde la posición guardada; una pausa manual se mantiene. Puede haber una breve interrupción: no es reproducción continua entre páginas. Si el navegador bloquea la reproducción automática, pulsa PLAY. Si se elimina la pista, no se reproduce otra automáticamente. Sin almacenamiento, la reproducción manual sigue funcionando, pero no se puede reanudar la sesión.
 
 Antes de reproducir, se descarga la pista completa y se convierte en un Blob del navegador, por lo que el salto de posición no depende de HTTP Range. Los archivos grandes o las conexiones lentas aumentan la espera y el uso de memoria. Pausar y continuar reutiliza la pista cargada; cambiar de pista libera la anterior. Al navegar se vuelve a cargar, aunque la caché HTTP del navegador puede ayudar. Los servidores de audio externos deben permitir descargas entre orígenes (CORS); los archivos del mismo sitio en `public/music/` no requieren esa configuración.
+
+## Licencia
+
+MIT License. Ver `LICENSE`.

@@ -1,18 +1,32 @@
-# Anglefeint
-
-為個人部落格打造的電影感 Astro 主題。
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
 
+<p align="center">
+  <a href="https://demo.anglefeint.com/zh-hant/">
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+  </a>
+</p>
+
+<p align="center">為個人部落格打造的電影感 Astro 主題。</p>
+
 [Demo](https://demo.anglefeint.com/zh-hant/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
+
+<p align="center">
+  <a href="#installation">安裝</a> · <a href="#setup">設定指南</a>
+</p>
+
+<p align="center">
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
+</p>
+
+<a id="installation"></a>
 
 ```bash
 npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 ```
 
-## 語言
-
-預設啟用九種語言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。`new-post` 初始會建立九份骨架，不會自動翻譯。請在 `src/site.config.ts` 以 `meta.enabled: false` 關閉不需要的語言，省略設定不會停用，預設語言會保持啟用。只建立繁體中文：`npm run new-post -- my-post --locales zh-hant`。
+<a id="setup"></a>
 
 ## 使用指南 1：設定你的部落格
 
@@ -95,6 +109,10 @@ doctor 包含檢查與建置。preview 僅在本機顯示結果，不會發布�
 同一物件只保留一個 theme 與一個 i18n，將選項合併進去。陣列會整份取代舊值。不要直接修改 src/config/ 的產生檔。更新 npm 套件不會更新本機 starter 檔案；遷移前請閱讀[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 - [使用指南 2：撰寫與整理內容](https://demo.anglefeint.com/zh-hant/blog/starter-guide-2-languages-and-routing/)
+
+## 語言
+
+預設啟用九種語言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。`new-post` 初始會建立九份骨架，不會自動翻譯。請在 `src/site.config.ts` 以 `meta.enabled: false` 關閉不需要的語言，省略設定不會停用，預設語言會保持啟用。只建立繁體中文：`npm run new-post -- my-post --locales zh-hant`。
 
 ## 使用指南 2：撰寫與整理內容
 

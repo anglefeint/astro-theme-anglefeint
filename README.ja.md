@@ -1,6 +1,10 @@
-<h1 align="center">Anglefeint</h1>
-
 [English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+
+<p align="center">
+  <a href="https://demo.anglefeint.com/ja/">
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+  </a>
+</p>
 
 <p align="center">映画的な表現と複数の雰囲気を持つ Astro テーマです。</p>
 
@@ -13,6 +17,10 @@
 </p>
 
 <p align="center">
+  <a href="#installation">インストール</a> · <a href="#setup">設定ガイド</a>
+</p>
+
+<p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.5-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
@@ -20,9 +28,12 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## 使用する言語を選ぶ
+## 動作要件
 
-標準で9言語が有効です：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。既定は英語です。不要な言語は `src/site.config.ts` で `i18n.locales.<code>.meta.enabled: false` にします。設定の省略では無効にならず、既定言語は常に有効です。`new-post` は初期状態で9ファイルを作成しますが、自動翻訳はしません。日本語だけ作成する場合：`npm run new-post -- my-post --locales ja`。
+- Node.js `22.12.0+`（LTS 推奨）
+- 0.8.0 starter の記載コマンドは Linux 上の npm + Node 22、pnpm 10 + Node 24 で検証済みです。yarn/bun は未検証です。[検証記録](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)を参照してください。
+
+<a id="installation"></a>
 
 ## テンプレートの導入
 
@@ -35,11 +46,6 @@ pnpm を使う場合は、上の npm コマンドでテンプレートを作成�
 ```bash
 pnpm install
 ```
-
-## 動作要件
-
-- Node.js `22.12.0+`（LTS 推奨）
-- 0.8.0 starter の記載コマンドは Linux 上の npm + Node 22、pnpm 10 + Node 24 で検証済みです。yarn/bun は未検証です。[検証記録](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)を参照してください。
 
 ## クイックスタート
 
@@ -71,6 +77,8 @@ pnpm build
 pnpm preview
 ```
 
+<a id="setup"></a>
+
 ## 初期設定：サイト情報とホームの URL
 
 公開前に、`src/site.config.ts` 内の既存の `defineThemeConfig({...})` オブジェクトを編集してください。以下の項目を既存の設定に統合し、ファイルの import/export、言語設定、機能設定は残します。タイトル、著者名、`https://your-domain.example` は自分の情報に置き換えてください。
@@ -99,6 +107,10 @@ export const THEME_CONFIG = defineThemeConfig({
 `defaultLocale` には、有効な言語（`ja`、`en`、`zh`、`ko`、`es` など）を指定します。この設定が変えるのは既定言語の**ホーム**だけです。ブログや記事には引き続き `/ja/blog/` のような言語プレフィックスが付きます。
 
 canonical、フィード、サイトマップに正しいドメインを使うため、`site.url` に本番サイトの URL を設定してください。環境ファイルやホスティングのビルド設定に `PUBLIC_SITE_URL` がある場合は、そちらが優先されるため併せて確認します。変更後は再ビルドしてデプロイしてください（`npm run build`、または連携済みホスティングのビルド）。ローカルファイルの編集だけでは公開サイトは更新されません。
+
+## 使用する言語を選ぶ
+
+標準で9言語が有効です：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。既定は英語です。不要な言語は `src/site.config.ts` で `i18n.locales.<code>.meta.enabled: false` にします。設定の省略では無効にならず、既定言語は常に有効です。`new-post` は初期状態で9ファイルを作成しますが、自動翻訳はしません。日本語だけ作成する場合：`npm run new-post -- my-post --locales ja`。
 
 ## テーマのアップグレード
 
@@ -321,10 +333,6 @@ MDX 内の Markdown 見出しに対応しますが、コンポーネントが生
 
 同梱フォントで標準の9言語に対応し、画像 API やブラウザー JS は不要です。長いタイトルは画像内のみ省略します。すべての絵文字や文字体系は保証しません。ビルド時間とインストール容量は増えますが、記事ページへのフォント追加配信はありません。
 
-## ライセンス
-
-MIT License。`LICENSE` を参照。
-
 ## 任意の音楽プレーヤー
 
 既定では無効です。音声ファイルを `public/music/` に置き、次の設定を `src/site.config.ts` に追加します：
@@ -341,3 +349,7 @@ theme: {
 各曲に `title` と `src` を指定し、`artist` は任意です。HTTPS の音声 URL も利用できます。空のリストでは表示されません。初回訪問では PLAY を押してから音声を読み込みます。同じタブのセッション内で曲・位置・音量を記憶します。再生中にページ移動、再読み込み、戻る・進むを行うと保存位置からの再生を試み、手動で一時停止した場合は停止状態を保ちます。短い途切れが生じる場合があり、シームレス再生ではありません。ブラウザーが自動再生をブロックした場合は PLAY を押してください。削除された曲の代わりに別の曲を自動再生しません。ストレージが使えない場合も手動再生は可能ですが、セッションの再生再開はできません。
 
 再生前に曲全体をダウンロードしてブラウザーの Blob に変換するため、シークにサーバーの HTTP Range 対応は不要です。大きなファイルや遅い回線では待ち時間とメモリー使用量が増えます。一時停止からの再開は読み込み済みの曲を再利用し、曲の切り替え時に古い曲を解放します。ページ移動後は再読み込みしますが、ブラウザーの HTTP キャッシュが利用される場合があります。外部音源にはクロスオリジン取得を許可する CORS 設定が必要です。同一サイトの `public/music/` に置けば、この設定は不要です。
+
+## ライセンス
+
+MIT License。`LICENSE` を参照。
