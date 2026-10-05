@@ -117,6 +117,8 @@ This is not a privacy or draft setting: the post remains directly accessible and
 
 By default, a build generates a 1200×630 PNG for posts without `ogImage`, using the title, post author (or site author), and site name. No image API or per-post design work is needed. This does not change the body cover, `heroImage`.
 
+Automatic cards use a bundled code-rain, terminal and neon-network background, with your own site name, title and author. The small `Theme by Anglefeint` credit at the bottom right follows `theme.footer.showCredits` (default `true`); set it to `false` to hide both footer credits and this image credit. Rebuild and redeploy after changing it. Custom `ogImage` files are never modified. The artwork works offline and adds no browser JavaScript.
+
 For a custom image, put `share.png` beside the post and add to frontmatter:
 
 ```yaml

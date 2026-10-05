@@ -117,6 +117,8 @@ search: false
 
 默认构建会为未设置 `ogImage` 的文章生成 1200×630 PNG，使用文章标题、文章作者（未填则用站点作者）和站点名称。无需图片 API，也不用每篇制作图片；它不改变正文封面 `heroImage`。
 
+自动分享图使用随主题提供的代码雨、终端与霓虹网络背景，站点名、标题和作者仍取自你的内容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（默认 `true`）；设为 `false` 会同时隐藏页脚署名和图片署名，修改后重新构建部署。不会修改自定义的 `ogImage`。背景离线使用，不增加浏览器 JavaScript。
+
 若要自己指定，把 `share.png` 放在文章旁边，在 frontmatter 加：
 
 ```yaml
