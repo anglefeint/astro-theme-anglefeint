@@ -23,7 +23,7 @@
 <a id="installation"></a>
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
 <a id="setup"></a>
@@ -32,14 +32,15 @@ npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
 ### Installation und lokaler Start
 
-Verwende Node.js ab 22.12.0. Wähle im Assistenten beispielsweise my-blog und passe cd an den tatsächlichen Ordner an. Überspringe npm install, wenn die Abhängigkeiten bereits installiert wurden.
+Verwende Node.js ab 22.12.0. Der obige Befehl erstellt einmalig den neuen Ordner `my-blog` und überspringt die Installation der Abhängigkeiten. Beantworte die übrigen Fragen und fahre unten fort; bei einem anderen Ordnernamen passe auch `cd` an.
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 cd my-blog
 npm install
 npm run dev
 ```
+
+Der Entwicklungsserver läuft weiter. Beende ihn vor weiteren Befehlen mit `Ctrl+C` oder öffne ein zweites Terminal in `my-blog`. Führe alle folgenden Befehle im Projektordner aus. Erstelle das Projekt nicht ein zweites Mal.
 
 Öffne die im Terminal angezeigte Adresse. Für pnpm verwende denselben npm-Erstellungsbefehl, überspringe die Installation im Assistenten und führe pnpm install sowie pnpm dev aus.
 
@@ -89,11 +90,10 @@ Weglassen deaktiviert keine Sprache, da Einstellungen mit Vorgaben zusammengefü
 Jede Sprache enthält einen Willkommensbeitrag und drei Anleitungen. Sichere Inhalte und entferne unerwünschte Beispiele; behalte noch verwendete Bilder.
 
 ```bash
-npm run new-post -- my-first-post
-# --locales en,pt-br
+npm run new-post -- my-first-post --locales de
 ```
 
-Der Befehl erstellt je aktiver Sprache eine Vorlage, anfangs also neun. Er übersetzt nicht und überschreibt keine vorhandenen Dateien. Bearbeite Titel, Beschreibung und Text in src/content/blog/de/my-first-post.md.
+Beginne mit einem deutschen Artikel. Ohne `--locales de` erstellt der Befehl Gerüste für alle aktivierten Sprachen (anfangs neun), ohne automatische Übersetzung. Bestehende Dateien bleiben erhalten. Bearbeite Titel, Beschreibung und Text in src/content/blog/de/my-first-post.md.
 
 ### Prüfen und veröffentlichen
 
@@ -119,8 +119,7 @@ Standardmäßig sind neun Sprachen aktiv: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`,
 ### Beitrag erstellen
 
 ```bash
-npm run new-post -- my-first-post
-# --locales en,pt-br
+npm run new-post -- my-first-post --locales de
 ```
 
 Nur Deutsch: npm run new-post -- my-first-post --locales de. Slugs bestehen aus Kleinbuchstaben, Zahlen und Bindestrichen. src/content/blog/de/my-first-post.md wird zu /de/blog/my-first-post/. Vorhandene Dateien bleiben erhalten. --locales erstellt Dateien, aktiviert aber keine Sprache.

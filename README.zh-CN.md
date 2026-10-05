@@ -37,44 +37,30 @@
 
 ## 模板安装
 
-```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
-```
-
-使用 pnpm 时，先用上面的 npm 命令创建模板（跳过依赖安装提示），再进入生成的项目目录执行：
+在准备存放博客的父目录执行一次。命令会创建 `my-blog`，跳过依赖安装；完成其余向导提示后继续下面的步骤。请使用新目录；如果修改目录名，也要修改后面的 `cd` 命令。
 
 ```bash
-pnpm install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
 ## 快速开始
 
+为这个项目选择 npm 或 pnpm。使用 npm 时：
+
 ```bash
+cd my-blog
 npm install
 npm run dev
 ```
 
-构建与预览：
+打开终端显示的网址。`dev` 会持续运行：执行后续命令前，按 `Ctrl+C` 停止它，或另开终端并进入 `my-blog`。以下命令都在项目目录内执行。
+
+使用 pnpm 时，仍用上面的命令创建项目，然后用以下命令替代 npm 安装和启动步骤：
 
 ```bash
-npm run build
-npm run preview
-```
-
-质量检查命令：
-
-```bash
-npm run doctor
-npm run check
-```
-
-使用 `pnpm`：
-
-```bash
+cd my-blog
 pnpm install
 pnpm dev
-pnpm build
-pnpm preview
 ```
 
 <a id="setup"></a>
@@ -112,44 +98,24 @@ export const THEME_CONFIG = defineThemeConfig({
 
 默认启用九种语言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`，默认语言仍为英语。在 `src/site.config.ts` 中为不需要的语言设置 `i18n.locales.<code>.meta.enabled: false`；省略配置不会禁用，默认语言始终启用。`new-post` 初始会创建九份文章骨架，不会自动翻译。只创建简体中文：`npm run new-post -- my-post --locales zh`。
 
-## 升级主题
-
-对于 `#starter` 创建的项目，仅在目标版本明确兼容现有 starter 和 Astro、且无需本地结构迁移时执行：
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-```
-
-`npm update` 只在 `package.json` 声明的范围内更新：`^0.5.1` 不包含 `0.6.0`。兼容但跨范围的更新，应按发布说明安装明确的目标版本，不要直接安装 `@latest`。用 `npm ls @anglefeint/astro-theme astro` 确认实际版本。
-
-当前 starter 的 `doctor` 已包含检查和构建，成功后用 `npm run preview` 人工检查站点。只有明确报告生成适配文件与本地模板不同步时，才运行 `npm run sync-adapters`，然后重跑 `npm run doctor`；它不会下载上游模板。旧工程的脚本可能不同，请查看本地 `package.json` 并遵循升级指南。
-
-如果发布说明涉及 starter 骨架变化，建议在新目录创建最新模板，再迁移文章、资源和个人设置，不要用旧文件整体覆盖新配置辅助文件。`npm update` 只更新主题包，不保证所有历史 starter 都能原地升级。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
-
-如果你的自定义代码还在引用 `src/consts` 或 `@anglefeint/astro-theme/consts`，请迁移到 `src/config/site.ts`。
-
-如需进行 Astro 大版本升级，请先参考官方升级文档：
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- 然后按上方升级指南的验证清单检查。
-
 ## 新建文章
 
-一次为配置中已启用的语言创建同名 slug：
+先创建一篇简体中文文章：
 
 ```bash
-npm run new-post -- my-first-post
+npm run new-post -- my-first-post --locales zh
 ```
+
+编辑 `src/content/blog/zh/my-first-post.md` 的标题、描述和正文。需要为所有已启用语言创建同名骨架时，省略 `--locales`；初始配置会创建九份文件，不会自动翻译，已有文件不会被覆盖。
 
 Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
 如果 `src/assets/blog/default-covers/` 中存在默认封面，脚本会按 slug 哈希自动分配一张（后续可手动替换 `heroImage`）。
 可选语言覆盖：
 
 ```bash
-npm run new-post -- my-first-post --locales en,fr
+npm run new-post -- my-first-post --locales en,zh
 # 或
-ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
+ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
 ```
 
 `ANGLEFEINT_LOCALES=...` 写法适用于 Bash/POSIX shell；PowerShell 请使用上面的 `--locales` 命令。
@@ -162,6 +128,28 @@ URL 规则：
 - 不需要手动加路由，Astro 会在构建时根据内容文件自动生成。
 
 `--locales` 只生成文章文件，不会启用语言。还需要在 `src/site.config.ts` 中添加或启用对应语言，构建时才会生成其路由。
+
+## 发布前检查与预览
+
+完成站点配置和文章编辑后，停止开发服务，再运行：
+
+```bash
+npm run doctor
+npm run preview
+```
+
+`doctor` 已包含检查和构建，无需再重复运行 `npm run check`。打开 `preview` 输出的网址，按 `Ctrl+C` 停止预览。预览仅在本机运行，不会把网站发布到网上。
+
+如果只需要构建和预览、不执行完整检查，可改用：
+
+```bash
+npm run build
+npm run preview
+```
+
+pnpm 用户使用 `pnpm doctor`，再运行 `pnpm preview`；只构建时则使用 `pnpm build`，再运行 `pnpm preview`。
+
+静态输出位于 `dist/`。在托管平台设置构建命令 `npm run build`、输出目录 `dist/`，按照 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/) 发布；上线后检查实际域名、文章、语言菜单和搜索。
 
 ## 新建页面
 
@@ -185,9 +173,31 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## 升级主题
+
+对于 `#starter` 创建的项目，仅在目标版本明确兼容现有 starter 和 Astro、且无需本地结构迁移时执行：
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+```
+
+`npm update` 只在 `package.json` 声明的范围内更新：`^0.5.1` 不包含 `0.6.0`。兼容但跨范围的更新，应按发布说明安装明确的目标版本，不要直接安装 `@latest`。用 `npm ls @anglefeint/astro-theme astro` 确认实际版本。
+
+当前 starter 的 `doctor` 已包含检查和构建，成功后用 `npm run preview` 人工检查站点。只有明确报告生成适配文件与本地模板不同步时，才运行 `npm run sync-adapters`，然后重跑 `npm run doctor`；它不会下载上游模板。旧工程的脚本可能不同，请查看本地 `package.json` 并遵循升级指南。
+
+如果发布说明涉及 starter 骨架变化，建议在新目录创建最新模板，再迁移文章、资源和个人设置，不要用旧文件整体覆盖新配置辅助文件。`npm update` 只更新主题包，不保证所有历史 starter 都能原地升级。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+
+如果你的自定义代码还在引用 `src/consts` 或 `@anglefeint/astro-theme/consts`，请迁移到 `src/config/site.ts`。
+
+如需进行 Astro 大版本升级，请先参考官方升级文档：
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- 然后按上方升级指南的验证清单检查。
+
 ## 语言
 
-[English](README.md) · 简体中文（当前） · [日本語](README.ja.md) · [Español](README.es.md) · [한국어](README.ko.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
 
 ## 预览
 
@@ -223,7 +233,7 @@ npm run new-page -- projects --theme matrix
 - 代码块一键复制与正文图片预览
 - Astro 7 静态输出
 - Markdown + MDX 内容集合
-- Starter 内置示例语言：`en`、`ja`、`ko`、`es`、`zh`
+- Starter 内置示例语言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`
 - 按语言生成 RSS
 - 内置 Sitemap 与 robots
 - 配置驱动的主题定制
@@ -339,7 +349,7 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 
 在 `src/site.config.ts` 设置 `theme: { socialImage: { enabled: false } }` 可关闭自动生成。手动 `ogImage` 始终优先，其他文章回退到正文封面或原有默认图。修改后重新构建、部署；自动图片位于 `dist/_social/`，文章 HTML 的 `og:image` 给出准确地址。图片地址随内容变化，但外部平台仍可能缓存链接预览。
 
-内置字体覆盖默认的中、英、日、韩、西班牙语；超长标题仅在图片中缩略，不修改文章标题。不保证所有 emoji 和其他文字系统。生成会增加构建时间与安装体积，字体不会因此被文章页面下载。
+内置字体覆盖默认的九种语言；超长标题仅在图片中缩略，不修改文章标题。不保证所有 emoji 和其他文字系统。生成会增加构建时间与安装体积，字体不会因此被文章页面下载。
 
 ## 可选音乐播放器
 

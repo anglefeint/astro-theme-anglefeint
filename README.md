@@ -37,44 +37,30 @@
 
 ## Template Install
 
-```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
-```
-
-For pnpm, use the npm command above to create the template (skip its dependency-install prompt), then enter the generated project and run:
+Run this once from the parent directory where you want your blog. It creates `my-blog` and skips dependency installation; follow any remaining prompts, then continue below. Use a new directory; if you rename it, change the `cd` command too.
 
 ```bash
-pnpm install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
 ## Quick Start
 
+Choose npm or pnpm for this project. The npm path is:
+
 ```bash
+cd my-blog
 npm install
 npm run dev
 ```
 
-Build and preview:
+Open the URL printed in the terminal. `dev` keeps running: before the next commands, stop it with `Ctrl+C`, or open another terminal in `my-blog`. All following commands run inside that project directory.
+
+For pnpm, use the same creation command above, then run these instead of the npm installation/start commands:
 
 ```bash
-npm run build
-npm run preview
-```
-
-Quality commands:
-
-```bash
-npm run doctor
-npm run check
-```
-
-With `pnpm`:
-
-```bash
+cd my-blog
 pnpm install
 pnpm dev
-pnpm build
-pnpm preview
 ```
 
 <a id="setup"></a>
@@ -112,44 +98,24 @@ Set `site.url` to your real production origin so canonical links, feeds and site
 
 Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. English remains the default. In `src/site.config.ts`, set `i18n.locales.<code>.meta.enabled: false` for each unwanted language; omitting an override does not disable it, and the default locale stays enabled. `new-post` initially creates nine article skeletons, not automatic translations. To create only one: `npm run new-post -- my-post --locales en`.
 
-## Upgrade Theme
-
-For projects created from `#starter`, use the following only when the target release supports your existing starter and Astro version and requires no local structure changes:
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-```
-
-`npm update` stays within the range in `package.json`: `^0.5.1` does not include `0.6.0`. For a compatible update outside that range, follow the release notes and install an explicit target version, not blindly `@latest`. Check the installed versions with `npm ls @anglefeint/astro-theme astro`.
-
-In the current starter, `doctor` already includes checks and a build. After it succeeds, use `npm run preview` to inspect the site. Only if it reports generated adapters out of sync with local templates, run `npm run sync-adapters`, then rerun `npm run doctor`; this does not download upstream templates. Older projects may have different scripts: inspect their `package.json` and follow the upgrade guide.
-
-If release notes mention starter-side contract changes, create the latest template in a new directory and migrate your content and personal settings. Do not overwrite the new configuration helpers with old files. `npm update` only updates the published package; in-place upgrades across all historical starters are not guaranteed. See the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
-
-If your custom code still imports `src/consts` or `@anglefeint/astro-theme/consts`, migrate to `src/config/site.ts`.
-
-For Astro major-version migrations, follow the official Astro guide first:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- then follow the validation checklist in the upgrade guide linked above.
-
 ## Create New Post
 
-Create the same slug in all enabled locales:
+Start with one English article:
 
 ```bash
-npm run new-post -- my-first-post
+npm run new-post -- my-first-post --locales en
 ```
+
+Edit the title, description and body in `src/content/blog/en/my-first-post.md`. To create matching skeletons in every enabled language, omit `--locales`: initially this creates nine files, without translating them. Existing files are preserved.
 
 Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-post`).
 If default covers exist in `src/assets/blog/default-covers/`, a stable cover is auto-assigned by slug hash (you can replace `heroImage` later).
 Optional locale override:
 
 ```bash
-npm run new-post -- my-first-post --locales en,fr
+npm run new-post -- my-first-post --locales en,zh
 # or
-ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
+ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
 ```
 
 The `ANGLEFEINT_LOCALES=...` syntax is for Bash/POSIX shells. In PowerShell, use the `--locales` command above.
@@ -162,6 +128,28 @@ How URL works:
 - You do not need to add routes manually. Astro generates them from content files at build time.
 
 `--locales` creates article files but does not enable languages. Add/enable each target locale in `src/site.config.ts` for its routes to be generated.
+
+## Check and preview before publishing
+
+After configuring your site and writing your article, stop the development server and run:
+
+```bash
+npm run doctor
+npm run preview
+```
+
+`doctor` includes checks and a build, so you do not need to run `npm run check` again. Open the URL printed by `preview`; stop it with `Ctrl+C`. Preview is local only and does not publish your site.
+
+For a build and preview without the full checks, use this alternative:
+
+```bash
+npm run build
+npm run preview
+```
+
+With pnpm, use `pnpm doctor` then `pnpm preview`; the build-only alternative is `pnpm build` then `pnpm preview`.
+
+The static output is `dist/`. Configure your host to run `npm run build` and serve `dist/`; follow the [Astro deployment guide](https://docs.astro.build/en/guides/deploy/). Verify your production domain, article, language menu and search after deploying.
 
 ## Create New Page
 
@@ -185,9 +173,31 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## Upgrade Theme
+
+For projects created from `#starter`, use the following only when the target release supports your existing starter and Astro version and requires no local structure changes:
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+```
+
+`npm update` stays within the range in `package.json`: `^0.5.1` does not include `0.6.0`. For a compatible update outside that range, follow the release notes and install an explicit target version, not blindly `@latest`. Check the installed versions with `npm ls @anglefeint/astro-theme astro`.
+
+In the current starter, `doctor` already includes checks and a build. After it succeeds, use `npm run preview` to inspect the site. Only if it reports generated adapters out of sync with local templates, run `npm run sync-adapters`, then rerun `npm run doctor`; this does not download upstream templates. Older projects may have different scripts: inspect their `package.json` and follow the upgrade guide.
+
+If release notes mention starter-side contract changes, create the latest template in a new directory and migrate your content and personal settings. Do not overwrite the new configuration helpers with old files. `npm update` only updates the published package; in-place upgrades across all historical starters are not guaranteed. See the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+
+If your custom code still imports `src/consts` or `@anglefeint/astro-theme/consts`, migrate to `src/config/site.ts`.
+
+For Astro major-version migrations, follow the official Astro guide first:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- then follow the validation checklist in the upgrade guide linked above.
+
 ## Languages
 
-English (this file) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [Español](README.es.md) · [한국어](README.ko.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
 
 ## Preview
 

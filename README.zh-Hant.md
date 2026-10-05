@@ -23,7 +23,7 @@
 <a id="installation"></a>
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
 <a id="setup"></a>
@@ -32,14 +32,15 @@ npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
 ### 安裝並在本機開啟
 
-使用 Node.js 22.12.0 或更新版本。在精靈中選擇資料夾，例如 my-blog，並讓 cd 指向實際建立的位置。若精靈已安裝相依套件，可略過 npm install。
+使用 Node.js 22.12.0 或更新版本。上方指令只需執行一次，會建立新的 `my-blog` 資料夾並略過相依套件安裝。完成其餘精靈提示後繼續下方步驟；若更改資料夾名稱，也要調整 `cd`。
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 cd my-blog
 npm install
 npm run dev
 ```
+
+開發伺服器會持續執行。執行後續指令前，按 `Ctrl+C` 停止它，或另開終端並進入 `my-blog`。以下指令都在專案資料夾內執行，不必再次建立專案。
 
 開啟終端顯示的網址。若使用 pnpm，仍以相同 npm 指令建立專案，略過精靈的安裝步驟，再執行 pnpm install 與 pnpm dev。
 
@@ -89,11 +90,10 @@ i18n: {
 每種語言都有歡迎文章與三篇指南。先備份，再刪除不需要的範例；保留其他文章仍在使用的圖片。
 
 ```bash
-npm run new-post -- my-first-post
-# --locales en,pt-br
+npm run new-post -- my-first-post --locales zh-hant
 ```
 
-指令會為每個啟用的語言建立骨架，初始設定共九份。它不會自動翻譯，也不會覆寫現有檔案。請編輯 src/content/blog/zh-hant/my-first-post.md 的標題、描述與正文。
+先建立一篇繁體中文文章。省略 `--locales zh-hant` 才會為所有啟用語言建立骨架（初始共九份），不會自動翻譯，也不會覆寫現有檔案。 請編輯 src/content/blog/zh-hant/my-first-post.md 的標題、描述與正文。
 
 ### 檢查與部署
 
@@ -119,8 +119,7 @@ doctor 包含檢查與建置。preview 僅在本機顯示結果，不會發布�
 ### 建立文章
 
 ```bash
-npm run new-post -- my-first-post
-# --locales en,pt-br
+npm run new-post -- my-first-post --locales zh-hant
 ```
 
 只建立繁體中文可用 npm run new-post -- my-first-post --locales zh-hant。slug 使用小寫英文字母、數字與連字號。src/content/blog/zh-hant/my-first-post.md 對應 /zh-hant/blog/my-first-post/。現有檔案不會被覆寫。--locales 只建立檔案，不會啟用語言。

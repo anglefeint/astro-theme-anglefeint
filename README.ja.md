@@ -37,44 +37,30 @@
 
 ## テンプレートの導入
 
-```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
-```
-
-pnpm を使う場合は、上の npm コマンドでテンプレートを作成し（依存関係のインストールはスキップ）、生成されたプロジェクトに移動して実行します:
+ブログを置く親ディレクトリで一度実行します。`my-blog` を作成し、依存関係のインストールをスキップします。残りの質問に答えたら次へ進んでください。新しいディレクトリを使い、名前を変えた場合は `cd` も変更します。
 
 ```bash
-pnpm install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
 ## クイックスタート
 
+このプロジェクトでは npm または pnpm のどちらかを選びます。npm の場合：
+
 ```bash
+cd my-blog
 npm install
 npm run dev
 ```
 
-ビルドとプレビュー:
+ターミナルに表示された URL を開きます。`dev` は動き続けるため、次のコマンドの前に `Ctrl+C` で停止するか、別のターミナルで `my-blog` に移動してください。以降のコマンドはすべてプロジェクト内で実行します。
+
+pnpm の場合も上の作成コマンドを使い、npm のインストール・起動手順の代わりに次を実行します：
 
 ```bash
-npm run build
-npm run preview
-```
-
-品質チェック:
-
-```bash
-npm run doctor
-npm run check
-```
-
-`pnpm` を使う場合:
-
-```bash
+cd my-blog
 pnpm install
 pnpm dev
-pnpm build
-pnpm preview
 ```
 
 <a id="setup"></a>
@@ -112,44 +98,24 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 
 標準で9言語が有効です：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。既定は英語です。不要な言語は `src/site.config.ts` で `i18n.locales.<code>.meta.enabled: false` にします。設定の省略では無効にならず、既定言語は常に有効です。`new-post` は初期状態で9ファイルを作成しますが、自動翻訳はしません。日本語だけ作成する場合：`npm run new-post -- my-post --locales ja`。
 
-## テーマのアップグレード
-
-`#starter` から作成したプロジェクトでは、対象リリースが既存の starter と Astro に対応し、ローカル構成の移行が不要な場合にのみ実行します:
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-```
-
-`npm update` は `package.json` の範囲内で更新します。`^0.5.1` に `0.6.0` は含まれません。互換性のある範囲外の更新では、リリースノートに従って対象バージョンを明示し、無条件に `@latest` を使わないでください。`npm ls @anglefeint/astro-theme astro` で実際のバージョンを確認できます。
-
-現在の starter では `doctor` にチェックとビルドが含まれます。成功後、`npm run preview` でサイトを確認してください。生成アダプターとローカルテンプレートの不一致が報告された場合に限り、`npm run sync-adapters` を実行し、`npm run doctor` を再実行します。上流のテンプレートは取得しません。旧プロジェクトではスクリプトが異なる場合があるため、ローカルの `package.json` と更新ガイドを確認してください。
-
-リリースノートに starter の構成変更がある場合は、新しいディレクトリに最新テンプレートを作成し、記事・画像・個人設定を移してください。新しい設定補助ファイルを古いファイルで上書きしないでください。`npm update` はパッケージのみを更新し、すべての旧 starter の直接更新は保証しません。[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
-
-カスタムコードが `src/consts` または `@anglefeint/astro-theme/consts` を参照している場合は、`src/config/site.ts` へ移行してください。
-
-Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- その後、上記の更新ガイドの検証チェックリストに従ってください。
-
 ## 新しい記事を作成
 
-設定で有効になっているロケールに同じ slug の記事を一括作成します:
+まず日本語の記事を1つ作成します：
 
 ```bash
-npm run new-post -- my-first-post
+npm run new-post -- my-first-post --locales ja
 ```
+
+`src/content/blog/ja/my-first-post.md` のタイトル、説明、本文を編集します。すべての有効な言語に同じ slug の雛形を作るには `--locales` を省略します。初期設定では9ファイルを作成し、自動翻訳や既存ファイルの上書きはしません。
 
 Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
 `src/assets/blog/default-covers/` に画像がある場合、slug ハッシュで安定したデフォルトカバーを自動設定します（後で `heroImage` を手動変更可能）。
 ロケールを明示指定する場合:
 
 ```bash
-npm run new-post -- my-first-post --locales en,fr
+npm run new-post -- my-first-post --locales en,zh
 # または
-ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
+ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
 ```
 
 `ANGLEFEINT_LOCALES=...` は Bash/POSIX シェル用の構文です。PowerShell では上の `--locales` コマンドを使ってください。
@@ -162,6 +128,28 @@ URL のルール:
 - ルートを手動で追加する必要はありません。Astro が build 時に自動生成します。
 
 `--locales` は記事ファイルだけを作成し、言語を有効化しません。ルートを生成するには `src/site.config.ts` で対象言語を追加・有効化してください。
+
+## 公開前のチェックとプレビュー
+
+サイト設定と記事の編集後、開発サーバーを停止して実行します：
+
+```bash
+npm run doctor
+npm run preview
+```
+
+`doctor` はチェックとビルドを含むため、`npm run check` を重ねて実行する必要はありません。`preview` の URL を開き、終了時は `Ctrl+C` を押します。プレビューはローカル表示のみで、公開はしません。
+
+完全なチェックを省き、ビルドとプレビューだけ行う場合：
+
+```bash
+npm run build
+npm run preview
+```
+
+pnpm では `pnpm doctor`、次に `pnpm preview` を使います。ビルドのみなら `pnpm build`、次に `pnpm preview` です。
+
+静的ファイルは `dist/` に出力されます。ホストのビルドコマンドを `npm run build`、出力先を `dist/` に設定し、[Astro デプロイガイド](https://docs.astro.build/en/guides/deploy/)に従って公開します。本番ドメイン、記事、言語メニュー、検索を確認してください。
 
 ## 新しいページを作成
 
@@ -185,9 +173,31 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## テーマのアップグレード
+
+`#starter` から作成したプロジェクトでは、対象リリースが既存の starter と Astro に対応し、ローカル構成の移行が不要な場合にのみ実行します:
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+```
+
+`npm update` は `package.json` の範囲内で更新します。`^0.5.1` に `0.6.0` は含まれません。互換性のある範囲外の更新では、リリースノートに従って対象バージョンを明示し、無条件に `@latest` を使わないでください。`npm ls @anglefeint/astro-theme astro` で実際のバージョンを確認できます。
+
+現在の starter では `doctor` にチェックとビルドが含まれます。成功後、`npm run preview` でサイトを確認してください。生成アダプターとローカルテンプレートの不一致が報告された場合に限り、`npm run sync-adapters` を実行し、`npm run doctor` を再実行します。上流のテンプレートは取得しません。旧プロジェクトではスクリプトが異なる場合があるため、ローカルの `package.json` と更新ガイドを確認してください。
+
+リリースノートに starter の構成変更がある場合は、新しいディレクトリに最新テンプレートを作成し、記事・画像・個人設定を移してください。新しい設定補助ファイルを古いファイルで上書きしないでください。`npm update` はパッケージのみを更新し、すべての旧 starter の直接更新は保証しません。[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
+
+カスタムコードが `src/consts` または `@anglefeint/astro-theme/consts` を参照している場合は、`src/config/site.ts` へ移行してください。
+
+Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- その後、上記の更新ガイドの検証チェックリストに従ってください。
+
 ## 言語
 
-[English](README.md) · [简体中文](README.zh-CN.md) · 日本語（このファイル） · [Español](README.es.md) · [한국어](README.ko.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
 
 ## プレビュー
 
