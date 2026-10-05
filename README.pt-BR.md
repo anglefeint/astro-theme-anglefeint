@@ -23,7 +23,7 @@
 <a id="installation"></a>
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
 <a id="setup"></a>
@@ -32,14 +32,15 @@ npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
 ### Instalar e abrir localmente
 
-Use Node.js 22.12.0 ou superior. No assistente, escolha uma pasta como my-blog; ajuste o comando cd à pasta criada. Se o assistente já instalou as dependências, pule npm install.
+Use Node.js 22.12.0 ou superior. O comando acima cria uma única vez a nova pasta `my-blog` e pula a instalação das dependências. Responda às outras perguntas e continue abaixo; se mudar o nome da pasta, ajuste também `cd`.
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 cd my-blog
 npm install
 npm run dev
 ```
+
+O servidor de desenvolvimento continua ativo. Antes dos próximos comandos, pare-o com `Ctrl+C` ou abra outro terminal dentro de `my-blog`. Execute todos os comandos seguintes na pasta do projeto. Não crie o projeto novamente.
 
 Abra o endereço indicado no terminal. Para pnpm, crie o projeto com o mesmo comando npm, pule a instalação no assistente e execute pnpm install e pnpm dev.
 
@@ -89,11 +90,10 @@ Omitir um idioma não o desativa: a configuração é mesclada com os padrões. 
 Cada idioma do starter tem uma página de boas-vindas e três guias. Faça backup e remova os exemplos que não quiser; preserve imagens ainda utilizadas.
 
 ```bash
-npm run new-post -- my-first-post
-# --locales en,pt-br
+npm run new-post -- my-first-post --locales pt-br
 ```
 
-O comando cria um arquivo por idioma ativo — nove inicialmente. Ele não traduz o conteúdo e não sobrescreve arquivos existentes. Edite título, descrição e corpo em src/content/blog/pt-br/my-first-post.md.
+Comece com um artigo em português do Brasil. Sem `--locales pt-br`, o comando cria modelos para todos os idiomas ativos (inicialmente nove), sem tradução automática. Os arquivos existentes são preservados. Edite título, descrição e corpo em src/content/blog/pt-br/my-first-post.md.
 
 ### Verificar e publicar
 
@@ -119,8 +119,7 @@ Nove idiomas ativos por padrão: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `r
 ### Criar um artigo
 
 ```bash
-npm run new-post -- my-first-post
-# --locales en,pt-br
+npm run new-post -- my-first-post --locales pt-br
 ```
 
 Para criar somente português, use npm run new-post -- my-first-post --locales pt-br. Use letras minúsculas, números e hífens no slug. O arquivo src/content/blog/pt-br/my-first-post.md gera /pt-br/blog/my-first-post/. Arquivos existentes são preservados. --locales cria arquivos, mas não ativa idiomas.

@@ -23,7 +23,7 @@
 <a id="installation"></a>
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
 <a id="setup"></a>
@@ -32,14 +32,15 @@ npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 
 ### Установка и локальный запуск
 
-Нужен Node.js 22.12.0 или новее. В мастере выберите папку, например my-blog, и укажите её в cd. Пропустите npm install, если зависимости уже установлены.
+Нужен Node.js 22.12.0 или новее. Команда выше один раз создаёт новую папку `my-blog` и пропускает установку зависимостей. Ответьте на остальные вопросы и продолжайте ниже; если изменили имя папки, измените и `cd`.
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
 cd my-blog
 npm install
 npm run dev
 ```
+
+Сервер разработки продолжает работать. Перед следующими командами остановите его через `Ctrl+C` или откройте второй терминал в `my-blog`. Все дальнейшие команды выполняются в папке проекта. Повторно создавать проект не нужно.
 
 Откройте адрес из терминала. Для pnpm используйте ту же команду создания, пропустите установку в мастере, затем выполните pnpm install и pnpm dev.
 
@@ -89,11 +90,10 @@ i18n: {
 Для каждого языка starter содержит приветствие и три руководства. Сохраните нужное и удалите лишние примеры; не удаляйте используемые изображения.
 
 ```bash
-npm run new-post -- my-first-post
-# --locales en,pt-br
+npm run new-post -- my-first-post --locales ru
 ```
 
-Команда создаёт шаблон для каждого активного языка, изначально девять. Она не переводит текст и не перезаписывает файлы. Измените заголовок, описание и текст в src/content/blog/ru/my-first-post.md.
+Начните с одной статьи на русском. Без `--locales ru` команда создаёт заготовки для всех включённых языков (изначально девять), без автоматического перевода. Существующие файлы сохраняются. Измените заголовок, описание и текст в src/content/blog/ru/my-first-post.md.
 
 ### Проверка и публикация
 
@@ -119,8 +119,7 @@ doctor выполняет проверки и сборку. preview показы
 ### Создать статью
 
 ```bash
-npm run new-post -- my-first-post
-# --locales en,pt-br
+npm run new-post -- my-first-post --locales ru
 ```
 
 Только русский: npm run new-post -- my-first-post --locales ru. Slug содержит строчные латинские буквы, цифры и дефисы. src/content/blog/ru/my-first-post.md создаёт /ru/blog/my-first-post/. Существующие файлы сохраняются. --locales создаёт файлы, но не включает язык.

@@ -37,44 +37,30 @@
 
 ## Instalación con plantilla
 
-```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
-```
-
-Para pnpm, crea la plantilla con el comando npm anterior (omite la instalación de dependencias), entra en el proyecto generado y ejecuta:
+Ejecuta esto una sola vez desde el directorio donde quieres guardar tu blog. Crea `my-blog` y omite la instalación de dependencias; responde las preguntas restantes y continúa abajo. Usa una carpeta nueva; si cambias el nombre, ajusta también `cd`.
 
 ```bash
-pnpm install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
 ## Inicio rápido
 
+Elige npm o pnpm para este proyecto. Con npm:
+
 ```bash
+cd my-blog
 npm install
 npm run dev
 ```
 
-Build y preview:
+Abre la URL indicada en el terminal. `dev` sigue ejecutándose: antes de los siguientes comandos, detenlo con `Ctrl+C` o abre otro terminal dentro de `my-blog`. Todos los comandos siguientes se ejecutan en esa carpeta.
+
+Con pnpm, usa el mismo comando de creación y sustituye los pasos de instalación e inicio de npm por:
 
 ```bash
-npm run build
-npm run preview
-```
-
-Comandos de calidad:
-
-```bash
-npm run doctor
-npm run check
-```
-
-Con `pnpm`:
-
-```bash
+cd my-blog
 pnpm install
 pnpm dev
-pnpm build
-pnpm preview
 ```
 
 <a id="setup"></a>
@@ -112,44 +98,24 @@ Configura `site.url` con la URL real de producción para que los enlaces canonic
 
 Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`; inglés sigue siendo el predeterminado. Desactiva cada idioma innecesario con `i18n.locales.<code>.meta.enabled: false` en `src/site.config.ts`. Omitirlo no lo desactiva; el idioma predeterminado permanece activo. `new-post` crea inicialmente nueve plantillas, sin traducir el contenido. Para crear solo español: `npm run new-post -- my-post --locales es`.
 
-## Actualizar tema
-
-En proyectos creados desde `#starter`, ejecuta lo siguiente solo si la versión de destino es compatible con tu starter y Astro y no requiere cambios de estructura local:
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-```
-
-`npm update` respeta el rango de `package.json`: `^0.5.1` no incluye `0.6.0`. Para una actualización compatible fuera del rango, sigue las notas de versión e instala una versión de destino explícita, no `@latest` sin comprobarla. Verifica las versiones con `npm ls @anglefeint/astro-theme astro`.
-
-En el starter actual, `doctor` ya incluye las comprobaciones y la compilación. Cuando termine correctamente, revisa el sitio con `npm run preview`. Solo si informa de diferencias entre los adaptadores generados y las plantillas locales, ejecuta `npm run sync-adapters` y repite `npm run doctor`; esto no descarga plantillas del repositorio original. Los proyectos antiguos pueden tener otros scripts: consulta su `package.json` y la guía de actualización.
-
-Si las notas de versión incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualización directa de todos los starters históricos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
-
-Si tu código personalizado aún importa `src/consts` o `@anglefeint/astro-theme/consts`, mígralo a `src/config/site.ts`.
-
-Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- después sigue la lista de verificación de la guía de actualización enlazada arriba.
-
 ## Crear nuevo post
 
-Crea el mismo slug para todos los idiomas habilitados en la configuración:
+Empieza con un artículo en español:
 
 ```bash
-npm run new-post -- my-first-post
+npm run new-post -- my-first-post --locales es
 ```
+
+Edita el título, la descripción y el contenido en `src/content/blog/es/my-first-post.md`. Para crear plantillas con el mismo slug en todos los idiomas activos, omite `--locales`: inicialmente crea nueve archivos, sin traducirlos ni sobrescribir los existentes.
 
 Regla del slug: usa solo minúsculas, números y guiones (ejemplo: `my-first-post`).
 Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` después).
 Override opcional de idiomas:
 
 ```bash
-npm run new-post -- my-first-post --locales en,fr
+npm run new-post -- my-first-post --locales en,zh
 # o
-ANGLEFEINT_LOCALES=en,fr npm run new-post -- my-first-post
+ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
 ```
 
 La sintaxis `ANGLEFEINT_LOCALES=...` es para Bash y shells POSIX. En PowerShell, usa el comando con `--locales` de arriba.
@@ -162,6 +128,28 @@ Cómo funciona la URL:
 - No necesitas crear rutas a mano. Astro las genera automáticamente en build.
 
 `--locales` solo crea archivos de artículos; no habilita idiomas. Añade o habilita cada idioma en `src/site.config.ts` para generar sus rutas.
+
+## Comprobar y previsualizar antes de publicar
+
+Después de configurar el sitio y escribir el artículo, detén el servidor de desarrollo y ejecuta:
+
+```bash
+npm run doctor
+npm run preview
+```
+
+`doctor` incluye comprobaciones y compilación; no necesitas repetir `npm run check`. Abre la URL de `preview` y detenlo con `Ctrl+C`. La vista previa es local y no publica el sitio.
+
+Para compilar y previsualizar sin todas las comprobaciones, usa esta alternativa:
+
+```bash
+npm run build
+npm run preview
+```
+
+Con pnpm, ejecuta `pnpm doctor` y luego `pnpm preview`; para solo compilar, usa `pnpm build` y luego `pnpm preview`.
+
+La salida estática está en `dist/`. Configura el alojamiento con `npm run build` y el directorio de salida `dist/`; sigue la [guía de despliegue de Astro](https://docs.astro.build/en/guides/deploy/). Verifica el dominio real, el artículo, el selector de idiomas y la búsqueda tras publicar.
 
 ## Crear nueva página
 
@@ -185,9 +173,31 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## Actualizar tema
+
+En proyectos creados desde `#starter`, ejecuta lo siguiente solo si la versión de destino es compatible con tu starter y Astro y no requiere cambios de estructura local:
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+```
+
+`npm update` respeta el rango de `package.json`: `^0.5.1` no incluye `0.6.0`. Para una actualización compatible fuera del rango, sigue las notas de versión e instala una versión de destino explícita, no `@latest` sin comprobarla. Verifica las versiones con `npm ls @anglefeint/astro-theme astro`.
+
+En el starter actual, `doctor` ya incluye las comprobaciones y la compilación. Cuando termine correctamente, revisa el sitio con `npm run preview`. Solo si informa de diferencias entre los adaptadores generados y las plantillas locales, ejecuta `npm run sync-adapters` y repite `npm run doctor`; esto no descarga plantillas del repositorio original. Los proyectos antiguos pueden tener otros scripts: consulta su `package.json` y la guía de actualización.
+
+Si las notas de versión incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualización directa de todos los starters históricos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+
+Si tu código personalizado aún importa `src/consts` o `@anglefeint/astro-theme/consts`, mígralo a `src/config/site.ts`.
+
+Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- después sigue la lista de verificación de la guía de actualización enlazada arriba.
+
 ## Idiomas
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · Español (este archivo) · [한국어](README.ko.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
 
 ## Vista previa
 
