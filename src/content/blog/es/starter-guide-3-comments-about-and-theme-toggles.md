@@ -198,6 +198,8 @@ export const THEME_CONFIG = defineThemeConfig({
 
 Usa `showCredits: true` para volver a mostrarlos. Al ocultarlos se eliminan ambos enlaces, pero se mantiene la línea de copyright. El campo opcional `site.tagline` añade texto propio independientemente de este interruptor. Está vacío por defecto; el valor anterior `Built with Astro.` se trata como el crédito integrado para evitar duplicados. No se añade `All rights reserved`.
 
+Las tarjetas automáticas usan un fondo incluido de lluvia de código, terminales y redes de neón, con tu propio nombre de sitio, título y autor. El pequeño crédito `Theme by Anglefeint` abajo a la derecha sigue `theme.footer.showCredits` (por defecto `true`); con `false` se ocultan los créditos del pie y de la imagen. Vuelve a compilar y desplegar tras cambiarlo. Los archivos `ogImage` personalizados no se modifican. El fondo funciona sin conexión y no añade JavaScript al navegador.
+
 La demo pública utiliza su propio nombre, dominio e introducciones traducidas. Un starter nuevo conserva valores genéricos y se sigue configurando en `src/site.config.ts`. Al actualizar un starter antiguo, migra también los archivos de configuración indicados en la guía de actualización; actualizar solo el paquete npm no añade esta opción a los adaptadores antiguos.
 
 ## En esta serie

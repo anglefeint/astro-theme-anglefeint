@@ -198,6 +198,8 @@ export const THEME_CONFIG = defineThemeConfig({
 
 设置 `showCredits: true` 可恢复显示。关闭后两条署名链接都移除，版权行保留。可选的 `site.tagline` 独立追加自定义纯文字，不受此开关控制；默认为空，旧默认值 `Built with Astro.` 视为内置署名，避免重复。不会追加 `All rights reserved`。
 
+自动分享图使用随主题提供的代码雨、终端与霓虹网络背景，站点名、标题和作者仍取自你的内容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（默认 `true`）；设为 `false` 会同时隐藏页脚署名和图片署名，修改后重新构建部署。不会修改自定义的 `ogImage`。背景离线使用，不增加浏览器 JavaScript。
+
 公开 demo 使用专用站名、域名和翻译后的介绍；新安装的 starter 保持通用默认配置，用户仍只需编辑 `src/site.config.ts`。升级旧 starter 时，请按升级指南迁移配套配置文件；仅更新 npm 包不会为旧适配器补上这个开关。
 
 ## 这套教程
