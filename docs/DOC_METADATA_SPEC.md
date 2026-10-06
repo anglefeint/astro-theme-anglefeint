@@ -318,7 +318,7 @@ Tool adapters such as `CLAUDE.md` and `.cursor/rules/00-repo.mdc` should normall
 
 ## Validation Boundaries
 
-The maintainer scripts share `scripts/parse-frontmatter.mjs`, which extracts YAML fences and parses values with `js-yaml` 4. It supports LF/CRLF, an initial BOM, multiline values and sidecar wrappers; malformed or unclosed metadata fails parsing. No JavaScript frontmatter engine is enabled. `tests/frontmatter.unit.test.mjs` covers these boundaries. This maintainer dependency is not distributed with the theme package or starter.
+The maintainer scripts share `scripts/parse-frontmatter.mjs`, which extracts YAML fences and parses values with `js-yaml` 4. It supports LF/CRLF, an initial BOM, multiline values and sidecar wrappers; malformed or unclosed metadata fails parsing. No JavaScript frontmatter engine is enabled. `tests/frontmatter.unit.test.mjs` covers these boundaries. This shared parser is maintainer-only, and starter generation does not copy main's direct `js-yaml` devDependency. Astro can independently install `js-yaml` transitively; this change does not remove or replace Astro's content parser.
 
 `npm run check:docs` should validate the contract, not the entire quality of prose.
 
