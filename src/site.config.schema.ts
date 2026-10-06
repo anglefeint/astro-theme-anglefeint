@@ -3,11 +3,8 @@ import type { Messages } from '@anglefeint/theme-default-i18n';
 
 export type LocaleCode = string;
 
-export interface SocialLink {
-  href: string;
-  label: string;
-  icon?: 'mastodon' | 'twitter' | 'github';
-}
+import type { SocialLink } from '@anglefeint/astro-theme/utils/social-icons.ts';
+export type { SocialLink };
 
 export interface AboutConfig {
   metaLine: string;

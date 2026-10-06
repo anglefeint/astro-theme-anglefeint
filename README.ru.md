@@ -28,6 +28,26 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 <a id="setup"></a>
 
+## Социальные ссылки
+
+Настройте `social.links` в `src/site.config.ts`: шапка и подвал используют порядок массива. Добавляйте только нужные ссылки:
+
+```ts
+// src/site.config.ts — defineThemeConfig({ ... })
+social: {
+  links: [
+    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
+    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
+  ],
+},
+```
+
+Встроенные значения `icon`: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
+
+Для своего изображения поместите `community.svg` в `public/icons/` и задайте ссылке `iconSrc: "/icons/community.svg"`. Поддерживаются локальные SVG, PNG и WebP. Путь начинается с `/`, без внешнего URL, параметров запроса, фрагмента или закодированных символов. Значение Astro `base` добавляется автоматически. Отсутствующий файл или неизвестное имя значка вызывает ошибку конфигурации при разработке/сборке.
+
+Приоритет: `iconSrc` → `icon` → текст. Встроенные значки наследуют цвет меню, свои изображения сохраняют исходные цвета. `label` задаёт доступное имя. В подвале ссылки при необходимости переносятся на новую строку; в шапке сохраняется одна строка с горизонтальной прокруткой при нехватке места. При ширине до 720px включительно они по-прежнему скрыты в шапке и видны в подвале. Пустой `links` сохраняет три неактивных значка-заполнителя. После изменения конфигурации пересоберите и разверните сайт.
+
 ## Руководство 1: Настройка блога
 
 ### Установка и локальный запуск

@@ -16,6 +16,10 @@ This theme uses four distinct atmospheres by route.
 
 The built-in locales use horizontal LTR. Narrow article panels include padding and borders in their width, long prose paths can wrap, and inactive link-preview pseudo-elements do not create horizontal overflow. These local layout fixes retain the scene effects. New-language browser coverage exercises Home, Blog, About and article pages at 1280, 390 and 320 pixels.
 
+## Shared social menus
+
+Header and footer use the same configured order. The twelve built-in SVGs retain `currentColor` and existing menu hover colors; custom images use a fixed square box with `object-fit: contain` and retain source colors. Text-only links have readable line height and wrap. Footer menus wrap. Header menus stay in one horizontally scrollable row so fixed headers do not grow over page content; desktop headers with four or more links allocate remaining space to the controls. Keyboard links have a visible focus outline and can scroll into view. Header social links remain hidden at <=720px; footer links remain available. Empty configuration keeps three non-interactive placeholders. This does not alter the four scene effects.
+
 ## Design Intent and Change Principles
 
 The product positioning is defined in [AGENTS.md](../AGENTS.md#product-identity-and-design-intent): lightweight, simple publishing with conspicuous cinematic character. The following describes creative intent; the route sections below describe implemented behavior.

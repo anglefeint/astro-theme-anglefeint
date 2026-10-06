@@ -16,6 +16,20 @@ import { checkReadmeLinks } from './check-readme-links.mjs';
 import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
 import { auditDependencies } from './audit-dependencies.mjs';
 import sharp from 'sharp';
+const socialIconNames = [
+  'mastodon',
+  'twitter',
+  'github',
+  'youtube',
+  'bluesky',
+  'linkedin',
+  'discord',
+  'telegram',
+  'instagram',
+  'facebook',
+  'whatsapp',
+  'line',
+];
 
 const exec = promisify(execFile);
 const root = process.cwd();
@@ -172,10 +186,32 @@ try {
       path.join(project, 'src/content/blog/en/tag-special.md'),
       '---\ntitle: Special tag fixture\ndescription: Tag routing fixture\npubDate: 2026-01-01\ntags: ["C++", "C#", "中文", "Astro", "astro", "anglefeint"]\n---\nTag fixture.\n'
     );
+    await sharp(path.join(project, customCover))
+      .png()
+      .toFile(path.join(project, 'public/share-test.png'));
     for (const locale of ['en', 'zh', 'pt-br', 'de', 'ru', 'zh-hant']) {
       const creditedImages = new Map();
       for (const mode of ['always', 'never']) {
         await setConfig({
+          social: {
+            links:
+              mode === 'always'
+                ? [
+                    ...socialIconNames.map((icon) => ({
+                      href: `https://example.com/${icon}`,
+                      label: icon,
+                      icon,
+                    })),
+                    {
+                      href: 'https://example.com/custom',
+                      label: 'Custom social',
+                      icon: 'github',
+                      iconSrc: '/share-test.png',
+                    },
+                    { href: 'https://example.com/text', label: 'Text social' },
+                  ]
+                : [],
+          },
           analytics: { googleAnalyticsId: mode === 'always' ? 'G-TEST123456' : '' },
           site: { description: 'SITE_DESCRIPTION_SENTINEL', tagline: 'CUSTOM_FOOTER_SENTINEL' },
           i18n: {
@@ -208,6 +244,16 @@ try {
               mode === 'always' ? 1 : 0
             );
             assert.equal(page.includes('googletagmanager.com'), mode === 'always');
+            assert.equal(
+              (page.match(/aria-label="Custom social"/g) || []).length,
+              mode === 'always' ? 2 : 0
+            );
+            if (mode === 'always') {
+              for (const name of socialIconNames)
+                assert.equal((page.match(new RegExp(`aria-label="${name}"`, 'g')) || []).length, 2);
+              assert.equal((page.match(/src="\/share-test.png"/g) || []).length, 2);
+              assert.equal((page.match(/aria-label="Text social"/g) || []).length, 2);
+            }
           }
           const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0];
           assert(footer?.includes('CUSTOM_FOOTER_SENTINEL'));

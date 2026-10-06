@@ -28,6 +28,26 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 <a id="setup"></a>
 
+## Links sociais
+
+Configure `social.links` em `src/site.config.ts`; cabeçalho e rodapé compartilham a ordem do array. Adicione apenas os links que você usa:
+
+```ts
+// src/site.config.ts — defineThemeConfig({ ... })
+social: {
+  links: [
+    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
+    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
+  ],
+},
+```
+
+Nomes de `icon` incluídos: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
+
+Para uma imagem própria, coloque `community.svg` em `public/icons/` e defina `iconSrc: "/icons/community.svg"` no link. São aceitos SVG, PNG e WebP locais. Use um caminho iniciado por `/`, sem URL remota, consulta, fragmento ou caracteres codificados. O `base` do Astro é adicionado automaticamente. Arquivos ausentes ou nomes de ícones não suportados geram erro de configuração no desenvolvimento/build.
+
+Prioridade: `iconSrc` → `icon` → texto. Ícones incluídos herdam a cor do menu; imagens próprias mantêm suas cores. `label` fornece o nome acessível. No rodapé, os links quebram linha quando necessário; o cabeçalho mantém uma linha com rolagem horizontal quando falta espaço. Em larguras de até 720px, continuam ocultos no cabeçalho e visíveis no rodapé. Um array `links` vazio mantém os três marcadores não clicáveis. Refaça o build e o deploy após alterações.
+
 ## Guia 1: Configure seu blog
 
 ### Instalar e abrir localmente

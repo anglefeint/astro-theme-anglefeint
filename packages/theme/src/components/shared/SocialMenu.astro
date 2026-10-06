@@ -1,5 +1,8 @@
 ---
-import { SOCIAL_LINKS, type SocialLink } from '@anglefeint/site-config/social';
+import { SOCIAL_LINKS } from '@anglefeint/site-config/social';
+import { publicDir, base } from 'astro:config/server';
+import type { SocialLink } from '../../utils/social-icons';
+import { resolveSocialLinks } from '../../utils/social-links';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -22,16 +25,25 @@ const placeholderLinks: SocialLink[] = [
   { href: '', label: 'Twitter', icon: 'twitter' },
   { href: '', label: 'GitHub', icon: 'github' },
 ];
-const resolvedLinks = links.length > 0 || !showPlaceholdersWhenEmpty ? links : placeholderLinks;
+const resolvedLinks = resolveSocialLinks(
+  links.length > 0 || !showPlaceholdersWhenEmpty ? links : placeholderLinks,
+  publicDir,
+  base
+);
 ---
 
 <div class:list={['social-menu', `social-menu-${tone}`]} style={`--social-gap:${gap};`}>
   {
     resolvedLinks.map((link) =>
       links.length > 0 ? (
-        <a href={link.href} target="_blank" rel="noopener noreferrer">
-          <span class="sr-only">{link.label}</span>
-          {link.icon ? <Icon name={link.icon} size={iconSize} /> : <span>{link.label}</span>}
+        <a href={link.href} aria-label={link.label} target="_blank" rel="noopener noreferrer">
+          {link.iconSrc ? (
+            <img src={link.iconSrc} alt="" width={iconSize} height={iconSize} />
+          ) : link.icon ? (
+            <Icon name={link.icon} size={iconSize} />
+          ) : (
+            <span>{link.label}</span>
+          )}
         </a>
       ) : (
         <span class="social-placeholder" aria-hidden="true">
@@ -45,6 +57,8 @@ const resolvedLinks = links.length > 0 || !showPlaceholdersWhenEmpty ? links : p
 <style>
   .social-menu {
     display: inline-flex;
+    flex-wrap: wrap;
+    max-width: 100%;
     align-items: center;
     gap: var(--social-gap);
   }
@@ -59,7 +73,9 @@ const resolvedLinks = links.length > 0 || !showPlaceholdersWhenEmpty ? links : p
   .social-menu a {
     color: rgba(188, 220, 242, 0.82);
     text-decoration: none;
-    line-height: 0;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    max-width: 100%;
     transition:
       color 0.22s ease,
       transform 0.22s ease,
@@ -70,6 +86,33 @@ const resolvedLinks = links.length > 0 || !showPlaceholdersWhenEmpty ? links : p
     color: rgba(228, 242, 255, 0.98);
     transform: translateY(-1px);
     filter: drop-shadow(0 0 12px rgba(132, 214, 255, 0.28));
+  }
+
+  .social-menu a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  .social-menu img {
+    display: block;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .social-menu-header {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 5px;
+    scrollbar-width: thin;
+  }
+  .social-menu-header a {
+    flex-shrink: 0;
+    max-width: none;
+    white-space: nowrap;
+  }
+  .social-menu-footer {
+    justify-content: center;
   }
 
   .social-menu-footer a {

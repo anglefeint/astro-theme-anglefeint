@@ -65,6 +65,10 @@ The project now follows a compositional structure:
 - `src/pages/**`
 - Responsibility: content query, pagination, locale pathing, page-specific DOM/behavior.
 
+## Social links
+
+`social.links` passes unchanged through the generated social adapter to both shared menus. `utils/social-icons.ts` owns the twelve icon paths and the shared SocialLink type; starter schema imports/re-exports that type. No icon library or client script is added. `utils/social-links.ts` resolves optional `iconSrc` during rendering against Astro's actual `publicDir`, verifies containment/file existence and the SVG/PNG/WebP extension, then prefixes Astro's `base`. Remote URLs, query/fragment/encoded paths and traversal are rejected with an indexed configuration error. Custom images override built-ins; otherwise unknown icon names fail clearly and omitted icons render text. Empty links keep the original placeholders. Image contents are served as ordinary images, not injected markup.
+
 ## Content Pipeline
 
 The collection implementation is [packages/theme/src/content-schema.ts](../packages/theme/src/content-schema.ts), re-exported by the starter's [src/content.config.ts](../src/content.config.ts). Article schema fields `tags?: string[]`, `toc?: boolean` and `search?: boolean` feed the capabilities below. Their global defaults are enabled in `src/site.config.defaults.ts` and mapped to `THEME.TAGS/TOC/SEARCH.ENABLED` by the theme adapter. Tags are trimmed/deduplicated by tag utilities when consumed, not rewritten by the collection schema.

@@ -33,6 +33,8 @@ Each public-template run gives the downloader a fresh `XDG_CACHE_HOME` inside it
 
 `npm run check:upgrade` adds a targeted package-only regression check against frozen real 0.8.3 and 0.8.4 starter commits. It installs the locally packed theme without overlaying current routes, audits dependencies, creates partial/full translation fixtures, and runs each old project's checks/build. It asserts canonical, hreflang, OG and menu behavior and hashes source files before/after installation and build to detect rewrites. Evidence is stored in ignored `acceptance-results/upgrade-*`; successful temporary projects are removed. This is a bounded compatibility test, not a guarantee for every historical or customized starter. The referenced commits must exist in local Git history.
 
+The installed-starter matrix also pairs configured social links with the `always` mode and empty links with `never`: all twelve built-ins, one local PNG override and a text link are checked in both shared menus across nine languages and the available shells. Resolver unit tests cover paths, base prefixes and invalid input. Separate release browser evidence records layout, keyboard navigation and image loading; HTML assertions alone do not establish those visual properties.
+
 ## Local execution
 
 ### GA4 coverage
