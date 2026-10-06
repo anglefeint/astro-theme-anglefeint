@@ -39,6 +39,8 @@ git push origin main
 
 ## 2) Pre-release checks
 
+The maintainer root pins Miniflare's transitive `sharp` to `0.35.5` through a scoped npm override. During 0.11.2 preparation, the registry began reporting [GHSA-wq5f-xc86-pv6w](https://github.com/advisories/GHSA-wq5f-xc86-pv6w) for Miniflare's exact `0.35.4` dependency; the official patched version is `0.35.5`. Wrangler/Miniflare versions remain unchanged. Fresh `npm ci` and the real Miniflare Images binding were verified after deduplication. This maintainer-only override is not generated into starter (which does not include Wrangler); remove it once the selected upstream Miniflare requires a patched version, then recheck installation, image handling and audits. Do not use `npm audit fix --force` to downgrade Wrangler automatically.
+
 Dependency audits are blocking: main, isolated starter and delivered starter use `scripts/audit-dependencies.mjs`. All reported vulnerabilities and registry errors block delivery, including with `--skip-checks`. The former static-cache exception was retired on 2026-10-04 after updating main to `http-cache-semantics@4.3.0`; the delivered starter already resolved that version.
 
 `scripts/release-npm.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or completed CI. Those are maintainer workflow requirements: inspect them before running it. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
