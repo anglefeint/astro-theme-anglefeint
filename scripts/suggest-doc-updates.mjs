@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import matter from 'gray-matter';
+import matter from './parse-frontmatter.mjs';
 
 const ROOT = process.cwd();
 const EXCLUDE_PREFIXES = [

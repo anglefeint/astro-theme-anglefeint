@@ -318,6 +318,8 @@ Tool adapters such as `CLAUDE.md` and `.cursor/rules/00-repo.mdc` should normall
 
 ## Validation Boundaries
 
+The maintainer scripts share `scripts/parse-frontmatter.mjs`, which extracts YAML fences and parses values with `js-yaml` 4. It supports LF/CRLF, an initial BOM, multiline values and sidecar wrappers; malformed or unclosed metadata fails parsing. No JavaScript frontmatter engine is enabled. `tests/frontmatter.unit.test.mjs` covers these boundaries. This maintainer dependency is not distributed with the theme package or starter.
+
 `npm run check:docs` should validate the contract, not the entire quality of prose.
 
 ### It should validate
