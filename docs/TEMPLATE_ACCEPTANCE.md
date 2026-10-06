@@ -21,13 +21,15 @@ Run from the maintainer checkout, not from a user's starter. These tools do not 
 
 ## Complementary checks
 
-| Command                                      | Source under test                                      | Purpose                                                                                                                                                                   |
-| -------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run e2e`                                | Current local main build                               | 34 Chromium tests (including footer credits): desktop/mobile navigation, SEO, search, tags, TOC, clipboard, image preview, About interactions, effects and reduced motion |
-| `npm run check:installed -- --build --audit` | Locally packed theme and current managed starter files | Independent package installation; CLI/config/adapter checks; en/zh/pt-br/de/ru/zh-hant × homepage prefix matrix; feature switches; security audit                         |
-| `npm run check:template`                     | Public GitHub `#starter` and npm package               | Fresh consumer installation, all starter script entries, documented command scenarios, configuration changes, dev/preview HTTP checks and Chromium interactions           |
+| Command                                      | Source under test                                      | Purpose                                                                                                                                                                                                    |
+| -------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run e2e`                                | Current local main build                               | Chromium regression tests: desktop/mobile navigation, SEO, search, tags, TOC, clipboard, image preview, About interactions, footer credits, effects, reduced motion and nine-language reading-panel widths |
+| `npm run check:installed -- --build --audit` | Locally packed theme and current managed starter files | Independent package installation; CLI/config/adapter checks; en/zh/pt-br/de/ru/zh-hant × homepage prefix matrix; feature switches; security audit                                                          |
+| `npm run check:template`                     | Public GitHub `#starter` and npm package               | Fresh consumer installation, all starter script entries, documented command scenarios, configuration changes, dev/preview HTTP checks and Chromium interactions                                            |
 
 The public-template check deliberately does not overlay local changes. Use it after starter delivery; use `check:installed` before delivery. Do not interpret a passing public-template run as verification of unpublished runtime changes.
+
+[Reading-width regression](../tests/e2e/reading-width.spec.mjs) checks Home and a representative article in all nine built-in languages at 320/390/720/721/740/768/800/820/900/1440px with reduced motion. It allows at most 1px of rounding tolerance for page overflow and panel bounds, and asserts a 720px content width at 1440px. This is part of local main E2E, not the public-template matrix; exact test counts and execution results belong in the [release ledger](releases/README.md).
 
 Each public-template run gives the downloader a fresh `XDG_CACHE_HOME` inside its temporary directory. This prevents create-astro's archive downloader from silently substituting an older cached starter after a network failure. The normal public template command remains unchanged; failed downloads must be diagnosed and retried rather than accepted as current-template evidence.
 
