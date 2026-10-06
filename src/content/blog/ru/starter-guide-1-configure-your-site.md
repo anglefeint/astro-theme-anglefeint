@@ -47,7 +47,7 @@ site.url задаёт домен canonical, RSS, sitemap и изображени
 
 defaultLocalePrefix: 'never' показывает главную основного языка сразу на /. Стандартное 'always' перенаправляет на `/<язык>/`, иногда с кратким “Redirecting to home…”. Статьи остаются на /ru/blog/ и при 'never'.
 
-social.links содержит href, label и icon (github, twitter или mastodon). Пустой список оставляет декоративные значки без ссылок. site.tagline добавляет текст в подвал.
+`social.links` содержит `href`, `label` и имя `icon`: `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Свой локальный SVG/PNG/WebP поместите в `public/icons/` и задайте `iconSrc: "/icons/community.svg"`: это поле имеет приоритет над `icon`, цвета сохраняются. Без обоих полей отображается текст. Правила путей и примеры — в [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ru.md). Пустой список оставляет декоративные значки без ссылок. site.tagline добавляет текст в подвал.
 
 ## Выбор языков
 

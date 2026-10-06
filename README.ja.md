@@ -306,6 +306,26 @@ CLI はマージ後の設定で有効な言語を使用します。設定エラ�
 - アダプタ層（直接編集は非推奨）: `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - サイト情報は `PUBLIC_*` 環境変数でも上書き可能
 
+## ソーシャルリンク
+
+`src/site.config.ts` の `social.links` を設定します。ヘッダーとフッターは配列の順序を共有します。必要なリンクだけ追加してください：
+
+```ts
+// src/site.config.ts — defineThemeConfig({ ... })
+social: {
+  links: [
+    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
+    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
+  ],
+},
+```
+
+組み込みの `icon` 名： `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
+
+カスタム画像は `community.svg` を `public/icons/` に置き、リンクに `iconSrc: "/icons/community.svg"` を指定します。ローカルの SVG、PNG、WebP に対応。パスは `/` で始め、外部 URL、クエリ、フラグメント、エンコード文字は使いません。Astro の `base` は自動で付加されます。ファイルがない場合や未対応のアイコン名は開発・ビルド時に設定エラーになります。
+
+優先順位は `iconSrc` → `icon` → テキストです。組み込みアイコンはメニューの色を継承し、カスタム画像は元の色を保ちます。`label` はアクセシブルな名前です。フッターは必要に応じて折り返し、ヘッダーは1行のまま横スクロールできます。720px 以下では従来どおりヘッダーのソーシャルリンクを非表示にします。フッターは表示されます。空の `links` はクリックできない既存の3つのプレースホルダーを表示します。変更後は再ビルド・デプロイしてください。
+
 ## ドキュメント
 
 - [アーキテクチャ](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)

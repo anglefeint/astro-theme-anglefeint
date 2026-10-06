@@ -306,6 +306,26 @@ CLI는 병합된 설정에서 활성화된 언어를 사용합니다. 설정 오
 - 어댑터 레이어(직접 수정 비권장): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - 사이트 정보는 `PUBLIC_*` 환경 변수로도 덮어쓸 수 있습니다
 
+## 소셜 링크
+
+`src/site.config.ts`의 `social.links`에서 설정합니다. 헤더와 푸터는 배열 순서를 공유합니다. 필요한 링크만 추가하세요:
+
+```ts
+// src/site.config.ts — defineThemeConfig({ ... })
+social: {
+  links: [
+    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
+    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
+  ],
+},
+```
+
+내장 `icon` 이름: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
+
+사용자 이미지는 `community.svg`를 `public/icons/`에 넣고 링크에 `iconSrc: "/icons/community.svg"`를 설정합니다. 로컬 SVG, PNG, WebP를 지원합니다. 경로는 `/`로 시작하며 원격 URL, 쿼리, 프래그먼트, 인코딩 문자는 사용하지 않습니다. Astro의 `base`는 자동으로 붙습니다. 파일 누락이나 지원하지 않는 아이콘 이름은 개발/빌드 시 설정 오류로 표시됩니다.
+
+우선순위는 `iconSrc` → `icon` → 텍스트입니다. 내장 아이콘은 메뉴 색상을 따르고 사용자 이미지는 원래 색상을 유지합니다. `label`은 접근성 이름입니다. 푸터 링크는 필요하면 줄바꿈되며, 헤더는 한 줄을 유지하고 공간이 부족하면 가로로 스크롤됩니다. 720px 이하에서는 기존처럼 헤더 소셜 링크가 숨겨지고 푸터는 표시됩니다. 빈 `links`는 클릭할 수 없는 기존 자리표시자 3개를 유지합니다. 변경 후 다시 빌드하고 배포하세요.
+
 ## 문서
 
 - [아키텍처](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)

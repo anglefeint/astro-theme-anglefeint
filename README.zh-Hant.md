@@ -28,6 +28,26 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 <a id="setup"></a>
 
+## 社群連結
+
+在 `src/site.config.ts` 設定 `social.links`，頂欄與頁尾共用陣列順序。只加入需要的連結：
+
+```ts
+// src/site.config.ts — defineThemeConfig({ ... })
+social: {
+  links: [
+    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
+    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
+  ],
+},
+```
+
+內建 `icon` 名稱： `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
+
+自訂圖片：將 `community.svg` 放入 `public/icons/`，再為連結設定 `iconSrc: "/icons/community.svg"`。支援本機 SVG、PNG、WebP，路徑以 `/` 開頭，不使用遠端網址、查詢參數、片段或編碼字元；主題會自動加上 Astro 的 `base`。檔案不存在或圖示名稱不受支援時，開發/建置會回報設定錯誤。
+
+優先順序為 `iconSrc` → `icon` → 文字。內建圖示繼承選單顏色，自訂圖片保留原色；`label` 提供無障礙名稱。頁尾連結過多會換行，頂欄保持單行，空間不足時可橫向捲動；寬度不超過 720px 時仍隱藏頂欄社群入口，頁尾保留。空 `links` 保留原有三個不可點擊的佔位圖示。修改後重新建置、部署。
+
 ## 使用指南 1：設定你的部落格
 
 ### 安裝並在本機開啟

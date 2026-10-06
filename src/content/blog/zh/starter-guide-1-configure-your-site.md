@@ -62,7 +62,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 首页大标题下的介绍由当前语言的 `site.hero` 控制。`site.description` 是站点级默认描述，而首页元描述优先使用该语言的 `messages.siteDescription`。只改 `site.description` 不会替换首页可见介绍。
 
-社交链接支持 `github`、`twitter`、`mastodon` 图标；用 `social: { links: [] }` 清空链接。空列表仍会在顶部和页脚显示 Mastodon、Twitter、GitHub 三个不可点击的占位图标；列表非空时只显示已配置的条目。若 `.env` 中已有 `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` 等站点覆盖值，它们会优先于配置文件；修改没有生效时也检查这些变量。
+社交链接支持 `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line` 图标。自定义图标可将本地 SVG/PNG/WebP 放入 `public/icons/`，设置 `iconSrc: "/icons/community.svg"`，优先于 `icon` 并保留原色；两项都省略则显示文字。路径限制与示例见 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-CN.md)。用 `social: { links: [] }` 清空链接。空列表仍会在顶部和页脚显示 Mastodon、Twitter、GitHub 三个不可点击的占位图标；列表非空时只显示已配置的条目。若 `.env` 中已有 `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` 等站点覆盖值，它们会优先于配置文件；修改没有生效时也检查这些变量。
 
 可在项目根目录的 `.env` 或托管平台的构建环境中设置 `PUBLIC_SITE_URL=https://your-domain.example`，覆盖 `site.url`。修改后重启开发服务或重新构建，并检查 canonical、RSS、sitemap 和分享图绝对地址是否使用该域名。这需要配套 starter 的 `astro.config.mjs` 和域名解析辅助脚本；只更新 npm 主题包不会更新这些文件。
 
