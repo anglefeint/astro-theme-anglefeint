@@ -12,6 +12,16 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-07 Reading-width release documentation follow-up
+
+Reviewed committed range `530e53a..5e4672c` (11 changed paths), including the CSS patch, persistent browser regression and release closeout. Passed the explicit paths to `suggest:docs`: direct candidates cover visual/architecture, acceptance, upgrading, package/release and workflow documents; propagation includes the eight translated READMEs. Metadata discovery reported no errors.
+
+Compared package-owned Home/prose CSS and the global width rules with `tests/e2e/reading-width.spec.mjs`, the visual reference, changelog, upgrade instructions and release ledger. Corrected TEMPLATE_ACCEPTANCE's stale 34-test description and documented the actual nine-language width coverage, reduced-motion setting, rounding tolerance and separation from public-template acceptance. Kept exact counts in the release ledger. Added the already-completed final deployment/inventory evidence to the 0.11.1 repository note after reading back the GitHub Release and retained JSON results.
+
+Nine READMEs and bundled guides, architecture, visual reference and upgrade instructions need no further edits: configuration, commands, routes, package/starter ownership and runtime descriptions remain consistent with this patch. Agent entrypoints, metadata/workflow policies, packaging and listing documents are unchanged. Historical releases retain their original evidence, including the defect first recorded in 0.11.0. This follow-up changes only three maintainer documents, none in the npm package or starter-managed file set; no new npm version or starter regeneration is needed.
+
+This audit reruns documentation metadata and local-link checks; browser, isolated-install and public-template results remain the recorded 0.11.1 release evidence. The mandatory pre-push hook runs the repository checks/build separately; it does not rerun Chromium E2E or public-template acceptance.
+
 ## 2026-10-06 Reading-width patch review
 
 Reviewed the 0.11.1 working-tree CSS/test delta against 530e53a using `suggest:docs`. Home and AI prose maximum widths now reserve their actual desktop padding/borders; mobile rules and wide-screen content widths are retained. Updated visual contracts, changelog, upgrading and release ledger. Nine READMEs and bundled guides need no changes because no setup, command or configuration contract changed. Architecture, metadata and release workflow are also unchanged. The [0.11.0 record](releases/0.11.0.md) remains historical evidence of the discovered defect; [0.11.1](releases/0.11.1.md) records the fix and new validation.
