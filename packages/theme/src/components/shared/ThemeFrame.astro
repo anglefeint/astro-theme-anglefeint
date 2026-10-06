@@ -99,7 +99,7 @@ const messages = getMessages(locale);
     <main class={mainClass}>
       <slot />
     </main>
-    <CommonFooter scanlines={scanlines} />
+    <CommonFooter scanlines={scanlines} labels={messages.footer} />
     {THEME.MUSIC?.enabled && <MusicDeck tracks={THEME.MUSIC.tracks} labels={messages.music} />}
     <slot name="body-end" />
   </body>

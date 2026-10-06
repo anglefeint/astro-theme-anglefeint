@@ -49,6 +49,8 @@ defaultLocalePrefix: 'never' показывает главную основно�
 
 `social.links` содержит `href`, `label` и имя `icon`: `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Свой локальный SVG/PNG/WebP поместите в `public/icons/` и задайте `iconSrc: "/icons/community.svg"`: это поле имеет приоритет над `icon`, цвета сохраняются. Без обоих полей отображается текст. Правила путей и примеры — в [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ru.md). Пустой список оставляет декоративные значки без ссылок. site.tagline добавляет текст в подвал.
 
+В подвале отдельно отображаются копирайт, сведения о теме/Astro и необязательный текст `site.tagline`, а ниже — значки соцсетей. Подписи темы следуют языку страницы; пользовательский текст остаётся одинаковым для всех языков. Пустой текст не занимает места, длинный переносится на мобильных устройствах. Существующие настройки и `PUBLIC_SITE_TAGLINE` сохраняются; миграция не требуется.
+
 ## Выбор языков
 
 Включены en, ja, ko, es, zh, pt-br, de, ru и zh-hant; исходный основной язык — английский. Для отключения добавьте, например:

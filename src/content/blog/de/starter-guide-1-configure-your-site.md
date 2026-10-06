@@ -49,6 +49,8 @@ Mit defaultLocalePrefix: 'never' erscheint die Standardstartseite direkt unter /
 
 `social.links` enthält `href`, `label` und einen `icon`-Namen: `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Eigene lokale SVG/PNG/WebP-Dateien kommen nach `public/icons/`; `iconSrc: "/icons/community.svg"` hat Vorrang vor `icon` und behält die Bildfarben bei. Ohne beide Felder wird Text angezeigt. Pfadregeln und Beispiele stehen in der [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.de.md). Eine leere Liste zeigt nicht anklickbare Platzhalter. site.tagline ergänzt den Fußzeilentext.
 
+Der Footer trennt Copyright, Theme-/Astro-Verweise und den optionalen Text `site.tagline`; darunter stehen die Social-Media-Symbole. Die Verweise folgen der Seitensprache, eigener Text bleibt in allen Sprachen unverändert. Leerer Text benötigt keinen Platz, langer Text bricht auf Mobilgeräten um. Bestehende Einstellungen und `PUBLIC_SITE_TAGLINE` bleiben gültig; keine Migration ist nötig.
+
 ## Sprachen auswählen
 
 Aktiv sind en, ja, ko, es, zh, pt-br, de, ru und zh-hant; Englisch ist anfangs Standard. Zum Abschalten ergänze beispielsweise:

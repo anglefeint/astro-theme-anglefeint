@@ -257,6 +257,8 @@ Astro のメジャーアップグレードは、まず公式ガイドを参照�
    - `theme.comments`: Giscus を有効化・設定（コア ID + 動作パラメータ）
 3. `src/content/blog/<locale>/` のサンプル記事を差し替え。
 
+フッターは著作権、テーマ/Astro のクレジット、任意の `site.tagline` を別々に表示し、その下にソーシャルアイコンを配置します。クレジットはページの言語に従い、独自の文言は全言語でそのまま表示します。空の文言はスペースを取らず、長文はモバイルで折り返します。既存の設定と `PUBLIC_SITE_TAGLINE` による上書きは維持され、移行は不要です。
+
 ### 任意：Google Analytics 4
 
 `src/site.config.ts` の既存の `defineThemeConfig({...})` に次のトップレベル設定を追加・編集します（`site` と同じ階層で、`theme` の中ではありません）。

@@ -49,6 +49,8 @@ Com defaultLocalePrefix: 'never', a página inicial do idioma padrão aparece di
 
 Configure `social.links` com `href`, `label` e um `icon`: `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Para uma imagem própria, coloque um SVG/PNG/WebP local em `public/icons/` e defina `iconSrc: "/icons/community.svg"`; ele substitui `icon` e mantém as cores originais. Omita ambos para exibir texto. Veja regras de caminhos e exemplos no [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.pt-BR.md). Uma lista vazia mantém ícones ilustrativos sem links. site.tagline adiciona texto ao rodapé.
 
+O rodapé separa copyright, créditos do tema/Astro e o texto opcional `site.tagline`, com ícones sociais abaixo. Os créditos seguem o idioma da página; seu texto permanece igual em todos os idiomas. Texto vazio não ocupa espaço e textos longos quebram linha no celular. A configuração existente e `PUBLIC_SITE_TAGLINE` continuam funcionando; nenhuma migração é necessária.
+
 ## Escolher idiomas
 
 Nove idiomas estão ativos: en, ja, ko, es, zh, pt-br, de, ru e zh-hant. Inglês é o padrão inicial. Para desativar idiomas, mescle entradas como estas:
