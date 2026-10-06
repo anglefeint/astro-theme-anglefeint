@@ -176,6 +176,7 @@ try {
       const creditedImages = new Map();
       for (const mode of ['always', 'never']) {
         await setConfig({
+          analytics: { googleAnalyticsId: mode === 'always' ? 'G-TEST123456' : '' },
           site: { description: 'SITE_DESCRIPTION_SENTINEL', tagline: 'CUSTOM_FOOTER_SENTINEL' },
           i18n: {
             defaultLocale: locale,
@@ -196,6 +197,18 @@ try {
         await npm(['run', 'build']);
         for (const lang of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
           const html = await read(`dist/${lang}/blog/installed-default/index.html`);
+          for (const page of [
+            html,
+            await read(`dist/${lang}/blog/index.html`),
+            await read(`dist/${mode === 'never' && lang === locale ? '' : lang + '/'}index.html`),
+            ...(mode === 'always' ? [await read(`dist/${lang}/about/index.html`)] : []),
+          ]) {
+            assert.equal(
+              (page.match(/data-ga-id="G-TEST123456"/g) || []).length,
+              mode === 'always' ? 1 : 0
+            );
+            assert.equal(page.includes('googletagmanager.com'), mode === 'always');
+          }
           const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0];
           assert(footer?.includes('CUSTOM_FOOTER_SENTINEL'));
           assert.equal(footer.includes('Theme by'), mode === 'always');

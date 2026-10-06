@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.10.0] - 2026-10-06
+
+- Add optional GA4 through one top-level `analytics.googleAnalyticsId`; empty by default, shared by all languages and themed pages.
+- Skip development and localhost/loopback previews, asynchronously load the official tag once, and validate the Measurement ID. No new dependency or consent-management UI.
+- Requires matching starter configuration types/defaults/adapter to enable; no article or page-route edits. See [release notes](docs/releases/0.10.0.md).
+
 ## [0.9.2] - 2026-10-06
 
 - Give automatic article share cards a bundled cinematic code-rain, terminal and neon-network background, retaining the user's title, site name and author.

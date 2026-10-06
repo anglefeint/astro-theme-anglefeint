@@ -2,6 +2,7 @@
  * Theme behavior config.
  */
 export const THEME = {
+  ANALYTICS: { GOOGLE_ANALYTICS_ID: '' },
   FOOTER: { SHOW_CREDITS: true },
   /** Posts per page on blog list */
   BLOG_PAGE_SIZE: 9,

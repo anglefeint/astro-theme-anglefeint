@@ -1,5 +1,6 @@
 ---
 import MusicDeck from './MusicDeck.astro';
+import GoogleAnalytics from './GoogleAnalytics.astro';
 import { THEME } from '@anglefeint/site-config/theme';
 import BaseHead from '../BaseHead.astro';
 import CommonHeader from './CommonHeader.astro';
@@ -78,6 +79,7 @@ const messages = getMessages(locale);
       includeAlternateLinks={includeAlternateLinks}
     />
     <slot name="head" />
+    <GoogleAnalytics />
   </head>
   <body class={bodyClass}>
     <slot name="body-start" />

@@ -17,6 +17,7 @@ export { DEFAULT_ABOUT_CONFIG, defineThemeConfig } from './site.config.defaults.
 export { normalizeI18nConfig } from './site.config.runtime.ts';
 
 export const THEME_CONFIG = defineThemeConfig({
+  analytics: { googleAnalyticsId: '' }, // Optional GA4 Measurement ID (G-...).
   site: {
     title: 'Anglefeint',
     author: 'Anglefeint',

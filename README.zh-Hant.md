@@ -187,6 +187,20 @@ theme: {
 
 播放器先下載完整音檔再播放，大檔案會增加等待與記憶體使用。外部音檔需要 CORS；本機檔案沒有這項要求。enabled: false 可停用播放器。
 
+### 選用：Google Analytics 4
+
+在 `src/site.config.ts` 現有的 `defineThemeConfig({...})` 物件中新增或修改以下頂層設定（與 `site` 同層，不放在 `theme` 內）：
+
+```ts
+analytics: {
+  googleAnalyticsId: 'G-XXXXXXXXXX',
+},
+```
+
+在 Google Analytics → 管理 → 資料串流 → 網站串流中複製 **評估 ID**（`G-...`），不是資源名稱或數字資源 ID。留空即停用。所有語言和主題頁面共用一個 ID，可依頁面路徑區分語言。重新建置部署後，瀏覽線上網站，在 GA4 即時報表中確認資料。
+
+開發模式及 localhost/回環位址預覽不傳送資料；設定後，遠端預覽和區域網路位址預覽會統計。預設範本不載入 Google 指令碼。不要透過 GTM、Zaraz 或手動程式碼重複接入相同統計。本選項不包含 Cookie 同意橫幅或同意管理；有此需求的網站應先完成對應設定，再啟用統計。指令碼封鎖工具可能阻止資料收集。舊專案需要相符的設定輔助檔案與配接器，詳見[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+
 ### Giscus 留言
 
 準備已啟用 Discussions 的公開儲存庫、安裝應用程式，並從 [giscus.app](https://giscus.app/) 取得 ID。
