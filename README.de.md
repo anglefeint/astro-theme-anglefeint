@@ -187,6 +187,20 @@ Titel enthalten title, src und optional artist. Ohne Titel bleibt der Player ver
 
 Vor dem Start wird die vollständige Datei geladen. Große Dateien erhöhen Wartezeit und Speicherbedarf. Externe Quellen benötigen CORS. Lokale Dateien vermeiden das. enabled: false deaktiviert den Player.
 
+### Optional: Google Analytics 4
+
+Ergänze oder bearbeite diese Einstellung auf oberster Ebene im vorhandenen `defineThemeConfig({...})`-Objekt in `src/site.config.ts` (neben `site`, nicht innerhalb von `theme`):
+
+```ts
+analytics: {
+  googleAnalyticsId: 'G-XXXXXXXXXX',
+},
+```
+
+Kopiere die **Mess-ID** (`G-...`) aus Google Analytics → Verwaltung → Datenstreams → deinem Webstream. Gemeint ist weder der Property-Name noch die numerische Property-ID. Ein leerer Wert deaktiviert die Messung. Eine ID gilt für alle Sprachen und Theme-Seiten; Sprachen lassen sich anhand des Seitenpfads vergleichen. Neu bauen und bereitstellen, die veröffentlichte Website besuchen und den GA4-Echtzeitbericht prüfen.
+
+Entwicklungsmodus und Vorschauen über localhost/Loopback senden keine Daten. Konfigurierte Remote- und LAN-Vorschauen erfassen Zugriffe. Standardmäßig lädt der Starter kein Google-Skript. Vermeide eine doppelte Einrichtung über GTM, Zaraz oder manuelle Skripte. Einwilligungsbanner und Einwilligungsverwaltung sind nicht enthalten; richte diese bei Bedarf vor dem Aktivieren ein. Blocker können die Erfassung verhindern. Bestehende Projekte benötigen passende Konfigurationshilfen und Adapter; siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+
 ### Giscus-Kommentare
 
 Richte ein öffentliches Repository mit Discussions ein, installiere die App und hole die IDs von [giscus.app](https://giscus.app/).
