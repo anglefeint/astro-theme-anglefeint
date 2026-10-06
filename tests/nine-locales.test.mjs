@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { loadProjectModule } from '../packages/theme/src/scaffold/project-config.mjs';
 import { buildNewPostTemplate, resolveLocales } from '../packages/theme/src/scaffold/new-post.mjs';
-import matter from 'gray-matter';
+import matter from '../scripts/parse-frontmatter.mjs';
 import path from 'node:path';
 
 const additions = ['pt-br', 'de', 'ru', 'zh-hant'];
