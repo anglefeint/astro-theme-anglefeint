@@ -47,7 +47,7 @@ site.url bestimmt die Domain für Canonical-Links, RSS, Sitemap und Vorschaubild
 
 Mit defaultLocalePrefix: 'never' erscheint die Standardstartseite direkt unter /. Der Standard 'always' leitet auf `/<Sprache>/` weiter und kann kurz “Redirecting to home…” anzeigen. Artikel bleiben auch mit 'never' unter /de/blog/.
 
-social.links enthält href, label und icon (github, twitter oder mastodon). Eine leere Liste zeigt nicht anklickbare Platzhalter. site.tagline ergänzt den Fußzeilentext.
+`social.links` enthält `href`, `label` und einen `icon`-Namen: `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Eigene lokale SVG/PNG/WebP-Dateien kommen nach `public/icons/`; `iconSrc: "/icons/community.svg"` hat Vorrang vor `icon` und behält die Bildfarben bei. Ohne beide Felder wird Text angezeigt. Pfadregeln und Beispiele stehen in der [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.de.md). Eine leere Liste zeigt nicht anklickbare Platzhalter. site.tagline ergänzt den Fußzeilentext.
 
 ## Sprachen auswählen
 

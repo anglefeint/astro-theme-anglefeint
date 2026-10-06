@@ -62,7 +62,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 홈의 큰 제목 아래 소개는 현재 언어의 `site.hero`로 설정합니다. `site.description`은 사이트 기본 설명이며 홈 메타 설명에는 해당 언어의 `messages.siteDescription`이 우선합니다. `site.description`만 바꿔서는 화면의 소개가 바뀌지 않습니다.
 
-소셜 아이콘은 `github`, `twitter`, `mastodon`을 지원합니다. `social: { links: [] }`로 링크를 비울 수 있습니다. 목록이 비어 있어도 헤더와 푸터에는 클릭할 수 없는 Mastodon, Twitter, GitHub 자리 표시자 아이콘 세 개가 표시됩니다. 목록에 항목을 넣으면 설정한 항목만 표시됩니다. `.env`의 `PUBLIC_SITE_TITLE`, `PUBLIC_SITE_URL` 같은 재정의 값이 설정 파일보다 우선하므로 변경이 반영되지 않으면 확인하세요.
+소셜 아이콘은 `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`을 지원합니다. 사용자 SVG/PNG/WebP는 `public/icons/`에 넣고 `iconSrc: "/icons/community.svg"`를 지정하세요. `icon`보다 우선하며 원래 색상을 유지합니다. 둘 다 생략하면 텍스트가 표시됩니다. 경로 제한과 예제는 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ko.md)를 참고하세요. `social: { links: [] }`로 링크를 비울 수 있습니다. 목록이 비어 있어도 헤더와 푸터에는 클릭할 수 없는 Mastodon, Twitter, GitHub 자리 표시자 아이콘 세 개가 표시됩니다. 목록에 항목을 넣으면 설정한 항목만 표시됩니다. `.env`의 `PUBLIC_SITE_TITLE`, `PUBLIC_SITE_URL` 같은 재정의 값이 설정 파일보다 우선하므로 변경이 반영되지 않으면 확인하세요.
 
 프로젝트 루트의 `.env` 또는 호스팅 플랫폼의 빌드 환경에서 `PUBLIC_SITE_URL=https://your-domain.example`를 설정하면 `site.url`을 재정의합니다. 변경 후 개발 서버를 다시 시작하거나 다시 빌드하고 canonical, RSS, 사이트맵, 공유 이미지의 절대 URL이 해당 도메인을 사용하는지 확인하세요. 이에 맞는 starter의 `astro.config.mjs`와 URL 해석 스크립트가 필요하며 npm 테마 패키지만 업데이트하면 이 파일들은 갱신되지 않습니다.
 

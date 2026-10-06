@@ -47,7 +47,7 @@ site.url define o domínio usado por canonical, RSS, sitemap e imagens sociais. 
 
 Com defaultLocalePrefix: 'never', a página inicial do idioma padrão aparece diretamente em /. O padrão 'always' redireciona / para `/<idioma>/` e pode exibir “Redirecting to home…”. Artigos continuam em /pt-br/blog/ mesmo com 'never'.
 
-Configure social.links com href, label e icon (github, twitter ou mastodon). Uma lista vazia mantém ícones ilustrativos sem links. site.tagline adiciona texto ao rodapé.
+Configure `social.links` com `href`, `label` e um `icon`: `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Para uma imagem própria, coloque um SVG/PNG/WebP local em `public/icons/` e defina `iconSrc: "/icons/community.svg"`; ele substitui `icon` e mantém as cores originais. Omita ambos para exibir texto. Veja regras de caminhos e exemplos no [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.pt-BR.md). Uma lista vazia mantém ícones ilustrativos sem links. site.tagline adiciona texto ao rodapé.
 
 ## Escolher idiomas
 

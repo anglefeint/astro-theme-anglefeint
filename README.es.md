@@ -306,6 +306,26 @@ El CLI usa los idiomas habilitados de la configuración combinada. Los errores d
 - Capa adaptadora (no editar directamente): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - La identidad del sitio también se puede sobrescribir con variables `PUBLIC_*`
 
+## Enlaces sociales
+
+Configura `social.links` en `src/site.config.ts`; cabecera y pie comparten el orden del array. Añade solo los enlaces que uses:
+
+```ts
+// src/site.config.ts — defineThemeConfig({ ... })
+social: {
+  links: [
+    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
+    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
+  ],
+},
+```
+
+Nombres de `icon` incluidos: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
+
+Para una imagen propia, guarda `community.svg` en `public/icons/` y asigna `iconSrc: "/icons/community.svg"` al enlace. Se admiten SVG, PNG y WebP locales. Usa una ruta que empiece por `/`, sin URL remota, consulta, fragmento ni caracteres codificados. El `base` de Astro se añade automáticamente. Los archivos inexistentes o nombres de iconos no admitidos generan un error de configuración en desarrollo/compilación.
+
+Prioridad: `iconSrc` → `icon` → texto. Los iconos incluidos heredan el color del menú; las imágenes propias conservan sus colores. `label` proporciona el nombre accesible. En el pie, los enlaces se distribuyen en varias líneas cuando hace falta; en la cabecera se mantiene una fila con desplazamiento horizontal si falta espacio. A 720px o menos se siguen ocultando en la cabecera y permanecen visibles en el pie. Un array `links` vacío conserva los tres marcadores no interactivos. Vuelve a compilar y desplegar tras cambiar la configuración.
+
 ## Documentación
 
 - [Arquitectura](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)

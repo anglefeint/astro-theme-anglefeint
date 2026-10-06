@@ -310,6 +310,26 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 - 适配层（不建议直接编辑）：`src/config/site.ts`、`src/config/theme.ts`、`src/config/about.ts`、`src/config/social.ts`
 - 站点信息仍支持 `PUBLIC_*` 环境变量覆盖
 
+## 社交链接
+
+在 `src/site.config.ts` 配置 `social.links`，顶栏和页脚共用数组顺序。只添加自己需要的链接：
+
+```ts
+// src/site.config.ts — defineThemeConfig({ ... })
+social: {
+  links: [
+    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
+    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
+  ],
+},
+```
+
+内置 `icon` 名称： `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
+
+自定义图片：将 `community.svg` 放入 `public/icons/`，再为链接设置 `iconSrc: "/icons/community.svg"`。支持本地 SVG、PNG、WebP，路径以 `/` 开头，不使用远程地址、查询参数、片段或编码字符；主题自动加上 Astro 的 `base`。文件不存在或图标名称不受支持时，开发/构建会报配置错误。
+
+优先级为 `iconSrc` → `icon` → 文字。内置图标继承菜单颜色，自定义图片保留原色；`label` 是无障碍名称。页脚链接过多会换行，顶栏保持单行，空间不足时可横向滚动；宽度不超过 720px 时仍隐藏顶栏社交入口，页脚保留。空 `links` 保留原有三个不可点击的占位图标。修改配置后重新构建、部署。
+
 ## 文档
 
 - [架构说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)

@@ -28,6 +28,26 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 <a id="setup"></a>
 
+## Social-Links
+
+Konfiguriere `social.links` in `src/site.config.ts`. Kopf- und Fußbereich übernehmen die Reihenfolge des Arrays. Füge nur benötigte Links hinzu:
+
+```ts
+// src/site.config.ts — defineThemeConfig({ ... })
+social: {
+  links: [
+    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
+    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
+  ],
+},
+```
+
+Verfügbare `icon`-Namen: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
+
+Für ein eigenes Bild lege `community.svg` unter `public/icons/` ab und setze am Link `iconSrc: "/icons/community.svg"`. Lokale SVG-, PNG- und WebP-Dateien werden unterstützt. Der Pfad beginnt mit `/`; externe URLs, Query-Parameter, Fragmente und codierte Zeichen sind nicht erlaubt. Astros `base` wird automatisch ergänzt. Fehlende Dateien oder unbekannte Icon-Namen führen beim Entwickeln/Build zu einem Konfigurationsfehler.
+
+Priorität: `iconSrc` → `icon` → Text. Integrierte Icons übernehmen die Menüfarbe, eigene Bilder behalten ihre Farben. `label` liefert den zugänglichen Namen. Im Fußbereich brechen Links bei Bedarf um; im Kopfbereich bleiben sie einzeilig und lassen sich bei Platzmangel horizontal scrollen. Bis einschließlich 720px bleiben Social-Links im Kopfbereich ausgeblendet und im Fußbereich sichtbar. Ein leeres `links`-Array behält die drei nicht anklickbaren Platzhalter bei. Nach Änderungen neu bauen und bereitstellen.
+
 ## Anleitung 1: Deinen Blog einrichten
 
 ### Installation und lokaler Start
