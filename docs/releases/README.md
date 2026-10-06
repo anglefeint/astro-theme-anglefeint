@@ -29,7 +29,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 Latest feature release entry: [0.11.0](./0.11.0.md), expanded social icons and optional local custom images. See its delivery status and acceptance record.
 
-Latest patch entry: [0.9.2](./0.9.2.md), cinematic article share cards and shared credit visibility. See its delivery status and validation record.
+Latest patch entry: [0.11.1](./0.11.1.md), reading-panel overflow correction above the mobile breakpoint. See its delivery status and validation record.
 
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.

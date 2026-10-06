@@ -16,6 +16,10 @@ This theme uses four distinct atmospheres by route.
 
 The built-in locales use horizontal LTR. Narrow article panels include padding and borders in their width, long prose paths can wrap, and inactive link-preview pseudo-elements do not create horizontal overflow. These local layout fixes retain the scene effects. New-language browser coverage exercises Home, Blog, About and article pages at 1280, 390 and 320 pixels.
 
+## Reading-panel width caps
+
+Above 720px, Home reserves its existing two 2rem paddings and two 1px borders in `max-width`; article prose reserves its two 2em paddings and borders. Both keep their 720px content-width cap on wide screens. Existing <=720px rules, cinematic effects and animations are unchanged; no global overflow clipping is introduced. The nine-language browser regression covers Home and a representative article at 320/390/720/721/740/768/800/820/900/1440px and asserts the wide-screen content width.
+
 ## Shared social menus
 
 Header and footer use the same configured order. The twelve built-in SVGs retain `currentColor` and existing menu hover colors; custom images use a fixed square box with `object-fit: contain` and retain source colors. Text-only links have readable line height and wrap. Footer menus wrap. Header menus stay in one horizontally scrollable row so fixed headers do not grow over page content; desktop headers with four or more links allocate remaining space to the controls. Keyboard links have a visible focus outline and can scroll into view. Header social links remain hidden at <=720px; footer links remain available. Empty configuration keeps three non-interactive placeholders. This does not alter the four scene effects.
