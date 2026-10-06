@@ -60,6 +60,8 @@ export const THEME_CONFIG = defineThemeConfig({
 
 `site.title`은 사이트 이름입니다. `site.url`에는 실제 배포 주소 전체를 입력하며 canonical, RSS, sitemap, 공유 이미지 URL에 영향을 줍니다. `site.author`는 글의 기본 작성자이고 `site.tagline`은 푸터 문구입니다.
 
+푸터는 저작권, 테마/Astro 크레딧, 선택적인 `site.tagline`을 각각 표시하고 아래에 소셜 아이콘을 배치합니다. 기본 크레딧은 페이지 언어를 따르며 사용자 문구는 모든 언어에서 원문을 유지합니다. 빈 문구는 공간을 차지하지 않고 긴 문구는 모바일에서 줄바꿈됩니다. 기존 설정과 `PUBLIC_SITE_TAGLINE` 재정의는 그대로 작동하며 마이그레이션이 필요 없습니다.
+
 홈의 큰 제목 아래 소개는 현재 언어의 `site.hero`로 설정합니다. `site.description`은 사이트 기본 설명이며 홈 메타 설명에는 해당 언어의 `messages.siteDescription`이 우선합니다. `site.description`만 바꿔서는 화면의 소개가 바뀌지 않습니다.
 
 소셜 아이콘은 `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`을 지원합니다. 사용자 SVG/PNG/WebP는 `public/icons/`에 넣고 `iconSrc: "/icons/community.svg"`를 지정하세요. `icon`보다 우선하며 원래 색상을 유지합니다. 둘 다 생략하면 텍스트가 표시됩니다. 경로 제한과 예제는 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ko.md)를 참고하세요. `social: { links: [] }`로 링크를 비울 수 있습니다. 목록이 비어 있어도 헤더와 푸터에는 클릭할 수 없는 Mastodon, Twitter, GitHub 자리 표시자 아이콘 세 개가 표시됩니다. 목록에 항목을 넣으면 설정한 항목만 표시됩니다. `.env`의 `PUBLIC_SITE_TITLE`, `PUBLIC_SITE_URL` 같은 재정의 값이 설정 파일보다 우선하므로 변경이 반영되지 않으면 확인하세요.

@@ -120,6 +120,8 @@ Audio is fully downloaded into a browser Blob before playback, making seeking in
 
 ## Footer credits
 
+Copyright, localized theme/Astro credits and optional `site.tagline` occupy separate groups, followed by social icons. Empty taglines take no space; long text wraps on mobile. Credits follow the page language, while your custom tagline stays unchanged across languages. Existing settings and `PUBLIC_SITE_TAGLINE` overrides work without schema or adapter migration.
+
 The footer displays the build year and site title, with linked Anglefeint/Astro credits by default. With the matching 0.8.0 starter configuration, set `theme.footer.showCredits: false` to omit both credit links. Copyright and custom `site.tagline` remain; the former default tagline `Built with Astro.` is represented by the built-in credit to avoid duplication. The new tagline default is empty. See User Guide 3 and UPGRADING before updating an older starter.
 
 ## Code block copy

@@ -257,7 +257,10 @@ try {
           }
           const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0];
           assert(footer?.includes('CUSTOM_FOOTER_SENTINEL'));
-          assert.equal(footer.includes('Theme by'), mode === 'always');
+          assert.equal(
+            footer.includes('href="https://github.com/anglefeint/astro-theme-anglefeint"'),
+            mode === 'always'
+          );
           assert.equal(footer.includes('href="https://astro.build/"'), mode === 'always');
           const og = html.match(/property="og:image" content="([^"]+)"/)?.[1];
           assert.ok(og && new URL(og).pathname.startsWith('/_social/'));

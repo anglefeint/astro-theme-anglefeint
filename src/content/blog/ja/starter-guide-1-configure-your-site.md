@@ -60,6 +60,8 @@ export const THEME_CONFIG = defineThemeConfig({
 
 `site.title` はサイト名です。`site.url` には公開先の完全な URL を指定します。canonical、RSS、sitemap、共有画像の URL に影響します。`site.author` は記事の既定の著者、`site.tagline` はフッターの文言です。
 
+フッターは著作権、テーマ/Astro のクレジット、任意の `site.tagline` を別々に表示し、その下にソーシャルアイコンを配置します。クレジットはページの言語に従い、独自の文言は全言語でそのまま表示します。空の文言はスペースを取らず、長文はモバイルで折り返します。既存の設定と `PUBLIC_SITE_TAGLINE` による上書きは維持され、移行は不要です。
+
 トップページの大きな見出しの下に出る紹介文は、その言語の `site.hero` で設定します。`site.description` はサイトの既定の説明ですが、トップページのメタ説明では言語別の `messages.siteDescription` が優先されます。`site.description` だけを変えても、画面の紹介文は変わりません。
 
 ソーシャルアイコンは `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line` に対応します。独自の SVG/PNG/WebP は `public/icons/` に置き、`iconSrc: "/icons/community.svg"` を指定します。`icon` より優先され、元の色を保ちます。両方省略するとテキストになります。パスの制約と例は [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ja.md) を参照してください。`social: { links: [] }` でリンクを空にできます。空の場合もヘッダーとフッターに Mastodon、Twitter、GitHub のクリックできないプレースホルダーアイコンが表示されます。項目を設定すると、設定した項目だけが表示されます。`.env` の `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` などの上書き値は設定ファイルより優先されます。変更が反映されない場合はこちらも確認してください。

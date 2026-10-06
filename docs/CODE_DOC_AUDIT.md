@@ -12,6 +12,14 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-07 Grouped footer implementation review
+
+Reviewed the working-tree change against `c61d924`: CommonFooter groups copyright, credits and custom text; ThemeFrame passes localized footer labels from the existing message resolver; package dictionaries supply nine translations. Global `site.tagline`, environment precedence, the credits toggle and legacy-tagline deduplication are unchanged. No localized custom-tagline field or user schema/adapter migration is introduced.
+
+Updated nine READMEs, nine first-configuration guides, visual contracts and acceptance coverage. Package README receives the same usage boundary. Existing architecture, configuration schema, routing/SEO, metadata and maintainer workflows need no changes. Historical release notes remain historical. After visual review the maintainer authorized publication; the follow-up documentation workflow verified default-empty tagline behavior and prepared upgrading, changelog and the [0.11.2 release ledger](releases/0.11.2.md), which records actual delivery status.
+
+Validation: lint and `check:no-build` passed (85 unit tests; Astro zero errors/warnings). The complete 52-test Chromium suite passed; after correcting Home paragraph-color inheritance, the final build and all 11 footer tests passed again. An isolated real-component fixture passed 20 desktop/mobile cases for ordinary, unbroken long, empty and legacy taglines plus omitted-label fallback, and produced screenshots. Independent packed-starter installation, zero-vulnerability audit and 14 build variants passed. Maintained-document local links and guide route/assets passed (22 changed Markdown files); the link helper was initially applied to content routes as filesystem paths, then corrected to check those against build output. No Firefox/WebKit or public-template delivery is claimed before release.
+
 ## 2026-10-07 Reading-width release documentation follow-up
 
 Reviewed committed range `530e53a..5e4672c` (11 changed paths), including the CSS patch, persistent browser regression and release closeout. Passed the explicit paths to `suggest:docs`: direct candidates cover visual/architecture, acceptance, upgrading, package/release and workflow documents; propagation includes the eight translated READMEs. Metadata discovery reported no errors.

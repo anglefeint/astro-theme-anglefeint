@@ -1,6 +1,7 @@
 import { DEFAULT_LOCALE, type Locale } from './config';
 
 export type Messages = {
+  footer: { theme: string; builtWith: string };
   music: {
     mute: string;
     unmute: string;
@@ -113,6 +114,7 @@ export type Messages = {
 
 export const DEFAULT_MESSAGES: Record<string, Messages> = {
   'pt-br': {
+    footer: { theme: 'Tema por', builtWith: 'Feito com' },
     music: {
       mute: 'Silenciar',
       unmute: 'Ativar som',
@@ -230,6 +232,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   de: {
+    footer: { theme: 'Theme von', builtWith: 'Erstellt mit' },
     music: {
       mute: 'Stummschalten',
       unmute: 'Ton einschalten',
@@ -349,6 +352,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ru: {
+    footer: { theme: 'Тема от', builtWith: 'Создано на' },
     music: {
       mute: 'Выключить звук',
       unmute: 'Включить звук',
@@ -466,6 +470,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   'zh-hant': {
+    footer: { theme: '佈景主題：', builtWith: '建置工具：' },
     music: {
       mute: '靜音',
       unmute: '取消靜音',
@@ -583,6 +588,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   en: {
+    footer: { theme: 'Theme by', builtWith: 'Built with' },
     music: {
       mute: 'Mute',
       unmute: 'Unmute',
@@ -697,6 +703,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ja: {
+    footer: { theme: 'テーマ：', builtWith: '構築：' },
     music: {
       mute: 'ミュート',
       unmute: 'ミュート解除',
@@ -811,6 +818,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ko: {
+    footer: { theme: '테마:', builtWith: '제작 도구:' },
     music: {
       mute: '음소거',
       unmute: '음소거 해제',
@@ -925,6 +933,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   es: {
+    footer: { theme: 'Tema de', builtWith: 'Creado con' },
     music: {
       mute: 'Silenciar',
       unmute: 'Activar sonido',
@@ -1040,6 +1049,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   zh: {
+    footer: { theme: '主题：', builtWith: '构建工具：' },
     music: {
       mute: '静音',
       unmute: '取消静音',

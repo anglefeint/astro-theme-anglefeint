@@ -3,46 +3,103 @@ import { SITE_TAGLINE, SITE_TITLE } from '@anglefeint/site-config/site';
 import { SOCIAL_LINKS } from '@anglefeint/site-config/social';
 import { THEME } from '@anglefeint/site-config/theme';
 import SocialMenu from './SocialMenu.astro';
+import type { Messages } from '../../i18n/messages';
 
 const today = new Date();
 interface Props {
   tagline?: string;
+  labels?: Messages['footer'];
   /** Show Blade Runner scanlines overlay on ai-page (header/footer only) */
   scanlines?: boolean;
 }
 
-const { tagline = SITE_TAGLINE, scanlines = false } = Astro.props as Props;
+const { tagline = SITE_TAGLINE, scanlines = false, labels } = Astro.props as Props;
+const themeLabel = labels?.theme ?? 'Theme by';
+const builtWithLabel = labels?.builtWith ?? 'Built with';
 // The former default is now represented by the configurable linked credits.
 const customTagline = tagline.trim() === 'Built with Astro.' ? '' : tagline.trim();
 const showCredits = THEME.FOOTER?.SHOW_CREDITS ?? true;
 ---
 
 <footer>
-  &copy; {today.getFullYear()}
-  {SITE_TITLE}
-  {
-    showCredits && (
-      <span class="footer-credits">
-        {' '}
-        · Theme by <a href="https://github.com/anglefeint/astro-theme-anglefeint">Anglefeint</a> ·
-        Built with <a href="https://astro.build/">Astro</a>
-      </span>
-    )
-  }
-  {customTagline && <span class="footer-tagline"> · {customTagline}</span>}
-  <div class="social-links">
-    <SocialMenu links={SOCIAL_LINKS} tone="footer" gap="0.85rem" />
+  <div class="footer-content">
+    <p class="footer-copyright">&copy; {today.getFullYear()} {SITE_TITLE}</p>
+    {
+      showCredits && (
+        <div class="footer-credits">
+          <span>
+            {themeLabel}{' '}
+            <a href="https://github.com/anglefeint/astro-theme-anglefeint">Anglefeint</a>
+          </span>
+          <span class="footer-built-with">
+            {builtWithLabel} <a href="https://astro.build/">Astro</a>
+          </span>
+        </div>
+      )
+    }
+    {customTagline && <p class="footer-tagline">{customTagline}</p>}
+    <div class="social-links">
+      <SocialMenu links={SOCIAL_LINKS} tone="footer" gap="0.85rem" />
+    </div>
+    {
+      import.meta.env.DEV && SOCIAL_LINKS.length === 0 && (
+        <p class="social-hint">
+          Configure social links in <code>src/site.config.ts</code>
+        </p>
+      )
+    }
   </div>
-  {
-    import.meta.env.DEV && SOCIAL_LINKS.length === 0 && (
-      <p class="social-hint">
-        Configure social links in <code>src/site.config.ts</code>
-      </p>
-    )
-  }
   {scanlines && <div class="ai-scanlines" aria-hidden="true" />}
 </footer>
 <style>
+  .footer-content {
+    max-width: 720px;
+    margin-inline: auto;
+    overflow-wrap: anywhere;
+  }
+  .footer-copyright,
+  .footer-tagline {
+    margin: 0;
+  }
+  .footer-content p {
+    color: inherit;
+    text-shadow: none;
+  }
+  .footer-copyright {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .footer-credits {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.15rem 1.2rem;
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+  .footer-credits > span {
+    position: relative;
+    max-width: 100%;
+  }
+  .footer-built-with::before {
+    content: '·';
+    position: absolute;
+    inset-inline-start: -0.7rem;
+  }
+  .footer-tagline {
+    margin-top: 0.55rem;
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+  @media (max-width: 480px) {
+    .footer-credits {
+      column-gap: 0.8rem;
+    }
+    .footer-built-with::before {
+      content: none;
+    }
+  }
   .footer-credits a {
     color: inherit;
     text-underline-offset: 0.2em;

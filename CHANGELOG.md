@@ -13,6 +13,11 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.11.2] - 2026-10-07
+
+- Group footer copyright, theme/Astro credits and optional custom tagline separately, with responsive wrapping and existing scene colors. Translate built-in footer credits into all nine built-in languages.
+- Preserve user text, environment overrides, the credits toggle and empty defaults. No schema/adapter migration or client JavaScript is added. See [release notes](docs/releases/0.11.2.md).
+
 ## [0.11.1] - 2026-10-06
 
 - Fix Home and article reading-panel horizontal overflow just above the 720px mobile breakpoint by accounting for existing padding and borders in desktop maximum widths. Keep the 720px wide-screen content width and existing mobile rules.
