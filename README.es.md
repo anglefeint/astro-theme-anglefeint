@@ -257,6 +257,8 @@ Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
    - `theme.comments` para activar y configurar Giscus (IDs base + parámetros de comportamiento)
 3. Reemplaza posts de ejemplo en `src/content/blog/<locale>/`.
 
+El pie separa el copyright, los créditos del tema/Astro y el texto opcional `site.tagline`, con los iconos sociales debajo. Los créditos siguen el idioma de la página; tu texto se conserva en todos los idiomas. El texto vacío no ocupa espacio y los textos largos se ajustan en móviles. La configuración existente y `PUBLIC_SITE_TAGLINE` siguen funcionando; no hace falta migrar.
+
 ### Opcional: Google Analytics 4
 
 Añade o edita esta opción de nivel superior en el objeto `defineThemeConfig({...})` existente de `src/site.config.ts` (junto a `site`, no dentro de `theme`):

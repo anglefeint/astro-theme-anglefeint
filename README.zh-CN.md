@@ -257,6 +257,8 @@ npm run doctor
    - `theme.comments`：开启并配置 Giscus（核心 ID + 行为参数）
 3. 在 `src/content/blog/<locale>/` 替换示例文章。
 
+页脚将版权、主题/Astro 署名和可选的 `site.tagline` 分组展示，下方保留社交图标。内置署名跟随页面语言，自定义说明在各语言中保持原文；空说明不占位置，手机端长文案自动换行。现有配置和 `PUBLIC_SITE_TAGLINE` 覆盖继续有效，无需迁移。
+
 说明：
 
 - `site.description` 是站点级默认描述。首页优先使用解析后的 `messages.siteDescription`（含内置与回退语言文案），只有解析结果为空才回退到站点描述；仅修改 `site.description` 不会替换内置首页描述。
