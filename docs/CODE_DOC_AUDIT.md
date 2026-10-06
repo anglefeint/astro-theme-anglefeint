@@ -14,6 +14,8 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 ## 2026-10-07 Grouped footer implementation review
 
+Release preflight subsequently found a new registry advisory in maintainer-only Miniflare's pinned sharp dependency. The root override/lockfile repair and its verification are documented in PACKAGE_RELEASE and the 0.11.2 ledger. Starter packaging excludes Wrangler and does not copy root overrides; user configuration and footer upgrade instructions remain unchanged.
+
 Reviewed the working-tree change against `c61d924`: CommonFooter groups copyright, credits and custom text; ThemeFrame passes localized footer labels from the existing message resolver; package dictionaries supply nine translations. Global `site.tagline`, environment precedence, the credits toggle and legacy-tagline deduplication are unchanged. No localized custom-tagline field or user schema/adapter migration is introduced.
 
 Updated nine READMEs, nine first-configuration guides, visual contracts and acceptance coverage. Package README receives the same usage boundary. Existing architecture, configuration schema, routing/SEO, metadata and maintainer workflows need no changes. Historical release notes remain historical. After visual review the maintainer authorized publication; the follow-up documentation workflow verified default-empty tagline behavior and prepared upgrading, changelog and the [0.11.2 release ledger](releases/0.11.2.md), which records actual delivery status.
