@@ -12,6 +12,21 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-06 GA4 发布后文档工作流复核
+
+核对已提交范围 `c10eae9..e8cce3a`，包含 GA4 功能、维护文档解析依赖替换和 0.10.0 发布收尾。工作区开始时干净；将该范围的真实变更路径显式传给 `suggest:docs`，并检查提交历史，未把空工作区当作无需同步的证据。
+
+| 核对链路                                                                                                                                       | 对应文档与处置                                                                                                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/site.config.ts`、schema/defaults、starter 配置模板 → theme adapter → `GoogleAnalytics.astro`、`google-analytics.js`、`utils/analytics.ts` | 九语 README 和包 README 已准确说明顶层 ID、默认关闭、语言共用、开发/本地预览排除、远程预览及同意管理边界，保留原文；UPGRADING 的四个配置辅助文件说明与实现一致，修正无关但仍残留的 0.9.0“待发布”标题。          |
+| `tests/analytics.unit.test.mjs`、`scripts/check-installed-starter.mjs`、现有 E2E/public-template 检查                                          | ARCHITECTURE 收窄验收描述；TEMPLATE_ACCEPTANCE 补上 GA4 覆盖和限制。GA 开关与首页前缀在 fixture 中配对，About 只在开启组验收，不宣称独立开关全组合覆盖。临时浏览器 fixture 是已有发布证据，不冒充仓库常设测试。 |
+| `scripts/parse-frontmatter.mjs` → 两个文档工具和 `tests/frontmatter.unit.test.mjs` → root/starter 依赖生成                                     | DOC_METADATA_SPEC 区分维护者专用解析器和 Astro 自己的传递依赖，避免误读为用户安装树里完全没有 `js-yaml`。实际使用 YAML parser，不调整内容构建逻辑。                                                             |
+| npm 源码标签、starter 提交、发布日志和 `0100-*-closeout.json`                                                                                  | 0.10.0 发布记录补齐已完成的最终文档提交构建与线上核对，替换待办措辞；未重新发布 npm，也未把历史验收算作本轮重跑。                                                                                               |
+
+直接候选覆盖 README、架构、配置、验收、升级、维护和发布文档；本次 helper 没有额外传播候选（相关关系目标已在直接候选中）。沿 README 的 `sync_targets` 核对全部九种语言，沿架构/维护文档关系核对关联指南。AGENTS/工具适配入口、AI_WORKFLOW、DOC_SYNC_WORKFLOW、维护/打包/发布流程、VISUAL_SYSTEMS、主题展示材料和文章指南无需改写：这轮没有改变命令、分支/发布政策、视觉、SEO/语言路由或写作行为。历史版本说明保留当时事实。
+
+本轮仅修改仓库 Markdown 文档，执行文档元数据、相对文档链接及 diff 空白检查；运行时测试、构建、审计、浏览器和云端验收引用 [0.10.0 发布证据](releases/0.10.0.md)，不声称重新执行。没有改代码、配置或现有命令。这些文档不在 npm 包文件范围或 starter 受管清单中，不需要 npm 新版本或重新生成 starter。
+
 ## 2026-10-04 缓存依赖与审计例外收尾
 
 在 `fd0955a` 基线上，将 main 锁文件中的 `http-cache-semantics` 从 4.2.0 更新为 4.3.0，Astro 保持 7.3.5。原始 npm audit 和维护者审计门禁均报告零漏洞，撤销旧静态缓存例外，新增验证旧 advisory、其他漏洞和不完整响应均被阻断的测试。当前 PACKAGE_RELEASE、AI_WORKFLOW、MAINTAINER_WORKFLOW、TEMPLATE_ACCEPTANCE 同步为无例外审计；历史 0.9.0/0.9.1 发布结果保留。
