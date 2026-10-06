@@ -13,6 +13,11 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.11.1] - 2026-10-06
+
+- Fix Home and article reading-panel horizontal overflow just above the 720px mobile breakpoint by accounting for existing padding and borders in desktop maximum widths. Keep the 720px wide-screen content width and existing mobile rules.
+- Package-only patch for matching 0.11.0 starters; no configuration, adapter, route or content migration. See [release notes](docs/releases/0.11.1.md).
+
 ## [0.11.0] - 2026-10-06
 
 - Add YouTube, Bluesky, LinkedIn, Discord, Telegram, Instagram, Facebook, WhatsApp and LINE to the existing social icons. No new runtime dependency.

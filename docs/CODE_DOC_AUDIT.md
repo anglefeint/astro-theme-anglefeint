@@ -12,6 +12,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-06 Reading-width patch review
+
+Reviewed the 0.11.1 working-tree CSS/test delta against 530e53a using `suggest:docs`. Home and AI prose maximum widths now reserve their actual desktop padding/borders; mobile rules and wide-screen content widths are retained. Updated visual contracts, changelog, upgrading and release ledger. Nine READMEs and bundled guides need no changes because no setup, command or configuration contract changed. Architecture, metadata and release workflow are also unchanged. The [0.11.0 record](releases/0.11.0.md) remains historical evidence of the discovered defect; [0.11.1](releases/0.11.1.md) records the fix and new validation.
+
 ## 2026-10-06 Social links documentation review
 
 Reviewed the 0.11.0 working-tree delta against 78a00f3. Code remains authoritative: the shared menu, icon registry, path resolver, starter schema and installed-package fixture determine the documented behavior. All nine READMEs and the nine bundled first-configuration guides now show the same configuration, twelve supported names, image priority and limitations, empty behavior and mobile visibility. Architecture, visual contracts, acceptance coverage, upgrading, changelog and release notes are synchronized. No new starter-managed file is needed: the existing schema is already manifest-owned; assets/helpers ship inside the npm package. Agent/release workflow and metadata contracts are unchanged, so candidate guidance documents and historical release notes are intentionally not rewritten. Validation and delivery evidence belongs to the [0.11.0 release record](releases/0.11.0.md).

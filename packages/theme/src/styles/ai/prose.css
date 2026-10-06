@@ -4,6 +4,13 @@
   overflow-wrap: anywhere;
 }
 
+/* Desktop prose remains content-box: reserve both 2em paddings and the 1px borders. */
+@media (min-width: 721px) {
+  body.ai-page .ai-content .prose {
+    max-width: calc(100% - 4em - 2px);
+  }
+}
+
 @media (max-width: 720px) {
   body.ai-page .ai-content .prose {
     box-sizing: border-box;
