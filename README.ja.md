@@ -257,6 +257,20 @@ Astro のメジャーアップグレードは、まず公式ガイドを参照�
    - `theme.comments`: Giscus を有効化・設定（コア ID + 動作パラメータ）
 3. `src/content/blog/<locale>/` のサンプル記事を差し替え。
 
+### 任意：Google Analytics 4
+
+`src/site.config.ts` の既存の `defineThemeConfig({...})` に次のトップレベル設定を追加・編集します（`site` と同じ階層で、`theme` の中ではありません）。
+
+```ts
+analytics: {
+  googleAnalyticsId: 'G-XXXXXXXXXX',
+},
+```
+
+Google Analytics → 管理 → データストリーム → ウェブストリームから **測定 ID**（`G-...`）をコピーします。プロパティ名や数字のプロパティ ID ではありません。空欄なら無効です。全言語・全テーマのページで同じ ID を使い、ページパスで言語を比較できます。再ビルド・再デプロイ後、公開サイトを開いて GA4 のリアルタイムレポートで確認してください。
+
+開発モードと localhost・ループバックでのプレビューは送信しません。設定済みのリモート・LAN アドレスのプレビューは計測します。初期状態では Google スクリプトを読み込みません。GTM、Zaraz、手動コードとの二重導入を避けてください。同意バナーや同意管理は含まれません。必要なサイトは計測を有効にする前に整備してください。ブロッカーにより計測できない場合があります。既存プロジェクトには対応する設定補助ファイルとアダプターが必要です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
+
 ### 任意: Giscus コメント
 
 コメントはデフォルトで無効です。有効化するには:

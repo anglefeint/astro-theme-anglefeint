@@ -263,6 +263,20 @@ npm run doctor
 - 语言配置与默认值深合并。禁用语言请设置 `i18n.locales.<code>.meta.enabled = false`，省略覆盖项不代表删除语言；默认语言始终启用。
 - 语言元信息当前支持 `label`、`hreflang`、`ogLocale`、`enabled`、`fallback`。
 
+### 可选：Google Analytics 4
+
+在 `src/site.config.ts` 已有的 `defineThemeConfig({...})` 对象中添加或修改以下顶层配置（与 `site` 同级，不放在 `theme` 内）：
+
+```ts
+analytics: {
+  googleAnalyticsId: 'G-XXXXXXXXXX',
+},
+```
+
+在 Google Analytics → 管理 → 数据流 → 网站数据流中复制 **衡量 ID**（`G-...`），不是资源名称或数字资源 ID。留空即关闭。所有语言和主题页面共用一个 ID，可按页面路径区分语言。重新构建部署后，访问线上网站，在 GA4 实时报告中确认数据。
+
+开发模式及 localhost/回环地址预览不发送数据；配置后，远程预览和局域网地址预览会统计。默认模板不加载 Google 脚本。不要与 GTM、Zaraz 或手动代码重复接入同一统计。本选项不包含 Cookie 同意弹窗或同意管理；有此需求的网站应先完成对应设置，再启用统计。脚本拦截器可能阻止数据采集。旧项目需要匹配的配置辅助文件和适配器，详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+
 ### 可选：Giscus 评论
 
 评论默认关闭。启用方式：

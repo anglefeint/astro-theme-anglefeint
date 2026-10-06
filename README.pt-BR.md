@@ -187,6 +187,20 @@ Faixas aceitam title, src e artist opcional. Sem faixas, o player fica oculto. A
 
 O arquivo completo é baixado antes de tocar; arquivos grandes aumentam espera e memória. Faixas externas exigem CORS. Prefira arquivos locais. enabled: false desativa o player.
 
+### Opcional: Google Analytics 4
+
+Adicione ou edite esta opção no nível superior do objeto `defineThemeConfig({...})` existente em `src/site.config.ts` (ao lado de `site`, não dentro de `theme`):
+
+```ts
+analytics: {
+  googleAnalyticsId: 'G-XXXXXXXXXX',
+},
+```
+
+Copie o **ID de medição** (`G-...`) em Google Analytics → Administrador → Fluxos de dados → seu fluxo da Web. Não é o nome nem o ID numérico da propriedade. Deixe vazio para desativar. Um ID atende todos os idiomas e páginas do tema; compare idiomas pelo caminho da página. Compile e publique novamente, visite o site e confira o relatório Em tempo real do GA4.
+
+O modo de desenvolvimento e as prévias em localhost/loopback não enviam dados. Prévias remotas ou por endereço LAN coletam dados quando configuradas. O starter padrão não carrega scripts do Google. Evite instalação duplicada por GTM, Zaraz ou código manual. Não inclui banner nem gerenciamento de consentimento; se seu site precisar, configure-os antes de ativar a coleta. Bloqueadores podem impedir a medição. Projetos existentes precisam dos arquivos auxiliares de configuração e do adaptador correspondentes; consulte o [guia de atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+
 ### Comentários Giscus
 
 Prepare um repositório público com Discussions, instale o aplicativo e obtenha os IDs em [giscus.app](https://giscus.app/).

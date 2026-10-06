@@ -80,6 +80,7 @@ export interface AboutConfig {
 }
 
 export interface ThemeConfig {
+  analytics: { googleAnalyticsId: string };
   site: {
     title: string;
     description: string;
