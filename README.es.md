@@ -257,6 +257,20 @@ Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
    - `theme.comments` para activar y configurar Giscus (IDs base + parámetros de comportamiento)
 3. Reemplaza posts de ejemplo en `src/content/blog/<locale>/`.
 
+### Opcional: Google Analytics 4
+
+Añade o edita esta opción de nivel superior en el objeto `defineThemeConfig({...})` existente de `src/site.config.ts` (junto a `site`, no dentro de `theme`):
+
+```ts
+analytics: {
+  googleAnalyticsId: 'G-XXXXXXXXXX',
+},
+```
+
+Copia el **ID de medición** (`G-...`) de Google Analytics → Administrar → Flujos de datos → tu flujo web. No es el nombre ni el ID numérico de la propiedad. Déjalo vacío para desactivar la medición. Un ID sirve para todos los idiomas y páginas del tema; compara idiomas por la ruta de página. Vuelve a compilar y desplegar, visita el sitio publicado y comprueba el informe En tiempo real de GA4.
+
+El modo de desarrollo y las vistas previas en localhost/bucle local no envían datos. Las vistas previas remotas o por dirección LAN sí miden cuando están configuradas. El starter predeterminado no carga scripts de Google. Evita duplicar la instalación con GTM, Zaraz o código manual. No se incluye un banner ni gestión del consentimiento; si tu sitio los requiere, configúralos antes de activar la medición. Los bloqueadores pueden impedirla. Los proyectos existentes necesitan los archivos auxiliares de configuración y el adaptador correspondientes; consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+
 ### Opcional: comentarios con Giscus
 
 Los comentarios vienen desactivados por defecto. Para activarlos:

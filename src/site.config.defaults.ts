@@ -99,6 +99,7 @@ export const DEFAULT_ABOUT_CONFIG: AboutConfig = {
 };
 
 const defaultThemeConfig: ThemeConfig = {
+  analytics: { googleAnalyticsId: '' },
   site: {
     title: 'My Blog',
     description:

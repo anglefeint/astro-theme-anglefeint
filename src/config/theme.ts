@@ -28,6 +28,7 @@ if (commentsConfig.enabled) {
  * Theme behavior config.
  */
 export const THEME = {
+  ANALYTICS: { GOOGLE_ANALYTICS_ID: THEME_CONFIG.analytics?.googleAnalyticsId ?? '' },
   FOOTER: { SHOW_CREDITS: THEME_CONFIG.theme.footer?.showCredits ?? true },
   MUSIC: normalizeMusic(THEME_CONFIG.theme.music),
   /** Posts per page on blog list */

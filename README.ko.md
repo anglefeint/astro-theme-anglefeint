@@ -257,6 +257,20 @@ Astro 메이저 버전 마이그레이션은 먼저 공식 가이드를 확인�
    - `theme.comments`: Giscus 활성화/설정 (핵심 ID + 동작 파라미터)
 3. `src/content/blog/<locale>/` 의 샘플 글을 교체합니다.
 
+### 선택 사항: Google Analytics 4
+
+`src/site.config.ts`의 기존 `defineThemeConfig({...})` 객체에 다음 최상위 설정을 추가하거나 수정하세요(`theme` 내부가 아닌 `site`와 같은 단계).
+
+```ts
+analytics: {
+  googleAnalyticsId: 'G-XXXXXXXXXX',
+},
+```
+
+Google Analytics → 관리 → 데이터 스트림 → 웹 스트림에서 **측정 ID**(`G-...`)를 복사하세요. 속성 이름이나 숫자 속성 ID가 아닙니다. 비워 두면 비활성화됩니다. 모든 언어와 테마 페이지에서 하나의 ID를 사용하며 페이지 경로로 언어를 비교할 수 있습니다. 다시 빌드·배포한 후 실제 사이트를 방문하고 GA4 실시간 보고서에서 확인하세요.
+
+개발 모드와 localhost/루프백 미리보기는 데이터를 보내지 않습니다. 설정된 원격 및 LAN 주소 미리보기는 집계됩니다. 기본 템플릿은 Google 스크립트를 로드하지 않습니다. GTM, Zaraz 또는 수동 코드와 중복 설치하지 마세요. 동의 배너와 동의 관리는 포함되지 않으므로 필요한 사이트는 추적 활성화 전에 마련하세요. 차단 도구로 수집이 중단될 수 있습니다. 기존 프로젝트에는 호환되는 설정 보조 파일과 어댑터가 필요합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참조하세요.
+
 ### 선택: Giscus 댓글
 
 댓글은 기본적으로 비활성화되어 있습니다. 활성화하려면:

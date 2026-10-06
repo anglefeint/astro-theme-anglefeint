@@ -24,6 +24,12 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.10.0: optional Google Analytics 4
+
+This feature adds starter-owned configuration as well as package runtime. For the supported baseline, create the latest starter in a **new directory**, migrate your content and personal settings, then set top-level `analytics: { googleAnalyticsId: 'G-XXXXXXXXXX' }` in `src/site.config.ts`. Preserve the new configuration helpers. No article frontmatter or page-route edits are needed. Run `npm run doctor`, preview, rebuild and redeploy; confirm collection in GA4 Realtime on the deployed site. Localhost previews intentionally do not send data.
+
+For maintainers reviewing a customized 0.9.x project, the configuration delta is limited to `src/site.config.schema.ts` (analytics type), `src/site.config.defaults.ts` (empty default), `scripts/adapter-templates/src/config/theme.ts` (ANALYTICS mapping) and its generated `src/config/theme.ts`. Merge those changes without replacing personal configuration; `npm run sync-adapters` uses local templates and does not download them. The package target is `@anglefeint/astro-theme@^0.10.0`, outside the `^0.9.x` update range. Package-only installation leaves old adapters disabled and does not make the new option available automatically. Historical customized starters are not covered by the release matrix. See [release notes](docs/releases/0.10.0.md).
+
 ### 0.9.2: cinematic article share cards
 
 Package-only patch for matching 0.9.0/0.9.1 starters. Run `npm update @anglefeint/astro-theme`, then `npm run doctor`, preview and redeploy. No route, adapter or content migration is required. Automatically generated cards gain a bundled background and a small `Theme by Anglefeint` credit. The existing `theme.footer.showCredits: false` setting now hides both footer credits and this image credit. Custom `ogImage` remains untouched. Generated image URLs change; sharing platforms may retain cached previews until they fetch the page again. See [0.9.2 release notes](docs/releases/0.9.2.md).

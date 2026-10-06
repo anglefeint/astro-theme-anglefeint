@@ -264,6 +264,20 @@ Notes:
 - Locale config is deep-merged with defaults. Disable an unwanted language with `i18n.locales.<code>.meta.enabled = false`; omitting its override does not remove it. The default locale remains enabled.
 - Locale metadata currently supports `label`, `hreflang`, `ogLocale`, `enabled`, and `fallback`.
 
+### Optional: Google Analytics 4
+
+In the existing `defineThemeConfig({...})` object in `src/site.config.ts`, add or edit this top-level setting (next to `site`, not inside `theme`):
+
+```ts
+analytics: {
+  googleAnalyticsId: 'G-XXXXXXXXXX',
+},
+```
+
+Copy the **Measurement ID** (`G-...`) from Google Analytics → Admin → Data streams → your Web stream. This is not the property name or numeric property ID. Leave the value empty to disable tracking. One ID covers every language and themed page; compare languages by page path. Rebuild and redeploy, then visit the live site and check the GA4 Realtime report.
+
+Development mode and localhost/loopback previews do not send data. Remote previews and LAN-address previews do track when configured. The default starter loads no Google script. Do not also install the same tracking through GTM, Zaraz or a manual snippet. This option does not include a consent banner or consent management; if your site requires these, arrange them before enabling tracking. Script blockers can prevent data collection. Existing projects need the matching configuration helpers/adapter; see the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+
 ### Optional: Giscus Comments
 
 Comments are disabled by default. To enable:

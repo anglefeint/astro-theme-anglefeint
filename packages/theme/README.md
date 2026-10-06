@@ -6,6 +6,8 @@ Version 0.9.0 requires Astro `^7.3.5`. Its matching starter uses Sharp `^0.35.5`
 
 ## Install
 
+Optional GA4 is available with the matching 0.10.0 starter. Set top-level `analytics.googleAnalyticsId: 'G-XXXXXXXXXX'` in the existing `src/site.config.ts` configuration, rebuild and deploy. Empty disables it; one Measurement ID covers all languages. Development and localhost/loopback preview are excluded; remote and LAN previews are not. Check the GA4 Realtime report on the deployed site. No consent banner/management is included; arrange consent handling before enabling where needed, and avoid duplicate GTM/Zaraz/manual tags. Upgrading npm alone does not add the new starter schema/defaults/adapter; follow [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). Manual package consumers map `THEME.ANALYTICS.GOOGLE_ANALYTICS_ID` through their existing site-config alias.
+
 ```bash
 npm install @anglefeint/astro-theme
 ```

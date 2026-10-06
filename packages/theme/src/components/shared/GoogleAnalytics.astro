@@ -1,0 +1,11 @@
+---
+import { THEME } from '@anglefeint/site-config/theme';
+import { normalizeGoogleAnalyticsId } from '../../utils/analytics';
+import loader from '../../scripts/google-analytics.js?raw';
+
+// Older custom adapters may omit this optional feature entirely.
+const theme = THEME as typeof THEME & { ANALYTICS?: { GOOGLE_ANALYTICS_ID?: unknown } };
+const id = normalizeGoogleAnalyticsId(theme.ANALYTICS?.GOOGLE_ANALYTICS_ID);
+---
+
+{import.meta.env.PROD && id && <script is:inline data-ga-id={id} set:html={loader} />}
