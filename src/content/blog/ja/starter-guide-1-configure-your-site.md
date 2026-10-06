@@ -62,7 +62,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 トップページの大きな見出しの下に出る紹介文は、その言語の `site.hero` で設定します。`site.description` はサイトの既定の説明ですが、トップページのメタ説明では言語別の `messages.siteDescription` が優先されます。`site.description` だけを変えても、画面の紹介文は変わりません。
 
-ソーシャルアイコンは `github`、`twitter`、`mastodon` に対応します。`social: { links: [] }` でリンクを空にできます。空の場合もヘッダーとフッターに Mastodon、Twitter、GitHub のクリックできないプレースホルダーアイコンが表示されます。項目を設定すると、設定した項目だけが表示されます。`.env` の `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` などの上書き値は設定ファイルより優先されます。変更が反映されない場合はこちらも確認してください。
+ソーシャルアイコンは `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line` に対応します。独自の SVG/PNG/WebP は `public/icons/` に置き、`iconSrc: "/icons/community.svg"` を指定します。`icon` より優先され、元の色を保ちます。両方省略するとテキストになります。パスの制約と例は [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ja.md) を参照してください。`social: { links: [] }` でリンクを空にできます。空の場合もヘッダーとフッターに Mastodon、Twitter、GitHub のクリックできないプレースホルダーアイコンが表示されます。項目を設定すると、設定した項目だけが表示されます。`.env` の `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` などの上書き値は設定ファイルより優先されます。変更が反映されない場合はこちらも確認してください。
 
 プロジェクト直下の `.env` またはホスティング先のビルド環境で `PUBLIC_SITE_URL=https://your-domain.example` を設定すると、`site.url` を上書きできます。変更後は開発サーバーを再起動するか再ビルドし、canonical、RSS、サイトマップ、共有画像の絶対 URL がそのドメインを使うか確認してください。対応する starter の `astro.config.mjs` と URL 解決スクリプトが必要です。npm テーマパッケージの更新だけではこれらのファイルは更新されません。
 

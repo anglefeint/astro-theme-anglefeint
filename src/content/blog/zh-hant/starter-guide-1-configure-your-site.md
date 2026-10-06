@@ -47,7 +47,7 @@ site.url 影響 canonical、RSS、sitemap 與分享圖網址。建置環境或 .
 
 defaultLocalePrefix: 'never' 讓預設語言首頁直接顯示於 /。預設的 'always' 會導向 `/<語言>/`，可能短暫顯示 “Redirecting to home…”。即使使用 'never'，文章仍位於 /zh-hant/blog/。
 
-social.links 使用 href、label 與 icon（github、twitter 或 mastodon）。空清單會保留不可點擊的裝飾圖示。site.tagline 可增加頁尾文字。
+`social.links` 使用 `href`、`label` 與 `icon`：`github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`。自訂本機 SVG/PNG/WebP 可放入 `public/icons/`，設定 `iconSrc: "/icons/community.svg"`，優先於 `icon` 並保留原色；兩項都省略則顯示文字。路徑限制與範例見 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-Hant.md)。空清單會保留不可點擊的裝飾圖示。site.tagline 可增加頁尾文字。
 
 ## 選擇語言
 
