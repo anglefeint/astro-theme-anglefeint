@@ -12,6 +12,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-06 Social links documentation review
+
+Reviewed the 0.11.0 working-tree delta against 78a00f3. Code remains authoritative: the shared menu, icon registry, path resolver, starter schema and installed-package fixture determine the documented behavior. All nine READMEs now show the same configuration, twelve supported names, image priority and limitations, empty behavior and mobile visibility. Architecture, visual contracts, acceptance coverage, upgrading, changelog and release notes are synchronized. No new starter-managed file is needed: the existing schema is already manifest-owned; assets/helpers ship inside the npm package. Agent/release workflow and metadata contracts are unchanged, so candidate guidance documents and historical release notes are intentionally not rewritten. Validation and delivery evidence belongs to the [0.11.0 release record](releases/0.11.0.md).
+
 ## 2026-10-06 GA4 发布后文档工作流复核
 
 核对已提交范围 `c10eae9..e8cce3a`，包含 GA4 功能、维护文档解析依赖替换和 0.10.0 发布收尾。工作区开始时干净；将该范围的真实变更路径显式传给 `suggest:docs`，并检查提交历史，未把空工作区当作无需同步的证据。

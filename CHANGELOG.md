@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.11.0] - 2026-10-06
+
+- Add YouTube, Bluesky, LinkedIn, Discord, Telegram, Instagram, Facebook, WhatsApp and LINE to the existing social icons. No new runtime dependency.
+- Support local SVG/PNG/WebP through `social.links[].iconSrc`, with file validation and automatic Astro base prefix. Shared header/footer order, keyboard focus, footer wrapping and header horizontal scrolling; existing mobile visibility remains.
+- Update all nine READMEs and the starter social type. See [release notes](docs/releases/0.11.0.md) for upgrade boundaries and validation.
+
 ## [0.10.0] - 2026-10-06
 
 - Add optional GA4 through one top-level `analytics.googleAnalyticsId`; empty by default, shared by all languages and themed pages.

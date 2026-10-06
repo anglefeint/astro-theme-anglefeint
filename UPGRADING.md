@@ -24,6 +24,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.11.0: social icons and custom images
+
+Adds nine optional built-in icons and local `iconSrc` images to `social.links`. Existing links and empty placeholders retain their behavior. The supported baseline is the matching starter plus `@anglefeint/astro-theme@^0.11.0`; `^0.10.0` does not include this minor release. New projects need only edit `src/site.config.ts`. For customized 0.10.0 projects, the only starter code delta is `src/site.config.schema.ts`: its `SocialLink` type now imports/re-exports the package's `@anglefeint/astro-theme/utils/social-icons.ts` type. npm alone does not update local schema files. No adapter, route, article or locale migration is required. Prefer the fresh-template migration below when unsure; do not overwrite personalized configuration. Rebuild, preview header/footer and redeploy. See [release notes](docs/releases/0.11.0.md).
+
 ### 0.10.0: optional Google Analytics 4
 
 This feature adds starter-owned configuration as well as package runtime. For the supported baseline, create the latest starter in a **new directory**, migrate your content and personal settings, then set top-level `analytics: { googleAnalyticsId: 'G-XXXXXXXXXX' }` in `src/site.config.ts`. Preserve the new configuration helpers. No article frontmatter or page-route edits are needed. Run `npm run doctor`, preview, rebuild and redeploy; confirm collection in GA4 Realtime on the deployed site. Localhost previews intentionally do not send data.

@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release: [0.10.0](./0.10.0.md), optional GA4 with one ID and matching starter configuration. See its delivery and acceptance record.
+Latest feature release entry: [0.11.0](./0.11.0.md), expanded social icons and optional local custom images. See its delivery status and acceptance record.
 
 Latest patch entry: [0.9.2](./0.9.2.md), cinematic article share cards and shared credit visibility. See its delivery status and validation record.
 
