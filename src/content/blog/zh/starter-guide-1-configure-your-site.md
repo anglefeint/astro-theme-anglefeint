@@ -60,6 +60,8 @@ export const THEME_CONFIG = defineThemeConfig({
 
 `site.title` 是站点名称；`site.url` 填最终上线的完整网址，影响 canonical、RSS、sitemap 和分享图片地址；`site.author` 是文章默认作者；`site.tagline` 是页脚文案。
 
+页脚将版权、主题/Astro 署名和可选的 `site.tagline` 分组展示，下方保留社交图标。内置署名跟随页面语言，自定义说明在各语言中保持原文；空说明不占位置，手机端长文案自动换行。现有配置和 `PUBLIC_SITE_TAGLINE` 覆盖继续有效，无需迁移。
+
 首页大标题下的介绍由当前语言的 `site.hero` 控制。`site.description` 是站点级默认描述，而首页元描述优先使用该语言的 `messages.siteDescription`。只改 `site.description` 不会替换首页可见介绍。
 
 社交链接支持 `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line` 图标。自定义图标可将本地 SVG/PNG/WebP 放入 `public/icons/`，设置 `iconSrc: "/icons/community.svg"`，优先于 `icon` 并保留原色；两项都省略则显示文字。路径限制与示例见 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-CN.md)。用 `social: { links: [] }` 清空链接。空列表仍会在顶部和页脚显示 Mastodon、Twitter、GitHub 三个不可点击的占位图标；列表非空时只显示已配置的条目。若 `.env` 中已有 `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` 等站点覆盖值，它们会优先于配置文件；修改没有生效时也检查这些变量。

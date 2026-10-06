@@ -49,6 +49,8 @@ defaultLocalePrefix: 'never' 讓預設語言首頁直接顯示於 /。預設的 
 
 `social.links` 使用 `href`、`label` 與 `icon`：`github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`。自訂本機 SVG/PNG/WebP 可放入 `public/icons/`，設定 `iconSrc: "/icons/community.svg"`，優先於 `icon` 並保留原色；兩項都省略則顯示文字。路徑限制與範例見 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-Hant.md)。空清單會保留不可點擊的裝飾圖示。site.tagline 可增加頁尾文字。
 
+頁尾將版權、佈景主題/Astro 署名及選填的 `site.tagline` 分組呈現，下方保留社群圖示。內建署名隨頁面語言切換，自訂說明在各語言中保留原文；空白說明不占空間，手機上的長文案自動換行。現有設定及 `PUBLIC_SITE_TAGLINE` 覆寫仍有效，無須遷移。
+
 ## 選擇語言
 
 預設啟用 en、ja、ko、es、zh、pt-br、de、ru、zh-hant 九種語言，英語是初始預設語言。可合併下列設定停用部分語言：
