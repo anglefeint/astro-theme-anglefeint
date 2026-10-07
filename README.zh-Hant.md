@@ -90,6 +90,8 @@ defaultLocalePrefix: 'never' 讓預設語言首頁直接顯示於 /。預設的 
 
 social.links 使用 href、label 與 icon（github、twitter 或 mastodon）。空清單會保留不可點擊的裝飾圖示。site.tagline 可增加頁尾文字。
 
+About 正文段落與簽名保留設定字串中的換行：`\n` 換行，`\n\n` 留一空行，長句仍自動換行。內容仍是純文字，不解析 Markdown 或 HTML，請勿插入 `<br>`。
+
 頁尾將版權、佈景主題/Astro 署名及選填的 `site.tagline` 分組呈現，下方保留社群圖示。內建署名隨頁面語言切換，自訂說明在各語言中保留原文；空白說明不占空間，手機上的長文案自動換行。現有設定及 `PUBLIC_SITE_TAGLINE` 覆寫仍有效，無須遷移。
 
 ### 選擇語言

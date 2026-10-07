@@ -80,6 +80,8 @@ The command list is maintained explicitly rather than blindly executing prose sc
 
 ## Configuration and browser coverage
 
+About newline browser checks measure the actual separation of lines and blank lines in paragraphs/signatures at 1440/390/320px, including long-text wrapping and unaffected headings/sidebar whitespace. The independent installed build matrix supplies multiline About configuration and verifies that its line feeds survive HTML generation.
+
 The footer browser regression checks all nine built-in languages across Home, Blog, About and article pages at 1440/721/390/320px: localized credits, separate copyright/credit groups, no empty tagline row and bounded layout. The installed-package matrix checks custom tagline preservation with credits both enabled and disabled; assertions use credit link destinations rather than English wording so translations remain valid.
 
 Article SEO checks parse built HTML for Chinese-only, Chinese/Japanese, English/Chinese and five-language fixtures. They verify self-canonical URLs, exact reciprocal hreflang sets, conditional `x-default`, OG alternate locales and language-menu fallbacks. The installed matrix exercises English, Chinese, Brazilian Portuguese, German, Russian and Traditional Chinese defaults with both homepage prefix modes; public-template acceptance checks the delivered default-English starter. `tests/head-locales.unit.test.mjs` additionally covers an empty explicit map, omitted-map compatibility and exclusion of unenabled locale keys.

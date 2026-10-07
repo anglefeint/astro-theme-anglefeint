@@ -12,6 +12,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-07 About plain-text line breaks
+
+Reviewed the working-tree delta against `247d4c1`: a scoped rule in package-owned About panel CSS preserves configured line feeds in direct body paragraphs/signature. Configuration parsing, About routes, language fallback, HTML escaping and interactive effects are unchanged. Nine READMEs and nine optional-feature guides, package README, visual/acceptance references and the release ledger explain plain-text behavior without promising Markdown support. Architecture, metadata/workflow rules and old releases need no edits. Browser geometry and independent installed-config checks cover presentation and build preservation separately; final execution/delivery results belong in the release record.
+
 ## 2026-10-07 Grouped footer implementation review
 
 Release preflight subsequently found a new registry advisory in maintainer-only Miniflare's pinned sharp dependency. The root override/lockfile repair and its verification are documented in PACKAGE_RELEASE and the 0.11.2 ledger. Starter packaging excludes Wrangler and does not copy root overrides; user configuration and footer upgrade instructions remain unchanged.
