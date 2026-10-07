@@ -90,6 +90,8 @@ Mit defaultLocalePrefix: 'never' erscheint die Standardstartseite direkt unter /
 
 social.links enthält href, label und icon (github, twitter oder mastodon). Eine leere Liste zeigt nicht anklickbare Platzhalter. site.tagline ergänzt den Fußzeilentext.
 
+Absätze und Signatur auf der About-Seite behalten Zeilenumbrüche aus Konfigurationsstrings: `\n` beginnt eine neue Zeile, `\n\n` lässt eine Leerzeile. Lange Sätze werden weiterhin umgebrochen. Es bleibt Klartext, kein Markdown oder HTML; kein `<br>` einfügen.
+
 Der Footer trennt Copyright, Theme-/Astro-Verweise und den optionalen Text `site.tagline`; darunter stehen die Social-Media-Symbole. Die Verweise folgen der Seitensprache, eigener Text bleibt in allen Sprachen unverändert. Leerer Text benötigt keinen Platz, langer Text bricht auf Mobilgeräten um. Bestehende Einstellungen und `PUBLIC_SITE_TAGLINE` bleiben gültig; keine Migration ist nötig.
 
 ### Sprachen auswählen
