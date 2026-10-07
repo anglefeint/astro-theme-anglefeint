@@ -13,6 +13,10 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.11.3] - 2026-10-07
+
+- Preserve configured About paragraph/signature line breaks and blank lines while retaining normal wrapping. Scoped CSS only; no Markdown/HTML interpretation or configuration migration. See [release notes](docs/releases/0.11.3.md).
+
 ## [0.11.2] - 2026-10-07
 
 - Group footer copyright, theme/Astro credits and optional custom tagline separately, with responsive wrapping and existing scene colors. Translate built-in footer credits into all nine built-in languages.

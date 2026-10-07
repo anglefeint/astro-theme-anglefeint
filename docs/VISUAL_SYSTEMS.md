@@ -101,6 +101,8 @@ The shared footer uses understated inherited-color Anglefeint and Astro links, s
 
 ## 4) About (`body.hacker-page`)
 
+Direct body paragraphs and the signature use `white-space: pre-line`: actual line feeds in configured text remain visible, consecutive line feeds leave blank lines, and ordinary long text still wraps. This does not parse Markdown/HTML or create additional paragraph elements. The rule does not target headings, list items, sidebar labels or modal content.
+
 - Hacker/terminal profile page
 - Modal-driven right sidebar tools
 - Runtime text and modal content from `src/site.config.ts -> i18n.locales.<code>.about` (selected via `src/config/about.ts`)

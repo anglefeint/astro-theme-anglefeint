@@ -71,6 +71,8 @@ Comprueba el final del artículo. Si no aparecen, revisa ID, permisos del reposi
 
 ## 3. Sustituye el contenido de About
 
+Los párrafos y la firma de About conservan los saltos de línea de la configuración: `\n` cambia de línea y `\n\n` deja una línea en blanco. Las frases largas siguen ajustándose. Es texto plano, sin Markdown ni HTML; no insertes `<br>`.
+
 About está activo por defecto. Configura el texto por idioma sin editar la plantilla de la página:
 
 ```ts

@@ -218,6 +218,14 @@ try {
             defaultLocale: locale,
             routing: { defaultLocalePrefix: mode },
             locales: {
+              en: {
+                about: {
+                  sections: {
+                    who: 'ABOUT_LINE_ONE\n\nABOUT_LINE_TWO',
+                    signature: 'SIGNATURE_ONE\nSIGNATURE_TWO',
+                  },
+                },
+              },
               zh: { messages: { siteDescription: 'CUSTOM_ZH_DESCRIPTION' } },
               fr: { meta: { label: 'French', enabled: true } },
             },
@@ -231,6 +239,11 @@ try {
         console.log(`Building installed starter: default=${locale}, prefix=${mode}`);
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
         await npm(['run', 'build']);
+        if (mode === 'always') {
+          const aboutHtml = await read('dist/en/about/index.html');
+          assert(aboutHtml.includes('ABOUT_LINE_ONE\n\nABOUT_LINE_TWO'));
+          assert(aboutHtml.includes('SIGNATURE_ONE\nSIGNATURE_TWO'));
+        }
         for (const lang of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
           const html = await read(`dist/${lang}/blog/installed-default/index.html`);
           for (const page of [

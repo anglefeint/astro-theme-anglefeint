@@ -258,6 +258,8 @@ For Astro major-version migrations, follow the official Astro guide first:
 3. Replace starter posts in `src/content/blog/<locale>/`.
 4. Set your real site URL (`PUBLIC_SITE_URL` or `src/site.config.ts`) before production deploy.
 
+About body paragraphs and the signature preserve line breaks in configuration strings: `\n` starts a new line and `\n\n` leaves a blank line. Long sentences still wrap. This is plain text, not Markdown or HTML; do not insert `<br>`.
+
 The footer separates copyright, theme/Astro credits and your optional `site.tagline` into independent groups, followed by social icons. Built-in credits follow the page language; your tagline stays unchanged across languages. Empty taglines take no space, and long text wraps on mobile. Existing configuration and `PUBLIC_SITE_TAGLINE` overrides still work; no migration is needed.
 
 Notes:

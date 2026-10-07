@@ -71,6 +71,8 @@ Check the bottom of a post. If comments are absent, check IDs, repository permis
 
 ## 3. Replace About content
 
+About body paragraphs and the signature preserve line breaks in configuration strings: `\n` starts a new line and `\n\n` leaves a blank line. Long sentences still wrap. This is plain text, not Markdown or HTML; do not insert `<br>`.
+
 About is enabled by default. Configure its content per language without editing the page template:
 
 ```ts

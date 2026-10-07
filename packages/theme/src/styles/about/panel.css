@@ -203,6 +203,11 @@
   background: #000;
 }
 /* ── prose body ── */
+.hacker-body > p,
+.hacker-body > .about-signature {
+  white-space: pre-line;
+}
+
 .hacker-body p,
 .hacker-body h2,
 .hacker-body blockquote,

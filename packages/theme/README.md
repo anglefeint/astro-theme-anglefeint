@@ -118,6 +118,10 @@ With the existing `theme.music` configuration, 0.8.1 attempts to resume active t
 
 Audio is fully downloaded into a browser Blob before playback, making seeking independent of HTTP Range support. Large tracks and slow connections increase startup time and memory use. External audio hosts must allow cross-origin fetch (CORS); same-origin files in `public/music/` need no CORS configuration. Pause/resume reuses the loaded track; switching tracks releases it. Page navigation loads the track again, subject to browser HTTP caching.
 
+## About line breaks
+
+About body paragraphs and the signature preserve configured line breaks (`\n` / `\n\n`) while long text still wraps. Content remains plain text; Markdown and `<br>` are not interpreted. No configuration migration is needed.
+
 ## Footer credits
 
 Copyright, localized theme/Astro credits and optional `site.tagline` occupy separate groups, followed by social icons. Empty taglines take no space; long text wraps on mobile. Credits follow the page language, while your custom tagline stays unchanged across languages. Existing settings and `PUBLIC_SITE_TAGLINE` overrides work without schema or adapter migration.

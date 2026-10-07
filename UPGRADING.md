@@ -24,6 +24,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.11.3: About line breaks
+
+Compatible package-only patch for matching 0.11.x starters. Update the theme, run `npm run doctor` and `npm run build`, preview and redeploy. About body paragraphs/signature preserve actual line feeds in configuration strings (`\n` for a new line, `\n\n` for a blank line). No configuration, schema or adapter migration; content remains plain text. See [release notes](docs/releases/0.11.3.md).
+
 ### 0.11.2: grouped and localized footer
 
 Compatible package-only patch for matching 0.11.0/0.11.1 starters. Run `npm update @anglefeint/astro-theme`, `npm run doctor`, `npm run build`, then preview and redeploy. No schema, adapter or configuration edits are needed. Existing `site.tagline` and `PUBLIC_SITE_TAGLINE` remain global user text; no copyright/hosting statement is added by default. Built-in credits follow the page language and `theme.footer.showCredits` still controls them. See [release notes](docs/releases/0.11.2.md); earlier migration requirements remain unchanged.

@@ -257,6 +257,8 @@ npm run doctor
    - `theme.comments`：开启并配置 Giscus（核心 ID + 行为参数）
 3. 在 `src/content/blog/<locale>/` 替换示例文章。
 
+About 正文段落和签名保留配置字符串中的换行：`\n` 换行，`\n\n` 留一空行，长句仍自动折行。这仍是纯文本，不解析 Markdown 或 HTML，不要插入 `<br>`。
+
 页脚将版权、主题/Astro 署名和可选的 `site.tagline` 分组展示，下方保留社交图标。内置署名跟随页面语言，自定义说明在各语言中保持原文；空说明不占位置，手机端长文案自动换行。现有配置和 `PUBLIC_SITE_TAGLINE` 覆盖继续有效，无需迁移。
 
 说明：
