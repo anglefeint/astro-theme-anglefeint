@@ -326,6 +326,12 @@ social: {
 
 組み込みの `icon` 名： `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
 
+任意の `rel` に `me` や `me nofollow` などを空白区切りで指定できます。組み込みアイコン・独自画像・テキストリンクに共通です。省略・空欄では `noopener noreferrer` を維持します。小文字化・重複除去を行い、安全属性は常に保持し、競合する `opener` は無視します。プラットフォームによる `me` の自動付与はありません。自分のアカウントにのみ指定してください。[Mastodon の確認](https://docs.joinmastodon.org/user/profile/#link-verification)には、デプロイ後にプロフィール項目へサイトの HTTPS URL を保存します。リンクがある実ページ（例：`/en/`）を使用してください。ルートの HTML リダイレクトページにはリンクがない場合があります。確認は Mastodon サーバーが行います。
+
+```ts
+{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
+```
+
 カスタム画像は `community.svg` を `public/icons/` に置き、リンクに `iconSrc: "/icons/community.svg"` を指定します。ローカルの SVG、PNG、WebP に対応。パスは `/` で始め、外部 URL、クエリ、フラグメント、エンコード文字は使いません。Astro の `base` は自動で付加されます。ファイルがない場合や未対応のアイコン名は開発・ビルド時に設定エラーになります。
 
 優先順位は `iconSrc` → `icon` → テキストです。組み込みアイコンはメニューの色を継承し、カスタム画像は元の色を保ちます。`label` はアクセシブルな名前です。フッターは必要に応じて折り返し、ヘッダーは1行のまま横スクロールできます。720px 以下では従来どおりヘッダーのソーシャルリンクを非表示にします。フッターは表示されます。空の `links` はクリックできない既存の3つのプレースホルダーを表示します。変更後は再ビルド・デプロイしてください。

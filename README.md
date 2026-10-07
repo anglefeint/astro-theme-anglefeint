@@ -331,6 +331,12 @@ social: {
 
 Built-in `icon` names: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
 
+Optional `rel` accepts space-separated relations, such as `me` or `me nofollow`, for any link (built-in icon, custom image or text). Omitted/blank values keep `noopener noreferrer`; values are lowercased and deduplicated, these protections are always retained, and conflicting `opener` is ignored. Nothing automatically adds `me` based on the platform. Use `me` only for your own identity. For [Mastodon verification](https://docs.joinmastodon.org/user/profile/#link-verification), deploy first, then save an HTTPS website URL in your Mastodon profile fields. Use a page containing the backlink, such as `/en/`; a root HTML redirect page may not contain it. Verification is performed by your Mastodon server, not the theme.
+
+```ts
+{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
+```
+
 For a custom image, put `community.svg` in `public/icons/`, then set `iconSrc: "/icons/community.svg"` on the link. Local SVG, PNG and WebP are supported; use a path starting with `/`, without a remote URL, query, fragment or encoded characters. Astro’s `base` is added automatically. Missing files or unsupported icon names stop dev/build with a configuration error.
 
 `iconSrc` takes priority over `icon`; omit both for a text link. Built-in icons inherit the menu color; custom images retain their own colors. `label` supplies the accessible name. Footer links wrap as needed; the header keeps one horizontally scrollable row when space is limited. header social icons remain hidden at widths of 720px and below, while footer links remain visible. Empty `links` retains the three non-clickable placeholders. Rebuild and deploy after configuration changes.

@@ -330,6 +330,12 @@ social: {
 
 内置 `icon` 名称： `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
 
+可选的 `rel` 接受空格分隔的关系值，例如 `me` 或 `me nofollow`，适用于内置图标、自定义图片和纯文字链接。不填或留空保持 `noopener noreferrer`；值会转为小写并去重，安全属性始终保留，冲突的 `opener` 会被忽略。不会按平台自动添加 `me`，仅为自己的身份链接设置它。[Mastodon 验证](https://docs.joinmastodon.org/user/profile/#link-verification)：先部署网站，再在 Mastodon 个人资料字段中填写并保存网站 HTTPS 地址。使用包含返回账号链接的实际页面（如 `/en/`）；根路径的 HTML 跳转页可能没有该链接。验证由 Mastodon 服务器完成，主题不保证验证结果。
+
+```ts
+{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
+```
+
 自定义图片：将 `community.svg` 放入 `public/icons/`，再为链接设置 `iconSrc: "/icons/community.svg"`。支持本地 SVG、PNG、WebP，路径以 `/` 开头，不使用远程地址、查询参数、片段或编码字符；主题自动加上 Astro 的 `base`。文件不存在或图标名称不受支持时，开发/构建会报配置错误。
 
 优先级为 `iconSrc` → `icon` → 文字。内置图标继承菜单颜色，自定义图片保留原色；`label` 是无障碍名称。页脚链接过多会换行，顶栏保持单行，空间不足时可横向滚动；宽度不超过 720px 时仍隐藏顶栏社交入口，页脚保留。空 `links` 保留原有三个不可点击的占位图标。修改配置后重新构建、部署。
