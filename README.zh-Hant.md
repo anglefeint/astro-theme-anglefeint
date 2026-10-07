@@ -44,6 +44,12 @@ social: {
 
 內建 `icon` 名稱： `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
 
+可選的 `rel` 接受空格分隔的關係值，例如 `me` 或 `me nofollow`，適用於內建圖示、自訂圖片及純文字連結。未填或留空保持 `noopener noreferrer`；值會轉為小寫並去重，安全屬性始終保留，衝突的 `opener` 會被忽略。不會按平台自動加入 `me`，僅用於自己的身分連結。[Mastodon 驗證](https://docs.joinmastodon.org/user/profile/#link-verification)：先部署，再於 Mastodon 個人資料欄位填寫並儲存網站 HTTPS 網址。請用含有返回帳號連結的實際頁面（如 `/en/`）；根路徑 HTML 跳轉頁可能沒有此連結。驗證由 Mastodon 伺服器執行。
+
+```ts
+{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
+```
+
 自訂圖片：將 `community.svg` 放入 `public/icons/`，再為連結設定 `iconSrc: "/icons/community.svg"`。支援本機 SVG、PNG、WebP，路徑以 `/` 開頭，不使用遠端網址、查詢參數、片段或編碼字元；主題會自動加上 Astro 的 `base`。檔案不存在或圖示名稱不受支援時，開發/建置會回報設定錯誤。
 
 優先順序為 `iconSrc` → `icon` → 文字。內建圖示繼承選單顏色，自訂圖片保留原色；`label` 提供無障礙名稱。頁尾連結過多會換行，頂欄保持單行，空間不足時可橫向捲動；寬度不超過 720px 時仍隱藏頂欄社群入口，頁尾保留。空 `links` 保留原有三個不可點擊的佔位圖示。修改後重新建置、部署。

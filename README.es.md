@@ -326,6 +326,12 @@ social: {
 
 Nombres de `icon` incluidos: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
 
+El campo opcional `rel` admite valores separados por espacios, como `me` o `me nofollow`, con iconos integrados, imágenes propias o texto. Omitido o vacío conserva `noopener noreferrer`. Se normaliza a minúsculas, se eliminan duplicados, se mantienen las protecciones y se ignora `opener`. Ninguna plataforma añade `me` automáticamente: úsalo solo para tu propia identidad. Para la [verificación de Mastodon](https://docs.joinmastodon.org/user/profile/#link-verification), despliega y guarda la URL HTTPS del sitio en los campos del perfil. Usa una página con el enlace de vuelta, como `/en/`; la redirección HTML de la raíz puede no tenerlo. La verificación la realiza el servidor de Mastodon.
+
+```ts
+{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
+```
+
 Para una imagen propia, guarda `community.svg` en `public/icons/` y asigna `iconSrc: "/icons/community.svg"` al enlace. Se admiten SVG, PNG y WebP locales. Usa una ruta que empiece por `/`, sin URL remota, consulta, fragmento ni caracteres codificados. El `base` de Astro se añade automáticamente. Los archivos inexistentes o nombres de iconos no admitidos generan un error de configuración en desarrollo/compilación.
 
 Prioridad: `iconSrc` → `icon` → texto. Los iconos incluidos heredan el color del menú; las imágenes propias conservan sus colores. `label` proporciona el nombre accesible. En el pie, los enlaces se distribuyen en varias líneas cuando hace falta; en la cabecera se mantiene una fila con desplazamiento horizontal si falta espacio. A 720px o menos se siguen ocultando en la cabecera y permanecen visibles en el pie. Un array `links` vacío conserva los tres marcadores no interactivos. Vuelve a compilar y desplegar tras cambiar la configuración.

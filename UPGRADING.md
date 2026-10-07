@@ -24,6 +24,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.12.0: optional social link relations
+
+Compatible package-only feature for matching 0.11.x starters; no schema/adapter migration. Because `^0.11.x` does not select 0.12.0, use `npm install @anglefeint/astro-theme@^0.12.0`, then `npm run doctor`, preview and redeploy. Add `rel: 'me'` only to links representing your own identity, or other space-separated relations as needed. Without the field, existing behavior is unchanged. See [release notes](docs/releases/0.12.0.md).
+
 ### 0.11.3: About line breaks
 
 Compatible package-only patch for matching 0.11.x starters. Update the theme, run `npm run doctor` and `npm run build`, preview and redeploy. About body paragraphs/signature preserve actual line feeds in configuration strings (`\n` for a new line, `\n\n` for a blank line). No configuration, schema or adapter migration; content remains plain text. See [release notes](docs/releases/0.11.3.md).

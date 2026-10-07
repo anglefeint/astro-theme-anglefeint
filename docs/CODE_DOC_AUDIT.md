@@ -12,6 +12,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-08 Optional social link relations
+
+Reviewed changes against `8f66c80`: `SocialLink.rel` flows unchanged through the existing package-imported starter schema/social adapter, is normalized by the package resolver, and is emitted by shared header/footer anchors. The default remains `noopener noreferrer`; identity is never inferred from a platform. Updated nine README translations, package README, architecture/visual/acceptance references, upgrade guidance and release ledger. Existing starter guides do not define social relation configuration and need no changes; schemas/adapters/manifests, route/SEO behavior, workflow and metadata contracts are unchanged. README instructions distinguish the actual homepage from the root HTML redirect and local attribute verification from a real Mastodon server result. Unit and installed-build tests own normalization and rendered-HTML coverage; execution evidence belongs to the release ledger.
+
 ## 2026-10-07 About plain-text line breaks
 
 Reviewed the working-tree delta against `247d4c1`: a scoped rule in package-owned About panel CSS preserves configured line feeds in direct body paragraphs/signature. Configuration parsing, About routes, language fallback, HTML escaping and interactive effects are unchanged. Nine READMEs and nine optional-feature guides, package README, visual/acceptance references and the release ledger explain plain-text behavior without promising Markdown support. Architecture, metadata/workflow rules and old releases need no edits. Browser geometry and independent installed-config checks cover presentation and build preservation separately; final execution/delivery results belong in the release record.

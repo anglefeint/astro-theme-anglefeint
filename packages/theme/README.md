@@ -118,6 +118,12 @@ With the existing `theme.music` configuration, 0.8.1 attempts to resume active t
 
 Audio is fully downloaded into a browser Blob before playback, making seeking independent of HTTP Range support. Large tracks and slow connections increase startup time and memory use. External audio hosts must allow cross-origin fetch (CORS); same-origin files in `public/music/` need no CORS configuration. Pause/resume reuses the loaded track; switching tracks releases it. Page navigation loads the track again, subject to browser HTTP caching.
 
+## Social link relations
+
+Each `social.links` entry accepts optional `rel: 'me'` or other space-separated values such as `'me nofollow'`, independently of its platform/icon. The theme lowercases and deduplicates tokens, always retains `noopener noreferrer`, and ignores conflicting `opener`. Omitted/blank `rel` preserves existing behavior. Built-in icons, local images and text links all support it; no arbitrary HTML attributes are exposed.
+
+Use `me` only for your own identity. For [Mastodon verification](https://docs.joinmastodon.org/user/profile/#link-verification), deploy the website, then save its HTTPS URL in your Mastodon profile fields. Use a page containing the backlink (for example `/en/`); a root HTML redirect page may not contain it. Links are present in static HTML, but successful verification depends on the Mastodon server reaching the page and matching the profile URL. No configuration migration is needed for matching 0.11.x starters; install `@anglefeint/astro-theme@^0.12.0` explicitly when upgrading across the minor-version range.
+
 ## About line breaks
 
 About body paragraphs and the signature preserve configured line breaks (`\n` / `\n\n`) while long text still wraps. Content remains plain text; Markdown and `<br>` are not interpreted. No configuration migration is needed.

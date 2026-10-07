@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release entry: [0.11.0](./0.11.0.md), expanded social icons and optional local custom images. See its delivery status and acceptance record.
+Latest feature release entry: [0.12.0](./0.12.0.md), optional per-link social relations and opt-in identity verification. See its delivery status and acceptance record.
 
 Latest patch entry: [0.11.3](./0.11.3.md), About plain-text line breaks with unchanged user configuration. See its delivery status and validation record.
 
