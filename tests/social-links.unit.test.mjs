@@ -7,6 +7,26 @@ import { pathToFileURL } from 'node:url';
 import { resolveSocialLinks } from '../packages/theme/src/utils/social-links.ts';
 import { SOCIAL_ICON_PATHS } from '../packages/theme/src/utils/social-icons.ts';
 
+test('social rel is opt-in, normalized and cannot remove new-window protections', () => {
+  const resolve = (rel, icon = 'mastodon') =>
+    resolveSocialLinks(
+      [{ href: 'https://example.com/profile', label: 'Profile', icon, rel }],
+      pathToFileURL('/unused')
+    )[0].rel;
+  assert.equal(resolve(undefined), 'noopener noreferrer');
+  assert.equal(resolve(''), 'noopener noreferrer');
+  assert.equal(resolve(' \t\n'), 'noopener noreferrer');
+  assert.equal(resolve('me'), 'me noopener noreferrer');
+  assert.equal(
+    resolve(' ME\tme\nNOFOLLOW noreferrer NOOPENER opener '),
+    'me nofollow noreferrer noopener'
+  );
+  assert.equal(resolve('me', 'github'), 'me noopener noreferrer');
+  for (const rel of [true, null, [], {}]) {
+    assert.throws(() => resolve(rel), /social.links\[0\].*rel must be/);
+  }
+});
+
 test('social icons cover exactly the approved platforms and preserve text/empty configurations', () => {
   const names = [
     'mastodon',

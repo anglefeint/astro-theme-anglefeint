@@ -44,6 +44,12 @@ social: {
 
 Verfügbare `icon`-Namen: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
 
+Das optionale `rel` nimmt durch Leerzeichen getrennte Werte wie `me` oder `me nofollow` an, auch bei eigenen Bildern und Textlinks. Ohne Wert bleibt `noopener noreferrer` erhalten. Werte werden kleingeschrieben und dedupliziert; Schutzattribute bleiben erhalten, `opener` wird ignoriert. Keine Plattform erhält automatisch `me`; verwende es nur für deine eigene Identität. Für die [Mastodon-Verifizierung](https://docs.joinmastodon.org/user/profile/#link-verification) veröffentlichst du die Website und speicherst ihre HTTPS-URL in den Profilfeldern. Nutze eine Seite mit Rücklink, etwa `/en/`; die HTML-Weiterleitung unter `/` enthält ihn möglicherweise nicht. Der Mastodon-Server führt die Prüfung durch.
+
+```ts
+{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
+```
+
 Für ein eigenes Bild lege `community.svg` unter `public/icons/` ab und setze am Link `iconSrc: "/icons/community.svg"`. Lokale SVG-, PNG- und WebP-Dateien werden unterstützt. Der Pfad beginnt mit `/`; externe URLs, Query-Parameter, Fragmente und codierte Zeichen sind nicht erlaubt. Astros `base` wird automatisch ergänzt. Fehlende Dateien oder unbekannte Icon-Namen führen beim Entwickeln/Build zu einem Konfigurationsfehler.
 
 Priorität: `iconSrc` → `icon` → Text. Integrierte Icons übernehmen die Menüfarbe, eigene Bilder behalten ihre Farben. `label` liefert den zugänglichen Namen. Im Fußbereich brechen Links bei Bedarf um; im Kopfbereich bleiben sie einzeilig und lassen sich bei Platzmangel horizontal scrollen. Bis einschließlich 720px bleiben Social-Links im Kopfbereich ausgeblendet und im Fußbereich sichtbar. Ein leeres `links`-Array behält die drei nicht anklickbaren Platzhalter bei. Nach Änderungen neu bauen und bereitstellen.

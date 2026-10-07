@@ -36,7 +36,7 @@ const resolvedLinks = resolveSocialLinks(
   {
     resolvedLinks.map((link) =>
       links.length > 0 ? (
-        <a href={link.href} aria-label={link.label} target="_blank" rel="noopener noreferrer">
+        <a href={link.href} aria-label={link.label} target="_blank" rel={link.rel}>
           {link.iconSrc ? (
             <img src={link.iconSrc} alt="" width={iconSize} height={iconSize} />
           ) : link.icon ? (

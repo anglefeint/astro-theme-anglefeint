@@ -31,6 +31,8 @@ export type SocialIcon = keyof typeof SOCIAL_ICON_PATHS;
 export interface SocialLink {
   href: string;
   label: string;
+  /** Optional space-separated link relations, e.g. 'me nofollow'. */
+  rel?: string;
   icon?: SocialIcon;
   /** Local SVG/PNG/WebP in public/, e.g. /icons/community.svg. Overrides icon. */
   iconSrc?: string;

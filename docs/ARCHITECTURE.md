@@ -67,6 +67,8 @@ The project now follows a compositional structure:
 
 ## Social links
 
+Optional `SocialLink.rel` is passed through the existing schema/adapter without migration. `utils/social-links.ts` validates it as a string, normalizes case/HTML whitespace, deduplicates tokens, removes conflicting `opener` and retains `noopener noreferrer`. `SocialMenu.astro` renders the resolved value in static header/footer anchors. `me` is never inferred from an icon or domain. Built-in, custom-image and text links share the behavior. Identity verification uses the actual page containing the backlink; the root meta-refresh page has no shared menus. No route, SEO head or redirect changes are introduced.
+
 `social.links` passes unchanged through the generated social adapter to both shared menus. `utils/social-icons.ts` owns the twelve icon paths and the shared SocialLink type; starter schema imports/re-exports that type. No icon library or client script is added. `utils/social-links.ts` resolves optional `iconSrc` during rendering against Astro's actual `publicDir`, verifies containment/file existence and the SVG/PNG/WebP extension, then prefixes Astro's `base`. Remote URLs, query/fragment/encoded paths and traversal are rejected with an indexed configuration error. Custom images override built-ins; otherwise unknown icon names fail clearly and omitted icons render text. Empty links keep the original placeholders. Image contents are served as ordinary images, not injected markup.
 
 ## Content Pipeline

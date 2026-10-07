@@ -9,6 +9,20 @@ export function resolveSocialLinks(links: SocialLink[], publicDir: URL, base = '
     const fail = (message: string): never => {
       throw new Error(`[Anglefeint] social.links[${index}] (${link.label}): ${message}`);
     };
+    if (link.rel !== undefined && typeof link.rel !== 'string') {
+      fail('rel must be a space-separated string, e.g. "me nofollow".');
+    }
+    // Keep new-window protections even when callers supply additional relations.
+    const rel = [
+      ...new Set([
+        ...(link.rel ?? '')
+          .toLowerCase()
+          .split(/[\t\n\f\r ]+/)
+          .filter((token) => token && token !== 'opener'),
+        'noopener',
+        'noreferrer',
+      ]),
+    ].join(' ');
     if (link.iconSrc !== undefined && typeof link.iconSrc !== 'string') {
       fail('iconSrc must be a local image path, e.g. /icons/community.svg.');
     }
@@ -41,12 +55,13 @@ export function resolveSocialLinks(links: SocialLink[], publicDir: URL, base = '
       }
       return {
         ...link,
+        rel,
         iconSrc: `${base.replace(/\/$/, '')}${source.split('/').map(encodeURIComponent).join('/')}`,
       };
     }
     if (link.icon && !Object.hasOwn(SOCIAL_ICON_PATHS, link.icon)) {
       fail(`Unknown icon "${link.icon}". Use a supported name, iconSrc, or omit icon for text.`);
     }
-    return { ...link, iconSrc: undefined };
+    return { ...link, rel, iconSrc: undefined };
   });
 }

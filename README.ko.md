@@ -326,6 +326,12 @@ social: {
 
 내장 `icon` 이름: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
 
+선택 항목 `rel`에는 `me`, `me nofollow`처럼 공백으로 구분한 값을 지정합니다. 기본 아이콘, 사용자 이미지, 텍스트 링크에 모두 적용됩니다. 생략하거나 비우면 `noopener noreferrer`를 유지합니다. 소문자 변환과 중복 제거 후 안전 속성을 유지하며 충돌하는 `opener`는 무시합니다. 플랫폼에 따라 `me`를 자동 추가하지 않습니다. 본인 계정에만 사용하세요. [Mastodon 인증](https://docs.joinmastodon.org/user/profile/#link-verification)은 배포 후 프로필 필드에 사이트 HTTPS 주소를 저장합니다. 링크가 있는 실제 페이지(예: `/en/`)를 사용하세요. 루트 HTML 리디렉션 페이지에는 링크가 없을 수 있습니다. 인증은 Mastodon 서버가 수행합니다.
+
+```ts
+{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
+```
+
 사용자 이미지는 `community.svg`를 `public/icons/`에 넣고 링크에 `iconSrc: "/icons/community.svg"`를 설정합니다. 로컬 SVG, PNG, WebP를 지원합니다. 경로는 `/`로 시작하며 원격 URL, 쿼리, 프래그먼트, 인코딩 문자는 사용하지 않습니다. Astro의 `base`는 자동으로 붙습니다. 파일 누락이나 지원하지 않는 아이콘 이름은 개발/빌드 시 설정 오류로 표시됩니다.
 
 우선순위는 `iconSrc` → `icon` → 텍스트입니다. 내장 아이콘은 메뉴 색상을 따르고 사용자 이미지는 원래 색상을 유지합니다. `label`은 접근성 이름입니다. 푸터 링크는 필요하면 줄바꿈되며, 헤더는 한 줄을 유지하고 공간이 부족하면 가로로 스크롤됩니다. 720px 이하에서는 기존처럼 헤더 소셜 링크가 숨겨지고 푸터는 표시됩니다. 빈 `links`는 클릭할 수 없는 기존 자리표시자 3개를 유지합니다. 변경 후 다시 빌드하고 배포하세요.

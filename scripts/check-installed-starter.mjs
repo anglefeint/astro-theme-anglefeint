@@ -201,14 +201,16 @@ try {
                       href: `https://example.com/${icon}`,
                       label: icon,
                       icon,
+                      rel: icon === 'mastodon' && locale === 'en' ? ' ME me\tnofollow ' : undefined,
                     })),
                     {
                       href: 'https://example.com/custom',
                       label: 'Custom social',
                       icon: 'github',
                       iconSrc: '/share-test.png',
+                      rel: 'me',
                     },
-                    { href: 'https://example.com/text', label: 'Text social' },
+                    { href: 'https://example.com/text', label: 'Text social', rel: 'nofollow' },
                   ]
                 : [],
           },
@@ -337,6 +339,31 @@ try {
         const homePath = mode === 'always' ? `${locale}/index.html` : 'index.html';
         const redirectPath = mode === 'always' ? 'index.html' : `${locale}/index.html`;
         const home = await read(`dist/${homePath}`);
+        if (mode === 'always') {
+          for (const page of [
+            home,
+            await read(`dist/${locale}/about/index.html`),
+            await read(`dist/${locale}/blog/index.html`),
+          ]) {
+            for (const [label, expected] of [
+              [
+                'mastodon',
+                locale === 'en' ? 'me nofollow noopener noreferrer' : 'noopener noreferrer',
+              ],
+              ['github', 'noopener noreferrer'],
+              ['Custom social', 'me noopener noreferrer'],
+              ['Text social', 'nofollow noopener noreferrer'],
+            ]) {
+              const anchors = [...page.matchAll(/<a\b[^>]*>/g)]
+                .map((match) => match[0])
+                .filter((tag) => tag.includes(`aria-label="${label}"`));
+              assert.equal(anchors.length, 2, `header/footer ${label}`);
+              for (const anchor of anchors) assert.ok(anchor.includes(`rel="${expected}"`), anchor);
+            }
+          }
+        } else {
+          assert.doesNotMatch(home, /rel="[^"]*\bme\b/);
+        }
         assert.doesNotMatch(home, /data-music-deck|music-deck\.css|music\/controller/);
         const redirect = await read(`dist/${redirectPath}`);
         assert.doesNotMatch(home, /name="robots" content="noindex/);

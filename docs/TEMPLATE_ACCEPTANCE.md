@@ -96,6 +96,8 @@ Giscus account setup, real comment submission, platform deployment and human ass
 
 ## Evidence and cleanup
 
+Social relation coverage: unit checks exercise omitted/blank values, opt-in `me`, multiple tokens, case/whitespace normalization, duplicates, conflicting `opener` and non-string errors. The independent installed-starter build matrix checks static header/footer attributes with built-in, custom-image and text links, opted-in and non-opted-in Mastodon links, and empty social lists across default-language/routing variants. These checks do not claim a real Mastodon account verification or test arbitrary hosting redirects.
+
 `check:template` writes per-command logs, `report.json`, screenshots and a failure trace to `acceptance-results/template-<manager>-<timestamp>/`. This directory is separate from Playwright's `test-results/`, which Playwright clears at startup. Reports include actual Node/package versions, executed scripts, expected rejections, HTTP routes and overall success.
 
 Successful temporary projects are removed after test servers stop. Failed projects are retained for diagnosis, with the path printed and recorded; remove only that exact verified temporary directory after investigating. Reports remain in the ignored evidence directory. `e2e` retains traces and screenshots on failure, even without retries.

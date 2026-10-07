@@ -13,6 +13,11 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.12.0] - 2026-10-08
+
+- Add optional space-separated `social.links[].rel` for built-in, custom-image and text links. Identity relations such as `me` are explicitly opt-in; no platform receives them automatically. Normalize/deduplicate tokens while retaining `noopener noreferrer` and ignoring conflicting `opener`.
+- Existing configuration keeps its behavior; matching 0.11.x starters need only an explicit package update to `^0.12.0`, with no adapter migration. Nine READMEs document Mastodon verification and the root HTML redirect limitation. See [release notes](docs/releases/0.12.0.md).
+
 ## [0.11.3] - 2026-10-07
 
 - Preserve configured About paragraph/signature line breaks and blank lines while retaining normal wrapping. Scoped CSS only; no Markdown/HTML interpretation or configuration migration. See [release notes](docs/releases/0.11.3.md).

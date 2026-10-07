@@ -22,6 +22,8 @@ Above 720px, Home reserves its existing two 2rem paddings and two 1px borders in
 
 ## Shared social menus
 
+Optional per-link `rel` changes static anchor semantics only; it does not affect colors, layout or interaction. No platform automatically receives `me`, and both new-window protection tokens remain present.
+
 The shared footer groups copyright, optional localized theme/Astro credits and optional custom `site.tagline` separately, with social icons below. Content is capped at 720px; credits and custom text use smaller type, wrap on narrow screens and inherit the scene's chrome palette. Empty text and disabled credits do not reserve a row. The existing global tagline/environment override stays unchanged across languages; only built-in credits follow the page locale via `ThemeFrame` and the existing messages resolver. The legacy `Built with Astro.` tagline is still suppressed to avoid duplicate credits. No new client script or configuration field is needed.
 
 Header and footer use the same configured order. The twelve built-in SVGs retain `currentColor` and existing menu hover colors; custom images use a fixed square box with `object-fit: contain` and retain source colors. Text-only links have readable line height and wrap. Footer menus wrap. Header menus stay in one horizontally scrollable row so fixed headers do not grow over page content; desktop headers with four or more links allocate remaining space to the controls. Keyboard links have a visible focus outline and can scroll into view. Header social links remain hidden at <=720px; footer links remain available. Empty configuration keeps three non-interactive placeholders. This does not alter the four scene effects.
