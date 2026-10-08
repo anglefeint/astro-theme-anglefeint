@@ -24,6 +24,10 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 2026-10-08: Astro dependency refresh
+
+Main and the generated starter target Astro `^7.3.7` and MDX `^8.0.3`. Matching Astro 7.3.x / MDX 8.x projects can run `npm install astro@^7.3.7 @astrojs/mdx@^8.0.3`, then `npm run doctor`, preview and redeploy. This dependency-only refresh does not require a new theme package; `@anglefeint/astro-theme` remains 0.12.0. It does not enable mathematical formula rendering or change the Markdown processor/configuration. Earlier major-version migration requirements still apply.
+
 ### 0.12.0: optional social link relations
 
 Compatible package-only feature for matching 0.11.x starters; no schema/adapter migration. Because `^0.11.x` does not select 0.12.0, use `npm install @anglefeint/astro-theme@^0.12.0`, then `npm run doctor`, preview and redeploy. Add `rel: 'me'` only to links representing your own identity, or other space-separated relations as needed. Without the field, existing behavior is unchanged. See [release notes](docs/releases/0.12.0.md).

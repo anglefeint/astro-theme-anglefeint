@@ -12,6 +12,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-08 Astro 7.3.7 dependency refresh
+
+Reviewed against `0cfc07c`: root Astro moves from 7.3.5 to 7.3.7 and MDX from 8.0.2 to 8.0.3, with their transitive lockfile updates. Starter derives these dependencies from root through `scripts/starter-package.mjs`; package runtime and its compatible Astro peer range remain unchanged, so no npm theme release is required. Updated nine README badges and UPGRADING. Historical release records remain historical; configuration, architecture, routes, visual behavior and workflow contracts have no source changes. Mathematical rendering remains disabled. Lint, metadata validation, all 86 unit tests, full checks and a 190-page build passed, including nine About runtime checks; all 55 Chromium E2E tests passed. Installation audit reported zero vulnerabilities. Starter delivery evidence will be recorded after completion.
+
 ## 2026-10-08 Optional social link relations
 
 Reviewed changes against `8f66c80`: `SocialLink.rel` flows unchanged through the existing package-imported starter schema/social adapter, is normalized by the package resolver, and is emitted by shared header/footer anchors. The default remains `noopener noreferrer`; identity is never inferred from a platform. Updated nine README translations, package README, architecture/visual/acceptance references, upgrade guidance and release ledger. Existing starter guides do not define social relation configuration and need no changes; schemas/adapters/manifests, route/SEO behavior, workflow and metadata contracts are unchanged. README instructions distinguish the actual homepage from the root HTML redirect and local attribute verification from a real Mastodon server result. Unit and installed-build tests own normalization and rendered-HTML coverage; execution evidence belongs to the release ledger.
