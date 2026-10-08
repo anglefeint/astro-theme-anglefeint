@@ -65,10 +65,10 @@
   },
   "dependencies": {
     "@anglefeint/astro-theme": "workspace:*",
-    "@astrojs/mdx": "^8.0.2",
+    "@astrojs/mdx": "^8.0.3",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.3.5",
+    "astro": "^7.3.7",
     "sharp": "^0.35.5",
     "vite": "^8.3.2"
   },
