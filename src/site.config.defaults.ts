@@ -115,6 +115,7 @@ const defaultThemeConfig: ThemeConfig = {
     homeLatestCount: 3,
     enableAboutPage: true,
     tags: { enabled: true },
+    math: { enabled: true },
     toc: { enabled: true },
     search: { enabled: true },
     socialImage: { enabled: true },

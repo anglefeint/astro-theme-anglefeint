@@ -11,6 +11,7 @@ import type { MarkdownHeading } from 'astro';
 import Giscus from '../components/Giscus.astro';
 import AiShell from './shells/AiShell.astro';
 import blogPostCssUrl from '../styles/blog-post.css?url';
+import mathCssUrl from '../styles/math.css?url';
 import { SITE_AUTHOR, SITE_TITLE } from '@anglefeint/site-config/site';
 import { publicDir } from 'virtual:anglefeint-social';
 import { resolveSocialImage } from '../social/resolve.mjs';
@@ -132,6 +133,7 @@ const hasCommentsConfig = Boolean(
   seoLocaleHrefs={articleLocaleHrefs}
 >
   <link slot="head" rel="stylesheet" href={blogPostCssUrl} />
+  {(THEME.MATH?.ENABLED ?? false) && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
   <Fragment slot="body-start">
     <div class="ai-bg" aria-hidden="true">
       <div class="ai-glow ai-glow-shift"></div>

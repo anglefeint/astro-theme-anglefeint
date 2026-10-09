@@ -2,6 +2,7 @@
  * Theme behavior config.
  */
 export const THEME = {
+  MATH: { ENABLED: true },
   ANALYTICS: { GOOGLE_ANALYTICS_ID: '' },
   FOOTER: { SHOW_CREDITS: true },
   /** Posts per page on blog list */

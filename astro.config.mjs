@@ -4,6 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import search from '@anglefeint/astro-theme/search';
 import socialImage from '@anglefeint/astro-theme/social-image';
+import markdown from '@anglefeint/astro-theme/markdown';
 import { THEME } from './src/config/theme';
 import { defineConfig } from 'astro/config';
 import { URL, fileURLToPath } from 'node:url';
@@ -17,6 +18,7 @@ const themeDefaultI18nEntry = resolveThemeDefaultI18nEntry(import.meta.url);
 // https://astro.build/config
 export default defineConfig({
   compressHTML: true,
+  markdown: { processor: markdown({ enabled: THEME.MATH.ENABLED }) },
   site: resolveSiteUrl(SITE_URL, fileURLToPath(new URL('.', import.meta.url))),
   vite: {
     resolve: {

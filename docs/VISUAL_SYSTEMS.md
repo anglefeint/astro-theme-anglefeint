@@ -10,6 +10,10 @@ sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
 
 # Visual Systems
 
+## Article mathematics
+
+Global mathematics is enabled in the current starter. `packages/theme/src/styles/math.css` imports bundled KaTeX styles/fonts and inherits article text color. Display formulas own horizontal overflow within the prose width; inline formulas remain inline. The BlogPost head includes the stylesheet only when the math adapter is enabled, with false fallback for old adapters. No canvas/background effect or article width contract changes. HTML plus MathML preserves accessible output; formula subtrees are excluded only from Pagefind, not accessibility. Nine-language browser checks cover 320, 390, 721 and 1440 px widths. Formula syntax, disabled-state MDX behavior and migration are user-guide concerns, not additional visual toggles.
+
 This theme uses four distinct atmospheres by route.
 
 ## Nine-language layout validation

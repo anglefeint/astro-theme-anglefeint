@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -34,7 +34,9 @@
     "src/search.d.mts",
     "src/social-image.mjs",
     "src/social-image.d.mts",
-    "src/social"
+    "src/social",
+    "src/markdown.mjs",
+    "src/markdown.d.mts"
   ],
   "bin": {
     "anglefeint-new-post": "src/cli-new-post.mjs",
@@ -64,15 +66,22 @@
     "./search": {
       "types": "./src/search.d.mts",
       "default": "./src/search.mjs"
+    },
+    "./markdown": {
+      "types": "./src/markdown.d.mts",
+      "default": "./src/markdown.mjs"
     }
   },
   "peerDependencies": {
     "astro": "^7.3.5"
   },
   "dependencies": {
+    "@astrojs/markdown-satteri": "^0.4.3",
     "jiti": "^2.7.0",
+    "katex": "^0.19.0",
     "pagefind": "^1.5.2",
     "satori": "0.32.0",
+    "satteri": "^0.10.5",
     "sharp": "^0.35.5"
   }
 }

@@ -25,6 +25,7 @@ export { normalizeI18nConfig } from './site.config.runtime.ts';
  */
 export const THEME_CONFIG = defineThemeConfig({
   analytics: { googleAnalyticsId: '' }, // Optional GA4 Measurement ID (G-...).
+  // Markdown/MDX math is enabled globally. Disable with theme: { math: { enabled: false } }.
   // Hide theme and Astro credits; copyright and custom site.tagline remain.
   // theme: { footer: { showCredits: false } },
   // Optional music: put your audio in public/music/, then enable a playlist.

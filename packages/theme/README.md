@@ -141,3 +141,21 @@ Article-body `pre > code` blocks include an automatic upper-right copy button wi
 ## Image preview
 
 Article-body images outside links/buttons include a native modal preview with keyboard/backdrop dismissal and localized labels. Hero images are excluded. The preview uses `currentSrc || src`, not a separately fetched full-resolution original, and restores scrolling/focus on dismissal. It is initialized with the article runtime; no images means no modal. There is no gallery navigation, gesture zoom or configuration switch. No additional dependency or author markup is required.
+
+## Mathematical formulas
+
+Markdown and MDX articles support LaTeX-style math globally by default. Write `$C_{saved}$` inline or put a formula between separate `$$` lines. No per-post flag or extra plugin installation is needed.
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Escape literal dollars as `\$` when ambiguous; code spans and fenced code remain literal. Disabling math restores normal MDX rules, including JavaScript expressions in braces.
+
+Rendering happens at build time with local KaTeX styles/fonts and accessible MathML, without a browser math engine. Long display formulas scroll horizontally. Invalid formulas stop the build with a source/error message. Keep titles and descriptions plain text; formulas are excluded from search indexing. Supported math is KaTeX syntax, not complete LaTeX documents.
+
+Older projects need the one-time starter/configuration migration described in the upgrade guide; updating only the theme package does not wire the Markdown processor.
