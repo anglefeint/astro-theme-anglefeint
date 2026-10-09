@@ -417,3 +417,21 @@ theme: {
 ## 许可证
 
 MIT License，见 `LICENSE`。
+
+## 数学公式
+
+Markdown 和 MDX 文章默认全局支持 LaTeX 风格数学公式。行内写 `$C_{saved}$`，独立公式放在单独两行 `$$` 之间，无需每篇开关或自行安装插件。
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+在 `src/site.config.ts` 中设置 `theme: { math: { enabled: false } }` 可关闭。普通美元有歧义时写成 `\$`；行内代码和代码块保持原样。关闭数学后恢复普通 MDX 规则，包括花括号中的 JavaScript 表达式。
+
+公式在构建时渲染，样式和字体随站点提供，保留可访问的 MathML，不加载浏览器数学引擎。长独立公式可横向滚动。错误公式会中止构建并提示来源与原因。标题和摘要保持纯文本；搜索索引排除公式。支持 KaTeX 数学语法，不是完整 LaTeX 文档。
+
+老项目需要按升级指南完成一次 starter/配置迁移，仅更新主题包不会接入 Markdown 处理器。

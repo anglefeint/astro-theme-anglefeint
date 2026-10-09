@@ -209,3 +209,27 @@ export const THEME_CONFIG = defineThemeConfig({
 - [使用指南 1：搭建你的博客](/zh/blog/starter-guide-1-configure-your-site/)
 - [使用指南 2：写文章与管理内容](/zh/blog/starter-guide-2-languages-and-routing/)
 - [使用指南 3：按需开启与定制功能](/zh/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+## 数学公式
+
+Markdown 和 MDX 文章默认全局支持 LaTeX 风格数学公式。行内写 `$C_{saved}$`，独立公式放在单独两行 `$$` 之间，无需每篇开关或自行安装插件。
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+在 `src/site.config.ts` 中设置 `theme: { math: { enabled: false } }` 可关闭。普通美元有歧义时写成 `\$`；行内代码和代码块保持原样。关闭数学后恢复普通 MDX 规则，包括花括号中的 JavaScript 表达式。
+
+公式在构建时渲染，样式和字体随站点提供，保留可访问的 MathML，不加载浏览器数学引擎。长独立公式可横向滚动。错误公式会中止构建并提示来源与原因。标题和摘要保持纯文本；搜索索引排除公式。支持 KaTeX 数学语法，不是完整 LaTeX 文档。
+
+老项目需要按升级指南完成一次 starter/配置迁移，仅更新主题包不会接入 Markdown 处理器。
+
+$C_{saved}$
+
+$$
+\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
+$$
