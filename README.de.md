@@ -313,3 +313,21 @@ npm run preview
 ## Lizenz
 
 MIT — [LICENSE](LICENSE).
+
+## Mathematische Formeln
+
+Markdown- und MDX-Artikel unterstützen LaTeX-artige Formeln standardmäßig global. Schreibe `$C_{saved}$` im Text oder eine Formel zwischen zwei eigenen `$$`-Zeilen. Keine Einstellung pro Artikel und keine zusätzliche Plugin-Installation nötig.
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+Mit `theme: { math: { enabled: false } }` in `src/site.config.ts` deaktivieren. Mehrdeutige Dollarzeichen als `\$` schreiben; Code bleibt unverändert. Ohne Mathematik gelten wieder die normalen MDX-Regeln, einschließlich JavaScript-Ausdrücken in geschweiften Klammern.
+
+Die Ausgabe entsteht beim Build mit lokalen Schriften und Stilen sowie zugänglichem MathML, ohne Formel-Engine im Browser. Lange Formeln lassen sich horizontal scrollen. Fehler stoppen den Build mit Quelle und Ursache. Titel und Beschreibungen bleiben Klartext; Formeln werden nicht indexiert. Unterstützt wird die KaTeX-Mathematiksyntax, nicht vollständige LaTeX-Dokumente.
+
+Bestehende Projekte benötigen die einmalige Starter-/Konfigurationsmigration aus der Upgrade-Anleitung; allein das Paketupdate bindet den Markdown-Prozessor nicht ein.

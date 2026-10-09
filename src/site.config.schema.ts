@@ -86,6 +86,7 @@ export interface ThemeConfig {
     tagline: string;
   };
   theme: {
+    math: { enabled: boolean };
     footer: { showCredits: boolean };
     music: { enabled: boolean; tracks: { title: string; artist?: string; src: string }[] };
     blogPageSize: number;

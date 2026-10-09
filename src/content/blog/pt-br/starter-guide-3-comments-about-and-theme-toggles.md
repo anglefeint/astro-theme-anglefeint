@@ -80,3 +80,27 @@ Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteri
 - [Guia 1: Configure seu blog](/pt-br/blog/starter-guide-1-configure-your-site/)
 - [Guia 2: Escreva e organize conteúdo](/pt-br/blog/starter-guide-2-languages-and-routing/)
 - [Guia 3: Recursos opcionais](/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+## Fórmulas matemáticas
+
+Artigos Markdown e MDX aceitam matemática no estilo LaTeX globalmente por padrão. Use `$C_{saved}$` em linha ou uma fórmula entre linhas separadas com `$$`. Não é necessário configurar cada artigo nem instalar plugins adicionais.
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+Desative com `theme: { math: { enabled: false } }` em `src/site.config.ts`. Escape dólares ambíguos como `\$`; trechos de código permanecem literais. Ao desativar, voltam as regras normais de MDX, incluindo expressões JavaScript entre chaves.
+
+A renderização ocorre na compilação, com estilos e fontes locais e MathML acessível, sem motor matemático no navegador. Fórmulas longas têm rolagem horizontal. Erros interrompem a compilação indicando origem e causa. Mantenha títulos e descrições em texto simples; fórmulas ficam fora da busca. O suporte é à sintaxe matemática do KaTeX, não a documentos LaTeX completos.
+
+Projetos antigos precisam da migração inicial do starter e da configuração descrita no guia de atualização; atualizar apenas o pacote não conecta o processador Markdown.
+
+$C_{saved}$
+
+$$
+\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
+$$

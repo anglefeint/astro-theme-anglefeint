@@ -209,3 +209,27 @@ The public demo uses its own name, domain and translated introduction. A fresh s
 - [User Guide 1: Set Up Your Blog](/en/blog/starter-guide-1-configure-your-site/)
 - [User Guide 2: Write and Organize Content](/en/blog/starter-guide-2-languages-and-routing/)
 - [User Guide 3: Enable and Customize Optional Features](/en/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+## Mathematical formulas
+
+Markdown and MDX articles support LaTeX-style math globally by default. Write `$C_{saved}$` inline or put a formula between separate `$$` lines. No per-post flag or extra plugin installation is needed.
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Escape literal dollars as `\$` when ambiguous; code spans and fenced code remain literal. Disabling math restores normal MDX rules, including JavaScript expressions in braces.
+
+Rendering happens at build time with local KaTeX styles/fonts and accessible MathML, without a browser math engine. Long display formulas scroll horizontally. Invalid formulas stop the build with a source/error message. Keep titles and descriptions plain text; formulas are excluded from search indexing. Supported math is KaTeX syntax, not complete LaTeX documents.
+
+Older projects need the one-time starter/configuration migration described in the upgrade guide; updating only the theme package does not wire the Markdown processor.
+
+$C_{saved}$
+
+$$
+\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
+$$

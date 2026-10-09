@@ -409,3 +409,21 @@ Antes de reproducir, se descarga la pista completa y se convierte en un Blob del
 ## Licencia
 
 MIT License. Ver `LICENSE`.
+
+## Fórmulas matemáticas
+
+Los artículos Markdown y MDX admiten matemáticas de estilo LaTeX de forma global y predeterminada. Usa `$C_{saved}$` en línea o una fórmula entre líneas separadas con `$$`. No hacen falta opciones por artículo ni instalar plugins adicionales.
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+Desactiva con `theme: { math: { enabled: false } }` en `src/site.config.ts`. Escapa los dólares ambiguos como `\$`; el código permanece literal. Al desactivar se recuperan las reglas normales de MDX, incluidas las expresiones JavaScript entre llaves.
+
+Se renderiza durante la compilación, con estilos y fuentes locales y MathML accesible, sin motor matemático en el navegador. Las fórmulas largas tienen desplazamiento horizontal. Los errores detienen la compilación indicando origen y causa. Mantén títulos y descripciones en texto plano; las fórmulas se excluyen de la búsqueda. Se admite la sintaxis matemática de KaTeX, no documentos LaTeX completos.
+
+Los proyectos anteriores necesitan la migración inicial del starter y la configuración explicada en la guía de actualización; actualizar solo el paquete no conecta el procesador Markdown.

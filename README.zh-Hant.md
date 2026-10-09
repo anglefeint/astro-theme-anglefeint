@@ -313,3 +313,21 @@ npm run preview
 ## 授權
 
 MIT — [LICENSE](LICENSE).
+
+## 數學公式
+
+Markdown 和 MDX 文章預設全域支援 LaTeX 風格數學公式。行內寫 `$C_{saved}$`，獨立公式放在單獨兩行 `$$` 之間，不需要逐篇開關或自行安裝外掛。
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+在 `src/site.config.ts` 設定 `theme: { math: { enabled: false } }` 可關閉。一般美元有歧義時寫成 `\$`；行內程式碼與程式碼區塊保持原樣。關閉後恢復一般 MDX 規則，包括大括號內的 JavaScript 表達式。
+
+公式於建置時渲染，樣式與字型隨網站提供，保留可存取的 MathML，不載入瀏覽器數學引擎。長公式可橫向捲動。錯誤公式會中止建置並提示來源與原因。標題與摘要維持純文字；搜尋索引排除公式。支援 KaTeX 數學語法，並非完整 LaTeX 文件。
+
+舊專案需要依升級指南完成一次 starter／設定遷移，只更新主題套件不會接入 Markdown 處理器。
