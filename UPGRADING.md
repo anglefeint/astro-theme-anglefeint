@@ -24,6 +24,20 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.13.0: global Markdown and MDX mathematics
+
+This release needs starter configuration changes; npm alone does not connect the new processor. Prefer a fresh `#starter` project in a new directory and migrate your articles/assets/personal settings using the procedure below. Do not overwrite your customized site configuration.
+
+For a matching Astro 7.3.7 / theme 0.12.0 project, the minimal manual migration is:
+
+1. Run `npm install @anglefeint/astro-theme@^0.13.0 astro@^7.3.7 @astrojs/mdx@^8.0.3`.
+2. Add `math: { enabled: boolean };` to `ThemeConfig.theme` in `src/site.config.schema.ts` and `math: { enabled: true },` to the default `theme` object in `src/site.config.defaults.ts`.
+3. Add `MATH: { ENABLED: THEME_CONFIG.theme.math?.enabled ?? true },` to the exported `THEME` object in `scripts/adapter-templates/src/config/theme.ts`, then run `npm run sync-adapters`. Review the generated diff if you previously customized adapters.
+4. Import `markdown from '@anglefeint/astro-theme/markdown'` in `astro.config.mjs` and add `markdown: { processor: markdown({ enabled: THEME.MATH.ENABLED }) }` to `defineConfig`. Keep the existing `THEME` import and `mdx()` integration. If you already have a custom Markdown processor/plugins, merge deliberately rather than replacing them with this example.
+5. Run `npm run doctor`, then `npm run preview`. Check existing dollar text and formulas before redeploying.
+
+Math is now on globally; no per-post flag is needed. Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Escape ambiguous literal dollars as `\$`. Disabling math restores normal MDX expression parsing, so formula braces are not automatically treated as literal text. Titles/descriptions remain plain text. See [0.13.0](docs/releases/0.13.0.md) for scope and delivery evidence.
+
 ### 2026-10-08: Astro dependency refresh
 
 Main and the generated starter target Astro `^7.3.7` and MDX `^8.0.3`. Matching Astro 7.3.x / MDX 8.x projects can run `npm install astro@^7.3.7 @astrojs/mdx@^8.0.3`, then `npm run doctor`, preview and redeploy. This dependency-only refresh does not require a new theme package; `@anglefeint/astro-theme` remains 0.12.0. It does not enable mathematical formula rendering or change the Markdown processor/configuration. Earlier major-version migration requirements still apply.

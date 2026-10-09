@@ -19,6 +19,14 @@ sync_targets: [README.md, CLAUDE.md]
 
 ## Runtime Model
 
+### Article mathematics
+
+`astro.config.mjs` selects the package's `@anglefeint/astro-theme/markdown` processor with `THEME.MATH.ENABLED`, normalized from the global `theme.math.enabled` setting (default true). `packages/theme/src/markdown.mjs` retains Sätteri and replaces only parsed math/inlineMath nodes with KaTeX HTML plus MathML at build time; MDX inherits the same processor. Disabled math leaves ordinary Markdown/MDX parsing in place. The plugin fails with file context on invalid formulas and excludes formula subtrees from Pagefind to prevent duplicate representations; surrounding prose is unaffected. This does not render frontmatter titles/descriptions, RSS summaries or social-card text.
+
+`BlogPost.astro` conditionally links `styles/math.css`, which bundles local KaTeX fonts/styles and constrains display overflow. Its missing-adapter fallback is false so package-only upgrades of old skeletons do not start loading formula CSS before migration. New adapters default to true. Dependencies and processor exports are package-owned; schema/defaults, adapter templates and Astro wiring are starter-owned. Existing manifest entries cover all changed starter files; new processor files are distributed through the npm package files/exports, not copied into starter. There is no per-post toggle or browser formula engine.
+
+Coverage: `tests/math.unit.test.mjs` (syntax, MDX, escaping, disabled behavior, errors), `tests/e2e/math.spec.mjs` (nine locales, local stylesheet, MathML and mobile scrolling), and `scripts/check-installed-starter.mjs` (real MD/MDX content in enabled and disabled installed builds). Migration is documented in `UPGRADING.md`.
+
 The main checkout's `src/site.config.ts` configures the public demo. `starterSourcePath()` in `scripts/starter-manifest.mjs` maps the distribution destination `src/site.config.ts` to `scripts/starter-templates/site.config.ts.template`. Both maintainer synchronization (including drift detection) and independent installed-starter checks use that mapping. Other managed files retain their source paths; consumers still edit only `src/site.config.ts`, with neutral title/domain/author defaults. The template source itself is not distributed.
 
 `CommonFooter.astro` reads `THEME.FOOTER.SHOW_CREDITS`, normalized from `theme.footer.showCredits` (default true). Disabling it omits theme/Astro links, retaining build-year/site-title copyright and any custom `site.tagline`. The default tagline is empty; the former default `Built with Astro.` is treated as built-in credit to avoid duplication. The optional About email link is omitted when `contact.email` is empty.

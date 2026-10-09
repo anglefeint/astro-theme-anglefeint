@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.13.0] - 2026-10-09
+
+- Add global, default-enabled Markdown/MDX mathematics using Sätteri and build-time KaTeX. Inline `$...$` and display `$$...$$` produce HTML and accessible MathML without a client rendering engine.
+- Bundle local formula styles/fonts; long display formulas scroll within article width. Exclude formula subtrees from search to avoid duplicate visual/MathML text. Invalid formulas stop the build with source context.
+- Add `theme.math.enabled` and a package-owned `@anglefeint/astro-theme/markdown` processor entry. Starter/configuration migration is required for old projects; npm alone does not activate the processor. See [upgrade steps](UPGRADING.md#0130-global-markdown-and-mdx-mathematics) and [release record](docs/releases/0.13.0.md).
+
 ## [0.12.0] - 2026-10-08
 
 - Add optional space-separated `social.links[].rel` for built-in, custom-image and text links. Identity relations such as `me` are explicitly opt-in; no platform receives them automatically. Normalize/deduplicate tokens while retaining `noopener noreferrer` and ignoring conflicting `opener`.

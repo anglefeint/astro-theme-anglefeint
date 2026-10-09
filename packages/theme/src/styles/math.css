@@ -1,0 +1,22 @@
+@import 'katex/dist/katex.min.css';
+
+.anglefeint-math {
+  color: inherit;
+}
+
+.anglefeint-math-display {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.25rem;
+  margin-block: 1rem;
+}
+
+.anglefeint-math-display .katex-display {
+  margin: 0;
+}
+
+.anglefeint-math-inline {
+  overflow-wrap: normal;
+}

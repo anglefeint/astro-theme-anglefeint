@@ -209,3 +209,27 @@ export const THEME_CONFIG = defineThemeConfig({
 - [利用ガイド 1：ブログを立ち上げる](/ja/blog/starter-guide-1-configure-your-site/)
 - [利用ガイド 2：記事を書く・コンテンツを整理する](/ja/blog/starter-guide-2-languages-and-routing/)
 - [利用ガイド 3：必要な機能を有効化・カスタマイズする](/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+## 数式
+
+Markdown と MDX の記事では、LaTeX 形式の数式が既定で全体に有効です。インラインは `$C_{saved}$`、独立した数式は別々の行の `$$` で囲みます。記事ごとの指定やプラグインの追加インストールは不要です。
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+`src/site.config.ts` の `theme: { math: { enabled: false } }` で無効にできます。曖昧なドル記号は `\$` と書きます。コードはそのまま表示されます。無効時は波括弧内の JavaScript 式を含む通常の MDX 規則に戻ります。
+
+ビルド時にレンダリングし、ローカルのスタイル・フォントとアクセシブルな MathML を使用します。ブラウザー用数式エンジンは不要です。長い独立数式は横スクロールできます。不正な数式はファイルと原因を示してビルドを停止します。タイトルと概要はプレーンテキストにし、数式は検索対象から除外されます。KaTeX の数式構文に対応し、完全な LaTeX 文書には対応しません。
+
+既存サイトはアップグレードガイドに従って starter と設定を一度移行してください。パッケージ更新だけでは処理器は接続されません。
+
+$C_{saved}$
+
+$$
+\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
+$$

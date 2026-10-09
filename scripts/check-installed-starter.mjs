@@ -164,6 +164,12 @@ try {
   );
 
   if (process.argv.includes('--build')) {
+    for (const extension of ['md', 'mdx']) {
+      await writeFile(
+        path.join(project, `src/content/blog/en/math-${extension}.${extension}`),
+        '---\ntitle: Math acceptance\ndescription: Plain text math summary\npubDate: 2026-01-01\n---\nInline $C_{saved}$.\n\n$$\n\\frac{a}{b}\n$$\n\nCost \\$50 and \\$100.\n\n`$literal$`\n'
+      );
+    }
     const customCover = 'public/share-test.jpg';
     await cp(
       path.join(root, 'packages/theme/src/assets/theme/placeholders/theme-placeholder-1.jpg'),
@@ -241,6 +247,15 @@ try {
         console.log(`Building installed starter: default=${locale}, prefix=${mode}`);
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
         await npm(['run', 'build']);
+        for (const extension of ['md', 'mdx']) {
+          const mathHtml = await read(`dist/en/blog/math-${extension}/index.html`);
+          assert.match(mathHtml, /anglefeint-math-inline/);
+          assert.match(mathHtml, /<mfrac>/);
+          assert.match(mathHtml, /data-pagefind-ignore/);
+          assert.match(mathHtml, /\$literal\$/);
+          assert.match(mathHtml, /Cost \$50 and \$100/);
+          assert.match(mathHtml, /href="[^"]*math[^"/]*\.css"/);
+        }
         if (mode === 'always') {
           const aboutHtml = await read('dist/en/about/index.html');
           assert(aboutHtml.includes('ABOUT_LINE_ONE\n\nABOUT_LINE_TWO'));
@@ -391,12 +406,23 @@ try {
     await setConfig({
       theme: {
         search: { enabled: false },
+        math: { enabled: false },
         tags: { enabled: false },
         socialImage: { enabled: false },
       },
     });
-    console.log('Building installed starter with search and tags disabled...');
+    // Exercise the same real content with parsing and stylesheet delivery disabled.
+    // Without math parsing, MDX braces are JavaScript again; use ordinary MDX text.
+    await writeFile(
+      path.join(project, 'src/content/blog/en/math-mdx.mdx'),
+      '---\ntitle: Math disabled\ndescription: Plain text\npubDate: 2026-01-01\n---\n$E = mc^2$\n'
+    );
+    console.log('Building installed starter with search, tags and math disabled...');
     await npm(['run', 'build']);
+    for (const extension of ['md', 'mdx']) {
+      const mathHtml = await read(`dist/en/blog/math-${extension}/index.html`);
+      assert.doesNotMatch(mathHtml, /anglefeint-math|<mfrac>|href="[^"]*math[^"/]*\.css"/);
+    }
     assert.doesNotMatch(await read('dist/en/blog/installed-default/index.html'), /\/_social\//);
     await assert.rejects(readdir(path.join(project, 'dist/_social')), { code: 'ENOENT' });
     assert.match(
