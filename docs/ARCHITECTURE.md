@@ -17,6 +17,14 @@ sync_targets: [README.md, CLAUDE.md]
 - Styling: package-owned plain CSS files + Astro scoped component styles (not CSS Modules)
 - Output: static build (`astro build`)
 
+The default output directory is `dist/`. Deploy its contents to a static web root with directory-index support (`/<locale>/blog/` resolves to its `index.html`). Cloudflare is the demo's hosting choice, not a runtime dependency; no Node.js server is required in production. Set the production origin before building (including any `PUBLIC_SITE_URL` override), and rebuild after content/configuration changes. Optional GA4, Giscus and externally hosted audio still make their own browser requests.
+
+## Article statistics
+
+`src/utils/metrics.ts` estimates from `post.body`, not rendered HTML or an AI service. It removes triple-backtick code, inline code, HTML tags, Markdown images and complete Markdown links (including link text), strips selected punctuation and collapses whitespace. Han/Hiragana/Katakana/Hangul characters count individually; remaining whitespace-separated chunks count as words. This regex heuristic is not linguistic segmentation and does not specially remove formula or MDX expression source.
+
+With `safeWords = max(words, 1)`, tokens are `round(safeWords * 1.3)` and reading minutes are `max(1, ceil(safeWords / 220))`. Latency/confidence fallbacks are deterministic visual estimates from the same count, not measured inference time or model confidence. The article route independently prefers supplied frontmatter `wordCount`, `tokenCount`, `readMinutes`, `aiLatencyMs` and `aiConfidence`; overriding wordCount does not recalculate the other fallbacks. BlogPost formats counts at 1,000 and above with one decimal and `k`. The current tokens label does not explicitly say estimated; documentation must not present it as real model usage. No AI API is called for these values.
+
 ## Article mathematics
 
 `astro.config.mjs` selects the package's `@anglefeint/astro-theme/markdown` processor with `THEME.MATH.ENABLED`, normalized from the global `theme.math.enabled` setting (default true). `packages/theme/src/markdown.mjs` retains Sätteri and replaces only parsed math/inlineMath nodes with KaTeX HTML plus MathML at build time; MDX inherits the same processor. Disabled math leaves ordinary Markdown/MDX parsing in place. The plugin fails with file context on invalid formulas and excludes formula subtrees from Pagefind to prevent duplicate representations; surrounding prose is unaffected. This does not render frontmatter titles/descriptions, RSS summaries or social-card text.
@@ -149,6 +157,7 @@ The loader skips localhost, `.localhost`, IPv4 loopback, IPv6 loopback and `0.0.
 - `src/config/theme.ts`: theme adapter (pagination, home latest count, About toggle, effect switches such as `enableRedQueen`)
 - `src/config/about.ts`: About adapter selector (`getAboutConfig(locale)` from `src/site.config.ts -> i18n.locales`)
 - `src/config/social.ts`: social adapter (header/footer social links)
+- Shared header navigation is implemented as Home, Blog and optional About in `CommonHeader.astro`; labels are localizable, but there is no arbitrary navigation-link array. `new-page` creates page routes without adding a header entry.
 - `packages/theme/src/components/shared/SocialMenu.astro`: both header and footer show Mastodon/Twitter/GitHub non-clickable placeholders when the social list is empty; a non-empty list renders only its configured links. Main's demo config leaves the list empty, like the neutral starter. About contact links and footer theme/Astro credits are configured separately.
 - `packages/theme/src/config/*.ts`: package fallback defaults for non-starter/manual consumers
 

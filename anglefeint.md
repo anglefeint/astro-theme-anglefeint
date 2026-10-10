@@ -40,7 +40,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 这份中文项目地图解释当前工程的功能和代码入口，面向维护者和 coding agent。**代码定义已实现行为，文档负责记录它。** 遇到差异先读实现、配置、调用方和测试，再修正文档；不为了让旧文档成立而修改代码。
 
-本次核对基线为 `54738b5`，覆盖 `cb54464..54738b5` 的阅读、搜索、标签和发布改动。具体交付版本与验证结果见 [0.3.0 发布记录](docs/releases/0.3.0.md)；当前源码版本读取 [package.json](packages/theme/package.json)，不要把这里的快照当作实时 npm 状态。
+本次核对基线为 `373ac4c`，覆盖当前实现及最近的依赖升级、数学公式和发布收尾。具体交付与验收见 [0.13.0 发布记录](docs/releases/0.13.0.md)；当前源码版本读取 [package.json](packages/theme/package.json)，不要把这里的快照当作实时 npm 状态。
 
 ## 1. 工程边界
 
@@ -49,7 +49,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 - 根目录 `src/` 是 starter/demo：站点配置、路由、内容和适配器。
 - `starter` 是由 [starter manifest](scripts/starter-manifest.mjs) 和 [同步工具](tools/maintainer/sync-starter.mjs) 生成的分发分支；不是独立手改的实现源。
 - 用户修改 `src/site.config.ts`。schema/defaults/runtime 位于同级文件；`src/config/*`、`src/i18n/*` 的适配器实现来自 `scripts/adapter-templates/`。
-- 当前工作区升级到 Astro 7.3.2，包 peer 范围为 `^7.3.2`，Sharp 为 `^0.35.4`。0.4.0 的迁移与实际分发验证见 [发布记录](docs/releases/0.4.0.md)。旧用户工程不会自动更新。
+- 当前使用 Astro 7；根 `package.json`、主题 `package.json` 和各分支锁文件分别定义依赖范围、peer 兼容范围与安装版本。更新主题包不保证同步升级用户项目的 Astro/MDX；操作步骤见 [升级指南](UPGRADING.md)。
 
 ## 2. 页面与静态生成
 
@@ -118,6 +118,16 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 ### 阅读状态和回到顶部
 
+文章字词统计由 [metrics.ts](src/utils/metrics.ts) 从源正文估算：部分 Markdown/代码被移除，中日韩字符逐字计数，其他文本按空白切分。tokens 为 `round(max(words, 1) × 1.3)`，不是模型分词器结果；阅读分钟、AI 延迟和置信度的默认值也来自固定公式，不是随机值或实际 AI 调用。文章 frontmatter 可分别覆盖各字段；只覆盖 `wordCount` 不会重算 token 默认值。公式源码和 MDX 表达式未被专门排除，不能把统计描述为精确结果。具体规则见 [架构说明](docs/ARCHITECTURE.md#article-statistics)。
+
+### 数学公式与静态托管
+
+当前 starter 通过 `@anglefeint/astro-theme/markdown` 接入 Sätteri 和构建期 KaTeX，Markdown/MDX 正文默认全局开启数学解析；`theme.math.enabled: false` 可关闭，没有单篇开关。输出含 HTML 与 MathML，长独立公式内部滚动，公式子树不进入搜索索引。普通美元有歧义时使用 `\$`；代码保持原样。旧项目需要一次 Astro 配置/schema/defaults/adapter 迁移，npm 包不会自动改用户文件。
+
+`npm run build` 输出 `dist/`，将其内容放入支持目录 `index.html` 的静态服务器即可，不依赖 Cloudflare 或线上 Node.js。先设置正式域名及环境变量覆盖，再构建部署。可选评论、GA4 和远程音频仍依赖各自服务。
+
+### 阅读进度反馈
+
 [进度脚本](packages/theme/src/scripts/blogpost/read-progress.js) 根据整个文档可滚动距离计算进度，10%、30%、60%、90% 各显示一次短暂阶段提示。这是阅读装饰反馈，不是文章下载/加载状态。
 
 宽屏阶段提示位于正文右边框外 12px、视口底部上方 1rem；与目录是否开启无关。回到顶部滚动超过 400px 出现；有宽屏目录时向左、向上留出距离。细节和样式入口见 [视觉说明](docs/VISUAL_SYSTEMS.md#reading-feedback)。
@@ -140,12 +150,13 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 ## 5. 多语言与 SEO
 
 - 配置经 `site.config.runtime.ts` 归一化；省略默认语言配置不等于禁用，显式 `meta.enabled: false` 用于禁用非默认语言。
+- 九种语言默认启用：`en`、`zh`、`ja`、`ko`、`es`、`pt-br`、`de`、`ru`、`zh-hant`。文章菜单在缺译时可回退列表，但文章 SEO alternate 由真实翻译集合确定，不把列表页作为译文。
 - 博客详情与分页的语言切换使用存在性判断，不存在时回到目标语言博客首页。
 - 标签语言切换匹配同名标签的第一页，否则进入目标语言标签目录，不保留分页序号。
 - [BaseHead](packages/theme/src/components/BaseHead.astro) 负责 canonical、分享元数据、RSS discovery 和结构化数据。
 - 普通页面可用 `localeHrefs` 同时提供导航与 hreflang；标签页明确 `includeAlternateLinks=false`，保留 canonical，但不声称标签页面互为翻译。
 - RSS 是 `/:lang/rss.xml`；sitemap 由 Astro 集成生成，`robots.txt` 来自站点路由。
-- 当前没有动态 OG 图片生成器。
+- 分享图在构建时生成；没有请求时运行的 OG 图片服务。
 
 ## 6. CLI 与分发
 
@@ -173,10 +184,10 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 ## 8. 已实现与未实现的边界
 
-文章目录、全文搜索、标签浏览、代码块复制和正文图片预览已经实现，不能再列为待开发建议。
+文章目录、全文搜索、标签浏览、代码块复制、正文图片预览、构建期分享图、全局数学公式、可选 GA4、可配置社交链接 rel、分组页脚和 About 纯文本换行已经实现，不能再列为待开发建议。About 正文仍不是 Markdown。导航由 Home、Blog 和可选 About 组成，可翻译标签，但没有任意链接数组；`new-page` 不会自动加入导航。
 
 当前提供默认关闭的 MusicDeck：在 `src/site.config.ts` 的 `theme.music` 中启用并配置曲目。播放器组件、样式、播放核心和会话存储独立；未启用或空歌单不挂载，首次访问点击播放后才加载音频，不内置歌曲。桌面位于左下角，手机默认收起，展开时避让回到顶部。0.8.1 起，正在播放时切页会尝试从保存位置续播，主动暂停后仍保持暂停；浏览器拦截时提示点击继续，不支持跨页无缝播放。配置与安装边界见 [架构说明](docs/ARCHITECTURE.md#optional-music-player) 和 [升级指南](UPGRADING.md)。
 
-没有新增首次建站引导弹窗、专用引导 CLI、Expressive Code、代码文件名标记、目录 scroll-spy、图片画廊或动态 OG 功能。后续需求应从真实用户需要出发，不能由旧讨论或本文件中的提及自动变成产品承诺。
+没有新增首次建站引导弹窗、专用引导 CLI、Expressive Code、代码文件名标记、目录 scroll-spy、图片画廊或请求时生成 OG 图片的服务。后续需求应从真实用户需要出发，不能由旧讨论或本文件中的提及自动变成产品承诺。
 
 本轮核对记录见 [代码与文档审阅记录](docs/CODE_DOC_AUDIT.md)。

@@ -435,3 +435,11 @@ $$
 公式在构建时渲染，样式和字体随站点提供，保留可访问的 MathML，不加载浏览器数学引擎。长独立公式可横向滚动。错误公式会中止构建并提示来源与原因。标题和摘要保持纯文本；搜索索引排除公式。支持 KaTeX 数学语法，不是完整 LaTeX 文档。
 
 老项目需要按升级指南完成一次 starter/配置迁移，仅更新主题包不会接入 Markdown 处理器。
+
+## 静态部署
+
+执行 `npm run build`，将 `dist/` 内全部内容上传到静态网站根目录；服务器需支持目录下的 `index.html`。不依赖 Cloudflare，也不需要线上 Node.js 进程。构建前设置 `site.url` 及任何 `PUBLIC_SITE_URL` 覆盖，改动后重新构建部署。可选评论、GA4 和远程音频仍会访问各自服务。
+
+## 文章统计
+
+页面字词数是源正文的粗略统计：中日韩字符逐字计数，其他文本主要按空白切分。tokens 默认按 `round(max(words, 1) × 1.3)` 估算，不是模型分词器结果或真实 AI 用量。达到 1,000 后显示一位小数和 k。frontmatter 的 `wordCount`、`tokenCount`、`readMinutes` 分别覆盖各自值；只改 wordCount 不会重算 tokens。公式和 MDX 源码也可能影响估算。

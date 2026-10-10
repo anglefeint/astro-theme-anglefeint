@@ -59,6 +59,8 @@ The phase outline below records the package extraction approach already implemen
 
 ## Current State
 
+The current package also exports `@anglefeint/astro-theme/markdown`, which owns Sätteri/KaTeX parsing and build-time formula rendering. Existing starter-managed Astro config, schema/defaults and theme adapter wire the global default-on `theme.math.enabled` setting; BlogPost owns conditional local formula CSS. npm updates cannot add this processor to an old project's Astro config. See the 0.13.0 migration in `UPGRADING.md`.
+
 Version 0.5.0 adds the package export `@anglefeint/astro-theme/social-image`, package-owned `src/social/`, and the full Noto CJK font/license under `src/assets/theme/social/`. Existing starter-managed Astro config, defaults/schema and theme adapter register and configure the feature; no new starter-owned file is required. These changes require coordinated package/starter delivery, not a docs-only starter sync.
 
 - Theme package is published and upgradeable from npm.

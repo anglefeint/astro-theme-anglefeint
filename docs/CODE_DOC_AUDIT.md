@@ -12,6 +12,22 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-10 全量文档候选复核与近期行为沉淀
+
+起点为干净的 main `373ac4c6802d1892c8cca82b2b89ae7a414dc6f7`。检查提交历史，并将 `0cfc07c..373ac4c` 的实际变更路径显式交给 `suggest:docs`，覆盖依赖升级、数学支持和发布收尾；另核对近期讨论涉及的统计、静态部署和主题介绍。候选报告保存于本地 `acceptance-results/docs-1010-suggestions.log`。本次按实现修正文档，没有修改运行代码来满足旧说明。
+
+| 事实来源                                                                                      | 核对结果与处置                                                                                                                                                                                                                            |
+| --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/utils/metrics.ts` → 文章路由 → `BlogPost.astro`                                          | 九语 README、包 README、ARCHITECTURE 和中文总览补上字词/token 估算、独立 frontmatter 覆盖和 `k` 显示规则。并非随机数、实际 AI 使用量或精确分词；公式/MDX 源码会影响结果。当前 UI 未标注 token 为估算，作为现状记录，不在文档任务中改 UI。 |
+| `astro.config.mjs` → 静态路由/构建集成                                                        | 补充 `dist/` 内容部署、目录 index 支持、构建前设置域名、无需 Cloudflare/线上 Node.js，以及可选外部服务边界。                                                                                                                              |
+| `packages/theme/src/markdown.mjs`、配置 schema/defaults/adapter、公式 CSS、RSS 路由和既有测试 | 现有九语公式说明、九语功能指南、UPGRADING 和视觉参考与实现一致；PACKAGING_WORKFLOW 补足包/starter 归属。数学只处理正文，RSS 使用 frontmatter 摘要，标题/描述需由作者保持纯文本；不是自动清洗公式源码。                                    |
+| `CommonHeader.astro`、locale registry、CLI、社交/页脚/About 组件                              | 更新主题目录中英介绍和中文总览，补齐九语言与现有能力；明确无任意导航数组、About 仍为纯文本、分享图为构建期输出。目录命令保留纯文本形式，避免富文本粘贴的代码背景问题；未更新外部主题站点。                                                |
+| 根/包 manifest、锁文件、已发布 GitHub Release                                                 | 中文总览去掉过时依赖快照；0.13.0 仓库记录补齐已完成的标签、Release、部署及线上核验事实，保留原验证时间和限制，不将历史证据冒充本轮执行。                                                                                                  |
+
+候选处置：直接命中文档覆盖九语 README、包 README、架构/视觉、升级/打包、工作流、验收、提交介绍和历史发布文档；本次输入范围已直接包含翻译文档，首轮报告没有额外传播项。工作流/元数据规则、AGENTS/CLAUDE/Cursor 入口、贡献和分支规则没有行为变更，保留；现有测试/验收参考、指南和升级步骤没有发现需要改写的相关契约，保留。旧发布版本继续描述当时事实；仅补齐 0.13.0 已完成的收尾。工具候选不是要求全库重写，也不能证明语义正确。
+
+本轮验证执行文档元数据检查、变更文档本地链接检查、Prettier 和 diff 空白检查，并运行两条 CLI 的 `--help` 核对命令入口。没有重新执行构建、浏览器、公开模板或安全审计；其既有结果见 [0.13.0](releases/0.13.0.md)。仅 Markdown 改动，无功能发布需求。九语 README 属于 starter 受管文件，后续交付应同步 starter；包 README 随下次正常 npm 版本分发即可，不为本轮说明修正单独发布 npm。
+
 ## 2026-10-09 Global mathematics
 
 Reviewed the working-tree delta against `982b5a6`: schema/defaults and generated adapter feed the package-owned Sätteri/KaTeX processor; BlogPost conditionally links local formula styles. Markdown and MDX share parsing, invalid input fails compilation, code and escaped dollars remain literal, formula subtrees are excluded from Pagefind, and RSS/share metadata remain plain text. The missing-adapter CSS fallback protects package-only updates before starter migration. Existing starter manifest entries already own the modified skeleton files; package files/exports own the new processor.

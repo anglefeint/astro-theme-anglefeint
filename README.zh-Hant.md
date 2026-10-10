@@ -331,3 +331,11 @@ $$
 公式於建置時渲染，樣式與字型隨網站提供，保留可存取的 MathML，不載入瀏覽器數學引擎。長公式可橫向捲動。錯誤公式會中止建置並提示來源與原因。標題與摘要維持純文字；搜尋索引排除公式。支援 KaTeX 數學語法，並非完整 LaTeX 文件。
 
 舊專案需要依升級指南完成一次 starter／設定遷移，只更新主題套件不會接入 Markdown 處理器。
+
+## 靜態部署
+
+執行 `npm run build`，把 `dist/` 內全部內容上傳到靜態網站根目錄；伺服器需支援目錄下的 `index.html`。不依賴 Cloudflare，也不需要線上 Node.js 程序。建置前設定 `site.url` 與任何 `PUBLIC_SITE_URL` 覆蓋值，修改後重新建置部署。選用留言、GA4 與遠端音訊仍會存取各自服務。
+
+## 文章統計
+
+字詞數是來源正文的概略統計：中日韓字元逐字計算，其他文字主要依空白分割。tokens 預設為 `round(max(words, 1) × 1.3)`，並非模型分詞器結果或實際 AI 用量。達到 1,000 後以一位小數和 k 顯示。frontmatter 的 `wordCount`、`tokenCount`、`readMinutes` 分別覆蓋各自值；只改 wordCount 不會重算 tokens。公式與 MDX 原始碼也可能影響估算。
