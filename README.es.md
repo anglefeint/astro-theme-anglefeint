@@ -427,3 +427,11 @@ Desactiva con `theme: { math: { enabled: false } }` en `src/site.config.ts`. Esc
 Se renderiza durante la compilación, con estilos y fuentes locales y MathML accesible, sin motor matemático en el navegador. Las fórmulas largas tienen desplazamiento horizontal. Los errores detienen la compilación indicando origen y causa. Mantén títulos y descripciones en texto plano; las fórmulas se excluyen de la búsqueda. Se admite la sintaxis matemática de KaTeX, no documentos LaTeX completos.
 
 Los proyectos anteriores necesitan la migración inicial del starter y la configuración explicada en la guía de actualización; actualizar solo el paquete no conecta el procesador Markdown.
+
+## Despliegue estático
+
+Ejecuta `npm run build` y sube todo el contenido de `dist/` a la raíz de tu sitio estático. El servidor debe servir el `index.html` de cada directorio. Cloudflare es opcional y no hace falta Node.js en producción. Configura `site.url` y cualquier sobrescritura `PUBLIC_SITE_URL` antes de compilar; vuelve a compilar tras los cambios. Comentarios, GA4 y audio remoto opcionales siguen conectándose a sus servicios.
+
+## Estadísticas del artículo
+
+El recuento es aproximado: caracteres CJK individualmente y el resto principalmente por espacios. Los tokens se estiman como `round(max(words, 1) × 1.3)`; no son el resultado de un tokenizador ni consumo real de IA. Desde 1.000 se usa un decimal y k. `wordCount`, `tokenCount` y `readMinutes` en frontmatter sobrescriben cada valor por separado; cambiar solo wordCount no recalcula tokens. El código fuente de fórmulas y MDX puede afectar las estimaciones.

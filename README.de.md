@@ -331,3 +331,11 @@ Mit `theme: { math: { enabled: false } }` in `src/site.config.ts` deaktivieren. 
 Die Ausgabe entsteht beim Build mit lokalen Schriften und Stilen sowie zugänglichem MathML, ohne Formel-Engine im Browser. Lange Formeln lassen sich horizontal scrollen. Fehler stoppen den Build mit Quelle und Ursache. Titel und Beschreibungen bleiben Klartext; Formeln werden nicht indexiert. Unterstützt wird die KaTeX-Mathematiksyntax, nicht vollständige LaTeX-Dokumente.
 
 Bestehende Projekte benötigen die einmalige Starter-/Konfigurationsmigration aus der Upgrade-Anleitung; allein das Paketupdate bindet den Markdown-Prozessor nicht ein.
+
+## Statische Bereitstellung
+
+Führe `npm run build` aus und lade den gesamten Inhalt von `dist/` in das statische Webverzeichnis. Der Server muss die `index.html` der Verzeichnisse ausliefern. Cloudflare ist optional; im Produktivbetrieb ist kein Node.js-Prozess nötig. Konfiguriere `site.url` und eine mögliche `PUBLIC_SITE_URL`-Überschreibung vor dem Build und baue nach Änderungen neu. Optionale Kommentare, GA4 und externe Audiodateien kontaktieren weiterhin ihre Dienste.
+
+## Artikelstatistik
+
+Die Wortzahl ist eine Schätzung aus dem Quelltext: CJK-Zeichen einzeln, sonst hauptsächlich durch Leerraum getrennte Teile. Tokens werden als `round(max(words, 1) × 1.3)` geschätzt, nicht durch einen Modell-Tokenizer oder tatsächlichen KI-Verbrauch. Ab 1.000 erscheint eine Dezimalstelle mit k. Frontmatter-Felder `wordCount`, `tokenCount` und `readMinutes` überschreiben Werte unabhängig; wordCount allein berechnet Tokens nicht neu. Formel- und MDX-Quelltext können die Schätzung beeinflussen.
