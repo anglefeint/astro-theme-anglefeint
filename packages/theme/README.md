@@ -159,3 +159,9 @@ Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Esca
 Rendering happens at build time with local KaTeX styles/fonts and accessible MathML, without a browser math engine. Long display formulas scroll horizontally. Invalid formulas stop the build with a source/error message. Keep titles and descriptions plain text; formulas are excluded from search indexing. Supported math is KaTeX syntax, not complete LaTeX documents.
 
 Older projects need the one-time starter/configuration migration described in the upgrade guide; updating only the theme package does not wire the Markdown processor.
+
+## Static deployment and article statistics
+
+The matching starter builds static files into `dist/`. Upload its contents to a static server that serves directory `index.html` files; Cloudflare and a production Node.js process are not required. Set the public site URL before building. Optional GA4, comments and remote audio still contact their respective services.
+
+The starter estimates words from source text and defaults tokens to `round(max(words, 1) × 1.3)`. These are neither random values nor actual AI usage. Frontmatter `wordCount`, `tokenCount` and `readMinutes` override their values independently. Formula and MDX source can affect estimates. See the repository [article statistics reference](../../docs/ARCHITECTURE.md#article-statistics) for the exact rules and display limitations.

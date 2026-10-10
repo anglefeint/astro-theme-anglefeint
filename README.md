@@ -441,3 +441,11 @@ Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Esca
 Rendering happens at build time with local KaTeX styles/fonts and accessible MathML, without a browser math engine. Long display formulas scroll horizontally. Invalid formulas stop the build with a source/error message. Keep titles and descriptions plain text; formulas are excluded from search indexing. Supported math is KaTeX syntax, not complete LaTeX documents.
 
 Older projects need the one-time starter/configuration migration described in the upgrade guide; updating only the theme package does not wire the Markdown processor.
+
+## Static deployment
+
+Run `npm run build`, then upload all contents of `dist/` to your static web root. The server must serve directory `index.html` files. Cloudflare is optional; no production Node.js process is required. Configure `site.url` and any `PUBLIC_SITE_URL` override before building, and rebuild after changes. Optional comments, GA4 and remote audio still contact their respective services.
+
+## Article statistics
+
+The displayed words are a heuristic count of source text (CJK characters individually, other text mainly by whitespace). Tokens default to `round(max(words, 1) × 1.3)`, not a model tokenizer or actual AI usage. Counts at 1,000 or more use one decimal and `k`. Frontmatter `wordCount`, `tokenCount` and `readMinutes` override their values independently; changing only wordCount does not recalculate tokens. Formula/MDX source can affect the estimates.
