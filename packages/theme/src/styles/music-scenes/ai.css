@@ -1,0 +1,4 @@
+/* Article / AI: independent article-player presentation and future effects. */
+.music-deck:where([data-scene='ai']) {
+  --music-accent-alt: var(--chrome-link-hover, #7ba6ff);
+}

@@ -642,7 +642,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     home: {
       hero: 'Write a short introduction for your site and what readers can expect from your posts.',
       latest: 'Latest Posts',
-      viewAll: 'View all posts',
+      viewAll: 'View All Posts',
       noPosts: 'No posts available in this language yet.',
     },
     about: {

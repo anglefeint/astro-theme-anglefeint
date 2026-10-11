@@ -21,6 +21,8 @@ Run from the maintainer checkout, not from a user's starter. These tools do not 
 
 ## Complementary checks
 
+`tests/e2e/home-effects-lifecycle.spec.mjs` instruments browser frame ownership and mirror texture allocation to check repeated visibility events, cached pagehide/pageshow, live reduced-motion changes and repair cleanup. It complements cinematic visual regression, rather than proving the absence of all possible memory leaks. Oracle/passage and music scene exploratory evidence belongs in the matching release ledger; the existing public-template check does not claim exhaustive coverage of every new animation.
+
 Mathematics coverage combines unit tests for parsing/escaping/MDX/errors, nine-language Chromium article checks for MathML/local CSS and mobile scrolling, and the independent installed build matrix with actual `.md`/`.mdx` formulas and a disabled-math build. Disabling restores normal MDX expressions, so the disabled MDX fixture intentionally uses brace-free prose. The matrix checks formula output/exclusions and the absence of the stylesheet link when disabled; it does not claim to remove unused assets from the build directory. Search intentionally excludes entire formula subtrees while keeping surrounding prose. Public-template delivery checks exercise the published processor through the formula examples in the nine bundled guides.
 
 | Command                                      | Source under test                                      | Purpose                                                                                                                                                                                                    |

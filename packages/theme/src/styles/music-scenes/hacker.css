@@ -1,0 +1,22 @@
+/* Hacker chrome uses a neutral active link; keep its terminal-green highlight. */
+.music-deck:where([data-scene='hacker']) {
+  --music-accent: var(--chrome-link-hover, #00ff64);
+  --music-accent-alt: var(--chrome-link, #e6e6e6);
+  --music-border: var(--chrome-border, rgba(255, 255, 255, 0.2));
+  --music-glow: color-mix(in srgb, var(--music-text) 6%, transparent);
+  --music-surface: rgba(0, 0, 0, 0.94);
+  background: var(--music-panel);
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.music-deck:where([data-scene='hacker']) :is(.music-deck__btn, .music-deck__collapse) {
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.music-deck:where([data-scene='hacker'])
+  :is(.music-deck__playlist-toggle, .music-deck__track-chip) {
+  border-radius: 8px;
+  font-family: inherit;
+}

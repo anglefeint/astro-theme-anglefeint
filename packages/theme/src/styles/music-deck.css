@@ -42,32 +42,6 @@
   overflow: hidden;
 }
 
-/* Hacker chrome uses a neutral active link; keep its terminal-green highlight. */
-:where(body.hacker-page) .music-deck {
-  --music-accent: var(--chrome-link-hover, #00ff64);
-  --music-accent-alt: var(--chrome-link, #e6e6e6);
-  --music-border: var(--chrome-border, rgba(255, 255, 255, 0.2));
-  --music-glow: color-mix(in srgb, var(--music-text) 6%, transparent);
-  --music-surface: rgba(0, 0, 0, 0.94);
-  background: var(--music-panel);
-  border-radius: 8px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-:where(body.hacker-page) .music-deck :is(.music-deck__btn, .music-deck__collapse) {
-  border-radius: 6px;
-  font-family: inherit;
-}
-
-:where(body.hacker-page) .music-deck :is(.music-deck__playlist-toggle, .music-deck__track-chip) {
-  border-radius: 8px;
-  font-family: inherit;
-}
-
-:where(body.cyber-page) .music-deck {
-  --music-accent-alt: var(--chrome-link, #c4e2ff);
-}
-
 .music-deck::before {
   content: '';
   position: absolute;

@@ -13,6 +13,14 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.14.0] - 2026-10-11
+
+- Add sequential Matrix terminal messages, four shuffled white-rabbit link decoders and a cracked/liquid mirror that repairs on click until refresh.
+- Add a default-off, 8-second homepage passage and an independent About Oracle preview with four click-selected palettes, animated digital crows and click/Escape dismissal. Starter migration is required for the new configuration and About button; see [upgrade steps](UPGRADING.md#0140-matrix-homepage-and-oracle).
+- Separate corridor, door, rain, courtyard, bench, Oracle and crow modules; add mixed-direction code flow and softly glowing character clusters.
+- Unify homepage effect lifecycle with a single rain loop, idempotent controllers, background suspension, live reduced-motion handling and GPU/canvas cleanup. Separate music-player scene presentation from playback and add local Matrix reflection/ripple feedback.
+- See [release record](docs/releases/0.14.0.md) for validation and delivery status.
+
 ## [0.13.0] - 2026-10-09
 
 - Add global, default-enabled Markdown/MDX mathematics using Sätteri and build-time KaTeX. Inline `$...$` and display `$$...$$` produce HTML and accessible MathML without a client rendering engine.

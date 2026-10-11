@@ -116,6 +116,7 @@ export interface ThemeConfig {
     };
     effects: {
       enableRedQueen: boolean;
+      enableHomePassage: boolean;
     };
     comments: {
       enabled: boolean;

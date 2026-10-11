@@ -50,7 +50,16 @@ for (const viewport of [
       await page.keyboard.press('Escape');
       await expect(page.locator('#hacker-modal')).toHaveAttribute('aria-hidden', 'true');
     } else {
-      await expect(page.locator('.hacker-sidebar')).toBeHidden();
+      await expect(page.locator('.hacker-sidebar [data-modal]')).toHaveCount(5);
+      for (const tool of await page.locator('.hacker-sidebar [data-modal]').all()) {
+        await expect(tool).toBeHidden();
+      }
+      await expect(page.locator('[data-oracle]')).toBeVisible();
+      await page.locator('[data-oracle]').click();
+      await expect(page.locator('.oracle-passage.is-static')).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(page.locator('.oracle-passage')).toHaveCount(0);
+      await expect(page.locator('[data-oracle]')).toBeFocused();
       const contact = page
         .locator('main a[href^="mailto:"], main a[href^="https://github.com/"]')
         .first();

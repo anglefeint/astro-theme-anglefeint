@@ -24,6 +24,12 @@ This guide explains the recommended upgrade path for projects created from the s
 
 ## Recommended Baseline
 
+### 0.14.0: Matrix homepage and Oracle
+
+Prefer a fresh matching starter and migrate personal content/settings. For a matching 0.13.0 project, install `@anglefeint/astro-theme@^0.14.0`; add `enableHomePassage: boolean` to `ThemeConfig.theme.effects` in `src/site.config.schema.ts` and `enableHomePassage: false` to the corresponding defaults. Add `ENABLE_HOME_PASSAGE: THEME_CONFIG.theme.effects.enableHomePassage` to `THEME.EFFECTS` in `scripts/adapter-templates/src/config/theme.ts`, then run `npm run sync-adapters`. Review customized adapters before replacing them.
+
+The About Oracle button also needs the matching `src/pages/[lang]/about.astro` route and script declarations in `src/types/theme-scripts.d.ts` (and its adapter template). Merge these files from the new starter deliberately; npm alone does not add the button. Run `npm run doctor` and preview Home/About with normal and reduced motion. The homepage passage is disabled by default and remains green when enabled; Oracle is independent and chooses a different one of four palettes at each click. Dismiss with another click or Escape. The existing music configuration is unchanged. See [0.14.0](docs/releases/0.14.0.md).
+
 ### 0.13.0: global Markdown and MDX mathematics
 
 This release needs starter configuration changes; npm alone does not connect the new processor. Prefer a fresh `#starter` project in a new directory and migrate your articles/assets/personal settings using the procedure below. Do not overwrite your customized site configuration.

@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Matrix Code NFI';
+  src:
+    url('/fonts/ff2a407fe06752facf8828a86955e988.woff2') format('woff2'),
+    url('/fonts/ff2a407fe06752facf8828a86955e988.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

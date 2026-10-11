@@ -1,10 +1,12 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
+import HomeWhiteRabbit from '../components/HomeWhiteRabbit.astro';
 import { SITE_DESCRIPTION, SITE_TITLE, getSiteHero } from '@anglefeint/site-config/site';
 import { type Locale, blogIdToSlugAnyLocale, localePath } from '@anglefeint/site-i18n/config';
 import { getMessages } from '@anglefeint/site-i18n/messages';
 import MatrixShell from './shells/MatrixShell.astro';
+import { THEME } from '@anglefeint/site-config/theme';
 
 interface Props {
   locale: Locale;
@@ -18,22 +20,41 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
 ---
 
 <MatrixShell locale={locale} title={SITE_TITLE} description={pageDescription}>
+  <button class="home-mirror-surface" type="button" aria-label="Repair mirror">
+    <canvas class="home-mirror" aria-hidden="true"></canvas>
+  </button>
+  <div class="home-terminal-intro">
+    <div class="home-terminal-line">
+      <span class="home-terminal-system"><span>Initialize...</span></span><span
+        class="home-terminal-done"><span> done.</span></span
+      >
+    </div>
+    <div class="home-terminal-line">
+      <span class="home-terminal-wake"><span>Wake Up...</span></span><span
+        class="home-terminal-follow"><span> Follow The White Rabbit...</span></span
+      >
+    </div>
+  </div>
   <h1>{SITE_TITLE}</h1>
   <p class="home-hero-copy">{heroText}</p>
 
   <section class="home-latest">
     <h2 class="home-section-title">{messages.home.latest}</h2>
-    <ul class="home-post-list">
+    <ul
+      class="home-post-list"
+      data-home-passage-enabled={String(THEME.EFFECTS.ENABLE_HOME_PASSAGE)}
+    >
       {
         latestPosts.length > 0 ? (
-          latestPosts.map((post) => (
-            <li>
+          latestPosts.map((post, index) => (
+            <li class="home-post-record" data-decode={['scatter', 'rain', 'rebuild'][index % 3]}>
               <a
                 class="home-post-title"
                 href={localePath(locale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}
               >
                 {post.data.title}
               </a>
+              <HomeWhiteRabbit />
               <div class="home-post-meta">
                 <FormattedDate date={post.data.pubDate} locale={locale} />
                 {post.data.description && <> · {post.data.description}</>}
@@ -45,6 +66,10 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
         )
       }
     </ul>
-    <p><a href={localePath(locale, '/blog/')}>{messages.home.viewAll}</a></p>
+    <p>
+      <a class="home-archive-command" data-decode="scan" href={localePath(locale, '/blog/')}
+        >{messages.home.viewAll}<HomeWhiteRabbit /></a
+      >
+    </p>
   </section>
 </MatrixShell>

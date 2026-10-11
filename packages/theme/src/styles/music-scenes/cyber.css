@@ -1,0 +1,4 @@
+/* Blog list and tags share the Cyber shell; keep their player effects here. */
+.music-deck:where([data-scene='cyber']) {
+  --music-accent-alt: var(--chrome-link, #c4e2ff);
+}

@@ -28,6 +28,8 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+可选 Matrix 穿越：`theme.effects.enableHomePassage` 默认 `false`。开启后，首页文章链接播放 8 秒绿色穿越后导航。About 的 `Oracle` 按钮独立可用：每次点击选择四种场景配色之一，不连续重复；再次点击或按 Escape 返回。减少动态效果时，首页直接导航，Oracle 显示静态预览。
+
 ## 环境要求
 
 - Node.js `22.12.0+`（建议 LTS）

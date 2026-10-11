@@ -1,0 +1,77 @@
+---
+// Development-only visual trial. No preview routes are emitted in production builds.
+import ThemeFrame from '@anglefeint/astro-theme/components/shared/ThemeFrame.astro';
+import MusicDeck from '@anglefeint/astro-theme/components/shared/MusicDeck.astro';
+import homeCss from '@anglefeint/astro-theme/styles/home-page.css?url';
+import { SITE_TITLE, getSiteHero } from '../../config/site';
+import { getMessages } from '../../i18n/messages';
+import { DEFAULT_LOCALE, localePath } from '../../i18n/config';
+
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { scene: 'matrix' } }] : [];
+}
+const messages = getMessages(DEFAULT_LOCALE);
+const rate = 16000;
+const samples = rate * 4;
+const wav = Buffer.alloc(44 + samples * 2);
+wav.write('RIFF', 0);
+wav.writeUInt32LE(wav.length - 8, 4);
+wav.write('WAVEfmt ', 8);
+wav.writeUInt32LE(16, 16);
+wav.writeUInt16LE(1, 20);
+wav.writeUInt16LE(1, 22);
+wav.writeUInt32LE(rate, 24);
+wav.writeUInt32LE(rate * 2, 28);
+wav.writeUInt16LE(2, 32);
+wav.writeUInt16LE(16, 34);
+wav.write('data', 36);
+wav.writeUInt32LE(samples * 2, 40);
+for (let i = 0; i < samples; i++) {
+  const t = i / rate;
+  const envelope = Math.min(1, t * 8, (4 - t) * 8) * 0.12;
+  wav.writeInt16LE(Math.round(Math.sin(t * 2 * Math.PI * 220) * envelope * 32767), 44 + i * 2);
+}
+const tracks = [
+  {
+    title: 'Matrix liquid · test tone',
+    artist: 'Local interaction preview',
+    src: `data:audio/wav;base64,${wav.toString('base64')}`,
+  },
+];
+---
+
+<ThemeFrame
+  locale={DEFAULT_LOCALE}
+  title="Matrix player preview"
+  description="Local player effects preview"
+  bodyClass="page-home"
+  noindex
+>
+  <link slot="head" rel="stylesheet" href={homeCss} />
+  <canvas slot="body-start" id="matrix-bg" aria-hidden="true"></canvas>
+  <div class="home-terminal-intro">
+    <div class="home-terminal-line">
+      <span class="home-terminal-system"><span>Initialize...</span></span><span
+        class="home-terminal-done"><span> done.</span></span
+      >
+    </div>
+    <div class="home-terminal-line">
+      <span class="home-terminal-wake"><span>Wake Up...</span></span><span
+        class="home-terminal-follow"><span> Follow The White Rabbit...</span></span
+      >
+    </div>
+  </div>
+  <h1>{SITE_TITLE}</h1>
+  <p class="home-hero-copy">{getSiteHero(DEFAULT_LOCALE) ?? messages.home.hero}</p>
+  <section class="home-latest">
+    <h2 class="home-section-title">{messages.home.latest}</h2>
+    <p><a href={localePath(DEFAULT_LOCALE, '/blog/')}>{messages.home.viewAll}</a></p>
+  </section>
+  <MusicDeck slot="music" scene="matrix" tracks={tracks} labels={messages.music} />
+  <Fragment slot="body-end">
+    <script>
+      import { initHomeEffects } from '@anglefeint/astro-theme/scripts/home-effects.js';
+      initHomeEffects();
+    </script>
+  </Fragment>
+</ThemeFrame>

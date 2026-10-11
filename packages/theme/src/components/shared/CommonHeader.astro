@@ -67,7 +67,9 @@ const localeOptions = ENABLED_LOCALES.map((targetLocale) => ({
     </div>
     <div class="internal-links">
       <HeaderLink href={homeHref}>{labels.home}</HeaderLink>
-      <HeaderLink href={alternatePathForLocale(locale, '/blog/')}>{labels.blog}</HeaderLink>
+      <HeaderLink data-home-passage href={alternatePathForLocale(locale, '/blog/')}
+        >{labels.blog}</HeaderLink
+      >
       {
         showAbout && (
           <HeaderLink href={alternatePathForLocale(locale, '/about/')}>{labels.about}</HeaderLink>

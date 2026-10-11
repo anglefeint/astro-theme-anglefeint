@@ -1,5 +1,6 @@
 ---
 import MusicDeck from './MusicDeck.astro';
+import { resolveMusicScene } from './music-scenes';
 import GoogleAnalytics from './GoogleAnalytics.astro';
 import { THEME } from '@anglefeint/site-config/theme';
 import BaseHead from '../BaseHead.astro';
@@ -100,7 +101,17 @@ const messages = getMessages(locale);
       <slot />
     </main>
     <CommonFooter scanlines={scanlines} labels={messages.footer} />
-    {THEME.MUSIC?.enabled && <MusicDeck tracks={THEME.MUSIC.tracks} labels={messages.music} />}
+    <slot name="music">
+      {
+        THEME.MUSIC?.enabled && (
+          <MusicDeck
+            tracks={THEME.MUSIC.tracks}
+            labels={messages.music}
+            scene={resolveMusicScene(bodyClass)}
+          />
+        )
+      }
+    </slot>
     <slot name="body-end" />
   </body>
 </html>
