@@ -26,6 +26,14 @@
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
+## Mit einem KI-Assistenten arbeiten
+
+Öffne den Projektordner in Cursor, Codex oder Claude Code. Der Starter enthält eine gemeinsame [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), einen Claude-Code-Einstieg und eine immer angewendete Cursor-Regel. Die Hinweise gelten für deinen Blog; Veröffentlichungstools des ursprünglichen Projekts sind nicht nötig. Beginne mit „Lies AGENTS.md“, falls die Hinweise nicht geladen wurden. Ergänze deine eigenen Wünsche.
+
+Beispiele: „Lies AGENTS.md, richte meine Website ein und aktiviere nur Deutsch; erhalte meine Inhalte.“ „Erstelle einen deutschen Artikel mit dem Slug my-first-post; den Text liefere ich.“ „Füge meine erlaubten MP3-Dateien mit Titel und Urheber hinzu.“ Bitte um doctor und eine Vorschau der geänderten Seiten. Inhalte, Übersetzungen, Domain und Veröffentlichungsziel bestimmst du.
+
+Ersetze vor der Veröffentlichung die Platzhalter in der optionalen `public/llms.txt` durch deine Website-Daten und tatsächlichen Sprach-URLs oder entferne die Datei. Sie beschreibt die Website für Leser und Crawler; Projektanweisungen stehen in AGENTS.md.
+
 <a id="setup"></a>
 
 Optionaler Matrix-Übergang: `theme.effects.enableHomePassage` ist standardmäßig `false`. Aktiviert zeigen Beitragslinks auf der Startseite vor der Navigation einen grünen Übergang von 8 Sekunden. `Oracle` auf About funktioniert unabhängig: Jeder Klick wählt eine von vier Paletten ohne direkte Wiederholung; ein weiterer Klick oder Escape kehrt zurück. Bei reduzierter Bewegung erfolgt die Navigation direkt und Oracle zeigt eine statische Vorschau.

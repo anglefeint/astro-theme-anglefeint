@@ -11,4 +11,4 @@ update_triggers:
   - sync-from-readme-en
 source_of_truth: false
 depends_on:
-  - README.md
+  - AGENTS.md

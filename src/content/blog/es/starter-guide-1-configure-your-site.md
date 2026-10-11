@@ -4,23 +4,23 @@ title: 'Guía 1: Configura tu blog'
 subtitle: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 description: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
 ## Empieza por lo esencial
 
-Esta serie corresponde al starter 0.9.0 y explica la puesta en marcha, la escritura y las funciones opcionales. No necesitas conocer todos los ajustes para empezar. Sustituye la identidad del sitio y el contenido, y conserva los demás valores predeterminados. Estas guías son artículos normales: puedes probar su índice, la copia de código y la búsqueda.
+Esta serie corresponde al starter actual y explica la puesta en marcha, la escritura y las funciones opcionales. No necesitas conocer todos los ajustes para empezar. Sustituye la identidad del sitio y el contenido, y conserva los demás valores predeterminados. Estas guías son artículos normales: puedes probar su índice, la copia de código y la búsqueda.
 
 ## 1. Instala y abre el sitio localmente
 
 Con Node.js 22.12.0 o posterior, ejecuta:
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
-Elige un directorio en el asistente, por ejemplo `my-blog`. Entra en el directorio que realmente hayas creado: ajusta la primera línea siguiente. Si el asistente ya instaló las dependencias, omite `npm install`.
+El comando crea `my-blog` sin instalar dependencias. Ejecútalo desde el directorio padre; si cambias el nombre, actualiza tanto el comando como cd. Después instala e inicia:
 
 ```bash
 cd my-blog
@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-Abre la URL local que aparece en la terminal; el puerto puede cambiar si está ocupado. Con pnpm también puedes crear la plantilla mediante el comando npm anterior, omitir la instalación de dependencias en el asistente y ejecutar después `pnpm install` y `pnpm dev`.
+Abre la URL indicada en la terminal; el puerto puede cambiar si está ocupado. Con pnpm, usa el mismo comando de creación y después `pnpm install` y `pnpm dev` en lugar de los comandos npm de instalación e inicio.
 
 ## 2. Cambia el nombre, la presentación y los enlaces
 
@@ -41,7 +41,7 @@ export const THEME_CONFIG = defineThemeConfig({
     description: 'My notes and projects.',
     url: 'https://example.com',
     author: 'Your Name',
-    tagline: 'Built with Astro.',
+    tagline: '',
   },
   i18n: {
     defaultLocale: 'es',
@@ -106,12 +106,11 @@ El comando crea archivos con el mismo nombre para los idiomas activos; no traduc
 Durante el desarrollo usa `npm run dev`. Antes de publicar, ejecuta desde el proyecto:
 
 ```bash
-npm run check
-npm run build
+npm run doctor
 npm run preview
 ```
 
-`check` revisa la configuración y los adaptadores, los archivos Astro y la configuración de About compilada. `build` genera el sitio estático en `dist/`, con el índice de búsqueda y, por defecto, las imágenes automáticas para compartir. `preview` sirve el resultado localmente; no lo publica en Internet. Detén la vista previa con Ctrl+C.
+`doctor` comprueba el proyecto y lo compila en `dist/`, con el índice de búsqueda y las imágenes sociales predeterminadas. Si termina correctamente, no hace falta ejecutar check ni build otra vez. `preview` muestra ese resultado localmente; no lo publica. Deténlo con Ctrl+C.
 
 En el alojamiento estático, establece `npm run build` como comando de compilación y `dist` como directorio de salida. Cambia antes `site.url` por tu dominio real. Consulta la [guía de despliegue de Astro](https://docs.astro.build/en/guides/deploy/) para conectar el repositorio, configurar el dominio y publicar en tu plataforma. Comprueba después inicio, artículos, cambio de idioma, búsqueda y `/<idioma>/rss.xml`. Cada cambio de contenido o configuración requiere compilar y desplegar de nuevo.
 

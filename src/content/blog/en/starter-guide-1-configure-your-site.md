@@ -4,23 +4,23 @@ title: 'User Guide 1: Set Up Your Blog'
 subtitle: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 description: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
 ## Start with the essentials
 
-This series covers the accompanying 0.9.0 starter: setup, writing, and optional features. You do not need to understand every setting first. Replace the site identity and content, and keep the other defaults. These tutorials are ordinary blog posts, so you can try their table of contents, code copying, and search.
+This series covers the accompanying starter: setup, writing, and optional features. You do not need to understand every setting first. Replace the site identity and content, and keep the other defaults. These tutorials are ordinary blog posts, so you can try their table of contents, code copying, and search.
 
 ## 1. Install and open locally
 
 Use Node.js 22.12.0 or newer and run:
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
-Choose a project directory in the wizard, such as `my-blog`. Enter the directory actually created; adjust the first line below to match. Skip `npm install` if the wizard already installed dependencies.
+The command creates `my-blog` without installing dependencies. Run it from the parent directory; if you choose another name, update the creation command and `cd` together. Then install and start:
 
 ```bash
 cd my-blog
@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed in the terminal; the port can change if occupied. For pnpm, use the same npm template command, skip dependency installation in the wizard, then run `pnpm install` and `pnpm dev`.
+Open the local URL printed in the terminal; the port can change if occupied. For pnpm, use the same creation command, then run `pnpm install` and `pnpm dev` instead of the npm installation/start commands.
 
 ## 2. Set your name, homepage introduction, and links
 
@@ -41,7 +41,7 @@ export const THEME_CONFIG = defineThemeConfig({
     description: 'My notes and projects.',
     url: 'https://example.com',
     author: 'Your Name',
-    tagline: 'Built with Astro.',
+    tagline: '',
   },
   i18n: {
     defaultLocale: 'en',
@@ -106,12 +106,11 @@ This creates a post with the same filename for each enabled locale; it does not 
 Use `npm run dev` while developing. Before deployment, run these in the project directory:
 
 ```bash
-npm run check
-npm run build
+npm run doctor
 npm run preview
 ```
 
-`check` checks configuration/adapters, Astro files, and the built About configuration. `build` produces static output in `dist/`, including the search index and automatically generated social images by default. `preview` serves the built site locally; it does not publish it online. Stop the preview with Ctrl+C.
+`doctor` checks the project and includes a build, producing static output in `dist/` with the search index and default social images. No additional `check` or `build` is needed after it succeeds. `preview` serves that output locally; it does not publish it. Stop it with Ctrl+C.
 
 For static hosting, set the build command to `npm run build` and the output directory to `dist`. Set `site.url` to your actual domain first. Follow the [Astro deployment guide](https://docs.astro.build/en/guides/deploy/) for your platform’s repository, domain, and publishing steps. After deployment, check the homepage, posts, language switching, search, and `/<locale>/rss.xml`. Content or configuration changes require rebuilding and redeploying.
 

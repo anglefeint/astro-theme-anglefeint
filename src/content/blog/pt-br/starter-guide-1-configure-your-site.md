@@ -6,22 +6,22 @@ title: 'Guia 1: Configure seu blog'
 subtitle: 'Instalação, identidade, idiomas e publicação.'
 description: 'Instalação, identidade, idiomas e publicação.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-10-11'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
 ## Instalar e abrir localmente
 
-Use Node.js 22.12.0 ou superior. No assistente, escolha uma pasta como my-blog; ajuste o comando cd à pasta criada. Se o assistente já instalou as dependências, pule npm install.
+Use Node.js 22.12.0 ou superior. Execute no diretório pai: o comando cria my-blog sem instalar dependências. Depois instale e inicie. Se mudar o nome, ajuste o comando de criação e cd juntos.
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 cd my-blog
 npm install
 npm run dev
 ```
 
-Abra o endereço indicado no terminal. Para pnpm, crie o projeto com o mesmo comando npm, pule a instalação no assistente e execute pnpm install e pnpm dev.
+Abra o endereço indicado no terminal. Para pnpm, use o mesmo comando de criação e depois pnpm install e pnpm dev em vez dos comandos npm de instalação e início.
 
 ## Identidade e endereço inicial
 

@@ -1,6 +1,22 @@
 // Distribution destinations may use a neutral source instead of demo configuration.
 export const STARTER_SOURCE_OVERRIDES = {
   'src/site.config.ts': 'scripts/starter-templates/site.config.ts.template',
+  'AGENTS.md': 'scripts/starter-templates/AGENTS.md.template',
+  'CLAUDE.md': 'scripts/starter-templates/CLAUDE.md.template',
+  '.cursor/rules/00-repo.mdc': 'scripts/starter-templates/cursor-repo.mdc.template',
+  ...Object.fromEntries(
+    [
+      'README',
+      'README.zh-CN',
+      'README.ja',
+      'README.ko',
+      'README.es',
+      'README.pt-BR',
+      'README.de',
+      'README.ru',
+      'README.zh-Hant',
+    ].map((name) => [`${name}.meta.yaml`, `scripts/starter-templates/${name}.meta.yaml.template`])
+  ),
 };
 
 export const starterSourcePath = (destination) =>
@@ -71,6 +87,10 @@ export const STARTER_SUPPORT_SCRIPTS = [
 ];
 
 export const STARTER_STATIC_MANAGED_FILES = [
+  'AGENTS.md',
+  'CLAUDE.md',
+  '.cursor/rules/00-repo.mdc',
+  'public/llms.txt',
   'astro.config.mjs',
   'src/pages/index.astro',
   'src/pages/robots.txt.ts',

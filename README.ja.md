@@ -65,6 +65,14 @@ pnpm install
 pnpm dev
 ```
 
+## AI アシスタントを使う
+
+Cursor、Codex、Claude Code でプロジェクトフォルダーを開いてください。starter には共通の [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)、Claude Code の入口、常時適用する Cursor ルールが含まれます。ブログ向けの手順であり、上流の公開ツールは不要です。指示が読み込まれていない場合は「AGENTS.md を読んで」と依頼してください。自分の方針を追記できます。
+
+例：「AGENTS.md を読んで、サイト情報を設定し、日本語だけを有効にして。既存の記事は残して」「my-first-post という日本語記事を作って。本文はこちらで用意する」「使用許可のある MP3 を曲名と作者付きで追加して」。doctor と変更ページのプレビューを依頼してください。内容、翻訳、ドメイン、公開先は自分で決めます。
+
+公開前に、任意の `public/llms.txt` のプレースホルダーを自分のサイト情報と実際の言語別 URL に置き換えるか、ファイルを削除してください。読者やクローラー向けの説明であり、プロジェクトの作業指示は AGENTS.md にあります。
+
 <a id="setup"></a>
 
 ## 初期設定：サイト情報とホームの URL
