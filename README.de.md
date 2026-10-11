@@ -205,6 +205,8 @@ npm run new-page -- projects --theme cyber erstellt src/pages/[lang]/projects.as
 
 ## Anleitung 3: Optionale Funktionen
 
+Die öffentliche Demo verwendet acht Titel von Free Music Archive; im Starter bleibt Musik standardmäßig deaktiviert. Die [Musiknachweise](https://demo.anglefeint.com/music/credits.html) nennen Urheber, Quellen und individuelle Lizenzen (CC0 1.0 oder CC BY 4.0). Die Aufnahmen sind von der MIT-Lizenz des Theme-Codes getrennt und werden weder im npm-Paket noch im Starter verteilt. Beachte beim Hinzufügen oder Wiederverwenden die jeweilige Lizenz und ihre Namensnennungspflichten.
+
 ### Musik
 
 Lege Audio unter public/music/ ab und ergänze:

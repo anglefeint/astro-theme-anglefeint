@@ -205,6 +205,8 @@ npm run new-page -- projects --theme cyber 會建立 src/pages/[lang]/projects.a
 
 ## 使用指南 3：選用功能
 
+公開 demo 已啟用八首來自 Free Music Archive 的示例音樂，starter 仍預設關閉音樂。作者、來源與各曲目授權（CC0 1.0 或 CC BY 4.0）見[音樂署名與授權說明](https://demo.anglefeint.com/music/credits.html)。音樂不適用主題程式碼的 MIT 授權，也不隨 npm 套件或 starter 分發；新增或重用音樂時，請遵守各自授權與署名要求。
+
 ### 音樂
 
 把音檔放在 public/music/，並合併：
