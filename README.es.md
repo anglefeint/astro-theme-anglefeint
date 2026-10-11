@@ -393,6 +393,8 @@ Las fuentes incluidas cubren los nueve idiomas incluidos, sin API de imágenes n
 
 ## Reproductor de música opcional
 
+La demo pública incluye ocho pistas de Free Music Archive; la música sigue desactivada en el starter. Consulta los [créditos musicales](https://demo.anglefeint.com/music/credits.html) para ver autores, fuentes y licencias individuales (CC0 1.0 o CC BY 4.0). Las grabaciones son independientes de la licencia MIT del código y no se distribuyen en el paquete npm ni en el starter. Al añadir o reutilizar música, respeta su licencia y los requisitos de atribución.
+
 Desactivado por defecto. Coloca el audio en `public/music/` y combina esta configuración con la de `src/site.config.ts`:
 
 ```ts

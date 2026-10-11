@@ -401,6 +401,8 @@ social: {
 
 ## 可选音乐播放器
 
+公开 demo 已启用八首来自 Free Music Archive 的示例音乐，starter 仍默认关闭音乐。作者、来源和各曲目授权（CC0 1.0 或 CC BY 4.0）见[音乐署名与授权说明](https://demo.anglefeint.com/music/credits.html)。音乐不适用主题代码的 MIT 许可证，也不随 npm 包或 starter 分发；添加或复用音乐时，请遵守对应许可证及署名要求。
+
 默认关闭。将音频放在 `public/music/`，把以下配置合并到 `src/site.config.ts`：
 
 ```ts

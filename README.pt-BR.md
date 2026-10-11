@@ -205,6 +205,8 @@ npm run new-page -- projects --theme cyber cria src/pages/[lang]/projects.astro.
 
 ## Guia 3: Recursos opcionais
 
+A demonstração pública usa oito faixas do Free Music Archive; a música continua desativada no starter. Consulte os [créditos musicais](https://demo.anglefeint.com/music/credits.html) para autores, fontes e licenças individuais (CC0 1.0 ou CC BY 4.0). As gravações são separadas da licença MIT do código e não são distribuídas no pacote npm nem no starter. Ao adicionar ou reutilizar música, respeite sua licença e os requisitos de atribuição.
+
 ### Música
 
 Coloque o áudio em public/music/ e mescle:
