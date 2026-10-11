@@ -18,7 +18,7 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 沿 schema/defaults/site config → theme adapter → HomePage/MatrixShell、About route → 独立脚本/样式核对：首页穿越默认关闭且固定绿色；Oracle 独立可用，在点击时选配色并避免连续重复，点击/Escape 关闭；时长与键盘/减少动态效果边界以 player/timeline 和调用者为准。沿 ThemeFrame → music-scenes → MusicDeck → effects host 核对播放器场景仅影响视觉，不改变播放配置。新增包文件由既有包分发范围覆盖；修改的 starter 配置、About 路由和类型模板已由 manifest 管理；仅开发预览路由不进入 starter，生产静态路径为空。
 
-更新九语 README 和包 README 的可用能力/默认值，UPGRADING 的 0.14.0 手工迁移边界，ARCHITECTURE/VISUAL_SYSTEMS 的模块和生命周期对应关系，TEMPLATE_ACCEPTANCE 的新回归覆盖，以及 CHANGELOG/新版本账本。README 关系传播到全部翻译均已核对。写作指南无需增加穷举特效说明；AGENTS/工具入口、文档元数据、发布/分支政策、主题目录介绍及历史版本无相应契约变化，保留。没有为满足旧描述而修改运行行为。验证与交付结果将写入 [0.14.0](releases/0.14.0.md)，区分本轮执行和已有特效验收。
+更新九语 README 和包 README 的可用能力/默认值，UPGRADING 的 0.14.0 手工迁移边界，ARCHITECTURE/VISUAL_SYSTEMS 的模块和生命周期对应关系，TEMPLATE_ACCEPTANCE 的新回归覆盖，以及 CHANGELOG/新版本账本。README 关系传播到全部翻译均已核对。写作指南无需增加穷举特效说明；AGENTS/工具入口、文档元数据、发布/分支政策、主题目录介绍及历史版本无相应契约变化，保留。没有为满足旧描述而修改运行行为。文档元数据、链接和格式检查通过；本轮运行了完整主检查、90 项单元测试、67 项 Chromium 回归、独立安装的 14 场景构建矩阵、安全审计和公开模板验收。交付结果、注册表等待恢复、Windows 文件锁恢复及未验证的 Cloudflare 账户设置见 [0.14.0](releases/0.14.0.md)，区分本轮执行和已有特效验收。
 
 ## 2026-10-10 全量文档候选复核与近期行为沉淀
 
