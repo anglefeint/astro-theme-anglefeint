@@ -314,6 +314,8 @@ Follow the implementation column before editing a feature explanation. User-faci
 
 ## Optional music player
 
+The public demo enables eight unchanged user-supplied MP3 recordings in `public/music/` through `src/site.config.ts`. `public/music/CREDITS.txt` and `credits.html` record each creator, FMA source and license (six CC0 1.0, two CC BY 4.0); the demo social menu links to the HTML credits. These demo-only assets are outside the npm package and starter manifest. The neutral starter configuration continues to default to disabled music and an empty playlist.
+
 Code-to-document map: [config schema](../src/site.config.schema.ts), [defaults](../src/site.config.defaults.ts), [adapter template](../scripts/adapter-templates/src/config/theme.ts) and [normalizer](../packages/theme/src/utils/music.ts) define the README configuration example. [MusicDeck](../packages/theme/src/components/shared/MusicDeck.astro), [controller](../packages/theme/src/scripts/music/controller.js) and [stylesheet](../packages/theme/src/styles/music-deck.css) implement the Visual Systems music contract. [Core/storage unit checks](../tests/music.unit.test.mjs) and [installed-starter checks](../scripts/check-installed-starter.mjs) cover lazy audio, event races, validation/storage failure and package installation with music disabled/enabled.
 
 `ThemeFrame` conditionally mounts `MusicDeck` from normalized `THEME.MUSIC`. Configuration lives in `src/site.config.ts`; the adapter template calls package-owned `utils/music.ts` for validation. Missing settings default to disabled. Empty playlists are hidden. Public-path tracks are resolved against the Astro base URL; HTTPS sources remain unchanged.
