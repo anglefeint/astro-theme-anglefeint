@@ -15,6 +15,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import { chromium, expect } from '@playwright/test';
 import { checkReadmeLinks } from './check-readme-links.mjs';
+import { checkStarterGuidance } from './check-starter-guidance.mjs';
 import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
 import { auditDependencies } from './audit-dependencies.mjs';
 
@@ -244,6 +245,11 @@ try {
   await command(['install']);
   const managerVersion = (await command(['--version'])).trim();
   const pkg = JSON.parse(await read('package.json'));
+  await checkStarterGuidance(project);
+  results.push({
+    check: 'consumer AI entries, commands and local document references',
+    status: 'passed',
+  });
   const version = JSON.parse(
     await read('node_modules/@anglefeint/astro-theme/package.json')
   ).version;

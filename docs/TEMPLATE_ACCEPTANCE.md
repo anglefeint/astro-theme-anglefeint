@@ -33,6 +33,10 @@ Mathematics coverage combines unit tests for parsing/escaping/MDX/errors, nine-l
 
 The public-template check deliberately does not overlay local changes. Use it after starter delivery; use `check:installed` before delivery. Do not interpret a passing public-template run as verification of unpublished runtime changes.
 
+Both installed-starter and public-template acceptance run `scripts/check-starter-guidance.mjs` against the consumer files: shared AGENTS instructions, Claude's import, Cursor's always-applied rule, available command names, guide links and README metadata relationships. The remote check also records this result. These checks establish valid delivered entry files and executable workflows; they do not run authenticated sessions in the three AI products or guarantee a model's decisions.
+
+Entry formats follow the official [Codex AGENTS.md instructions](https://developers.openai.com/codex/guides/agents-md/), [Cursor rules](https://cursor.com/docs/rules) and [Claude Code project memory/imports](https://code.claude.com/docs/en/memory). Keep tool adapters thin and retain the shared consumer guide as the instruction source.
+
 [Reading-width regression](../tests/e2e/reading-width.spec.mjs) checks Home and a representative article in all nine built-in languages at 320/390/720/721/740/768/800/820/900/1440px with reduced motion. It allows at most 1px of rounding tolerance for page overflow and panel bounds, and asserts a 720px content width at 1440px. This is part of local main E2E, not the public-template matrix; exact test counts and execution results belong in the [release ledger](releases/README.md).
 
 Each public-template run gives the downloader a fresh `XDG_CACHE_HOME` inside its temporary directory. This prevents create-astro's archive downloader from silently substituting an older cached starter after a network failure. The normal public template command remains unchanged; failed downloads must be diagnosed and retried rather than accepted as current-template evidence.

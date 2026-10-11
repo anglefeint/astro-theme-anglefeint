@@ -4,23 +4,23 @@ title: '사용 가이드 1: 블로그 시작하기'
 subtitle: '설치부터 사이트 정보와 언어 설정, 예제 글 교체, 빌드와 배포까지 안내합니다.'
 description: '설치부터 사이트 정보와 언어 설정, 예제 글 교체, 빌드와 배포까지 안내합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
 ## 최소한의 설정부터 시작하세요
 
-이 가이드는 함께 제공되는 0.9.0 starter를 기준으로 사이트 시작, 글 작성, 선택 기능을 설명합니다. 처음부터 모든 설정을 알 필요는 없습니다. 사이트 정보와 콘텐츠를 바꾸고 나머지는 기본값으로 시작하세요. 이 가이드도 일반 블로그 글이므로 목차, 코드 복사, 검색을 직접 확인할 수 있습니다.
+이 가이드는 함께 제공되는 starter를 기준으로 사이트 시작, 글 작성, 선택 기능을 설명합니다. 처음부터 모든 설정을 알 필요는 없습니다. 사이트 정보와 콘텐츠를 바꾸고 나머지는 기본값으로 시작하세요. 이 가이드도 일반 블로그 글이므로 목차, 코드 복사, 검색을 직접 확인할 수 있습니다.
 
 ## 1. 설치하고 로컬에서 열기
 
 Node.js 22.12.0 이상을 준비하고 실행합니다.
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
-생성 마법사에서 `my-blog` 같은 프로젝트 디렉터리를 선택합니다. 아래 첫 줄을 실제로 생성한 디렉터리에 맞게 바꾸세요. 마법사에서 의존성을 설치했다면 `npm install`은 생략해도 됩니다.
+이 명령은 의존성을 설치하지 않고 `my-blog`를 만듭니다. 부모 디렉터리에서 실행하고 이름을 바꾸면 생성 명령과 cd를 함께 수정하세요. 다음으로 설치하고 시작합니다.
 
 ```bash
 cd my-blog
@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-터미널에 표시된 로컬 URL을 엽니다. 포트가 사용 중이면 번호가 달라질 수 있습니다. pnpm도 위 npm 명령으로 템플릿을 생성하되 마법사의 의존성 설치를 건너뛴 뒤 `pnpm install`, `pnpm dev`를 실행하면 됩니다.
+터미널에 표시된 URL을 여세요. 포트가 사용 중이면 달라질 수 있습니다. pnpm도 같은 생성 명령을 사용한 뒤 `pnpm install`과 `pnpm dev`를 실행하세요.
 
 ## 2. 사이트 이름, 홈 소개, 링크 바꾸기
 
@@ -41,7 +41,7 @@ export const THEME_CONFIG = defineThemeConfig({
     description: 'My notes and projects.',
     url: 'https://example.com',
     author: 'Your Name',
-    tagline: 'Built with Astro.',
+    tagline: '',
   },
   i18n: {
     defaultLocale: 'ko',
@@ -106,12 +106,11 @@ npm run new-post -- my-first-post
 개발할 때는 `npm run dev`를 사용합니다. 배포 전 프로젝트 디렉터리에서 실행하세요.
 
 ```bash
-npm run check
-npm run build
+npm run doctor
 npm run preview
 ```
 
-`check`는 설정과 어댑터, Astro 파일, 빌드된 About 설정을 검사합니다. `build`는 검색 인덱스와 기본 자동 공유 이미지를 포함한 정적 결과물을 `dist/`에 생성합니다. `preview`는 빌드 결과를 로컬에서 확인할 뿐 인터넷에 배포하지 않습니다. Ctrl+C로 종료합니다.
+`doctor`는 프로젝트 검사와 빌드를 수행하며 검색 인덱스와 기본 공유 이미지를 포함한 정적 결과물을 `dist/`에 만듭니다. 성공 후 check나 build를 추가로 실행할 필요가 없습니다. `preview`는 로컬 확인용이며 게시하지 않습니다. Ctrl+C로 종료하세요.
 
 정적 호스팅의 빌드 명령은 `npm run build`, 출력 디렉터리는 `dist`로 설정하고 먼저 `site.url`을 실제 도메인으로 바꾸세요. 저장소 연결, 도메인, 배포 방법은 [Astro 배포 가이드](https://docs.astro.build/en/guides/deploy/)의 플랫폼별 설명을 참고하세요. 배포 후 홈, 글, 언어 전환, 검색, `/<언어 코드>/rss.xml`을 확인합니다. 글이나 설정을 바꿨다면 다시 빌드하고 배포해야 합니다.
 

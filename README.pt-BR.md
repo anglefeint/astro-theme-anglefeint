@@ -26,6 +26,14 @@
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
+## Usar um assistente de IA
+
+Abra a pasta do projeto no Cursor, Codex ou Claude Code. O starter inclui um [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) compartilhado, uma entrada para Claude Code e uma regra do Cursor sempre aplicada. São instruções para seu blog; ferramentas de publicação do projeto original não são necessárias. Comece com “Leia AGENTS.md” se o assistente não carregou as instruções. Você pode acrescentar suas preferências.
+
+Exemplos: “Leia AGENTS.md, configure meu site e mantenha apenas pt-br; preserve meu conteúdo”. “Crie um artigo em português com slug my-first-post; eu fornecerei o texto”. “Adicione meus MP3 autorizados com título e artista”. Peça para executar doctor e revisar as páginas em preview. Você decide conteúdo, traduções, domínio e destino da publicação.
+
+Antes de publicar, substitua os marcadores do arquivo opcional `public/llms.txt` pelos dados do site e URLs reais dos idiomas, ou remova o arquivo. Ele descreve o site para leitores e rastreadores; as instruções do projeto ficam em AGENTS.md.
+
 <a id="setup"></a>
 
 Passagem Matrix opcional: `theme.effects.enableHomePassage` é `false` por padrão. Ao ativar, os links de posts na página inicial exibem uma passagem verde de 8 segundos antes da navegação. `Oracle` em About funciona separadamente: cada clique escolhe uma de quatro paletas sem repetir a anterior; outro clique ou Escape retorna à página. Com movimento reduzido, a navegação é direta e Oracle mostra uma prévia estática.

@@ -65,6 +65,14 @@ pnpm install
 pnpm dev
 ```
 
+## Usar un asistente de IA
+
+Abre la carpeta del proyecto en Cursor, Codex o Claude Code. El starter incluye un [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) compartido, una entrada para Claude Code y una regla de Cursor aplicada siempre. Son instrucciones para tu blog; no necesitas herramientas de publicación del proyecto original. Empieza con «Lee AGENTS.md» si el asistente no ha cargado las instrucciones. Puedes añadir tus preferencias.
+
+Ejemplos: «Lee AGENTS.md, configura mi sitio y deja solo español; conserva mi contenido». «Crea un artículo en español con slug my-first-post; yo proporcionaré el texto». «Añade mis MP3 autorizados con título y autor». Pide que ejecute doctor y revise las páginas en preview. Tú decides el contenido, las traducciones, el dominio y dónde publicar.
+
+Antes de publicar, sustituye los marcadores del archivo opcional `public/llms.txt` por tus datos y las URL reales de cada idioma, o elimínalo. Describe el sitio para lectores y rastreadores; las instrucciones del proyecto están en AGENTS.md.
+
 <a id="setup"></a>
 
 ## Primera configuración: identidad del sitio y URL de inicio

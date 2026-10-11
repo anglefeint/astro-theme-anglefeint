@@ -65,6 +65,14 @@ pnpm install
 pnpm dev
 ```
 
+## 使用 AI 助手
+
+在 Cursor、Codex 或 Claude Code 中打开项目文件夹。starter 附带统一的 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)、Claude Code 入口和自动应用的 Cursor 规则，说明如何管理自己的博客，无需使用上游发布工具。请求可以先写“阅读 AGENTS.md”，尤其当助手尚未加载项目指引时；你也可以按自己的偏好修改这份文件。
+
+例如：“阅读 AGENTS.md，设置我的站点信息，只保留中文，保留已有内容。”“新建 slug 为 my-first-post 的中文文章，正文由我提供。”“添加我有权使用的 MP3，填写歌名和作者。”让助手运行 doctor 并预览修改后的页面；正文、翻译、域名和部署目标仍由你决定。
+
+发布前，请把可选的 `public/llms.txt` 占位内容换成自己的站点信息和真实语言网址，或删除该文件。它面向网站读者和爬虫；工程操作指引放在 AGENTS.md。
+
 <a id="setup"></a>
 
 ## 首次配置：站点信息与首页地址

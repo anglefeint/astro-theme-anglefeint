@@ -4,23 +4,23 @@ title: '利用ガイド 1：ブログを立ち上げる'
 subtitle: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 description: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
 ## まずは最小限の設定から
 
-このガイドは対応する 0.9.0 starter を対象とし、サイトの準備、記事の執筆、任意機能の順で説明します。最初からすべての設定を理解する必要はありません。サイト情報と内容を自分のものに置き換え、ほかは既定値のままで始められます。このガイド自体も通常のブログ記事なので、目次やコードコピー、検索を試せます。
+このガイドは対応する starter を対象とし、サイトの準備、記事の執筆、任意機能の順で説明します。最初からすべての設定を理解する必要はありません。サイト情報と内容を自分のものに置き換え、ほかは既定値のままで始められます。このガイド自体も通常のブログ記事なので、目次やコードコピー、検索を試せます。
 
 ## 1. インストールしてローカルで開く
 
 Node.js 22.12.0 以降を用意して実行します。
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
-ウィザードで作成先を指定します。たとえば `my-blog` です。実際に作成したディレクトリに移動するよう、次の 1 行目を調整してください。依存関係をウィザードでインストール済みなら `npm install` は省略できます。
+このコマンドは依存関係をインストールせずに `my-blog` を作成します。親ディレクトリで実行し、名前を変える場合は作成コマンドと cd の両方を変更してください。次にインストールして起動します。
 
 ```bash
 cd my-blog
@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-ターミナルに表示されるローカル URL を開きます。ポートが使用中なら番号が変わる場合があります。pnpm を使う場合も作成には上の npm コマンドを使い、ウィザードの依存関係インストールをスキップしてから `pnpm install`、`pnpm dev` を実行できます。
+ターミナルに表示される URL を開きます。ポートは使用状況で変わることがあります。pnpm の場合も同じ作成コマンドを使い、その後は `pnpm install` と `pnpm dev` を実行します。
 
 ## 2. サイト名・トップページの紹介・リンクを変更する
 
@@ -41,7 +41,7 @@ export const THEME_CONFIG = defineThemeConfig({
     description: 'My notes and projects.',
     url: 'https://example.com',
     author: 'Your Name',
-    tagline: 'Built with Astro.',
+    tagline: '',
   },
   i18n: {
     defaultLocale: 'ja',
@@ -106,12 +106,11 @@ npm run new-post -- my-first-post
 開発中は `npm run dev` を使います。公開前にプロジェクトディレクトリで次を実行します。
 
 ```bash
-npm run check
-npm run build
+npm run doctor
 npm run preview
 ```
 
-`check` は設定・アダプター、Astro ファイル、ビルド後の About 設定を検査します。`build` は検索インデックスと既定の自動共有画像を含む静的ファイルを `dist/` に出力します。`preview` はその成果物をローカルで確認するもので、インターネットへ公開するコマンドではありません。終了は Ctrl+C です。
+`doctor` はプロジェクトを検査してビルドし、検索索引と既定の共有画像を含む静的出力を `dist/` に生成します。成功後に check や build を追加実行する必要はありません。`preview` はローカル確認用で、公開はしません。Ctrl+C で停止します。
 
 静的ホスティングのビルドコマンドを `npm run build`、出力ディレクトリを `dist` に設定し、先に `site.url` を実際のドメインに変更します。リポジトリ接続やドメイン、公開手順は [Astro のデプロイガイド](https://docs.astro.build/en/guides/deploy/) の各サービスの説明を参照してください。公開後はトップページ、記事、言語切り替え、検索、`/<言語コード>/rss.xml` を確認します。記事や設定の変更後は再ビルドと再デプロイが必要です。
 

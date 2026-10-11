@@ -180,6 +180,8 @@ This repository uses one neutral entry plus thin tool adapters:
 
 Do not maintain separate, conflicting workflow copies in those adapter files.
 
+Consumer projects receive separate user-oriented `AGENTS.md`, `CLAUDE.md` and `.cursor/rules/00-repo.mdc` sources from `scripts/starter-templates/` through the starter manifest's source overrides. Do not distribute this checkout's maintainer entries to personal blogs. Consumer README metadata also uses template sources whose document relationships resolve inside the delivered project. Independent installed and remote-template acceptance run `checkStarterGuidance` to verify those entries, commands and links; this is structural acceptance, not a live test of Cursor, Codex or Claude Code sessions.
+
 ## Prohibitions
 
 - Do not fix runtime bugs directly on `starter`.

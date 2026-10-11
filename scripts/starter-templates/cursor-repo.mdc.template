@@ -1,0 +1,12 @@
+---
+doc_id: starter_cursor_entry
+doc_role: adapter-entry
+doc_purpose: Cursor entry for the personal blog instructions.
+doc_scope: [agent-guidance]
+update_triggers: [workflow-change]
+depends_on: [AGENTS.md]
+description: Follow the shared instructions for this Anglefeint personal blog.
+alwaysApply: true
+---
+
+Read the project-root `AGENTS.md` before working on this blog. It describes configuration, content, generated adapters and validation. Follow the owner's requests; keep shared project guidance in `AGENTS.md`.
