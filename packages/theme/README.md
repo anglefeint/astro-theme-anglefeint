@@ -25,6 +25,10 @@ npm pkg set scripts.new-post="anglefeint-new-post"
 npm pkg set scripts.new-page="anglefeint-new-page"
 ```
 
+## Homepage and Oracle (0.14.0)
+
+The homepage adds sequential terminal text, four shuffled white-rabbit decoders and a local cracked/liquid mirror that repairs on click until refresh. Optional `theme.effects.enableHomePassage` defaults to `false`; enabling it adds an 8-second green passage to homepage post links. The matching starter maps this field to `THEME.EFFECTS.ENABLE_HOME_PASSAGE`. About adds an independent `Oracle` button with four click-selected palettes, no immediate palette repetition, and click/Escape dismissal. Reduced motion uses native home navigation and a static Oracle preview. Migration of starter schema/defaults/adapters and the About route is required for the complete feature; see [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). The existing optional music player selects its presentation by page atmosphere; audio configuration and playback controls are unchanged.
+
 ## Usage in Starter/Site
 
 Optional music (0.7.0) requires the matching starter schema/defaults and theme adapter. It is disabled by default and ships no songs. Configure `theme.music` in `src/site.config.ts` with `enabled: true` and `tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }]`; place the file in `public/music/` or use an HTTPS audio URL. First visits load audio after Play; version 0.8.1 attempts to resume active tab sessions after navigation, with a click required when the browser blocks playback. See the repository README and upgrade guide before updating an older starter.

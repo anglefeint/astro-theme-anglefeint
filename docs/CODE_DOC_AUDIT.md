@@ -12,6 +12,14 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-11 Matrix、Oracle 与播放器场景文档同步
+
+以 main `dc78b98` 为已复核基线，读取该提交后的全部工作区变更（含新增文件），将路径交给 `suggest:docs`；报告保存在 `acceptance-results/release-0140-doc-suggestions.log`。直接候选包含九语 README、包 README、架构/视觉参考、升级、验收、发布、工作流和历史版本；无额外传播项，因为关系目标已在直接候选中。
+
+沿 schema/defaults/site config → theme adapter → HomePage/MatrixShell、About route → 独立脚本/样式核对：首页穿越默认关闭且固定绿色；Oracle 独立可用，在点击时选配色并避免连续重复，点击/Escape 关闭；时长与键盘/减少动态效果边界以 player/timeline 和调用者为准。沿 ThemeFrame → music-scenes → MusicDeck → effects host 核对播放器场景仅影响视觉，不改变播放配置。新增包文件由既有包分发范围覆盖；修改的 starter 配置、About 路由和类型模板已由 manifest 管理；仅开发预览路由不进入 starter，生产静态路径为空。
+
+更新九语 README 和包 README 的可用能力/默认值，UPGRADING 的 0.14.0 手工迁移边界，ARCHITECTURE/VISUAL_SYSTEMS 的模块和生命周期对应关系，TEMPLATE_ACCEPTANCE 的新回归覆盖，以及 CHANGELOG/新版本账本。README 关系传播到全部翻译均已核对。写作指南无需增加穷举特效说明；AGENTS/工具入口、文档元数据、发布/分支政策、主题目录介绍及历史版本无相应契约变化，保留。没有为满足旧描述而修改运行行为。验证与交付结果将写入 [0.14.0](releases/0.14.0.md)，区分本轮执行和已有特效验收。
+
 ## 2026-10-10 全量文档候选复核与近期行为沉淀
 
 起点为干净的 main `373ac4c6802d1892c8cca82b2b89ae7a414dc6f7`。检查提交历史，并将 `0cfc07c..373ac4c` 的实际变更路径显式交给 `suggest:docs`，覆盖依赖升级、数学支持和发布收尾；另核对近期讨论涉及的统计、静态部署和主题介绍。候选报告保存于本地 `acceptance-results/docs-1010-suggestions.log`。本次按实现修正文档，没有修改运行代码来满足旧说明。

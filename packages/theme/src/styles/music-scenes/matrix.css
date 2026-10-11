@@ -1,0 +1,63 @@
+/* Home / Matrix: independent home-player presentation and future effects. */
+.music-deck:where([data-scene='matrix']) {
+  --music-accent-alt: var(--chrome-link-hover, #7ba6ff);
+  transition: box-shadow 500ms ease;
+}
+
+.music-matrix-surface {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.music-matrix-reflection {
+  position: absolute;
+  width: 220px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgba(150, 255, 185, 0.09),
+    rgba(40, 255, 110, 0.04) 40%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition:
+    opacity 500ms ease,
+    transform 180ms ease-out;
+}
+
+.music-deck[data-matrix-hover='true'] .music-matrix-reflection {
+  opacity: 1;
+}
+
+.music-matrix-ripple {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  opacity: 0;
+  background: radial-gradient(
+    circle,
+    transparent 42%,
+    rgba(70, 255, 130, 0.05) 53%,
+    rgba(170, 255, 200, 0.24) 58%,
+    rgba(70, 255, 130, 0.1) 62%,
+    transparent 72%
+  );
+}
+
+.music-deck[data-scene='matrix'][data-matrix-playing='true'] {
+  box-shadow:
+    0 0 0 1px rgba(110, 255, 155, 0.09) inset,
+    0 0 30px rgba(70, 255, 130, 0.16),
+    0 1.3rem 2.8rem rgba(0, 0, 0, 0.42);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-matrix-surface {
+    display: none;
+  }
+}

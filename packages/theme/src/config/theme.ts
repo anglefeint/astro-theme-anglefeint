@@ -33,6 +33,7 @@ export const THEME = {
   /** Optional visual effects switches */
   EFFECTS: {
     ENABLE_RED_QUEEN: true,
+    ENABLE_HOME_PASSAGE: false,
   },
   /** Optional comments integration (Giscus) */
   COMMENTS: {

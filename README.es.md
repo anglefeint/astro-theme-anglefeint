@@ -28,6 +28,8 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+Pasaje Matrix opcional: `theme.effects.enableHomePassage` vale `false` por defecto. Al activarlo, los enlaces a entradas de inicio muestran un pasaje verde de 8 segundos antes de navegar. `Oracle` en About funciona por separado: cada clic elige una de cuatro paletas sin repetir la anterior; otro clic o Escape vuelve a la página. Con movimiento reducido, la navegación es directa y Oracle muestra una vista estática.
+
 ## Requisitos
 
 - Node.js `22.12.0+` (LTS recomendado)

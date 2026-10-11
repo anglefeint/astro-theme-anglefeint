@@ -28,6 +28,8 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+Optional Matrix passage: `theme.effects.enableHomePassage` defaults to `false`. When enabled, homepage post links use an 8-second green passage before navigation. About’s `Oracle` button works independently: each click selects one of four scene palettes without repeating the previous palette; click again or press Escape to return. Reduced motion keeps native home navigation and a static Oracle preview.
+
 ## Requirements
 
 - Node.js `22.12.0+` (LTS recommended)
@@ -253,6 +255,7 @@ For Astro major-version migrations, follow the official Astro guide first:
    - `i18n.locales.<code>.about` for localized About content/runtime text
    - `social.links` for header/footer links
    - `theme.enableAboutPage` for About route/nav toggle
+   - `theme.effects.enableHomePassage` to enable/disable the 8-second homepage click passage (disabled by default; About’s Oracle button offers the scene independently)
    - `theme.effects.enableRedQueen` to enable/disable the post-side monitor effect
    - `theme.comments` to enable and configure Giscus (core IDs + behavior options)
 3. Replace starter posts in `src/content/blog/<locale>/`.

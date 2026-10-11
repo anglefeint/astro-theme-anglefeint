@@ -1,12 +1,4 @@
-@font-face {
-  font-family: 'Matrix Code NFI';
-  src:
-    url('/fonts/ff2a407fe06752facf8828a86955e988.woff2') format('woff2'),
-    url('/fonts/ff2a407fe06752facf8828a86955e988.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@import './matrix-font.css';
 
 body.page-home {
   --matrix-green: rgba(96, 255, 128, 0.92);
@@ -76,6 +68,102 @@ body.page-home main {
   backdrop-filter: blur(2px);
 }
 
+body.page-home main > :not(.home-mirror-surface) {
+  position: relative;
+  z-index: 1;
+}
+
+.home-mirror-surface {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(260px, 36%);
+  height: 225px;
+  border: 0;
+  border-top-right-radius: inherit;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.home-mirror-surface:focus-visible {
+  outline: 1px solid var(--matrix-green);
+  outline-offset: -3px;
+}
+
+.home-mirror {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: inherit;
+  pointer-events: none;
+  mask-image: linear-gradient(225deg, #000 12%, rgba(0, 0, 0, 0.9) 38%, transparent 76%);
+}
+
+@media (max-width: 720px) {
+  .home-mirror-surface {
+    width: 32%;
+    height: 150px;
+    opacity: 0.8;
+  }
+}
+
+@property --home-signal-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+body.page-home main::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 2px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--home-signal-angle),
+    transparent 0deg 310deg,
+    rgba(60, 255, 120, 0.15) 325deg,
+    rgba(100, 255, 155, 0.85) 350deg,
+    rgba(210, 255, 225, 0.95) 357deg,
+    transparent 360deg
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: home-border-signal 6s linear infinite;
+}
+
+@keyframes home-border-signal {
+  0% {
+    --home-signal-angle: 0deg;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 1;
+  }
+  50% {
+    --home-signal-angle: 360deg;
+    opacity: 0;
+  }
+  100% {
+    --home-signal-angle: 360deg;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.page-home main::before {
+    display: none;
+    animation: none;
+  }
+}
+
 body.page-home h1 {
   color: var(--matrix-green);
   letter-spacing: 0.04em;
@@ -85,16 +173,162 @@ body.page-home h1 {
   font-size: clamp(2rem, 5vw, 3rem);
 }
 
-body.page-home h1::before {
-  content: 'INITIALIZE';
-  display: block;
+.home-terminal-intro {
+  display: grid;
   margin-bottom: 0.65rem;
-  font-size: 0.34em;
+  font-size: clamp(0.68rem, 1.7vw, 1.02rem);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   color: var(--matrix-green-soft);
   letter-spacing: 0.2em;
 }
-
+.home-terminal-line {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 1.45em;
+}
+.home-terminal-line:first-child {
+  animation: home-terminal-fade 1s ease 7.6s forwards;
+}
+.home-terminal-line:last-child {
+  visibility: hidden;
+  animation: home-terminal-show 0s 8.6s forwards;
+}
+.home-terminal-line > span {
+  position: relative;
+  display: inline-block;
+  text-shadow: 0 0 10px rgba(96, 255, 128, 0.3);
+}
+.home-terminal-system {
+  --cursor-blinks: 7;
+  --terminal-chars: 13;
+  --terminal-duration: 1.5s;
+  --terminal-delay: 0.25s;
+  --cursor-delay: 0s;
+  --cursor-duration: 4.25s;
+}
+.home-terminal-done {
+  --cursor-blinks: 4;
+  --terminal-chars: 6;
+  --terminal-duration: 0.85s;
+  --terminal-delay: 5.25s;
+  --cursor-delay: 5.25s;
+  --cursor-duration: 2.35s;
+}
+.home-terminal-wake {
+  --cursor-blinks: 4;
+  --terminal-chars: 10;
+  --terminal-duration: 0.8s;
+  --terminal-delay: 8.6s;
+  --cursor-delay: 8.6s;
+  --cursor-duration: 2.65s;
+}
+.home-terminal-follow {
+  --cursor-blinks: 6;
+  --terminal-chars: 27;
+  --terminal-duration: 1.35s;
+  --terminal-delay: 13.25s;
+  --cursor-delay: 13.25s;
+  --cursor-duration: 3.55s;
+}
+.home-terminal-line > span > span {
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: pre;
+  width: calc(var(--terminal-chars) * (1ch + 0.2em));
+  animation: home-terminal-type var(--terminal-duration) steps(var(--terminal-chars), end)
+    var(--terminal-delay) backwards;
+}
+.home-terminal-line > span::after {
+  content: '';
+  position: absolute;
+  right: -0.6em;
+  top: 0.12em;
+  width: 0.45em;
+  height: 0.9em;
+  background: var(--matrix-green);
+  pointer-events: none;
+  visibility: hidden;
+  animation:
+    home-terminal-cursor 0.7s step-end var(--cursor-blinks) var(--cursor-delay) forwards,
+    home-terminal-cursor-window var(--cursor-duration) step-end var(--cursor-delay) forwards;
+}
+.home-terminal-line > .home-terminal-done > span {
+  animation:
+    home-terminal-done-type 0.85s steps(5, end) 5.25s backwards,
+    home-terminal-hold 5.25s step-end backwards;
+}
+@keyframes home-terminal-done-type {
+  from {
+    width: calc(1ch + 0.2em);
+  }
+  to {
+    width: calc(6ch + 1.2em);
+  }
+}
+@keyframes home-terminal-hold {
+  from {
+    width: 0;
+  }
+  to {
+    width: 0;
+  }
+}
+@keyframes home-terminal-type {
+  from {
+    width: 0;
+  }
+  to {
+    width: calc(var(--terminal-chars) * (1ch + 0.2em));
+  }
+}
+@keyframes home-terminal-fade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes home-terminal-show {
+  to {
+    visibility: visible;
+  }
+}
+@keyframes home-terminal-cursor-window {
+  0% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
+@keyframes home-terminal-cursor {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-terminal-line:first-child {
+    display: none;
+    animation: none;
+  }
+  .home-terminal-line:last-child {
+    visibility: visible;
+    animation: none;
+  }
+  .home-terminal-line > span > span,
+  .home-terminal-line > .home-terminal-done > span {
+    animation: none;
+  }
+  .home-terminal-line > span::after {
+    display: none;
+  }
+}
 body.page-home p,
 body.page-home li {
   color: rgba(220, 255, 228, 0.88);
@@ -168,6 +402,115 @@ body.page-home code {
   border-bottom: none;
 }
 
+body.page-home .home-post-list .home-post-record {
+  padding: 0.55rem 0 0.55rem 1.1rem;
+  transition: background-color 180ms ease;
+}
+
+body.page-home .home-post-record:is(:hover, :focus-within) {
+  background-color: rgba(96, 255, 128, 0.045);
+}
+
+.home-white-rabbit {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  --rabbit-width: 22px;
+  --rabbit-height: 28px;
+  --rabbit-gap: 0.25rem;
+  color: rgba(205, 255, 219, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.home-white-rabbit svg {
+  position: absolute;
+  left: var(--rabbit-gap);
+  bottom: -0.2rem;
+  display: block;
+  width: var(--rabbit-width);
+  height: var(--rabbit-height);
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+:is(.home-post-record, .home-archive-command):focus-within .home-white-rabbit {
+  opacity: 1;
+}
+:is(.home-post-record, .home-archive-command):focus-within .home-white-rabbit svg {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  :is(.home-post-record, .home-archive-command):hover .home-white-rabbit {
+    opacity: 1;
+  }
+  :is(.home-post-record, .home-archive-command):hover .home-white-rabbit svg {
+    opacity: 1;
+  }
+}
+.home-rabbit-particles {
+  position: absolute;
+  left: var(--rabbit-gap);
+  bottom: -0.2rem;
+  width: var(--rabbit-width);
+  height: var(--rabbit-height);
+  opacity: 0;
+  pointer-events: none;
+}
+[data-decode][data-decoding='true'] .home-rabbit-particles {
+  opacity: 1;
+}
+[data-decode][data-decoding='true'] .home-white-rabbit svg {
+  opacity: 0;
+}
+@media (max-width: 720px) {
+  .home-white-rabbit {
+    --rabbit-width: 13px;
+    --rabbit-height: 19px;
+    --rabbit-gap: 0.1rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-rabbit-particles {
+    display: none;
+  }
+  :is(.home-post-record, .home-archive-command):is(:hover, :focus-within) .home-white-rabbit svg {
+    opacity: 1;
+  }
+}
+body.page-home .home-archive-command {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.home-archive-command::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--matrix-green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms ease;
+  pointer-events: none;
+}
+
+.home-archive-command:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.page-home .home-post-record,
+  .home-archive-command::after {
+    transition: none;
+  }
+}
 .home-post-title {
   font-weight: 700;
 }

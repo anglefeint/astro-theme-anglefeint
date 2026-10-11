@@ -1,1 +1,13 @@
 /* About responsive layer: viewport-specific overrides. */
+@media (max-width: 900px) {
+  /* Other folders retain their existing mobile visibility; Oracle stays reachable. */
+  .hacker-sidebar:has([data-oracle]) {
+    display: flex;
+    top: auto;
+    bottom: 5rem;
+    right: 1rem;
+  }
+  .hacker-sidebar > :not([data-oracle]) {
+    display: none;
+  }
+}
