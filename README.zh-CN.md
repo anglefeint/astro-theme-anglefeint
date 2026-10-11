@@ -42,7 +42,7 @@
 在准备存放博客的父目录执行一次。命令会创建 `my-blog`，跳过依赖安装；完成其余向导提示后继续下面的步骤。请使用新目录；如果修改目录名，也要修改后面的 `cd` 命令。
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 ## 快速开始

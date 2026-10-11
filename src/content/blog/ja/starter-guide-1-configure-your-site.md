@@ -17,7 +17,7 @@ heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 Node.js 22.12.0 以降を用意して実行します。
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 このコマンドは依存関係をインストールせずに `my-blog` を作成します。親ディレクトリで実行し、名前を変える場合は作成コマンドと cd の両方を変更してください。次にインストールして起動します。

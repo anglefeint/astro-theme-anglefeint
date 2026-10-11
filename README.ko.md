@@ -42,7 +42,7 @@
 블로그를 둘 상위 디렉터리에서 한 번 실행하세요. `my-blog`를 만들고 의존성 설치는 건너뜁니다. 나머지 안내에 답한 뒤 아래로 진행하세요. 새 디렉터리를 사용하고 이름을 바꾸면 `cd`도 바꾸세요.
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 ## 빠른 시작

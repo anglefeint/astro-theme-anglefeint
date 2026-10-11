@@ -17,7 +17,7 @@ This series covers the accompanying starter: setup, writing, and optional featur
 Use Node.js 22.12.0 or newer and run:
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 The command creates `my-blog` without installing dependencies. Run it from the parent directory; if you choose another name, update the creation command and `cd` together. Then install and start:

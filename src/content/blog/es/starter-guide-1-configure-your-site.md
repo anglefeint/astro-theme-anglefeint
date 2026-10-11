@@ -17,7 +17,7 @@ Esta serie corresponde al starter actual y explica la puesta en marcha, la escri
 Con Node.js 22.12.0 o posterior, ejecuta:
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 El comando crea `my-blog` sin instalar dependencias. Ejecútalo desde el directorio padre; si cambias el nombre, actualiza tanto el comando como cd. Después instala e inicia:

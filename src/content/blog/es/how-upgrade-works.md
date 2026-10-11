@@ -19,7 +19,7 @@ Un problema típico en temas es que iniciar es fácil pero actualizar es costoso
 Inicialización:
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter --no-ai
 ```
 
 Actualizaciones compatibles solo del paquete:

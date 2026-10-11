@@ -17,7 +17,7 @@ heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 准备 Node.js 22.12.0 或更新版本，在终端运行：
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 该命令在当前目录下创建 `my-blog`，不安装依赖。请在项目的父目录运行；若换名字，同时修改创建命令和 cd，然后安装并启动：

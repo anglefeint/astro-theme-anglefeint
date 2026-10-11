@@ -15,7 +15,7 @@ heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 Используйте Node.js 22.12.0 или новее. Запустите команду в родительском каталоге: она создаёт my-blog без установки зависимостей. Затем установите зависимости и запустите сайт. При смене имени измените команду создания и cd вместе.
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 cd my-blog
 npm install
 npm run dev
