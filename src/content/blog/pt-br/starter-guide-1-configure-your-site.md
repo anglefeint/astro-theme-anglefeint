@@ -15,7 +15,7 @@ heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 Use Node.js 22.12.0 ou superior. Execute no diretório pai: o comando cria my-blog sem instalar dependências. Depois instale e inicie. Se mudar o nome, ajuste o comando de criação e cd juntos.
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 cd my-blog
 npm install
 npm run dev

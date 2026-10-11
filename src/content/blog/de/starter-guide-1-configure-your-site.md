@@ -15,7 +15,7 @@ heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 Verwende Node.js ab 22.12.0. Wähle im Assistenten beispielsweise my-blog und passe cd an den tatsächlichen Ordner an. Überspringe npm install, wenn die Abhängigkeiten bereits installiert wurden.
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 cd my-blog
 npm install
 npm run dev
