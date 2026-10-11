@@ -42,7 +42,7 @@
 ブログを置く親ディレクトリで一度実行します。`my-blog` を作成し、依存関係のインストールをスキップします。残りの質問に答えたら次へ進んでください。新しいディレクトリを使い、名前を変えた場合は `cd` も変更します。
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 ## クイックスタート

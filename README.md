@@ -42,7 +42,7 @@ Optional Matrix passage: `theme.effects.enableHomePassage` defaults to `false`. 
 Run this once from the parent directory where you want your blog. It creates `my-blog` and skips dependency installation; follow any remaining prompts, then continue below. Use a new directory; if you rename it, change the `cd` command too.
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 ## Quick Start
