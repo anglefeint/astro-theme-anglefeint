@@ -6,22 +6,22 @@ title: 'Руководство 1: Настройка блога'
 subtitle: 'Установка, данные сайта, языки и публикация.'
 description: 'Установка, данные сайта, языки и публикация.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-10-11'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
 ## Установка и локальный запуск
 
-Нужен Node.js 22.12.0 или новее. В мастере выберите папку, например my-blog, и укажите её в cd. Пропустите npm install, если зависимости уже установлены.
+Используйте Node.js 22.12.0 или новее. Запустите команду в родительском каталоге: она создаёт my-blog без установки зависимостей. Затем установите зависимости и запустите сайт. При смене имени измените команду создания и cd вместе.
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 cd my-blog
 npm install
 npm run dev
 ```
 
-Откройте адрес из терминала. Для pnpm используйте ту же команду создания, пропустите установку в мастере, затем выполните pnpm install и pnpm dev.
+Откройте адрес из терминала. Для pnpm используйте ту же команду создания, затем pnpm install и pnpm dev вместо команд npm для установки и запуска.
 
 ## Данные сайта и главная страница
 

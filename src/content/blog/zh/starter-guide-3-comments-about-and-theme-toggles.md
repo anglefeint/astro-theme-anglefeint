@@ -4,13 +4,13 @@ title: '使用指南 3：按需开启与定制功能'
 subtitle: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 description: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-21'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 ## 先看默认状态，再决定改什么
 
-本文适用于配套的 0.8.3 starter；所有 TypeScript 片段都合并到 `src/site.config.ts` 的 `defineThemeConfig({...})` 对象中。只配置你需要改变的项目。
+本文适用于配套的 starter；所有 TypeScript 片段都合并到 `src/site.config.ts` 的 `defineThemeConfig({...})` 对象中。只配置你需要改变的项目。
 
 | 功能                             | 默认状态           |
 | -------------------------------- | ------------------ |
@@ -182,7 +182,7 @@ theme: {
 
 已有 `theme.comments` 等设置也保留在同一个对象里。不要用示例整体覆盖自己的配置；数组会整体替换，因此增加歌曲或社交链接时保留原来的条目。
 
-修改后先在开发页面检查对应功能，再运行 `npm run check` 和 `npm run build`。搜索用构建后的 `npm run preview` 验证。只有需要诊断工程或升级问题时再运行 `npm run doctor`；它包含更完整的检查。上线必须重新部署构建产物。
+修改后先在开发页面检查对应功能，再运行 `npm run doctor` 和 `npm run preview`。doctor 已包含检查与构建，成功后无需重复运行 check 和 build；搜索用构建后的预览验证。上线必须重新部署构建产物。
 
 ## 8. 显示或隐藏页脚署名
 

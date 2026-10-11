@@ -4,13 +4,13 @@ title: 'Guía 3: Activa y personaliza funciones opcionales'
 subtitle: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 description: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-21'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 ## Consulta los valores predeterminados antes de cambiar
 
-Esta guía corresponde al starter 0.8.3. Integra todos los fragmentos TypeScript en el objeto `defineThemeConfig({...})` de `src/site.config.ts`. Configura solo aquello que quieras cambiar.
+Esta guía corresponde al starter actual. Integra todos los fragmentos TypeScript en el objeto `defineThemeConfig({...})` de `src/site.config.ts`. Configura solo aquello que quieras cambiar.
 
 | Función                                                          | Estado predeterminado          |
 | ---------------------------------------------------------------- | ------------------------------ |
@@ -182,7 +182,7 @@ theme: {
 
 Conserva ajustes existentes como `theme.comments` en ese mismo objeto. No sobrescribas toda tu configuración con un ejemplo. Las matrices se reemplazan enteras, así que conserva las canciones o enlaces anteriores al añadir entradas.
 
-Comprueba la función en desarrollo y ejecuta `npm run check` y `npm run build`. Verifica la búsqueda con `npm run preview` tras compilar. Usa `npm run doctor` para diagnosticar problemas del proyecto o de actualización; incluye comprobaciones más amplias. Para publicar los cambios debes desplegar el nuevo resultado.
+Comprueba la función en desarrollo y ejecuta `npm run doctor` y `npm run preview`. Doctor incluye comprobaciones y compilación; no repitas check y build si termina correctamente. Verifica la búsqueda en la vista previa compilada y despliega el nuevo resultado para publicar.
 
 ## 8. Mostrar u ocultar los créditos del pie de página
 

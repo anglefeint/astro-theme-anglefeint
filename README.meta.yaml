@@ -15,8 +15,7 @@ update_triggers:
   - i18n-change
 source_of_truth: true
 depends_on:
-  - docs/ARCHITECTURE.md
-  - docs/VISUAL_SYSTEMS.md
+  - AGENTS.md
 sync_targets:
   - README.pt-BR.md
   - README.de.md

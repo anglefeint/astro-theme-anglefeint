@@ -4,23 +4,23 @@ title: '使用指南 1：搭建你的博客'
 subtitle: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 description: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
 ## 先做最少的配置
 
-这套教程面向配套的 0.9.0 starter。三篇分别讲建站、写作和可选功能。你不需要先读懂所有配置：先把站点身份和内容换成自己的，其他功能保留默认即可。教程本身就是普通博客文章，能直接体验目录、代码复制和搜索。
+这套教程面向配套的 starter。三篇分别讲建站、写作和可选功能。你不需要先读懂所有配置：先把站点身份和内容换成自己的，其他功能保留默认即可。教程本身就是普通博客文章，能直接体验目录、代码复制和搜索。
 
 ## 1. 安装并在本地打开
 
 准备 Node.js 22.12.0 或更新版本，在终端运行：
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
-创建向导里选择项目目录，例如 `my-blog`。进入实际生成的目录；以下第一行要与你选择的目录一致。如果向导已安装依赖，可以略过 `npm install`。
+该命令在当前目录下创建 `my-blog`，不安装依赖。请在项目的父目录运行；若换名字，同时修改创建命令和 cd，然后安装并启动：
 
 ```bash
 cd my-blog
@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-打开终端显示的本地网址；端口被占用时可能变化。使用 pnpm 时，创建模板仍可使用上面的 npm 命令，跳过向导的依赖安装，再运行 `pnpm install`、`pnpm dev`。
+打开终端显示的本地网址；端口被占用时可能变化。使用 pnpm 时保持同一创建命令，再用 `pnpm install` 和 `pnpm dev` 替代 npm 的安装与启动命令。
 
 ## 2. 修改站点名称、首页介绍和链接
 
@@ -41,7 +41,7 @@ export const THEME_CONFIG = defineThemeConfig({
     description: 'My notes and projects.',
     url: 'https://example.com',
     author: 'Your Name',
-    tagline: 'Built with Astro.',
+    tagline: '',
   },
   i18n: {
     defaultLocale: 'zh',
@@ -106,12 +106,11 @@ npm run new-post -- my-first-post
 开发时用 `npm run dev`；正式发布前在项目目录运行：
 
 ```bash
-npm run check
-npm run build
+npm run doctor
 npm run preview
 ```
 
-`check` 检查配置/适配层、Astro 文件及构建中的 About 配置；`build` 生成静态输出 `dist/`，包含搜索索引和默认自动生成的分享图；`preview` 在本地检查构建产物，并不会把网站发布到互联网。预览结束可用 Ctrl+C 停止。
+`doctor` 检查工程并完成构建，静态产物位于 `dist/`，默认包括搜索索引和自动分享图。成功后无需再运行 check 或 build。`preview` 在本机预览这些产物，不会发布网站；按 Ctrl+C 停止。
 
 在静态托管平台配置构建命令 `npm run build`、输出目录 `dist`，并先把 `site.url` 改成实际域名。具体平台的连接仓库、域名和发布步骤参考 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/)。部署后检查首页、文章、语言切换、搜索和 `/<语言代码>/rss.xml`。修改文章或配置后，需要重新构建并部署。
 

@@ -6,7 +6,7 @@ title: 'Anleitung 1: Deinen Blog einrichten'
 subtitle: 'Installation, Website-Daten, Sprachen und Veröffentlichung.'
 description: 'Installation, Website-Daten, Sprachen und Veröffentlichung.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-10-11'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -15,13 +15,13 @@ heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 Verwende Node.js ab 22.12.0. Wähle im Assistenten beispielsweise my-blog und passe cd an den tatsächlichen Ordner an. Überspringe npm install, wenn die Abhängigkeiten bereits installiert wurden.
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 cd my-blog
 npm install
 npm run dev
 ```
 
-Öffne die im Terminal angezeigte Adresse. Für pnpm verwende denselben npm-Erstellungsbefehl, überspringe die Installation im Assistenten und führe pnpm install sowie pnpm dev aus.
+Öffne die im Terminal angezeigte Adresse. Für pnpm verwende denselben Erstellungsbefehl und danach pnpm install und pnpm dev statt der npm-Befehle zur Installation und zum Start.
 
 ## Identität und Startadresse
 
