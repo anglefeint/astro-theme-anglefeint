@@ -28,6 +28,8 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 <a id="setup"></a>
 
+Optionaler Matrix-Übergang: `theme.effects.enableHomePassage` ist standardmäßig `false`. Aktiviert zeigen Beitragslinks auf der Startseite vor der Navigation einen grünen Übergang von 8 Sekunden. `Oracle` auf About funktioniert unabhängig: Jeder Klick wählt eine von vier Paletten ohne direkte Wiederholung; ein weiterer Klick oder Escape kehrt zurück. Bei reduzierter Bewegung erfolgt die Navigation direkt und Oracle zeigt eine statische Vorschau.
+
 ## Social-Links
 
 Konfiguriere `social.links` in `src/site.config.ts`. Kopf- und Fußbereich übernehmen die Reihenfolge des Arrays. Füge nur benötigte Links hinzu:

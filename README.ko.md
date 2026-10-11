@@ -28,6 +28,8 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+선택적 Matrix 전환: `theme.effects.enableHomePassage` 기본값은 `false`입니다. 켜면 홈의 글 링크에서 8초 녹색 전환 후 이동합니다. About의 `Oracle` 버튼은 독립적으로 작동하며 클릭할 때 네 가지 색상 중 직전과 다른 색상을 선택합니다. 다시 클릭하거나 Escape를 누르면 돌아갑니다. 동작 줄이기 설정에서는 홈 링크가 바로 이동하고 Oracle은 정적 미리보기를 표시합니다.
+
 ## 요구 사항
 
 - Node.js `22.12.0+` (LTS 권장)

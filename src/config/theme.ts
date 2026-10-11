@@ -61,6 +61,7 @@ export const THEME = {
   /** Optional visual effects switches */
   EFFECTS: {
     ENABLE_RED_QUEEN: THEME_CONFIG.theme.effects.enableRedQueen,
+    ENABLE_HOME_PASSAGE: THEME_CONFIG.theme.effects.enableHomePassage,
   },
   /** Optional comments integration (Giscus) */
   COMMENTS: {

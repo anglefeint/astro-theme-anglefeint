@@ -135,6 +135,7 @@ const defaultThemeConfig: ThemeConfig = {
     },
     effects: {
       enableRedQueen: true,
+      enableHomePassage: false,
     },
     comments: {
       enabled: false,
