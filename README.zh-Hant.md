@@ -28,6 +28,8 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 <a id="setup"></a>
 
+可選 Matrix 穿越：`theme.effects.enableHomePassage` 預設為 `false`。啟用後，首頁文章連結播放 8 秒綠色穿越再導覽。About 的 `Oracle` 按鈕獨立可用：每次點擊選擇四種場景配色之一，不連續重複；再次點擊或按 Escape 返回。減少動態效果時，首頁直接導覽，Oracle 顯示靜態預覽。
+
 ## 社群連結
 
 在 `src/site.config.ts` 設定 `social.links`，頂欄與頁尾共用陣列順序。只加入需要的連結：

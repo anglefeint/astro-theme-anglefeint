@@ -28,6 +28,8 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+任意の Matrix 演出：`theme.effects.enableHomePassage` は既定で `false`。有効時はホームの記事リンクで緑の演出を 8 秒再生してから移動します。About の `Oracle` は独立して動作し、クリック時に前回と異なる 4 種類の配色から選びます。再クリックまたは Escape で戻ります。動きを減らす設定では通常の移動と静止した Oracle プレビューを使います。
+
 ## 動作要件
 
 - Node.js `22.12.0+`（LTS 推奨）

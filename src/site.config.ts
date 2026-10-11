@@ -32,6 +32,7 @@ export const THEME_CONFIG = defineThemeConfig({
   // theme: { music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] } },
   // Article contents are enabled by default. Per-post `toc: true/false` overrides this.
   // theme: { toc: { enabled: false } },
+  // Home click passage: theme: { effects: { enableHomePassage: false } }
   // Tag browsing: theme: { tags: { enabled: false } }
   // Automatic article share images: theme: { socialImage: { enabled: false } }
   // Per-post `ogImage` always takes priority and does not change the hero image.
