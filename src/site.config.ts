@@ -57,9 +57,6 @@ export const THEME_CONFIG = defineThemeConfig({
       ],
     },
   },
-  social: {
-    links: [{ label: 'Music credits / 音乐署名', href: '/music/credits.html' }],
-  },
   analytics: { googleAnalyticsId: '' }, // Optional GA4 Measurement ID (G-...).
   site: {
     title: 'Anglefeint',
