@@ -393,6 +393,8 @@ MDX의 Markdown 제목은 지원하지만 컴포넌트에서 생성하거나 HTM
 
 ## 선택적 음악 플레이어
 
+공개 데모는 Free Music Archive의 예시 음악 8곡을 사용하며, starter에서는 음악이 기본적으로 꺼져 있습니다. 창작자, 출처와 곡별 라이선스(CC0 1.0 또는 CC BY 4.0)는 [음악 크레딧](https://demo.anglefeint.com/music/credits.html)을 확인하세요. 음악은 테마 코드의 MIT 라이선스와 별개이며 npm 패키지나 starter에 포함되지 않습니다. 음악을 추가하거나 재사용할 때 해당 라이선스와 저작자 표시 조건을 준수하세요.
+
 기본적으로 비활성화되어 있습니다. 오디오를 `public/music/`에 넣고 다음 설정을 `src/site.config.ts`에 병합하세요:
 
 ```ts

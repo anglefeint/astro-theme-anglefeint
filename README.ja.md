@@ -393,6 +393,8 @@ MDX 内の Markdown 見出しに対応しますが、コンポーネントが生
 
 ## 任意の音楽プレーヤー
 
+公開デモでは Free Music Archive の8曲を使用しています。starter の音楽は既定で無効です。作者、出典、各曲のライセンス（CC0 1.0 または CC BY 4.0）は[音楽クレジット](https://demo.anglefeint.com/music/credits.html)を参照してください。音楽はテーマコードの MIT ライセンスとは別で、npm パッケージや starter には含まれません。音楽を追加・再利用する際は、各ライセンスと帰属表示の条件に従ってください。
+
 既定では無効です。音声ファイルを `public/music/` に置き、次の設定を `src/site.config.ts` に追加します：
 
 ```ts

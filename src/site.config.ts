@@ -17,7 +17,49 @@ export { DEFAULT_ABOUT_CONFIG, defineThemeConfig } from './site.config.defaults.
 export { normalizeI18nConfig } from './site.config.runtime.ts';
 
 export const THEME_CONFIG = defineThemeConfig({
-  theme: { effects: { enableHomePassage: false } },
+  theme: {
+    effects: { enableHomePassage: false },
+    music: {
+      enabled: true,
+      tracks: [
+        {
+          title: 'And never come back',
+          artist: 'Soft and Furious',
+          src: '/music/soft-and-furious-and-never-come-back.mp3',
+        },
+        {
+          title: 'Horizon Ending',
+          artist: 'Soft and Furious',
+          src: '/music/soft-and-furious-horizon-ending.mp3',
+        },
+        {
+          title: 'Game On',
+          artist: 'Soft and Furious',
+          src: '/music/soft-and-furious-game-on.mp3',
+        },
+        { title: 'Noctara', artist: 'Meninjau_', src: '/music/meninjau-noctara.mp3' },
+        {
+          title: 'Contracté•e par site internet',
+          artist: 'chien•ne errant•e',
+          src: '/music/chienne-errante-contractee-par-site-internet.mp3',
+        },
+        { title: 'Tranquility', artist: 'Onys', src: '/music/onys-tranquility.mp3' },
+        {
+          title: 'Electronic Chill',
+          artist: 'Pro Tunes - Copyright Safe Music',
+          src: '/music/pro-tunes-electronic-chill.mp3',
+        },
+        {
+          title: 'Electronic Outlaw',
+          artist: 'Zane Little',
+          src: '/music/zane-little-electronic-outlaw.mp3',
+        },
+      ],
+    },
+  },
+  social: {
+    links: [{ label: 'Music credits / 音乐署名', href: '/music/credits.html' }],
+  },
   analytics: { googleAnalyticsId: '' }, // Optional GA4 Measurement ID (G-...).
   site: {
     title: 'Anglefeint',

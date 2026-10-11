@@ -408,6 +408,8 @@ The bundled font covers the starter's Latin, Cyrillic, simplified/traditional Ch
 
 ## Optional music player
 
+The public demo enables eight example tracks from Free Music Archive; the starter keeps music disabled. See [demo music credits](https://demo.anglefeint.com/music/credits.html) for creators, sources and individual licenses (CC0 1.0 or CC BY 4.0). These recordings are separate from the theme code’s MIT license and are not included in the npm package or starter. When adding or reusing music, follow its own license and attribution requirements.
+
 Disabled by default. Put audio files in `public/music/` and merge this into `src/site.config.ts`:
 
 ```ts
