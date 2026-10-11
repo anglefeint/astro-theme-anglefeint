@@ -19,7 +19,7 @@ tokenCount: 1040
 初始化：
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter --no-ai
 ```
 
 兼容的纯包更新：

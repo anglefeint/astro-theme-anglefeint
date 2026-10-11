@@ -104,6 +104,8 @@ Giscus account setup, real comment submission, platform deployment and human ass
 
 ## Evidence and cleanup
 
+Creation uses `--no-ai` to preserve the template's shared `AGENTS.md` and tool entries. Current create-astro otherwise replaces the root guide with generic Astro instructions; README and tutorial creation commands use the same flag. This skips the creator's generated instructions, while retaining the template's AI guidance.
+
 Social relation coverage: unit checks exercise omitted/blank values, opt-in `me`, multiple tokens, case/whitespace normalization, duplicates, conflicting `opener` and non-string errors. The independent installed-starter build matrix checks static header/footer attributes with built-in, custom-image and text links, opted-in and non-opted-in Mastodon links, and empty social lists across default-language/routing variants. These checks do not claim a real Mastodon account verification or test arbitrary hosting redirects.
 
 `check:template` writes per-command logs, `report.json`, screenshots and a failure trace to `acceptance-results/template-<manager>-<timestamp>/`. This directory is separate from Playwright's `test-results/`, which Playwright clears at startup. Reports include actual Node/package versions, executed scripts, expected rejections, HTTP routes and overall success.

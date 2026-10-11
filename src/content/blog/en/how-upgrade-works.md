@@ -19,7 +19,7 @@ A common theme problem is easy initialization but painful upgrades. Anglefeint s
 Initialization:
 
 ```bash
-npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter
+npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter --no-ai
 ```
 
 Compatible package-only updates:

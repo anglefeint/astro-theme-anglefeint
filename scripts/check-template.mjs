@@ -238,6 +238,7 @@ try {
       'anglefeint/astro-theme-anglefeint#starter',
       '--yes',
       '--no-install',
+      '--no-ai',
       '--no-git',
     ],
     { cwd: temporary, npm: true }

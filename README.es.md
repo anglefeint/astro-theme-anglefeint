@@ -42,7 +42,7 @@ Pasaje Matrix opcional: `theme.effects.enableHomePassage` vale `false` por defec
 Ejecuta esto una sola vez desde el directorio donde quieres guardar tu blog. Crea `my-blog` y omite la instalación de dependencias; responde las preguntas restantes y continúa abajo. Usa una carpeta nueva; si cambias el nombre, ajusta también `cd`.
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
 ## Inicio rápido

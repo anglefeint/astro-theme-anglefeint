@@ -15,7 +15,7 @@ heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 使用 Node.js 22.12.0 或更新版本。在父目錄執行以下指令，建立 my-blog 並略過相依套件安裝，再安裝並啟動；若換名字，同時修改建立指令與 cd。
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 cd my-blog
 npm install
 npm run dev
