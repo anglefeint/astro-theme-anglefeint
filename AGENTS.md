@@ -34,6 +34,8 @@ Guidance for AI IDE/CLI agents working in this repository.
 
 This file is the neutral entrypoint for all coding agents working in this repository.
 
+These are maintainer instructions for the theme and public demo. Personal blogs receive separate user-oriented entries from `scripts/starter-templates/` through `scripts/starter-manifest.mjs`; do not copy this maintainer workflow into consumer projects.
+
 - Use this file as the first document to read.
 - Then follow its document map to the deeper workflow and architecture sources.
 - Tool-specific files such as `CLAUDE.md` or `.cursor/rules/*.mdc` should point here instead of duplicating repository rules.

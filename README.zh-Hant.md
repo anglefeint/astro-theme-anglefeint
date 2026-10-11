@@ -26,6 +26,14 @@
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install
 ```
 
+## 使用 AI 助手
+
+在 Cursor、Codex 或 Claude Code 中開啟專案資料夾。starter 附帶統一的 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)、Claude Code 入口與自動套用的 Cursor 規則，說明如何管理自己的部落格，無需使用上游發布工具。請求可先寫「閱讀 AGENTS.md」，尤其當助手尚未載入專案指引時；也可按自己的偏好修改這份檔案。
+
+例如：「閱讀 AGENTS.md，設定站點資訊，只保留繁體中文，保留既有內容。」「新增 slug 為 my-first-post 的繁體中文文章，正文由我提供。」「加入我有權使用的 MP3，填入歌名與作者。」讓助手執行 doctor 並預覽修改後的頁面；正文、翻譯、網域與部署目標仍由你決定。
+
+發布前，請把選用的 `public/llms.txt` 佔位內容換成自己的網站資訊與實際語言網址，或刪除該檔案。它面向網站讀者與爬蟲；專案操作指引放在 AGENTS.md。
+
 <a id="setup"></a>
 
 可選 Matrix 穿越：`theme.effects.enableHomePassage` 預設為 `false`。啟用後，首頁文章連結播放 8 秒綠色穿越再導覽。About 的 `Oracle` 按鈕獨立可用：每次點擊選擇四種場景配色之一，不連續重複；再次點擊或按 Escape 返回。減少動態效果時，首頁直接導覽，Oracle 顯示靜態預覽。

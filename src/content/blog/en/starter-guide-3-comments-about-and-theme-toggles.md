@@ -4,13 +4,13 @@ title: 'User Guide 3: Enable and Customize Optional Features'
 subtitle: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 description: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-21'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 ## Check the defaults before changing anything
 
-This guide covers the accompanying 0.8.3 starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
+This guide covers the accompanying starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
 
 | Feature                                                  | Default                     |
 | -------------------------------------------------------- | --------------------------- |
@@ -182,7 +182,7 @@ theme: {
 
 Keep existing settings such as `theme.comments` in that same object. Do not overwrite your configuration with a whole example. Arrays replace previous arrays, so retain existing tracks or social links when adding entries.
 
-Check the feature in development, then run `npm run check` and `npm run build`. Test search with `npm run preview` after building. Use `npm run doctor` when diagnosing project or upgrade problems; it performs broader checks. Deploy the new output to publish changes.
+Check the feature in development, then run `npm run doctor` and `npm run preview`. Doctor includes checks and a build; do not repeat `check` and `build` after it succeeds. Test search in the built preview. Deploy the new output to publish changes.
 
 ## 8. Show or hide footer credits
 

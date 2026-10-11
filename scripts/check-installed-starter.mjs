@@ -13,6 +13,7 @@ import {
 } from './starter-manifest.mjs';
 import { inspectProject } from './doctor.mjs';
 import { checkReadmeLinks } from './check-readme-links.mjs';
+import { checkStarterGuidance } from './check-starter-guidance.mjs';
 import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
 import { auditDependencies } from './audit-dependencies.mjs';
 import sharp from 'sharp';
@@ -93,6 +94,7 @@ try {
     `file:${tarball.replaceAll('\\', '/')}`
   );
   await writeFile(path.join(project, 'package.json'), JSON.stringify(pkg, null, 2));
+  await checkStarterGuidance(project);
   await rm(path.join(project, 'package-lock.json'), { force: true });
   console.log('Installing packed theme into an independent starter (no workspace links)...');
   await npm(['install', '--ignore-scripts', '--no-audit', '--no-fund', '--prefer-offline']);

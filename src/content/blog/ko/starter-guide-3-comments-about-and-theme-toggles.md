@@ -4,13 +4,13 @@ title: '사용 가이드 3: 필요한 기능 켜기와 사용자 설정'
 subtitle: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 description: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-21'
+updatedDate: '2026-10-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 ## 기본 상태부터 보고 필요한 것만 변경
 
-함께 제공되는 0.8.3 starter를 기준으로 설명합니다. 모든 TypeScript 예제는 `src/site.config.ts`의 `defineThemeConfig({...})` 객체에 합칩니다. 변경할 항목만 설정하세요.
+함께 제공되는 starter를 기준으로 설명합니다. 모든 TypeScript 예제는 `src/site.config.ts`의 `defineThemeConfig({...})` 객체에 합칩니다. 변경할 항목만 설정하세요.
 
 | 기능                                  | 기본 상태              |
 | ------------------------------------- | ---------------------- |
@@ -182,7 +182,7 @@ theme: {
 
 기존 `theme.comments` 등도 같은 객체에 유지하세요. 예제로 자신의 설정 전체를 덮어쓰지 마세요. 배열은 전체를 교체하므로 곡이나 소셜 링크를 추가할 때 기존 항목도 남겨야 합니다.
 
-개발 화면에서 기능을 확인하고 `npm run check`, `npm run build`를 실행합니다. 검색은 빌드 후 `npm run preview`로 확인합니다. `npm run doctor`는 더 넓은 검사를 포함하므로 프로젝트나 업그레이드 문제를 진단할 때 사용하세요. 변경 사항 공개에는 빌드 결과물 재배포가 필요합니다.
+개발 화면에서 기능을 확인한 뒤 `npm run doctor`와 `npm run preview`를 실행하세요. doctor에는 검사와 빌드가 포함되므로 성공 후 check와 build를 반복할 필요가 없습니다. 검색은 빌드된 미리보기에서 확인하고, 게시하려면 새 결과물을 배포하세요.
 
 ## 8. 푸터 출처 표시 또는 숨기기
 
