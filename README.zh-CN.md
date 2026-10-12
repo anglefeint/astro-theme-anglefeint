@@ -30,6 +30,8 @@
 
 可选 Matrix 穿越：`theme.effects.enableHomePassage` 默认 `false`。开启后，首页文章链接播放 8 秒绿色穿越后导航。About 的 `Oracle` 按钮独立可用：每次点击选择四种场景配色之一，不连续重复；再次点击或按 Escape 返回。减少动态效果时，首页直接导航，Oracle 显示静态预览。
 
+首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
+
 ## 环境要求
 
 - Node.js `22.12.0+`（建议 LTS）
@@ -269,7 +271,7 @@ npm run doctor
 
 About 正文段落和签名保留配置字符串中的换行：`\n` 换行，`\n\n` 留一空行，长句仍自动折行。这仍是纯文本，不解析 Markdown 或 HTML，不要插入 `<br>`。
 
-页脚将版权、主题/Astro 署名和可选的 `site.tagline` 分组展示，下方保留社交图标。内置署名跟随页面语言，自定义说明在各语言中保持原文；空说明不占位置，手机端长文案自动换行。现有配置和 `PUBLIC_SITE_TAGLINE` 覆盖继续有效，无需迁移。
+页脚将版权、主题/Astro 署名和可选的 `site.tagline` 分组展示，下方保留社交图标。内置署名跟随页面语言，自定义说明在各语言中保持原文；空说明不占位置，手机端长文案自动换行。现有配置和 `PUBLIC_SITE_TAGLINE` 覆盖继续有效，无需迁移。可选的 `theme.footer.links` 数组填写 `label` 和 `href`，在版权与署名之间显示以中间点分隔的链接，标签保持配置原文；默认数组为空，独立于 `social.links` 和 `showCredits`。
 
 说明：
 
