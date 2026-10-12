@@ -30,6 +30,8 @@
 
 Pasaje Matrix opcional: `theme.effects.enableHomePassage` vale `false` por defecto. Al activarlo, los enlaces a entradas de inicio muestran un pasaje verde de 8 segundos antes de navegar. `Oracle` en About funciona por separado: cada clic elige una de cuatro paletas sin repetir la anterior; otro clic o Escape vuelve a la página. Con movimiento reducido, la navegación es directa y Oracle muestra una vista estática.
 
+En `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow y `showTrace` controla el estado inferior derecho. Todos valen `true` por defecto; `false` oculta cada sección por separado.
+
 ## Requisitos
 
 - Node.js `22.12.0+` (LTS recomendado)
@@ -270,6 +272,8 @@ Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
 Los párrafos y la firma de About conservan los saltos de línea de la configuración: `\n` cambia de línea y `\n\n` deja una línea en blanco. Las frases largas siguen ajustándose. Es texto plano, sin Markdown ni HTML; no insertes `<br>`.
 
 El pie separa el copyright, los créditos del tema/Astro y el texto opcional `site.tagline`, con los iconos sociales debajo. Los créditos siguen el idioma de la página; tu texto se conserva en todos los idiomas. El texto vacío no ocupa espacio y los textos largos se ajustan en móviles. La configuración existente y `PUBLIC_SITE_TAGLINE` siguen funcionando; no hace falta migrar.
+
+La opción `theme.footer.links` añade una fila independiente al pie: cada entrada contiene `label` y `href`, con puntos entre enlaces. Omitirla o usar un array vacío oculta la fila. Las etiquetas mantienen el texto configurado en todos los idiomas; no depende de los iconos sociales ni de `showCredits`.
 
 ### Opcional: Google Analytics 4
 

@@ -30,6 +30,8 @@
 
 선택적 Matrix 전환: `theme.effects.enableHomePassage` 기본값은 `false`입니다. 켜면 홈의 글 링크에서 8초 녹색 전환 후 이동합니다. About의 `Oracle` 버튼은 독립적으로 작동하며 클릭할 때 네 가지 색상 중 직전과 다른 색상을 선택합니다. 다시 클릭하거나 Escape를 누르면 돌아갑니다. 동작 줄이기 설정에서는 홈 링크가 바로 이동하고 Oracle은 정적 미리보기를 표시합니다.
 
+`src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다.
+
 ## 요구 사항
 
 - Node.js `22.12.0+` (LTS 권장)
@@ -270,6 +272,8 @@ Astro 메이저 버전 마이그레이션은 먼저 공식 가이드를 확인�
 About 본문 단락과 서명은 설정 문자열의 줄바꿈을 유지합니다. `\n`은 줄바꿈, `\n\n`은 빈 줄이며 긴 문장은 자동으로 줄바꿈됩니다. 일반 텍스트이므로 Markdown이나 HTML을 해석하지 않습니다. `<br>`을 넣지 마세요.
 
 푸터는 저작권, 테마/Astro 크레딧, 선택적인 `site.tagline`을 각각 표시하고 아래에 소셜 아이콘을 배치합니다. 기본 크레딧은 페이지 언어를 따르며 사용자 문구는 모든 언어에서 원문을 유지합니다. 빈 문구는 공간을 차지하지 않고 긴 문구는 모바일에서 줄바꿈됩니다. 기존 설정과 `PUBLIC_SITE_TAGLINE` 재정의는 그대로 작동하며 마이그레이션이 필요 없습니다.
+
+선택 사항인 `theme.footer.links`는 푸터에 별도 행을 추가합니다. 각 항목의 `label`과 `href`를 설정하며 링크 사이에는 가운데 점이 표시됩니다. 생략하거나 빈 배열을 사용하면 숨겨집니다. 라벨은 언어가 바뀌어도 설정한 원문을 유지하며 소셜 아이콘 및 `showCredits`와 독립적입니다.
 
 ### 선택 사항: Google Analytics 4
 

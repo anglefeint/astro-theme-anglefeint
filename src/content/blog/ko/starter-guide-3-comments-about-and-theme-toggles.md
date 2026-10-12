@@ -4,7 +4,7 @@ title: '사용 가이드 3: 필요한 기능 켜기와 사용자 설정'
 subtitle: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 description: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: 2026-10-12
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -199,6 +199,21 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 `showCredits: true`로 다시 표시할 수 있습니다. 숨기면 두 링크가 모두 제거되고 저작권 줄은 유지됩니다. 선택 사항인 `site.tagline`은 이 스위치와 별개로 사용자 지정 일반 텍스트를 추가합니다. 기본값은 빈 문자열이며, 이전 기본값인 `Built with Astro.`는 중복을 방지하기 위해 내장 출처로 처리합니다. `All rights reserved`는 추가하지 않습니다.
+
+이 홈/푸터 옵션은 아직 출시되지 않은 로컬 변경이며 npm 0.14.0과 공개 starter에서는 사용할 수 없습니다. starter와 패키지를 함께 업데이트해야 합니다. [예정된 마이그레이션](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)을 참고하세요.
+
+`src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다.
+
+선택 사항인 `theme.footer.links`는 푸터에 별도 행을 추가합니다. 각 항목의 `label`과 `href`를 설정하며 링크 사이에는 가운데 점이 표시됩니다. 생략하거나 빈 배열을 사용하면 숨겨집니다. 라벨은 언어가 바뀌어도 설정한 원문을 유지하며 소셜 아이콘 및 `showCredits`와 독립적입니다.
+
+```ts
+theme: {
+  home: { showInitialize: true, showFollow: true, showTrace: true },
+  footer: {
+    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+  },
+},
+```
 
 자동 공유 이미지는 코드 레인, 터미널, 네온 네트워크 배경을 포함하며 사이트 이름, 제목, 작성자는 사용자 콘텐츠에서 가져옵니다. 오른쪽 아래의 작은 `Theme by Anglefeint` 문구는 `theme.footer.showCredits`(기본 `true`)를 따릅니다. `false`로 설정하면 푸터와 이미지의 크레딧을 함께 숨깁니다. 변경 후 다시 빌드하고 배포하세요. 사용자 지정 `ogImage`는 수정하지 않습니다. 배경은 오프라인으로 사용되며 브라우저 JavaScript를 추가하지 않습니다.
 

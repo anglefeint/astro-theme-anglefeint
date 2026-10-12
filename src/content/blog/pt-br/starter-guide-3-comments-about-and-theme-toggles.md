@@ -6,7 +6,7 @@ title: 'Guia 3: Recursos opcionais'
 subtitle: 'Música, comentários, Sobre, paginação e opções visuais.'
 description: 'Música, comentários, Sobre, paginação e opções visuais.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: 2026-10-12
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -72,6 +72,21 @@ defaultLocalePrefix: 'always' redireciona / para a página inicial localizada; '
 ## Rodapé e verificação
 
 footer.showCredits: false oculta os créditos do tema e do Astro, preservando o ano gerado e site.title. site.tagline adiciona texto independente. O antigo valor Built with Astro. é tratado como crédito interno para evitar duplicação.
+
+Estas opções de início/rodapé são alterações locais ainda não publicadas; npm 0.14.0 e o starter público não as incluem. Exigem mudanças no starter e no pacote; consulte a [migração pendente](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links).
+
+Em `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow e `showTrace` controla o status inferior direito. Todos são `true` por padrão; `false` oculta cada parte separadamente.
+
+A opção `theme.footer.links` adiciona uma linha independente ao rodapé: cada item contém `label` e `href`, com pontos entre os links. Omitir a opção ou usar um array vazio oculta a linha. Os rótulos mantêm o texto configurado em todos os idiomas; a linha é independente dos ícones sociais e de `showCredits`.
+
+```ts
+theme: {
+  home: { showInitialize: true, showFollow: true, showTrace: true },
+  footer: {
+    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+  },
+},
+```
 
 Os cartões automáticos usam um fundo incluído de chuva de código, terminais e redes de neon, com o nome do seu site, título e autor. O pequeno crédito `Theme by Anglefeint` no canto inferior direito segue `theme.footer.showCredits` (padrão `true`); `false` oculta os créditos do rodapé e da imagem. Compile e publique novamente após alterar. Arquivos `ogImage` personalizados não são modificados. O fundo funciona offline e não adiciona JavaScript ao navegador.
 
