@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.15.0] - 2026-10-12
+
+- Add optional `theme.footer.links` for a separate dot-separated footer link row, empty by default and independent of social icons and theme credits.
+- Add independent `theme.home.showInitialize`, `showFollow` and `showTrace` switches, all enabled by default; the trace status uses a CSS cursor with reduced-motion support.
+- These features require matching starter configuration/schema/defaults/adapters as well as the theme package. See [migration](UPGRADING.md#0150-home-switches-and-footer-links).
+
 ## [0.14.0] - 2026-10-11
 
 - Add sequential Matrix terminal messages, four shuffled white-rabbit link decoders and a cracked/liquid mirror that repairs on click until refresh.

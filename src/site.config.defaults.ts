@@ -109,7 +109,8 @@ const defaultThemeConfig: ThemeConfig = {
     tagline: '',
   },
   theme: {
-    footer: { showCredits: true },
+    home: { showInitialize: true, showFollow: true, showTrace: true },
+    footer: { showCredits: true, links: [] },
     music: { enabled: false, tracks: [] },
     blogPageSize: 9,
     homeLatestCount: 3,

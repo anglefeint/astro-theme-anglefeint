@@ -26,6 +26,10 @@
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
+首頁開關：`theme.home.showInitialize` 控制 Initialize/done，`showFollow` 控制 Wake Up/Follow，`showTrace` 控制右下角狀態。於 `src/site.config.ts` 設定，預設皆為 `true`，設為 `false` 可獨立隱藏。
+
+可選的 `theme.footer.links` 在頁尾增加一行，每項填寫 `label` 與 `href`，連結以中間點分隔；省略或空陣列隱藏該行。標籤在各語言中保留設定原文，獨立於社群圖示與 `showCredits`。
+
 ## 使用 AI 助手
 
 在 Cursor、Codex 或 Claude Code 中開啟專案資料夾。starter 附帶統一的 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)、Claude Code 入口與自動套用的 Cursor 規則，說明如何管理自己的部落格，無需使用上游發布工具。請求可先寫「閱讀 AGENTS.md」，尤其當助手尚未載入專案指引時；也可按自己的偏好修改這份檔案。

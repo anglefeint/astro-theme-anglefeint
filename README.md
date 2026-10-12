@@ -30,6 +30,8 @@
 
 Optional Matrix passage: `theme.effects.enableHomePassage` defaults to `false`. When enabled, homepage post links use an 8-second green passage before navigation. About’s `Oracle` button works independently: each click selects one of four scene palettes without repeating the previous palette; click again or press Escape to return. Reduced motion keeps native home navigation and a static Oracle preview.
 
+Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.
+
 ## Requirements
 
 - Node.js `22.12.0+` (LTS recommended)
@@ -271,7 +273,7 @@ For Astro major-version migrations, follow the official Astro guide first:
 
 About body paragraphs and the signature preserve line breaks in configuration strings: `\n` starts a new line and `\n\n` leaves a blank line. Long sentences still wrap. This is plain text, not Markdown or HTML; do not insert `<br>`.
 
-The footer separates copyright, theme/Astro credits and your optional `site.tagline` into independent groups, followed by social icons. Built-in credits follow the page language; your tagline stays unchanged across languages. Empty taglines take no space, and long text wraps on mobile. Existing configuration and `PUBLIC_SITE_TAGLINE` overrides still work; no migration is needed.
+The footer separates copyright, theme/Astro credits and your optional `site.tagline` into independent groups, followed by social icons. Built-in credits follow the page language; your tagline stays unchanged across languages. Empty taglines take no space, and long text wraps on mobile. Existing configuration and `PUBLIC_SITE_TAGLINE` overrides still work; no migration is needed. Optional `theme.footer.links` entries (`label`, `href`) appear between copyright and credits, separated by dots; labels retain your configured text. The default is an empty array. These links are independent of `social.links` and `showCredits`.
 
 Notes:
 

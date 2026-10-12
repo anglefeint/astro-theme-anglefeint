@@ -6,7 +6,7 @@ title: 'Руководство 3: Дополнительные функции'
 subtitle: 'Музыка, комментарии, профиль, пагинация и оформление.'
 description: 'Музыка, комментарии, профиль, пагинация и оформление.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: 2026-10-12
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -72,6 +72,21 @@ defaultLocalePrefix: 'always' перенаправляет / на локализ
 ## Подвал и проверка
 
 footer.showCredits: false скрывает ссылки на тему и Astro, сохраняя год сборки и site.title. site.tagline независим. Старое значение Built with Astro. считается встроенным упоминанием, чтобы избежать дублирования.
+
+Эти настройки главной страницы и подвала пока не опубликованы и отсутствуют в npm 0.14.0 и публичном starter. Нужны изменения и starter, и пакета; см. [план миграции](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links).
+
+В `src/site.config.ts` параметры `theme.home.showInitialize`, `showFollow` и `showTrace` управляют соответственно Initialize/done, Wake Up/Follow и статусом справа внизу. По умолчанию все равны `true`; `false` скрывает соответствующий элемент.
+
+Параметр `theme.footer.links` добавляет отдельную строку в подвал: каждый элемент содержит `label` и `href`, ссылки разделены точками. Если параметр отсутствует или массив пуст, строка скрыта. Подписи сохраняют заданный текст во всех языках; строка не зависит от социальных значков и `showCredits`.
+
+```ts
+theme: {
+  home: { showInitialize: true, showFollow: true, showTrace: true },
+  footer: {
+    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+  },
+},
+```
 
 Автоматические карточки используют встроенный фон с дождём кода, терминалами и неоновой сетью, сохраняя ваше название сайта, заголовок и автора. Небольшая подпись `Theme by Anglefeint` справа внизу зависит от `theme.footer.showCredits` (по умолчанию `true`); `false` скрывает подписи и в подвале, и на изображении. После изменения пересоберите и опубликуйте сайт. Собственные файлы `ogImage` не изменяются. Фон работает офлайн и не добавляет JavaScript в браузер.
 

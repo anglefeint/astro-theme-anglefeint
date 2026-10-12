@@ -4,7 +4,7 @@ title: '利用ガイド 3：必要な機能を有効化・カスタマイズす�
 subtitle: '音楽、コメント、About、ページ分割、機能スイッチ、多言語を必要に応じて設定します。'
 description: '音楽、コメント、About、ページ分割、機能スイッチ、多言語を必要に応じて設定します。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: 2026-10-12
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -199,6 +199,21 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 `showCredits: true` で再表示できます。非表示にすると両方のリンクが削除され、著作権表示は残ります。任意の `site.tagline` は、このスイッチとは独立したプレーンテキストです。既定値は空です。旧既定値の `Built with Astro.` は重複を避けるため組み込みクレジットとして扱います。`All rights reserved` は追加しません。
+
+これらのホーム/フッター設定は未公開のローカル変更で、npm 0.14.0 と公開 starter では利用できません。対応する starter とパッケージの更新が必要です。[移行予定](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)を参照してください。
+
+ホームのスイッチは `src/site.config.ts` の `theme.home` にあります。`showInitialize` は Initialize/done、`showFollow` は Wake Up/Follow、`showTrace` は右下の状態表示です。すべて既定は `true`、`false` で個別に非表示にできます。
+
+任意の `theme.footer.links` はフッターに独立した行を追加します。各項目は `label` と `href` を持ち、リンク間に中点を表示します。省略または空配列で非表示になります。ラベルは各言語でも設定した原文を保ち、ソーシャルアイコンや `showCredits` とは独立しています。
+
+```ts
+theme: {
+  home: { showInitialize: true, showFollow: true, showTrace: true },
+  footer: {
+    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+  },
+},
+```
 
 自動共有画像には、コードレイン・ターミナル・ネオンネットワークの同梱背景を使い、サイト名・タイトル・著者は自分の情報を表示します。右下の小さな `Theme by Anglefeint` は `theme.footer.showCredits`（既定 `true`）に従います。`false` にするとフッターと画像のクレジットを非表示にします。変更後は再ビルド・再デプロイしてください。独自の `ogImage` は変更しません。背景はオフラインで使え、ブラウザー JavaScript は増えません。
 

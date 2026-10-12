@@ -6,7 +6,7 @@ title: 使用指南 3：選用功能
 subtitle: 音樂、留言、關於頁、分頁與視覺設定。
 description: 音樂、留言、關於頁、分頁與視覺設定。
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: 2026-10-12
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -72,6 +72,21 @@ defaultLocalePrefix: 'always' 讓 / 導向語言首頁；'never' 對預設語言
 ## 頁尾與驗證
 
 footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 site.title。site.tagline 是獨立文字。舊值 Built with Astro. 會視為內建署名，避免重複顯示。
+
+這些首頁/頁尾選項仍是未發布的本機變更，npm 0.14.0 與公開 starter 尚不支援；需要同步升級 starter 與主題套件，見[待發布遷移說明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)。
+
+首頁開關：`theme.home.showInitialize` 控制 Initialize/done，`showFollow` 控制 Wake Up/Follow，`showTrace` 控制右下角狀態。於 `src/site.config.ts` 設定，預設皆為 `true`，設為 `false` 可獨立隱藏。
+
+可選的 `theme.footer.links` 在頁尾增加一行，每項填寫 `label` 與 `href`，連結以中間點分隔；省略或空陣列隱藏該行。標籤在各語言中保留設定原文，獨立於社群圖示與 `showCredits`。
+
+```ts
+theme: {
+  home: { showInitialize: true, showFollow: true, showTrace: true },
+  footer: {
+    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+  },
+},
+```
 
 自動分享圖使用主題內附的代碼雨、終端與霓虹網路背景，網站名稱、標題和作者仍使用你的內容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（預設 `true`）；設為 `false` 會同時隱藏頁尾與圖片署名，修改後請重新建置部署。自訂 `ogImage` 不會被修改。背景離線使用，不增加瀏覽器 JavaScript。
 

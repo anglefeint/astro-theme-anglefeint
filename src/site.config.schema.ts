@@ -86,8 +86,9 @@ export interface ThemeConfig {
     tagline: string;
   };
   theme: {
+    home: { showInitialize: boolean; showFollow: boolean; showTrace: boolean };
     math: { enabled: boolean };
-    footer: { showCredits: boolean };
+    footer: { showCredits: boolean; links: { label: string; href: string }[] };
     music: { enabled: boolean; tracks: { title: string; artist?: string; src: string }[] };
     blogPageSize: number;
     homeLatestCount: number;

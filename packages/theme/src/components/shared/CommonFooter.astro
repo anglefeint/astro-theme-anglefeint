@@ -19,11 +19,24 @@ const builtWithLabel = labels?.builtWith ?? 'Built with';
 // The former default is now represented by the configurable linked credits.
 const customTagline = tagline.trim() === 'Built with Astro.' ? '' : tagline.trim();
 const showCredits = THEME.FOOTER?.SHOW_CREDITS ?? true;
+const footerLinks = THEME.FOOTER?.LINKS ?? [];
 ---
 
 <footer>
   <div class="footer-content">
     <p class="footer-copyright">&copy; {today.getFullYear()} {SITE_TITLE}</p>
+    {
+      footerLinks.length > 0 && (
+        <div class="footer-project-links">
+          {footerLinks.map((link, index) => (
+            <>
+              {index > 0 && <span aria-hidden="true">·</span>}
+              <a href={link.href}>{link.label}</a>
+            </>
+          ))}
+        </div>
+      )
+    }
     {
       showCredits && (
         <div class="footer-credits">
@@ -78,6 +91,16 @@ const showCredits = THEME.FOOTER?.SHOW_CREDITS ?? true;
     font-size: 0.8rem;
     line-height: 1.7;
   }
+  .footer-project-links {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.55rem;
+    margin-top: 0.45rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
   .footer-credits > span {
     position: relative;
     max-width: 100%;
@@ -100,11 +123,13 @@ const showCredits = THEME.FOOTER?.SHOW_CREDITS ?? true;
       content: none;
     }
   }
-  .footer-credits a {
+  .footer-credits a,
+  .footer-project-links a {
     color: inherit;
     text-underline-offset: 0.2em;
   }
-  .footer-credits a:focus-visible {
+  .footer-credits a:focus-visible,
+  .footer-project-links a:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }

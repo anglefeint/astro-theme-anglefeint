@@ -18,6 +18,13 @@ export { normalizeI18nConfig } from './site.config.runtime.ts';
 
 export const THEME_CONFIG = defineThemeConfig({
   theme: {
+    home: { showInitialize: true, showFollow: true, showTrace: true },
+    footer: {
+      links: [
+        { label: 'Open Source', href: 'https://github.com/anglefeint/astro-theme-anglefeint' },
+        { label: 'View on GitHub', href: 'https://github.com/anglefeint/astro-theme-anglefeint' },
+      ],
+    },
     effects: { enableHomePassage: false },
     music: {
       enabled: true,
@@ -56,6 +63,13 @@ export const THEME_CONFIG = defineThemeConfig({
         },
       ],
     },
+  },
+  social: {
+    links: [
+      { label: 'X', iconSrc: '/icons/x.svg', href: 'https://x.com/anglefeint' },
+      { label: 'Mastodon', icon: 'mastodon', href: 'https://mastodon.social/@anglefeint' },
+      { label: 'GitHub', icon: 'github', href: 'https://github.com/anglefeint' },
+    ],
   },
   analytics: { googleAnalyticsId: '' }, // Optional GA4 Measurement ID (G-...).
   site: {
