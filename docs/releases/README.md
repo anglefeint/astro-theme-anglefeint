@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release entry: [0.14.0](./0.14.0.md), Matrix homepage, Oracle preview and effect lifecycle management. See its delivery status and acceptance record.
+Latest feature release entry: [0.15.0](./0.15.0.md), independent homepage terminal switches and optional footer links. See its delivery status and acceptance record.
 
 Latest patch entry: [0.11.3](./0.11.3.md), About plain-text line breaks with unchanged user configuration. See its delivery status and validation record.
 

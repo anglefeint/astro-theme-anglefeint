@@ -10,6 +10,8 @@ sync_targets: [README.md, CLAUDE.md]
 
 # Architecture Notes
 
+Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently. The adapter maps these flags to `THEME.HOME`. Explicit startup/message CSS classes avoid selector ambiguity when one sequence is absent. With startup disabled, Wake Up begins immediately and Follow retains its relative pause. No dynamic JavaScript character/width calculation or client-side switch logic is added; the fixed text retains CSS width/steps animations. Disabled sections are omitted during Astro rendering, so their text and cursor animations do not exist in the generated page. These switches do not disable the background rain, mirror or rabbit effects.
+
 ## Stack
 
 - Framework: Astro 7 (root `package.json` declares the compatible range; `package-lock.json` records the resolved version)
@@ -295,6 +297,8 @@ Only images present inside the first `.ai-prose-body[data-image-preview]` at ini
 
 ## Code-to-Documentation Map
 
+Home switches and footer links follow [configuration types](../src/site.config.schema.ts) → [defaults](../src/site.config.defaults.ts) → [adapter template](../scripts/adapter-templates/src/config/theme.ts) → generated `src/config/theme.ts` → [HomePage](../packages/theme/src/layouts/HomePage.astro) / [CommonFooter](../packages/theme/src/components/shared/CommonFooter.astro). [Homepage CSS](../packages/theme/src/styles/home-page.css) owns startup/message timing and trace cursor behavior. Package fallback config lives in `packages/theme/src/config/theme.ts`; consumer schemas and adapters remain starter-owned. See README configuration, the nine-language optional-features tutorials and [migration](../UPGRADING.md#0150-home-switches-and-footer-links). Existing [adapter checks](../scripts/check-adapter-contract.mjs) and [scaffold checks](../scripts/check-scaffold.mjs) validate structure; they do not assert every visual state or prove the new options work with an old installed package. Current local browser evidence is separate from released-version acceptance. Local acceptance in `acceptance-results/home-switches-preview.mjs` checked all eight flag combinations and retained visible main content; `home-terminal-config-preview.mjs` checked desktop/mobile status, cursor blinking and reduced motion. These ignored local scripts are evidence for this work, not permanent regression tests.
+
 Follow the implementation column before editing a feature explanation. User-facing usage lives in README sections; visual details live in [VISUAL_SYSTEMS.md](VISUAL_SYSTEMS.md). These paths are the review entry points, not a claim that metadata checks validate their semantics.
 
 | Capability                           | Implementation entry points                                                                                                                                                                                                                                         | Responsible explanation                                                                                              | Existing verification                                                                                                        |
@@ -314,7 +318,7 @@ Follow the implementation column before editing a feature explanation. User-faci
 
 ## Optional music player
 
-The public demo enables eight unchanged user-supplied MP3 recordings in `public/music/` through `src/site.config.ts`. `public/music/CREDITS.txt` and `credits.html` record each creator, FMA source and license (six CC0 1.0, two CC BY 4.0); the demo social menu links to the HTML credits. These demo-only assets are outside the npm package and starter manifest. The neutral starter configuration continues to default to disabled music and an empty playlist.
+The public demo enables eight unchanged user-supplied MP3 recordings in `public/music/` through `src/site.config.ts`. `public/music/CREDITS.txt` and `credits.html` record each creator, FMA source and license (six CC0 1.0, two CC BY 4.0); READMEs link to the HTML credits. These demo-only assets are outside the npm package and starter manifest. The neutral starter configuration continues to default to disabled music and an empty playlist.
 
 Code-to-document map: [config schema](../src/site.config.schema.ts), [defaults](../src/site.config.defaults.ts), [adapter template](../scripts/adapter-templates/src/config/theme.ts) and [normalizer](../packages/theme/src/utils/music.ts) define the README configuration example. [MusicDeck](../packages/theme/src/components/shared/MusicDeck.astro), [controller](../packages/theme/src/scripts/music/controller.js) and [stylesheet](../packages/theme/src/styles/music-deck.css) implement the Visual Systems music contract. [Core/storage unit checks](../tests/music.unit.test.mjs) and [installed-starter checks](../scripts/check-installed-starter.mjs) cover lazy audio, event races, validation/storage failure and package installation with music disabled/enabled.
 

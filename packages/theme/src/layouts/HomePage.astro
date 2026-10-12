@@ -23,18 +23,37 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
   <button class="home-mirror-surface" type="button" aria-label="Repair mirror">
     <canvas class="home-mirror" aria-hidden="true"></canvas>
   </button>
-  <div class="home-terminal-intro">
-    <div class="home-terminal-line">
-      <span class="home-terminal-system"><span>Initialize...</span></span><span
-        class="home-terminal-done"><span> done.</span></span
+  {
+    (THEME.HOME.SHOW_INITIALIZE || THEME.HOME.SHOW_FOLLOW) && (
+      <div
+        class:list={[
+          'home-terminal-intro',
+          { 'home-terminal-skip-startup': !THEME.HOME.SHOW_INITIALIZE },
+        ]}
       >
-    </div>
-    <div class="home-terminal-line">
-      <span class="home-terminal-wake"><span>Wake Up...</span></span><span
-        class="home-terminal-follow"><span> Follow The White Rabbit...</span></span
-      >
-    </div>
-  </div>
+        {THEME.HOME.SHOW_INITIALIZE && (
+          <div class="home-terminal-line home-terminal-startup">
+            <span class="home-terminal-system">
+              <span>Initialize...</span>
+            </span>
+            <span class="home-terminal-done">
+              <span> done.</span>
+            </span>
+          </div>
+        )}
+        {THEME.HOME.SHOW_FOLLOW && (
+          <div class="home-terminal-line home-terminal-message">
+            <span class="home-terminal-wake">
+              <span>Wake Up...</span>
+            </span>
+            <span class="home-terminal-follow">
+              <span> Follow The White Rabbit...</span>
+            </span>
+          </div>
+        )}
+      </div>
+    )
+  }
   <h1>{SITE_TITLE}</h1>
   <p class="home-hero-copy">{heroText}</p>
 
@@ -72,4 +91,14 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
       >
     </p>
   </section>
+  {
+    THEME.HOME.SHOW_TRACE && (
+      <div class="home-terminal-status">
+        <span class="home-trace-text">
+          <span aria-hidden="true">&gt; </span>TRACE PROGRAM: RUNNING
+          <span class="home-trace-cursor" aria-hidden="true" />
+        </span>
+      </div>
+    )
+  }
 </MatrixShell>

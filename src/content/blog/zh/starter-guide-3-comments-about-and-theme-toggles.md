@@ -4,7 +4,7 @@ title: '使用指南 3：按需开启与定制功能'
 subtitle: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 description: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: 2026-10-12
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -199,6 +199,21 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 设置 `showCredits: true` 可恢复显示。关闭后两条署名链接都移除，版权行保留。可选的 `site.tagline` 独立追加自定义纯文字，不受此开关控制；默认为空，旧默认值 `Built with Astro.` 视为内置署名，避免重复。不会追加 `All rights reserved`。
+
+这些首页/页脚选项仍是未发布的本地改动，npm 0.14.0 和公开 starter 尚不支持；需要同步升级 starter 和主题包，见[待发布迁移说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)。
+
+首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
+
+可选的 `theme.footer.links` 在页脚多显示一行，每项填写 `label` 和 `href`，链接之间用中间点分隔；省略或空数组隐藏该行。标签在各语言中保持配置原文，不影响社交图标，也不受 `showCredits` 控制。
+
+```ts
+theme: {
+  home: { showInitialize: true, showFollow: true, showTrace: true },
+  footer: {
+    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+  },
+},
+```
 
 自动分享图使用随主题提供的代码雨、终端与霓虹网络背景，站点名、标题和作者仍取自你的内容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（默认 `true`）；设为 `false` 会同时隐藏页脚署名和图片署名，修改后重新构建部署。不会修改自定义的 `ogImage`。背景离线使用，不增加浏览器 JavaScript。
 

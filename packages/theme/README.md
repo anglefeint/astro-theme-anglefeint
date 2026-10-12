@@ -4,6 +4,10 @@ Core package for the Anglefeint Astro theme.
 
 Version 0.9.0 requires Astro `^7.3.5`. Its matching starter uses Sharp `^0.35.5` and refreshed official integrations. Astro 5/6 are no longer supported; migrate the site dependencies together with the theme.
 
+Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.
+
+Optional `theme.footer.links` adds a separate dot-separated row of `{ label, href }` links between copyright and theme credits. Empty or omitted links hide it; it is independent of social icons and `showCredits`, and labels keep their configured text across locales. Home switches and footer links require version 0.15.0 and matching starter schema/defaults/adapter changes. See [migration](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0150-home-switches-and-footer-links). Custom integrations map home switches to `THEME.HOME.SHOW_INITIALIZE/SHOW_FOLLOW/SHOW_TRACE` and links to `THEME.FOOTER.LINKS` through their site-config alias.
+
 ## Install
 
 Optional GA4 is available with the matching 0.10.0 starter. Set top-level `analytics.googleAnalyticsId: 'G-XXXXXXXXXX'` in the existing `src/site.config.ts` configuration, rebuild and deploy. Empty disables it; one Measurement ID covers all languages. Development and localhost/loopback preview are excluded; remote and LAN previews are not. Check the GA4 Realtime report on the deployed site. No consent banner/management is included; arrange consent handling before enabling where needed, and avoid duplicate GTM/Zaraz/manual tags. Upgrading npm alone does not add the new starter schema/defaults/adapter; follow [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). Manual package consumers map `THEME.ANALYTICS.GOOGLE_ANALYTICS_ID` through their existing site-config alias.

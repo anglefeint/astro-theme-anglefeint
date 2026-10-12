@@ -28,9 +28,17 @@ if (commentsConfig.enabled) {
  * Theme behavior config.
  */
 export const THEME = {
+  HOME: {
+    SHOW_INITIALIZE: THEME_CONFIG.theme.home?.showInitialize ?? true,
+    SHOW_FOLLOW: THEME_CONFIG.theme.home?.showFollow ?? true,
+    SHOW_TRACE: THEME_CONFIG.theme.home?.showTrace ?? true,
+  },
   MATH: { ENABLED: THEME_CONFIG.theme.math?.enabled ?? true },
   ANALYTICS: { GOOGLE_ANALYTICS_ID: THEME_CONFIG.analytics?.googleAnalyticsId ?? '' },
-  FOOTER: { SHOW_CREDITS: THEME_CONFIG.theme.footer?.showCredits ?? true },
+  FOOTER: {
+    SHOW_CREDITS: THEME_CONFIG.theme.footer?.showCredits ?? true,
+    LINKS: THEME_CONFIG.theme.footer?.links ?? [],
+  },
   MUSIC: normalizeMusic(THEME_CONFIG.theme.music),
   /** Posts per page on blog list */
   BLOG_PAGE_SIZE: THEME_CONFIG.theme.blogPageSize,

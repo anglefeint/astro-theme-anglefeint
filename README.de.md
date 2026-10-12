@@ -26,6 +26,8 @@
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
+Unter `theme.home` in `src/site.config.ts` steuert `showInitialize` Initialize/done, `showFollow` Wake Up/Follow und `showTrace` den Status unten rechts. Alle sind standardmäßig `true`; `false` blendet den jeweiligen Bereich aus.
+
 ## Mit einem KI-Assistenten arbeiten
 
 Öffne den Projektordner in Cursor, Codex oder Claude Code. Der Starter enthält eine gemeinsame [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), einen Claude-Code-Einstieg und eine immer angewendete Cursor-Regel. Die Hinweise gelten für deinen Blog; Veröffentlichungstools des ursprünglichen Projekts sind nicht nötig. Beginne mit „Lies AGENTS.md“, falls die Hinweise nicht geladen wurden. Ergänze deine eigenen Wünsche.
@@ -109,6 +111,8 @@ social.links enthält href, label und icon (github, twitter oder mastodon). Eine
 Absätze und Signatur auf der About-Seite behalten Zeilenumbrüche aus Konfigurationsstrings: `\n` beginnt eine neue Zeile, `\n\n` lässt eine Leerzeile. Lange Sätze werden weiterhin umgebrochen. Es bleibt Klartext, kein Markdown oder HTML; kein `<br>` einfügen.
 
 Der Footer trennt Copyright, Theme-/Astro-Verweise und den optionalen Text `site.tagline`; darunter stehen die Social-Media-Symbole. Die Verweise folgen der Seitensprache, eigener Text bleibt in allen Sprachen unverändert. Leerer Text benötigt keinen Platz, langer Text bricht auf Mobilgeräten um. Bestehende Einstellungen und `PUBLIC_SITE_TAGLINE` bleiben gültig; keine Migration ist nötig.
+
+Optional fügt `theme.footer.links` eine eigene Fußzeile hinzu: Jeder Eintrag enthält `label` und `href`, mit Punkten zwischen den Links. Ohne Einträge wird die Zeile ausgeblendet. Beschriftungen behalten in allen Sprachen den konfigurierten Text; die Zeile ist unabhängig von sozialen Symbolen und `showCredits`.
 
 ### Sprachen auswählen
 

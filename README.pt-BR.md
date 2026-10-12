@@ -26,6 +26,8 @@
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
 ```
 
+Em `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow e `showTrace` controla o status inferior direito. Todos são `true` por padrão; `false` oculta cada parte separadamente.
+
 ## Usar um assistente de IA
 
 Abra a pasta do projeto no Cursor, Codex ou Claude Code. O starter inclui um [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) compartilhado, uma entrada para Claude Code e uma regra do Cursor sempre aplicada. São instruções para seu blog; ferramentas de publicação do projeto original não são necessárias. Comece com “Leia AGENTS.md” se o assistente não carregou as instruções. Você pode acrescentar suas preferências.
@@ -109,6 +111,8 @@ Configure social.links com href, label e icon (github, twitter ou mastodon). Uma
 Os parágrafos e a assinatura de Sobre preservam quebras de linha da configuração: `\n` inicia outra linha e `\n\n` deixa uma linha em branco. Frases longas continuam quebrando automaticamente. É texto simples, sem Markdown ou HTML; não insira `<br>`.
 
 O rodapé separa copyright, créditos do tema/Astro e o texto opcional `site.tagline`, com ícones sociais abaixo. Os créditos seguem o idioma da página; seu texto permanece igual em todos os idiomas. Texto vazio não ocupa espaço e textos longos quebram linha no celular. A configuração existente e `PUBLIC_SITE_TAGLINE` continuam funcionando; nenhuma migração é necessária.
+
+A opção `theme.footer.links` adiciona uma linha independente ao rodapé: cada item contém `label` e `href`, com pontos entre os links. Omitir a opção ou usar um array vazio oculta a linha. Os rótulos mantêm o texto configurado em todos os idiomas; a linha é independente dos ícones sociais e de `showCredits`.
 
 ### Escolher idiomas
 

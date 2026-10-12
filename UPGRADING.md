@@ -10,6 +10,14 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.15.0: home switches and footer links
+
+Version 0.15.0 requires the matching starter configuration and theme package. Prefer a fresh template and migrate personal content/configuration.
+
+`theme.home.showInitialize`, `showFollow` and `showTrace` default to `true`. `theme.footer.links` defaults to `[]`; configured `{ label, href }` entries render a separate row between copyright and credits, independent of `social.links` and `showCredits`. Labels are user text and do not automatically translate. No demo account or repository links are added to consumer defaults.
+
+Use the matching starter or merge the additions in `src/site.config.schema.ts`, `src/site.config.defaults.ts` and `scripts/adapter-templates/src/config/theme.ts`, then run `npm run sync-adapters` and review the generated `src/config/theme.ts`. The adapter must expose `THEME.HOME` and `THEME.FOOTER.LINKS`; installing the package alone does not update these local files. `sync-adapters` uses local templates and does not download the new template. Preserve personal configuration and add only the requested options in `src/site.config.ts`. Run `npm run doctor`, then preview the homepage and footer before deployment. Use `npm install @anglefeint/astro-theme@^0.15.0` only after merging the matching starter changes.
+
 ## Nine-language baseline (0.9.0)
 
 Version 0.9.0 adds four enabled languages in starter-owned defaults, alongside package UI and CLI translations. It requires Astro `^7.3.5`; see [release status](docs/releases/0.9.0.md). Use a fresh matching starter and migrate personal content/settings for the complete experience. An npm update alone does not add local locale defaults, translated guides or README files. Existing custom article files must not be overwritten. New projects create nine article skeletons by default; disable unwanted locales explicitly with `meta.enabled: false` or select files with `--locales`.

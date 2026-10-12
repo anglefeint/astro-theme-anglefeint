@@ -1,10 +1,12 @@
 /**
  * Theme behavior config.
  */
+
 export const THEME = {
+  HOME: { SHOW_INITIALIZE: true, SHOW_FOLLOW: true, SHOW_TRACE: true },
   MATH: { ENABLED: true },
   ANALYTICS: { GOOGLE_ANALYTICS_ID: '' },
-  FOOTER: { SHOW_CREDITS: true },
+  FOOTER: { SHOW_CREDITS: true, LINKS: [] as { label: string; href: string }[] },
   /** Posts per page on blog list */
   BLOG_PAGE_SIZE: 9,
   /** Number of latest posts shown on home page */

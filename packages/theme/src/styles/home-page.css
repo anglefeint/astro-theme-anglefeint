@@ -187,10 +187,10 @@ body.page-home h1 {
   flex-wrap: wrap;
   min-height: 1.45em;
 }
-.home-terminal-line:first-child {
+.home-terminal-startup {
   animation: home-terminal-fade 1s ease 7.6s forwards;
 }
-.home-terminal-line:last-child {
+.home-terminal-message {
   visibility: hidden;
   animation: home-terminal-show 0s 8.6s forwards;
 }
@@ -313,11 +313,11 @@ body.page-home h1 {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .home-terminal-line:first-child {
+  .home-terminal-startup {
     display: none;
     animation: none;
   }
-  .home-terminal-line:last-child {
+  .home-terminal-message {
     visibility: visible;
     animation: none;
   }
@@ -515,6 +515,48 @@ body.page-home .home-archive-command {
   font-weight: 700;
 }
 
+.home-terminal-status {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0.8rem;
+  color: var(--matrix-green-soft);
+  font:
+    0.75rem/1.5 'Courier New',
+    Courier,
+    monospace;
+  letter-spacing: normal;
+}
+.home-terminal-status .home-trace-text {
+  overflow-wrap: anywhere;
+  min-width: 0;
+  text-align: right;
+}
+.home-trace-cursor {
+  display: inline-block;
+  width: 1ch;
+  height: 1em;
+  margin-left: 1ch;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: home-trace-blink 1s step-end infinite;
+}
+@keyframes home-trace-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-trace-cursor {
+    animation: none;
+  }
+}
+
 .home-post-meta {
   font-size: 0.82rem;
   color: rgba(178, 246, 192, 0.8);
@@ -543,4 +585,18 @@ body.page-home header {
   z-index: 100;
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
+}
+
+/* Start the message immediately when the startup sequence is disabled. */
+.home-terminal-skip-startup .home-terminal-message {
+  visibility: visible;
+  animation: none;
+}
+.home-terminal-skip-startup .home-terminal-wake {
+  --terminal-delay: 0s;
+  --cursor-delay: 0s;
+}
+.home-terminal-skip-startup .home-terminal-follow {
+  --terminal-delay: 4.65s;
+  --cursor-delay: 4.65s;
 }

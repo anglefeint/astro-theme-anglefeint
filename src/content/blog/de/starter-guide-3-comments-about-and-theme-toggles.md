@@ -6,7 +6,7 @@ title: 'Anleitung 3: Optionale Funktionen'
 subtitle: 'Musik, Kommentare, Profil, Seitennavigation und Darstellung.'
 description: 'Musik, Kommentare, Profil, Seitennavigation und Darstellung.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: 2026-10-12
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -72,6 +72,21 @@ defaultLocalePrefix: 'always' leitet / zur lokalisierten Startseite weiter; 'nev
 ## Fußzeile und Prüfung
 
 footer.showCredits: false verbirgt Theme- und Astro-Verweise; Build-Jahr und site.title bleiben sichtbar. site.tagline ist unabhängig. Der alte Wert Built with Astro. gilt als eingebauter Verweis, um Dopplungen zu vermeiden.
+
+Diese Home-/Fußzeilenoptionen sind unveröffentlichte lokale Änderungen und fehlen in npm 0.14.0 und im öffentlichen Starter. Starter und Paket müssen gemeinsam aktualisiert werden; siehe [geplante Migration](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links).
+
+Unter `theme.home` in `src/site.config.ts` steuert `showInitialize` Initialize/done, `showFollow` Wake Up/Follow und `showTrace` den Status unten rechts. Alle sind standardmäßig `true`; `false` blendet den jeweiligen Bereich aus.
+
+Optional fügt `theme.footer.links` eine eigene Fußzeile hinzu: Jeder Eintrag enthält `label` und `href`, mit Punkten zwischen den Links. Ohne Einträge wird die Zeile ausgeblendet. Beschriftungen behalten in allen Sprachen den konfigurierten Text; die Zeile ist unabhängig von sozialen Symbolen und `showCredits`.
+
+```ts
+theme: {
+  home: { showInitialize: true, showFollow: true, showTrace: true },
+  footer: {
+    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+  },
+},
+```
 
 Automatische Vorschaubilder verwenden einen mitgelieferten Hintergrund aus Code-Regen, Terminals und Neon-Netzwerken mit deinem Website-Namen, Titel und Autor. Der kleine Hinweis `Theme by Anglefeint` unten rechts folgt `theme.footer.showCredits` (Standard `true`); `false` blendet die Hinweise im Footer und im Bild aus. Danach neu bauen und veröffentlichen. Eigene `ogImage`-Dateien bleiben unverändert. Der Hintergrund funktioniert offline und fügt kein Browser-JavaScript hinzu.
 
