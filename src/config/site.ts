@@ -22,6 +22,15 @@ export const SITE_AUTHOR =
 export const SITE_TAGLINE =
   (env.PUBLIC_SITE_TAGLINE as string | undefined) ?? THEME_CONFIG.site.tagline;
 
+/** Homepage heading only; site identity and metadata retain SITE_TITLE. */
+export function getHomeTitle(locale: Locale): string {
+  for (const code of getLocaleResolutionChain(locale)) {
+    const title = getLocaleConfig(code).site.homeTitle?.trim();
+    if (title) return title;
+  }
+  return SITE_TITLE;
+}
+
 export function getSiteHero(locale: Locale): string | undefined {
   for (const code of getLocaleResolutionChain(locale)) {
     const hero = getLocaleConfig(code).site.hero;

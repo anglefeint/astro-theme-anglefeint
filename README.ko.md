@@ -32,6 +32,8 @@
 
 `src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다.
 
+언어별 홈의 큰 제목은 `src/site.config.ts`의 `i18n.locales.<code>.site.homeTitle`로 설정합니다（예: `ko: { site: { homeTitle: "나의 디지털 정원" } }`）。새로 추가한 언어에도 적용됩니다. 생략하거나 공백만 입력하면 `meta.fallback` 순서로 찾고, 마지막으로 전역 `site.title` 또는 `PUBLIC_SITE_TITLE`을 사용합니다. 홈의 큰 제목만 변경되며 브라우저 제목, 탐색 메뉴, 푸터, RSS 및 SEO 사이트 이름은 전역 설정을 유지합니다. 변경 후 다시 빌드하고 배포하세요.
+
 ## 요구 사항
 
 - Node.js `22.12.0+` (LTS 권장)
