@@ -79,6 +79,8 @@ pnpm dev
 
 ## 首次配置：站点信息与首页地址
 
+首页大标题可按语言设置：在 `src/site.config.ts` 中填写 `i18n.locales.<code>.site.homeTitle`，例如 `zh: { site: { homeTitle: '我的数字花园' } }`。内置语言和自行新增的语言都适用。未填写或只有空白时，沿该语言的 `meta.fallback` 链查找，最后使用全局 `site.title`（或 `PUBLIC_SITE_TITLE`）。它只改变首页可见大标题；浏览器标题、导航、页脚、RSS 和 SEO 站点名称继续使用全局站名。修改后重新构建并部署。
+
 发布前，编辑 `src/site.config.ts` 中已有的 `defineThemeConfig({...})` 对象。把以下字段合并到现有配置中，保留文件的导入、导出及已有语言和功能设置；将示例标题、作者和 `https://your-domain.example` 换成自己的信息。
 
 ```ts

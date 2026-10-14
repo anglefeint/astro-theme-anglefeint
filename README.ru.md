@@ -28,6 +28,8 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 В `src/site.config.ts` параметры `theme.home.showInitialize`, `showFollow` и `showTrace` управляют соответственно Initialize/done, Wake Up/Follow и статусом справа внизу. По умолчанию все равны `true`; `false` скрывает соответствующий элемент.
 
+Главный заголовок домашней страницы задаётся для каждого языка через `i18n.locales.<code>.site.homeTitle` в `src/site.config.ts`, например `ru: { site: { homeTitle: "Мой цифровой сад" } }`. Это работает и для добавленных языков. Отсутствующие или пустые значения проверяются по цепочке `meta.fallback`, затем используется общий `site.title` или `PUBLIC_SITE_TITLE`. Меняется только видимый заголовок; название вкладки, навигация, подвал, RSS и SEO сохраняют общее имя сайта. Пересоберите и опубликуйте сайт.
+
 ## Работа с ИИ-помощником
 
 Откройте папку проекта в Cursor, Codex или Claude Code. Starter содержит общий [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), файл входа для Claude Code и постоянно применяемое правило Cursor. Инструкции относятся к вашему блогу; инструменты публикации исходной темы не нужны. Начните с «Прочитай AGENTS.md», если инструкции ещё не загружены. Их можно дополнить своими предпочтениями.
