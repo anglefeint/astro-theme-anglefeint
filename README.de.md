@@ -28,6 +28,8 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 Unter `theme.home` in `src/site.config.ts` steuert `showInitialize` Initialize/done, `showFollow` Wake Up/Follow und `showTrace` den Status unten rechts. Alle sind standardmäßig `true`; `false` blendet den jeweiligen Bereich aus.
 
+Die große Startseitenüberschrift lässt sich je Sprache über `i18n.locales.<code>.site.homeTitle` in `src/site.config.ts` setzen, etwa `de: { site: { homeTitle: "Mein digitaler Garten" } }`. Das gilt auch für zusätzlich konfigurierte Sprachen. Fehlende oder leere Werte folgen `meta.fallback`, danach gilt der globale `site.title` oder `PUBLIC_SITE_TITLE`. Nur die sichtbare Überschrift ändert sich; Browser-Titel, Navigation, Footer, RSS und SEO-Seitenname bleiben global. Anschließend neu bauen und bereitstellen.
+
 ## Mit einem KI-Assistenten arbeiten
 
 Öffne den Projektordner in Cursor, Codex oder Claude Code. Der Starter enthält eine gemeinsame [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), einen Claude-Code-Einstieg und eine immer angewendete Cursor-Regel. Die Hinweise gelten für deinen Blog; Veröffentlichungstools des ursprünglichen Projekts sind nicht nötig. Beginne mit „Lies AGENTS.md“, falls die Hinweise nicht geladen wurden. Ergänze deine eigenen Wünsche.

@@ -108,6 +108,8 @@ Set `site.url` to your real production origin so canonical links, feeds and site
 
 ## Choose your languages
 
+To customize the homepage's large heading per language, set `i18n.locales.<code>.site.homeTitle` in `src/site.config.ts`, for example `zh: { site: { homeTitle: '我的数字花园' } }`. It works for built-in and newly configured languages. Missing or whitespace-only headings follow that language's `meta.fallback` chain, then use the global `site.title` (or `PUBLIC_SITE_TITLE`). Only the visible homepage heading changes; browser titles, navigation, footer, RSS and SEO site identity retain the global site name. Rebuild and redeploy after changing configuration.
+
 Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. English remains the default. In `src/site.config.ts`, set `i18n.locales.<code>.meta.enabled: false` for each unwanted language; omitting an override does not disable it, and the default locale stays enabled. `new-post` initially creates nine article skeletons, not automatic translations. To create only one: `npm run new-post -- my-post --locales en`.
 
 ## Create New Post

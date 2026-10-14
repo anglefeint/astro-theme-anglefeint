@@ -71,6 +71,40 @@ export const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});`
       'zh',
       'zh-hant',
     ]);
+    for (const [locales, locale, expected] of [
+      [
+        { fr: { meta: { label: 'Français' }, site: { homeTitle: ' Jardin numérique ' } } },
+        'fr',
+        'Jardin numérique',
+      ],
+      [{ fr: { meta: { label: 'Français' } } }, 'fr', 'Global title'],
+      [
+        {
+          en: { site: { homeTitle: 'English heading' } },
+          fr: { meta: { label: 'Français' }, site: { homeTitle: '  ' } },
+        },
+        'fr',
+        'English heading',
+      ],
+      [
+        {
+          de: { site: { homeTitle: 'Deutscher Titel' } },
+          fr: { meta: { label: 'Français', fallback: ['de'] }, site: { homeTitle: '' } },
+        },
+        'fr',
+        'Deutscher Titel',
+      ],
+      [
+        { fr: { meta: { label: 'Français' }, site: { homeTitle: '<b>Bonjour & bienvenue</b>' } } },
+        'fr',
+        '<b>Bonjour & bienvenue</b>',
+      ],
+    ]) {
+      await set({ site: { title: 'Global title' }, i18n: { locales } });
+      const site = await loadProjectModule(path.join(root, 'src/config/site.ts'));
+      assert.equal(site.getHomeTitle(locale), expected);
+      assert.equal(site.SITE_TITLE, 'Global title');
+    }
     for (const comments of [
       { enabled: true, mapping: 'specific', term: '' },
       { enabled: true, mapping: 'number', number: '0' },

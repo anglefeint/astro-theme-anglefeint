@@ -153,6 +153,7 @@ export interface LocaleMetaConfig {
 }
 
 export interface LocaleSiteConfig {
+  homeTitle?: string;
   hero?: string;
 }
 
@@ -181,6 +182,7 @@ export interface NormalizedLocaleConfig {
     fallback: LocaleCode[];
   };
   site: {
+    homeTitle?: string;
     hero?: string;
   };
   about?: DeepPartial<AboutConfig>;

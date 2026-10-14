@@ -32,6 +32,8 @@ Pasaje Matrix opcional: `theme.effects.enableHomePassage` vale `false` por defec
 
 En `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow y `showTrace` controla el estado inferior derecho. Todos valen `true` por defecto; `false` oculta cada sección por separado.
 
+Configura el encabezado principal de inicio por idioma mediante `i18n.locales.<code>.site.homeTitle` en `src/site.config.ts`, por ejemplo `es: { site: { homeTitle: "Mi jardín digital" } }`. También funciona con idiomas añadidos. Los valores ausentes o en blanco siguen `meta.fallback` y luego usan `site.title` global o `PUBLIC_SITE_TITLE`. Solo cambia el encabezado visible; el título del navegador, la navegación, el pie, RSS y la identidad SEO mantienen el nombre global. Vuelve a compilar y desplegar.
+
 ## Requisitos
 
 - Node.js `22.12.0+` (LTS recomendado)

@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.16.0] - 2026-10-14
+
+- Add optional `i18n.locales.<code>.site.homeTitle` for the visible homepage heading in built-in or custom languages. Missing/blank values follow the locale fallback chain, then the global site name including its environment override.
+- Preserve global browser titles, navigation, footer, RSS and SEO site identity; long headings wrap within mobile bounds.
+- Configure nine localized demo headings without copying demo branding into the neutral starter. This feature requires matching starter types/runtime/site adapter and theme package; see [migration](UPGRADING.md#0160-localized-homepage-headings).
+
 ## [0.15.0] - 2026-10-12
 
 - Add optional `theme.footer.links` for a separate dot-separated footer link row, empty by default and independent of social icons and theme credits.

@@ -17,6 +17,11 @@ export const SITE_URL =
 export const SITE_AUTHOR = (env.PUBLIC_SITE_AUTHOR as string | undefined) ?? 'Your Name';
 export const SITE_TAGLINE = (env.PUBLIC_SITE_TAGLINE as string | undefined) ?? 'Built with Astro.';
 
+/** Direct package consumers retain the global heading without a site registry. */
+export function getHomeTitle(_locale: Locale): string {
+  return SITE_TITLE;
+}
+
 export function getSiteHero(locale: Locale): string | undefined {
   const heroByEnabledLocale: Partial<Record<Locale, string>> = {
     en: 'Write a short introduction for your site and what readers can expect from your posts.',

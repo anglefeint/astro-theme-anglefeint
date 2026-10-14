@@ -32,6 +32,8 @@
 
 ホームのスイッチは `src/site.config.ts` の `theme.home` にあります。`showInitialize` は Initialize/done、`showFollow` は Wake Up/Follow、`showTrace` は右下の状態表示です。すべて既定は `true`、`false` で個別に非表示にできます。
 
+言語別のホーム大見出しは `src/site.config.ts` の `i18n.locales.<code>.site.homeTitle` で設定できます（例：`ja: { site: { homeTitle: "私のデジタルガーデン" } }`）。追加した言語にも対応します。未設定・空白の場合は `meta.fallback` の順に探し、最後に全体の `site.title`（または `PUBLIC_SITE_TITLE`）を使います。ホームの見出しだけが変わり、ブラウザータイトル、ナビゲーション、フッター、RSS、SEO のサイト名は共通です。変更後は再ビルドして公開してください。
+
 ## 動作要件
 
 - Node.js `22.12.0+`（LTS 推奨）

@@ -69,6 +69,7 @@ export function normalizeI18nConfig(config: ThemeI18nConfig): NormalizedThemeI18
         fallback,
       },
       site: {
+        homeTitle: localeConfig.site?.homeTitle,
         hero: localeConfig.site?.hero,
       },
       about: localeConfig.about,
