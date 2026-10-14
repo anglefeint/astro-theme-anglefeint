@@ -166,6 +166,8 @@ async function browserCheck(base, customized = false) {
     await page.goto(base + '/en/');
     await expect(page.locator('footer .footer-credits')).toHaveCount(customized ? 0 : 1);
     if (customized) {
+      await expect(page.locator('main h1')).toHaveText('Acceptance home heading');
+      await expect(page).toHaveTitle('Acceptance site');
       await expect(page.locator('body')).toContainText('Acceptance hero');
       await expect(page.locator('#lang-select option')).toHaveCount(2);
       await expect(page.locator('#lang-select option[value="/zh/"]')).toHaveText('测试中文');
@@ -365,8 +367,8 @@ try {
       },
       i18n: {
         locales: {
-          en: { site: { hero: 'Acceptance hero' } },
-          zh: { meta: { label: '测试中文' } },
+          en: { site: { hero: 'Acceptance hero', homeTitle: 'Acceptance home heading' } },
+          zh: { meta: { label: '测试中文' }, site: { homeTitle: '验收中文首页' } },
           ja: { meta: { enabled: false } },
           ko: { meta: { enabled: false } },
           es: { meta: { enabled: false } },
@@ -411,6 +413,9 @@ try {
   await writeFile(file('.env'), 'PUBLIC_SITE_URL=https://acceptance.example\n');
   await run('build');
   const home = await read('dist/en/index.html');
+  assert.ok(home.includes('<h1>Acceptance home heading</h1>'));
+  assert.ok((await read('dist/zh/index.html')).includes('<h1>验收中文首页</h1>'));
+  assert.ok(home.includes('<title>Acceptance site</title>'));
   assert.match(home, /https:\/\/acceptance.example\/en\//);
   for (const missing of [
     'dist/en/about/index.html',

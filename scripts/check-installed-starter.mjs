@@ -229,6 +229,7 @@ try {
             routing: { defaultLocalePrefix: mode },
             locales: {
               en: {
+                site: { homeTitle: 'INSTALLED_EN_HEADING' },
                 about: {
                   sections: {
                     who: 'ABOUT_LINE_ONE\n\nABOUT_LINE_TWO',
@@ -236,8 +237,14 @@ try {
                   },
                 },
               },
-              zh: { messages: { siteDescription: 'CUSTOM_ZH_DESCRIPTION' } },
-              fr: { meta: { label: 'French', enabled: true } },
+              zh: {
+                site: { homeTitle: '安装版中文标题' },
+                messages: { siteDescription: 'CUSTOM_ZH_DESCRIPTION' },
+              },
+              fr: {
+                meta: { label: 'French', enabled: true },
+                site: { homeTitle: '<b>Jardin & numérique</b>' },
+              },
             },
           },
           theme: {
@@ -356,6 +363,12 @@ try {
         const homePath = mode === 'always' ? `${locale}/index.html` : 'index.html';
         const redirectPath = mode === 'always' ? 'index.html' : `${locale}/index.html`;
         const home = await read(`dist/${homePath}`);
+        assert.ok(
+          home.includes(`<h1>${locale === 'zh' ? '安装版中文标题' : 'INSTALLED_EN_HEADING'}</h1>`)
+        );
+        const customHome = await read('dist/fr/index.html');
+        assert.ok(customHome.includes('<h1>&lt;b&gt;Jardin &amp; numérique&lt;/b&gt;</h1>'));
+        assert.ok(!customHome.includes('<h1><b>'));
         if (mode === 'always') {
           for (const page of [
             home,

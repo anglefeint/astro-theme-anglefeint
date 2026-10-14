@@ -84,6 +84,7 @@ export const THEME_CONFIG = defineThemeConfig({
     locales: {
       'pt-br': {
         site: {
+          homeTitle: 'Finta Angular',
           hero: 'Escreva seu blog em um mundo cinematográfico. Chuva de código Matrix, noites de neon Cyberpunk, terminais Hacker e interfaces de IA em um tema Astro leve.',
         },
         about: {
@@ -113,6 +114,7 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       de: {
         site: {
+          homeTitle: 'Winkelfinte',
           hero: 'Dein Blog in einer filmischen Welt: Matrix-Coderegen, Cyberpunk-Neonnächte, Hacker-Terminals und KI-Oberflächen in einem schlanken Astro-Theme.',
         },
         about: {
@@ -142,6 +144,7 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       ru: {
         site: {
+          homeTitle: 'Угловой финт',
           hero: 'Превратите блог в кинематографичный мир: дождь кода Matrix, неоновые ночи Cyberpunk, терминалы Hacker и интерфейсы ИИ в одной лёгкой теме Astro.',
         },
         about: {
@@ -172,6 +175,7 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       'zh-hant': {
         site: {
+          homeTitle: '角度佯攻',
           hero: '把你的部落格寫進電影裡。Matrix 的程式碼雨、Cyberpunk 的霓虹雨夜、Hacker 終端與 AI 介面，盡在一個輕量的 Astro 主題。',
         },
         about: {
@@ -201,6 +205,7 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       en: {
         site: {
+          homeTitle: 'AngleFeint.',
           hero: 'Write your blog into a cinematic world. Matrix code rain, Cyberpunk neon nights, Hacker terminals and AI interfaces — one lightweight Astro theme.',
         },
         about: {
@@ -230,6 +235,7 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       zh: {
         site: {
+          homeTitle: '角度佯攻',
           hero: '把你的博客写进电影里。Matrix 的代码雨、Cyberpunk 的霓虹雨夜、Hacker 的终端与 AI 的未来界面，一个轻量的 Astro 主题。',
         },
         about: {
@@ -259,6 +265,7 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       ja: {
         site: {
+          homeTitle: 'アングルフェイント',
           hero: 'あなたのブログに、映画のような世界を。Matrix のコードの雨、Cyberpunk のネオンに染まる雨の夜、Hacker の端末、AI の未来的な画面を、軽量な Astro テーマに。',
         },
         about: {
@@ -288,6 +295,7 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       ko: {
         site: {
+          homeTitle: '앵글 페인트',
           hero: '블로그를 영화 속 세계로. Matrix의 코드 비, Cyberpunk의 비 내리는 네온 거리, Hacker의 터미널, AI의 미래적인 화면을 하나의 가벼운 Astro 테마에 담았습니다.',
         },
         about: {
@@ -317,6 +325,7 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       es: {
         site: {
+          homeTitle: 'Finta Angular',
           hero: 'Dale a tu blog una atmósfera de cine. La lluvia de código de Matrix, las noches de neón de Cyberpunk, las terminales Hacker y las interfaces de IA, en un tema ligero de Astro.',
         },
         about: {

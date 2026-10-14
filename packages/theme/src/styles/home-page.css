@@ -165,6 +165,7 @@ body.page-home main::before {
 }
 
 body.page-home h1 {
+  overflow-wrap: anywhere;
   color: var(--matrix-green);
   letter-spacing: 0.04em;
   text-shadow:

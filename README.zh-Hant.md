@@ -30,6 +30,8 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 可選的 `theme.footer.links` 在頁尾增加一行，每項填寫 `label` 與 `href`，連結以中間點分隔；省略或空陣列隱藏該行。標籤在各語言中保留設定原文，獨立於社群圖示與 `showCredits`。
 
+首頁大標題可在 `src/site.config.ts` 透過 `i18n.locales.<code>.site.homeTitle` 按語言設定，例如 `"zh-hant": { site: { homeTitle: "我的數位花園" } }`。內建及自行新增的語言都適用。未填或只有空白時，沿 `meta.fallback` 鏈查找，最後使用全域 `site.title`（或 `PUBLIC_SITE_TITLE`）。它只改變首頁可見大標題；瀏覽器標題、導覽列、頁尾、RSS 與 SEO 站點名稱維持全域設定。修改後重新建置並部署。
+
 ## 使用 AI 助手
 
 在 Cursor、Codex 或 Claude Code 中開啟專案資料夾。starter 附帶統一的 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)、Claude Code 入口與自動套用的 Cursor 規則，說明如何管理自己的部落格，無需使用上游發布工具。請求可先寫「閱讀 AGENTS.md」，尤其當助手尚未載入專案指引時；也可按自己的偏好修改這份檔案。

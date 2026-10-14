@@ -10,6 +10,8 @@ Optional `theme.footer.links` adds a separate dot-separated row of `{ label, hre
 
 ## Install
 
+Version 0.16.0 adds `i18n.locales.<code>.site.homeTitle` for the visible homepage heading. Non-empty trimmed text follows the locale fallback chain, then the global site name; site metadata and shared chrome remain global. Use the matching starter schema/runtime/site adapter. Custom integrations must export `getHomeTitle(locale): string` through `@anglefeint/site-config/site`; direct package defaults return `SITE_TITLE`. Older starters require migration before installing this release; see [upgrade steps](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0160-localized-homepage-headings).
+
 Optional GA4 is available with the matching 0.10.0 starter. Set top-level `analytics.googleAnalyticsId: 'G-XXXXXXXXXX'` in the existing `src/site.config.ts` configuration, rebuild and deploy. Empty disables it; one Measurement ID covers all languages. Development and localhost/loopback preview are excluded; remote and LAN previews are not. Check the GA4 Realtime report on the deployed site. No consent banner/management is included; arrange consent handling before enabling where needed, and avoid duplicate GTM/Zaraz/manual tags. Upgrading npm alone does not add the new starter schema/defaults/adapter; follow [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). Manual package consumers map `THEME.ANALYTICS.GOOGLE_ANALYTICS_ID` through their existing site-config alias.
 
 ```bash

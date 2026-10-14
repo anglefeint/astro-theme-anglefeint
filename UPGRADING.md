@@ -10,6 +10,12 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.16.0: localized homepage headings
+
+Version 0.16.0 requires the matching starter and package. Prefer a fresh template and migrate personal content/settings. For a matching 0.15.0 project, merge `homeTitle?: string` into `LocaleSiteConfig` and `NormalizedLocaleConfig.site` in `src/site.config.schema.ts`, preserve it in `src/site.config.runtime.ts`, and merge `getHomeTitle(locale)` from the matching `scripts/adapter-templates/src/config/site.ts`. Run `npm run sync-adapters`, review the generated diff, then install `@anglefeint/astro-theme@^0.16.0`. The package's homepage now imports this helper; installing npm alone into an older starter is insufficient. Local `sync-adapters` does not download upstream templates.
+
+Set `i18n.locales.<code>.site.homeTitle` for any built-in or custom language. Trimmed non-empty values follow the locale fallback chain, then `SITE_TITLE` including `PUBLIC_SITE_TITLE`. Defaults remain unset. Only the visible homepage h1 changes; browser title, navigation, footer, RSS and SEO identity remain global. Run doctor, preview the relevant language homepages and redeploy. No content, route or language-registry migration is needed.
+
 ## 0.15.0: home switches and footer links
 
 Version 0.15.0 requires the matching starter configuration and theme package. Prefer a fresh template and migrate personal content/configuration.
