@@ -59,7 +59,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 首页和 About Oracle 共用 `matrix-passage/player.js`、`matrix-corridor.js` 与场景/材质/渲染器/时间线。小窗口先建走廊，点门后补充广场、Oracle、乌鸦；返回关门后保留资源但跳过这些组的绘制，再开门不重复分配。后方门廊只有四对门，尽头右转，位置观察和倒退均不增加另一套动画。到达广场后拖动环顾，右键直接退回；对准走廊可左键返回。About 用 Escape 或 × 关闭。
 
-小画布按尺寸选择 256px 纹理和简化几何；绘制上限 30fps，隐藏页面暂停。首页移开鼠标暂停，15 秒内再次激活复用，超时/窗口尺寸变化/pagehide 释放；About 关闭后释放。具体路径、检查与限制见 [架构](docs/ARCHITECTURE.md#shared-terminal-and-oracle-passage)、[视觉参考](docs/VISUAL_SYSTEMS.md#1-home-bodypage-home) 和 [本轮审查记录](docs/CODE_DOC_AUDIT.md)。本段说明工作区实现，不表示已发布到 npm、starter 或线上站点。
+小画布按尺寸选择 256px 纹理和简化几何；绘制上限 30fps，隐藏页面暂停。首页移开鼠标暂停，15 秒内再次激活复用，超时/窗口尺寸变化/pagehide 释放；About 关闭后释放。具体路径、检查与限制见 [架构](docs/ARCHITECTURE.md#shared-terminal-and-oracle-passage)、[视觉参考](docs/VISUAL_SYSTEMS.md#1-home-bodypage-home) 和 [本轮审查记录](docs/CODE_DOC_AUDIT.md)。该增量已随 0.17.0 交付；源码、starter、注册表和线上验证见 [发布记录](docs/releases/0.17.0.md)。
 
 | 页面         | 路由与代码入口                                                                                                | 当前行为                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
