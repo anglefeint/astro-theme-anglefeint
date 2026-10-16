@@ -167,6 +167,7 @@ async function browserCheck(base, customized = false) {
     await expect(page.locator('footer .footer-credits')).toHaveCount(customized ? 0 : 1);
     if (customized) {
       await expect(page.locator('main h1')).toHaveText('Acceptance home heading');
+      await expect(page.locator('.home-signal-message')).toHaveText('Acceptance shared signal');
       await expect(page).toHaveTitle('Acceptance site');
       await expect(page.locator('body')).toContainText('Acceptance hero');
       await expect(page.locator('#lang-select option')).toHaveCount(2);
@@ -367,8 +368,15 @@ try {
       },
       i18n: {
         locales: {
-          en: { site: { hero: 'Acceptance hero', homeTitle: 'Acceptance home heading' } },
-          zh: { meta: { label: '测试中文' }, site: { homeTitle: '验收中文首页' } },
+          en: {
+            site: { hero: 'Acceptance hero', homeTitle: 'Acceptance home heading' },
+            messages: { home: { transmission: 'Acceptance shared signal' } },
+          },
+          zh: {
+            meta: { label: '测试中文' },
+            site: { homeTitle: '验收中文首页' },
+            messages: { home: { transmission: '验收中文信号' } },
+          },
           ja: { meta: { enabled: false } },
           ko: { meta: { enabled: false } },
           es: { meta: { enabled: false } },
@@ -413,8 +421,11 @@ try {
   await writeFile(file('.env'), 'PUBLIC_SITE_URL=https://acceptance.example\n');
   await run('build');
   const home = await read('dist/en/index.html');
-  assert.ok(home.includes('<h1>Acceptance home heading</h1>'));
-  assert.ok((await read('dist/zh/index.html')).includes('<h1>验收中文首页</h1>'));
+  assert.equal(home.match(/<h1\b[^>]*>(.*?)<\/h1>/s)?.[1], 'Acceptance home heading');
+  assert.ok(home.includes('Acceptance shared signal'));
+  const chineseHome = await read('dist/zh/index.html');
+  assert.equal(chineseHome.match(/<h1\b[^>]*>(.*?)<\/h1>/s)?.[1], '验收中文首页');
+  assert.ok(chineseHome.includes('验收中文信号'));
   assert.ok(home.includes('<title>Acceptance site</title>'));
   assert.match(home, /https:\/\/acceptance.example\/en\//);
   for (const missing of [

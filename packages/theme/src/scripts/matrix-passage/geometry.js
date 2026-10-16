@@ -1,5 +1,7 @@
 // CPU mesh generation only; no rendering or animation state.
-export function createGeometry(materialCount = 9, transform = (point) => point) {
+export function createGeometry(materialCount = 9, transform = (point) => point, quality) {
+  const steps = quality?.curveSteps ?? 10;
+  const sides = quality?.tubeSides ?? 8;
   const batches = Array.from({ length: materialCount }, () => []);
   const meshBatches = batches;
   const face = (
@@ -34,8 +36,8 @@ export function createGeometry(materialCount = 9, transform = (point) => point) 
         p1 = controls[segment],
         p2 = controls[segment + 1],
         p3 = controls[Math.min(controls.length - 1, segment + 2)];
-      for (let step = 0; step < 10; step++) {
-        const t = step / 10;
+      for (let step = 0; step < steps; step++) {
+        const t = step / steps;
         points.push(
           p1.map(
             (v, i) =>
@@ -55,23 +57,25 @@ export function createGeometry(materialCount = 9, transform = (point) => point) 
       const axis = normalize(next.map((v, i) => v - previous[i]));
       const u = normalize(cross(axis, Math.abs(axis[2]) < 0.9 ? [0, 0, 1] : [0, 1, 0])),
         v = cross(axis, u);
-      return Array.from({ length: 8 }, (_, side) =>
+      return Array.from({ length: sides }, (_, side) =>
         center.map(
           (n, i) =>
             n +
-            radius * (u[i] * Math.cos((side * Math.PI) / 4) + v[i] * Math.sin((side * Math.PI) / 4))
+            radius *
+              (u[i] * Math.cos((side * Math.PI * 2) / sides) +
+                v[i] * Math.sin((side * Math.PI * 2) / sides))
         )
       );
     });
     for (let i = 1; i < rings.length; i++)
-      for (let side = 0; side < 8; side++) {
-        const next = (side + 1) % 8,
+      for (let side = 0; side < sides; side++) {
+        const next = (side + 1) % sides,
           y0 = 0.1 + (0.8 * (i - 1)) / (rings.length - 1),
           y1 = 0.1 + (0.8 * i) / (rings.length - 1);
         face(
           texture,
           [rings[i - 1][side], rings[i][side], rings[i][next], rings[i - 1][next]],
-          1.05 + 0.3 * Math.cos((side * Math.PI) / 4),
+          1.05 + 0.3 * Math.cos((side * Math.PI * 2) / sides),
           [
             [0.2 + side * 0.008, y0],
             [0.2 + side * 0.008, y1],

@@ -2,6 +2,18 @@ export const TOTAL_DURATION_MS = 8000;
 export const SCREEN_EXPAND_MS = 2500;
 export const PASSAGE_DURATION_MS = TOTAL_DURATION_MS - SCREEN_EXPAND_MS;
 export const PASSAGE_FALLBACK_MS = TOTAL_DURATION_MS + 1500;
+// Fixed views share the original camera path; only environmental time keeps advancing.
+export function passageProgress(mode, progress) {
+  if (mode === 'corridor') return 0.06;
+  if (mode === 'oracle') return 1;
+  return progress;
+}
+// Both directions sample the same normalized camera/door timeline.
+export function travelProgress(from, to, elapsedMs) {
+  const direction = Math.sign(to - from);
+  const position = from + (direction * Math.max(0, elapsedMs)) / PASSAGE_DURATION_MS;
+  return direction >= 0 ? Math.min(to, position) : Math.max(to, position);
+}
 export function samplePassage(progress, end = 6, floor = 1.35) {
   progress = Math.max(0, Math.min(1, progress));
   const ease = (t) => t * t * (3 - 2 * t);

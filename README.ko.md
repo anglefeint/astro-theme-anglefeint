@@ -28,7 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-선택적 Matrix 전환: `theme.effects.enableHomePassage` 기본값은 `false`입니다. 켜면 홈의 글 링크에서 8초 녹색 전환 후 이동합니다. About의 `Oracle` 버튼은 독립적으로 작동하며 클릭할 때 네 가지 색상 중 직전과 다른 색상을 선택합니다. 다시 클릭하거나 Escape를 누르면 돌아갑니다. 동작 줄이기 설정에서는 홈 링크가 바로 이동하고 Oracle은 정적 미리보기를 표시합니다.
+선택적 Matrix 전환: `theme.effects.enableHomePassage` 기본값은 `false`입니다. 켜면 홈의 글 링크에서 8초 녹색 전환 후 이동합니다. About의 `Oracle` 버튼은 독립적으로 작동하며 클릭할 때 네 가지 색상 중 직전과 다른 색상을 선택합니다. 도착 후 드래그로 둘러보고 오른쪽 클릭으로 복도로 돌아갑니다. Escape 또는 ×로 닫습니다. 동작 줄이기 설정에서는 홈 링크가 바로 이동하고 Oracle은 정적 미리보기를 표시합니다.
+
+너비 1440px 이상에서는 오른쪽 아래 터미널에 `Knock, knock.`이 표시됩니다. 글은 선택·복사·스크롤할 수 있으며 별도 열쇠구멍 버튼으로 공통 복도 미리보기를 시작합니다. `src/site.config.ts`의 `i18n.locales.en.messages.home.transmission`을 공통 문구로 설정하고 필요한 언어만 `i18n.locales.<code>.messages.home.transmission`으로 덮어쓰세요. 우선순위는 현재 언어 설정 → 영어 설정 → `Knock, knock.`이며 일반 UI 번역과 다릅니다. 변경 후 다시 빌드하고 배포하세요.
 
 `src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다.
 

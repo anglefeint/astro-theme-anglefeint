@@ -10,6 +10,12 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.17.0: terminal message and shared Oracle exploration
+
+Version 0.17.0 adds the wide-screen homepage keyhole terminal, shared drag-to-look and reverse travel. See the [release record](docs/releases/0.17.0.md) for delivery status. Terminal and Oracle use one package-owned player; right-click returns to the corridor after arrival, while Escape or × closes About exploration. Text selection and scrolling do not start the terminal preview.
+
+Prefer a fresh matching starter and migrate personal content/settings. For the terminal message fallback, merge the matching `scripts/adapter-templates/src/i18n/messages.ts`, run `npm run sync-adapters` and review `src/i18n/messages.ts` before installing `@anglefeint/astro-theme@^0.17.0`. npm updates do not replace these project-owned files, and `sync-adapters` uses local templates rather than downloading new ones. The existing `messages` configuration surface needs no schema addition. Set `i18n.locales.en.messages.home.transmission` for shared text and optionally override individual languages; otherwise `Knock, knock.` remains the default. Keep personal configuration and preview Home/About with normal and reduced motion.
+
 ## 0.16.0: localized homepage headings
 
 Version 0.16.0 requires the matching starter and package. Prefer a fresh template and migrate personal content/settings. For a matching 0.15.0 project, merge `homeTitle?: string` into `LocaleSiteConfig` and `NormalizedLocaleConfig.site` in `src/site.config.schema.ts`, preserve it in `src/site.config.runtime.ts`, and merge `getHomeTitle(locale)` from the matching `scripts/adapter-templates/src/config/site.ts`. Run `npm run sync-adapters`, review the generated diff, then install `@anglefeint/astro-theme@^0.16.0`. The package's homepage now imports this helper; installing npm alone into an older starter is insufficient. Local `sync-adapters` does not download upstream templates.

@@ -12,6 +12,22 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-16 首页终端、共享走廊与 Oracle 文档工作流
+
+本轮以 main `baaef62`（0.16.0 交付说明）为工作区基线，检查最近五次提交及全部未提交修改和新增测试。既有 0.16.0 标题配置已经有对应记录；本轮没有把已发布版本改写成包含新终端或探索功能。`npm run suggest:docs` 的原始候选保存在 `acceptance-results/doc-sync-suggestions.log`，输入覆盖 HomePage/MatrixShell、首页和 About 生命周期、全部变更的 `matrix-passage` 模块、样式、消息与适配器模板及单元/浏览器测试。最终文档仍描述尚未交付的当前源码，不表示 npm、starter 或 demo 已发布。
+
+| 核对链路                                                                              | 观察结果与文档处置                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/site.config.schema.ts` / runtime → 消息适配器模板及生成目标 → HomePage           | 终端文字支持任意已配置语言，当前语言显式配置 → 英文显式配置 → 单一 `Knock, knock.` 默认值；空字符串保留，其他 UI 翻译合并顺序不变。九语 README、包 README、架构、视觉参考和升级说明补齐配置入口及匹配 starter 适配器要求。测试用的 100 词覆盖已移除。                         |
+| HomePage → MatrixShell 命名插槽 → `home-effects.js` / `home-page.css`                 | 宽屏终端在正文外，文字可复制和滚动；钥匙孔绝对定位在独立底部区域（预留 38px），不与短句同行。点击才触发 600ms CSS 解锁，之后展开 1000ms，展开 800ms 后启动共享渲染，成功首帧后淡入 1000ms；退出取消/暂停，15 秒有界缓存与超时释放。修正旧 hover 启动、时间范围和内边距说明。  |
+| About wrapper / background → shared player → scene/materials/renderer/timeline/camera | 首页小画布与 About 使用一套实现；小画布先建走廊，开门追加后方缓冲区，返回关门后停止这些组的颜色/辉光绘制并保留资源。原时间线可逆；拖动只改朝向，右键任意方向倒退，左键/Enter 需要命中走廊；About Escape/× 关闭。修正 README、包 README 和架构里的再次点击关闭及静态门框说法。 |
+| corridor / door builders → renderer → 相关测试                                        | 后方四对门和右转短廊、门框/内侧墙流动、静态金属把手、按画布预算生成纹理与几何、30fps 与隐藏暂停。架构增加源码/检查映射；视觉参考保留详细参数，验收指南区分持久测试和局部探索证据。                                                                                            |
+| package exports / starter manifest → adapter generation                               | 本轮没有新增 starter 消费的运行文件；现有 manifest 已覆盖消息模板、生成目标和九语 README。升级文档说明更新 npm 不会覆盖项目适配器，本地 sync 不下载新模板；没有在本轮执行版本号、发布或分支同步。                                                                             |
+
+候选与传播处置：直接命中范围包括九语 README、包 README、ARCHITECTURE、VISUAL_SYSTEMS、中文项目地图、升级/验收、工作流/工具入口和部分历史版本；依赖图继续传播到发布/分支及其他历史版本。更新其中有事实变化的九语 README、包 README、ARCHITECTURE、VISUAL_SYSTEMS、UPGRADING、TEMPLATE_ACCEPTANCE、anglefeint.md 和本记录。AGENTS/CLAUDE/Cursor、贡献指南、AI/文档/元数据工作流、打包/发布/分支政策、目录提交介绍和截图清单均无对应规则、命令、默认开关或分发文件集合变化，复核后不改。CHANGELOG 与历史 releases 保留既有交付事实，待用户执行发布工作流再记录新版本。内容文章按工作流的数据排除规则处理，没有将历史教程泛化为当前全部特效清单。
+
+验证按本轮文档任务区分：新执行的文档元数据检查通过（73 份 Markdown、无元数据错误），16 份变更文档的本地链接检查通过；Prettier、diff 空白、适配器契约/同步检查通过，终端回退和共享时间线的 6 项单元测试全部通过。此前功能轮次已经完成完整主检查、190 页构建、9 个 About 运行检查和终端/Oracle 浏览器测试，本轮不把它们写成新执行的发布验收。没有新增运行代码去迎合文档，没有 npm 发布、starter 推送、公开模板或线上验证。当前未验证每种硬件的帧率和全部内存泄漏情形；性能说明仅描述有界资源策略，不承诺跨设备表现。
+
 ## 2026-10-11 Matrix、Oracle 与播放器场景文档同步
 
 以 main `dc78b98` 为已复核基线，读取该提交后的全部工作区变更（含新增文件），将路径交给 `suggest:docs`；报告保存在 `acceptance-results/release-0140-doc-suggestions.log`。直接候选包含九语 README、包 README、架构/视觉参考、升级、验收、发布、工作流和历史版本；无额外传播项，因为关系目标已在直接候选中。

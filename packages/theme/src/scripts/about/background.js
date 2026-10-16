@@ -16,9 +16,12 @@ export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
     '~ $ cat .motd',
     '>> welcome to the void | access granted',
   ];
-  var dirLines = runtimeConfig.effects && Array.isArray(runtimeConfig.effects.backgroundLines) && runtimeConfig.effects.backgroundLines.length > 0
-    ? runtimeConfig.effects.backgroundLines
-    : fallbackDirLines;
+  var dirLines =
+    runtimeConfig.effects &&
+    Array.isArray(runtimeConfig.effects.backgroundLines) &&
+    runtimeConfig.effects.backgroundLines.length > 0
+      ? runtimeConfig.effects.backgroundLines
+      : fallbackDirLines;
   var hackerFocused = false;
   var hackerInput = '';
   var hackerHistory = [];
@@ -52,7 +55,11 @@ export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
         bgCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
       } else if (line.indexOf('>>') === 0) {
         bgCtx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-      } else if (line.indexOf('total') === 0 || line.indexOf('drwx') === 0 || line.indexOf('-rw') === 0) {
+      } else if (
+        line.indexOf('total') === 0 ||
+        line.indexOf('drwx') === 0 ||
+        line.indexOf('-rw') === 0
+      ) {
         bgCtx.fillStyle = 'rgba(255, 255, 255, 0.55)';
       } else {
         bgCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
@@ -103,7 +110,7 @@ export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
     stopBackgroundLoop();
   } else {
     startBackgroundLoop();
-    document.addEventListener('visibilitychange', function() {
+    document.addEventListener('visibilitychange', function () {
       if (document.hidden) {
         stopBackgroundLoop();
         return;
@@ -112,7 +119,7 @@ export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
     });
   }
 
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     var content = document.querySelector('.about-shell');
     var header = document.querySelector('header');
     var footer = document.querySelector('footer');
@@ -129,7 +136,8 @@ export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
     }
   });
 
-  document.addEventListener('keydown', function(e) {
+  document.addEventListener('keydown', function (e) {
+    if (e.target instanceof Element && e.target.closest('.oracle-passage')) return;
     if (!hackerFocused) return;
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     e.preventDefault();
@@ -139,12 +147,22 @@ export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
       if (hackerHistory.length > 8) hackerHistory.shift();
     } else if (e.key === 'Backspace') {
       hackerInput = hackerInput.slice(0, -1);
-    } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey && hackerInput.length < 80) {
+    } else if (
+      e.key.length === 1 &&
+      !e.ctrlKey &&
+      !e.metaKey &&
+      !e.altKey &&
+      hackerInput.length < 80
+    ) {
       hackerInput += e.key;
     }
   });
 
-  window.addEventListener('resize', function() {
-    sizeBackground();
-  }, { passive: true });
+  window.addEventListener(
+    'resize',
+    function () {
+      sizeBackground();
+    },
+    { passive: true }
+  );
 }

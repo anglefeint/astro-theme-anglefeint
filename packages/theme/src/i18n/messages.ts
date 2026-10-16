@@ -49,6 +49,8 @@ export type Messages = {
     statusAria: string;
   };
   home: {
+    openDoor: string;
+    transmission: string;
     hero: string;
     latest: string;
     viewAll: string;
@@ -112,6 +114,8 @@ export type Messages = {
   };
 };
 
+const DEFAULT_TRANSMISSION = 'Knock, knock.';
+
 export const DEFAULT_MESSAGES: Record<string, Messages> = {
   'pt-br': {
     footer: { theme: 'Tema por', builtWith: 'Feito com' },
@@ -169,9 +173,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: 'Estado do sistema',
     },
     home: {
+      openDoor: 'Abrir a porta',
+      transmission: DEFAULT_TRANSMISSION,
       hero: 'Apresente seu site e conte o que os leitores encontrarão nos seus artigos.',
-      latest: 'Artigos recentes',
-      viewAll: 'Ver todos os artigos',
+      latest: 'Recentes',
+      viewAll: 'Todos',
       noPosts: 'Ainda não há artigos neste idioma.',
     },
     about: {
@@ -289,9 +295,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: 'Systemstatus',
     },
     home: {
+      openDoor: 'Tür öffnen',
+      transmission: DEFAULT_TRANSMISSION,
       hero: 'Stelle deine Website kurz vor und beschreibe, was Leser in deinen Beiträgen erwartet.',
-      latest: 'Neueste Beiträge',
-      viewAll: 'Alle Beiträge ansehen',
+      latest: 'Neu',
+      viewAll: 'Alle',
       noPosts: 'In dieser Sprache gibt es noch keine Beiträge.',
     },
     about: {
@@ -407,9 +415,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: 'Состояние системы',
     },
     home: {
+      openDoor: 'Открыть дверь',
+      transmission: DEFAULT_TRANSMISSION,
       hero: 'Кратко представьте свой сайт и расскажите, какие статьи здесь найдут читатели.',
-      latest: 'Новые статьи',
-      viewAll: 'Все статьи',
+      latest: 'Новое',
+      viewAll: 'Все',
       noPosts: 'На этом языке пока нет статей.',
     },
     about: {
@@ -525,9 +535,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: '系統狀態',
     },
     home: {
+      openDoor: '開門',
+      transmission: DEFAULT_TRANSMISSION,
       hero: '簡短介紹你的網站，並告訴讀者這裡會有哪些內容。',
-      latest: '最新文章',
-      viewAll: '檢視所有文章',
+      latest: '最新',
+      viewAll: '全部',
       noPosts: '這個語言目前還沒有文章。',
     },
     about: {
@@ -640,9 +652,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: 'System status',
     },
     home: {
+      openDoor: 'Open door',
+      transmission: DEFAULT_TRANSMISSION,
       hero: 'Write a short introduction for your site and what readers can expect from your posts.',
-      latest: 'Latest Posts',
-      viewAll: 'View All Posts',
+      latest: 'Latest',
+      viewAll: 'All',
       noPosts: 'No posts available in this language yet.',
     },
     about: {
@@ -755,9 +769,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: 'システム状態',
     },
     home: {
+      openDoor: 'ドアを開く',
+      transmission: DEFAULT_TRANSMISSION,
       hero: 'このサイトの紹介文と、読者がどんな記事を期待できるかを書いてください。',
-      latest: '最新記事',
-      viewAll: 'すべての記事を見る',
+      latest: '最新',
+      viewAll: 'すべて',
       noPosts: 'この言語の記事はまだありません。',
     },
     about: {
@@ -870,9 +886,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: '시스템 상태',
     },
     home: {
+      openDoor: '문 열기',
+      transmission: DEFAULT_TRANSMISSION,
       hero: '사이트 소개와 방문자가 어떤 글을 기대할 수 있는지 간단히 작성하세요.',
-      latest: '최신 글',
-      viewAll: '모든 글 보기',
+      latest: '최신',
+      viewAll: '전체',
       noPosts: '이 언어에는 아직 게시물이 없습니다.',
     },
     about: {
@@ -985,9 +1003,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: 'Estado del sistema',
     },
     home: {
+      openDoor: 'Abrir la puerta',
+      transmission: DEFAULT_TRANSMISSION,
       hero: 'Escribe una breve presentación del sitio y qué tipo de contenido encontrarán tus lectores.',
-      latest: 'Últimas publicaciones',
-      viewAll: 'Ver todas las publicaciones',
+      latest: 'Recientes',
+      viewAll: 'Todo',
       noPosts: 'Aún no hay publicaciones en este idioma.',
     },
     about: {
@@ -1097,9 +1117,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       statusAria: '系统状态',
     },
     home: {
+      openDoor: '开门',
+      transmission: DEFAULT_TRANSMISSION,
       hero: '在这里写一段站点简介，并告诉读者你将发布什么类型的内容。',
-      latest: '最新文章',
-      viewAll: '查看全部文章',
+      latest: '最新',
+      viewAll: '全部',
       noPosts: '该语言暂时没有文章。',
     },
     about: {

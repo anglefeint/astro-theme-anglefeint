@@ -4,7 +4,7 @@
 import type { Messages } from '@anglefeint/theme-default-i18n';
 import { DEFAULT_MESSAGES } from '@anglefeint/theme-default-i18n';
 import { deepMerge } from '@anglefeint/astro-theme/utils/merge';
-import { getLocaleConfig, getLocaleResolutionChain, type Locale } from './runtime.ts';
+import { I18N, getLocaleConfig, getLocaleResolutionChain, type Locale } from './runtime.ts';
 
 const BUILTIN_MESSAGES = DEFAULT_MESSAGES as Record<string, Messages>;
 
@@ -23,6 +23,12 @@ export function getMessages(locale: Locale): Messages {
       resolved = deepMerge(resolved, overrideMessages);
     }
   }
+
+  // Author text has one shared English default; UI translations keep their normal chain.
+  resolved.home.transmission =
+    I18N.locales[locale]?.messages?.home?.transmission ??
+    I18N.locales.en?.messages?.home?.transmission ??
+    DEFAULT_MESSAGES.en.home.transmission;
 
   return resolved;
 }

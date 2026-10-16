@@ -28,7 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-Optional Matrix passage: `theme.effects.enableHomePassage` defaults to `false`. When enabled, homepage post links use an 8-second green passage before navigation. About’s `Oracle` button works independently: each click selects one of four scene palettes without repeating the previous palette; click again or press Escape to return. Reduced motion keeps native home navigation and a static Oracle preview.
+Optional Matrix passage: `theme.effects.enableHomePassage` defaults to `false`. When enabled, homepage post links use an 8-second green passage before navigation. About’s `Oracle` button works independently: each click selects one of four scene palettes without repeating the previous palette; drag to look around after arrival, right-click to walk back, and use Escape or × to close. Reduced motion keeps native home navigation and a static Oracle preview.
+
+On wide screens (1440px and above), the bottom-right terminal shows `Knock, knock.`. Text remains selectable and scrollable; activate its keyhole button to unlock the shared corridor preview. Set `i18n.locales.en.messages.home.transmission` in `src/site.config.ts` once for all languages, then override `i18n.locales.<code>.messages.home.transmission` only where needed. Resolution is current-language configuration → English configuration → `Knock, knock.`; this differs from normal UI-message fallback. Configuration changes require rebuilding and redeploying.
 
 Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.
 

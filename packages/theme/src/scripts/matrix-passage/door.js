@@ -1,10 +1,11 @@
-export function buildDoorFrame({ face }, dimensions) {
+export function buildDoorFrame({ face }, dimensions, surround) {
+  let surfaceFace = surround?.face ?? face;
   const { floor, half, end, doorTop, doorHalf } = dimensions;
   const outerTop = doorTop - 0.15;
   const front = end - 0.06,
     back = end + 0.15;
   const wallFace = (material, points, shade = 1) =>
-    face(
+    surfaceFace(
       material,
       points,
       shade,
@@ -27,6 +28,7 @@ export function buildDoorFrame({ face }, dimensions) {
   rectangle(1, half, 20, -20, 20, end, 0.9);
   rectangle(4, -half, half, -20, outerTop, end, 0.9);
   rectangle(4, -half, half, floor, 20, end, 0.9);
+  surfaceFace = face;
 
   // A continuous three-sided frame, with separate front/back faces and real reveals.
   for (const depth of [front, back]) {

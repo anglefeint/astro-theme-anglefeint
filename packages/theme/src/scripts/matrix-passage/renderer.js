@@ -6,11 +6,11 @@ import { passageCamera } from './camera.js';
 import { createSignalGlow } from './signal-glow.js';
 
 // Owns GPU allocation, drawing and disposal; receives a completed scene.
-export function createPassageRenderer(canvas, scene, materials, palette) {
+export function createPassageRenderer(canvas, scene, materials, palette, viewport) {
   const gl = canvas.getContext('webgl', { alpha: false, antialias: false });
   if (!gl) throw new Error('Perspective renderer unavailable');
-  const width = innerWidth,
-    height = innerHeight;
+  const width = viewport?.width ?? innerWidth,
+    height = viewport?.height ?? innerHeight;
   const dpr = Math.min(devicePixelRatio || 1, width < 721 ? 1 : 1.5);
   canvas.width = Math.round(width * dpr);
   canvas.height = Math.round(height * dpr);
@@ -46,9 +46,9 @@ export function createPassageRenderer(canvas, scene, materials, palette) {
         point.x = hinge + cos(doorAngle) * x - sin(doorAngle) * z;
         point.z = doorway + sin(doorAngle) * x + cos(doorAngle) * z;
       }
-      float z = point.z - camera;
-      gl_Position = projection * view * vec4(point, 1.0);
-      texcoord = uv; brightness = shade; distance = z; worldPoint = point;
+      vec4 cameraPoint = view * vec4(point, 1.0);
+      gl_Position = projection * cameraPoint;
+      texcoord = uv; brightness = shade; distance = -cameraPoint.z; worldPoint = point;
     }
   `
     )
@@ -236,8 +236,10 @@ export function createPassageRenderer(canvas, scene, materials, palette) {
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(values), gl.STATIC_DRAW);
       return { buffer, count: values.length / (stride / 4) };
     });
-  const groups = scene.groups.map((group) => ({
+  const uploadGroup = (group) => ({
+    id: group.id,
     mode: group.mode,
+    behindDoor: Boolean(group.behindDoor),
     profile: RAIN_PROFILES[group.rain],
     signals: group.rain === 'door' ? scene.doorSignals : scene.wallSignals,
     staticCode: Boolean(group.staticCode),
@@ -245,7 +247,8 @@ export function createPassageRenderer(canvas, scene, materials, palette) {
     lightBoost: group.lightBoost ?? 1,
     stride: group.stride ?? 24,
     buffers: makeBuffers(group.batches, group.stride),
-  }));
+  });
+  const groups = scene.groups.map(uploadGroup);
   const figureMode = gl.getUniformLocation(program, 'figureMode');
   const crowMode = gl.getUniformLocation(program, 'crowMode');
   const surfaceFlow = gl.getUniformLocation(program, 'surfaceFlow');
@@ -275,6 +278,7 @@ export function createPassageRenderer(canvas, scene, materials, palette) {
   const background = palette?.recolor ? [0, 0, 0] : [0.001, 0.012, 0.003];
   gl.clearColor(...background, 1);
   const glow = createSignalGlow(gl, canvas.width, canvas.height, width < 721);
+  let courtyardVisible = false;
   const renderScene = (target, mask) => {
     gl.useProgram(program);
     gl.activeTexture(gl.TEXTURE0);
@@ -284,6 +288,7 @@ export function createPassageRenderer(canvas, scene, materials, palette) {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.uniform1f(maskPass, mask ? 1 : 0);
     for (const {
+      behindDoor,
       mode,
       profile,
       signals,
@@ -293,6 +298,9 @@ export function createPassageRenderer(canvas, scene, materials, palette) {
       lightBoost: boost,
       buffers: group,
     } of groups) {
+      // Keep uploaded resources for reuse, but skip both color and glow-mask work
+      // while the existing door timeline says the opaque leaf is fully closed.
+      if (behindDoor && !courtyardVisible) continue;
       gl.uniform1f(localRain, profile?.local ? 1 : 0);
       if (profile) {
         gl.uniform4fv(rainMotion, profile.motion);
@@ -333,9 +341,10 @@ export function createPassageRenderer(canvas, scene, materials, palette) {
       }
     }
   };
-  const draw = ({ distance, angle, elapsed, eyeY, pitch }) => {
+  const draw = ({ distance, angle, elapsed, eyeY, pitch, yaw }) => {
+    courtyardVisible = angle !== 0;
     gl.useProgram(program);
-    const camera = passageCamera({ distance, eyeY, pitch }, width / height);
+    const camera = passageCamera({ distance, eyeY, pitch, yaw }, width / height);
     gl.uniformMatrix4fv(viewUniform, false, camera.view);
     gl.uniformMatrix4fv(projectionUniform, false, camera.projection);
     gl.uniform1f(cameraUniform, distance);
@@ -346,6 +355,12 @@ export function createPassageRenderer(canvas, scene, materials, palette) {
     else renderScene(null, false);
   };
   let disposed = false;
+  draw.addGroups = (additional) => {
+    if (disposed) return;
+    for (const group of additional) {
+      if (!groups.some((existing) => existing.id === group.id)) groups.push(uploadGroup(group));
+    }
+  };
   draw.dispose = () => {
     if (disposed) return;
     disposed = true;

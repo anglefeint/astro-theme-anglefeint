@@ -13,6 +13,13 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.17.0] - 2026-10-16
+
+- Add a wide-screen homepage terminal with selectable, scrollable text and a separate keyhole/key unlock interaction. Configure one English message for all languages, with optional per-language overrides.
+- Reuse one passage player, scene and renderer for the terminal and About Oracle. Add projected door activation, drag-to-look exploration, shared reverse travel and right-click return; About closes with Escape or ×.
+- Generate compact previews on demand, append courtyard geometry only when needed, retain one paused preview for 15 seconds and skip hidden courtyard groups after the door closes. Add a shorter rear hall with a right-angle elbow and flowing doorway surfaces.
+- Refine the cinematic homepage heading, terminal section labels and all-posts link. Message fallback requires the matching starter adapter; see [migration](UPGRADING.md#0170-terminal-message-and-shared-oracle-exploration) and [release record](docs/releases/0.17.0.md).
+
 ## [0.16.0] - 2026-10-14
 
 - Add optional `i18n.locales.<code>.site.homeTitle` for the visible homepage heading in built-in or custom languages. Missing/blank values follow the locale fallback chain, then the global site name including its environment override.

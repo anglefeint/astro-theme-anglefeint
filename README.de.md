@@ -40,7 +40,9 @@ Ersetze vor der Veröffentlichung die Platzhalter in der optionalen `public/llms
 
 <a id="setup"></a>
 
-Optionaler Matrix-Übergang: `theme.effects.enableHomePassage` ist standardmäßig `false`. Aktiviert zeigen Beitragslinks auf der Startseite vor der Navigation einen grünen Übergang von 8 Sekunden. `Oracle` auf About funktioniert unabhängig: Jeder Klick wählt eine von vier Paletten ohne direkte Wiederholung; ein weiterer Klick oder Escape kehrt zurück. Bei reduzierter Bewegung erfolgt die Navigation direkt und Oracle zeigt eine statische Vorschau.
+Optionaler Matrix-Übergang: `theme.effects.enableHomePassage` ist standardmäßig `false`. Aktiviert zeigen Beitragslinks auf der Startseite vor der Navigation einen grünen Übergang von 8 Sekunden. `Oracle` auf About funktioniert unabhängig: Jeder Klick wählt eine von vier Paletten ohne direkte Wiederholung; nach der Ankunft kannst du dich durch Ziehen umsehen, per Rechtsklick in den Flur zurückgehen und mit Escape oder × schließen. Bei reduzierter Bewegung erfolgt die Navigation direkt und Oracle zeigt eine statische Vorschau.
+
+Ab 1440px Bildschirmbreite zeigt das Terminal unten rechts `Knock, knock.`. Der Text lässt sich auswählen, kopieren und scrollen; die separate Schlüsselloch-Schaltfläche startet die gemeinsame Flurvorschau. Setze `i18n.locales.en.messages.home.transmission` in `src/site.config.ts` für alle Sprachen und überschreibe bei Bedarf `i18n.locales.<code>.messages.home.transmission`. Reihenfolge: Konfiguration der aktuellen Sprache → englische Konfiguration → `Knock, knock.`; unabhängig vom üblichen Fallback der UI-Übersetzungen. Danach neu bauen und bereitstellen.
 
 ## Social-Links
 
