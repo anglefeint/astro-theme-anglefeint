@@ -25,6 +25,42 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
 ---
 
 <MatrixShell locale={locale} title={SITE_TITLE} description={pageDescription}>
+  <div slot="signal-monitor" class="home-signal-monitor">
+    <div class="home-signal-viewport" data-door-label={messages.home.openDoor} inert></div>
+    <div class="home-signal-code" aria-hidden="true">
+      {
+        [0, 1, 2, 3, 4, 5].map((column) => (
+          <span style={`--signal-column: ${column}`}>0101 ZN7 1010 RX 0011</span>
+        ))
+      }
+    </div>
+    <div class="home-signal-scroll" tabindex="0">
+      <span class="home-signal-message">{messages.home.transmission}</span>
+    </div>
+    <button class="home-signal-enter" type="button" aria-label={messages.home.openDoor}>
+      <svg
+        class="home-signal-key"
+        viewBox="0 0 32 28"
+        fill="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <g class="home-signal-lock">
+          <path
+            d="M17.5 12.5A4.5 4.5 0 1 1 22.5 12.5L24 23H16Z"
+            fill="#010603"
+            stroke="#99b8a4"
+            stroke-width="1.2"></path>
+        </g>
+        <g class="home-signal-insert-key">
+          <ellipse cx="1.5" cy="10" rx="3" ry="3.8"></ellipse>
+          <path d="M4.5 9.4H21V10.6H4.5Z" fill="currentColor" stroke="none"></path>
+          <path d="M16 10.6V15H18V13.3H19.3V15H21V10.6Z" fill="currentColor" stroke="none"></path>
+          <path d="M5.5 8.8V11.2M7 8.8V11.2" opacity="0.6"></path>
+        </g>
+      </svg>
+    </button>
+  </div>
   <button class="home-mirror-surface" type="button" aria-label="Repair mirror">
     <canvas class="home-mirror" aria-hidden="true"></canvas>
   </button>
@@ -59,7 +95,7 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
       </div>
     )
   }
-  <h1>{getHomeTitle(locale)}</h1>
+  <h1 class="home-wordmark">{getHomeTitle(locale)}</h1>
   <p class="home-hero-copy">{heroText}</p>
 
   <section class="home-latest">
@@ -90,15 +126,25 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
         )
       }
     </ul>
-    <p>
-      <a class="home-archive-command" data-decode="scan" href={localePath(locale, '/blog/')}
-        >{messages.home.viewAll}<HomeWhiteRabbit /></a
+    <p class="home-archive-row">
+      <a
+        class="home-archive-command"
+        data-decode="scan"
+        href={localePath(locale, '/blog/')}
+        aria-label={messages.blog.allPosts}
+        ><HomeWhiteRabbit /><span class="home-archive-label">{messages.home.viewAll}</span><span
+          class="home-archive-arrow"
+          aria-hidden="true">→</span
+        ></a
       >
     </p>
   </section>
   {
     THEME.HOME.SHOW_TRACE && (
       <div class="home-terminal-status">
+        <span class="home-pirate-signal" aria-hidden="true">
+          <span class="home-signal-prompt">&gt;</span> PIRATE SIGNAL
+        </span>
         <span class="home-trace-text">
           <span aria-hidden="true">&gt; </span>TRACE PROGRAM: RUNNING
           <span class="home-trace-cursor" aria-hidden="true" />

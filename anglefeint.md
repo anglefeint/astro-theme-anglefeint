@@ -40,7 +40,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 这份中文项目地图解释当前工程的功能和代码入口，面向维护者和 coding agent。**代码定义已实现行为，文档负责记录它。** 遇到差异先读实现、配置、调用方和测试，再修正文档；不为了让旧文档成立而修改代码。
 
-本次核对基线为 `373ac4c`，覆盖当前实现及最近的依赖升级、数学公式和发布收尾。具体交付与验收见 [0.13.0 发布记录](docs/releases/0.13.0.md)；当前源码版本读取 [package.json](packages/theme/package.json)，不要把这里的快照当作实时 npm 状态。
+此前全量核对基线为 `373ac4c`，覆盖依赖升级、数学公式和当时的发布收尾；2026-10-16 的增量核对以 `baaef62` 及其工作区变更为准，补充首页终端与共享 Oracle，见 [文档审查记录](docs/CODE_DOC_AUDIT.md)。具体交付与验收见 [0.13.0 发布记录](docs/releases/0.13.0.md)；当前源码版本读取 [package.json](packages/theme/package.json)，不要把这里的快照当作实时 npm 状态。
 
 ## 1. 工程边界
 
@@ -52,6 +52,14 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 - 当前使用 Astro 7；根 `package.json`、主题 `package.json` 和各分支锁文件分别定义依赖范围、peer 兼容范围与安装版本。更新主题包不保证同步升级用户项目的 Astro/MDX；操作步骤见 [升级指南](UPGRADING.md)。
 
 ## 2. 页面与静态生成
+
+### 首页终端与 Oracle 共享场景（当前源码）
+
+1440px 及以上的首页右下角显示终端，文字可复制、换行和滚动；钥匙孔独立固定在下方右侧。悬停只显示钥匙，点击才运行 600ms 插入解锁，接着展开窗口并淡入走廊。文字配置为 `i18n.locales.<code>.messages.home.transmission`，严格按当前语言配置 → 英文配置 → `Knock, knock.` 读取；只配英文即可覆盖未单独配置的语言。它不是普通界面翻译的回退规则，需更新 starter 消息适配器并重新构建。
+
+首页和 About Oracle 共用 `matrix-passage/player.js`、`matrix-corridor.js` 与场景/材质/渲染器/时间线。小窗口先建走廊，点门后补充广场、Oracle、乌鸦；返回关门后保留资源但跳过这些组的绘制，再开门不重复分配。后方门廊只有四对门，尽头右转，位置观察和倒退均不增加另一套动画。到达广场后拖动环顾，右键直接退回；对准走廊可左键返回。About 用 Escape 或 × 关闭。
+
+小画布按尺寸选择 256px 纹理和简化几何；绘制上限 30fps，隐藏页面暂停。首页移开鼠标暂停，15 秒内再次激活复用，超时/窗口尺寸变化/pagehide 释放；About 关闭后释放。具体路径、检查与限制见 [架构](docs/ARCHITECTURE.md#shared-terminal-and-oracle-passage)、[视觉参考](docs/VISUAL_SYSTEMS.md#1-home-bodypage-home) 和 [本轮审查记录](docs/CODE_DOC_AUDIT.md)。本段说明工作区实现，不表示已发布到 npm、starter 或线上站点。
 
 | 页面         | 路由与代码入口                                                                                                | 当前行为                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |

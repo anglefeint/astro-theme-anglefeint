@@ -17,7 +17,6 @@ export function initOracle() {
     if (!closePlayer) return;
     closePlayer();
     closePlayer = undefined;
-    document.removeEventListener('click', dismiss, true);
     document.removeEventListener('keydown', keyboard, true);
     document.body.style.overflow = previousOverflow;
     siblings.forEach(([element, inert]) => {
@@ -33,7 +32,12 @@ export function initOracle() {
   };
   const keyboard = (event) => {
     if (event.key === 'Escape') dismiss(event);
-    else if (event.key === 'Tab') event.preventDefault();
+    else if (event.key === 'Tab') {
+      event.preventDefault();
+      const overlay = document.querySelector('.oracle-passage');
+      const exit = overlay?.querySelector('.passage-exit');
+      (document.activeElement === exit ? overlay : exit)?.focus();
+    }
   };
   button.addEventListener('click', async (event) => {
     if (closePlayer || starting) return;
@@ -49,6 +53,16 @@ export function initOracle() {
         explore: true,
         reduced: matchMedia('(prefers-reduced-motion: reduce)').matches,
       });
+      const exit = document.createElement('button');
+      exit.type = 'button';
+      exit.className = 'passage-exit';
+      exit.textContent = '×';
+      exit.setAttribute(
+        'aria-label',
+        document.querySelector('.hacker-modal-close')?.getAttribute('aria-label') || 'Close'
+      );
+      exit.addEventListener('click', dismiss);
+      document.querySelector('.oracle-passage')?.append(exit);
       previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       siblings = [...document.body.children]
@@ -57,8 +71,6 @@ export function initOracle() {
       siblings.forEach(([element]) => {
         element.inert = true;
       });
-      // This click has already passed document capture; only subsequent clicks dismiss.
-      document.addEventListener('click', dismiss, true);
       document.addEventListener('keydown', keyboard, true);
     } catch {
       // Keep About usable on devices without WebGL.

@@ -20,7 +20,7 @@
 }
 .home-passage.oracle-passage {
   pointer-events: auto;
-  cursor: pointer;
+  cursor: default;
   outline: none;
 }
 .home-passage.is-static {
@@ -47,4 +47,52 @@
   .home-passage.oracle-passage {
     display: block;
   }
+}
+.passage-inline {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.oracle-passage {
+  touch-action: none;
+  user-select: none;
+}
+.oracle-passage[data-view='oracle'][data-playback='idle'] {
+  cursor: grab;
+}
+.oracle-passage .passage-exit {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(220, 255, 230, 0.45);
+  background: rgba(0, 8, 3, 0.65);
+  color: #dcffe6;
+  font: 28px/1 monospace;
+  cursor: pointer;
+}
+.oracle-passage .passage-exit:focus-visible {
+  outline: 2px solid #dcffe6;
+  outline-offset: 3px;
+}
+.passage-inline canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.passage-door-hit {
+  position: absolute;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.passage-door-hit:focus-visible {
+  background: rgba(96, 255, 128, 0.08);
+  outline: 2px solid #9bf5b8;
+  outline-offset: -2px;
 }

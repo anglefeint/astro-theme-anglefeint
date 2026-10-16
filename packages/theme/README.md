@@ -31,9 +31,11 @@ npm pkg set scripts.new-post="anglefeint-new-post"
 npm pkg set scripts.new-page="anglefeint-new-page"
 ```
 
-## Homepage and Oracle (0.14.0)
+## Homepage and Oracle
 
-The homepage adds sequential terminal text, four shuffled white-rabbit decoders and a local cracked/liquid mirror that repairs on click until refresh. Optional `theme.effects.enableHomePassage` defaults to `false`; enabling it adds an 8-second green passage to homepage post links. The matching starter maps this field to `THEME.EFFECTS.ENABLE_HOME_PASSAGE`. About adds an independent `Oracle` button with four click-selected palettes, no immediate palette repetition, and click/Escape dismissal. Reduced motion uses native home navigation and a static Oracle preview. Migration of starter schema/defaults/adapters and the About route is required for the complete feature; see [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). The existing optional music player selects its presentation by page atmosphere; audio configuration and playback controls are unchanged.
+The homepage adds sequential terminal text, four shuffled white-rabbit decoders and a local cracked/liquid mirror that repairs on click until refresh. Optional `theme.effects.enableHomePassage` defaults to `false`; enabling it adds an 8-second green passage to homepage post links. The matching starter maps this field to `THEME.EFFECTS.ENABLE_HOME_PASSAGE`. About adds an independent `Oracle` button with four click-selected palettes, no immediate palette repetition, drag-to-look exploration, right-click reverse travel, and Escape/× dismissal. Reduced motion uses native home navigation and a static Oracle preview. Migration of starter schema/defaults/adapters and the About route is required for the complete feature; see [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). The existing optional music player selects its presentation by page atmosphere; audio configuration and playback controls are unchanged.
+
+The wide-screen homepage terminal uses the same passage player as About. Its text can be selected and scrolled; the separate keyhole button starts the preview. Configure `i18n.locales.en.messages.home.transmission` once in the matching starter’s `src/site.config.ts`, then optionally override individual languages. Resolution is current-language configuration → English configuration → `Knock, knock.`. This requires the updated starter message adapter as well as the package; updating npm alone does not replace project-owned adapters.
 
 ## Usage in Starter/Site
 

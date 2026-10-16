@@ -22,6 +22,7 @@ const { locale, title, description } = Astro.props as Props;
   <link slot="head" rel="stylesheet" href={homePageCssUrl} />
   <canvas slot="body-start" id="matrix-bg" aria-hidden="true"></canvas>
   <Fragment slot="body-end">
+    <slot name="signal-monitor" />
     <script>
       import { initHomeEffects } from '../../scripts/home-effects.js';
       initHomeEffects();

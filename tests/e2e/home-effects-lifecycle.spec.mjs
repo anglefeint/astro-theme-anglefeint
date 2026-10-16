@@ -6,9 +6,175 @@ const { defaultLocale } = JSON.parse(
   await readFile(new URL('./.generated-smoke-config.json', import.meta.url), 'utf8')
 );
 
+test('terminal retains one paused preview, reuses it and releases idle GPU resources', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1764, height: 1000 });
+  await page.addInitScript(() => {
+    window.signalStats = { draws: 0, textures: 0 };
+    for (const [name, counter] of [
+      ['drawArrays', 'draws'],
+      ['createTexture', 'textures'],
+    ]) {
+      const original = WebGLRenderingContext.prototype[name];
+      WebGLRenderingContext.prototype[name] = function (...args) {
+        if (this.canvas.closest('.home-signal-monitor')) window.signalStats[counter]++;
+        return original.apply(this, args);
+      };
+    }
+  });
+  await page.goto(`/${defaultLocale}/`);
+  const panel = page.locator('.home-signal-monitor');
+  await panel.hover();
+  await page.waitForTimeout(1000);
+  await expect(panel.locator('canvas')).toHaveCount(0);
+  const text = panel.locator('.home-signal-scroll');
+  await text.focus();
+  await expect(panel).not.toHaveAttribute('data-expanded', '');
+  await panel.locator('.home-signal-message').evaluate((element) => {
+    element.textContent = 'A quiet signal travels through the city. '.repeat(20);
+  });
+  await text.hover();
+  await page.mouse.wheel(0, 180);
+  await expect.poll(() => text.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+  await expect(panel.locator('canvas')).toHaveCount(0);
+  await text.evaluate((element) => {
+    element.scrollTop = 0;
+  });
+  await panel.locator('.home-signal-message').click({ position: { x: 10, y: 10 } });
+  await expect(panel).not.toHaveAttribute('data-expanded', '');
+  await panel.locator('.home-signal-message').evaluate((element) => {
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+  });
+  expect(await page.evaluate(() => window.getSelection().toString())).toContain('quiet signal');
+  await panel.locator('.home-signal-enter').click();
+  await expect(panel).toHaveAttribute('data-unlocking', '');
+  await expect(panel).not.toHaveAttribute('data-expanded', '');
+  await page.mouse.move(800, 100);
+  await page.waitForTimeout(500);
+  await expect(panel).not.toHaveAttribute('data-unlocking', '');
+  await expect(panel.locator('canvas')).toHaveCount(0);
+  await panel.locator('.home-signal-enter').click();
+  await expect(panel).toHaveAttribute('data-unlocked', '');
+  await expect(panel).toHaveAttribute('data-expanded', '');
+  await expect(panel.locator('.home-signal-insert-key')).toHaveCSS('opacity', '0');
+  await expect(panel).toHaveAttribute('data-preview', '');
+  const textures = await page.evaluate(() => window.signalStats.textures);
+  expect(textures).toBeGreaterThan(0);
+  await page.mouse.move(800, 100);
+  await expect(panel).not.toHaveAttribute('data-preview', '');
+  const draws = await page.evaluate(() => window.signalStats.draws);
+  await page.waitForTimeout(150);
+  expect(await page.evaluate(() => window.signalStats.draws)).toBe(draws);
+  await expect(panel.locator('canvas')).toHaveCount(1);
+  await panel.locator('.home-signal-enter').click();
+  await expect(panel).toHaveAttribute('data-preview', '');
+  expect(await page.evaluate(() => window.signalStats.textures)).toBe(textures);
+  await page.mouse.move(800, 100);
+  await expect(panel.locator('canvas')).toHaveCount(0, { timeout: 17000 });
+  await panel.locator('.home-signal-enter').click();
+  await expect(panel).toHaveAttribute('data-preview', '');
+  expect(await page.evaluate(() => window.signalStats.textures)).toBeGreaterThan(textures);
+  await page.evaluate(() =>
+    window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true }))
+  );
+  await expect(panel.locator('canvas')).toHaveCount(0);
+});
+
+test('terminal door hit area continues the shared passage without restarting WebGL', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1764, height: 1000 });
+  await page.addInitScript(() => {
+    window.doorPrograms = 0;
+    const create = WebGLRenderingContext.prototype.createProgram;
+    WebGLRenderingContext.prototype.createProgram = function (...args) {
+      if (this.canvas.closest('.home-signal-monitor')) window.doorPrograms++;
+      return create.apply(this, args);
+    };
+  });
+  await page.goto(`/${defaultLocale}/`);
+  const panel = page.locator('.home-signal-monitor');
+  await panel.locator('.home-signal-enter').click();
+  await expect(panel).toHaveAttribute('data-preview', '');
+  const door = panel.locator('.passage-door-hit');
+  const programs = await page.evaluate(() => window.doorPrograms);
+  const bounds = await panel.boundingBox();
+  await page.mouse.click(bounds.x + 8, bounds.y + 80);
+  await expect(door).toBeEnabled();
+  await expect(door).toHaveCSS('cursor', 'pointer');
+  await door.focus();
+  await door.press('Enter');
+  await expect(door).toBeDisabled();
+  await expect(panel.locator('.home-signal-scroll')).toBeFocused();
+  expect(await page.evaluate(() => window.doorPrograms)).toBe(programs);
+  const passage = panel.locator('.passage-inline');
+  await expect(passage).toHaveAttribute('data-view', 'oracle', { timeout: 7000 });
+  for (let i = 0; i < 12; i++) await page.keyboard.press('ArrowRight');
+  await expect.poll(() => page.evaluate(() => window.passageView?.[0])).toBeLessThan(-0.99);
+  await page.keyboard.press('Home');
+  await expect.poll(() => page.evaluate(() => window.passageView?.[0])).toBeGreaterThan(0.99);
+  await panel.click({ button: 'right', position: { x: 90, y: 80 } });
+  await expect(passage).toHaveAttribute('data-playback', 'reverse');
+  await expect(door).toBeEnabled({ timeout: 7000 });
+  await expect(passage).toHaveAttribute('data-view', 'corridor');
+  expect(await page.evaluate(() => window.doorPrograms)).toBe(programs);
+  await page.mouse.move(800, 100);
+  await page.locator('.home-wordmark').click();
+  await expect(panel).not.toHaveAttribute('data-preview', '');
+});
+
+test('About Oracle walks back on right-click and keeps Escape exit', async ({ page }) => {
+  await page.goto(`/${defaultLocale}/about/`);
+  await page.locator('[data-oracle]').click();
+  const passage = page.locator('.oracle-passage');
+  await expect(passage).toHaveAttribute('data-view', 'oracle', { timeout: 12000 });
+  await page.mouse.move(1270, 360);
+  await page.mouse.down();
+  await page.mouse.move(630, 360, { steps: 12 });
+  await page.mouse.up();
+  await expect(passage).toHaveAttribute('data-playback', 'idle');
+  await expect.poll(() => page.evaluate(() => window.passageView?.[0])).toBeLessThan(-0.99);
+  await page.keyboard.press('Home');
+  await expect.poll(() => page.evaluate(() => window.passageView?.[0])).toBeGreaterThan(0.99);
+  await passage.click({ button: 'right', position: { x: 640, y: 360 } });
+  await expect(passage).toHaveAttribute('data-playback', 'reverse');
+  await expect(passage).toHaveAttribute('data-view', 'corridor', { timeout: 7000 });
+  await expect(passage).toHaveAttribute('data-playback', 'idle');
+  await page.keyboard.press('Escape');
+  await expect(passage).toHaveCount(0);
+  await expect(page.locator('[data-oracle]')).toBeFocused();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.locator('[data-oracle]').click();
+  await page.keyboard.press('Tab');
+  await expect(page.locator('.passage-exit')).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(passage).toHaveCount(0);
+});
+
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.addInitScript(() => {
+    const locations = new WeakMap();
+    const uniformLocation = WebGLRenderingContext.prototype.getUniformLocation;
+    const uniformMatrix = WebGLRenderingContext.prototype.uniformMatrix4fv;
+    WebGLRenderingContext.prototype.getUniformLocation = function (...args) {
+      const location = uniformLocation.apply(this, args);
+      if (location) locations.set(location, args[1]);
+      return location;
+    };
+    WebGLRenderingContext.prototype.uniformMatrix4fv = function (...args) {
+      if (
+        locations.get(args[0]) === 'view' &&
+        this.canvas.closest('.passage-inline, .oracle-passage')
+      ) {
+        window.passageView = Array.from(args[2]);
+      }
+      return uniformMatrix.apply(this, args);
+    };
     const request = window.requestAnimationFrame;
     const cancel = window.cancelAnimationFrame;
     const fill = CanvasRenderingContext2D.prototype.fillRect;

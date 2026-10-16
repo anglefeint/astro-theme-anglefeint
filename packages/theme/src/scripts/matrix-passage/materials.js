@@ -1,8 +1,20 @@
 import { MATRIX_CHARACTERS as alphabet, MATRIX_CODE_FONT } from '../matrix-glyphs.js';
 // Texture canvases and flow roles are independent of WebGL ownership.
-export function createMaterials(width, random = Math.random) {
+export function resolvePassageQuality(width, height, pixelRatio = 1) {
+  const compact = width * height * Math.min(pixelRatio, 1.5) ** 2 <= 320 * 240;
+  return Object.freeze({
+    compact,
+    textureSize: compact ? 256 : width < 721 ? 512 : 1024,
+    glyphStep: compact ? 2 : 1,
+    curveSteps: compact ? 3 : 10,
+    tubeSides: compact ? 4 : 8,
+  });
+}
+
+export function createMaterials(width, random = Math.random, quality) {
+  const density = quality?.glyphStep ?? 1;
   const makeTexture = (kind) => {
-    const size = width < 721 ? 512 : 1024;
+    const size = quality?.textureSize ?? (width < 721 ? 512 : 1024);
     const texture = document.createElement('canvas');
     texture.width = size;
     texture.height = size;
@@ -11,12 +23,12 @@ export function createMaterials(width, random = Math.random) {
     ink.fillStyle = '#001908';
     ink.fillRect(0, 0, 1024, 1024);
     // Fine underlying code survives in dark areas; brighter streams have independent lengths.
-    for (let x = 0; x < 1024; x += 14) {
+    for (let x = 0; x < 1024; x += 14 * density) {
       const featured = random() > 0.72;
       const start = random() * 1024,
         length = 100 + random() * 700;
       ink.font = `${featured ? 'bold ' : ''}${featured ? 19 : 10}px ${MATRIX_CODE_FONT}`;
-      for (let y = 0; y < 1024; y += 22) {
+      for (let y = 0; y < 1024; y += 22 * density) {
         const run = (y - start + 1024) % 1024;
         const pulse = Math.max(0, 1 - run / length);
         const alpha = featured ? 0.35 + pulse * 0.55 : 0.12 + random() * 0.18;
@@ -29,7 +41,7 @@ export function createMaterials(width, random = Math.random) {
       }
     }
     // A second, larger code layer produces continuous luminous bands over the fine base.
-    for (let stream = 0; stream < 28; stream++) {
+    for (let stream = 0; stream < 28 / density; stream++) {
       const x = random() * 1024;
       const start = random() * 250;
       const length = 300 + random() * 700;
@@ -44,7 +56,7 @@ export function createMaterials(width, random = Math.random) {
       }
       ink.shadowBlur = 0;
     }
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 35 / density; i++) {
       const x = random() * 1024,
         y = random() * 1024;
       const w = kind === 'wall' ? 5 + random() * 25 : 25 + random() * 90;
@@ -54,7 +66,7 @@ export function createMaterials(width, random = Math.random) {
       ink.fillStyle = 'rgba(120,255,155,0.35)';
       ink.fillRect(x + w, y, 1, h);
     }
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 24 / density; i++) {
       const x = random() * 1024,
         y = random() * 1024,
         r = 5 + random() * 15;

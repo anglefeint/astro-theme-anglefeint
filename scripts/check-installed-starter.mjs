@@ -230,6 +230,7 @@ try {
             locales: {
               en: {
                 site: { homeTitle: 'INSTALLED_EN_HEADING' },
+                messages: { home: { transmission: 'INSTALLED_SHARED_SIGNAL' } },
                 about: {
                   sections: {
                     who: 'ABOUT_LINE_ONE\n\nABOUT_LINE_TWO',
@@ -239,7 +240,10 @@ try {
               },
               zh: {
                 site: { homeTitle: '安装版中文标题' },
-                messages: { siteDescription: 'CUSTOM_ZH_DESCRIPTION' },
+                messages: {
+                  siteDescription: 'CUSTOM_ZH_DESCRIPTION',
+                  home: { transmission: '安装版中文信号' },
+                },
               },
               fr: {
                 meta: { label: 'French', enabled: true },
@@ -364,11 +368,17 @@ try {
         const redirectPath = mode === 'always' ? 'index.html' : `${locale}/index.html`;
         const home = await read(`dist/${homePath}`);
         assert.ok(
-          home.includes(`<h1>${locale === 'zh' ? '安装版中文标题' : 'INSTALLED_EN_HEADING'}</h1>`)
+          home.match(/<h1\b[^>]*>(.*?)<\/h1>/s)?.[1] ===
+            (locale === 'zh' ? '安装版中文标题' : 'INSTALLED_EN_HEADING')
         );
+        assert.ok(home.includes(locale === 'zh' ? '安装版中文信号' : 'INSTALLED_SHARED_SIGNAL'));
         const customHome = await read('dist/fr/index.html');
-        assert.ok(customHome.includes('<h1>&lt;b&gt;Jardin &amp; numérique&lt;/b&gt;</h1>'));
-        assert.ok(!customHome.includes('<h1><b>'));
+        assert.equal(
+          customHome.match(/<h1\b[^>]*>(.*?)<\/h1>/s)?.[1],
+          '&lt;b&gt;Jardin &amp; numérique&lt;/b&gt;'
+        );
+        assert.ok(customHome.includes('INSTALLED_SHARED_SIGNAL'));
+        assert.ok(!/<h1\b[^>]*><b>/.test(customHome));
         if (mode === 'always') {
           for (const page of [
             home,
