@@ -28,7 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-任意の Matrix 演出：`theme.effects.enableHomePassage` は既定で `false`。有効時はホームの記事リンクで緑の演出を 8 秒再生してから移動します。About の `Oracle` は独立して動作し、クリック時に前回と異なる 4 種類の配色から選びます。再クリックまたは Escape で戻ります。動きを減らす設定では通常の移動と静止した Oracle プレビューを使います。
+任意の Matrix 演出：`theme.effects.enableHomePassage` は既定で `false`。有効時はホームの記事リンクで緑の演出を 8 秒再生してから移動します。About の `Oracle` は独立して動作し、クリック時に前回と異なる 4 種類の配色から選びます。到着後はドラッグで周囲を見回し、右クリックで廊下へ戻れます。Escape または × で閉じます。動きを減らす設定では通常の移動と静止した Oracle プレビューを使います。
+
+幅1440px以上では右下の端末に `Knock, knock.` が表示されます。文章は選択・コピー・スクロールでき、独立した鍵穴ボタンで共通の廊下プレビューを開始します。`src/site.config.ts` の `i18n.locales.en.messages.home.transmission` を全言語の共通文として設定し、必要な言語だけ `i18n.locales.<code>.messages.home.transmission` で上書きします。優先順は現在の言語設定 → 英語設定 → `Knock, knock.` です。通常のUI翻訳とは異なります。変更後は再ビルド・再デプロイしてください。
 
 ホームのスイッチは `src/site.config.ts` の `theme.home` にあります。`showInitialize` は Initialize/done、`showFollow` は Wake Up/Follow、`showTrace` は右下の状態表示です。すべて既定は `true`、`false` で個別に非表示にできます。
 

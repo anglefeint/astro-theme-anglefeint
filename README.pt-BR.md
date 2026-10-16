@@ -40,7 +40,9 @@ Antes de publicar, substitua os marcadores do arquivo opcional `public/llms.txt`
 
 <a id="setup"></a>
 
-Passagem Matrix opcional: `theme.effects.enableHomePassage` é `false` por padrão. Ao ativar, os links de posts na página inicial exibem uma passagem verde de 8 segundos antes da navegação. `Oracle` em About funciona separadamente: cada clique escolhe uma de quatro paletas sem repetir a anterior; outro clique ou Escape retorna à página. Com movimento reduzido, a navegação é direta e Oracle mostra uma prévia estática.
+Passagem Matrix opcional: `theme.effects.enableHomePassage` é `false` por padrão. Ao ativar, os links de posts na página inicial exibem uma passagem verde de 8 segundos antes da navegação. `Oracle` em About funciona separadamente: cada clique escolhe uma de quatro paletas sem repetir a anterior; após chegar, arraste para olhar ao redor, clique com o botão direito para voltar ao corredor e use Escape ou × para fechar. Com movimento reduzido, a navegação é direta e Oracle mostra uma prévia estática.
+
+Em telas de 1440px ou mais, o terminal inferior direito mostra `Knock, knock.`. O texto pode ser selecionado, copiado e rolado; o botão separado com fechadura inicia o corredor compartilhado. Configure `i18n.locales.en.messages.home.transmission` em `src/site.config.ts` para todos os idiomas e sobrescreva apenas os necessários em `i18n.locales.<code>.messages.home.transmission`. Ordem: configuração do idioma atual → configuração inglesa → `Knock, knock.`; difere da cadeia normal de traduções da interface. Após alterar, gere o build e publique novamente.
 
 ## Links sociais
 

@@ -28,7 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-Pasaje Matrix opcional: `theme.effects.enableHomePassage` vale `false` por defecto. Al activarlo, los enlaces a entradas de inicio muestran un pasaje verde de 8 segundos antes de navegar. `Oracle` en About funciona por separado: cada clic elige una de cuatro paletas sin repetir la anterior; otro clic o Escape vuelve a la página. Con movimiento reducido, la navegación es directa y Oracle muestra una vista estática.
+Pasaje Matrix opcional: `theme.effects.enableHomePassage` vale `false` por defecto. Al activarlo, los enlaces a entradas de inicio muestran un pasaje verde de 8 segundos antes de navegar. `Oracle` en About funciona por separado: cada clic elige una de cuatro paletas sin repetir la anterior; al llegar puedes arrastrar para mirar alrededor, usar el botón derecho para volver al pasillo y Escape o × para cerrar. Con movimiento reducido, la navegación es directa y Oracle muestra una vista estática.
+
+En pantallas de 1440px o más, el terminal inferior derecho muestra `Knock, knock.`. El texto se puede seleccionar, copiar y desplazar; el botón independiente con ojo de cerradura inicia el pasillo compartido. Configura `i18n.locales.en.messages.home.transmission` en `src/site.config.ts` para todos los idiomas y sobrescribe solo los necesarios con `i18n.locales.<code>.messages.home.transmission`. Orden: configuración del idioma actual → configuración inglesa → `Knock, knock.`; no es la cadena habitual de traducciones de interfaz. Reconstruye y despliega después de cambiarla.
 
 En `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow y `showTrace` controla el estado inferior derecho. Todos valen `true` por defecto; `false` oculta cada sección por separado.
 

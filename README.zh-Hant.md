@@ -42,7 +42,9 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 <a id="setup"></a>
 
-可選 Matrix 穿越：`theme.effects.enableHomePassage` 預設為 `false`。啟用後，首頁文章連結播放 8 秒綠色穿越再導覽。About 的 `Oracle` 按鈕獨立可用：每次點擊選擇四種場景配色之一，不連續重複；再次點擊或按 Escape 返回。減少動態效果時，首頁直接導覽，Oracle 顯示靜態預覽。
+可選 Matrix 穿越：`theme.effects.enableHomePassage` 預設為 `false`。啟用後，首頁文章連結播放 8 秒綠色穿越再導覽。About 的 `Oracle` 按鈕獨立可用：每次點擊選擇四種場景配色之一，不連續重複；抵達後可拖曳環顧、按滑鼠右鍵退回走廊，按 Escape 或點擊 × 關閉。減少動態效果時，首頁直接導覽，Oracle 顯示靜態預覽。
+
+寬螢幕（1440px 以上）右下角終端預設顯示 `Knock, knock.`。文字可選取複製及捲動，點擊獨立鑰匙孔按鈕才解鎖共享走廊。在 `src/site.config.ts` 設定 `i18n.locales.en.messages.home.transmission` 即可供全部語言使用；需要不同文字時，再設定 `i18n.locales.<code>.messages.home.transmission`。順序為目前語言設定 → 英文設定 → `Knock, knock.`，與一般介面翻譯的回退規則不同。修改後重新建置並部署。
 
 ## 社群連結
 
