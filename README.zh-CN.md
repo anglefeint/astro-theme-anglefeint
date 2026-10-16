@@ -28,7 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-可选 Matrix 穿越：`theme.effects.enableHomePassage` 默认 `false`。开启后，首页文章链接播放 8 秒绿色穿越后导航。About 的 `Oracle` 按钮独立可用：每次点击选择四种场景配色之一，不连续重复；再次点击或按 Escape 返回。减少动态效果时，首页直接导航，Oracle 显示静态预览。
+可选 Matrix 穿越：`theme.effects.enableHomePassage` 默认 `false`。开启后，首页文章链接播放 8 秒绿色穿越后导航。About 的 `Oracle` 按钮独立可用：每次点击选择四种场景配色之一，不连续重复；到达后可拖动观察四周、右键倒退回走廊，按 Escape 或点击 × 关闭。减少动态效果时，首页直接导航，Oracle 显示静态预览。
+
+宽屏（1440px 及以上）右下角终端默认显示 `Knock, knock.`。文字可选择复制和滚动，点击独立钥匙孔按钮才解锁并展示共享走廊。在 `src/site.config.ts` 配置 `i18n.locales.en.messages.home.transmission` 即可供全部语言使用；需要不同文字时，再配置 `i18n.locales.<code>.messages.home.transmission`。取值顺序为当前语言配置 → 英文配置 → `Knock, knock.`，与普通界面翻译的回退规则不同。修改后重新构建并部署。
 
 首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
 
