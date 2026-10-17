@@ -17,14 +17,14 @@
 </p>
 
 <p align="center">
-  <a href="#installation">설치</a> · <a href="#setup">설정 가이드</a>
+  <a href="#installation">설치</a> · <a href="#setup">설정 가이드</a> · <a href="#deployment">배포</a>
 </p>
 
 <p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
-  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
@@ -452,9 +452,33 @@ $$
 
 기존 프로젝트는 업그레이드 안내에 따라 starter와 설정을 한 번 이전해야 합니다. 패키지만 업데이트하면 처리기가 연결되지 않습니다.
 
+<a id="deployment"></a>
+
 ## 정적 배포
 
-`npm run build` 후 `dist/` 안의 모든 내용을 정적 웹 루트에 업로드하세요. 서버는 디렉터리의 `index.html`을 제공해야 합니다. Cloudflare나 운영 Node.js 프로세스는 필요 없습니다. 빌드 전에 `site.url` 및 `PUBLIC_SITE_URL` 재정의 값을 설정하고 변경 후 다시 빌드하세요. 선택 기능인 댓글, GA4, 원격 오디오는 각각의 서비스에 접속합니다.
+starter는 Cloudflare에 종속되지 않는 정적 Astro 사이트입니다. Wrangler, Miniflare, 서버 어댑터나 운영 Node.js 프로세스가 필요하지 않습니다. 설치와 빌드에는 Node.js가 필요합니다.
+
+### 배포 준비
+
+`site.url`을 운영 도메인으로 설정하세요. `PUBLIC_SITE_URL` 설정이 우선합니다. `npm run doctor`, `npm run preview`로 확인하세요. preview는 사이트를 게시하지 않습니다.
+
+생성한 블로그와 잠금 파일을 자신의 Git 저장소에 올린 뒤 호스팅에 가져오세요. 배포 브랜치와 `package.json` 디렉터리를 선택하세요. 원본 테마 저장소를 연결하지 마세요.
+
+| 플랫폼                                                                                             | 배포 설정                                                                                                                                     |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | 저장소 가져오기, Astro 선택. 빌드 `npm run build`, 게시 디렉터리 `dist`.                                                                      |
+| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | 저장소 가져오기, Astro 선택. 빌드 `npm run build`, 출력 `dist`.                                                                               |
+| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Pages에서 Git 연결. 빌드 `npm run build`, 출력 `dist`. 별도 Wrangler 명령은 불필요합니다.                                                     |
+| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Settings → Pages에서 GitHub Actions 선택 후 공식 Astro 워크플로를 따르세요. `USERNAME.github.io` 또는 루트 경로의 사용자 도메인을 사용하세요. |
+| Nginx / Apache / static hosting                                                                    | `npm run build` 후 `dist/` 전체 내용을 웹 루트로 업로드하세요. 디렉터리 `index.html`을 제공하고 모든 URL을 홈으로 재작성하지 마세요.          |
+
+지원되는 Node.js를 사용하세요(`package.json`의 `>=22.12.0`, 현재 검증 기준 Node 24 LTS). 개발 의존성도 설치하세요. pnpm은 `pnpm build`와 해당 잠금 파일을 사용하세요.
+
+현재 탐색 URL에 루트 상대 경로가 포함됩니다. Astro `base`만으로 `/repository/` 하위 경로를 보장하지 않습니다. GitHub 프로젝트 Pages도 동일하므로 루트 도메인을 사용하거나 직접 수정·검증하세요.
+
+Workers는 Wrangler로 `dist`를 업로드하는 별도 선택 사항입니다. 데모 유지관리 환경은 starter 요구 사항이 아니며 정적 배포에는 SSR 어댑터가 필요 없습니다.
+
+게시 후 글 URL 직접 열기·새로고침, 언어 전환, 검색, Decoder, `/<locale>/rss.xml`, `/sitemap-index.xml`, canonical을 확인하세요. 리소스, 검색 색인, 공유 이미지, 터미널 JSON을 포함한 전체 출력을 올리세요. 변경 후 재빌드·배포하세요. 선택적 댓글, GA4, 외부 오디오는 각 서비스에 연결됩니다.
 
 ## 글 통계
 

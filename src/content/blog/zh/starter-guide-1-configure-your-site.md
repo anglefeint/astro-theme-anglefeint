@@ -4,7 +4,7 @@ title: '使用指南 1：搭建你的博客'
 subtitle: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 description: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -113,6 +113,8 @@ npm run preview
 `doctor` 检查工程并完成构建，静态产物位于 `dist/`，默认包括搜索索引和自动分享图。成功后无需再运行 check 或 build。`preview` 在本机预览这些产物，不会发布网站；按 Ctrl+C 停止。
 
 在静态托管平台配置构建命令 `npm run build`、输出目录 `dist`，并先把 `site.url` 改成实际域名。具体平台的连接仓库、域名和发布步骤参考 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/)。部署后检查首页、文章、语言切换、搜索和 `/<语言代码>/rss.xml`。修改文章或配置后，需要重新构建并部署。
+
+Cloudflare 并非必需。Netlify、Vercel、Cloudflare Pages、GitHub Pages 和自建服务器的具体设置，以及当前需部署到域名根目录的限制，见 [README 部署说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-CN.md#deployment)。
 
 ## 6. 配置时记住这三件事
 

@@ -11,7 +11,7 @@
 [Demo](https://demo.anglefeint.com/de/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
-  <a href="#installation">Installation</a> · <a href="#setup">Einrichtung</a>
+  <a href="#installation">Installation</a> · <a href="#setup">Einrichtung</a> · <a href="#deployment">Veröffentlichen</a>
 </p>
 
 <p align="center">
@@ -356,9 +356,33 @@ Die Ausgabe entsteht beim Build mit lokalen Schriften und Stilen sowie zugängli
 
 Bestehende Projekte benötigen die einmalige Starter-/Konfigurationsmigration aus der Upgrade-Anleitung; allein das Paketupdate bindet den Markdown-Prozessor nicht ein.
 
+<a id="deployment"></a>
+
 ## Statische Bereitstellung
 
-Führe `npm run build` aus und lade den gesamten Inhalt von `dist/` in das statische Webverzeichnis. Der Server muss die `index.html` der Verzeichnisse ausliefern. Cloudflare ist optional; im Produktivbetrieb ist kein Node.js-Prozess nötig. Konfiguriere `site.url` und eine mögliche `PUBLIC_SITE_URL`-Überschreibung vor dem Build und baue nach Änderungen neu. Optionale Kommentare, GA4 und externe Audiodateien kontaktieren weiterhin ihre Dienste.
+Der Starter ist eine statische Astro-Website ohne Bindung an Cloudflare, Wrangler, Miniflare oder Serveradapter. Node.js wird zum Installieren und Bauen benötigt, nicht als Produktionsprozess.
+
+### Vorbereitung
+
+Setze `site.url` auf deine Domain; `PUBLIC_SITE_URL` hat Vorrang. Prüfe mit `npm run doctor` und `npm run preview`. Preview veröffentlicht nichts.
+
+Übertrage dein erzeugtes Blog samt Lockdatei in dein eigenes Git-Repository und importiere dieses beim Hoster. Wähle den Veröffentlichungsbranch und das Verzeichnis mit `package.json`, nicht das ursprüngliche Theme-Repository.
+
+| Plattform                                                                                          | Einstellungen                                                                                                                                                         |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | Repository importieren, Astro wählen. Build `npm run build`, Veröffentlichung `dist`.                                                                                 |
+| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | Repository importieren, Astro wählen. Build `npm run build`, Ausgabe `dist`.                                                                                          |
+| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Git in Pages verbinden. Build `npm run build`, Ausgabe `dist`; kein zusätzlicher Wrangler-Befehl nötig.                                                               |
+| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Unter Settings → Pages GitHub Actions wählen und dem offiziellen Astro-Workflow folgen. `USERNAME.github.io` oder eigene Domain am Root `/` verwenden.                |
+| Nginx / Apache / static hosting                                                                    | `npm run build` ausführen und den gesamten Inhalt von `dist/` ins Webroot laden. Verzeichnis-`index.html` ausliefern; nicht alle URLs auf die Startseite umschreiben. |
+
+Verwende eine unterstützte Node.js-Version gemäß `package.json` (`>=22.12.0`; derzeitige Prüfbasis Node 24 LTS). Entwicklungsabhängigkeiten mitinstallieren. Für pnpm `pnpm build` und die passende Lockdatei verwenden.
+
+Navigation enthält root-relative URLs. Astro `base` allein garantiert keinen Betrieb unter `/repository/`, auch nicht bei GitHub-Projekt-Pages. Root-Domain verwenden oder alle betroffenen Pfade selbst anpassen und prüfen.
+
+Workers ist eine optionale Alternative und lädt `dist` mit Wrangler hoch. Die Demo-Werkzeuge sind keine Starter-Anforderung. Für statisches Hosting sind keine SSR-Adapter nötig.
+
+Nach Veröffentlichung Artikel direkt öffnen und neu laden; Sprachen, Suche, Decoder, `/<locale>/rss.xml`, `/sitemap-index.xml` und Canonicals prüfen. Alle Ressourcen, Suchindizes, Vorschaubilder und Terminal-JSON hochladen. Nach Änderungen neu bauen. Optionale Kommentare, GA4 und externes Audio nutzen ihre jeweiligen Dienste.
 
 ## Artikelstatistik
 

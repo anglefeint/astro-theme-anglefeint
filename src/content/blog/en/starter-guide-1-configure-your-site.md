@@ -4,7 +4,7 @@ title: 'User Guide 1: Set Up Your Blog'
 subtitle: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 description: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -113,6 +113,8 @@ npm run preview
 `doctor` checks the project and includes a build, producing static output in `dist/` with the search index and default social images. No additional `check` or `build` is needed after it succeeds. `preview` serves that output locally; it does not publish it. Stop it with Ctrl+C.
 
 For static hosting, set the build command to `npm run build` and the output directory to `dist`. Set `site.url` to your actual domain first. Follow the [Astro deployment guide](https://docs.astro.build/en/guides/deploy/) for your platform’s repository, domain, and publishing steps. After deployment, check the homepage, posts, language switching, search, and `/<locale>/rss.xml`. Content or configuration changes require rebuilding and redeploying.
+
+Cloudflare is optional. See the [deployment settings by platform](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.md#deployment) for Netlify, Vercel, Cloudflare Pages, GitHub Pages and self-hosting, including the current domain-root requirement.
 
 ## 6. Remember three configuration rules
 

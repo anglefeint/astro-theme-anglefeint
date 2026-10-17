@@ -6,7 +6,7 @@ title: 使用指南 1：設定你的部落格
 subtitle: 安裝、網站資料、語言與部署。
 description: 安裝、網站資料、語言與部署。
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -85,6 +85,8 @@ npm run preview
 ```
 
 doctor 包含檢查與建置。preview 僅在本機顯示結果，不會發布到網路。靜態輸出在 dist/，包含搜尋索引與分享圖。託管服務使用 npm run build 建置，以 dist 為輸出目錄。依照 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/) 完成發布，並檢查頁面、語言切換、搜尋及 /zh-hant/rss.xml。
+
+不需要綁定 Cloudflare。Netlify、Vercel、Cloudflare Pages、GitHub Pages、自建伺服器設定及目前的網域根路徑限制，見 [README 部署說明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-Hant.md#deployment)。
 
 ## 設定原則
 
