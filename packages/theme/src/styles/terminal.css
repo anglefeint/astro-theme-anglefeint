@@ -1,0 +1,92 @@
+/* About background layer: terminal backdrop and scan/flicker ambience. */
+/* ── terminal background ── */
+.terminal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.terminal-backdrop__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.terminal-backdrop__scanlines {
+  position: absolute;
+  inset: 0;
+  /* 浅色扫描线：在深色背景上可见，全屏 CRT 感 */
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(151, 204, 168, 0.025) 2px,
+    rgba(151, 204, 168, 0.025) 3px
+  );
+  pointer-events: none;
+}
+.terminal-backdrop__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 58%,
+    rgba(0, 0, 0, 0.3) 85%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  pointer-events: none;
+}
+.terminal-backdrop__flicker {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  animation: terminal-flicker 0.08s infinite;
+  pointer-events: none;
+}
+@keyframes terminal-flicker {
+  0% {
+    background: rgba(255, 255, 255, 0.012);
+  }
+  50% {
+    background: transparent;
+  }
+  100% {
+    background: rgba(255, 255, 255, 0.005);
+  }
+}
+.terminal-backdrop__glow {
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 120px rgba(151, 204, 168, 0.025);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-backdrop__flicker {
+    animation: none;
+  }
+}
+
+/* Native input enables IME, touch keyboards and assistive technology. */
+.terminal-backdrop__input,
+.terminal-backdrop__log {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: pre;
+}
+
+/* Host presentation only: elevate the existing canvas while reading, no extra viewer DOM. */
+.terminal-backdrop--reading {
+  touch-action: none;
+  z-index: var(--terminal-reader-z, 150);
+  pointer-events: auto;
+}

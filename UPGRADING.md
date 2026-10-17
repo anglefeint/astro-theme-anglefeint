@@ -10,6 +10,12 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.18.0: Decoder Lab and shared About modules
+
+Prefer a fresh matching starter and migrate personal content/settings. The matched release adds `src/pages/[lang]/decoder.astro` and `src/pages/[lang]/terminal/[id].json.ts`, updates the About route, configuration schema/defaults, theme adapter template/generated adapter, runtime type declaration and validator. Package installation alone cannot add these project-owned files. `theme.enableDecoderPage` defaults to true and can be disabled independently of About. The terminal document route follows the About flag and publishes only already-public article source as inert JSON. No AI navigation page is included.
+
+The About Decryptor now performs local Base64/Base64URL, URL, Hex, HTML entities, Unicode escapes and JWT header/payload decoding instead of simulating password/key output. Use the matching package and starter route/defaults together. The title defaults to Hacker Decryptor; existing custom `about.modals.decryptor.title` values are preserved. Previous hash/passphrase label fields remain accepted but are no longer displayed. New controls use `messages.decoder` and the usual locale fallback. No API or extra dependency is required.
+
 ## 0.17.0: terminal message and shared Oracle exploration
 
 Version 0.17.0 adds the wide-screen homepage keyhole terminal, shared drag-to-look and reverse travel. See the [release record](docs/releases/0.17.0.md) for delivery status. Terminal and Oracle use one package-owned player; right-click returns to the corridor after arrival, while Escape or × closes About exploration. Text selection and scrolling do not start the terminal preview.
@@ -278,3 +284,9 @@ Tag browsing requires both the package components/utilities and the new starter-
 ### Article copy and image preview (0.3.0)
 
 The package-owned `BlogPost` layout and scripts provide both features with no new author markup or configuration switch. Custom layouts that do not use that article layout do not automatically gain them. Verify fenced code copying under HTTPS/localhost and click an unlinked body image in preview; linked images retain navigation and hero images are excluded. Preview displays the existing selected image source, not a higher-resolution original. The temporary public image demonstration article is not part of the starter.
+
+The matching starter adds `src/pages/[lang]/decoder.astro`. `theme.enableDecoderPage` defaults to true, independently of `enableAboutPage`; disable it to omit all localized decoder pages and the About dialog link. No `/decoder/` alias is generated. The quick dialog now clones a shared `DecoderWorkbench` template rather than serialized form HTML; upgrade package and starter route/runtime validator together. Text codecs, local crypto tasks, numeric reveal, actions, pipeline and window shell/controller are separate shared modules. Crypto dependencies load only on an explicit crypto operation; no RPC/API configuration is introduced.
+
+The read-only About terminal additionally requires the starter-owned `src/pages/[lang]/terminal/[id].json.ts` route alongside the matching theme package. This static route supplies localized source-text files on demand; package upgrades alone do not add a new project route. Keep the About page and new route aligned through the starter upgrade workflow.
+
+The matching Decoder Lab route now also renders static localized usage guidance and WebApplication metadata. Its enabled-only footer link is supplied by ThemeFrame; disabling `enableDecoderPage` removes both the route and its entries. About and the standalone route share the numeric reveal’s total 1.5–3 second timing (including 1.2 second crossfade), while each host supplies its own appearance. These animation parameters are internal module/CSS options, not new `site.config.ts` fields.

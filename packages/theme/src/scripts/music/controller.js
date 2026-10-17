@@ -20,7 +20,10 @@ async function init(root) {
   const player = createPlayer(tracks);
   // Narrow pages start compact; opening the full deck is an explicit action.
   const narrowScreen = window.matchMedia('(max-width: 720px)');
-  let collapsed = narrowScreen.matches || (saved?.collapsed ?? false);
+  const initialCollapse = root.dataset.initiallyCollapsed;
+  let collapsed =
+    narrowScreen.matches ||
+    (initialCollapse === undefined ? (saved?.collapsed ?? false) : initialCollapse === 'true');
   let state;
   let suspended = false;
   let restoring = true;

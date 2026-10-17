@@ -1,0 +1,90 @@
+---
+import type { GetStaticPaths } from 'astro';
+import ThemeFrame from '@anglefeint/astro-theme/components/shared/ThemeFrame.astro';
+import DecoderWorkbench from '@anglefeint/astro-theme/components/decoder/DecoderWorkbench.astro';
+import decoderPageCss from '@anglefeint/astro-theme/styles/decoder-page.css?url';
+import { SITE_URL } from '../../config/site';
+import { THEME } from '../../config/theme';
+import {
+  DEFAULT_LOCALE,
+  ENABLED_LOCALES,
+  isLocale,
+  localePath,
+  getLocaleHreflang,
+} from '../../i18n/config';
+import { getMessages } from '../../i18n/messages';
+export const getStaticPaths = (async () =>
+  THEME.DECODER_PAGE_ENABLED
+    ? ENABLED_LOCALES.map((lang) => ({ params: { lang } }))
+    : []) satisfies GetStaticPaths;
+const lang = Astro.params.lang ?? DEFAULT_LOCALE;
+const locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
+const messages = getMessages(locale);
+const localeHrefs = Object.fromEntries(
+  ENABLED_LOCALES.map((code) => [code, localePath(code, '/decoder/')])
+);
+const payload = JSON.stringify({ decoder: messages.decoder, page: messages.decoderPage }).replace(
+  /</g,
+  '\\u003c'
+);
+---
+
+<ThemeFrame
+  locale={locale}
+  title={`Base64 · JWT · ${messages.decoderPage.callTask} | ${messages.decoderPage.fullTool}`}
+  description={messages.decoderPage.description}
+  schema={{
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: messages.decoderPage.fullTool,
+    description: messages.decoderPage.description,
+    url: new URL(localePath(locale, '/decoder/'), Astro.site ?? SITE_URL).href,
+    inLanguage: getLocaleHreflang(locale),
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    isAccessibleForFree: true,
+  }}
+  bodyClass="decoder-page"
+  mainClass="page-main decoder-content"
+  musicInitiallyCollapsed
+  localeHrefs={localeHrefs}
+>
+  <link slot="head" rel="stylesheet" href={decoderPageCss} />
+  <article class="decoder-page-panel" data-decoder-page>
+    <div class="decoder-page-heading">
+      <h1>{messages.decoderPage.fullTool}</h1>
+      <p class="decoder-page-description">{messages.decoderPage.description}</p>
+    </div>
+    <DecoderWorkbench labels={messages.decoder} pageLabels={messages.decoderPage} full />
+    <section class="decoder-guide" aria-label={messages.decoderPage.fullTool}>
+      <section>
+        <h2>{messages.decoderPage.textTask}</h2><p>
+          {messages.decoder.supported}: Base64 / Base64URL · URL · Hex · {messages.decoder.html} · {
+            messages.decoder.unicode
+          } · JWT
+        </p><p>{messages.decoder.jwtWarning}</p><p>
+          {messages.decoderPage.history}: URL → Base64 → Hello
+        </p><code>SGVsbG8%3D → SGVsbG8= → Hello</code>
+      </section>
+      <section>
+        <h2>{messages.decoderPage.callTask}</h2><p>{messages.decoderPage.inputHint}</p><p>
+          {messages.decoderPage.callNotice}
+        </p>
+      </section>
+      <section>
+        <h2>{messages.decoderPage.addressTask}</h2><p>EVM · HyperEVM · TRON · Bitcoin</p><p>
+          {messages.decoderPage.addressNotice}
+        </p>
+      </section>
+    </section>
+  </article>
+  <script id="decoder-page-labels" type="application/json" set:html={payload} />
+</ThemeFrame>
+<script>
+  import { initDecoderPage } from '@anglefeint/astro-theme/scripts/decoder/page.js';
+  initDecoderPage();
+  document.addEventListener('astro:page-load', initDecoderPage);
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) initDecoderPage();
+  });
+</script>

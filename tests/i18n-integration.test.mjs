@@ -131,7 +131,7 @@ export const THEME_CONFIG = defineThemeConfig({
       en: {
         meta: { label: 'English', hreflang: 'en', ogLocale: 'en_US' },
         site: { hero: 'English hero' },
-        about: DEFAULT_ABOUT_CONFIG
+        about: { ...DEFAULT_ABOUT_CONFIG, metaLine: '' }
       },
       'pt-BR': {
         meta: { label: 'Português (Brasil)', hreflang: 'pt-BR', ogLocale: 'pt_BR', fallback: ['en'] },
@@ -266,6 +266,7 @@ export function getSiteHero(locale: Locale): string | undefined {
     assert.equal(messages.getMessages('pt-BR').nav.home, 'Inicio');
     assert.equal(messages.getMessages('pt-BR').langLabel, 'Idioma');
     assert.equal(site.getSiteHero('pt-BR'), 'Ola mundo em portugues');
+    assert.equal(about.getAboutConfig('en').metaLine, '');
     assert.equal(about.getAboutConfig('pt-BR').metaLine, '$ perfil inicializado | modo: builder');
 
     const enPost = await readFile(

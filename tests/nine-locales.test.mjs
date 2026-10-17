@@ -47,6 +47,15 @@ test('new locale defaults, language metadata and disabled states remain consiste
   );
   const config = defineThemeConfig({});
   assert.equal(Object.keys(config.i18n.locales).length, 9);
+  assert.equal(config.theme.enableDecoderPage, true);
+  assert.equal(
+    defineThemeConfig({ theme: { enableAboutPage: false } }).theme.enableDecoderPage,
+    true
+  );
+  assert.equal(
+    defineThemeConfig({ theme: { enableDecoderPage: false } }).theme.enableAboutPage,
+    true
+  );
   assert.equal(config.i18n.defaultLocale, 'en');
   assert.equal(config.i18n.locales['pt-br'].meta.hreflang, 'pt-BR');
   assert.equal(config.i18n.locales['zh-hant'].meta.hreflang, 'zh-Hant');

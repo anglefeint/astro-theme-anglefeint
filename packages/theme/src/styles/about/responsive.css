@@ -1,13 +1,19 @@
 /* About responsive layer: viewport-specific overrides. */
 @media (max-width: 900px) {
-  /* Other folders retain their existing mobile visibility; Oracle stays reachable. */
+  /* Keep the interactive decoder and Oracle reachable on narrow screens. */
   .hacker-sidebar:has([data-oracle]) {
     display: flex;
     top: auto;
-    bottom: 5rem;
+    bottom: 10rem;
     right: 1rem;
   }
-  .hacker-sidebar > :not([data-oracle]) {
+  .hacker-sidebar > :not([data-oracle]):not([data-modal='decryptor']) {
     display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  body.about-page .hacker-content {
+    padding-top: 8.5rem;
   }
 }

@@ -1,5 +1,9 @@
 ---
 import type { GetStaticPaths } from 'astro';
+import { terminalDocumentId } from '@anglefeint/astro-theme/utils/terminal-document';
+import TerminalBackdrop from '@anglefeint/astro-theme/components/shared/TerminalBackdrop.astro';
+import WindowShell from '@anglefeint/astro-theme/components/shared/WindowShell.astro';
+import DecoderWorkbench from '@anglefeint/astro-theme/components/decoder/DecoderWorkbench.astro';
 import HackerShell from '@anglefeint/astro-theme/layouts/shells/HackerShell.astro';
 import { getCollection } from 'astro:content';
 import { getAboutConfig } from '../../config/about';
@@ -33,6 +37,7 @@ const allPosts = await getCollection('blog');
 const blogPosts = postsForLocale(allPosts, locale).map((p) => ({
   slug: blogIdToSlugAnyLocale(p.id),
   title: p.data.title ?? p.id,
+  documentUrl: `${localePath(locale, '/terminal/')}${terminalDocumentId(p.id)}.json`,
 }));
 
 const escapeHtml = (value: string): string =>
@@ -43,26 +48,37 @@ const escapeHtml = (value: string): string =>
     .replaceAll('"', '&quot;');
 
 const aiBody = `<pre>${ABOUT_CONFIG.modals.ai.lines.map(escapeHtml).join('\n')}</pre>`;
-const decryptorBody = `<pre class="hacker-decryptor-pre">${escapeHtml(ABOUT_CONFIG.modals.decryptor.header)}
-
-<span id="dec-keys">[00:00:01] 0 ${escapeHtml(ABOUT_CONFIG.modals.decryptor.keysLabel)}</span>
-
-${escapeHtml(ABOUT_CONFIG.modals.decryptor.currentPassphraseLabel)} <span id="dec-pass">********</span>
-
-${escapeHtml(ABOUT_CONFIG.modals.decryptor.masterKeyLabel)}
-<span id="dec-master1"></span>
-<span id="dec-master2"></span>
-
-${escapeHtml(ABOUT_CONFIG.modals.decryptor.transientKeyLabel)}
-<span id="dec-trans1"></span>
-<span id="dec-trans2"></span>
-<span id="dec-trans3"></span>
-<span id="dec-trans4"></span></pre>`;
+const decoder = messages.decoder;
 
 const aboutRuntimeConfig = {
   effects: ABOUT_CONFIG.effects,
+  terminal: {
+    labels: messages.terminal,
+    cwd: ABOUT_CONFIG.scriptsPath,
+    entries: [
+      {
+        path: `${ABOUT_CONFIG.scriptsPath}/about.md`,
+        type: 'file',
+        title: messages.about.title,
+        content: [
+          ABOUT_CONFIG.sections.who,
+          ABOUT_CONFIG.sections.what,
+          ...ABOUT_CONFIG.sections.ethos,
+          ABOUT_CONFIG.sections.now,
+          ABOUT_CONFIG.sections.signature,
+        ].join('\n\n'),
+      },
+      ...blogPosts.map((post) => ({
+        path: `${ABOUT_CONFIG.scriptsPath}/${post.slug}.md`,
+        type: 'file',
+        title: post.title,
+        url: post.documentUrl,
+      })),
+    ],
+  },
   keyboard: ABOUT_CONFIG.modals.help,
-  decryptorKeysLabel: ABOUT_CONFIG.modals.decryptor.keysLabel,
+  decoderLabels: decoder,
+  scriptFolderLabels: messages.scriptFolders,
   modalContent: {
     'dl-data': {
       title: ABOUT_CONFIG.modals.dlData.title,
@@ -76,7 +92,7 @@ const aboutRuntimeConfig = {
     },
     decryptor: {
       title: ABOUT_CONFIG.modals.decryptor.title,
-      body: decryptorBody,
+      body: '',
       type: 'decryptor',
     },
     help: {
@@ -100,13 +116,14 @@ const aboutRuntimeConfig = {
   bodyClass="hacker-page about-page"
 >
   <Fragment slot="body-start">
-    <div class="hacker-bg" aria-hidden="true">
-      <canvas class="hacker-bg-canvas"></canvas>
-      <div class="hacker-scanlines"></div>
-      <div class="hacker-vignette"></div>
-      <div class="hacker-flicker"></div>
-      <div class="hacker-glow"></div>
-    </div>
+    <template id="hacker-decoder-tpl"
+      ><DecoderWorkbench labels={decoder} pageLabels={messages.decoderPage} /></template
+    >
+    <TerminalBackdrop
+      class="hacker-bg"
+      canvasClass="hacker-bg-canvas"
+      inputLabel={messages.terminal.commandInput}
+    />
     <div class="hacker-progress" aria-hidden="true"></div>
     <button
       type="button"
@@ -130,7 +147,7 @@ const aboutRuntimeConfig = {
           stroke="currentColor"
           stroke-width="1.5"
         >
-          <path d="M2 4h8l2 2h10v12H2V4z"></path>
+          <path d="M12 2v10m-4-4 4 4 4-4M4 13v5h16v-5"></path>
         </svg>
         <span>{ABOUT_CONFIG.sidebar.dlData}</span>
       </button>
@@ -147,7 +164,7 @@ const aboutRuntimeConfig = {
           stroke="currentColor"
           stroke-width="1.5"
         >
-          <path d="M2 4h8l2 2h10v12H2V4z"></path>
+          <path d="m5 5 5 5-5 5m8 0h6M2 2h20v16H2z"></path>
         </svg>
         <span>{ABOUT_CONFIG.sidebar.ai}</span>
       </button>
@@ -164,7 +181,7 @@ const aboutRuntimeConfig = {
           stroke="currentColor"
           stroke-width="1.5"
         >
-          <path d="M2 4h8l2 2h10v12H2V4z"></path>
+          <path d="m8 3-6 7 6 7m8-14 6 7-6 7m-3-15-2 16"></path>
         </svg>
         <span>{ABOUT_CONFIG.sidebar.decryptor}</span>
       </button>
@@ -181,7 +198,8 @@ const aboutRuntimeConfig = {
           stroke="currentColor"
           stroke-width="1.5"
         >
-          <path d="M2 4h8l2 2h10v12H2V4z"></path>
+          <path d="M9 6a3 3 0 0 1 6 0c0 3-3 2-3 5m0 3v1"></path><circle cx="12" cy="10" r="9"
+          ></circle>
         </svg>
         <span>{ABOUT_CONFIG.sidebar.help}</span>
       </button>
@@ -198,7 +216,7 @@ const aboutRuntimeConfig = {
           stroke="currentColor"
           stroke-width="1.5"
         >
-          <path d="M2 4h8l2 2h10v12H2V4z"></path>
+          <path d="M4 3h12l4 4v12H4zM15 3v5h5M7 11h10M7 15h7"></path>
         </svg>
         <span>{ABOUT_CONFIG.sidebar.allScripts}</span>
       </button>
@@ -216,77 +234,84 @@ const aboutRuntimeConfig = {
           stroke="currentColor"
           stroke-width="1.5"
         >
-          <path d="M2 4h8l2 2h10v12H2V4z"></path>
+          <path d="M7 18V2h10v16M4 18h16M10 10h1"></path>
         </svg>
         <span>Oracle</span>
       </button>
     </nav>
-    <div id="hacker-scripts-folders-tpl" hidden aria-hidden="true">
+    <template id="hacker-scripts-folders-tpl">
       <div class="hacker-modal-scripts">
         <div class="hacker-modal-scripts-path">{ABOUT_CONFIG.scriptsPath}</div>
         <div class="hacker-modal-scripts-grid">
           {
             blogPosts.map((post) => (
-              <a href={localePath(locale, `/blog/${post.slug}`)} class="hacker-script-folder">
-                <svg
-                  class="hacker-script-folder-icon"
-                  viewBox="0 0 24 20"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
+              <div class="hacker-script-card">
+                <a href={localePath(locale, `/blog/${post.slug}`)} class="hacker-script-folder">
+                  <svg
+                    class="hacker-script-folder-icon"
+                    viewBox="0 0 24 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path d="M2 4h8l2 2h10v12H2V4z" />
+                  </svg>
+                  <span class="hacker-script-folder-label" title={post.title}>
+                    {post.title}
+                  </span>
+                </a>
+                <button
+                  type="button"
+                  class="hacker-script-copy"
+                  data-copy-script-title
+                  title={messages.scriptFolders.copyTitle}
+                  aria-label={messages.scriptFolders.copyTitle}
                 >
-                  <path d="M2 4h8l2 2h10v12H2V4z" />
-                </svg>
-                <span class="hacker-script-folder-label">{post.title}</span>
-              </a>
+                  <svg
+                    viewBox="0 0 20 20"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    aria-hidden="true"
+                  >
+                    <rect x="7" y="7" width="10" height="10" rx="1" />
+                    <path d="M12 5V3H3v9h2" />
+                  </svg>
+                </button>
+              </div>
             ))
           }
         </div>
+        <p class="hacker-script-copy-status" role="status" aria-live="polite"></p>
       </div>
-    </div>
-    <div class="hacker-modal-overlay" id="hacker-modal" aria-hidden="true">
-      <div
-        class="hacker-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="hacker-modal-title"
-      >
-        <div class="hacker-modal-header">
-          <div class="hacker-modal-dots" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
-          <span class="hacker-modal-title" id="hacker-modal-title"
-            >{ABOUT_CONFIG.labels.modalOutput}</span
+    </template>
+    <WindowShell
+      title={ABOUT_CONFIG.labels.modalOutput}
+      closeLabel={ABOUT_CONFIG.labels.modalClose}
+      controls={messages.windowControls}
+    >
+      {
+        THEME.DECODER_PAGE_ENABLED && (
+          <a
+            slot="actions"
+            class="decoder-full-link"
+            data-decoder-entry
+            hidden
+            href={localePath(locale, '/decoder/')}
           >
-          <button
-            type="button"
-            class="hacker-modal-close"
-            aria-label={ABOUT_CONFIG.labels.modalClose}
-          >
-            <svg
-              class="hacker-modal-close-icon"
-              viewBox="0 0 24 24"
-              width="32"
-              height="32"
-              aria-hidden="true"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-            >
-              <path d="M6 6l12 12M18 6L6 18"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="hacker-modal-body" id="hacker-modal-body"></div>
-      </div>
-    </div>
+            {messages.decoderPage.fullTool} <span aria-hidden="true">↗</span>
+          </a>
+        )
+      }
+    </WindowShell>
   </Fragment>
   <div class="hacker-load-scan" aria-hidden="true"></div>
   <article class="about-shell">
     <div class="prose">
       <div class="title about-title">
-        <div class="hacker-meta">{ABOUT_CONFIG.metaLine}</div>
+        {ABOUT_CONFIG.metaLine && <div class="hacker-meta">{ABOUT_CONFIG.metaLine}</div>}
         <h1>{messages.about.title}</h1>
         <hr />
         <div class="hacker-title-bar" aria-hidden="true"></div>
@@ -367,7 +392,7 @@ const aboutRuntimeConfig = {
       } catch (_error) {
         throw new Error('Invalid hacker runtime config JSON payload.');
       }
-      const decryptorKeysLabel = runtimeConfig?.decryptorKeysLabel;
+      const decoderLabels = runtimeConfig?.decoderLabels;
       const modalContent = runtimeConfig?.modalContent;
       const aiModalBody = modalContent?.ai?.body;
       const hasRequiredModalKeys =
@@ -375,8 +400,8 @@ const aboutRuntimeConfig = {
         typeof modalContent === 'object' &&
         ['dl-data', 'ai', 'decryptor', 'help', 'all-scripts'].every((key) => modalContent[key]);
       if (
-        typeof decryptorKeysLabel !== 'string' ||
-        decryptorKeysLabel.trim().length === 0 ||
+        !decoderLabels ||
+        typeof decoderLabels.decode !== 'string' ||
         !hasRequiredModalKeys ||
         typeof aiModalBody !== 'string' ||
         aiModalBody.trim().length === 0

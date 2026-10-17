@@ -24,6 +24,15 @@ test('real config merge and adapters retain locale, comments and metadata semant
     }
     await cp(path.resolve('src/config'), path.join(root, 'src/config'), { recursive: true });
     await cp(path.resolve('src/i18n'), path.join(root, 'src/i18n'), { recursive: true });
+    // Resolve the build-time Vite alias explicitly in this standalone Node fixture.
+    const messageEntry = path.join(root, 'src/i18n/messages.ts');
+    await writeFile(
+      messageEntry,
+      (await readFile(messageEntry, 'utf8')).replaceAll(
+        '@anglefeint/theme-default-i18n',
+        path.resolve('packages/theme/src/i18n/messages.ts').split(path.sep).join('/')
+      )
+    );
     await symlink(
       path.resolve('node_modules'),
       path.join(root, 'node_modules'),
@@ -40,6 +49,8 @@ test('real config merge and adapters retain locale, comments and metadata semant
       'zh',
       'zh-hant',
     ]);
+    const messages = await loadProjectModule(path.join(root, 'src/i18n/messages.ts'));
+    assert.ok(messages.getMessages('en').decoderPage.fullTool);
     const entry = path.join(root, 'src/site.config.ts');
     const set = (value) =>
       writeFile(
@@ -60,6 +71,11 @@ export const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});`
       );
     }
     await set({ i18n: { defaultLocale: 'fr', locales: { en: { meta: { enabled: false } } } } });
+    const futureMessages = await loadProjectModule(path.join(root, 'src/i18n/messages.ts'));
+    assert.equal(
+      futureMessages.getMessages('fr').decoderPage.fullTool,
+      messages.getMessages('en').decoderPage.fullTool
+    );
     assert.deepEqual((await loadProjectLocales(root)).sort(), [
       'de',
       'es',

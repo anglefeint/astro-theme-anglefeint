@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release entry: [0.17.0](./0.17.0.md), keyhole terminal and shared Oracle exploration with on-demand scene generation and English author-text fallback. See its delivery status and acceptance record.
+Latest feature release entry: [0.18.0](./0.18.0.md), Decoder Lab, reusable numeric reveal and modular About terminal/windows. See its delivery status and acceptance record.
 
 Latest patch entry: [0.11.3](./0.11.3.md), About plain-text line breaks with unchanged user configuration. See its delivery status and validation record.
 

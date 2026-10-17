@@ -1,0 +1,176 @@
+---
+import type { Messages } from '../../i18n/messages';
+import '../../styles/decoder.css';
+interface Props {
+  labels: Messages['decoder'];
+  pageLabels: Messages['decoderPage'];
+  full?: boolean;
+}
+const { labels, pageLabels, full = false } = Astro.props;
+---
+
+<form class="hacker-decoder-form">
+  {
+    full && (
+      <>
+        <input type="hidden" name="decoder-task" value="text" />
+        <div class="decoder-topbar">
+          <div class="decoder-tabs" role="tablist" aria-label={pageLabels.task}>
+            {[
+              ['text', pageLabels.textTask],
+              ['call', pageLabels.callTask],
+              ['address', pageLabels.addressTask],
+            ].map(([value, label]) => (
+              <button
+                type="button"
+                role="tab"
+                id={`decoder-tab-${value}`}
+                data-decoder-task={value}
+                aria-selected={value === 'text' ? 'true' : 'false'}
+                tabindex={value === 'text' ? 0 : -1}
+                aria-controls="decoder-task-panel"
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <p class="hacker-decoder-status" role="status" aria-live="polite">
+            {labels.ready}
+          </p>
+        </div>
+      </>
+    )
+  }
+  <div
+    id={full ? 'decoder-task-panel' : undefined}
+    role={full ? 'tabpanel' : undefined}
+    aria-labelledby={full ? 'decoder-tab-text' : undefined}
+  >
+    <div class:list={[full && 'decoder-controls']}>
+      {
+        full && (
+          <div class="decoder-taskbar">
+            <label data-crypto-control hidden>
+              {pageLabels.chain}
+              <select name="decoder-chain">
+                <>
+                  <option value="evm">EVM</option>
+                  <option value="hyperevm">HyperEVM</option>
+                  <option value="tron">TRON</option>
+                  <option value="btc">Bitcoin</option>
+                </>
+              </select>
+            </label>
+            <label data-decimals-control hidden>
+              {pageLabels.decimals}
+              <input
+                name="decoder-decimals"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                maxlength="3"
+                placeholder="—"
+                aria-describedby="decoder-precision-hint"
+              />
+            </label>
+            <label data-network-control hidden>
+              {pageLabels.network}
+              <select name="decoder-network">
+                <>
+                  <option value="mainnet">Mainnet</option>
+                  <option value="testnet">Testnet / Signet</option>
+                  <option value="regtest">Regtest</option>
+                </>
+              </select>
+            </label>
+          </div>
+        )
+      }
+      <div class="hacker-decoder-toolbar">
+        <label data-text-control
+          >{labels.format}
+          <select name="decoder-format">
+            <option value="auto">{labels.auto}</option>
+            <option value="base64">Base64 / Base64URL</option>
+            <option value="url">URL</option>
+            <option value="hex">Hex</option>
+            <option value="html">{labels.html}</option>
+            <option value="unicode">{labels.unicode}</option>
+            <option value="jwt">JWT</option>
+          </select></label
+        >
+        <button type="button" data-decoder-example>{labels.example}</button>
+        <button type="button" data-decoder-clear>{labels.clear}</button>
+        <button type="button" data-decoder-reuse disabled>{labels.reuse}</button>
+        <button type="submit" class="hacker-decoder-submit">{labels.decode}</button>
+      </div>
+      {
+        full && (
+          <p
+            id="decoder-precision-hint"
+            data-decimals-control
+            hidden
+            class="hacker-decoder-formats"
+          >
+            {pageLabels.precisionHint}
+          </p>
+        )
+      }
+      <p class="hacker-decoder-formats decoder-supported" data-text-control>
+        <span>{labels.supported}:</span>{' '}
+        <span class="decoder-format-list">
+          {
+            ['Base64 / Base64URL', 'URL', 'Hex', labels.html, labels.unicode, 'JWT'].map((name) => (
+              <code>{name}</code>
+            ))
+          }
+        </span>
+      </p>
+    </div>
+    <div class="hacker-decoder-grid">
+      <label class="hacker-decoder-input-label"
+        >{labels.input}
+        <textarea
+          name="decoder-input"
+          maxlength="16384"
+          spellcheck="false"
+          autocomplete="off"
+          placeholder={labels.placeholder}></textarea>
+      </label>
+      <section class="hacker-decoder-result" aria-label={labels.output}>
+        <div class="hacker-decoder-result-header">
+          <span>{labels.output}</span><button type="button" data-decoder-copy disabled
+            >{labels.copy}</button
+          >
+        </div>
+        <pre class="hacker-decoder-output" tabindex="0" aria-label={labels.output}></pre>
+      </section>
+    </div>
+    {
+      !full && (
+        <p class="hacker-decoder-status" role="status" aria-live="polite">
+          {labels.ready}
+        </p>
+      )
+    }
+    {full && <p class="decoder-notice" data-decoder-notice />}
+    <p class="hacker-decoder-local">{labels.local}</p>
+    {
+      full && (
+        <section class="decoder-history" aria-label={pageLabels.history}>
+          <div class="hacker-decoder-result-header">
+            <>
+              <h2>{pageLabels.history}</h2>
+              <button type="button" data-decoder-export disabled>
+                {pageLabels.export}
+              </button>
+            </>
+          </div>
+          <>
+            <ol data-decoder-history />
+            <p class="hacker-decoder-local">{pageLabels.limits}</p>
+          </>
+        </section>
+      )
+    }
+  </div>
+</form>

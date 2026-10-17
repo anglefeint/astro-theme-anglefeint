@@ -124,6 +124,8 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'public/images/theme-previews/preview-blog-post-open.png',
   'public/images/theme-previews/preview-home.png',
   'src/pages/[lang]/about.astro',
+  'src/pages/[lang]/decoder.astro',
+  'src/pages/[lang]/terminal/[id].json.ts',
   'src/pages/[lang]/blog/[...page].astro',
   'src/pages/[lang]/blog/[...slug].astro',
   'src/pages/[lang]/index.astro',

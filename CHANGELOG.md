@@ -13,6 +13,14 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.18.0] - 2026-10-18
+
+- Add localized Decoder Lab pages with local text-processing chains, ERC-20/TRC-20 call interpretation and EVM/HyperEVM/TRON/Bitcoin address inspection. Six text codecs, strict validation and explicit processing history require no wallet or RPC.
+- Share the quick About decoder and full workbench controller, codecs, actions and numeric animation. Parameterize total duration, fade, colors, opacity and trails; total 1.5–3 seconds includes the final 1.2-second crossfade.
+- Extract reusable About window, terminal and lifecycle modules. Browse the configured virtual filesystem with ls/cd/cat/vi and read public articles within the original Canvas; dispose resources on close/navigation.
+- Refine About’s neutral/amber style, file-folder accessibility and page-scoped translucent player skins. Add localized static Decoder usage guidance, structured data and discovery links.
+- New routes/configuration require the matching starter; see [migration](UPGRADING.md#0180-decoder-lab-and-shared-about-modules) and [release record](docs/releases/0.18.0.md).
+
 ## [0.17.0] - 2026-10-16
 
 - Add a wide-screen homepage terminal with selectable, scrollable text and a separate keyhole/key unlock interaction. Configure one English message for all languages, with optional per-language overrides.

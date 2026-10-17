@@ -1,0 +1,60 @@
+---
+interface Props {
+  id?: string;
+  title: string;
+  closeLabel: string;
+  controls: { collapse: string; expand: string; restore: string };
+}
+const { id = 'hacker-modal', title, closeLabel, controls } = Astro.props;
+---
+
+<div class="hacker-modal-overlay" id={id} aria-hidden="true">
+  <div class="hacker-modal" role="dialog" aria-modal="true" aria-labelledby={`${id}-title`}>
+    <div class="hacker-modal-header">
+      <div class="hacker-modal-dots">
+        <button type="button" data-window-close aria-label={closeLabel} title={closeLabel}
+          ><span aria-hidden="true">×</span></button
+        >
+        <button
+          type="button"
+          data-window-collapse
+          aria-label={controls.collapse}
+          title={controls.collapse}
+          aria-expanded="true"
+          aria-controls={`${id}-body`}
+          data-label={controls.collapse}
+          data-restore-label={controls.restore}><span aria-hidden="true">−</span></button
+        >
+        <button
+          type="button"
+          data-window-expand
+          aria-label={controls.expand}
+          title={controls.expand}
+          aria-pressed="false"
+          data-label={controls.expand}
+          data-restore-label={controls.restore}><span aria-hidden="true">+</span></button
+        >
+      </div>
+      <span class="hacker-modal-title" id={`${id}-title`}>{title}</span>
+      <div class="hacker-modal-actions">
+        <slot name="actions" />
+        <button type="button" class="hacker-modal-close" aria-label={closeLabel}>
+          <svg
+            class="hacker-modal-close-icon"
+            viewBox="0 0 24 24"
+            width="32"
+            height="32"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="hacker-modal-body" id={`${id}-body`}></div>
+  </div>
+</div>

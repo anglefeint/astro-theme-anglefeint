@@ -1,0 +1,504 @@
+/* Standalone lab skin. Shared controls/algorithms remain in DecoderWorkbench. */
+body.decoder-page {
+  --lab-result: #78dcb2;
+  --numeric-reveal-color: currentColor;
+  --numeric-reveal-highlight: currentColor;
+  --numeric-reveal-opacity-min: 1;
+  --numeric-reveal-opacity-max: 1;
+  --numeric-reveal-trail-opacity: 0;
+  --lab-bg: #090b10;
+  --lab-surface: #10131b;
+  --lab-edge: #2a303f;
+  --lab-muted: #929bad;
+  --lab-text: #e5e9f2;
+  --lab-mint: #8ee8c3;
+  --lab-violet: #b8a6ff;
+  --chrome-bg: rgba(9, 11, 16, 0.9);
+  --chrome-border: #262c39;
+  --chrome-link-hover: var(--lab-mint);
+  --chrome-active: var(--lab-violet);
+  background-color: var(--lab-bg) !important;
+  background-image:
+    radial-gradient(ellipse at 85% 0%, rgba(111, 85, 185, 0.13), transparent 55%),
+    linear-gradient(rgba(161, 174, 205, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(161, 174, 205, 0.035) 1px, transparent 1px) !important;
+  background-size:
+    auto,
+    48px 48px,
+    48px 48px !important;
+  color: var(--lab-text);
+}
+.decoder-page .decoder-content {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 1rem clamp(0.75rem, 1.4vw, 1.5rem) 2rem;
+}
+.decoder-page-panel {
+  margin: 0 0 10rem;
+  min-width: 0;
+}
+.decoder-page-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 2rem;
+  position: relative;
+  padding: 0 0 1rem;
+}
+.decoder-page-panel h1 {
+  font:
+    650 clamp(2rem, 3vw, 3rem)/1.08 system-ui,
+    sans-serif;
+  color: #f0f1fa;
+  letter-spacing: -0.045em;
+  margin: 0;
+  text-wrap: balance;
+  text-shadow: none;
+  animation: none;
+}
+.decoder-page-description {
+  flex: 1 1 20rem;
+  max-width: 52rem;
+  margin: 0;
+  font:
+    1rem/1.7 system-ui,
+    sans-serif;
+  color: #b4bdce;
+}
+.decoder-page .hacker-decoder-form {
+  --decoder-control-border: #343e50;
+  --decoder-control-bg: #191f2b;
+  margin: 0;
+  border: 1px solid var(--lab-edge);
+  border-radius: 12px;
+  background: rgba(15, 18, 26, 0.96);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.24);
+  font:
+    0.8rem/1.65 Consolas,
+    'SFMono-Regular',
+    'Liberation Mono',
+    monospace;
+}
+.decoder-page .decoder-tabs {
+  counter-reset: lab-tab;
+  gap: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--lab-edge);
+  padding: 0;
+  overflow: hidden;
+  background: rgba(26, 30, 42, 0.45);
+  border-radius: 12px 12px 0 0;
+}
+.decoder-page .decoder-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  border-bottom: 1px solid var(--lab-edge);
+  border-radius: 11px 11px 0 0;
+  background: #141821;
+}
+.decoder-page .decoder-topbar .decoder-tabs {
+  border-bottom: 0;
+  background: transparent;
+}
+.decoder-page .decoder-topbar .hacker-decoder-status {
+  flex: 1 1 12rem;
+  justify-content: flex-end;
+  min-width: 0;
+  margin: 0;
+  padding: 0.45rem 0.75rem;
+  text-align: right;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.decoder-page .hacker-decoder-status[data-state='error'] {
+  color: #ffb4a6;
+}
+.decoder-page .decoder-controls > .decoder-supported {
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+.decoder-page .decoder-format-list code {
+  display: inline-block;
+  padding: 0;
+  background: none;
+  color: #b6e6d3;
+  font: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.decoder-page .decoder-format-list code + code::before {
+  content: ' · ';
+  color: var(--lab-muted);
+  font-weight: 400;
+}
+.decoder-page .hacker-decoder-form .decoder-tabs [role='tab'] {
+  counter-increment: lab-tab;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.9rem;
+  min-height: 44px;
+  border-radius: 0;
+  box-shadow: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: #9da7ba;
+  font:
+    500 0.83rem/1.5 system-ui,
+    sans-serif;
+}
+.decoder-page .decoder-tabs [role='tab']::before {
+  content: '0' counter(lab-tab);
+  font:
+    0.65rem/1.5 Consolas,
+    monospace;
+  opacity: 0.65;
+}
+.decoder-page .hacker-decoder-form .decoder-tabs [role='tab'][aria-selected='true'],
+.decoder-page .hacker-decoder-form .decoder-tabs [role='tab'][aria-selected='true']:hover {
+  color: #e1d9ff;
+  border-bottom-color: var(--lab-violet);
+  background: linear-gradient(0deg, rgba(184, 166, 255, 0.09), transparent);
+}
+.decoder-page .hacker-decoder-form .decoder-tabs [role='tab']:hover {
+  color: #f0edff;
+  border-color: transparent;
+  background-color: rgba(184, 166, 255, 0.025);
+  box-shadow: none;
+}
+.decoder-page .hacker-decoder-form .decoder-tabs [role='tab']:first-child {
+  border-top-left-radius: 11px;
+}
+.decoder-page .hacker-decoder-form .decoder-tabs [role='tab']:last-child {
+  border-top-right-radius: 11px;
+}
+.decoder-page #decoder-task-panel {
+  padding: 12px;
+}
+.decoder-page .decoder-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.65rem;
+}
+.decoder-page .decoder-taskbar,
+.decoder-page .hacker-decoder-toolbar {
+  gap: 0.6rem;
+  margin: 0;
+}
+.decoder-page .decoder-controls > .hacker-decoder-formats {
+  flex: 1 1 16rem;
+  min-width: 0;
+  margin: 0;
+}
+.decoder-page .decoder-taskbar:not(:has(> label:not([hidden]))) {
+  display: none;
+}
+.decoder-page .hacker-decoder-form button,
+.decoder-page .hacker-decoder-form select,
+.decoder-page .decoder-taskbar input {
+  color: #cbd3e2;
+  border-color: var(--decoder-control-border);
+  border-radius: 5px;
+  background-color: var(--decoder-control-bg);
+  font-size: 0.76rem;
+  min-height: 36px;
+  box-sizing: border-box;
+}
+.decoder-page .hacker-decoder-form button:hover:not(:disabled) {
+  border-color: #677792;
+  background: #242d3d;
+  color: #f3f6fc;
+}
+.decoder-page .hacker-decoder-form button:disabled {
+  opacity: 0.42;
+}
+.decoder-page .hacker-decoder-form .hacker-decoder-submit {
+  margin-left: 0;
+  min-width: 100px;
+  border-color: #8ee8c3;
+  background: var(--lab-mint);
+  color: #10251e;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(142, 232, 195, 0.08);
+}
+.decoder-page .hacker-decoder-form .hacker-decoder-submit:hover:not(:disabled) {
+  color: #081d14;
+  border-color: #c0ffdf;
+  background: #b3f4d8;
+}
+.decoder-page .hacker-decoder-toolbar label,
+.decoder-page .decoder-taskbar label {
+  color: #b8c1d3;
+}
+.decoder-page .hacker-decoder-formats {
+  color: var(--lab-muted);
+  font-size: 0.7rem;
+  margin: 0 0 1.4rem;
+}
+.decoder-page .hacker-decoder-grid {
+  gap: 0.75rem;
+}
+.decoder-page .hacker-decoder-input-label,
+.decoder-page .hacker-decoder-result {
+  border: 1px solid var(--lab-edge);
+  border-radius: 8px;
+  background: #0b0f16;
+  overflow: hidden;
+}
+.decoder-page .hacker-decoder-input-label {
+  padding-top: 0;
+  text-indent: 0.75rem;
+  color: #bac4d6;
+  line-height: 42px;
+}
+.decoder-page .hacker-decoder-result-header {
+  padding: 3px 0.6rem 3px 0.75rem;
+  min-height: 30px;
+  box-sizing: content-box;
+  color: #bac4d6;
+}
+.decoder-page .hacker-decoder-grid .hacker-decoder-result-header {
+  height: 42px;
+  min-height: 42px;
+  box-sizing: border-box;
+}
+.decoder-page .hacker-decoder-input-label textarea,
+.decoder-page .hacker-decoder-form .hacker-decoder-output {
+  height: clamp(340px, 50vh, 640px);
+  width: 100%;
+  margin: 0;
+  padding: 0.75rem;
+  border: 0;
+  border-top: 1px solid var(--lab-edge);
+  border-radius: 0;
+  background: #090d14;
+  color: #d3e3e0;
+  font:
+    0.85rem/1.8 Consolas,
+    'SFMono-Regular',
+    'Liberation Mono',
+    monospace;
+  text-indent: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #46516a #090d14;
+}
+.decoder-page .hacker-decoder-form .hacker-decoder-output {
+  color: var(--lab-result);
+}
+.decoder-page .hacker-decoder-input-label textarea::placeholder {
+  color: #717d91;
+}
+.decoder-page .hacker-decoder-form :focus-visible {
+  outline: 2px solid var(--lab-violet);
+  outline-offset: -3px;
+}
+.decoder-page .hacker-decoder-status {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  color: var(--lab-mint);
+  margin-top: 0.75rem;
+}
+.decoder-page .hacker-decoder-status::before {
+  content: '>';
+  color: var(--lab-muted);
+}
+.decoder-page .hacker-decoder-local {
+  color: var(--lab-muted);
+  font-size: 0.7rem;
+}
+.decoder-page .decoder-notice {
+  color: #bdc5d4;
+  border-left: 2px solid #70628e;
+  padding-left: 0.8rem;
+}
+.decoder-page .decoder-notice:empty {
+  display: none;
+}
+.decoder-page .decoder-history {
+  margin-top: 1rem;
+  border-top: 1px solid var(--lab-edge);
+  padding-top: 0.75rem;
+}
+.decoder-page .decoder-history > .hacker-decoder-result-header {
+  padding: 0 0 0.8rem;
+}
+.decoder-page .decoder-history h2 {
+  color: #d4d9e5;
+  font:
+    600 0.85rem/1.5 system-ui,
+    sans-serif;
+}
+.decoder-page .decoder-history > ol {
+  counter-reset: lab-step;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.decoder-page .decoder-history > ol > li {
+  counter-increment: lab-step;
+  position: relative;
+  padding: 0 0 0.8rem 2.1rem;
+  border-left: 1px solid #3b3552;
+  margin-left: 0.7rem;
+}
+.decoder-page .decoder-history > ol > li::before {
+  content: counter(lab-step);
+  position: absolute;
+  left: -0.7rem;
+  top: 0.7rem;
+  width: 1.4rem;
+  line-height: 1.4rem;
+  text-align: center;
+  font-size: 0.65rem;
+  background: #262236;
+  color: #d5c7ff;
+  border-radius: 4px;
+}
+.decoder-page .decoder-history details {
+  border: 1px solid var(--lab-edge);
+  border-radius: 6px;
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  color: #b8c4d7;
+  background: #111620;
+}
+.decoder-page .decoder-history summary:hover {
+  color: #e1d9ff;
+}
+.decoder-page .decoder-history pre {
+  border-color: var(--lab-edge);
+  background: #090d14;
+  color: #b8e3d3;
+}
+/* Keep the shared floating position; only the lab materials change. */
+body.decoder-page .music-deck {
+  --music-accent: var(--lab-mint);
+  --music-accent-alt: var(--lab-violet);
+  --music-text: var(--lab-text);
+  --music-muted: var(--lab-muted);
+  --music-border: var(--lab-edge);
+  --music-border-strong: #746990;
+  --music-surface: rgba(16, 21, 31, 0.35);
+  --music-panel: linear-gradient(145deg, rgba(27, 31, 46, 0.35), rgba(12, 16, 25, 0.35));
+  --music-glow: rgba(184, 166, 255, 0.06);
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  backdrop-filter: none;
+  font-family: Consolas, 'SFMono-Regular', 'Liberation Mono', monospace;
+}
+.decoder-page .music-deck::before {
+  display: none;
+}
+.decoder-page .music-deck .music-deck__topbar {
+  background: rgba(184, 166, 255, 0.035);
+  border-bottom: 1px solid var(--lab-edge);
+  padding-bottom: 0.65rem;
+  margin-bottom: 0.5rem;
+}
+.decoder-page
+  .music-deck
+  :is(
+    .music-deck__btn,
+    .music-deck__collapse,
+    .music-deck__playlist-toggle,
+    .music-deck__track-chip
+  ) {
+  border-radius: 5px;
+  border-color: #343e50;
+  background: #191f2b;
+  color: #cbd3e2;
+}
+.decoder-page
+  .music-deck
+  :is(.music-deck__btn, .music-deck__collapse, .music-deck__playlist-toggle):hover {
+  border-color: #746990;
+  background: #242b3d;
+  color: #f0edff;
+}
+.decoder-page .music-deck .music-deck__btn--primary {
+  color: var(--lab-mint);
+  border-color: #4d8c77;
+  background: #17312b;
+}
+.decoder-page .music-deck :focus-visible {
+  outline-color: var(--lab-violet);
+}
+@media (max-width: 720px) {
+  .decoder-page .hacker-decoder-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .decoder-page .hacker-decoder-form .decoder-tabs [role='tab'] {
+    padding: 0.6rem 0.65rem;
+    font-size: 0.78rem;
+    gap: 0.4rem;
+  }
+}
+@media (max-width: 720px) {
+  .decoder-page .decoder-content {
+    padding-top: 1rem;
+  }
+  .decoder-page-heading {
+    padding-bottom: 1rem;
+  }
+  .decoder-page .decoder-tabs {
+    flex-wrap: nowrap;
+  }
+  .decoder-page .hacker-decoder-form .decoder-tabs [role='tab'] {
+    flex: 1;
+    justify-content: center;
+    padding-inline: 0.4rem;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+  .decoder-page .decoder-tabs [role='tab']::before {
+    display: none;
+  }
+  .decoder-page .hacker-decoder-input-label textarea {
+    height: 190px;
+  }
+  .decoder-page .hacker-decoder-form .hacker-decoder-output {
+    height: 260px;
+  }
+}
+
+.decoder-page .decoder-guide {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.decoder-page .decoder-guide h2 {
+  font-size: 0.95rem;
+  color: #8ee8c3;
+  margin-bottom: 0.5rem;
+}
+.decoder-page .decoder-guide p {
+  color: #aeb8ca;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.decoder-page .decoder-guide code {
+  color: #b8a6ff;
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 720px) {
+  .decoder-page .decoder-guide {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}

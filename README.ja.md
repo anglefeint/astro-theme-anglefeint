@@ -36,6 +36,10 @@
 
 言語別のホーム大見出しは `src/site.config.ts` の `i18n.locales.<code>.site.homeTitle` で設定できます（例：`ja: { site: { homeTitle: "私のデジタルガーデン" } }`）。追加した言語にも対応します。未設定・空白の場合は `meta.fallback` の順に探し、最後に全体の `site.title`（または `PUBLIC_SITE_TITLE`）を使います。ホームの見出しだけが変わり、ブラウザータイトル、ナビゲーション、フッター、RSS、SEO のサイト名は共通です。変更後は再ビルドして公開してください。
 
+About の **Hacker Decryptor** は、Base64/Base64URL、URLエンコード、16進数、HTMLエンティティ、Unicodeエスケープ、JWTのヘッダーとペイロードをブラウザー内でデコードします。形式の自動判定とページ配色に合わせた数字の結果アニメーションに対応。サイドバーのDecryptorから開けます。APIや追加設定は不要です。
+
+完全版の **Decoder Lab** は `/<locale>/decoder/` にあります。ローカル処理履歴、EVM/HyperEVM/TRONのERC-20/TRC-20呼び出し解釈、EVM/TRON/Bitcoinアドレス確認に対応。Aboutの解読ダイアログから開けます。`src/site.config.ts` の `theme.enableDecoderPage: false` でページとリンクを個別に無効化できます。RPC、ウォレット接続、APIキーは不要です。
+
 ## 動作要件
 
 - Node.js `22.12.0+`（LTS 推奨）

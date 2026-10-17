@@ -12,6 +12,36 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-18 代码优先复核：纠正文档残留偏移
+
+在同一 `aeae6a9` 基线和当前未提交工作区上重新运行 `suggest:docs`，本轮重新检查配置/defaults/schema/adapter → About 与 Decoder 路由 → 组件/控制器/样式 → 测试链路，而不是以此前文档核对完成的声明代替源码验证。候选完整工作区路径保存在 `acceptance-results/doc-code-first-review.log`。直接候选包括架构、视觉参考、九语 README、包 README、升级/验收、核对记录、项目参考、打包边界及政策/历史发布文件；没有额外 propagated 项。项目参考补充 Decoder 入口，打包参考补充未发布新路由/依赖归属；其余政策规则和历史事实未改变，跳过更新。
+
+此次确认并修正前一轮仍遗漏的描述：
+
+- ARCHITECTURE 仍有两处 About 借用背景时钟，改为两个 host 各自创建独立 `createDecoderClock`，与 terminal 解耦。
+- 旧的 1–3 秒、viewport-sized、结束时一次性显现改为当前 1.5–3 秒总时长、结果框可见区域预算和包含其中的 1.2 秒交叠淡化。
+- “无新 starter 文件”在 Decoder 段落中不再成立；补明 manifest 已包含独立 Decoder 和 terminal document 路由。共享包模块仍由 package exports 提供。
+- Hacker 播放器旧绿色交互描述改为 About 当前琥珀配色；九语/包 README 的 Matrix 结果配色描述同步为按 host 配色的数字动画。
+- VISUAL_SYSTEMS 补明 Output 是静态可配置标签、0.3em 字距；DL Data 是装饰进度条、AI 是配置文本、Help 是键盘交互。AI 导航站只是提议，没有实现。
+
+本轮只修改文档。新运行的证据为文档建议、元数据验证、所改文档格式和本地链接检查；运行时证据复用上一节 2026-10-18 的 `decoder-final-*` 结果（121 单测、40 preview 浏览器案例、18 dev 案例和构建），不声称本轮重新运行了构建或这些运行时测试。没有依据旧文档修改正常运行代码，也没有提交、发布或创建 AI 导航页。
+
+## 2026-10-18 Decoder Lab 与共享数字动画文档核对
+
+本轮以 `main` 的 `aeae6a9` 为已提交基线，审查当前未提交 Decoder 路由、配置/schema/适配器、共享组件、脚本、样式、消息、starter manifest 和对应测试。输入来自 `npm run suggest:docs` 的完整工作区变更；原始候选保存在 `acceptance-results/decoder-final-doc-suggestions.log`。本轮覆盖 Decoder 与数字动画，不把同一工作区其他未发布功能视为已交付。
+
+直接命中文档包括九语 README、包 README、UPGRADING、ARCHITECTURE、VISUAL_SYSTEMS、TEMPLATE_ACCEPTANCE 及本核对记录。建议器没有额外 propagated 项；其直接候选已包含这些依赖/同步目标。政策、代理入口、元数据规范、打包/发布流程、主题提交材料和历史 releases 亦被宽泛域命中，但本轮没有改变其规则或发布状态，因此跳过改写。README 仅修正独立页的 Decoder Lab 名称，详细内部参数留在技术参考。
+
+| 源码链路                                                               | 核对与处置                                                                                                                                                                                             |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| site config/schema → adapter → locale route → shared footer            | 页面默认启用，独立于 About；关闭时移除路由与入口，无短路径 alias。确认 route 在 starter manifest 中，共享实现由包提供。                                                                                |
+| DecoderWorkbench → decoder/controller → codecs/crypto/pipeline/actions | 弹窗与独立页共用逻辑；本地文本解码、精确 ABI/地址检查、显式链路和按需 crypto 加载，未加入 RPC/API。                                                                                                    |
+| numeric-reveal-timing → numeric-reveal → host CSS                      | 总时长 1.5–3 秒包含最后 1.2 秒淡化；短、中、长输入使用子区间。参数化颜色、透明度、残影和固定时长覆盖；Lab 读取结果 currentColor、无明暗闪动/残影，About 保留琥珀色磷光。移除文档旧绿色和分散追加段落。 |
+| static route → ThemeFrame/BaseHead → built HTML                        | 功能标题、描述、canonical/hreflang、sitemap、WebApplication、静态说明与常驻本地化链接；未承诺搜索排名或伪造评分。                                                                                      |
+| decoder-page player CSS → shared MusicDeck                             | 仅 Lab 背景 alpha 35%、无 blur，保持固定左下角与默认折叠；其他页面播放器不改。                                                                                                                         |
+
+本轮检查证据归入 `acceptance-results/decoder-final-*`；最终结果同步 TEMPLATE_ACCEPTANCE。实际运行时间与动画总时长分开：输入先解码，再启动装饰动画；本机毫秒级基准是局部观察，不是所有浏览器的硬实时保证。未提交、推送、发布 npm 或同步 starter 分发分支。
+
 ## 2026-10-16 首页终端、共享走廊与 Oracle 文档工作流
 
 本轮以 main `baaef62`（0.16.0 交付说明）为工作区基线，检查最近五次提交及全部未提交修改和新增测试。既有 0.16.0 标题配置已经有对应记录；本轮没有把已发布版本改写成包含新终端或探索功能。`npm run suggest:docs` 的原始候选保存在 `acceptance-results/doc-sync-suggestions.log`，输入覆盖 HomePage/MatrixShell、首页和 About 生命周期、全部变更的 `matrix-passage` 模块、样式、消息与适配器模板及单元/浏览器测试。最终文档仍描述尚未交付的当前源码，不表示 npm、starter 或 demo 已发布。

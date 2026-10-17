@@ -1,4 +1,7 @@
+import { createLifetime } from './lifetime.js';
 export function initAboutReadingUi(runtimeConfig, prefersReducedMotion) {
+  const lifetime = createLifetime();
+  const { signal } = lifetime;
   var progress = document.querySelector('.hacker-progress');
   var toast = document.querySelector('.hacker-toast');
   var articlePanel = document.querySelector('.about-shell > .prose');
@@ -12,8 +15,8 @@ export function initAboutReadingUi(runtimeConfig, prefersReducedMotion) {
   }
   if (toast && articlePanel) {
     positionToast();
-    window.addEventListener('resize', positionToast, { passive: true });
-    new ResizeObserver(positionToast).observe(articlePanel);
+    window.addEventListener('resize', positionToast, { passive: true, signal });
+    lifetime.observe(new ResizeObserver(positionToast)).observe(articlePanel);
   }
   var fallbackToasts = {
     p30: 'context parsed',
@@ -34,7 +37,7 @@ export function initAboutReadingUi(runtimeConfig, prefersReducedMotion) {
     toast.textContent = '> ' + msg;
     toast.classList.add('visible');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () {
+    toastTimer = lifetime.timeout(function () {
       toast.classList.remove('visible');
     }, 1800);
   }
@@ -64,13 +67,21 @@ export function initAboutReadingUi(runtimeConfig, prefersReducedMotion) {
     }
 
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true, signal });
   }
 
   var backTop = document.querySelector('.hacker-back-to-top');
   if (backTop) {
-    backTop.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-    });
+    backTop.addEventListener(
+      'click',
+      function () {
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      },
+      { signal }
+    );
   }
+  return () => {
+    lifetime.dispose();
+    toast?.classList.remove('visible');
+  };
 }
