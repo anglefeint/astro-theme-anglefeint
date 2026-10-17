@@ -4,8 +4,8 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(2px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -16,43 +16,92 @@
 }
 .hacker-modal {
   width: min(420px, 100%);
-  max-height: 80vh;
+  max-height: 88dvh;
+  border: 1px solid var(--hacker-border, rgba(157, 181, 166, 0.3));
+  border-radius: 6px;
+  background: var(--hacker-surface, rgba(7, 13, 10, 0.96));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .hacker-modal.hacker-modal-wide {
   width: min(900px, calc(100vw - 2rem));
-  overflow: visible;
+  overflow: hidden;
+}
+.hacker-modal.hacker-modal-decoder {
+  width: min(800px, 100%);
 }
 .hacker-modal-header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.9rem;
-  background: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  background: var(--hacker-titlebar, #111914);
+  border-bottom: 1px solid rgba(153, 180, 162, 0.18);
 }
 .hacker-modal-dots {
   display: flex;
   gap: 6px;
 }
-.hacker-modal-dots span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+/* A generous hit area surrounds each small, recognizable window dot. */
+.hacker-modal-dots button {
+  width: 24px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
 }
-.hacker-modal-dots span:nth-child(1) {
+.hacker-modal-dots button span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  color: rgba(0, 0, 0, 0.8);
+  font: bold 12px/14px monospace;
+  text-align: center;
+}
+.hacker-modal-dots button:nth-child(1) span {
   background: #ff5f57;
 }
-.hacker-modal-dots span:nth-child(2) {
+.hacker-modal-dots button:nth-child(2) span {
   background: #febc2e;
 }
-.hacker-modal-dots span:nth-child(3) {
+.hacker-modal-dots button:nth-child(3) span {
   background: #28c840;
+}
+.hacker-modal-dots button:focus-visible {
+  outline: 1px solid #a8ffc2;
+  outline-offset: 1px;
+}
+.hacker-modal.is-expanded {
+  width: min(1200px, 100%);
+  height: 88dvh;
+}
+.hacker-modal.is-expanded .hacker-modal-body {
+  max-height: none;
+  flex: 1;
+}
+.hacker-modal.is-collapsed {
+  height: auto;
+}
+.hacker-modal-body[hidden] {
+  display: none;
+}
+.hacker-modal-header {
+  flex-shrink: 0;
+}
+.hacker-modal-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .hacker-modal-title {
   position: relative;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.75em;
-  color: #000;
+  font-size: 0.8125rem;
+  color: #dde5df;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -83,35 +132,38 @@
 }
 .hacker-modal-close {
   margin-left: auto;
-  width: 66px;
-  height: 66px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
   border: none;
-  background: rgba(0, 0, 0, 0.06);
-  color: #000;
+  background: transparent;
+  color: #c5d0c8;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   opacity: 0.9;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 .hacker-modal-close .hacker-modal-close-icon {
   flex-shrink: 0;
 }
 .hacker-modal-close:hover {
   opacity: 1;
-  background: rgba(0, 0, 0, 0.14);
+  background: rgba(96, 255, 128, 0.1);
 }
 .hacker-modal-body {
   padding: 1rem 0.9rem 1.2rem;
   color: rgba(255, 255, 255, 0.88);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.82rem;
+  font-family: var(--hacker-ui-font, system-ui, sans-serif);
+  font-size: 0.875rem;
   line-height: 1.6;
-  max-height: 60vh;
+  max-height: 72dvh;
+  min-height: 0;
   overflow-y: auto;
 }
 .hacker-modal-body pre {
+  font-family: var(--hacker-mono-font, monospace);
   margin: 0;
   white-space: pre-wrap;
   word-break: break-word;
@@ -151,10 +203,18 @@
 }
 .hacker-modal-scripts-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem;
 }
+.hacker-script-card {
+  position: relative;
+  min-width: 0;
+  height: 136px;
+}
 .hacker-script-folder {
+  height: 100%;
+  box-sizing: border-box;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -165,12 +225,14 @@
   border-radius: 6px;
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 .hacker-script-folder:hover {
   background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(0, 255, 100, 0.4);
-  box-shadow: 0 0 12px rgba(0, 255, 100, 0.15);
+  border-color: #ad8c55;
+  color: #eee9e0;
 }
 .hacker-script-folder-icon {
   width: 32px;
@@ -178,13 +240,160 @@
   color: rgba(255, 255, 255, 0.7);
 }
 .hacker-script-folder-label {
-  font-size: 0.72rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  max-height: 4.2em;
+  font-size: 0.8125rem;
   text-align: center;
   word-break: break-word;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 @media (max-width: 600px) {
   .hacker-modal-scripts-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+.hacker-modal-header {
+  flex-wrap: wrap;
+}
+.hacker-modal-header .hacker-modal-title {
+  flex: 1 1 120px;
+}
+.hacker-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-left: auto;
+}
+.hacker-modal-actions .hacker-modal-close {
+  margin-left: 0;
+}
+.hacker-modal-actions .decoder-full-link {
+  color: #c5d0c8;
+  font:
+    600 0.75rem/1.4 Consolas,
+    monospace;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.hacker-modal-actions .decoder-full-link:hover {
+  color: #8affaa;
+}
+.hacker-modal-actions .decoder-full-link:focus-visible {
+  outline: 1px solid #a8ffc2;
+  outline-offset: 4px;
+}
+.hacker-modal-actions [hidden] {
+  display: none;
+}
+
+.hacker-modal-decoder {
+  background: rgba(7, 13, 10, 0.96);
+  border-color: rgba(157, 181, 166, 0.3);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+}
+.hacker-modal-decoder .hacker-modal-body {
+  padding: 1.25rem 1.4rem 1.4rem;
+  font-size: 0.875rem;
+}
+.hacker-modal-decoder .hacker-modal-header {
+  min-height: 44px;
+}
+.hacker-modal-actions .decoder-full-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(157, 181, 166, 0.28);
+  border-radius: 5px;
+  background: rgba(118, 157, 132, 0.06);
+  letter-spacing: 0.04em;
+}
+.hacker-modal-actions .decoder-full-link:hover {
+  border-color: #6ca780;
+  background: rgba(80, 160, 110, 0.12);
+}
+.hacker-modal-actions .decoder-full-link span {
+  font-size: 1rem;
+  color: #a8c8b3;
+}
+@media (max-width: 600px) {
+  .hacker-modal-decoder .hacker-modal-body {
+    padding: 1rem;
+  }
+}
+
+.hacker-modal-actions .decoder-full-link[hidden] {
+  display: none;
+}
+
+.hacker-modal-actions {
+  max-width: 100%;
+}
+.hacker-modal-actions .decoder-full-link {
+  min-width: 0;
+}
+
+.hacker-script-copy {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: #aaa7a0;
+  cursor: pointer;
+}
+.hacker-script-copy:hover,
+.hacker-script-copy:focus-visible {
+  color: #dedbd5;
+  transform: translateY(1px);
+}
+.hacker-script-copy:focus-visible,
+.hacker-script-folder:focus-visible {
+  outline: 2px solid #efbd66;
+  outline-offset: 2px;
+}
+.hacker-script-copy-status {
+  min-height: 1.5em;
+  margin: 0.75rem 0 0;
+  font-size: 0.8rem;
+  color: #dfccaa;
+}
+.hacker-modal-scripts-wrap {
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #6e6556 #111113;
+}
+@media (max-width: 380px) {
+  .hacker-modal-scripts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hacker-script-copy {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hacker-script-card:hover .hacker-script-copy,
+  .hacker-script-card:focus-within .hacker-script-copy {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.hacker-script-copy:active {
+  transform: translateY(2px);
+  opacity: 0.7;
 }

@@ -30,6 +30,10 @@ Em `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `
 
 Configure o título principal da página inicial por idioma em `i18n.locales.<code>.site.homeTitle`, no arquivo `src/site.config.ts`, por exemplo `"pt-br": { site: { homeTitle: "Meu jardim digital" } }`. Também funciona com idiomas adicionados. Valores ausentes ou em branco seguem `meta.fallback` e depois usam `site.title` global ou `PUBLIC_SITE_TITLE`. Apenas o título visível muda; o título do navegador, a navegação, o rodapé, RSS e a identidade SEO mantêm o nome global. Compile e publique novamente.
 
+About inclui **Hacker Decryptor**: decodifique Base64/Base64URL, texto URL, hexadecimal, entidades HTML, escapes Unicode e cabeçalho/payload JWT no navegador, com detecção automática e animação numérica com as cores da página. Abra Decryptor na barra lateral; não exige API nem configuração extra.
+
+A versão completa do **Decoder Lab** fica em `/<locale>/decoder/`: histórico local, interpretação ERC-20/TRC-20 (EVM/HyperEVM/TRON) e inspeção de endereços EVM/TRON/Bitcoin. Abra pelo diálogo do About. Use `theme.enableDecoderPage: false` em `src/site.config.ts` para desativar página e link independentemente do About. Sem RPC, conexão de carteira ou chave API.
+
 ## Usar um assistente de IA
 
 Abra a pasta do projeto no Cursor, Codex ou Claude Code. O starter inclui um [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) compartilhado, uma entrada para Claude Code e uma regra do Cursor sempre aplicada. São instruções para seu blog; ferramentas de publicação do projeto original não são necessárias. Comece com “Leia AGENTS.md” se o assistente não carregou as instruções. Você pode acrescentar suas preferências.

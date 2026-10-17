@@ -61,14 +61,15 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 小画布按尺寸选择 256px 纹理和简化几何；绘制上限 30fps，隐藏页面暂停。首页移开鼠标暂停，15 秒内再次激活复用，超时/窗口尺寸变化/pagehide 释放；About 关闭后释放。具体路径、检查与限制见 [架构](docs/ARCHITECTURE.md#shared-terminal-and-oracle-passage)、[视觉参考](docs/VISUAL_SYSTEMS.md#1-home-bodypage-home) 和 [本轮审查记录](docs/CODE_DOC_AUDIT.md)。该增量已随 0.17.0 交付；源码、starter、注册表和线上验证见 [发布记录](docs/releases/0.17.0.md)。
 
-| 页面         | 路由与代码入口                                                                                                | 当前行为                                                                           |
-| ------------ | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| 首页         | [首页路由](src/pages/[lang]/index.astro)、[HomePage](packages/theme/src/layouts/HomePage.astro)               | Matrix 终端视觉，展示最新文章                                                      |
-| 博客列表     | [列表路由](src/pages/[lang]/blog/[...page].astro)、[BlogCards](packages/theme/src/components/BlogCards.astro) | Cyber 卡片列表，分页及可选跳页；有标签时显示“全部文章 / 标签”导航                  |
-| 文章详情     | [文章路由](src/pages/[lang]/blog/[...slug].astro)、[BlogPost](packages/theme/src/layouts/BlogPost.astro)      | AI 阅读布局，目录、标签、代码复制、正文图片预览、阅读状态、相关文章和可选评论/侧屏 |
-| 标签目录     | [目录路由](src/pages/[lang]/tags/index.astro)                                                                 | 每个启用语言的 `/:lang/tags/`，标签文章数量，680px 紧凑内容列                      |
-| 标签文章列表 | [标签分页路由](src/pages/[lang]/tags/[tag]/[...page].astro)                                                   | `/:lang/tags/<slug>/` 及后续页，复用博客卡片和分页                                 |
-| 关于         | [About 路由](src/pages/[lang]/about.astro)                                                                    | Hacker 风格；配置控制路由和导航，侧栏模态内容按语言读取                            |
+| 页面         | 路由与代码入口                                                                                                | 当前行为                                                                                |
+| ------------ | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| 首页         | [首页路由](src/pages/[lang]/index.astro)、[HomePage](packages/theme/src/layouts/HomePage.astro)               | Matrix 终端视觉，展示最新文章                                                           |
+| 博客列表     | [列表路由](src/pages/[lang]/blog/[...page].astro)、[BlogCards](packages/theme/src/components/BlogCards.astro) | Cyber 卡片列表，分页及可选跳页；有标签时显示“全部文章 / 标签”导航                       |
+| 文章详情     | [文章路由](src/pages/[lang]/blog/[...slug].astro)、[BlogPost](packages/theme/src/layouts/BlogPost.astro)      | AI 阅读布局，目录、标签、代码复制、正文图片预览、阅读状态、相关文章和可选评论/侧屏      |
+| 标签目录     | [目录路由](src/pages/[lang]/tags/index.astro)                                                                 | 每个启用语言的 `/:lang/tags/`，标签文章数量，680px 紧凑内容列                           |
+| 标签文章列表 | [标签分页路由](src/pages/[lang]/tags/[tag]/[...page].astro)                                                   | `/:lang/tags/<slug>/` 及后续页，复用博客卡片和分页                                      |
+| 关于         | [About 路由](src/pages/[lang]/about.astro)                                                                    | Hacker 风格；配置控制路由和导航，侧栏模态内容按语言读取                                 |
+| 解码实验室   | [Decoder 路由](src/pages/[lang]/decoder.astro)                                                                | 独立多语言静态工具页，与 About 弹窗共用解码与数字动画；配置独立控制启用，不请求链上数据 |
 
 构建采用 Astro 默认静态输出，内容来自 Markdown/MDX collections。不需要全文搜索后端或 SSR 服务。搜索、目录、标签都使用已有文章内容生成；不是手工给示例文章单独搭建的页面功能。
 

@@ -8,6 +8,10 @@ Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls 
 
 Optional `theme.footer.links` adds a separate dot-separated row of `{ label, href }` links between copyright and theme credits. Empty or omitted links hide it; it is independent of social icons and `showCredits`, and labels keep their configured text across locales. Home switches and footer links require version 0.15.0 and matching starter schema/defaults/adapter changes. See [migration](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0150-home-switches-and-footer-links). Custom integrations map home switches to `THEME.HOME.SHOW_INITIALIZE/SHOW_FOLLOW/SHOW_TRACE` and links to `THEME.FOOTER.LINKS` through their site-config alias.
 
+The full **Decoder Lab** is available at `/<locale>/decoder/`, with local text-processing history, ERC-20/TRC-20 call interpretation (EVM/HyperEVM/TRON), and EVM/TRON/Bitcoin address inspection. Open it from the About decoder dialog. Set `theme.enableDecoderPage: false` in `src/site.config.ts` to omit the page and its link independently of About. No RPC, wallet connection or API key is required.
+
+About includes Hacker Decryptor for local Base64/Base64URL, URL, Hex, HTML entities, Unicode escapes and JWT header/payload decoding, with translated controls, automatic detection and a shared numeric result animation with host-specific colors.
+
 ## Install
 
 Version 0.16.0 adds `i18n.locales.<code>.site.homeTitle` for the visible homepage heading. Non-empty trimmed text follows the locale fallback chain, then the global site name; site metadata and shared chrome remain global. Use the matching starter schema/runtime/site adapter. Custom integrations must export `getHomeTitle(locale): string` through `@anglefeint/site-config/site`; direct package defaults return `SITE_TITLE`. Older starters require migration before installing this release; see [upgrade steps](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0160-localized-homepage-headings).

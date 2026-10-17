@@ -53,7 +53,7 @@ export const ABOUT_CONFIG = {
       ],
     },
     decryptor: {
-      title: 'Password Decryptor',
+      title: 'Hacker Decryptor',
       header: 'Calculating Hashes',
       keysLabel: 'keys tested',
       currentPassphraseLabel: 'Current passphrase:',

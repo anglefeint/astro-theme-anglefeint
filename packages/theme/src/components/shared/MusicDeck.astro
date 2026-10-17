@@ -12,8 +12,9 @@ interface Props {
   tracks: MusicTrack[];
   labels: Messages['music'];
   scene?: MusicScene;
+  initiallyCollapsed?: boolean;
 }
-const { tracks, labels, scene = 'base' } = Astro.props;
+const { tracks, labels, scene = 'base', initiallyCollapsed } = Astro.props;
 const sceneStyle = musicSceneStyles[scene];
 const sceneEffect = scene === 'matrix' ? matrixEffectUrl : undefined;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -30,7 +31,10 @@ const resolvedTracks = tracks.map((track) => ({
   data-music-deck
   data-scene={scene}
   data-effect={sceneEffect}
-  data-collapsed="false"
+  data-collapsed={String(initiallyCollapsed ?? false)}
+  data-initially-collapsed={initiallyCollapsed === undefined
+    ? undefined
+    : String(initiallyCollapsed)}
   data-core={coreUrl}
   data-storage={storageUrl}
   data-tracks={JSON.stringify(resolvedTracks)}
@@ -48,8 +52,9 @@ const resolvedTracks = tracks.map((track) => ({
       class="music-deck__collapse"
       data-action="expand"
       disabled
-      aria-expanded="true"
-      aria-label={labels.close}>MIN</button
+      aria-expanded={!initiallyCollapsed}
+      aria-label={initiallyCollapsed ? labels.open : labels.close}
+      >{initiallyCollapsed ? 'OPEN' : 'MIN'}</button
     >
   </div>
   <div class="music-deck__header">

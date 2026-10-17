@@ -1,5 +1,5 @@
 declare module '@anglefeint/astro-theme/scripts/about-effects.js' {
-  export function initAboutEffects(): void;
+  export function initAboutEffects(): () => void;
 }
 
 declare module '@anglefeint/astro-theme/scripts/blogpost-effects.js' {

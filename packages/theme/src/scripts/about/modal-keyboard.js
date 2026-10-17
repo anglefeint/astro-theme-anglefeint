@@ -1,3 +1,4 @@
+import { createLifetime } from './lifetime.js';
 const NAV_KEYS = new Set([
   'Shift',
   'Ctrl',
@@ -162,7 +163,7 @@ function buildHelpKeyboardHtml(runtimeConfig) {
   return html;
 }
 
-function highlightKey(modalBody, code) {
+function highlightKey(modalBody, code, lifetime) {
   const normalizedCode = code === 'Escape' ? 'Backspace' : code;
 
   let el = modalBody.querySelector(`.hacker-vkey[data-code="${normalizedCode}"]`);
@@ -177,23 +178,24 @@ function highlightKey(modalBody, code) {
 
   if (!el) return;
   el.classList.add('highlight');
-  setTimeout(() => {
+  lifetime.timeout(() => {
     el.classList.remove('highlight');
   }, 150);
 }
 
 export function mountHelpKeyboard(modalOverlay, modalBody, runtimeConfig) {
+  const lifetime = createLifetime();
   let helpCharCount = 0;
   modalBody.innerHTML = buildHelpKeyboardHtml(runtimeConfig);
 
   const updateCount = () => {
-    const charEl = document.getElementById('help-char-count');
+    const charEl = modalBody.querySelector('#help-char-count');
     if (charEl) charEl.textContent = String(helpCharCount);
   };
 
   const onKeyClick = (keyEl) => {
     const code = keyEl.getAttribute('data-code');
-    if (code) highlightKey(modalBody, code);
+    if (code) highlightKey(modalBody, code, lifetime);
 
     const key = keyEl.getAttribute('data-key');
     if (!key) return;
@@ -204,27 +206,30 @@ export function mountHelpKeyboard(modalOverlay, modalBody, runtimeConfig) {
   };
 
   modalBody.querySelectorAll('.hacker-vkey').forEach((keyEl) => {
-    keyEl.addEventListener('click', () => onKeyClick(keyEl));
+    keyEl.addEventListener('click', () => onKeyClick(keyEl), { signal: lifetime.signal });
   });
   updateCount();
 
   const onKeyDown = (event) => {
     if (
       !modalOverlay.classList.contains('open') ||
+      modalBody.hidden ||
       !modalBody.classList.contains('hacker-modal-keyboard')
     )
       return;
-    if (event.key === 'Escape') return;
+    if (event.key === 'Escape' || event.key === 'Tab') return;
+    if ((event.key === 'Enter' || event.key === ' ') && event.target.closest?.('button, a')) return;
 
     event.preventDefault();
-    highlightKey(modalBody, event.code);
+    highlightKey(modalBody, event.code, lifetime);
     if (event.key.length !== 1) return;
     helpCharCount += 1;
     updateCount();
   };
 
-  document.addEventListener('keydown', onKeyDown);
+  document.addEventListener('keydown', onKeyDown, { signal: lifetime.signal });
   return () => {
-    document.removeEventListener('keydown', onKeyDown);
+    lifetime.dispose();
+    modalBody.querySelectorAll('.highlight').forEach((key) => key.classList.remove('highlight'));
   };
 }

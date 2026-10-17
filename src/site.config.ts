@@ -88,7 +88,7 @@ export const THEME_CONFIG = defineThemeConfig({
           hero: 'Escreva seu blog em um mundo cinematográfico. Chuva de código Matrix, noites de neon Cyberpunk, terminais Hacker e interfaces de IA em um tema Astro leve.',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint é um tema Astro de código aberto para blogs pessoais com identidade cinematográfica.',
             what: 'Quatro atmosferas e um único fluxo de publicação: Matrix no início, Cyberpunk na navegação, Hacker na página Sobre e IA na leitura.',
@@ -118,7 +118,7 @@ export const THEME_CONFIG = defineThemeConfig({
           hero: 'Dein Blog in einer filmischen Welt: Matrix-Coderegen, Cyberpunk-Neonnächte, Hacker-Terminals und KI-Oberflächen in einem schlanken Astro-Theme.',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint ist ein quelloffenes Astro-Theme für persönliche Blogs mit filmischer Identität.',
             what: 'Vier Atmosphären, ein Veröffentlichungsablauf: Matrix auf der Startseite, Cyberpunk beim Stöbern, Hacker im Profil und KI beim Lesen.',
@@ -148,7 +148,7 @@ export const THEME_CONFIG = defineThemeConfig({
           hero: 'Превратите блог в кинематографичный мир: дождь кода Matrix, неоновые ночи Cyberpunk, терминалы Hacker и интерфейсы ИИ в одной лёгкой теме Astro.',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint — открытая тема Astro для личных блогов с кинематографичным характером.',
             what: 'Четыре атмосферы, один процесс публикации: Matrix на главной, Cyberpunk в списках, Hacker на странице автора и ИИ в статьях.',
@@ -179,7 +179,7 @@ export const THEME_CONFIG = defineThemeConfig({
           hero: '把你的部落格寫進電影裡。Matrix 的程式碼雨、Cyberpunk 的霓虹雨夜、Hacker 終端與 AI 介面，盡在一個輕量的 Astro 主題。',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint 是開源的 Astro 主題，為個人部落格帶來電影感與鮮明個性。',
             what: '四種氛圍，一套發布流程：首頁是 Matrix，文章列表是 Cyberpunk，關於頁是 Hacker，閱讀介面是 AI。',
@@ -205,11 +205,11 @@ export const THEME_CONFIG = defineThemeConfig({
       },
       en: {
         site: {
-          homeTitle: 'AngleFeint.',
+          homeTitle: 'AngleFeint',
           hero: 'Write your blog into a cinematic world. Matrix code rain, Cyberpunk neon nights, Hacker terminals and AI interfaces — one lightweight Astro theme.',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint is an open-source Astro theme for personal blogs with a cinematic identity.',
             what: 'Four atmospheres, one publishing workflow: Matrix on the homepage, Cyberpunk for browsing, Hacker on About and AI for reading articles.',
@@ -239,7 +239,7 @@ export const THEME_CONFIG = defineThemeConfig({
           hero: '把你的博客写进电影里。Matrix 的代码雨、Cyberpunk 的霓虹雨夜、Hacker 的终端与 AI 的未来界面，一个轻量的 Astro 主题。',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint 是一个开源 Astro 主题，为希望个人博客拥有电影感与鲜明个性的人而设计。',
             what: '四种氛围，一套写作方式：首页是 Matrix，文章列表是 Cyberpunk，About 是 Hacker，正文阅读是 AI。',
@@ -269,7 +269,7 @@ export const THEME_CONFIG = defineThemeConfig({
           hero: 'あなたのブログに、映画のような世界を。Matrix のコードの雨、Cyberpunk のネオンに染まる雨の夜、Hacker の端末、AI の未来的な画面を、軽量な Astro テーマに。',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint は、映画のような雰囲気と個性を持つ個人ブログのための、オープンソースの Astro テーマです。',
             what: '4 つの雰囲気を、ひとつの投稿フローで。ホームは Matrix、記事一覧は Cyberpunk、About は Hacker、記事本文は AI をイメージしています。',
@@ -299,7 +299,7 @@ export const THEME_CONFIG = defineThemeConfig({
           hero: '블로그를 영화 속 세계로. Matrix의 코드 비, Cyberpunk의 비 내리는 네온 거리, Hacker의 터미널, AI의 미래적인 화면을 하나의 가벼운 Astro 테마에 담았습니다.',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint는 영화 같은 분위기와 뚜렷한 개성을 원하는 개인 블로그를 위한 오픈 소스 Astro 테마입니다.',
             what: '하나의 글쓰기 방식으로 네 가지 분위기를 만듭니다. 홈은 Matrix, 글 목록은 Cyberpunk, About은 Hacker, 본문 읽기는 AI를 담았습니다.',
@@ -329,7 +329,7 @@ export const THEME_CONFIG = defineThemeConfig({
           hero: 'Dale a tu blog una atmósfera de cine. La lluvia de código de Matrix, las noches de neón de Cyberpunk, las terminales Hacker y las interfaces de IA, en un tema ligero de Astro.',
         },
         about: {
-          metaLine: '$ anglefeint --mode cinematic --output static',
+          metaLine: '',
           sections: {
             who: 'Anglefeint es un tema de Astro de código abierto para blogs personales con identidad cinematográfica.',
             what: 'Cuatro ambientes y una sola forma de publicar: Matrix en el inicio, Cyberpunk en la lista de artículos, Hacker en About e IA en la lectura.',

@@ -7,19 +7,20 @@ import type { Messages } from '../../i18n/messages';
 
 const today = new Date();
 interface Props {
+  extraLinks?: Array<{ href: string; label: string }>;
   tagline?: string;
   labels?: Messages['footer'];
   /** Show Blade Runner scanlines overlay on ai-page (header/footer only) */
   scanlines?: boolean;
 }
 
-const { tagline = SITE_TAGLINE, scanlines = false, labels } = Astro.props as Props;
+const { tagline = SITE_TAGLINE, scanlines = false, labels, extraLinks = [] } = Astro.props as Props;
 const themeLabel = labels?.theme ?? 'Theme by';
 const builtWithLabel = labels?.builtWith ?? 'Built with';
 // The former default is now represented by the configurable linked credits.
 const customTagline = tagline.trim() === 'Built with Astro.' ? '' : tagline.trim();
 const showCredits = THEME.FOOTER?.SHOW_CREDITS ?? true;
-const footerLinks = THEME.FOOTER?.LINKS ?? [];
+const footerLinks = [...(THEME.FOOTER?.LINKS ?? []), ...extraLinks];
 ---
 
 <footer>

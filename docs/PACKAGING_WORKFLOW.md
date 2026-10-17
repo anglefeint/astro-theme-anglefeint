@@ -89,3 +89,9 @@ Version 0.5.0 adds the package export `@anglefeint/astro-theme/social-image`, pa
 Music (0.7.0): the package owns `MusicDeck`, its scoped CSS, controller/core/storage and the explicit `./utils/music` export. Existing starter-managed schema/defaults and the theme adapter provide `theme.music`; no new starter-owned file is required. Audio files belong to the consumer, are not bundled, and the feature defaults to disabled. Enabled and disabled installations are checked in `scripts/check-installed-starter.mjs`.
 
 The search hook writes assets into the built site's `pagefind/` directory; these are generated output, not files copied from main into the starter branch. Package installation cannot rewrite starter route/config files. The matching-template migration boundary is documented in `UPGRADING.md`; implementation/test entry points are in `docs/ARCHITECTURE.md`.
+
+## Unreleased Decoder and terminal ownership
+
+The current working tree adds starter-owned `src/pages/[lang]/decoder.astro` and `src/pages/[lang]/terminal/[id].json.ts`, both listed in `scripts/starter-manifest.mjs`. The matching About route, schema/defaults and theme adapters are also starter-owned. The package owns DecoderWorkbench, generic WindowShell/TerminalBackdrop, Decoder/terminal scripts, numeric effects, styles and translations through existing directory exports. Local crypto uses package dependencies `@scure/base` and `@noble/hashes`; text codecs and numeric animation do not add a backend or remote API.
+
+This boundary requires matching package and starter delivery: updating npm alone cannot create routes or migrate project-owned schema/adapters. These are current source facts, not a declaration that a newer package/template has been published. Release policy remains in `AI_WORKFLOW.md` and `PACKAGE_RELEASE.md`.

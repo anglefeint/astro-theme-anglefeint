@@ -34,6 +34,10 @@
 
 首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
 
+About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL、URL 编码、十六进制、HTML 实体、Unicode 转义及 JWT 头部和载荷，支持自动识别和 与页面配色一致的数字结果动画。从侧边栏打开 Decryptor 即可使用，无需配置接口。
+
+完整的 **Decoder Lab** 位于 `/<locale>/decoder/`，支持本地文本处理链路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 调用解释，以及 EVM／TRON／Bitcoin 地址检查。从 About 解码弹窗进入；在 `src/site.config.ts` 设置 `theme.enableDecoderPage: false` 可独立关闭页面和入口。无需 RPC、连接钱包或 API Key。
+
 ## 环境要求
 
 - Node.js `22.12.0+`（建议 LTS）

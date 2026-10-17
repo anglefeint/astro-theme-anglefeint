@@ -1,0 +1,131 @@
+/* About palette is intentionally independent from Matrix and the standalone Decoder. */
+body.about-page {
+  --numeric-reveal-color: #efbd66;
+  --numeric-reveal-highlight: #ffda93;
+  --hacker-surface: rgba(12, 12, 14, 0.96);
+  --hacker-titlebar: #1b1b1e;
+  --hacker-border: rgba(205, 205, 214, 0.28);
+  --chrome-link-hover: #efbd66;
+  --chrome-active: #efbd66;
+}
+.about-page .about-shell .prose {
+  background: linear-gradient(160deg, rgba(22, 22, 25, 0.72), rgba(7, 7, 9, 0.84));
+  border-color: rgba(205, 205, 214, 0.28);
+}
+.about-page .about-shell .title h1 {
+  color: #e9e9ed;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  text-shadow: 0 0 20px rgba(225, 225, 240, 0.13);
+}
+.about-page .hacker-response {
+  background: rgba(6, 6, 8, 0.22);
+  border-color: rgba(205, 205, 214, 0.16);
+}
+.about-page .hacker-response-header {
+  background: rgba(40, 40, 44, 0.7);
+}
+.about-page .hacker-response-label {
+  color: #d7d7dd;
+}
+.about-page .about-section-title {
+  color: #ddd9d1;
+}
+.about-page .about-manifest {
+  border-left-color: #efbd66;
+  background: rgba(239, 189, 102, 0.045);
+}
+.about-page .about-shell .about-signature {
+  border-color: #ad8c55;
+  color: #b8b6b0;
+}
+.about-page .about-shell .title hr {
+  border-color: rgba(205, 205, 214, 0.16);
+}
+.about-page .hacker-title-bar {
+  background: #333338;
+  box-shadow: none;
+}
+.about-page .hacker-title-bar::after {
+  background: linear-gradient(90deg, transparent, #efbd66, #c9c6bc, transparent);
+}
+.about-page .hacker-cursor {
+  background: #efbd66;
+}
+.about-page .hacker-regenerate:hover:not(:disabled),
+.about-page .hacker-body a:hover {
+  color: #ffda93;
+  border-color: #b38b47;
+  text-decoration-color: #b38b47;
+  background: rgba(239, 189, 102, 0.08);
+  box-shadow: none;
+}
+.about-page .terminal-backdrop__scanlines {
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 2px,
+    rgba(205, 205, 220, 0.025) 2px 3px
+  );
+}
+.about-page .hacker-modal-decoder {
+  background: rgba(12, 12, 14, 0.97);
+  border-color: var(--hacker-border);
+}
+.about-page .hacker-modal-actions .decoder-full-link {
+  color: #dedbd5;
+  border-color: #555259;
+  background: #202023;
+}
+.about-page .hacker-modal-actions .decoder-full-link:hover {
+  color: #ffda93;
+  border-color: #ad8c55;
+  background: #30291e;
+}
+.about-page .hacker-modal-actions .decoder-full-link span {
+  color: currentColor;
+}
+.about-page .hacker-modal-close:hover {
+  background: rgba(239, 189, 102, 0.1);
+}
+.about-page .hacker-decoder-form {
+  --decoder-control-bg: #1c1c20;
+  --decoder-control-border: #555259;
+}
+.about-page .hacker-decoder-form :is(textarea, .hacker-decoder-output) {
+  background: #09090c;
+  border-color: #414146;
+  color: #e1e1e5;
+}
+.about-page .hacker-decoder-form .hacker-decoder-submit {
+  background: #47361e;
+  border-color: #ac8647;
+  color: #ffe1a9;
+}
+.about-page .hacker-decoder-form button:hover:not(:disabled) {
+  background: #34302a;
+  border-color: #ac8647;
+  color: #ffe1a9;
+}
+.about-page .hacker-decoder-formats,
+.about-page .hacker-decoder-local {
+  color: #a9a6a0;
+}
+.about-page .hacker-decoder-status {
+  color: #dfccaa;
+}
+.about-page .hacker-decoder-form :focus-visible,
+.about-page .hacker-modal-dots button:focus-visible,
+.about-page .decoder-full-link:focus-visible {
+  outline-color: #efbd66;
+}
+@media (forced-colors: active) {
+  .about-page .about-shell .title h1 {
+    color: CanvasText;
+    text-shadow: none;
+  }
+  .hacker-folder:hover,
+  .hacker-folder:focus-visible {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

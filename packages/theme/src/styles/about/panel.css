@@ -4,16 +4,17 @@
   position: relative;
   z-index: 10;
 }
-.hacker-content .prose {
+/* One outer reading surface; the inner response is separated by its title bar. */
+.about-shell .prose {
   position: relative;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.92)),
-    linear-gradient(180deg, rgba(30, 30, 30, 0.1), rgba(15, 15, 15, 0.15));
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 16px 48px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  background: linear-gradient(160deg, rgba(12, 20, 15, 0.72), rgba(4, 9, 6, 0.84));
+  border: 1px solid rgba(157, 181, 166, 0.26);
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 .about-shell {
   width: 720px;
@@ -151,24 +152,22 @@
     left: 100%;
   }
 }
-/* ── response panel: Anonymous 窗口风格 (白标题栏 + 黑内容区) ── */
+/* Reading window shares the tool window surface and title bar. */
 .hacker-response {
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: #000;
-  border-radius: 0;
+  border: 1px solid rgba(157, 181, 166, 0.14);
+  background: rgba(3, 8, 5, 0.22);
+  border-radius: 4px;
   padding: 0;
   overflow: hidden;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 8px 32px rgba(0, 0, 0, 0.6);
+  box-shadow: none;
 }
 .hacker-response-header {
   display: flex;
   align-items: center;
   gap: 0.5em;
-  padding: 0.5rem 0.9rem;
-  background: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0.7rem 1.2rem;
+  background: rgba(24, 34, 28, 0.7);
+  border-bottom: 1px solid var(--hacker-border);
 }
 .hacker-window-dots {
   display: flex;
@@ -193,14 +192,17 @@
 .hacker-response-label {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.75em;
-  color: #000;
+  color: #d1dfd6;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 .hacker-body {
-  padding: 1rem 0.9rem 1.2rem;
-  background: #000;
+  padding: 1.4rem;
+  background: transparent;
+  font-family: var(--hacker-ui-font);
+  font-size: 0.9375rem;
+  line-height: 1.85;
 }
 /* ── prose body ── */
 .hacker-body > p,
@@ -257,15 +259,16 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.82);
-  margin: 1.7rem 0 0.45rem;
+  margin: 2rem 0 0.65rem;
 }
 /* ── manifest box ── */
 .about-manifest {
   margin: 1rem 0 1.4rem;
   padding: 0.8rem 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.4);
+  border: 0;
+  border-left: 2px solid #55856a;
+  border-radius: 0 4px 4px 0;
+  background: rgba(64, 113, 80, 0.09);
 }
 .about-manifest ul {
   margin: 0;
@@ -329,11 +332,43 @@
   text-align: center;
   line-height: 1;
 }
+.title.about-title {
+  padding-top: 0.5em;
+}
 .title h1 {
   margin: 0 0 0.5em 0;
-  color: rgba(255, 255, 255, 0.92);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  letter-spacing: 0.04em;
+  position: relative;
+  font-family: 'Times New Roman', 'Noto Serif CJK SC', 'Songti SC', 'SimSun', serif;
+  font-weight: 400;
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  letter-spacing: 0.08em;
+  color: #b6f6c5;
+  text-shadow:
+    0 0 6px rgba(145, 255, 181, 0.24),
+    0 0 20px rgba(55, 205, 115, 0.12);
+}
+@supports (background-clip: text) {
+  .title h1 {
+    background: linear-gradient(
+      180deg,
+      #edfff3,
+      #cbffdd 43%,
+      transparent 43%,
+      transparent 44.3%,
+      #dcffe8 44.3%,
+      #89e4ad
+    );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+@media (forced-colors: active) {
+  .title h1 {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: currentColor;
+    text-shadow: none;
+  }
 }
 /* ── mouse glow (green) ── */
 .hacker-mouse-glow {
@@ -385,5 +420,41 @@
   }
   100% {
     filter: none;
+  }
+}
+
+.about-shell .hacker-body > .about-section-title:first-child {
+  margin-top: 0;
+}
+.about-shell .hacker-body > p {
+  margin-top: 0;
+}
+.about-shell .about-signature {
+  border-left: 1px solid #55856a;
+  padding-left: 1rem;
+  margin-left: 0;
+  color: #a3b7aa;
+}
+.about-shell .title.about-title {
+  padding: 0.75rem 0 0.5rem;
+  margin-bottom: 1.75rem;
+}
+.about-shell .title h1 {
+  line-height: 1.2;
+}
+.about-shell .title hr {
+  border: 0;
+  border-top: 1px solid rgba(157, 181, 166, 0.16);
+}
+.about-shell .hacker-regenerate {
+  border-radius: 4px;
+  border-color: var(--hacker-border);
+}
+@media (max-width: 600px) {
+  .about-shell .hacker-body {
+    padding: 1.1rem;
+  }
+  .about-shell .title h1 {
+    letter-spacing: 0.04em;
   }
 }

@@ -1,6 +1,12 @@
 /* Home / Matrix: independent home-player presentation and future effects. */
 .music-deck:where([data-scene='matrix']) {
+  backdrop-filter: blur(3px);
   --music-accent-alt: var(--chrome-link-hover, #7ba6ff);
+  --music-panel: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--music-surface) 30%, transparent),
+    color-mix(in srgb, var(--music-surface) 45%, transparent)
+  );
   transition: box-shadow 500ms ease;
 }
 

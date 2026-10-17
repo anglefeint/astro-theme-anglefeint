@@ -1,3 +1,5 @@
+import { TERMINAL_LABELS, type TerminalMessages } from './terminal';
+import { DECODER_PAGE_LABELS, type DecoderPageMessages } from './decoder';
 import { DEFAULT_LOCALE, type Locale } from './config';
 
 export type Messages = {
@@ -55,6 +57,38 @@ export type Messages = {
     latest: string;
     viewAll: string;
     noPosts: string;
+  };
+  windowControls: { collapse: string; expand: string; restore: string };
+  terminal: TerminalMessages;
+  scriptFolders: { copyTitle: string; copied: string; failed: string };
+  decoderPage: DecoderPageMessages;
+  decoder: {
+    input: string;
+    placeholder: string;
+    format: string;
+    auto: string;
+    decode: string;
+    clear: string;
+    copy: string;
+    reuse: string;
+    supported: string;
+    html: string;
+    unicode: string;
+    jwtWarning: string;
+    copied: string;
+    copyFailed: string;
+    output: string;
+    local: string;
+    ready: string;
+    running: string;
+    done: string;
+    empty: string;
+    tooLong: string;
+    invalid: string;
+    binary: string;
+    unknown: string;
+    ambiguous: string;
+    example: string;
   };
   about: {
     title: string;
@@ -114,10 +148,334 @@ export type Messages = {
   };
 };
 
+const SCRIPT_FOLDER_LABELS: Record<string, Messages['scriptFolders']> = {
+  en: {
+    copyTitle: 'Copy article title',
+    copied: 'Title copied.',
+    failed: 'Copy unavailable. The full title is selected; copy it manually.',
+  },
+  zh: {
+    copyTitle: '复制文章标题',
+    copied: '标题已复制。',
+    failed: '无法自动复制，已选中完整标题，请手动复制。',
+  },
+  'zh-hant': {
+    copyTitle: '複製文章標題',
+    copied: '標題已複製。',
+    failed: '無法自動複製，已選取完整標題，請手動複製。',
+  },
+  ja: {
+    copyTitle: '記事のタイトルをコピー',
+    copied: 'タイトルをコピーしました。',
+    failed: 'コピーできません。選択されたタイトルを手動でコピーしてください。',
+  },
+  ko: {
+    copyTitle: '글 제목 복사',
+    copied: '제목을 복사했습니다.',
+    failed: '자동 복사가 불가능합니다. 선택된 전체 제목을 직접 복사하세요.',
+  },
+  es: {
+    copyTitle: 'Copiar título del artículo',
+    copied: 'Título copiado.',
+    failed: 'No se puede copiar. Copia manualmente el título seleccionado.',
+  },
+  'pt-br': {
+    copyTitle: 'Copiar título do artigo',
+    copied: 'Título copiado.',
+    failed: 'Não foi possível copiar. Copie manualmente o título selecionado.',
+  },
+  de: {
+    copyTitle: 'Artikeltitel kopieren',
+    copied: 'Titel kopiert.',
+    failed: 'Kopieren nicht verfügbar. Den ausgewählten Titel bitte manuell kopieren.',
+  },
+  ru: {
+    copyTitle: 'Копировать название статьи',
+    copied: 'Название скопировано.',
+    failed: 'Копирование недоступно. Скопируйте выделенное название вручную.',
+  },
+};
+
+const WINDOW_LABELS: Record<string, Messages['windowControls']> = {
+  en: { collapse: 'Collapse content', expand: 'Expand window', restore: 'Restore window' },
+  zh: { collapse: '折叠内容', expand: '放大窗口', restore: '还原窗口' },
+  'zh-hant': { collapse: '摺疊內容', expand: '放大視窗', restore: '還原視窗' },
+  ja: { collapse: '内容を折りたたむ', expand: 'ウィンドウを拡大', restore: 'ウィンドウを戻す' },
+  ko: { collapse: '내용 접기', expand: '창 확대', restore: '창 복원' },
+  es: { collapse: 'Contraer contenido', expand: 'Ampliar ventana', restore: 'Restaurar ventana' },
+  'pt-br': { collapse: 'Recolher conteúdo', expand: 'Ampliar janela', restore: 'Restaurar janela' },
+  de: {
+    collapse: 'Inhalt einklappen',
+    expand: 'Fenster vergrößern',
+    restore: 'Fenster wiederherstellen',
+  },
+  ru: { collapse: 'Свернуть содержимое', expand: 'Развернуть окно', restore: 'Восстановить окно' },
+};
+
+const DECODER_LABELS: Record<string, Messages['decoder']> = {
+  en: {
+    input: 'Input',
+    placeholder: 'Paste encoded text…',
+    format: 'Format',
+    auto: 'Auto detect',
+    decode: 'Decode',
+    clear: 'Clear',
+    copy: 'Copy result',
+    reuse: 'Use result as input',
+    html: 'HTML entities',
+    supported: 'Supported formats',
+    unicode: 'Unicode escapes',
+    jwtWarning: 'Signature not verified; decoded claims are untrusted.',
+    copied: 'Result copied.',
+    copyFailed: 'Copy unavailable. Select the result and copy it.',
+    output: 'Decoded text',
+    local: 'Processed in this browser. Nothing is uploaded.',
+    ready: 'Ready.',
+    running: 'Decoding…',
+    done: 'Decoded',
+    empty: 'Enter encoded text first.',
+    tooLong: 'Input limit: 16,384 characters.',
+    invalid: 'Invalid encoding for the selected format.',
+    binary: 'The decoded data is not UTF-8 text.',
+    unknown: 'Could not identify the encoding. Choose a format.',
+    ambiguous: 'More than one format matches. Choose a format.',
+    example: 'Example',
+  },
+  zh: {
+    input: '输入',
+    placeholder: '粘贴编码后的文本…',
+    format: '格式',
+    auto: '自动识别',
+    decode: '解码',
+    clear: '清空',
+    copy: '复制结果',
+    reuse: '将结果作为输入',
+    html: 'HTML 实体',
+    supported: '支持的解码格式',
+    unicode: 'Unicode 转义',
+    jwtWarning: '未验证签名，解码内容不代表可信。',
+    copied: '结果已复制。',
+    copyFailed: '无法复制，请选中结果手动复制。',
+    output: '解码结果',
+    local: '仅在当前浏览器处理，不上传内容。',
+    ready: '准备就绪。',
+    running: '正在解码…',
+    done: '解码完成',
+    empty: '请先输入编码文本。',
+    tooLong: '最多输入 16,384 个字符。',
+    invalid: '内容不符合所选编码格式。',
+    binary: '解码后的数据不是 UTF-8 文本。',
+    unknown: '无法识别编码，请手动选择格式。',
+    ambiguous: '存在多种可能的编码，请手动选择格式。',
+    example: '示例',
+  },
+  'zh-hant': {
+    input: '輸入',
+    placeholder: '貼上編碼後的文字…',
+    format: '格式',
+    auto: '自動辨識',
+    decode: '解碼',
+    clear: '清空',
+    copy: '複製結果',
+    reuse: '將結果作為輸入',
+    html: 'HTML 實體',
+    supported: '支援的解碼格式',
+    unicode: 'Unicode 跳脫',
+    jwtWarning: '未驗證簽章，解碼內容不代表可信。',
+    copied: '結果已複製。',
+    copyFailed: '無法複製，請選取結果手動複製。',
+    output: '解碼結果',
+    local: '僅在目前瀏覽器處理，不上傳內容。',
+    ready: '準備就緒。',
+    running: '正在解碼…',
+    done: '解碼完成',
+    empty: '請先輸入編碼文字。',
+    tooLong: '最多輸入 16,384 個字元。',
+    invalid: '內容不符合所選編碼格式。',
+    binary: '解碼後的資料不是 UTF-8 文字。',
+    unknown: '無法辨識編碼，請手動選擇格式。',
+    ambiguous: '存在多種可能的編碼，請手動選擇格式。',
+    example: '範例',
+  },
+  ja: {
+    input: '入力',
+    placeholder: 'エンコード済みのテキストを貼り付け…',
+    format: '形式',
+    auto: '自動判定',
+    decode: 'デコード',
+    clear: 'クリア',
+    copy: '結果をコピー',
+    reuse: '結果を入力に使用',
+    html: 'HTML エンティティ',
+    supported: '対応する形式',
+    unicode: 'Unicode エスケープ',
+    jwtWarning: '署名は未検証です。内容の信頼性は保証されません。',
+    copied: 'コピーしました。',
+    copyFailed: 'コピーできません。結果を選択してコピーしてください。',
+    output: 'デコード結果',
+    local: 'ブラウザー内で処理します。内容は送信されません。',
+    ready: '準備完了。',
+    running: 'デコード中…',
+    done: '完了',
+    empty: 'テキストを入力してください。',
+    tooLong: '入力は16,384文字までです。',
+    invalid: '選択した形式のデータではありません。',
+    binary: 'デコード結果はUTF-8テキストではありません。',
+    unknown: '形式を判定できません。手動で選択してください。',
+    ambiguous: '複数の形式に一致します。手動で選択してください。',
+    example: 'サンプル',
+  },
+  ko: {
+    input: '입력',
+    placeholder: '인코딩된 텍스트를 붙여넣으세요…',
+    format: '형식',
+    auto: '자동 감지',
+    decode: '디코딩',
+    clear: '지우기',
+    copy: '결과 복사',
+    reuse: '결과를 입력으로 사용',
+    html: 'HTML 엔티티',
+    supported: '지원 형식',
+    unicode: 'Unicode 이스케이프',
+    jwtWarning: '서명을 검증하지 않았습니다. 내용을 신뢰하지 마세요.',
+    copied: '복사했습니다.',
+    copyFailed: '복사할 수 없습니다. 결과를 선택해 직접 복사하세요.',
+    output: '디코딩 결과',
+    local: '브라우저에서만 처리하며 내용을 전송하지 않습니다.',
+    ready: '준비 완료.',
+    running: '디코딩 중…',
+    done: '완료',
+    empty: '인코딩된 텍스트를 입력하세요.',
+    tooLong: '최대 16,384자까지 입력할 수 있습니다.',
+    invalid: '선택한 인코딩 형식과 일치하지 않습니다.',
+    binary: '결과가 UTF-8 텍스트가 아닙니다.',
+    unknown: '형식을 감지할 수 없습니다. 직접 선택하세요.',
+    ambiguous: '여러 형식과 일치합니다. 직접 선택하세요.',
+    example: '예제',
+  },
+  es: {
+    input: 'Entrada',
+    placeholder: 'Pega el texto codificado…',
+    format: 'Formato',
+    auto: 'Detectar automáticamente',
+    decode: 'Decodificar',
+    clear: 'Limpiar',
+    copy: 'Copiar resultado',
+    reuse: 'Usar resultado como entrada',
+    html: 'Entidades HTML',
+    supported: 'Formatos compatibles',
+    unicode: 'Escapes Unicode',
+    jwtWarning: 'Firma no verificada; el contenido no está autenticado.',
+    copied: 'Resultado copiado.',
+    copyFailed: 'No se puede copiar. Selecciona el resultado y cópialo.',
+    output: 'Texto decodificado',
+    local: 'Se procesa en este navegador. No se sube ningún contenido.',
+    ready: 'Listo.',
+    running: 'Decodificando…',
+    done: 'Decodificado',
+    empty: 'Introduce primero el texto codificado.',
+    tooLong: 'Límite: 16.384 caracteres.',
+    invalid: 'El texto no coincide con el formato seleccionado.',
+    binary: 'Los datos decodificados no son texto UTF-8.',
+    unknown: 'No se reconoce la codificación. Elige un formato.',
+    ambiguous: 'Coinciden varios formatos. Elige uno.',
+    example: 'Ejemplo',
+  },
+  'pt-br': {
+    input: 'Entrada',
+    placeholder: 'Cole o texto codificado…',
+    format: 'Formato',
+    auto: 'Detectar automaticamente',
+    decode: 'Decodificar',
+    clear: 'Limpar',
+    copy: 'Copiar resultado',
+    reuse: 'Usar resultado como entrada',
+    html: 'Entidades HTML',
+    supported: 'Formatos compatíveis',
+    unicode: 'Escapes Unicode',
+    jwtWarning: 'Assinatura não verificada; o conteúdo não está autenticado.',
+    copied: 'Resultado copiado.',
+    copyFailed: 'Não foi possível copiar. Selecione o resultado e copie.',
+    output: 'Texto decodificado',
+    local: 'Processado neste navegador. Nenhum conteúdo é enviado.',
+    ready: 'Pronto.',
+    running: 'Decodificando…',
+    done: 'Decodificado',
+    empty: 'Digite primeiro o texto codificado.',
+    tooLong: 'Limite: 16.384 caracteres.',
+    invalid: 'O texto não corresponde ao formato selecionado.',
+    binary: 'Os dados decodificados não são texto UTF-8.',
+    unknown: 'Não foi possível identificar a codificação. Escolha um formato.',
+    ambiguous: 'Mais de um formato corresponde. Escolha um formato.',
+    example: 'Exemplo',
+  },
+  de: {
+    input: 'Eingabe',
+    placeholder: 'Codierten Text einfügen…',
+    format: 'Format',
+    auto: 'Automatisch erkennen',
+    decode: 'Decodieren',
+    clear: 'Leeren',
+    copy: 'Ergebnis kopieren',
+    reuse: 'Ergebnis als Eingabe verwenden',
+    html: 'HTML-Entitäten',
+    supported: 'Unterstützte Formate',
+    unicode: 'Unicode-Escapes',
+    jwtWarning: 'Signatur nicht geprüft; Inhalte sind nicht authentifiziert.',
+    copied: 'Ergebnis kopiert.',
+    copyFailed: 'Kopieren nicht möglich. Ergebnis auswählen und manuell kopieren.',
+    output: 'Decodierter Text',
+    local: 'Verarbeitung nur in diesem Browser. Keine Daten werden hochgeladen.',
+    ready: 'Bereit.',
+    running: 'Decodierung läuft…',
+    done: 'Decodiert',
+    empty: 'Bitte zuerst codierten Text eingeben.',
+    tooLong: 'Maximal 16.384 Zeichen.',
+    invalid: 'Die Eingabe entspricht nicht dem gewählten Format.',
+    binary: 'Die decodierten Daten sind kein UTF-8-Text.',
+    unknown: 'Codierung nicht erkannt. Bitte ein Format wählen.',
+    ambiguous: 'Mehrere Formate passen. Bitte ein Format wählen.',
+    example: 'Beispiel',
+  },
+  ru: {
+    input: 'Ввод',
+    placeholder: 'Вставьте закодированный текст…',
+    format: 'Формат',
+    auto: 'Автоопределение',
+    decode: 'Декодировать',
+    clear: 'Очистить',
+    copy: 'Копировать результат',
+    reuse: 'Использовать результат как ввод',
+    html: 'HTML-сущности',
+    supported: 'Поддерживаемые форматы',
+    unicode: 'Unicode-последовательности',
+    jwtWarning: 'Подпись не проверена; содержимое не подтверждено.',
+    copied: 'Результат скопирован.',
+    copyFailed: 'Не удалось скопировать. Выделите результат и скопируйте вручную.',
+    output: 'Результат',
+    local: 'Обработка только в браузере. Данные не отправляются.',
+    ready: 'Готово.',
+    running: 'Декодирование…',
+    done: 'Декодировано',
+    empty: 'Сначала введите закодированный текст.',
+    tooLong: 'Не более 16 384 символов.',
+    invalid: 'Ввод не соответствует выбранному формату.',
+    binary: 'Результат не является текстом UTF-8.',
+    unknown: 'Не удалось определить кодировку. Выберите формат.',
+    ambiguous: 'Подходит несколько форматов. Выберите один.',
+    example: 'Пример',
+  },
+};
+
 const DEFAULT_TRANSMISSION = 'Knock, knock.';
 
 export const DEFAULT_MESSAGES: Record<string, Messages> = {
   'pt-br': {
+    decoder: DECODER_LABELS['pt-br'],
+    decoderPage: DECODER_PAGE_LABELS['pt-br'],
+    windowControls: WINDOW_LABELS['pt-br'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['pt-br'],
+    terminal: TERMINAL_LABELS['pt-br'],
     footer: { theme: 'Tema por', builtWith: 'Feito com' },
     music: {
       mute: 'Silenciar',
@@ -238,6 +596,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   de: {
+    decoder: DECODER_LABELS['de'],
+    decoderPage: DECODER_PAGE_LABELS['de'],
+    windowControls: WINDOW_LABELS['de'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['de'],
+    terminal: TERMINAL_LABELS['de'],
     footer: { theme: 'Theme von', builtWith: 'Erstellt mit' },
     music: {
       mute: 'Stummschalten',
@@ -360,6 +723,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ru: {
+    decoder: DECODER_LABELS['ru'],
+    decoderPage: DECODER_PAGE_LABELS['ru'],
+    windowControls: WINDOW_LABELS['ru'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['ru'],
+    terminal: TERMINAL_LABELS['ru'],
     footer: { theme: 'Тема от', builtWith: 'Создано на' },
     music: {
       mute: 'Выключить звук',
@@ -480,6 +848,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   'zh-hant': {
+    decoder: DECODER_LABELS['zh-hant'],
+    decoderPage: DECODER_PAGE_LABELS['zh-hant'],
+    windowControls: WINDOW_LABELS['zh-hant'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['zh-hant'],
+    terminal: TERMINAL_LABELS['zh-hant'],
     footer: { theme: '佈景主題：', builtWith: '建置工具：' },
     music: {
       mute: '靜音',
@@ -600,6 +973,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   en: {
+    decoder: DECODER_LABELS['en'],
+    decoderPage: DECODER_PAGE_LABELS['en'],
+    windowControls: WINDOW_LABELS['en'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['en'],
+    terminal: TERMINAL_LABELS['en'],
     footer: { theme: 'Theme by', builtWith: 'Built with' },
     music: {
       mute: 'Mute',
@@ -717,6 +1095,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ja: {
+    decoder: DECODER_LABELS['ja'],
+    decoderPage: DECODER_PAGE_LABELS['ja'],
+    windowControls: WINDOW_LABELS['ja'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['ja'],
+    terminal: TERMINAL_LABELS['ja'],
     footer: { theme: 'テーマ：', builtWith: '構築：' },
     music: {
       mute: 'ミュート',
@@ -834,6 +1217,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   ko: {
+    decoder: DECODER_LABELS['ko'],
+    decoderPage: DECODER_PAGE_LABELS['ko'],
+    windowControls: WINDOW_LABELS['ko'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['ko'],
+    terminal: TERMINAL_LABELS['ko'],
     footer: { theme: '테마:', builtWith: '제작 도구:' },
     music: {
       mute: '음소거',
@@ -951,6 +1339,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   es: {
+    decoder: DECODER_LABELS['es'],
+    decoderPage: DECODER_PAGE_LABELS['es'],
+    windowControls: WINDOW_LABELS['es'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['es'],
+    terminal: TERMINAL_LABELS['es'],
     footer: { theme: 'Tema de', builtWith: 'Creado con' },
     music: {
       mute: 'Silenciar',
@@ -1069,6 +1462,11 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
     },
   },
   zh: {
+    decoder: DECODER_LABELS['zh'],
+    decoderPage: DECODER_PAGE_LABELS['zh'],
+    windowControls: WINDOW_LABELS['zh'],
+    scriptFolders: SCRIPT_FOLDER_LABELS['zh'],
+    terminal: TERMINAL_LABELS['zh'],
     footer: { theme: '主题：', builtWith: '构建工具：' },
     music: {
       mute: '静音',

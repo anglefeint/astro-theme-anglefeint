@@ -1,0 +1,34 @@
+---
+import '../../styles/terminal.css';
+interface Props {
+  class?: string;
+  canvasClass?: string;
+  inputLabel?: string;
+}
+const { class: className, canvasClass, inputLabel } = Astro.props;
+---
+
+<div class:list={['terminal-backdrop', className]} aria-hidden="true">
+  <canvas class:list={['terminal-backdrop__canvas', canvasClass]}></canvas>
+  <div class="terminal-backdrop__scanlines"></div>
+  <div class="terminal-backdrop__vignette"></div>
+  <div class="terminal-backdrop__flicker"></div>
+  <div class="terminal-backdrop__glow"></div>
+</div>
+
+{
+  inputLabel && (
+    <>
+      <textarea
+        class="terminal-backdrop__input"
+        aria-label={inputLabel}
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        rows="1"
+        maxlength="512"
+      />
+      <pre class="terminal-backdrop__log" role="log" aria-live="polite" aria-atomic="true" />
+    </>
+  )
+}

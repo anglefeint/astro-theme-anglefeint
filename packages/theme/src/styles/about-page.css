@@ -1,8 +1,10 @@
 /* About style entrypoint: imported in stable order to avoid visual regressions. */
-@import "./about/base.css";
-@import "./about/background.css";
-@import "./about/panel.css";
-@import "./about/sidebar.css";
-@import "./about/modals.css";
-@import "./about/keyboard.css";
-@import "./about/responsive.css";
+@import './about/base.css';
+@import './about/background.css';
+@import './about/panel.css';
+@import './about/sidebar.css';
+@import './about/modals.css';
+@import './about/keyboard.css';
+@import './about/responsive.css';
+
+@import './about/palette.css';
