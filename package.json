@@ -72,11 +72,6 @@
     "sharp": "^0.35.5",
     "vite": "^8.3.2"
   },
-  "overrides": {
-    "miniflare": {
-      "sharp": "0.35.5"
-    }
-  },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@eslint/js": "^9.22.0",
@@ -91,6 +86,6 @@
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3",
-    "wrangler": "^4.131.2"
+    "wrangler": "^4.151.1"
   }
 }
