@@ -12,12 +12,10 @@
   <a href="https://demo.anglefeint.com/">Demo en vivo</a>
   ·
   <a href="https://github.com/anglefeint/astro-theme-anglefeint">Repositorio</a>
-  ·
-  <a href="https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md">Ficha de listado</a>
 </p>
 
 <p align="center">
-  <a href="#installation">Instalación</a> · <a href="#setup">Guía de configuración</a> · <a href="#deployment">Desplegar</a>
+  <a href="#installation">Instalación</a> · <a href="#setup">Configuración del sitio</a> · <a href="#writing">Escribir</a> · <a href="#upgrade">Actualizar</a> · <a href="#deployment">Compilar y publicar</a>
 </p>
 
 <p align="center">
@@ -27,6 +25,139 @@
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="installation"></a>
+
+## Instalación
+
+Usa Node.js 22.12.0 o posterior. Ejecuta estos comandos desde la carpeta donde quieras crear tu blog y abre la dirección que muestre el servidor de desarrollo.
+
+```bash
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+cd my-blog
+npm install
+npm run dev
+```
+
+Si ya tienes el blog, ejecuta `npm install` y `npm run dev` en ese proyecto, sin crear otra copia. Detén dev con Ctrl+C antes de otros comandos o usa otra terminal. Con pnpm usa `pnpm install` y `pnpm dev`.
+
+<a id="setup"></a>
+
+## Configuración del sitio
+
+Edita el objeto de configuración existente en `src/site.config.ts`. Es la entrada única para identidad, enlaces sociales, About y opciones del tema. Conserva los imports/exports y combina los ajustes en el objeto existente.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: 'My Blog',
+    author: 'Your Name',
+    description: 'My notes and projects.',
+    url: 'https://your-domain.example',
+  },
+});
+```
+
+Configura `site.url` con la dirección real del sitio. `PUBLIC_SITE_URL`, si está definido, tiene prioridad. Vuelve a compilar y publicar después de cambiar contenido o configuración.
+
+<a id="writing"></a>
+
+## Crear nuevo post
+
+Empieza con un artículo en español:
+
+```bash
+npm run new-post -- my-first-post --locales es
+```
+
+Edita el título, la descripción y el contenido en `src/content/blog/es/my-first-post.md`. Para crear plantillas con el mismo slug en todos los idiomas activos, omite `--locales`: inicialmente crea nueve archivos, sin traducirlos ni sobrescribir los existentes.
+
+Regla del slug: usa solo minúsculas, números y guiones (ejemplo: `my-first-post`).
+Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` después).
+Override opcional de idiomas:
+
+```bash
+npm run new-post -- my-first-post --locales en,zh
+# o
+ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
+```
+
+La sintaxis `ANGLEFEINT_LOCALES=...` es para Bash y shells POSIX. En PowerShell, usa el comando con `--locales` de arriba.
+
+Cómo funciona la URL:
+
+- Archivo: `src/content/blog/es/my-first-post.md`
+- URL: `/es/blog/my-first-post/`
+- Lista del blog: `/es/blog/`
+- No necesitas crear rutas a mano. Astro las genera automáticamente en build.
+
+`--locales` solo crea archivos de artículos; no habilita idiomas. Añade o habilita cada idioma en `src/site.config.ts` para generar sus rutas.
+
+## Crear nueva página
+
+`new-post` solo crea contenido del blog. Para páginas personalizadas usa:
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
+El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
+Regla de slug: solo minúsculas, números y guiones; se permiten rutas anidadas (ejemplo: `projects/labs`). `_` y mayúsculas no son válidos.
+
+Ejemplos (elige uno para `projects`; si ejecutas los cinco, fallarán a partir del segundo porque el archivo ya existe):
+
+```bash
+npm run new-page -- projects --theme base
+npm run new-page -- projects --theme ai
+npm run new-page -- projects --theme cyber
+npm run new-page -- projects --theme hacker
+npm run new-page -- projects --theme matrix
+```
+
+<a id="upgrade"></a>
+
+## Actualizar tema
+
+En proyectos creados desde `#starter`, ejecuta lo siguiente solo si la versión de destino es compatible con tu starter y Astro y no requiere cambios de estructura local:
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+```
+
+`npm update` respeta el rango de `package.json`: `^0.5.1` no incluye `0.6.0`. Para una actualización compatible fuera del rango, sigue las notas de versión e instala una versión de destino explícita, no `@latest` sin comprobarla. Verifica las versiones con `npm ls @anglefeint/astro-theme astro`.
+
+En el starter actual, `doctor` ya incluye las comprobaciones y la compilación. Cuando termine correctamente, revisa el sitio con `npm run preview`. Solo si informa de diferencias entre los adaptadores generados y las plantillas locales, ejecuta `npm run sync-adapters` y repite `npm run doctor`; esto no descarga plantillas del repositorio original. Los proyectos antiguos pueden tener otros scripts: consulta su `package.json` y la guía de actualización.
+
+Si las notas de versión incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualización directa de todos los starters históricos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+
+Si tu código personalizado aún importa `src/consts` o `@anglefeint/astro-theme/consts`, mígralo a `src/config/site.ts`.
+
+Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- después sigue la lista de verificación de la guía de actualización enlazada arriba.
+
+<a id="deployment"></a>
+
+## Compilar y publicar
+
+```bash
+npm run build
+```
+
+El sitio estático se genera en `dist/`. Publica **todo el contenido** de esa carpeta en cualquier alojamiento estático. No necesitas un servidor Node.js en producción ni un adaptador de alojamiento.
+
+Ejecuta `npm run preview` para revisar la compilación localmente; no publica el sitio. También puedes usar `npm run doctor`, que incluye comprobaciones y compilación.
+
+Publica en la raíz del dominio y sirve el index.html de cada directorio. Las subrutas requieren adaptación adicional; configurar Astro `base` no basta.
+
+<a id="reference"></a>
+
+## Referencia de funciones y configuración
+
+### Efectos de inicio y herramientas de decodificación
 
 Pasaje Matrix opcional: `theme.effects.enableHomePassage` vale `false` por defecto. Al activarlo, los enlaces a entradas de inicio muestran un pasaje verde de 8 segundos antes de navegar. `Oracle` en About funciona por separado: cada clic elige una de cuatro paletas sin repetir la anterior; al llegar puedes arrastrar para mirar alrededor, usar el botón derecho para volver al pasillo y Escape o × para cerrar. Con movimiento reducido, la navegación es directa y Oracle muestra una vista estática.
 
@@ -45,35 +176,27 @@ La versión completa de **Decoder Lab** está en `/<locale>/decoder/`: historial
 - Node.js `22.12.0+` (LTS recomendado)
 - Los comandos documentados del starter 0.8.0 pasaron las pruebas en Linux con npm + Node 22 y pnpm 10 + Node 24. No se probaron yarn/bun. Consulta el [registro de validación](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md).
 
-<a id="installation"></a>
+## Comprobar y previsualizar antes de publicar
 
-## Instalación con plantilla
-
-Ejecuta esto una sola vez desde el directorio donde quieres guardar tu blog. Crea `my-blog` y omite la instalación de dependencias; responde las preguntas restantes y continúa abajo. Usa una carpeta nueva; si cambias el nombre, ajusta también `cd`.
+Después de configurar el sitio y escribir el artículo, detén el servidor de desarrollo y ejecuta:
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm run doctor
+npm run preview
 ```
 
-## Inicio rápido
+`doctor` incluye comprobaciones y compilación; no necesitas repetir `npm run check`. Abre la URL de `preview` y detenlo con `Ctrl+C`. La vista previa es local y no publica el sitio.
 
-Elige npm o pnpm para este proyecto. Con npm:
+Para compilar y previsualizar sin todas las comprobaciones, usa esta alternativa:
 
 ```bash
-cd my-blog
-npm install
-npm run dev
+npm run build
+npm run preview
 ```
 
-Abre la URL indicada en el terminal. `dev` sigue ejecutándose: antes de los siguientes comandos, detenlo con `Ctrl+C` o abre otro terminal dentro de `my-blog`. Todos los comandos siguientes se ejecutan en esa carpeta.
+Con pnpm, ejecuta `pnpm doctor` y luego `pnpm preview`; para solo compilar, usa `pnpm build` y luego `pnpm preview`.
 
-Con pnpm, usa el mismo comando de creación y sustituye los pasos de instalación e inicio de npm por:
-
-```bash
-cd my-blog
-pnpm install
-pnpm dev
-```
+La salida estática está en `dist/`. Configura el alojamiento con `npm run build` y el directorio de salida `dist/`; sigue la [guía de despliegue de Astro](https://docs.astro.build/en/guides/deploy/). Verifica el dominio real, el artículo, el selector de idiomas y la búsqueda tras publicar.
 
 ## Usar un asistente de IA
 
@@ -82,8 +205,6 @@ Abre la carpeta del proyecto en Cursor, Codex o Claude Code. El starter incluye 
 Ejemplos: «Lee AGENTS.md, configura mi sitio y deja solo español; conserva mi contenido». «Crea un artículo en español con slug my-first-post; yo proporcionaré el texto». «Añade mis MP3 autorizados con título y autor». Pide que ejecute doctor y revise las páginas en preview. Tú decides el contenido, las traducciones, el dominio y dónde publicar.
 
 Antes de publicar, sustituye los marcadores del archivo opcional `public/llms.txt` por tus datos y las URL reales de cada idioma, o elimínalo. Describe el sitio para lectores y rastreadores; las instrucciones del proyecto están en AGENTS.md.
-
-<a id="setup"></a>
 
 ## Primera configuración: identidad del sitio y URL de inicio
 
@@ -117,103 +238,6 @@ Configura `site.url` con la URL real de producción para que los enlaces canonic
 ## Elegir idiomas
 
 Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`; inglés sigue siendo el predeterminado. Desactiva cada idioma innecesario con `i18n.locales.<code>.meta.enabled: false` en `src/site.config.ts`. Omitirlo no lo desactiva; el idioma predeterminado permanece activo. `new-post` crea inicialmente nueve plantillas, sin traducir el contenido. Para crear solo español: `npm run new-post -- my-post --locales es`.
-
-## Crear nuevo post
-
-Empieza con un artículo en español:
-
-```bash
-npm run new-post -- my-first-post --locales es
-```
-
-Edita el título, la descripción y el contenido en `src/content/blog/es/my-first-post.md`. Para crear plantillas con el mismo slug en todos los idiomas activos, omite `--locales`: inicialmente crea nueve archivos, sin traducirlos ni sobrescribir los existentes.
-
-Regla del slug: usa solo minúsculas, números y guiones (ejemplo: `my-first-post`).
-Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` después).
-Override opcional de idiomas:
-
-```bash
-npm run new-post -- my-first-post --locales en,zh
-# o
-ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
-```
-
-La sintaxis `ANGLEFEINT_LOCALES=...` es para Bash y shells POSIX. En PowerShell, usa el comando con `--locales` de arriba.
-
-Cómo funciona la URL:
-
-- Archivo: `src/content/blog/es/my-first-post.md`
-- URL: `/es/blog/my-first-post/`
-- Lista del blog: `/es/blog/`
-- No necesitas crear rutas a mano. Astro las genera automáticamente en build.
-
-`--locales` solo crea archivos de artículos; no habilita idiomas. Añade o habilita cada idioma en `src/site.config.ts` para generar sus rutas.
-
-## Comprobar y previsualizar antes de publicar
-
-Después de configurar el sitio y escribir el artículo, detén el servidor de desarrollo y ejecuta:
-
-```bash
-npm run doctor
-npm run preview
-```
-
-`doctor` incluye comprobaciones y compilación; no necesitas repetir `npm run check`. Abre la URL de `preview` y detenlo con `Ctrl+C`. La vista previa es local y no publica el sitio.
-
-Para compilar y previsualizar sin todas las comprobaciones, usa esta alternativa:
-
-```bash
-npm run build
-npm run preview
-```
-
-Con pnpm, ejecuta `pnpm doctor` y luego `pnpm preview`; para solo compilar, usa `pnpm build` y luego `pnpm preview`.
-
-La salida estática está en `dist/`. Configura el alojamiento con `npm run build` y el directorio de salida `dist/`; sigue la [guía de despliegue de Astro](https://docs.astro.build/en/guides/deploy/). Verifica el dominio real, el artículo, el selector de idiomas y la búsqueda tras publicar.
-
-## Crear nueva página
-
-`new-post` solo crea contenido del blog. Para páginas personalizadas usa:
-
-```bash
-npm run new-page -- projects --theme base
-```
-
-Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
-El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
-Regla de slug: solo minúsculas, números y guiones; se permiten rutas anidadas (ejemplo: `projects/labs`). `_` y mayúsculas no son válidos.
-
-Ejemplos (elige uno para `projects`; si ejecutas los cinco, fallarán a partir del segundo porque el archivo ya existe):
-
-```bash
-npm run new-page -- projects --theme base
-npm run new-page -- projects --theme ai
-npm run new-page -- projects --theme cyber
-npm run new-page -- projects --theme hacker
-npm run new-page -- projects --theme matrix
-```
-
-## Actualizar tema
-
-En proyectos creados desde `#starter`, ejecuta lo siguiente solo si la versión de destino es compatible con tu starter y Astro y no requiere cambios de estructura local:
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-```
-
-`npm update` respeta el rango de `package.json`: `^0.5.1` no incluye `0.6.0`. Para una actualización compatible fuera del rango, sigue las notas de versión e instala una versión de destino explícita, no `@latest` sin comprobarla. Verifica las versiones con `npm ls @anglefeint/astro-theme astro`.
-
-En el starter actual, `doctor` ya incluye las comprobaciones y la compilación. Cuando termine correctamente, revisa el sitio con `npm run preview`. Solo si informa de diferencias entre los adaptadores generados y las plantillas locales, ejecuta `npm run sync-adapters` y repite `npm run doctor`; esto no descarga plantillas del repositorio original. Los proyectos antiguos pueden tener otros scripts: consulta su `package.json` y la guía de actualización.
-
-Si las notas de versión incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualización directa de todos los starters históricos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
-
-Si tu código personalizado aún importa `src/consts` o `@anglefeint/astro-theme/consts`, mígralo a `src/config/site.ts`.
-
-Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- después sigue la lista de verificación de la guía de actualización enlazada arriba.
 
 ## Idiomas
 
@@ -451,34 +475,6 @@ Desactiva con `theme: { math: { enabled: false } }` en `src/site.config.ts`. Esc
 Se renderiza durante la compilación, con estilos y fuentes locales y MathML accesible, sin motor matemático en el navegador. Las fórmulas largas tienen desplazamiento horizontal. Los errores detienen la compilación indicando origen y causa. Mantén títulos y descripciones en texto plano; las fórmulas se excluyen de la búsqueda. Se admite la sintaxis matemática de KaTeX, no documentos LaTeX completos.
 
 Los proyectos anteriores necesitan la migración inicial del starter y la configuración explicada en la guía de actualización; actualizar solo el paquete no conecta el procesador Markdown.
-
-<a id="deployment"></a>
-
-## Despliegue estático
-
-El starter es un sitio Astro estático sin dependencia de Cloudflare, Wrangler, Miniflare ni adaptadores de servidor. Node.js se necesita para instalar y compilar, no como proceso en producción.
-
-### Antes de publicar
-
-Configura `site.url` con tu dominio; `PUBLIC_SITE_URL` tiene prioridad. Ejecuta `npm run doctor` y `npm run preview`. La vista previa no publica el sitio.
-
-Sube tu blog generado y su archivo de bloqueo a tu propio repositorio Git e impórtalo en el alojamiento. Elige la rama de publicación y el directorio con `package.json`. No conectes el repositorio original del tema.
-
-| Plataforma                                                                                         | Configuración                                                                                                                                 |
-| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | Importa el repositorio y selecciona Astro. Compilación `npm run build`, publicación `dist`.                                                   |
-| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | Importa el repositorio y selecciona Astro. Compilación `npm run build`, salida `dist`.                                                        |
-| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Conecta Git en Pages. Compilación `npm run build`, salida `dist`; no requiere un comando Wrangler adicional.                                  |
-| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | En Settings → Pages elige GitHub Actions y sigue el flujo oficial de Astro. Usa `USERNAME.github.io` o un dominio propio que sirva desde `/`. |
-| Nginx / Apache / static hosting                                                                    | Ejecuta `npm run build` y sube todo `dist/` a la raíz web. Sirve el `index.html` de cada directorio sin redirigir todas las rutas al inicio.  |
-
-Usa una versión mantenida de Node.js compatible con `package.json` (`>=22.12.0`; referencia actual: Node 24 LTS). Instala también las dependencias de desarrollo. Con pnpm usa `pnpm build` y su archivo de bloqueo.
-
-La navegación actual incluye URL relativas a la raíz: configurar solo Astro `base` no garantiza el funcionamiento bajo `/repository/`, tampoco en Pages de proyectos GitHub. Usa la raíz del dominio o adapta y verifica las rutas.
-
-Workers es una alternativa opcional que sube `dist` con Wrangler. Las herramientas del demo no son requisitos del starter. Este despliegue estático no necesita adaptadores SSR.
-
-Tras publicar, abre y recarga artículos directamente; prueba idiomas, búsqueda, Decoder, `/<locale>/rss.xml`, `/sitemap-index.xml` y canonical. Sube todos los recursos, índices, imágenes y JSON del terminal. Reconstruye tras cambios. Comentarios, GA4 y audio externo opcionales siguen usando sus servicios.
 
 ## Estadísticas del artículo
 

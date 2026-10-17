@@ -12,12 +12,10 @@
   <a href="https://demo.anglefeint.com/">デモ</a>
   ·
   <a href="https://github.com/anglefeint/astro-theme-anglefeint">リポジトリ</a>
-  ·
-  <a href="https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md">テーマ掲載文案</a>
 </p>
 
 <p align="center">
-  <a href="#installation">インストール</a> · <a href="#setup">設定ガイド</a> · <a href="#deployment">デプロイ</a>
+  <a href="#installation">インストール</a> · <a href="#setup">サイト設定</a> · <a href="#writing">記事を書く</a> · <a href="#upgrade">アップグレード</a> · <a href="#deployment">ビルドと公開</a>
 </p>
 
 <p align="center">
@@ -27,6 +25,139 @@
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="installation"></a>
+
+## インストール
+
+Node.js 22.12.0 以降を使用します。ブログを作成する親ディレクトリで次のコマンドを実行し、開発サーバーが表示する URL を開いてください。
+
+```bash
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+cd my-blog
+npm install
+npm run dev
+```
+
+既存のブログではそのフォルダーで `npm install` と `npm run dev` を実行し、再作成しないでください。別のコマンドの前に Ctrl+C で dev を停止するか、別のターミナルを使います。pnpm では `pnpm install` と `pnpm dev` を使います。
+
+<a id="setup"></a>
+
+## サイト設定
+
+`src/site.config.ts` の既存の設定オブジェクトを編集します。サイト情報、ソーシャルリンク、About、テーマの設定はここに集約されています。import/export を残し、既存のオブジェクトに設定をまとめてください。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: 'My Blog',
+    author: 'Your Name',
+    description: 'My notes and projects.',
+    url: 'https://your-domain.example',
+  },
+});
+```
+
+`site.url` に実際のサイト URL を設定します。`PUBLIC_SITE_URL` が設定されている場合はそちらが優先されます。記事や設定を変更したら再ビルドして公開してください。
+
+<a id="writing"></a>
+
+## 新しい記事を作成
+
+まず日本語の記事を1つ作成します：
+
+```bash
+npm run new-post -- my-first-post --locales ja
+```
+
+`src/content/blog/ja/my-first-post.md` のタイトル、説明、本文を編集します。すべての有効な言語に同じ slug の雛形を作るには `--locales` を省略します。初期設定では9ファイルを作成し、自動翻訳や既存ファイルの上書きはしません。
+
+Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
+`src/assets/blog/default-covers/` に画像がある場合、slug ハッシュで安定したデフォルトカバーを自動設定します（後で `heroImage` を手動変更可能）。
+ロケールを明示指定する場合:
+
+```bash
+npm run new-post -- my-first-post --locales en,zh
+# または
+ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
+```
+
+`ANGLEFEINT_LOCALES=...` は Bash/POSIX シェル用の構文です。PowerShell では上の `--locales` コマンドを使ってください。
+
+URL のルール:
+
+- ファイル: `src/content/blog/ja/my-first-post.md`
+- URL: `/ja/blog/my-first-post/`
+- ブログ一覧: `/ja/blog/`
+- ルートを手動で追加する必要はありません。Astro が build 時に自動生成します。
+
+`--locales` は記事ファイルだけを作成し、言語を有効化しません。ルートを生成するには `src/site.config.ts` で対象言語を追加・有効化してください。
+
+## 新しいページを作成
+
+`new-post` はブログ記事専用です。カスタムページは次のコマンドを使用します:
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。  
+`src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
+slug ルール: 小文字・数字・ハイフンのみ（例: `projects/labs` のようなネストは可）。`_` と大文字は不可です。
+
+例（`projects` 用に 1 つだけ選んでください。続けて実行すると、2 回目以降はファイルが存在するため失敗します）:
+
+```bash
+npm run new-page -- projects --theme base
+npm run new-page -- projects --theme ai
+npm run new-page -- projects --theme cyber
+npm run new-page -- projects --theme hacker
+npm run new-page -- projects --theme matrix
+```
+
+<a id="upgrade"></a>
+
+## テーマのアップグレード
+
+`#starter` から作成したプロジェクトでは、対象リリースが既存の starter と Astro に対応し、ローカル構成の移行が不要な場合にのみ実行します:
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+```
+
+`npm update` は `package.json` の範囲内で更新します。`^0.5.1` に `0.6.0` は含まれません。互換性のある範囲外の更新では、リリースノートに従って対象バージョンを明示し、無条件に `@latest` を使わないでください。`npm ls @anglefeint/astro-theme astro` で実際のバージョンを確認できます。
+
+現在の starter では `doctor` にチェックとビルドが含まれます。成功後、`npm run preview` でサイトを確認してください。生成アダプターとローカルテンプレートの不一致が報告された場合に限り、`npm run sync-adapters` を実行し、`npm run doctor` を再実行します。上流のテンプレートは取得しません。旧プロジェクトではスクリプトが異なる場合があるため、ローカルの `package.json` と更新ガイドを確認してください。
+
+リリースノートに starter の構成変更がある場合は、新しいディレクトリに最新テンプレートを作成し、記事・画像・個人設定を移してください。新しい設定補助ファイルを古いファイルで上書きしないでください。`npm update` はパッケージのみを更新し、すべての旧 starter の直接更新は保証しません。[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
+
+カスタムコードが `src/consts` または `@anglefeint/astro-theme/consts` を参照している場合は、`src/config/site.ts` へ移行してください。
+
+Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- その後、上記の更新ガイドの検証チェックリストに従ってください。
+
+<a id="deployment"></a>
+
+## ビルドと公開
+
+```bash
+npm run build
+```
+
+静的サイトは `dist/` に生成されます。その**すべての内容**を任意の静的ホスティングに公開してください。本番の Node.js サーバーやホスティング用アダプターは不要です。
+
+`npm run preview` でビルド結果をローカル確認できます。公開は行いません。`npm run doctor` はチェックとビルドをまとめて実行します。
+
+ドメインのルートで公開し、各ディレクトリの index.html を配信してください。サブパス公開は追加対応が必要で、Astro `base` の設定だけでは不十分です。
+
+<a id="reference"></a>
+
+## 機能と設定のリファレンス
+
+### ホームの演出とデコードツール
 
 任意の Matrix 演出：`theme.effects.enableHomePassage` は既定で `false`。有効時はホームの記事リンクで緑の演出を 8 秒再生してから移動します。About の `Oracle` は独立して動作し、クリック時に前回と異なる 4 種類の配色から選びます。到着後はドラッグで周囲を見回し、右クリックで廊下へ戻れます。Escape または × で閉じます。動きを減らす設定では通常の移動と静止した Oracle プレビューを使います。
 
@@ -45,35 +176,27 @@ About の **Hacker Decryptor** は、Base64/Base64URL、URLエンコード、16�
 - Node.js `22.12.0+`（LTS 推奨）
 - 0.8.0 starter の記載コマンドは Linux 上の npm + Node 22、pnpm 10 + Node 24 で検証済みです。yarn/bun は未検証です。[検証記録](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)を参照してください。
 
-<a id="installation"></a>
+## 公開前のチェックとプレビュー
 
-## テンプレートの導入
-
-ブログを置く親ディレクトリで一度実行します。`my-blog` を作成し、依存関係のインストールをスキップします。残りの質問に答えたら次へ進んでください。新しいディレクトリを使い、名前を変えた場合は `cd` も変更します。
+サイト設定と記事の編集後、開発サーバーを停止して実行します：
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm run doctor
+npm run preview
 ```
 
-## クイックスタート
+`doctor` はチェックとビルドを含むため、`npm run check` を重ねて実行する必要はありません。`preview` の URL を開き、終了時は `Ctrl+C` を押します。プレビューはローカル表示のみで、公開はしません。
 
-このプロジェクトでは npm または pnpm のどちらかを選びます。npm の場合：
+完全なチェックを省き、ビルドとプレビューだけ行う場合：
 
 ```bash
-cd my-blog
-npm install
-npm run dev
+npm run build
+npm run preview
 ```
 
-ターミナルに表示された URL を開きます。`dev` は動き続けるため、次のコマンドの前に `Ctrl+C` で停止するか、別のターミナルで `my-blog` に移動してください。以降のコマンドはすべてプロジェクト内で実行します。
+pnpm では `pnpm doctor`、次に `pnpm preview` を使います。ビルドのみなら `pnpm build`、次に `pnpm preview` です。
 
-pnpm の場合も上の作成コマンドを使い、npm のインストール・起動手順の代わりに次を実行します：
-
-```bash
-cd my-blog
-pnpm install
-pnpm dev
-```
+静的ファイルは `dist/` に出力されます。ホストのビルドコマンドを `npm run build`、出力先を `dist/` に設定し、[Astro デプロイガイド](https://docs.astro.build/en/guides/deploy/)に従って公開します。本番ドメイン、記事、言語メニュー、検索を確認してください。
 
 ## AI アシスタントを使う
 
@@ -82,8 +205,6 @@ Cursor、Codex、Claude Code でプロジェクトフォルダーを開いてく
 例：「AGENTS.md を読んで、サイト情報を設定し、日本語だけを有効にして。既存の記事は残して」「my-first-post という日本語記事を作って。本文はこちらで用意する」「使用許可のある MP3 を曲名と作者付きで追加して」。doctor と変更ページのプレビューを依頼してください。内容、翻訳、ドメイン、公開先は自分で決めます。
 
 公開前に、任意の `public/llms.txt` のプレースホルダーを自分のサイト情報と実際の言語別 URL に置き換えるか、ファイルを削除してください。読者やクローラー向けの説明であり、プロジェクトの作業指示は AGENTS.md にあります。
-
-<a id="setup"></a>
 
 ## 初期設定：サイト情報とホームの URL
 
@@ -117,103 +238,6 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 ## 使用する言語を選ぶ
 
 標準で9言語が有効です：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。既定は英語です。不要な言語は `src/site.config.ts` で `i18n.locales.<code>.meta.enabled: false` にします。設定の省略では無効にならず、既定言語は常に有効です。`new-post` は初期状態で9ファイルを作成しますが、自動翻訳はしません。日本語だけ作成する場合：`npm run new-post -- my-post --locales ja`。
-
-## 新しい記事を作成
-
-まず日本語の記事を1つ作成します：
-
-```bash
-npm run new-post -- my-first-post --locales ja
-```
-
-`src/content/blog/ja/my-first-post.md` のタイトル、説明、本文を編集します。すべての有効な言語に同じ slug の雛形を作るには `--locales` を省略します。初期設定では9ファイルを作成し、自動翻訳や既存ファイルの上書きはしません。
-
-Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
-`src/assets/blog/default-covers/` に画像がある場合、slug ハッシュで安定したデフォルトカバーを自動設定します（後で `heroImage` を手動変更可能）。
-ロケールを明示指定する場合:
-
-```bash
-npm run new-post -- my-first-post --locales en,zh
-# または
-ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
-```
-
-`ANGLEFEINT_LOCALES=...` は Bash/POSIX シェル用の構文です。PowerShell では上の `--locales` コマンドを使ってください。
-
-URL のルール:
-
-- ファイル: `src/content/blog/ja/my-first-post.md`
-- URL: `/ja/blog/my-first-post/`
-- ブログ一覧: `/ja/blog/`
-- ルートを手動で追加する必要はありません。Astro が build 時に自動生成します。
-
-`--locales` は記事ファイルだけを作成し、言語を有効化しません。ルートを生成するには `src/site.config.ts` で対象言語を追加・有効化してください。
-
-## 公開前のチェックとプレビュー
-
-サイト設定と記事の編集後、開発サーバーを停止して実行します：
-
-```bash
-npm run doctor
-npm run preview
-```
-
-`doctor` はチェックとビルドを含むため、`npm run check` を重ねて実行する必要はありません。`preview` の URL を開き、終了時は `Ctrl+C` を押します。プレビューはローカル表示のみで、公開はしません。
-
-完全なチェックを省き、ビルドとプレビューだけ行う場合：
-
-```bash
-npm run build
-npm run preview
-```
-
-pnpm では `pnpm doctor`、次に `pnpm preview` を使います。ビルドのみなら `pnpm build`、次に `pnpm preview` です。
-
-静的ファイルは `dist/` に出力されます。ホストのビルドコマンドを `npm run build`、出力先を `dist/` に設定し、[Astro デプロイガイド](https://docs.astro.build/en/guides/deploy/)に従って公開します。本番ドメイン、記事、言語メニュー、検索を確認してください。
-
-## 新しいページを作成
-
-`new-post` はブログ記事専用です。カスタムページは次のコマンドを使用します:
-
-```bash
-npm run new-page -- projects --theme base
-```
-
-利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。  
-`src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
-slug ルール: 小文字・数字・ハイフンのみ（例: `projects/labs` のようなネストは可）。`_` と大文字は不可です。
-
-例（`projects` 用に 1 つだけ選んでください。続けて実行すると、2 回目以降はファイルが存在するため失敗します）:
-
-```bash
-npm run new-page -- projects --theme base
-npm run new-page -- projects --theme ai
-npm run new-page -- projects --theme cyber
-npm run new-page -- projects --theme hacker
-npm run new-page -- projects --theme matrix
-```
-
-## テーマのアップグレード
-
-`#starter` から作成したプロジェクトでは、対象リリースが既存の starter と Astro に対応し、ローカル構成の移行が不要な場合にのみ実行します:
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-```
-
-`npm update` は `package.json` の範囲内で更新します。`^0.5.1` に `0.6.0` は含まれません。互換性のある範囲外の更新では、リリースノートに従って対象バージョンを明示し、無条件に `@latest` を使わないでください。`npm ls @anglefeint/astro-theme astro` で実際のバージョンを確認できます。
-
-現在の starter では `doctor` にチェックとビルドが含まれます。成功後、`npm run preview` でサイトを確認してください。生成アダプターとローカルテンプレートの不一致が報告された場合に限り、`npm run sync-adapters` を実行し、`npm run doctor` を再実行します。上流のテンプレートは取得しません。旧プロジェクトではスクリプトが異なる場合があるため、ローカルの `package.json` と更新ガイドを確認してください。
-
-リリースノートに starter の構成変更がある場合は、新しいディレクトリに最新テンプレートを作成し、記事・画像・個人設定を移してください。新しい設定補助ファイルを古いファイルで上書きしないでください。`npm update` はパッケージのみを更新し、すべての旧 starter の直接更新は保証しません。[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
-
-カスタムコードが `src/consts` または `@anglefeint/astro-theme/consts` を参照している場合は、`src/config/site.ts` へ移行してください。
-
-Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- その後、上記の更新ガイドの検証チェックリストに従ってください。
 
 ## 言語
 
@@ -451,34 +475,6 @@ $$
 ビルド時にレンダリングし、ローカルのスタイル・フォントとアクセシブルな MathML を使用します。ブラウザー用数式エンジンは不要です。長い独立数式は横スクロールできます。不正な数式はファイルと原因を示してビルドを停止します。タイトルと概要はプレーンテキストにし、数式は検索対象から除外されます。KaTeX の数式構文に対応し、完全な LaTeX 文書には対応しません。
 
 既存サイトはアップグレードガイドに従って starter と設定を一度移行してください。パッケージ更新だけでは処理器は接続されません。
-
-<a id="deployment"></a>
-
-## 静的ホスティング
-
-starter は静的 Astro サイトです。Cloudflare、Wrangler、Miniflare、サーバーアダプターは必須ではなく、本番の Node.js プロセスも不要です。Node.js はインストールとビルドに使います。
-
-### 公開前の準備
-
-`site.url` に本番ドメインを設定します。`PUBLIC_SITE_URL` があれば優先されます。`npm run doctor` と `npm run preview` で確認します。preview は公開しません。
-
-生成したブログとロックファイルを自分の Git リポジトリへ push し、ホストへインポートします。公開ブランチと `package.json` のあるディレクトリを選びます。上流テーマのリポジトリを接続しないでください。
-
-| サービス                                                                                           | 公開設定                                                                                                                                   |
-| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | リポジトリをインポートして Astro を選択。ビルド `npm run build`、公開先 `dist`。                                                           |
-| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | リポジトリをインポートして Astro を選択。ビルド `npm run build`、出力先 `dist`。                                                           |
-| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Pages で Git を接続。ビルド `npm run build`、出力先 `dist`。Wrangler コマンドは不要です。                                                  |
-| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Settings → Pages で GitHub Actions を選び、公式 Astro ワークフローに従います。`USERNAME.github.io` またはルートの独自ドメインを使います。  |
-| Nginx / Apache / static hosting                                                                    | `npm run build` 後、`dist/` の全内容を Web ルートへ配置。各ディレクトリの `index.html` を配信し、全 URL をトップへ書き換えないでください。 |
-
-対応中の Node.js（`package.json` の `>=22.12.0` を満たすもの、現在の検証基準は Node 24 LTS）を使用し、開発依存もインストールします。pnpm では `pnpm build` と対応するロックファイルを使います。
-
-現在のナビゲーションにはルート相対 URL があります。Astro `base` だけでは `/repository/` 配下を保証できません。GitHub プロジェクト Pages も同様です。ルートで公開するか、関連パスを自分で修正・検証してください。
-
-Workers は別の任意の方法で、Wrangler から `dist` を送信します。デモの保守環境は starter の要件ではありません。静的公開に SSR アダプターは不要です。
-
-公開後、記事 URL の直接表示と再読み込み、言語切替、検索、Decoder、`/<locale>/rss.xml`、`/sitemap-index.xml`、canonical を確認します。資産・検索索引・共有画像・端末 JSON を含む全出力を配置してください。変更後は再ビルドして公開します。任意のコメント、GA4、外部音声は各サービスへ接続します。
 
 ## 記事の統計
 
