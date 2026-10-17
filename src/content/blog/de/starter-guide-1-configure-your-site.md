@@ -6,7 +6,7 @@ title: 'Anleitung 1: Deinen Blog einrichten'
 subtitle: 'Installation, Website-Daten, Sprachen und Veröffentlichung.'
 description: 'Installation, Website-Daten, Sprachen und Veröffentlichung.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -85,6 +85,8 @@ npm run preview
 ```
 
 doctor enthält Prüfungen und Build. preview zeigt das Ergebnis lokal und veröffentlicht es nicht. Die statische Ausgabe liegt in dist/, einschließlich Suche und Vorschaubildern. Verwende beim Hosting npm run build und das Ausgabeverzeichnis dist. Folge der [Astro-Anleitung](https://docs.astro.build/en/guides/deploy/) und prüfe Seiten, Sprachwechsel, Suche und /de/rss.xml nach der Veröffentlichung.
+
+Cloudflare ist optional. Die [Plattform-Anleitungen im README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.de.md#deployment) erklären auch die aktuelle Einschränkung auf die Domainwurzel.
 
 ## Konfigurationsregeln
 

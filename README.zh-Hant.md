@@ -11,7 +11,7 @@
 [Demo](https://demo.anglefeint.com/zh-hant/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
-  <a href="#installation">安裝</a> · <a href="#setup">設定指南</a>
+  <a href="#installation">安裝</a> · <a href="#setup">設定指南</a> · <a href="#deployment">部署</a>
 </p>
 
 <p align="center">
@@ -356,9 +356,33 @@ $$
 
 舊專案需要依升級指南完成一次 starter／設定遷移，只更新主題套件不會接入 Markdown 處理器。
 
+<a id="deployment"></a>
+
 ## 靜態部署
 
-執行 `npm run build`，把 `dist/` 內全部內容上傳到靜態網站根目錄；伺服器需支援目錄下的 `index.html`。不依賴 Cloudflare，也不需要線上 Node.js 程序。建置前設定 `site.url` 與任何 `PUBLIC_SITE_URL` 覆蓋值，修改後重新建置部署。選用留言、GA4 與遠端音訊仍會存取各自服務。
+starter 是靜態 Astro 網站，不綁定 Cloudflare，也不含 Wrangler、Miniflare 或平台適配器；Node.js 僅供安裝與建置。
+
+### 部署準備
+
+設定 `site.url` 為正式網域；`PUBLIC_SITE_URL` 會覆蓋它。先執行 `npm run doctor`、`npm run preview` 檢查，preview 不會發布。
+
+將個人部落格及鎖定檔推送到自己的 Git 儲存庫，再匯入託管平台。選擇發布分支及含 `package.json` 的目錄；不要連接上游主題儲存庫。
+
+| 平台                                                                                               | 發布設定                                                                                                   |
+| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | 匯入儲存庫，選 Astro；建置 `npm run build`，輸出 `dist`。                                                  |
+| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | 匯入儲存庫，選 Astro；建置 `npm run build`，輸出 `dist`。                                                  |
+| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Pages 連接儲存庫；建置 `npm run build`，輸出 `dist`；Git 整合不需 Wrangler 指令。                          |
+| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Settings → Pages 選 GitHub Actions，依官方 Astro 工作流；使用 `USERNAME.github.io` 或根路徑自訂網域。      |
+| Nginx / Apache / static hosting                                                                    | 執行 `npm run build`，將 `dist/` 全部內容上傳網站根目錄；提供目錄 `index.html`，不要將所有路徑重寫至首頁。 |
+
+使用符合 `package.json` 的受支援 Node.js（`>=22.12.0`，目前驗收基線為 Node 24 LTS）。安裝時保留開發相依套件。pnpm 使用 `pnpm build` 及其鎖定檔。
+
+目前導覽包含根相對路徑，僅設 Astro `base` 無法保證 `/repository/` 子路徑正常；GitHub 專案 Pages 也有此限制。請用網域根目錄，或自行適配及驗證。
+
+Workers 是選用的另一條部署途徑，使用 Wrangler 上傳 `dist`；示範站維護工具不是 starter 要求。靜態部署不需 SSR 適配器。
+
+發布後直接開啟並重新整理文章，檢查語言、搜尋、Decoder、`/<locale>/rss.xml`、`/sitemap-index.xml` 及 canonical 網域。上傳全部產物，包含資源、搜尋索引、分享圖與終端 JSON。修改後重新建置發布；選用留言、GA4 與外部音訊仍使用各自服務。
 
 ## 文章統計
 

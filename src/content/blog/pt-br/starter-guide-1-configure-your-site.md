@@ -6,7 +6,7 @@ title: 'Guia 1: Configure seu blog'
 subtitle: 'Instalação, identidade, idiomas e publicação.'
 description: 'Instalação, identidade, idiomas e publicação.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -85,6 +85,8 @@ npm run preview
 ```
 
 doctor inclui verificações e compilação. preview exibe o resultado localmente; não publica na internet. O site estático fica em dist/, com busca e imagens sociais. No provedor, use npm run build e dist como saída. Siga o [guia de implantação do Astro](https://docs.astro.build/en/guides/deploy/) e confira páginas, idiomas, busca e /pt-br/rss.xml após publicar.
+
+Cloudflare é opcional. Veja as [instruções por plataforma no README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.pt-BR.md#deployment), incluindo a limitação atual de publicar na raiz do domínio.
 
 ## Regras de configuração
 
