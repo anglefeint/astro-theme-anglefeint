@@ -12,12 +12,10 @@
   <a href="https://demo.anglefeint.com/">在线演示</a>
   ·
   <a href="https://github.com/anglefeint/astro-theme-anglefeint">仓库地址</a>
-  ·
-  <a href="https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md">主题提交文案</a>
 </p>
 
 <p align="center">
-  <a href="#installation">安装</a> · <a href="#setup">配置指南</a> · <a href="#deployment">部署</a>
+  <a href="#installation">安装</a> · <a href="#setup">站点配置</a> · <a href="#writing">写文章</a> · <a href="#upgrade">升级</a> · <a href="#deployment">构建与部署</a>
 </p>
 
 <p align="center">
@@ -28,13 +26,146 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+<a id="installation"></a>
+
+## 安装
+
+使用 Node.js 22.12.0 或更新版本。在准备存放博客的目录运行以下命令，然后打开开发服务输出的网址。
+
+```bash
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+cd my-blog
+npm install
+npm run dev
+```
+
+已有博客项目时，在原项目运行 `npm install` 和 `npm run dev`，无需再创建一份。执行其他命令前按 Ctrl+C 停止 dev，或另开终端。pnpm 用户使用 `pnpm install` 和 `pnpm dev`。
+
+<a id="setup"></a>
+
+## 站点配置
+
+编辑 `src/site.config.ts` 中已有的配置对象。站点信息、社交链接、About 内容和主题开关都在这里配置。保留导入与导出，将设置合并到已有对象中。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: 'My Blog',
+    author: 'Your Name',
+    description: 'My notes and projects.',
+    url: 'https://your-domain.example',
+  },
+});
+```
+
+`site.url` 填写实际网站地址；如果配置了 `PUBLIC_SITE_URL`，它会覆盖此值。文章或配置修改后，重新构建并部署。
+
+<a id="writing"></a>
+
+## 新建文章
+
+先创建一篇简体中文文章：
+
+```bash
+npm run new-post -- my-first-post --locales zh
+```
+
+编辑 `src/content/blog/zh/my-first-post.md` 的标题、描述和正文。需要为所有已启用语言创建同名骨架时，省略 `--locales`；初始配置会创建九份文件，不会自动翻译，已有文件不会被覆盖。
+
+Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
+如果 `src/assets/blog/default-covers/` 中存在默认封面，脚本会按 slug 哈希自动分配一张（后续可手动替换 `heroImage`）。
+可选语言覆盖：
+
+```bash
+npm run new-post -- my-first-post --locales en,zh
+# 或
+ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
+```
+
+`ANGLEFEINT_LOCALES=...` 写法适用于 Bash/POSIX shell；PowerShell 请使用上面的 `--locales` 命令。
+
+URL 规则：
+
+- 文件：`src/content/blog/zh/my-first-post.md`
+- 访问地址：`/zh/blog/my-first-post/`
+- 博客列表：`/zh/blog/`
+- 不需要手动加路由，Astro 会在构建时根据内容文件自动生成。
+
+`--locales` 只生成文章文件，不会启用语言。还需要在 `src/site.config.ts` 中添加或启用对应语言，构建时才会生成其路由。
+
+## 新建页面
+
+`new-post` 只创建博客文章。自定义页面请使用：
+
+```bash
+npm run new-page -- projects --theme base
+```
+
+可选主题：`base`、`ai`、`cyber`、`hacker`、`matrix`。  
+命令会生成 `src/pages/[lang]/projects.astro`，并通过 `getStaticPaths()` 输出全部语言路由。
+Slug 规则：只允许小写字母、数字和连字符；支持嵌套路由（例如 `projects/labs`）。不支持下划线或大写。
+
+示例（为 `projects` 五选一；连续执行时，从第二条起会因文件已存在而失败）：
+
+```bash
+npm run new-page -- projects --theme base
+npm run new-page -- projects --theme ai
+npm run new-page -- projects --theme cyber
+npm run new-page -- projects --theme hacker
+npm run new-page -- projects --theme matrix
+```
+
+<a id="upgrade"></a>
+
+## 升级主题
+
+对于 `#starter` 创建的项目，仅在目标版本明确兼容现有 starter 和 Astro、且无需本地结构迁移时执行：
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+```
+
+`npm update` 只在 `package.json` 声明的范围内更新：`^0.5.1` 不包含 `0.6.0`。兼容但跨范围的更新，应按发布说明安装明确的目标版本，不要直接安装 `@latest`。用 `npm ls @anglefeint/astro-theme astro` 确认实际版本。
+
+当前 starter 的 `doctor` 已包含检查和构建，成功后用 `npm run preview` 人工检查站点。只有明确报告生成适配文件与本地模板不同步时，才运行 `npm run sync-adapters`，然后重跑 `npm run doctor`；它不会下载上游模板。旧工程的脚本可能不同，请查看本地 `package.json` 并遵循升级指南。
+
+如果发布说明涉及 starter 骨架变化，建议在新目录创建最新模板，再迁移文章、资源和个人设置，不要用旧文件整体覆盖新配置辅助文件。`npm update` 只更新主题包，不保证所有历史 starter 都能原地升级。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+
+如果你的自定义代码还在引用 `src/consts` 或 `@anglefeint/astro-theme/consts`，请迁移到 `src/config/site.ts`。
+
+如需进行 Astro 大版本升级，请先参考官方升级文档：
+
+- https://docs.astro.build/en/guides/upgrade-to/
+- 然后按上方升级指南的验证清单检查。
+
+<a id="deployment"></a>
+
+## 构建与部署
+
+```bash
+npm run build
+```
+
+构建后的静态网站位于 `dist/`。将该目录的**全部内容**发布到任意静态托管即可，无需线上 Node.js 服务或托管平台适配器。
+
+本地查看构建结果可运行 `npm run preview`，它不会发布网站。也可使用 `npm run doctor`，一次完成检查和构建。
+
+请部署到域名根目录，并支持各目录的 index.html。子路径部署需要额外适配，仅设置 Astro `base` 不足以保证正常使用。
+
+<a id="reference"></a>
+
+## 功能与配置参考
+
+### 首页效果与解码工具
+
 可选 Matrix 穿越：`theme.effects.enableHomePassage` 默认 `false`。开启后，首页文章链接播放 8 秒绿色穿越后导航。About 的 `Oracle` 按钮独立可用：每次点击选择四种场景配色之一，不连续重复；到达后可拖动观察四周、右键倒退回走廊，按 Escape 或点击 × 关闭。减少动态效果时，首页直接导航，Oracle 显示静态预览。
 
 宽屏（1440px 及以上）右下角终端默认显示 `Knock, knock.`。文字可选择复制和滚动，点击独立钥匙孔按钮才解锁并展示共享走廊。在 `src/site.config.ts` 配置 `i18n.locales.en.messages.home.transmission` 即可供全部语言使用；需要不同文字时，再配置 `i18n.locales.<code>.messages.home.transmission`。取值顺序为当前语言配置 → 英文配置 → `Knock, knock.`，与普通界面翻译的回退规则不同。修改后重新构建并部署。
 
 首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
 
-About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL、URL 编码、十六进制、HTML 实体、Unicode 转义及 JWT 头部和载荷，支持自动识别和 与页面配色一致的数字结果动画。从侧边栏打开 Decryptor 即可使用，无需配置接口。
+About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL、URL 编码、十六进制、HTML 实体、Unicode 转义及 JWT 头部和载荷，支持自动识别和与页面配色一致的数字结果动画。从侧边栏打开 Decryptor 即可使用，无需配置接口。
 
 完整的 **Decoder Lab** 位于 `/<locale>/decoder/`，支持本地文本处理链路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 调用解释，以及 EVM／TRON／Bitcoin 地址检查。从 About 解码弹窗进入；在 `src/site.config.ts` 设置 `theme.enableDecoderPage: false` 可独立关闭页面和入口。无需 RPC、连接钱包或 API Key。
 
@@ -43,35 +174,27 @@ About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL
 - Node.js `22.12.0+`（建议 LTS）
 - 0.8.0 starter 的文档命令已在 Linux 下通过 npm + Node 22、pnpm 10 + Node 24 验收；未测试 yarn/bun。详见[验收记录](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)。
 
-<a id="installation"></a>
+## 发布前检查与预览
 
-## 模板安装
-
-在准备存放博客的父目录执行一次。命令会创建 `my-blog`，跳过依赖安装；完成其余向导提示后继续下面的步骤。请使用新目录；如果修改目录名，也要修改后面的 `cd` 命令。
+完成站点配置和文章编辑后，停止开发服务，再运行：
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm run doctor
+npm run preview
 ```
 
-## 快速开始
+`doctor` 已包含检查和构建，无需再重复运行 `npm run check`。打开 `preview` 输出的网址，按 `Ctrl+C` 停止预览。预览仅在本机运行，不会把网站发布到网上。
 
-为这个项目选择 npm 或 pnpm。使用 npm 时：
+如果只需要构建和预览、不执行完整检查，可改用：
 
 ```bash
-cd my-blog
-npm install
-npm run dev
+npm run build
+npm run preview
 ```
 
-打开终端显示的网址。`dev` 会持续运行：执行后续命令前，按 `Ctrl+C` 停止它，或另开终端并进入 `my-blog`。以下命令都在项目目录内执行。
+pnpm 用户使用 `pnpm doctor`，再运行 `pnpm preview`；只构建时则使用 `pnpm build`，再运行 `pnpm preview`。
 
-使用 pnpm 时，仍用上面的命令创建项目，然后用以下命令替代 npm 安装和启动步骤：
-
-```bash
-cd my-blog
-pnpm install
-pnpm dev
-```
+静态输出位于 `dist/`。在托管平台设置构建命令 `npm run build`、输出目录 `dist/`，按照 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/) 发布；上线后检查实际域名、文章、语言菜单和搜索。
 
 ## 使用 AI 助手
 
@@ -80,8 +203,6 @@ pnpm dev
 例如：“阅读 AGENTS.md，设置我的站点信息，只保留中文，保留已有内容。”“新建 slug 为 my-first-post 的中文文章，正文由我提供。”“添加我有权使用的 MP3，填写歌名和作者。”让助手运行 doctor 并预览修改后的页面；正文、翻译、域名和部署目标仍由你决定。
 
 发布前，请把可选的 `public/llms.txt` 占位内容换成自己的站点信息和真实语言网址，或删除该文件。它面向网站读者和爬虫；工程操作指引放在 AGENTS.md。
-
-<a id="setup"></a>
 
 ## 首次配置：站点信息与首页地址
 
@@ -117,103 +238,6 @@ export const THEME_CONFIG = defineThemeConfig({
 ## 选择需要的语言
 
 默认启用九种语言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`，默认语言仍为英语。在 `src/site.config.ts` 中为不需要的语言设置 `i18n.locales.<code>.meta.enabled: false`；省略配置不会禁用，默认语言始终启用。`new-post` 初始会创建九份文章骨架，不会自动翻译。只创建简体中文：`npm run new-post -- my-post --locales zh`。
-
-## 新建文章
-
-先创建一篇简体中文文章：
-
-```bash
-npm run new-post -- my-first-post --locales zh
-```
-
-编辑 `src/content/blog/zh/my-first-post.md` 的标题、描述和正文。需要为所有已启用语言创建同名骨架时，省略 `--locales`；初始配置会创建九份文件，不会自动翻译，已有文件不会被覆盖。
-
-Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
-如果 `src/assets/blog/default-covers/` 中存在默认封面，脚本会按 slug 哈希自动分配一张（后续可手动替换 `heroImage`）。
-可选语言覆盖：
-
-```bash
-npm run new-post -- my-first-post --locales en,zh
-# 或
-ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
-```
-
-`ANGLEFEINT_LOCALES=...` 写法适用于 Bash/POSIX shell；PowerShell 请使用上面的 `--locales` 命令。
-
-URL 规则：
-
-- 文件：`src/content/blog/zh/my-first-post.md`
-- 访问地址：`/zh/blog/my-first-post/`
-- 博客列表：`/zh/blog/`
-- 不需要手动加路由，Astro 会在构建时根据内容文件自动生成。
-
-`--locales` 只生成文章文件，不会启用语言。还需要在 `src/site.config.ts` 中添加或启用对应语言，构建时才会生成其路由。
-
-## 发布前检查与预览
-
-完成站点配置和文章编辑后，停止开发服务，再运行：
-
-```bash
-npm run doctor
-npm run preview
-```
-
-`doctor` 已包含检查和构建，无需再重复运行 `npm run check`。打开 `preview` 输出的网址，按 `Ctrl+C` 停止预览。预览仅在本机运行，不会把网站发布到网上。
-
-如果只需要构建和预览、不执行完整检查，可改用：
-
-```bash
-npm run build
-npm run preview
-```
-
-pnpm 用户使用 `pnpm doctor`，再运行 `pnpm preview`；只构建时则使用 `pnpm build`，再运行 `pnpm preview`。
-
-静态输出位于 `dist/`。在托管平台设置构建命令 `npm run build`、输出目录 `dist/`，按照 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/) 发布；上线后检查实际域名、文章、语言菜单和搜索。
-
-## 新建页面
-
-`new-post` 只创建博客文章。自定义页面请使用：
-
-```bash
-npm run new-page -- projects --theme base
-```
-
-可选主题：`base`、`ai`、`cyber`、`hacker`、`matrix`。  
-命令会生成 `src/pages/[lang]/projects.astro`，并通过 `getStaticPaths()` 输出全部语言路由。
-Slug 规则：只允许小写字母、数字和连字符；支持嵌套路由（例如 `projects/labs`）。不支持下划线或大写。
-
-示例（为 `projects` 五选一；连续执行时，从第二条起会因文件已存在而失败）：
-
-```bash
-npm run new-page -- projects --theme base
-npm run new-page -- projects --theme ai
-npm run new-page -- projects --theme cyber
-npm run new-page -- projects --theme hacker
-npm run new-page -- projects --theme matrix
-```
-
-## 升级主题
-
-对于 `#starter` 创建的项目，仅在目标版本明确兼容现有 starter 和 Astro、且无需本地结构迁移时执行：
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-```
-
-`npm update` 只在 `package.json` 声明的范围内更新：`^0.5.1` 不包含 `0.6.0`。兼容但跨范围的更新，应按发布说明安装明确的目标版本，不要直接安装 `@latest`。用 `npm ls @anglefeint/astro-theme astro` 确认实际版本。
-
-当前 starter 的 `doctor` 已包含检查和构建，成功后用 `npm run preview` 人工检查站点。只有明确报告生成适配文件与本地模板不同步时，才运行 `npm run sync-adapters`，然后重跑 `npm run doctor`；它不会下载上游模板。旧工程的脚本可能不同，请查看本地 `package.json` 并遵循升级指南。
-
-如果发布说明涉及 starter 骨架变化，建议在新目录创建最新模板，再迁移文章、资源和个人设置，不要用旧文件整体覆盖新配置辅助文件。`npm update` 只更新主题包，不保证所有历史 starter 都能原地升级。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
-
-如果你的自定义代码还在引用 `src/consts` 或 `@anglefeint/astro-theme/consts`，请迁移到 `src/config/site.ts`。
-
-如需进行 Astro 大版本升级，请先参考官方升级文档：
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- 然后按上方升级指南的验证清单检查。
 
 ## 语言
 
@@ -457,34 +481,6 @@ $$
 公式在构建时渲染，样式和字体随站点提供，保留可访问的 MathML，不加载浏览器数学引擎。长独立公式可横向滚动。错误公式会中止构建并提示来源与原因。标题和摘要保持纯文本；搜索索引排除公式。支持 KaTeX 数学语法，不是完整 LaTeX 文档。
 
 老项目需要按升级指南完成一次 starter/配置迁移，仅更新主题包不会接入 Markdown 处理器。
-
-<a id="deployment"></a>
-
-## 静态部署
-
-starter 是静态 Astro 网站，不绑定 Cloudflare，不包含 Wrangler、Miniflare 或托管平台适配器。现有功能不需要服务器适配器或线上 Node.js 进程；安装依赖和构建时需要 Node.js。
-
-### 部署前准备
-
-在 `src/site.config.ts` 中把 `site.url` 设置为生产域名，例如 `https://your-blog.example`；已配置的 `PUBLIC_SITE_URL` 会覆盖它。先运行 `npm run doctor`，再用 `npm run preview` 本地检查。Ctrl+C 停止预览；preview 不会发布网站。
-
-把生成的个人博客项目及锁文件提交到你自己的 Git 仓库，再在托管平台导入该仓库，选择发布分支及包含 `package.json` 的项目目录（通常为仓库根目录）。不要连接上游主题仓库，也不需要把个人博客切换到上游的 `starter` 分支。
-
-| 平台                                                                                               | 发布设置                                                                                                                                     |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | 导入仓库，选择 Astro；构建命令 `npm run build`，发布目录 `dist`。                                                                            |
-| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | 导入仓库，选择 Astro；构建命令 `npm run build`，输出目录 `dist`。                                                                            |
-| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | 在 Pages 中连接仓库；构建命令 `npm run build`，输出目录 `dist`。Pages 的 Git 集成不需要额外的 Wrangler 部署命令。                            |
-| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | 在 Settings → Pages 选择 GitHub Actions，按官方 Astro 工作流部署。优先使用 `USERNAME.github.io` 仓库或在 `/` 提供网站的自定义域名。          |
-| Nginx / Apache / static hosting                                                                    | 在本地或 CI 运行 `npm run build`，把 `dist/` 的**全部内容**上传到网站根目录。服务器需提供各目录的 `index.html`，不要把所有路径都重写为首页。 |
-
-构建环境使用满足 `package.json` 要求（`>=22.12.0`）且仍受支持的 Node.js；当前验收基线为 Node 24 LTS。安装时保留构建所需的开发依赖。pnpm 项目使用 `pnpm build` 和 pnpm 锁文件，不要混用包管理器。
-
-请部署到域名根目录。当前主题导航包含以 `/` 开头的路径，仅设置 Astro `base` 不能保证 `/repository/` 子路径部署正常；GitHub 项目 Pages 同样受此限制。使用根地址，或自行适配并验证所有相关路径。
-
-Cloudflare Workers 是另一种可选方式，通过 Wrangler 上传 `dist`；演示站的维护配置不是 starter 的前提。上表均按静态部署说明，不需要照搬平台教程中的 SSR 适配器。
-
-上线后直接打开并刷新文章，检查语言切换、搜索、Decoder、`/<locale>/rss.xml`、`/sitemap-index.xml` 和 canonical 域名。HTML、`_astro`、`pagefind`、`_social` 和生成的终端 JSON 等文件需一并上传，不要挑选遗漏。内容或配置修改后重新构建部署。可选评论、GA4 和远程音频仍会访问各自服务。
 
 ## 文章统计
 
