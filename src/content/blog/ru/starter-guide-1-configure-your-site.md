@@ -6,7 +6,7 @@ title: 'Руководство 1: Настройка блога'
 subtitle: 'Установка, данные сайта, языки и публикация.'
 description: 'Установка, данные сайта, языки и публикация.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -85,6 +85,8 @@ npm run preview
 ```
 
 doctor выполняет проверки и сборку. preview показывает результат локально, не публикуя его. Статический сайт находится в dist/, включая поиск и изображения ссылок. На хостинге задайте npm run build и каталог dist. Следуйте [инструкции Astro](https://docs.astro.build/en/guides/deploy/), затем проверьте страницы, переключение языков, поиск и /ru/rss.xml.
+
+Cloudflare необязателен. [Инструкции README по платформам](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ru.md#deployment) также описывают текущее ограничение размещения в корне домена.
 
 ## Правила настройки
 

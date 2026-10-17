@@ -17,14 +17,14 @@
 </p>
 
 <p align="center">
-  <a href="#installation">Install</a> · <a href="#setup">Setup guide</a>
+  <a href="#installation">Install</a> · <a href="#setup">Setup guide</a> · <a href="#deployment">Deploy</a>
 </p>
 
 <p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
-  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
@@ -465,9 +465,33 @@ Rendering happens at build time with local KaTeX styles/fonts and accessible Mat
 
 Older projects need the one-time starter/configuration migration described in the upgrade guide; updating only the theme package does not wire the Markdown processor.
 
+<a id="deployment"></a>
+
 ## Static deployment
 
-Run `npm run build`, then upload all contents of `dist/` to your static web root. The server must serve directory `index.html` files. Cloudflare is optional; no production Node.js process is required. Configure `site.url` and any `PUBLIC_SITE_URL` override before building, and rebuild after changes. Optional comments, GA4 and remote audio still contact their respective services.
+The starter is a static Astro site and is not tied to Cloudflare. It includes no Wrangler, Miniflare or hosting adapter. No server adapter or production Node.js process is needed for the shipped features; Node.js is needed to install dependencies and build.
+
+### Before deploying
+
+Set `site.url` in `src/site.config.ts` to your production origin (for example `https://your-blog.example`). `PUBLIC_SITE_URL`, if configured, overrides it. Run `npm run doctor`, then `npm run preview` locally. Stop preview with Ctrl+C; preview does not publish the site.
+
+Push your generated blog project to your own Git repository, commit its lockfile, then import that repository into your host. Select your publishing branch and the project directory containing `package.json` (normally the repository root). Do not connect the upstream theme repository or switch your personal blog to its generated `starter` branch.
+
+| Platform                                                                                           | Publishing settings                                                                                                                                                               |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | Import the repository; choose Astro, build command `npm run build`, publish directory `dist`.                                                                                     |
+| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | Import the repository; choose Astro, build command `npm run build`, output directory `dist`.                                                                                      |
+| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Connect the repository in Pages; build command `npm run build`, output directory `dist`. A separate Wrangler deploy command is not needed for Pages Git integration.              |
+| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Choose GitHub Actions under Settings → Pages and follow the official Astro workflow. Prefer a `USERNAME.github.io` repository or a custom domain that serves the site at `/`.     |
+| Nginx / Apache / static hosting                                                                    | Run `npm run build` locally or in CI, then upload **all contents** of `dist/` into the web root. Serve each directory’s `index.html`; do not rewrite every route to the homepage. |
+
+Use a supported Node.js version satisfying `package.json` (`>=22.12.0`); Node 24 LTS is the current acceptance baseline. Keep build dependencies enabled during installation. For pnpm projects use `pnpm build` and the pnpm lockfile instead of mixing package managers.
+
+Deploy at the domain root. Current theme navigation includes root-relative URLs, so setting Astro `base` alone does not guarantee correct `/repository/` subpath hosting. This limitation also applies to GitHub project Pages; use a root URL or verify and adapt all affected paths yourself.
+
+Cloudflare Workers is a separate optional deployment path: it uses Wrangler to upload `dist`. Our demo’s maintenance setup is not a starter requirement. The table describes static deployment; do not add SSR adapters from platform tutorials unless you deliberately change the application.
+
+After deployment, open and refresh an article directly, switch languages, test search and Decoder, and check `/<locale>/rss.xml`, `/sitemap-index.xml` and canonical URLs. Upload `_astro`, `pagefind`, `_social` and generated terminal JSON along with the HTML; do not omit generated files. Rebuild and redeploy after content/configuration changes. Optional comments, GA4 and remote audio still contact their own services.
 
 ## Article statistics
 

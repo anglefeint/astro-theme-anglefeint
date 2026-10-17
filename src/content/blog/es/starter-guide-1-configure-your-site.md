@@ -4,7 +4,7 @@ title: 'Guía 1: Configura tu blog'
 subtitle: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 description: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -113,6 +113,8 @@ npm run preview
 `doctor` comprueba el proyecto y lo compila en `dist/`, con el índice de búsqueda y las imágenes sociales predeterminadas. Si termina correctamente, no hace falta ejecutar check ni build otra vez. `preview` muestra ese resultado localmente; no lo publica. Deténlo con Ctrl+C.
 
 En el alojamiento estático, establece `npm run build` como comando de compilación y `dist` como directorio de salida. Cambia antes `site.url` por tu dominio real. Consulta la [guía de despliegue de Astro](https://docs.astro.build/en/guides/deploy/) para conectar el repositorio, configurar el dominio y publicar en tu plataforma. Comprueba después inicio, artículos, cambio de idioma, búsqueda y `/<idioma>/rss.xml`. Cada cambio de contenido o configuración requiere compilar y desplegar de nuevo.
+
+Cloudflare es opcional. Consulta la [configuración por plataforma en README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.es.md#deployment), incluida la limitación actual de publicar en la raíz del dominio.
 
 ## 6. Recuerda tres reglas de configuración
 

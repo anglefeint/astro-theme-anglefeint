@@ -4,7 +4,7 @@ title: '사용 가이드 1: 블로그 시작하기'
 subtitle: '설치부터 사이트 정보와 언어 설정, 예제 글 교체, 빌드와 배포까지 안내합니다.'
 description: '설치부터 사이트 정보와 언어 설정, 예제 글 교체, 빌드와 배포까지 안내합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -113,6 +113,8 @@ npm run preview
 `doctor`는 프로젝트 검사와 빌드를 수행하며 검색 인덱스와 기본 공유 이미지를 포함한 정적 결과물을 `dist/`에 만듭니다. 성공 후 check나 build를 추가로 실행할 필요가 없습니다. `preview`는 로컬 확인용이며 게시하지 않습니다. Ctrl+C로 종료하세요.
 
 정적 호스팅의 빌드 명령은 `npm run build`, 출력 디렉터리는 `dist`로 설정하고 먼저 `site.url`을 실제 도메인으로 바꾸세요. 저장소 연결, 도메인, 배포 방법은 [Astro 배포 가이드](https://docs.astro.build/en/guides/deploy/)의 플랫폼별 설명을 참고하세요. 배포 후 홈, 글, 언어 전환, 검색, `/<언어 코드>/rss.xml`을 확인합니다. 글이나 설정을 바꿨다면 다시 빌드하고 배포해야 합니다.
+
+Cloudflare는 필수가 아닙니다. 플랫폼별 설정과 현재 도메인 루트 배포 제한은 [README 배포 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ko.md#deployment)를 참고하세요.
 
 ## 6. 설정할 때 기억할 세 가지
 
