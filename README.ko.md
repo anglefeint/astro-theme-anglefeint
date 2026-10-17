@@ -163,7 +163,7 @@ npm run build
 
 너비 1440px 이상에서는 오른쪽 아래 터미널에 `Knock, knock.`이 표시됩니다. 글은 선택·복사·스크롤할 수 있으며 별도 열쇠구멍 버튼으로 공통 복도 미리보기를 시작합니다. `src/site.config.ts`의 `i18n.locales.en.messages.home.transmission`을 공통 문구로 설정하고 필요한 언어만 `i18n.locales.<code>.messages.home.transmission`으로 덮어쓰세요. 우선순위는 현재 언어 설정 → 영어 설정 → `Knock, knock.`이며 일반 UI 번역과 다릅니다. 변경 후 다시 빌드하고 배포하세요.
 
-`src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다.
+`src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다. 0.18.1: 하단 두 상태 항목은 처음에는 숨겨지며 마우스를 올리거나 선택한 항목만 나타납니다. 전체 선택 시 둘 다 표시되고 빛나는 커서는 오른쪽 추적 항목에만 따라옵니다.
 
 언어별 홈의 큰 제목은 `src/site.config.ts`의 `i18n.locales.<code>.site.homeTitle`로 설정합니다（예: `ko: { site: { homeTitle: "나의 디지털 정원" } }`）。새로 추가한 언어에도 적용됩니다. 생략하거나 공백만 입력하면 `meta.fallback` 순서로 찾고, 마지막으로 전역 `site.title` 또는 `PUBLIC_SITE_TITLE`을 사용합니다. 홈의 큰 제목만 변경되며 브라우저 제목, 탐색 메뉴, 푸터, RSS 및 SEO 사이트 이름은 전역 설정을 유지합니다. 변경 후 다시 빌드하고 배포하세요.
 
@@ -449,6 +449,8 @@ theme: {
   },
 },
 ```
+
+0.18.1: 활성화된 플레이어는 새 페이지에서 작게 시작하며 OPEN으로 펼칩니다. 재생 위치, 음량, 이어듣기는 초기 크기와 별개로 유지됩니다.
 
 각 곡에 `title`, `src`를 지정하며 `artist`는 선택 사항입니다. HTTPS 오디오 URL도 지원합니다. 목록이 비어 있으면 표시하지 않습니다. 첫 방문에서는 PLAY를 눌러야 음원을 불러옵니다. 같은 탭 세션에서 곡, 위치, 음량을 기억합니다. 재생 중이었다면 페이지 이동, 새로고침, 뒤로 또는 앞으로 이동할 때 저장 위치에서 이어 재생을 시도하며, 직접 일시 정지했다면 정지 상태를 유지합니다. 잠시 끊길 수 있으며 끊김 없는 재생은 아닙니다. 브라우저가 자동 재생을 차단하면 PLAY를 누르세요. 기존 곡이 삭제되어도 다른 곡을 자동 재생하지 않습니다. 저장소를 사용할 수 없으면 수동 재생은 가능하지만 세션 이어 재생은 불가능합니다.
 

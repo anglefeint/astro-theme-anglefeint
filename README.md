@@ -163,7 +163,7 @@ Optional Matrix passage: `theme.effects.enableHomePassage` defaults to `false`. 
 
 On wide screens (1440px and above), the bottom-right terminal shows `Knock, knock.`. Text remains selectable and scrollable; activate its keyhole button to unlock the shared corridor preview. Set `i18n.locales.en.messages.home.transmission` in `src/site.config.ts` once for all languages, then override `i18n.locales.<code>.messages.home.transmission` only where needed. Resolution is current-language configuration → English configuration → `Knock, knock.`; this differs from normal UI-message fallback. Configuration changes require rebuilding and redeploying.
 
-Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.
+Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently. 0.18.1: The two bottom status items start hidden and reveal independently on mouse hover or text selection; select-all reveals both, and the glowing cursor follows only the trace.
 
 About includes **Hacker Decryptor**: decode Base64/Base64URL, URL-encoded text, hexadecimal, HTML entities, Unicode escapes and JWT header/payload locally in your browser, with automatic format detection and a numeric result reveal matched to the page palette. Open Decryptor from the About sidebar; no API or extra setup is needed.
 
@@ -462,6 +462,8 @@ theme: {
   },
 },
 ```
+
+0.18.1: when enabled, the player starts compact on each new page; click OPEN to expand. Track position, volume and playback resume remain independent of this initial size.
 
 Each track accepts `title`, `src` and optional `artist`. HTTPS audio URLs are also supported. An empty playlist hides the player. On the first visit, audio loads only after clicking PLAY. The tab session remembers the track, position and volume. If playback was active, navigating, reloading or returning with Back/Forward attempts to resume at the saved position; manual pause stays paused. A short gap is expected, not seamless playback. If the browser blocks automatic playback, click PLAY to continue. A removed track is not replaced automatically. Without storage, manual playback still works but session resume is unavailable.
 

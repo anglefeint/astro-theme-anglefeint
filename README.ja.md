@@ -163,7 +163,7 @@ npm run build
 
 幅1440px以上では右下の端末に `Knock, knock.` が表示されます。文章は選択・コピー・スクロールでき、独立した鍵穴ボタンで共通の廊下プレビューを開始します。`src/site.config.ts` の `i18n.locales.en.messages.home.transmission` を全言語の共通文として設定し、必要な言語だけ `i18n.locales.<code>.messages.home.transmission` で上書きします。優先順は現在の言語設定 → 英語設定 → `Knock, knock.` です。通常のUI翻訳とは異なります。変更後は再ビルド・再デプロイしてください。
 
-ホームのスイッチは `src/site.config.ts` の `theme.home` にあります。`showInitialize` は Initialize/done、`showFollow` は Wake Up/Follow、`showTrace` は右下の状態表示です。すべて既定は `true`、`false` で個別に非表示にできます。
+ホームのスイッチは `src/site.config.ts` の `theme.home` にあります。`showInitialize` は Initialize/done、`showFollow` は Wake Up/Follow、`showTrace` は右下の状態表示です。すべて既定は `true`、`false` で個別に非表示にできます。 0.18.1:下部の2つのステータスは初期状態で非表示です。マウスを重ねた項目や選択した項目だけが現れ、全選択では両方が現れます。光るカーソルは右側のトレースにのみ連動します。
 
 言語別のホーム大見出しは `src/site.config.ts` の `i18n.locales.<code>.site.homeTitle` で設定できます（例：`ja: { site: { homeTitle: "私のデジタルガーデン" } }`）。追加した言語にも対応します。未設定・空白の場合は `meta.fallback` の順に探し、最後に全体の `site.title`（または `PUBLIC_SITE_TITLE`）を使います。ホームの見出しだけが変わり、ブラウザータイトル、ナビゲーション、フッター、RSS、SEO のサイト名は共通です。変更後は再ビルドして公開してください。
 
@@ -449,6 +449,8 @@ theme: {
   },
 },
 ```
+
+0.18.1:有効なプレーヤーは新しいページでコンパクト表示から始まり、OPEN で展開します。再生位置、音量、再開動作は初期サイズに影響されません。
 
 各曲に `title` と `src` を指定し、`artist` は任意です。HTTPS の音声 URL も利用できます。空のリストでは表示されません。初回訪問では PLAY を押してから音声を読み込みます。同じタブのセッション内で曲・位置・音量を記憶します。再生中にページ移動、再読み込み、戻る・進むを行うと保存位置からの再生を試み、手動で一時停止した場合は停止状態を保ちます。短い途切れが生じる場合があり、シームレス再生ではありません。ブラウザーが自動再生をブロックした場合は PLAY を押してください。削除された曲の代わりに別の曲を自動再生しません。ストレージが使えない場合も手動再生は可能ですが、セッションの再生再開はできません。
 
