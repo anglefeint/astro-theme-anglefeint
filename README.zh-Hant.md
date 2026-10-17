@@ -11,7 +11,7 @@
 [Demo](https://demo.anglefeint.com/zh-hant/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
-  <a href="#installation">安裝</a> · <a href="#setup">設定指南</a> · <a href="#deployment">部署</a>
+  <a href="#installation">安裝</a> · <a href="#setup">網站設定</a> · <a href="#writing">寫文章</a> · <a href="#upgrade">升級</a> · <a href="#deployment">建置與部署</a>
 </p>
 
 <p align="center">
@@ -22,9 +22,112 @@
 
 <a id="installation"></a>
 
+## 安裝
+
+使用 Node.js 22.12.0 或更新版本。在準備存放部落格的目錄執行以下命令，再開啟開發服務顯示的網址。
+
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+cd my-blog
+npm install
+npm run dev
 ```
+
+已有部落格時，在原專案執行 `npm install` 與 `npm run dev`，無需再建立一份。執行其他命令前以 Ctrl+C 停止 dev，或另開終端。pnpm 使用者使用 `pnpm install` 與 `pnpm dev`。
+
+<a id="setup"></a>
+
+## 網站設定
+
+編輯 `src/site.config.ts` 中既有的設定物件。網站資訊、社群連結、About 內容和主題選項都在這裡設定。保留匯入與匯出，將設定合併到既有物件中。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: 'My Blog',
+    author: 'Your Name',
+    description: 'My notes and projects.',
+    url: 'https://your-domain.example',
+  },
+});
+```
+
+`site.url` 填寫實際網站網址；若設定了 `PUBLIC_SITE_URL`，它會覆蓋此值。文章或設定修改後，重新建置並部署。
+
+<a id="writing"></a>
+
+## 撰寫文章
+
+### 建立文章
+
+```bash
+npm run new-post -- my-first-post --locales zh-hant
+```
+
+只建立繁體中文可用 npm run new-post -- my-first-post --locales zh-hant。slug 使用小寫英文字母、數字與連字號。src/content/blog/zh-hant/my-first-post.md 對應 /zh-hant/blog/my-first-post/。現有檔案不會被覆寫。--locales 只建立檔案，不會啟用語言。
+
+譯文請使用相同 slug。缺少譯文時，語言選單會導向目標語言的列表；hreflang 不會將列表冒充文章譯文。
+
+### 填寫 frontmatter
+
+```yaml
+---
+title: 'My first post'
+description: 'My notes and projects'
+pubDate: '2026-10-03'
+tags: ['astro', 'notes']
+---
+```
+
+title、description、pubDate 必填；subtitle、updatedDate、author 選填，作者預設使用網站作者。列表依 pubDate 排序。目前沒有草稿或排程發布篩選：draft: true 與未來日期都不會隱藏文章。未完成內容請放在 src/content/blog/ 之外。
+
+heroImage: ./cover.jpg 使用文章旁的圖片。若 src/assets/blog/default-covers/ 有圖片，指令會分配固定封面，不會下載圖片。閱讀時間與其他指標都是估計值，可用 readMinutes、wordCount、tokenCount、aiLatencyMs、aiConfidence 覆寫；這些資料不代表連接了真實 AI 服務。
+
+## 獨立頁面
+
+npm run new-page -- projects --theme cyber 會建立 src/pages/[lang]/projects.astro，內容需自行編輯，不會自動翻譯或增加導覽項目。可用 base、ai、cyber、hacker、matrix，slug 支援 projects/labs 這類路徑。檔案已存在時會報錯。
+
+- [使用指南 2：撰寫與整理內容](https://demo.anglefeint.com/zh-hant/blog/starter-guide-2-languages-and-routing/)
+
+<a id="upgrade"></a>
+
+## 升級
+
+先使用公開模板建立專案。相容的套件更新可執行 npm update @anglefeint/astro-theme，再執行 npm run doctor。
+
+npm update 遵守 package.json 的版本範圍，^0.5.1 不包含 0.6.0。請閱讀發布說明，必要時安裝明確版本，不要盲目使用 @latest。npm ls @anglefeint/astro-theme astro 可查看安裝版本。
+
+套件不會更新本機 starter 的設定、路由、介接檔與整合。若專案結構改變，請在另一個資料夾建立新 starter，遷移內容與個人設定，不要用舊輔助檔覆蓋新版。
+
+doctor 已包含檢查與建置，通過後使用 npm run preview。只有產生的介接檔與本機範本不同步時才執行 npm run sync-adapters；它不會下載上游範本。舊專案可能有不同指令。
+
+升級 Astro 主版本時先依官方遷移指南處理，其他細節請看[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+npm run preview
+```
+
+<a id="deployment"></a>
+
+## 建置與部署
+
+```bash
+npm run build
+```
+
+建置後的靜態網站位於 `dist/`。將該目錄的**全部內容**發布至任意靜態託管即可，無需線上 Node.js 服務或託管平台介面卡。
+
+可用 `npm run preview` 在本機查看建置結果，它不會發布網站。也可使用 `npm run doctor`，一次完成檢查和建置。
+
+請部署到網域根目錄，並支援各目錄的 index.html。子路徑部署需要額外調整，僅設定 Astro `base` 不足以確保正常使用。
+
+<a id="reference"></a>
+
+## 功能與設定參考
+
+### 首頁效果與解碼工具
 
 首頁開關：`theme.home.showInitialize` 控制 Initialize/done，`showFollow` 控制 Wake Up/Follow，`showTrace` 控制右下角狀態。於 `src/site.config.ts` 設定，預設皆為 `true`，設為 `false` 可獨立隱藏。
 
@@ -32,9 +135,13 @@ npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#
 
 首頁大標題可在 `src/site.config.ts` 透過 `i18n.locales.<code>.site.homeTitle` 按語言設定，例如 `"zh-hant": { site: { homeTitle: "我的數位花園" } }`。內建及自行新增的語言都適用。未填或只有空白時，沿 `meta.fallback` 鏈查找，最後使用全域 `site.title`（或 `PUBLIC_SITE_TITLE`）。它只改變首頁可見大標題；瀏覽器標題、導覽列、頁尾、RSS 與 SEO 站點名稱維持全域設定。修改後重新建置並部署。
 
-About 頁內建 **Hacker Decryptor**：在瀏覽器本機解碼 Base64/Base64URL、URL 編碼、十六進位、HTML 實體、Unicode 跳脫及 JWT 標頭與酬載，支援自動辨識與 與頁面配色一致的數字結果動畫。從側邊欄開啟 Decryptor 即可使用，無需設定介面。
+About 頁內建 **Hacker Decryptor**：在瀏覽器本機解碼 Base64/Base64URL、URL 編碼、十六進位、HTML 實體、Unicode 跳脫及 JWT 標頭與酬載，支援自動辨識與頁面配色一致的數字結果動畫。從側邊欄開啟 Decryptor 即可使用，無需設定介面。
 
 完整的 **Decoder Lab** 位於 `/<locale>/decoder/`，支援本機文字處理鏈路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 呼叫解讀及 EVM／TRON／Bitcoin 地址檢查。從 About 解碼視窗開啟；在 `src/site.config.ts` 設定 `theme.enableDecoderPage: false` 可獨立關閉頁面與入口。無需 RPC、錢包連線或 API Key。
+
+可選 Matrix 穿越：`theme.effects.enableHomePassage` 預設為 `false`。啟用後，首頁文章連結播放 8 秒綠色穿越再導覽。About 的 `Oracle` 按鈕獨立可用：每次點擊選擇四種場景配色之一，不連續重複；抵達後可拖曳環顧、按滑鼠右鍵退回走廊，按 Escape 或點擊 × 關閉。減少動態效果時，首頁直接導覽，Oracle 顯示靜態預覽。
+
+寬螢幕（1440px 以上）右下角終端預設顯示 `Knock, knock.`。文字可選取複製及捲動，點擊獨立鑰匙孔按鈕才解鎖共享走廊。在 `src/site.config.ts` 設定 `i18n.locales.en.messages.home.transmission` 即可供全部語言使用；需要不同文字時，再設定 `i18n.locales.<code>.messages.home.transmission`。順序為目前語言設定 → 英文設定 → `Knock, knock.`，與一般介面翻譯的回退規則不同。修改後重新建置並部署。
 
 ## 使用 AI 助手
 
@@ -43,12 +150,6 @@ About 頁內建 **Hacker Decryptor**：在瀏覽器本機解碼 Base64/Base64URL
 例如：「閱讀 AGENTS.md，設定站點資訊，只保留繁體中文，保留既有內容。」「新增 slug 為 my-first-post 的繁體中文文章，正文由我提供。」「加入我有權使用的 MP3，填入歌名與作者。」讓助手執行 doctor 並預覽修改後的頁面；正文、翻譯、網域與部署目標仍由你決定。
 
 發布前，請把選用的 `public/llms.txt` 佔位內容換成自己的網站資訊與實際語言網址，或刪除該檔案。它面向網站讀者與爬蟲；專案操作指引放在 AGENTS.md。
-
-<a id="setup"></a>
-
-可選 Matrix 穿越：`theme.effects.enableHomePassage` 預設為 `false`。啟用後，首頁文章連結播放 8 秒綠色穿越再導覽。About 的 `Oracle` 按鈕獨立可用：每次點擊選擇四種場景配色之一，不連續重複；抵達後可拖曳環顧、按滑鼠右鍵退回走廊，按 Escape 或點擊 × 關閉。減少動態效果時，首頁直接導覽，Oracle 顯示靜態預覽。
-
-寬螢幕（1440px 以上）右下角終端預設顯示 `Knock, knock.`。文字可選取複製及捲動，點擊獨立鑰匙孔按鈕才解鎖共享走廊。在 `src/site.config.ts` 設定 `i18n.locales.en.messages.home.transmission` 即可供全部語言使用；需要不同文字時，再設定 `i18n.locales.<code>.messages.home.transmission`。順序為目前語言設定 → 英文設定 → `Knock, knock.`，與一般介面翻譯的回退規則不同。修改後重新建置並部署。
 
 ## 社群連結
 
@@ -77,20 +178,6 @@ social: {
 優先順序為 `iconSrc` → `icon` → 文字。內建圖示繼承選單顏色，自訂圖片保留原色；`label` 提供無障礙名稱。頁尾連結過多會換行，頂欄保持單行，空間不足時可橫向捲動；寬度不超過 720px 時仍隱藏頂欄社群入口，頁尾保留。空 `links` 保留原有三個不可點擊的佔位圖示。修改後重新建置、部署。
 
 ## 使用指南 1：設定你的部落格
-
-### 安裝並在本機開啟
-
-使用 Node.js 22.12.0 或更新版本。上方指令只需執行一次，會建立新的 `my-blog` 資料夾並略過相依套件安裝。完成其餘精靈提示後繼續下方步驟；若更改資料夾名稱，也要調整 `cd`。
-
-```bash
-cd my-blog
-npm install
-npm run dev
-```
-
-開發伺服器會持續執行。執行後續指令前，按 `Ctrl+C` 停止它，或另開終端並進入 `my-blog`。以下指令都在專案資料夾內執行，不必再次建立專案。
-
-開啟終端顯示的網址。若使用 pnpm，仍以相同 npm 指令建立專案，略過精靈的安裝步驟，再執行 pnpm install 與 pnpm dev。
 
 ### 網站資料與首頁網址
 
@@ -147,15 +234,6 @@ npm run new-post -- my-first-post --locales zh-hant
 
 先建立一篇繁體中文文章。省略 `--locales zh-hant` 才會為所有啟用語言建立骨架（初始共九份），不會自動翻譯，也不會覆寫現有檔案。 請編輯 src/content/blog/zh-hant/my-first-post.md 的標題、描述與正文。
 
-### 檢查與部署
-
-```bash
-npm run doctor
-npm run preview
-```
-
-doctor 包含檢查與建置。preview 僅在本機顯示結果，不會發布到網路。靜態輸出在 dist/，包含搜尋索引與分享圖。託管服務使用 npm run build 建置，以 dist 為輸出目錄。依照 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/) 完成發布，並檢查頁面、語言切換、搜尋及 /zh-hant/rss.xml。
-
 ### 設定原則
 
 同一物件只保留一個 theme 與一個 i18n，將選項合併進去。陣列會整份取代舊值。不要直接修改 src/config/ 的產生檔。更新 npm 套件不會更新本機 starter 檔案；遷移前請閱讀[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
@@ -165,33 +243,6 @@ doctor 包含檢查與建置。preview 僅在本機顯示結果，不會發布�
 ## 語言
 
 預設啟用九種語言：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。`new-post` 初始會建立九份骨架，不會自動翻譯。請在 `src/site.config.ts` 以 `meta.enabled: false` 關閉不需要的語言，省略設定不會停用，預設語言會保持啟用。只建立繁體中文：`npm run new-post -- my-post --locales zh-hant`。
-
-## 使用指南 2：撰寫與整理內容
-
-### 建立文章
-
-```bash
-npm run new-post -- my-first-post --locales zh-hant
-```
-
-只建立繁體中文可用 npm run new-post -- my-first-post --locales zh-hant。slug 使用小寫英文字母、數字與連字號。src/content/blog/zh-hant/my-first-post.md 對應 /zh-hant/blog/my-first-post/。現有檔案不會被覆寫。--locales 只建立檔案，不會啟用語言。
-
-譯文請使用相同 slug。缺少譯文時，語言選單會導向目標語言的列表；hreflang 不會將列表冒充文章譯文。
-
-### 填寫 frontmatter
-
-```yaml
----
-title: 'My first post'
-description: 'My notes and projects'
-pubDate: '2026-10-03'
-tags: ['astro', 'notes']
----
-```
-
-title、description、pubDate 必填；subtitle、updatedDate、author 選填，作者預設使用網站作者。列表依 pubDate 排序。目前沒有草稿或排程發布篩選：draft: true 與未來日期都不會隱藏文章。未完成內容請放在 src/content/blog/ 之外。
-
-heroImage: ./cover.jpg 使用文章旁的圖片。若 src/assets/blog/default-covers/ 有圖片，指令會分配固定封面，不會下載圖片。閱讀時間與其他指標都是估計值，可用 readMinutes、wordCount、tokenCount、aiLatencyMs、aiConfidence 覆寫；這些資料不代表連接了真實 AI 服務。
 
 ### 目錄與標籤
 
@@ -216,12 +267,6 @@ tags: ['astro', 'notes'] 會產生 /zh-hant/tags/ 等頁面。標籤區分大小
 自動分享圖使用主題內附的代碼雨、終端與霓虹網路背景，網站名稱、標題和作者仍使用你的內容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（預設 `true`）；設為 `false` 會同時隱藏頁尾與圖片署名，修改後請重新建置部署。自訂 `ogImage` 不會被修改。背景離線使用，不增加瀏覽器 JavaScript。
 
 明確設定的 ogImage 優先。theme.socialImage.enabled: false 只停用自動產生，其他文章回退到封面或預設圖。檢查 HTML 的 og:image 與 dist/\_social/。分享平台可能快取舊圖，不保證支援所有 emoji 與文字系統。
-
-### 獨立頁面
-
-npm run new-page -- projects --theme cyber 會建立 src/pages/[lang]/projects.astro，內容需自行編輯，不會自動翻譯或增加導覽項目。可用 base、ai、cyber、hacker、matrix，slug 支援 projects/labs 這類路徑。檔案已存在時會報錯。
-
-- [使用指南 2：撰寫與整理內容](https://demo.anglefeint.com/zh-hant/blog/starter-guide-2-languages-and-routing/)
 
 ## 使用指南 3：選用功能
 
@@ -306,24 +351,6 @@ footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 s
 
 - [使用指南 2：撰寫與整理內容](https://demo.anglefeint.com/zh-hant/blog/starter-guide-2-languages-and-routing/)
 
-## 升級
-
-先使用公開模板建立專案。相容的套件更新可執行 npm update @anglefeint/astro-theme，再執行 npm run doctor。
-
-npm update 遵守 package.json 的版本範圍，^0.5.1 不包含 0.6.0。請閱讀發布說明，必要時安裝明確版本，不要盲目使用 @latest。npm ls @anglefeint/astro-theme astro 可查看安裝版本。
-
-套件不會更新本機 starter 的設定、路由、介接檔與整合。若專案結構改變，請在另一個資料夾建立新 starter，遷移內容與個人設定，不要用舊輔助檔覆蓋新版。
-
-doctor 已包含檢查與建置，通過後使用 npm run preview。只有產生的介接檔與本機範本不同步時才執行 npm run sync-adapters；它不會下載上游範本。舊專案可能有不同指令。
-
-升級 Astro 主版本時先依官方遷移指南處理，其他細節請看[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-npm run preview
-```
-
 ## 預覽
 
 ![Home](public/images/theme-previews/preview-home.png)
@@ -355,34 +382,6 @@ $$
 公式於建置時渲染，樣式與字型隨網站提供，保留可存取的 MathML，不載入瀏覽器數學引擎。長公式可橫向捲動。錯誤公式會中止建置並提示來源與原因。標題與摘要維持純文字；搜尋索引排除公式。支援 KaTeX 數學語法，並非完整 LaTeX 文件。
 
 舊專案需要依升級指南完成一次 starter／設定遷移，只更新主題套件不會接入 Markdown 處理器。
-
-<a id="deployment"></a>
-
-## 靜態部署
-
-starter 是靜態 Astro 網站，不綁定 Cloudflare，也不含 Wrangler、Miniflare 或平台適配器；Node.js 僅供安裝與建置。
-
-### 部署準備
-
-設定 `site.url` 為正式網域；`PUBLIC_SITE_URL` 會覆蓋它。先執行 `npm run doctor`、`npm run preview` 檢查，preview 不會發布。
-
-將個人部落格及鎖定檔推送到自己的 Git 儲存庫，再匯入託管平台。選擇發布分支及含 `package.json` 的目錄；不要連接上游主題儲存庫。
-
-| 平台                                                                                               | 發布設定                                                                                                   |
-| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | 匯入儲存庫，選 Astro；建置 `npm run build`，輸出 `dist`。                                                  |
-| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | 匯入儲存庫，選 Astro；建置 `npm run build`，輸出 `dist`。                                                  |
-| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Pages 連接儲存庫；建置 `npm run build`，輸出 `dist`；Git 整合不需 Wrangler 指令。                          |
-| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Settings → Pages 選 GitHub Actions，依官方 Astro 工作流；使用 `USERNAME.github.io` 或根路徑自訂網域。      |
-| Nginx / Apache / static hosting                                                                    | 執行 `npm run build`，將 `dist/` 全部內容上傳網站根目錄；提供目錄 `index.html`，不要將所有路徑重寫至首頁。 |
-
-使用符合 `package.json` 的受支援 Node.js（`>=22.12.0`，目前驗收基線為 Node 24 LTS）。安裝時保留開發相依套件。pnpm 使用 `pnpm build` 及其鎖定檔。
-
-目前導覽包含根相對路徑，僅設 Astro `base` 無法保證 `/repository/` 子路徑正常；GitHub 專案 Pages 也有此限制。請用網域根目錄，或自行適配及驗證。
-
-Workers 是選用的另一條部署途徑，使用 Wrangler 上傳 `dist`；示範站維護工具不是 starter 要求。靜態部署不需 SSR 適配器。
-
-發布後直接開啟並重新整理文章，檢查語言、搜尋、Decoder、`/<locale>/rss.xml`、`/sitemap-index.xml` 及 canonical 網域。上傳全部產物，包含資源、搜尋索引、分享圖與終端 JSON。修改後重新建置發布；選用留言、GA4 與外部音訊仍使用各自服務。
 
 ## 文章統計
 

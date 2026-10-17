@@ -11,7 +11,7 @@
 [Demo](https://demo.anglefeint.com/de/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
-  <a href="#installation">Installation</a> · <a href="#setup">Einrichtung</a> · <a href="#deployment">Veröffentlichen</a>
+  <a href="#installation">Installation</a> · <a href="#setup">Website konfigurieren</a> · <a href="#writing">Beiträge</a> · <a href="#upgrade">Aktualisieren</a> · <a href="#deployment">Bauen und veröffentlichen</a>
 </p>
 
 <p align="center">
@@ -22,9 +22,112 @@
 
 <a id="installation"></a>
 
+## Installation
+
+Verwende Node.js ab 22.12.0. Führe diese Befehle im gewünschten übergeordneten Ordner aus und öffne die vom Entwicklungsserver angezeigte Adresse.
+
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+cd my-blog
+npm install
+npm run dev
 ```
+
+Besteht dein Blog bereits, führe dort `npm install` und `npm run dev` aus, ohne eine zweite Kopie anzulegen. Beende dev mit Ctrl+C oder nutze ein zweites Terminal. Für pnpm nutze `pnpm install` und `pnpm dev`.
+
+<a id="setup"></a>
+
+## Website konfigurieren
+
+Bearbeite das vorhandene Konfigurationsobjekt in `src/site.config.ts`. Hier werden Website-Daten, Social-Links, About und Theme-Optionen eingestellt. Behalte Imports/Exports bei und ergänze das bestehende Objekt.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: {
+    title: 'My Blog',
+    author: 'Your Name',
+    description: 'My notes and projects.',
+    url: 'https://your-domain.example',
+  },
+});
+```
+
+Setze `site.url` auf die tatsächliche Website-Adresse. Ein gesetztes `PUBLIC_SITE_URL` hat Vorrang. Nach Änderungen an Inhalt oder Konfiguration neu bauen und veröffentlichen.
+
+<a id="writing"></a>
+
+## Beiträge schreiben
+
+### Beitrag erstellen
+
+```bash
+npm run new-post -- my-first-post --locales de
+```
+
+Nur Deutsch: npm run new-post -- my-first-post --locales de. Slugs bestehen aus Kleinbuchstaben, Zahlen und Bindestrichen. src/content/blog/de/my-first-post.md wird zu /de/blog/my-first-post/. Vorhandene Dateien bleiben erhalten. --locales erstellt Dateien, aktiviert aber keine Sprache.
+
+Übersetzungen verwenden denselben Slug. Fehlt eine Übersetzung, führt das Sprachmenü zur jeweiligen Übersicht; hreflang gibt diese nicht als Artikelübersetzung aus.
+
+### Frontmatter ausfüllen
+
+```yaml
+---
+title: 'My first post'
+description: 'My notes and projects'
+pubDate: '2026-10-03'
+tags: ['astro', 'notes']
+---
+```
+
+title, description und pubDate sind Pflicht. subtitle, updatedDate und author sind optional; standardmäßig gilt der Website-Autor. Beiträge werden nach pubDate sortiert. Es gibt keinen Entwurfs- oder Veröffentlichungszeitfilter: draft: true und zukünftige Daten verstecken nichts. Unfertige Texte außerhalb von src/content/blog/ aufbewahren.
+
+heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Bei vorhandenen Dateien in src/assets/blog/default-covers/ wählt der Befehl ein stabiles Titelbild. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
+
+## Eigenständige Seiten
+
+npm run new-page -- projects --theme cyber erstellt src/pages/[lang]/projects.astro. Inhalt selbst bearbeiten; Navigation und Übersetzungen werden nicht ergänzt. Verfügbar sind base, ai, cyber, hacker und matrix. Verschachtelte Slugs wie projects/labs sind erlaubt. Vorhandene Dateien führen zu einem Fehler.
+
+- [Anleitung 2: Inhalte schreiben und ordnen](https://demo.anglefeint.com/de/blog/starter-guide-2-languages-and-routing/)
+
+<a id="upgrade"></a>
+
+## Aktualisierung
+
+Beginne mit dem öffentlichen Template. Für kompatible Paketaktualisierungen nutze npm update @anglefeint/astro-theme und danach npm run doctor.
+
+npm update bleibt im Bereich von package.json: ^0.5.1 umfasst 0.6.0 nicht. Lies die Versionshinweise und installiere bei Bedarf eine konkrete Version statt blind @latest. npm ls @anglefeint/astro-theme astro zeigt installierte Versionen.
+
+Das Paket aktualisiert keine lokalen Einstellungen, Routen, Adapter oder Integrationen des Starters. Bei Strukturänderungen erstelle einen neuen Starter in einem anderen Ordner und übertrage Inhalte und persönliche Einstellungen. Neue Hilfsdateien nicht mit alten überschreiben.
+
+doctor enthält bereits Prüfungen und Build. Danach npm run preview verwenden. npm run sync-adapters nur bei Abweichungen zwischen generierten Adaptern und lokalen Vorlagen ausführen; es lädt keine neuen Vorlagen herunter. Alte Projekte können andere Skripte haben.
+
+Bei Astro-Hauptversionen zuerst die offizielle Migration befolgen. Weitere Hinweise stehen in der [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+
+```bash
+npm update @anglefeint/astro-theme
+npm run doctor
+npm run preview
+```
+
+<a id="deployment"></a>
+
+## Bauen und veröffentlichen
+
+```bash
+npm run build
+```
+
+Die statische Website wird in `dist/` erzeugt. Veröffentliche den **gesamten Inhalt** dieses Ordners bei einem beliebigen statischen Hoster. Ein Node.js-Server im Betrieb oder Hosting-Adapter ist nicht erforderlich.
+
+Mit `npm run preview` prüfst du das Ergebnis lokal; es veröffentlicht nichts. Alternativ führt `npm run doctor` Prüfungen und Build zusammen aus.
+
+Veröffentliche im Stammverzeichnis der Domain und liefere die index.html jedes Verzeichnisses aus. Unterpfade benötigen zusätzliche Anpassungen; Astro `base` allein reicht nicht.
+
+<a id="reference"></a>
+
+## Funktions- und Konfigurationsreferenz
+
+### Startseiteneffekte und Decoder
 
 Unter `theme.home` in `src/site.config.ts` steuert `showInitialize` Initialize/done, `showFollow` Wake Up/Follow und `showTrace` den Status unten rechts. Alle sind standardmäßig `true`; `false` blendet den jeweiligen Bereich aus.
 
@@ -34,6 +137,10 @@ About enthält **Hacker Decryptor**: Base64/Base64URL, URL-codierten Text, Hexad
 
 Der vollständige **Decoder Lab** unter `/<locale>/decoder/` bietet lokale Verarbeitungsschritte, ERC-20/TRC-20-Aufrufinterpretation (EVM/HyperEVM/TRON) und EVM/TRON/Bitcoin-Adressprüfung. Über den About-Dialog öffnen. `theme.enableDecoderPage: false` in `src/site.config.ts` deaktiviert Seite und Link unabhängig von About. Kein RPC, Wallet-Zugriff oder API-Schlüssel nötig.
 
+Optionaler Matrix-Übergang: `theme.effects.enableHomePassage` ist standardmäßig `false`. Aktiviert zeigen Beitragslinks auf der Startseite vor der Navigation einen grünen Übergang von 8 Sekunden. `Oracle` auf About funktioniert unabhängig: Jeder Klick wählt eine von vier Paletten ohne direkte Wiederholung; nach der Ankunft kannst du dich durch Ziehen umsehen, per Rechtsklick in den Flur zurückgehen und mit Escape oder × schließen. Bei reduzierter Bewegung erfolgt die Navigation direkt und Oracle zeigt eine statische Vorschau.
+
+Ab 1440px Bildschirmbreite zeigt das Terminal unten rechts `Knock, knock.`. Der Text lässt sich auswählen, kopieren und scrollen; die separate Schlüsselloch-Schaltfläche startet die gemeinsame Flurvorschau. Setze `i18n.locales.en.messages.home.transmission` in `src/site.config.ts` für alle Sprachen und überschreibe bei Bedarf `i18n.locales.<code>.messages.home.transmission`. Reihenfolge: Konfiguration der aktuellen Sprache → englische Konfiguration → `Knock, knock.`; unabhängig vom üblichen Fallback der UI-Übersetzungen. Danach neu bauen und bereitstellen.
+
 ## Mit einem KI-Assistenten arbeiten
 
 Öffne den Projektordner in Cursor, Codex oder Claude Code. Der Starter enthält eine gemeinsame [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), einen Claude-Code-Einstieg und eine immer angewendete Cursor-Regel. Die Hinweise gelten für deinen Blog; Veröffentlichungstools des ursprünglichen Projekts sind nicht nötig. Beginne mit „Lies AGENTS.md“, falls die Hinweise nicht geladen wurden. Ergänze deine eigenen Wünsche.
@@ -41,12 +148,6 @@ Der vollständige **Decoder Lab** unter `/<locale>/decoder/` bietet lokale Verar
 Beispiele: „Lies AGENTS.md, richte meine Website ein und aktiviere nur Deutsch; erhalte meine Inhalte.“ „Erstelle einen deutschen Artikel mit dem Slug my-first-post; den Text liefere ich.“ „Füge meine erlaubten MP3-Dateien mit Titel und Urheber hinzu.“ Bitte um doctor und eine Vorschau der geänderten Seiten. Inhalte, Übersetzungen, Domain und Veröffentlichungsziel bestimmst du.
 
 Ersetze vor der Veröffentlichung die Platzhalter in der optionalen `public/llms.txt` durch deine Website-Daten und tatsächlichen Sprach-URLs oder entferne die Datei. Sie beschreibt die Website für Leser und Crawler; Projektanweisungen stehen in AGENTS.md.
-
-<a id="setup"></a>
-
-Optionaler Matrix-Übergang: `theme.effects.enableHomePassage` ist standardmäßig `false`. Aktiviert zeigen Beitragslinks auf der Startseite vor der Navigation einen grünen Übergang von 8 Sekunden. `Oracle` auf About funktioniert unabhängig: Jeder Klick wählt eine von vier Paletten ohne direkte Wiederholung; nach der Ankunft kannst du dich durch Ziehen umsehen, per Rechtsklick in den Flur zurückgehen und mit Escape oder × schließen. Bei reduzierter Bewegung erfolgt die Navigation direkt und Oracle zeigt eine statische Vorschau.
-
-Ab 1440px Bildschirmbreite zeigt das Terminal unten rechts `Knock, knock.`. Der Text lässt sich auswählen, kopieren und scrollen; die separate Schlüsselloch-Schaltfläche startet die gemeinsame Flurvorschau. Setze `i18n.locales.en.messages.home.transmission` in `src/site.config.ts` für alle Sprachen und überschreibe bei Bedarf `i18n.locales.<code>.messages.home.transmission`. Reihenfolge: Konfiguration der aktuellen Sprache → englische Konfiguration → `Knock, knock.`; unabhängig vom üblichen Fallback der UI-Übersetzungen. Danach neu bauen und bereitstellen.
 
 ## Social-Links
 
@@ -75,20 +176,6 @@ Für ein eigenes Bild lege `community.svg` unter `public/icons/` ab und setze am
 Priorität: `iconSrc` → `icon` → Text. Integrierte Icons übernehmen die Menüfarbe, eigene Bilder behalten ihre Farben. `label` liefert den zugänglichen Namen. Im Fußbereich brechen Links bei Bedarf um; im Kopfbereich bleiben sie einzeilig und lassen sich bei Platzmangel horizontal scrollen. Bis einschließlich 720px bleiben Social-Links im Kopfbereich ausgeblendet und im Fußbereich sichtbar. Ein leeres `links`-Array behält die drei nicht anklickbaren Platzhalter bei. Nach Änderungen neu bauen und bereitstellen.
 
 ## Anleitung 1: Deinen Blog einrichten
-
-### Installation und lokaler Start
-
-Verwende Node.js ab 22.12.0. Der obige Befehl erstellt einmalig den neuen Ordner `my-blog` und überspringt die Installation der Abhängigkeiten. Beantworte die übrigen Fragen und fahre unten fort; bei einem anderen Ordnernamen passe auch `cd` an.
-
-```bash
-cd my-blog
-npm install
-npm run dev
-```
-
-Der Entwicklungsserver läuft weiter. Beende ihn vor weiteren Befehlen mit `Ctrl+C` oder öffne ein zweites Terminal in `my-blog`. Führe alle folgenden Befehle im Projektordner aus. Erstelle das Projekt nicht ein zweites Mal.
-
-Öffne die im Terminal angezeigte Adresse. Für pnpm verwende denselben npm-Erstellungsbefehl, überspringe die Installation im Assistenten und führe pnpm install sowie pnpm dev aus.
 
 ### Identität und Startadresse
 
@@ -147,15 +234,6 @@ npm run new-post -- my-first-post --locales de
 
 Beginne mit einem deutschen Artikel. Ohne `--locales de` erstellt der Befehl Gerüste für alle aktivierten Sprachen (anfangs neun), ohne automatische Übersetzung. Bestehende Dateien bleiben erhalten. Bearbeite Titel, Beschreibung und Text in src/content/blog/de/my-first-post.md.
 
-### Prüfen und veröffentlichen
-
-```bash
-npm run doctor
-npm run preview
-```
-
-doctor enthält Prüfungen und Build. preview zeigt das Ergebnis lokal und veröffentlicht es nicht. Die statische Ausgabe liegt in dist/, einschließlich Suche und Vorschaubildern. Verwende beim Hosting npm run build und das Ausgabeverzeichnis dist. Folge der [Astro-Anleitung](https://docs.astro.build/en/guides/deploy/) und prüfe Seiten, Sprachwechsel, Suche und /de/rss.xml nach der Veröffentlichung.
-
 ### Konfigurationsregeln
 
 Behalte jeweils ein theme- und i18n-Objekt. Führe Optionen zusammen; Listen ersetzen vorhandene Listen. Generierte Adapter unter src/config/ nicht direkt bearbeiten. Ein npm-Update aktualisiert lokale Starter-Dateien nicht. Lies vor einer Migration die [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
@@ -165,33 +243,6 @@ Behalte jeweils ein theme- und i18n-Objekt. Führe Optionen zusammen; Listen ers
 ## Sprachen
 
 Standardmäßig sind neun Sprachen aktiv: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. `new-post` erstellt anfangs neun Dateien, ohne Inhalte zu übersetzen. Nicht benötigte Sprachen mit `meta.enabled: false` in `src/site.config.ts` deaktivieren; Weglassen genügt nicht. Die Standardsprache bleibt aktiv. Nur Deutsch erstellen: `npm run new-post -- my-post --locales de`.
-
-## Anleitung 2: Inhalte schreiben und ordnen
-
-### Beitrag erstellen
-
-```bash
-npm run new-post -- my-first-post --locales de
-```
-
-Nur Deutsch: npm run new-post -- my-first-post --locales de. Slugs bestehen aus Kleinbuchstaben, Zahlen und Bindestrichen. src/content/blog/de/my-first-post.md wird zu /de/blog/my-first-post/. Vorhandene Dateien bleiben erhalten. --locales erstellt Dateien, aktiviert aber keine Sprache.
-
-Übersetzungen verwenden denselben Slug. Fehlt eine Übersetzung, führt das Sprachmenü zur jeweiligen Übersicht; hreflang gibt diese nicht als Artikelübersetzung aus.
-
-### Frontmatter ausfüllen
-
-```yaml
----
-title: 'My first post'
-description: 'My notes and projects'
-pubDate: '2026-10-03'
-tags: ['astro', 'notes']
----
-```
-
-title, description und pubDate sind Pflicht. subtitle, updatedDate und author sind optional; standardmäßig gilt der Website-Autor. Beiträge werden nach pubDate sortiert. Es gibt keinen Entwurfs- oder Veröffentlichungszeitfilter: draft: true und zukünftige Daten verstecken nichts. Unfertige Texte außerhalb von src/content/blog/ aufbewahren.
-
-heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Bei vorhandenen Dateien in src/assets/blog/default-covers/ wählt der Befehl ein stabiles Titelbild. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
 
 ### Inhaltsverzeichnis und Tags
 
@@ -216,12 +267,6 @@ Ohne ogImage erzeugt der Build ein PNG mit 1200×630 Pixeln aus Titel, Autor und
 Automatische Vorschaubilder verwenden einen mitgelieferten Hintergrund aus Code-Regen, Terminals und Neon-Netzwerken mit deinem Website-Namen, Titel und Autor. Der kleine Hinweis `Theme by Anglefeint` unten rechts folgt `theme.footer.showCredits` (Standard `true`); `false` blendet die Hinweise im Footer und im Bild aus. Danach neu bauen und veröffentlichen. Eigene `ogImage`-Dateien bleiben unverändert. Der Hintergrund funktioniert offline und fügt kein Browser-JavaScript hinzu.
 
 Ein explizites ogImage hat Vorrang. theme.socialImage.enabled: false stoppt nur die Erzeugung; sonst dienen Titelbild oder Standardbild als Ersatz. Prüfe og:image im HTML und dist/\_social/. Plattformen können alte Vorschauen zwischenspeichern. Nicht alle Emojis und Schriftsysteme sind abgedeckt.
-
-### Eigenständige Seiten
-
-npm run new-page -- projects --theme cyber erstellt src/pages/[lang]/projects.astro. Inhalt selbst bearbeiten; Navigation und Übersetzungen werden nicht ergänzt. Verfügbar sind base, ai, cyber, hacker und matrix. Verschachtelte Slugs wie projects/labs sind erlaubt. Vorhandene Dateien führen zu einem Fehler.
-
-- [Anleitung 2: Inhalte schreiben und ordnen](https://demo.anglefeint.com/de/blog/starter-guide-2-languages-and-routing/)
 
 ## Anleitung 3: Optionale Funktionen
 
@@ -306,24 +351,6 @@ Alle Optionen im selben theme beziehungsweise i18n zusammenführen. Listen erset
 
 - [Anleitung 2: Inhalte schreiben und ordnen](https://demo.anglefeint.com/de/blog/starter-guide-2-languages-and-routing/)
 
-## Aktualisierung
-
-Beginne mit dem öffentlichen Template. Für kompatible Paketaktualisierungen nutze npm update @anglefeint/astro-theme und danach npm run doctor.
-
-npm update bleibt im Bereich von package.json: ^0.5.1 umfasst 0.6.0 nicht. Lies die Versionshinweise und installiere bei Bedarf eine konkrete Version statt blind @latest. npm ls @anglefeint/astro-theme astro zeigt installierte Versionen.
-
-Das Paket aktualisiert keine lokalen Einstellungen, Routen, Adapter oder Integrationen des Starters. Bei Strukturänderungen erstelle einen neuen Starter in einem anderen Ordner und übertrage Inhalte und persönliche Einstellungen. Neue Hilfsdateien nicht mit alten überschreiben.
-
-doctor enthält bereits Prüfungen und Build. Danach npm run preview verwenden. npm run sync-adapters nur bei Abweichungen zwischen generierten Adaptern und lokalen Vorlagen ausführen; es lädt keine neuen Vorlagen herunter. Alte Projekte können andere Skripte haben.
-
-Bei Astro-Hauptversionen zuerst die offizielle Migration befolgen. Weitere Hinweise stehen in der [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
-
-```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-npm run preview
-```
-
 ## Vorschau
 
 ![Home](public/images/theme-previews/preview-home.png)
@@ -355,34 +382,6 @@ Mit `theme: { math: { enabled: false } }` in `src/site.config.ts` deaktivieren. 
 Die Ausgabe entsteht beim Build mit lokalen Schriften und Stilen sowie zugänglichem MathML, ohne Formel-Engine im Browser. Lange Formeln lassen sich horizontal scrollen. Fehler stoppen den Build mit Quelle und Ursache. Titel und Beschreibungen bleiben Klartext; Formeln werden nicht indexiert. Unterstützt wird die KaTeX-Mathematiksyntax, nicht vollständige LaTeX-Dokumente.
 
 Bestehende Projekte benötigen die einmalige Starter-/Konfigurationsmigration aus der Upgrade-Anleitung; allein das Paketupdate bindet den Markdown-Prozessor nicht ein.
-
-<a id="deployment"></a>
-
-## Statische Bereitstellung
-
-Der Starter ist eine statische Astro-Website ohne Bindung an Cloudflare, Wrangler, Miniflare oder Serveradapter. Node.js wird zum Installieren und Bauen benötigt, nicht als Produktionsprozess.
-
-### Vorbereitung
-
-Setze `site.url` auf deine Domain; `PUBLIC_SITE_URL` hat Vorrang. Prüfe mit `npm run doctor` und `npm run preview`. Preview veröffentlicht nichts.
-
-Übertrage dein erzeugtes Blog samt Lockdatei in dein eigenes Git-Repository und importiere dieses beim Hoster. Wähle den Veröffentlichungsbranch und das Verzeichnis mit `package.json`, nicht das ursprüngliche Theme-Repository.
-
-| Plattform                                                                                          | Einstellungen                                                                                                                                                         |
-| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | Repository importieren, Astro wählen. Build `npm run build`, Veröffentlichung `dist`.                                                                                 |
-| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | Repository importieren, Astro wählen. Build `npm run build`, Ausgabe `dist`.                                                                                          |
-| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Git in Pages verbinden. Build `npm run build`, Ausgabe `dist`; kein zusätzlicher Wrangler-Befehl nötig.                                                               |
-| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Unter Settings → Pages GitHub Actions wählen und dem offiziellen Astro-Workflow folgen. `USERNAME.github.io` oder eigene Domain am Root `/` verwenden.                |
-| Nginx / Apache / static hosting                                                                    | `npm run build` ausführen und den gesamten Inhalt von `dist/` ins Webroot laden. Verzeichnis-`index.html` ausliefern; nicht alle URLs auf die Startseite umschreiben. |
-
-Verwende eine unterstützte Node.js-Version gemäß `package.json` (`>=22.12.0`; derzeitige Prüfbasis Node 24 LTS). Entwicklungsabhängigkeiten mitinstallieren. Für pnpm `pnpm build` und die passende Lockdatei verwenden.
-
-Navigation enthält root-relative URLs. Astro `base` allein garantiert keinen Betrieb unter `/repository/`, auch nicht bei GitHub-Projekt-Pages. Root-Domain verwenden oder alle betroffenen Pfade selbst anpassen und prüfen.
-
-Workers ist eine optionale Alternative und lädt `dist` mit Wrangler hoch. Die Demo-Werkzeuge sind keine Starter-Anforderung. Für statisches Hosting sind keine SSR-Adapter nötig.
-
-Nach Veröffentlichung Artikel direkt öffnen und neu laden; Sprachen, Suche, Decoder, `/<locale>/rss.xml`, `/sitemap-index.xml` und Canonicals prüfen. Alle Ressourcen, Suchindizes, Vorschaubilder und Terminal-JSON hochladen. Nach Änderungen neu bauen. Optionale Kommentare, GA4 und externes Audio nutzen ihre jeweiligen Dienste.
 
 ## Artikelstatistik
 
