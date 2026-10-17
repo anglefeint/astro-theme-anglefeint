@@ -93,6 +93,7 @@ export interface ThemeConfig {
     blogPageSize: number;
     homeLatestCount: number;
     enableAboutPage: boolean;
+    enableDecoderPage: boolean;
     tags: { enabled: boolean };
     socialImage: { enabled: boolean };
     toc: {

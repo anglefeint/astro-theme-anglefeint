@@ -30,6 +30,10 @@ Unter `theme.home` in `src/site.config.ts` steuert `showInitialize` Initialize/d
 
 Die große Startseitenüberschrift lässt sich je Sprache über `i18n.locales.<code>.site.homeTitle` in `src/site.config.ts` setzen, etwa `de: { site: { homeTitle: "Mein digitaler Garten" } }`. Das gilt auch für zusätzlich konfigurierte Sprachen. Fehlende oder leere Werte folgen `meta.fallback`, danach gilt der globale `site.title` oder `PUBLIC_SITE_TITLE`. Nur die sichtbare Überschrift ändert sich; Browser-Titel, Navigation, Footer, RSS und SEO-Seitenname bleiben global. Anschließend neu bauen und bereitstellen.
 
+About enthält **Hacker Decryptor**: Base64/Base64URL, URL-codierten Text, Hexadezimaltext, HTML-Entitäten, Unicode-Escapes und JWT-Header/Payload lokal im Browser decodieren, mit automatischer Formaterkennung und einer zur Seitenpalette passenden Zahlenanimation. Über Decryptor in der Seitenleiste öffnen; keine API oder zusätzliche Einrichtung nötig.
+
+Der vollständige **Decoder Lab** unter `/<locale>/decoder/` bietet lokale Verarbeitungsschritte, ERC-20/TRC-20-Aufrufinterpretation (EVM/HyperEVM/TRON) und EVM/TRON/Bitcoin-Adressprüfung. Über den About-Dialog öffnen. `theme.enableDecoderPage: false` in `src/site.config.ts` deaktiviert Seite und Link unabhängig von About. Kein RPC, Wallet-Zugriff oder API-Schlüssel nötig.
+
 ## Mit einem KI-Assistenten arbeiten
 
 Öffne den Projektordner in Cursor, Codex oder Claude Code. Der Starter enthält eine gemeinsame [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), einen Claude-Code-Einstieg und eine immer angewendete Cursor-Regel. Die Hinweise gelten für deinen Blog; Veröffentlichungstools des ursprünglichen Projekts sind nicht nötig. Beginne mit „Lies AGENTS.md“, falls die Hinweise nicht geladen wurden. Ergänze deine eigenen Wünsche.

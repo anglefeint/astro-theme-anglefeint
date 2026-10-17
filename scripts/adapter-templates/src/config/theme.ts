@@ -45,6 +45,7 @@ export const THEME = {
   /** Number of latest posts shown on home page */
   HOME_LATEST_COUNT: THEME_CONFIG.theme.homeLatestCount,
   /** Whether to enable the About page (disable to hide from nav/routes if needed) */
+  DECODER_PAGE_ENABLED: THEME_CONFIG.theme.enableDecoderPage ?? true,
   ABOUT_PAGE_ENABLED: THEME_CONFIG.theme.enableAboutPage,
   /** Default for article contents; individual posts may override it. */
   TOC: { ENABLED: THEME_CONFIG.theme.toc?.enabled ?? true },

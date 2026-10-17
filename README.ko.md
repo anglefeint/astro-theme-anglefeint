@@ -36,6 +36,10 @@
 
 언어별 홈의 큰 제목은 `src/site.config.ts`의 `i18n.locales.<code>.site.homeTitle`로 설정합니다（예: `ko: { site: { homeTitle: "나의 디지털 정원" } }`）。새로 추가한 언어에도 적용됩니다. 생략하거나 공백만 입력하면 `meta.fallback` 순서로 찾고, 마지막으로 전역 `site.title` 또는 `PUBLIC_SITE_TITLE`을 사용합니다. 홈의 큰 제목만 변경되며 브라우저 제목, 탐색 메뉴, 푸터, RSS 및 SEO 사이트 이름은 전역 설정을 유지합니다. 변경 후 다시 빌드하고 배포하세요.
 
+About의 **Hacker Decryptor**는 Base64/Base64URL, URL 인코딩, 16진수, HTML 엔티티, Unicode 이스케이프 및 JWT 헤더/페이로드를 브라우저에서 디코딩합니다. 자동 형식 감지와 페이지 색상에 맞춘 숫자 결과 애니메이션을 지원합니다. 사이드바의 Decryptor에서 열 수 있으며 API나 추가 설정이 필요 없습니다.
+
+전체 **Decoder Lab**는 `/<locale>/decoder/`에서 로컬 처리 기록, EVM/HyperEVM/TRON의 ERC-20/TRC-20 호출 해석 및 EVM/TRON/Bitcoin 주소 확인을 제공합니다. About 디코더 창에서 열 수 있습니다. `src/site.config.ts`에서 `theme.enableDecoderPage: false`로 페이지와 링크를 독립적으로 끌 수 있습니다. RPC, 지갑 연결, API 키가 필요 없습니다.
+
 ## 요구 사항
 
 - Node.js `22.12.0+` (LTS 권장)

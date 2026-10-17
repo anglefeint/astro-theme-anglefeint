@@ -65,6 +65,14 @@ for (const filePath of aboutPages) {
   if (typeof aiBody !== 'string' || aiBody.trim().length === 0) {
     errors.push(`${filePath}: runtime config has empty AI modal content.`);
   }
+  if (
+    typeof runtimeConfig.decoderLabels?.decode !== 'string' ||
+    typeof modalContent.decryptor?.body !== 'string' ||
+    !html.includes('id="hacker-decoder-tpl"') ||
+    !html.includes('name="decoder-input"')
+  ) {
+    errors.push(`${filePath}: runtime config is missing the decoder form or translated labels.`);
+  }
 }
 
 if (errors.length > 0) {
