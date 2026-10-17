@@ -12,6 +12,12 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-18 0.18.0 分发门禁与交付核对
+
+完整发布门禁额外发现 workspace 路径掩盖的 terminal-document 包导出和 Decoder 脚本声明缺失，已在 npm 发布前修正并通过干净独立安装的 14 组构建。播放器夹具补传场景参数，手机冒烟测试按实际保留 Decryptor 入口更新；没有为迎合过期断言修改运行时。
+
+npm 原始源码为 `cec10b4`，下载哈希与打包相同；starter 为 `9c77f49`。公开模板确认安装 0.18.0，14 个用户命令、dev/preview 及新增 Decoder 三类工作流均通过。同步期间的失败夹具隔离、换行索引刷新和无主空索引锁恢复均为本地发布状态处理，不是消费者运行代码变更。验收脚本强化与说明属于发布后 maintainer/docs closeout，不需要另发 npm。详见 [0.18.0 交付记录](releases/0.18.0.md)。初始演示站构建失败和 Cloudflare 未登录限制单独保留，未把包验收冒充线上部署验收。
+
 ## 2026-10-18 代码优先复核：纠正文档残留偏移
 
 在同一 `aeae6a9` 基线和当前未提交工作区上重新运行 `suggest:docs`，本轮重新检查配置/defaults/schema/adapter → About 与 Decoder 路由 → 组件/控制器/样式 → 测试链路，而不是以此前文档核对完成的声明代替源码验证。候选完整工作区路径保存在 `acceptance-results/doc-code-first-review.log`。直接候选包括架构、视觉参考、九语 README、包 README、升级/验收、核对记录、项目参考、打包边界及政策/历史发布文件；没有额外 propagated 项。项目参考补充 Decoder 入口，打包参考补充未发布新路由/依赖归属；其余政策规则和历史事实未改变，跳过更新。

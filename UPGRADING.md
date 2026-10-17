@@ -285,6 +285,8 @@ Tag browsing requires both the package components/utilities and the new starter-
 
 The package-owned `BlogPost` layout and scripts provide both features with no new author markup or configuration switch. Custom layouts that do not use that article layout do not automatically gain them. Verify fenced code copying under HTTPS/localhost and click an unlinked body image in preview; linked images retain navigation and hero images are excluded. Preview displays the existing selected image source, not a higher-resolution original. The temporary public image demonstration article is not part of the starter.
 
+### Decoder and virtual terminal (0.18.0)
+
 The matching starter adds `src/pages/[lang]/decoder.astro`. `theme.enableDecoderPage` defaults to true, independently of `enableAboutPage`; disable it to omit all localized decoder pages and the About dialog link. No `/decoder/` alias is generated. The quick dialog now clones a shared `DecoderWorkbench` template rather than serialized form HTML; upgrade package and starter route/runtime validator together. Text codecs, local crypto tasks, numeric reveal, actions, pipeline and window shell/controller are separate shared modules. Crypto dependencies load only on an explicit crypto operation; no RPC/API configuration is introduced.
 
 The read-only About terminal additionally requires the starter-owned `src/pages/[lang]/terminal/[id].json.ts` route alongside the matching theme package. This static route supplies localized source-text files on demand; package upgrades alone do not add a new project route. Keep the About page and new route aligned through the starter upgrade workflow.

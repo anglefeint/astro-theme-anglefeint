@@ -90,8 +90,8 @@ Music (0.7.0): the package owns `MusicDeck`, its scoped CSS, controller/core/sto
 
 The search hook writes assets into the built site's `pagefind/` directory; these are generated output, not files copied from main into the starter branch. Package installation cannot rewrite starter route/config files. The matching-template migration boundary is documented in `UPGRADING.md`; implementation/test entry points are in `docs/ARCHITECTURE.md`.
 
-## Unreleased Decoder and terminal ownership
+## Decoder and terminal ownership (0.18.0)
 
-The current working tree adds starter-owned `src/pages/[lang]/decoder.astro` and `src/pages/[lang]/terminal/[id].json.ts`, both listed in `scripts/starter-manifest.mjs`. The matching About route, schema/defaults and theme adapters are also starter-owned. The package owns DecoderWorkbench, generic WindowShell/TerminalBackdrop, Decoder/terminal scripts, numeric effects, styles and translations through existing directory exports. Local crypto uses package dependencies `@scure/base` and `@noble/hashes`; text codecs and numeric animation do not add a backend or remote API.
+Version 0.18.0 adds starter-owned `src/pages/[lang]/decoder.astro` and `src/pages/[lang]/terminal/[id].json.ts`, both listed in `scripts/starter-manifest.mjs`. The matching About route, schema/defaults and theme adapters are also starter-owned. The package owns DecoderWorkbench, generic WindowShell/TerminalBackdrop, Decoder/terminal scripts, numeric effects, styles and translations through existing directory exports and the exact `./utils/terminal-document` export. Local crypto uses package dependencies `@scure/base` and `@noble/hashes`; text codecs and numeric animation do not add a backend or remote API.
 
-This boundary requires matching package and starter delivery: updating npm alone cannot create routes or migrate project-owned schema/adapters. These are current source facts, not a declaration that a newer package/template has been published. Release policy remains in `AI_WORKFLOW.md` and `PACKAGE_RELEASE.md`.
+This boundary requires matching package and starter delivery: updating npm alone cannot create routes or migrate project-owned schema/adapters. Delivery and actual acceptance evidence are recorded in `docs/releases/0.18.0.md`. Release policy remains in `AI_WORKFLOW.md` and `PACKAGE_RELEASE.md`.
