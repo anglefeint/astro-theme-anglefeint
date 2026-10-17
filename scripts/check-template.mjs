@@ -219,6 +219,38 @@ async function browserCheck(base, customized = false) {
     await page.screenshot({
       path: path.join(evidence, customized ? 'customized.png' : 'default.png'),
     });
+    await page.goto(base + '/en/decoder/');
+    await expect(page.locator('[data-decoder-page]')).toBeVisible();
+    const decoderInput = page.locator('[name="decoder-input"]');
+    const decoderOutput = page.locator('.hacker-decoder-output');
+    const decode = async () => {
+      await page.locator('.hacker-decoder-submit').click();
+      await expect(decoderOutput).toHaveAttribute('data-decoder-state', 'done');
+      await expect(page.locator('.hacker-decoder-status')).toHaveAttribute('data-state', 'done');
+    };
+    await decoderInput.fill('SGVsbG8=');
+    await decode();
+    await expect(decoderOutput).toHaveText('Hello');
+    await page.locator('[data-decoder-task="call"]').click();
+    await page.locator('[name="decoder-decimals"]').fill('6');
+    await page.locator('[data-decoder-example]').click();
+    await decode();
+    assert.equal(JSON.parse(await decoderOutput.textContent()).amount, '1');
+    await page.locator('[data-decoder-task="address"]').click();
+    for (const chain of ['evm', 'tron', 'btc']) {
+      await page.locator('[name="decoder-chain"]').selectOption(chain);
+      await page.locator('[data-decoder-example]').click();
+      await decode();
+      assert(JSON.parse(await decoderOutput.textContent()).address);
+    }
+    await expect(page.locator('footer a[href="/en/decoder/"]')).toHaveCount(1);
+    if (customized)
+      await expect(page.locator('[data-music-deck]')).toHaveAttribute('data-collapsed', 'true');
+    assert.deepEqual(errors, []);
+    await page.screenshot({
+      path: path.join(evidence, customized ? 'decoder-customized.png' : 'decoder-default.png'),
+    });
+    results.push({ check: 'installed Decoder text/call/address examples', status: 'passed' });
     success = true;
     results.push({
       check: customized ? 'customized browser' : 'default browser',
