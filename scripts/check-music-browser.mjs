@@ -18,6 +18,7 @@ await writeFile(
   path.join(pages, '[slug].astro'),
   `---
 import MusicDeck from '${source('packages/theme/src/components/shared/MusicDeck.astro')}';
+import { resolveMusicScene } from '${source('packages/theme/src/components/shared/music-scenes.ts')}';
 import { getMessages } from '${source('packages/theme/src/i18n/messages.ts')}';
 import homeCss from '${source('packages/theme/src/styles/home-page.css')}?url';
 import cyberCss from '${source('packages/theme/src/styles/theme-cyber.css')}?url';
@@ -31,7 +32,7 @@ const tracks = [{title:'Test tone',src: slug === 'removed' ? '/music/other.wav' 
 ---
 <!doctype html><html lang={slug}><head><meta charset="utf-8"/><title>Music fixture</title>{palettes[slug] && <link rel="stylesheet" href={palettes[slug][1]} />}</head><body class={palettes[slug]?.[0]}>
 <a href="/en/">English</a><a href="/zh/">中文</a><a href="/ja/">日本語</a>
-{!['off','empty'].includes(slug) && <MusicDeck tracks={tracks} labels={labels}/>}
+{!['off','empty'].includes(slug) && <MusicDeck tracks={tracks} labels={labels} scene={resolveMusicScene(palettes[slug]?.[0] || '')}/>}
 </body></html>`
 );
 // 30 seconds of a quiet generated tone, no external/copyrighted music.
