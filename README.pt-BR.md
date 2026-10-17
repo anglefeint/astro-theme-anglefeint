@@ -129,7 +129,7 @@ Publique na raiz do domínio e sirva o index.html de cada diretório. Subdiretó
 
 ### Efeitos da página inicial e decodificadores
 
-Em `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow e `showTrace` controla o status inferior direito. Todos são `true` por padrão; `false` oculta cada parte separadamente.
+Em `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow e `showTrace` controla o status inferior direito. Todos são `true` por padrão; `false` oculta cada parte separadamente. 0.18.1: Os dois estados inferiores começam ocultos e aparecem separadamente ao passar o mouse ou selecionar o texto. Selecionar tudo revela ambos; o cursor luminoso acompanha apenas o rastreamento à direita.
 
 Configure o título principal da página inicial por idioma em `i18n.locales.<code>.site.homeTitle`, no arquivo `src/site.config.ts`, por exemplo `"pt-br": { site: { homeTitle: "Meu jardim digital" } }`. Também funciona com idiomas adicionados. Valores ausentes ou em branco seguem `meta.fallback` e depois usam `site.title` global ou `PUBLIC_SITE_TITLE`. Apenas o título visível muda; o título do navegador, a navegação, o rodapé, RSS e a identidade SEO mantêm o nome global. Compile e publique novamente.
 
@@ -281,6 +281,8 @@ theme: {
   music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] },
 },
 ```
+
+0.18.1: o player ativado começa compacto em cada página nova; clique em OPEN para expandir. Posição, volume e retomada independem do tamanho inicial.
 
 Faixas aceitam title, src e artist opcional. Sem faixas, o player fica oculto. A primeira reprodução exige clique. A sessão guarda faixa, posição e volume; retomar depende das permissões do navegador, e pode haver uma pausa entre páginas. Ao terminar a última faixa, a primeira recomeça.
 
