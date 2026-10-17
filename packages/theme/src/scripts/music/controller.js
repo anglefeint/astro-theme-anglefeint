@@ -18,12 +18,13 @@ async function init(root) {
   const storage = () => sessionStorage;
   const saved = readMusicState(storage);
   const player = createPlayer(tracks);
-  // Narrow pages start compact; opening the full deck is an explicit action.
+  // Explicit initialization wins over viewport and saved presentation.
   const narrowScreen = window.matchMedia('(max-width: 720px)');
   const initialCollapse = root.dataset.initiallyCollapsed;
   let collapsed =
-    narrowScreen.matches ||
-    (initialCollapse === undefined ? (saved?.collapsed ?? false) : initialCollapse === 'true');
+    initialCollapse === undefined
+      ? narrowScreen.matches || (saved?.collapsed ?? true)
+      : initialCollapse === 'true';
   let state;
   let suspended = false;
   let restoring = true;
@@ -122,7 +123,7 @@ async function init(root) {
   const on = (target, event, handler) =>
     target.addEventListener(event, handler, { signal: abort.signal });
   on(narrowScreen, 'change', (event) => {
-    if (event.matches) {
+    if (event.matches && initialCollapse !== 'false') {
       collapsed = true;
       renderCollapse();
       persist();
@@ -188,7 +189,7 @@ async function init(root) {
     player.selectTrack(index < 0 ? 0 : index, index < 0 ? 0 : latest.time);
     if (latest) {
       player.setVolume(latest.volume);
-      collapsed = narrowScreen.matches || latest.collapsed;
+      collapsed = (narrowScreen.matches && initialCollapse !== 'false') || latest.collapsed;
       previousVolume = latest.volume || 0.5;
     }
     suspended = false;

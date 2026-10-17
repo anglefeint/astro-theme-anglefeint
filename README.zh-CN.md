@@ -163,7 +163,7 @@ npm run build
 
 宽屏（1440px 及以上）右下角终端默认显示 `Knock, knock.`。文字可选择复制和滚动，点击独立钥匙孔按钮才解锁并展示共享走廊。在 `src/site.config.ts` 配置 `i18n.locales.en.messages.home.transmission` 即可供全部语言使用；需要不同文字时，再配置 `i18n.locales.<code>.messages.home.transmission`。取值顺序为当前语言配置 → 英文配置 → `Knock, knock.`，与普通界面翻译的回退规则不同。修改后重新构建并部署。
 
-首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
+首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。 0.18.1:底部两项状态默认隐藏，各自响应鼠标悬停或文字选中；全选时两项都显现，发光光标只跟随右侧追踪文字。
 
 About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL、URL 编码、十六进制、HTML 实体、Unicode 转义及 JWT 头部和载荷，支持自动识别和与页面配色一致的数字结果动画。从侧边栏打开 Decryptor 即可使用，无需配置接口。
 
@@ -455,6 +455,8 @@ theme: {
   },
 },
 ```
+
+0.18.1:启用播放器后，每次进入新页面默认显示小播放器，点击 OPEN 展开；曲目进度、音量和续播不受初始大小影响。
 
 每首歌填写 `title`、`src`，`artist` 可选，也支持 HTTPS 音频直链。空歌单不显示播放器。首次访问时，点击 PLAY 后才加载音频。同一标签页会话内记住曲目、进度和音量；此前正在播放时，切页、刷新或前进后退会尝试从保存位置续播，主动暂停后仍保持暂停。切页可能短暂停顿，不是无缝播放。浏览器阻止自动播放时，点击 PLAY 继续。原曲目被删除时不会自动播放替代曲目。存储不可用时仍可手动播放，但无法会话续播。
 

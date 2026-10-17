@@ -29,7 +29,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 Latest feature release entry: [0.18.0](./0.18.0.md), Decoder Lab, reusable numeric reveal and modular About terminal/windows. See its delivery status and acceptance record.
 
-Latest patch entry: [0.11.3](./0.11.3.md), About plain-text line breaks with unchanged user configuration. See its delivery status and validation record.
+Latest patch entry: [0.18.1](./0.18.1.md), compact player initialization and independently revealed homepage signals. See its delivery status and validation record.
 
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.

@@ -10,6 +10,14 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.18.1: player initialization and hidden homepage signals
+
+This package-only update adds no configuration fields, routes, aliases or adapter exports. Projects already matching the 0.18.0 starter can run `npm update @anglefeint/astro-theme`, then `npm run doctor`, preview, rebuild and redeploy. See the [0.18.1 release record](docs/releases/0.18.1.md) for delivery status. Older starter contracts still require their corresponding migration.
+
+The player defaults to compact from its initial HTML. Custom `MusicDeck` callers can pass `initiallyCollapsed={false}` to start expanded on desktop or mobile, or true to start compact; `ThemeFrame` forwards `musicInitiallyCollapsed`. Explicit initialization takes precedence over viewport and stored presentation on a new page. Manual toggling and playback/session resume remain available; BFCache restoration reconciles the latest saved presentation rather than reapplying the initial setting.
+
+When `theme.home.showTrace` is enabled, the left pirate signal and right trace now start visually hidden. Hover or select either item to reveal it independently; select-all reveals both. The trace cursor follows only the trace. Setting the existing switch to false still omits the row completely.
+
 ## 0.18.0: Decoder Lab and shared About modules
 
 Prefer a fresh matching starter and migrate personal content/settings. The matched release adds `src/pages/[lang]/decoder.astro` and `src/pages/[lang]/terminal/[id].json.ts`, updates the About route, configuration schema/defaults, theme adapter template/generated adapter, runtime type declaration and validator. Package installation alone cannot add these project-owned files. `theme.enableDecoderPage` defaults to true and can be disabled independently of About. The terminal document route follows the About flag and publishes only already-public article source as inert JSON. No AI navigation page is included.

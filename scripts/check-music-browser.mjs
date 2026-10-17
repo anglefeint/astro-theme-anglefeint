@@ -25,14 +25,14 @@ import cyberCss from '${source('packages/theme/src/styles/theme-cyber.css')}?url
 import aiCss from '${source('packages/theme/src/styles/theme-ai.css')}?url';
 import hackerCss from '${source('packages/theme/src/styles/about-page.css')}?url';
 const palettes: Record<string, [string, string]> = {home:['page-home',homeCss],list:['cyber-page',cyberCss],detail:['ai-page',aiCss],about:['hacker-page',hackerCss]};
-export function getStaticPaths() { return ['en','zh','ja','ko','es','off','empty','removed','home','list','detail','about'].map(slug => ({params:{slug}})); }
+export function getStaticPaths() { return ['en','zh','ja','ko','es','off','empty','removed','home','list','detail','about','expanded','collapsed'].map(slug => ({params:{slug}})); }
 const slug = Astro.params.slug;
 const labels = getMessages(['en','zh','ja','ko','es'].includes(slug) ? slug : 'en').music;
 const tracks = [{title:'Test tone',src: slug === 'removed' ? '/music/other.wav' : '/music/tone.wav'}];
 ---
 <!doctype html><html lang={slug}><head><meta charset="utf-8"/><title>Music fixture</title>{palettes[slug] && <link rel="stylesheet" href={palettes[slug][1]} />}</head><body class={palettes[slug]?.[0]}>
 <a href="/en/">English</a><a href="/zh/">中文</a><a href="/ja/">日本語</a>
-{!['off','empty'].includes(slug) && <MusicDeck tracks={tracks} labels={labels} scene={resolveMusicScene(palettes[slug]?.[0] || '')}/>}
+{!['off','empty'].includes(slug) && <MusicDeck tracks={tracks} labels={labels} scene={resolveMusicScene(palettes[slug]?.[0] || '')} initiallyCollapsed={slug === 'expanded' ? false : slug === 'collapsed' ? true : undefined}/>}
 </body></html>`
 );
 // 30 seconds of a quiet generated tone, no external/copyrighted music.
@@ -70,7 +70,82 @@ try {
     assert.ok(!html.includes('data-music-deck'));
   }
   server = await preview(config);
+  const baseURL = `http://127.0.0.1:${server.port}`;
   browser = await chromium.launch(); // No autoplay-policy override.
+  const noScript = await browser.newContext({ javaScriptEnabled: false });
+  const initialPage = await noScript.newPage();
+  for (const route of ['home', 'list', 'detail', 'about']) {
+    await initialPage.goto(`${baseURL}/${route}/`);
+    assert.equal(
+      await initialPage.locator('[data-music-deck]').getAttribute('data-collapsed'),
+      'true'
+    );
+    assert.equal(await initialPage.locator('[data-action="expand"]').innerText(), 'OPEN');
+    assert.equal(
+      await initialPage.locator('[data-action="expand"]').getAttribute('aria-expanded'),
+      'false'
+    );
+    assert.equal(await initialPage.locator('.music-deck__playlist').isVisible(), false);
+    assert.equal((await initialPage.locator('[data-eyebrow]').textContent()).trim(), 'Test tone');
+  }
+  await noScript.close();
+  checks.push(
+    'all four scenes render compact before JavaScript, with matching title and OPEN state'
+  );
+  for (const width of [1440, 390]) {
+    for (const [route, collapsed] of [
+      ['home', true],
+      ['collapsed', true],
+      ['expanded', false],
+    ]) {
+      const explicit = await browser.newContext({ viewport: { width, height: 900 } });
+      await explicit.addInitScript((savedCollapsed) => {
+        sessionStorage.setItem(
+          'anglefeint-music-v1',
+          JSON.stringify({
+            src: '/music/tone.wav',
+            collapsed: savedCollapsed,
+            shouldResume: false,
+          })
+        );
+      }, !collapsed);
+      const tab = await explicit.newPage();
+      await tab.goto(`${baseURL}/${route}/`);
+      await tab.waitForFunction(() => !document.querySelector('[data-action="expand"]').disabled);
+      assert.equal(
+        await tab.locator('[data-music-deck]').getAttribute('data-collapsed'),
+        String(collapsed)
+      );
+      assert.equal(
+        await tab.locator('[data-action="expand"]').getAttribute('aria-expanded'),
+        String(!collapsed)
+      );
+      if (!collapsed) {
+        await tab.setViewportSize({ width: width === 390 ? 1440 : 390, height: 900 });
+        assert.equal(
+          await tab.locator('[data-music-deck]').getAttribute('data-collapsed'),
+          'false'
+        );
+        await tab.evaluate(() => {
+          window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true }));
+          window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }));
+        });
+        assert.equal(
+          await tab.locator('[data-music-deck]').getAttribute('data-collapsed'),
+          'false'
+        );
+      }
+      await tab.locator('[data-action="expand"]').click();
+      assert.equal(
+        await tab.locator('[data-music-deck]').getAttribute('data-collapsed'),
+        String(!collapsed)
+      );
+      await explicit.close();
+    }
+  }
+  checks.push(
+    'explicit large/small overrides opposite saved state on desktop/mobile; resize, BFCache and manual toggle remain consistent'
+  );
   const context = await browser.newContext();
   // Reproduce a static host that returns the entire file and never supports Range.
   await context.route('**/music/tone.wav', (route) =>
@@ -89,7 +164,7 @@ try {
       return audio;
     };
   });
-  const go = (slug) => page.goto(`http://127.0.0.1:4397/${slug}/`);
+  const go = (slug) => page.goto(`${baseURL}/${slug}/`);
   const ready = () =>
     page.waitForFunction(
       () =>
@@ -106,6 +181,11 @@ try {
   await go('en');
   await ready();
   assert.equal(await page.evaluate(() => window['__audioRequests']), 0);
+  assert.equal(await page.locator('[data-music-deck]').getAttribute('data-collapsed'), 'true');
+  assert.equal(await page.locator('[data-action="expand"]').getAttribute('aria-expanded'), 'false');
+  assert.equal((await page.locator('[data-eyebrow]').textContent()).trim(), 'Test tone');
+  await page.locator('[data-action="expand"]').click();
+  assert.equal(await page.locator('[data-music-deck]').getAttribute('data-collapsed'), 'false');
   await page.locator('[data-action="play"]').click();
   await status('playing');
   await page.waitForFunction(() => window['__audio'].duration > 0);
@@ -212,7 +292,7 @@ try {
       };
     });
     const tab = await blocked.newPage();
-    await tab.goto(`http://127.0.0.1:4397/${locale}/`);
+    await tab.goto(`${baseURL}/${locale}/`);
     await tab.waitForFunction(
       () => document.querySelector('[data-music-deck]')?.dataset.status === 'blocked'
     );
@@ -241,13 +321,13 @@ try {
     });
   });
   const mobile = await denied.newPage();
-  await mobile.goto('http://127.0.0.1:4397/zh/');
+  await mobile.goto(`${baseURL}/zh/`);
   await mobile.locator('[data-action="play"]').click();
   await mobile.waitForFunction(
     () => document.querySelector('[data-music-deck]')?.dataset.status === 'playing'
   );
   assert.equal(await mobile.locator('[data-music-deck]').getAttribute('data-collapsed'), 'true');
-  await mobile.goto('http://127.0.0.1:4397/removed/');
+  await mobile.goto(`${baseURL}/removed/`);
   await mobile.locator('[data-action="play"]').click();
   await mobile.waitForFunction(
     () => document.querySelector('[data-music-deck]')?.dataset.status === 'error'
@@ -257,11 +337,18 @@ try {
   const colors = [];
   for (const route of ['home', 'list', 'detail', 'about']) {
     const themeContext = await browser.newContext();
+    await themeContext.addInitScript(() => {
+      sessionStorage.setItem(
+        'anglefeint-music-v1',
+        JSON.stringify({ src: '/music/tone.wav', collapsed: false, shouldResume: false })
+      );
+    });
     const themed = await themeContext.newPage();
-    await themed.goto('http://127.0.0.1:4397/' + route + '/');
+    await themed.goto(`${baseURL}/${route}/`);
     await themed.waitForFunction(
       () => document.querySelector('[data-music-deck]')?.dataset.ready === 'true'
     );
+    assert.equal(await themed.locator('[data-music-deck]').getAttribute('data-collapsed'), 'true');
     const color = await themed
       .locator('.music-deck__led')
       .first()

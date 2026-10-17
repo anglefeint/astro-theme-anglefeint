@@ -53,6 +53,10 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 ## 2. 页面与静态生成
 
+### 首页底部隐藏状态（0.18.1）
+
+启用 theme.home.showTrace 时，PIRATE SIGNAL 和 TRACE PROGRAM 两项保留在 HTML 中但分别隐藏；各自悬停或选中文字时显现，全选显现两项，方块光标只跟随右侧追踪。底部内边距为桌面 0.8rem、手机 0.75rem；显现不改变布局。该状态行不是右下角的钥匙孔终端，两者交互独立。CSS 管理悬停，home-effects.js 使用既有生命周期监听选区；没有新增计时器或动画循环。对应回归为 tests/e2e/home-status.spec.mjs。
+
 ### 首页终端与 Oracle 共享场景（当前源码）
 
 1440px 及以上的首页右下角显示终端，文字可复制、换行和滚动；钥匙孔独立固定在下方右侧。悬停只显示钥匙，点击才运行 600ms 插入解锁，接着展开窗口并淡入走廊。文字配置为 `i18n.locales.<code>.messages.home.transmission`，严格按当前语言配置 → 英文配置 → `Knock, knock.` 读取；只配英文即可覆盖未单独配置的语言。它不是普通界面翻译的回退规则，需更新 starter 消息适配器并重新构建。
@@ -195,7 +199,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 文章目录、全文搜索、标签浏览、代码块复制、正文图片预览、构建期分享图、全局数学公式、可选 GA4、可配置社交链接 rel、分组页脚和 About 纯文本换行已经实现，不能再列为待开发建议。About 正文仍不是 Markdown。导航由 Home、Blog 和可选 About 组成，可翻译标签，但没有任意链接数组；`new-page` 不会自动加入导航。
 
-当前提供默认关闭的 MusicDeck：在 `src/site.config.ts` 的 `theme.music` 中启用并配置曲目。播放器组件、样式、播放核心和会话存储独立；未启用或空歌单不挂载，首次访问点击播放后才加载音频，不内置歌曲。桌面位于左下角，手机默认收起，展开时避让回到顶部。0.8.1 起，正在播放时切页会尝试从保存位置续播，主动暂停后仍保持暂停；浏览器拦截时提示点击继续，不支持跨页无缝播放。配置与安装边界见 [架构说明](docs/ARCHITECTURE.md#optional-music-player) 和 [升级指南](UPGRADING.md)。
+当前提供默认关闭的 MusicDeck：在 `src/site.config.ts` 的 `theme.music` 中启用并配置曲目。播放器组件、样式、播放核心和会话存储独立；未启用或空歌单不挂载，首次访问点击播放后才加载音频，不内置歌曲。桌面和手机均位于左下角；当前源码默认从初始 HTML 就收起，显式 initiallyCollapsed=false 可优先请求展开，ThemeFrame 通过 musicInitiallyCollapsed 转发。手动切换、播放与会话恢复独立，展开时避让回到顶部。此初始化调整属于 0.18.1，交付状态见对应发布记录。0.8.1 起，正在播放时切页会尝试从保存位置续播，主动暂停后仍保持暂停；浏览器拦截时提示点击继续，不支持跨页无缝播放。配置与安装边界见 [架构说明](docs/ARCHITECTURE.md#optional-music-player) 和 [升级指南](UPGRADING.md)。
 
 没有新增首次建站引导弹窗、专用引导 CLI、Expressive Code、代码文件名标记、目录 scroll-spy、图片画廊或请求时生成 OG 图片的服务。后续需求应从真实用户需要出发，不能由旧讨论或本文件中的提及自动变成产品承诺。
 

@@ -163,7 +163,7 @@ Pasaje Matrix opcional: `theme.effects.enableHomePassage` vale `false` por defec
 
 En pantallas de 1440px o más, el terminal inferior derecho muestra `Knock, knock.`. El texto se puede seleccionar, copiar y desplazar; el botón independiente con ojo de cerradura inicia el pasillo compartido. Configura `i18n.locales.en.messages.home.transmission` en `src/site.config.ts` para todos los idiomas y sobrescribe solo los necesarios con `i18n.locales.<code>.messages.home.transmission`. Orden: configuración del idioma actual → configuración inglesa → `Knock, knock.`; no es la cadena habitual de traducciones de interfaz. Reconstruye y despliega después de cambiarla.
 
-En `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow y `showTrace` controla el estado inferior derecho. Todos valen `true` por defecto; `false` oculta cada sección por separado.
+En `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow y `showTrace` controla el estado inferior derecho. Todos valen `true` por defecto; `false` oculta cada sección por separado. 0.18.1: Los dos estados inferiores empiezan ocultos y se revelan por separado al pasar el ratón o seleccionar su texto. Seleccionar todo revela ambos; el cursor luminoso acompaña solo al rastreo derecho.
 
 Configura el encabezado principal de inicio por idioma mediante `i18n.locales.<code>.site.homeTitle` en `src/site.config.ts`, por ejemplo `es: { site: { homeTitle: "Mi jardín digital" } }`. También funciona con idiomas añadidos. Los valores ausentes o en blanco siguen `meta.fallback` y luego usan `site.title` global o `PUBLIC_SITE_TITLE`. Solo cambia el encabezado visible; el título del navegador, la navegación, el pie, RSS y la identidad SEO mantienen el nombre global. Vuelve a compilar y desplegar.
 
@@ -449,6 +449,8 @@ theme: {
   },
 },
 ```
+
+0.18.1: el reproductor habilitado empieza compacto en cada página nueva; pulsa OPEN para ampliarlo. La posición, el volumen y la reanudación no dependen del tamaño inicial.
 
 Cada pista acepta `title`, `src` y un `artist` opcional. También admite URL HTTPS de audio. Una lista vacía oculta el reproductor. En la primera visita, el audio solo se carga al pulsar PLAY. La sesión de la pestaña recuerda pista, posición y volumen. Si se estaba reproduciendo, al navegar, recargar o usar Atrás/Adelante se intenta continuar desde la posición guardada; una pausa manual se mantiene. Puede haber una breve interrupción: no es reproducción continua entre páginas. Si el navegador bloquea la reproducción automática, pulsa PLAY. Si se elimina la pista, no se reproduce otra automáticamente. Sin almacenamiento, la reproducción manual sigue funcionando, pero no se puede reanudar la sesión.
 

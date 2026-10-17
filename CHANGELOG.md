@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.18.1] - 2026-10-18
+
+- Start the music player compact in the initial HTML. Explicit `initiallyCollapsed={false}` opens it on desktop or mobile; explicit true keeps it compact. Preserve manual controls and playback/session state.
+- Reveal the homepage pirate signal and trace independently on hover or text selection; select-all reveals both, with the cursor following only the trace. Reduce the panel's bottom padding without shifting content during reveal.
+- Package-only presentation changes add no site-config field, route or starter adapter contract. See the [release record](docs/releases/0.18.1.md) for delivery status.
+
 ## [0.18.0] - 2026-10-18
 
 - Add localized Decoder Lab pages with local text-processing chains, ERC-20/TRC-20 call interpretation and EVM/HyperEVM/TRON/Bitcoin address inspection. Six text codecs, strict validation and explicit processing history require no wallet or RPC.

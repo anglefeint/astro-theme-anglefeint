@@ -336,7 +336,7 @@ body.page-home main {
   background: rgba(0, 8, 0, 0.62);
   border: 1px solid var(--matrix-border);
   border-radius: 10px;
-  padding: 2rem 2rem 2.2rem;
+  padding: 2rem 2rem 0.8rem;
   margin-top: calc(3em + 56px);
   margin-bottom: 1.4rem;
   box-shadow:
@@ -901,6 +901,18 @@ body.page-home .home-archive-command {
     monospace;
   letter-spacing: normal;
 }
+.home-terminal-status > span {
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+.home-terminal-status > span[data-selected] {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .home-terminal-status > span:hover {
+    opacity: 1;
+  }
+}
 .home-pirate-signal {
   white-space: nowrap;
   font-family: 'Matrix Code NFI', 'Courier New', monospace;
@@ -944,7 +956,15 @@ body.page-home .home-archive-command {
   margin-left: 1ch;
   vertical-align: -0.15em;
   background: currentColor;
+  animation: none;
+}
+.home-trace-text[data-selected] .home-trace-cursor {
   animation: home-trace-blink 1s step-end infinite;
+}
+@media (hover: hover) and (pointer: fine) {
+  .home-trace-text:hover .home-trace-cursor {
+    animation: home-trace-blink 1s step-end infinite;
+  }
 }
 @keyframes home-trace-blink {
   0%,
@@ -957,7 +977,11 @@ body.page-home .home-archive-command {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .home-trace-cursor {
+  .home-terminal-status > span {
+    transition: none;
+  }
+  .home-trace-text[data-selected] .home-trace-cursor,
+  .home-trace-text:hover .home-trace-cursor {
     animation: none;
   }
 }
@@ -976,7 +1000,7 @@ body.page-home .home-archive-command {
 
 @media (max-width: 720px) {
   body.page-home main {
-    padding: 1.25rem 1rem 1.4rem;
+    padding: 1.25rem 1rem 0.75rem;
     margin-top: calc(1em + 56px);
     margin-bottom: 1rem;
   }

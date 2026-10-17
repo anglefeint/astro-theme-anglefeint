@@ -12,6 +12,20 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-10-18 播放器初始状态与首页独立隐藏信号（未发布）
+
+本轮以 main `1ec77ea` 为基线，审阅其后的未提交工作区，包含新增的 `tests/e2e/home-status.spec.mjs`。初始输入共 17 个路径：九语 README、架构/视觉参考、`MusicDeck.astro`、`music/controller.js`、`home-effects.js`、`home-page.css`、音乐浏览器夹具与新增首页测试。`suggest:docs` 的元数据匹配给出 75 份直接候选、无额外传播项、零元数据错误；候选较广是路径分类结果，不代表全部需要改写。工具首次受沙箱内 Git 子进程限制，重新以可读取工作区的环境执行成功；没有为此修改工具或运行代码。
+
+沿 `theme.music` schema/defaults → adapter → ThemeFrame → MusicDeck → controller/storage → 生成 HTML/CSS/JS 核对：音乐功能仍默认关闭，空歌单不挂载；挂载后的播放器默认从 HTML 就显示小尺寸，`initiallyCollapsed=false` 优先于屏幕和历史记录，可在桌面或手机初始化为大尺寸。ThemeFrame 的转发参数是 `musicInitiallyCollapsed`，并非新站点配置项。手动切换、音量、曲目进度与播放恢复保留；BFCache 使用最新保存的表现状态，不机械重放初始化参数。音乐夹具使用 Astro 实际返回的预览端口，不再误测占用首选端口的其他服务。
+
+沿 `theme.home.showTrace` → HomePage → home-page.css/home-effects.js → 浏览器输出核对：关闭开关会省略整个状态行；开启时左侧 PIRATE SIGNAL 与右侧 TRACE 各自隐藏、悬停或选中时独立显现，全选显现两项，方块光标只跟随右侧。选区监听复用既有 AbortSignal、pageshow 和销毁链，没有新增计时器或渲染循环；CSS 悬停不依赖 JavaScript，选区联动需要首页脚本初始化。底部内边距为桌面 0.8rem、手机 0.75rem，显现不改变布局。它与右下角钥匙孔终端无关，不能混写成同一交互。
+
+更新九语 README 的后部功能参考、包 README 的组件参数边界、ARCHITECTURE/VISUAL_SYSTEMS 的源码与测试对应、TEMPLATE_ACCEPTANCE 的新增覆盖、工程概览和 UPGRADING。CHANGELOG 增加 Unreleased，明确尚未发布；没有更改 0.18.0 或更早发布记录来描述新行为。架构文档中“演示站社交链接为空”的旧描述也按实际 `src/site.config.ts` 修正为 X/Mastodon/GitHub，未反向修改配置。
+
+未修改 AGENTS/CLAUDE/Cursor、元数据规范、发布/分支/包装政策、主题目录提交文案及历史版本：工作流、命令、包导出、schema、路由、i18n/SEO 和交付证据没有对应变化。源码文件已在包分发目录中，未新增 starter 消费文件，无需扩展 manifest。九语 README 属于后续 starter 同步范围；这不等同于已经同步或交付。
+
+沿用本功能轮次已经完成的证据：121 项单元测试、lint、完整 `npm run check`、199 页构建、九个 About 运行配置检查；音乐 Chromium 夹具通过初始无脚本小尺寸、显式大小优先级、对立历史记录、窗口变化/BFCache、播放与进度交互；首页两项 Chromium 测试通过独立悬停/选中、全选、无关选区、布局与底距、手机选区及 reduced motion，并人工查看了左右独立显现截图。本轮仅同步文档，重新运行文档元数据、本地链接/锚点、格式及差异检查，不重复宣称重新执行功能验收。原生手机长按手柄、Safari/Firefox、独立安装、注册表审计、npm/starter 发布和线上部署均未在本轮验证；后续安全发布仍需按发布工作流执行。
+
 ## 2026-10-18 0.18.0 分发门禁与交付核对
 
 完整发布门禁额外发现 workspace 路径掩盖的 terminal-document 包导出和 Decoder 脚本声明缺失，已在 npm 发布前修正并通过干净独立安装的 14 组构建。播放器夹具补传场景参数，手机冒烟测试按实际保留 Decryptor 入口更新；没有为迎合过期断言修改运行时。
