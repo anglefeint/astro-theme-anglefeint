@@ -1,5 +1,5 @@
 declare module '@anglefeint/astro-theme/scripts/about-effects.js' {
-  export function initAboutEffects(): void;
+  export function initAboutEffects(): () => void;
 }
 
 declare module '@anglefeint/astro-theme/scripts/blogpost-effects.js' {
@@ -21,4 +21,8 @@ declare module '@anglefeint/astro-theme/scripts/home-matrix.js' {
 declare module '@anglefeint/astro-theme/scripts/home-effects.js' {
   export function initHomeEffects():
     { start(): void; pause(): void; resume(): void; dispose(): void } | undefined;
+}
+
+declare module '@anglefeint/astro-theme/scripts/decoder/page.js' {
+  export function initDecoderPage(): void;
 }

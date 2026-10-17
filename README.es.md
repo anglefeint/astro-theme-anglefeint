@@ -36,6 +36,10 @@ En `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `
 
 Configura el encabezado principal de inicio por idioma mediante `i18n.locales.<code>.site.homeTitle` en `src/site.config.ts`, por ejemplo `es: { site: { homeTitle: "Mi jardín digital" } }`. También funciona con idiomas añadidos. Los valores ausentes o en blanco siguen `meta.fallback` y luego usan `site.title` global o `PUBLIC_SITE_TITLE`. Solo cambia el encabezado visible; el título del navegador, la navegación, el pie, RSS y la identidad SEO mantienen el nombre global. Vuelve a compilar y desplegar.
 
+About incluye **Hacker Decryptor**: decodifica Base64/Base64URL, texto URL, hexadecimal, entidades HTML, escapes Unicode y cabecera/carga JWT en el navegador, con detección automática y una animación numérica con los colores de la página. Ábrelo desde Decryptor en la barra lateral; no requiere API ni configuración adicional.
+
+La versión completa de **Decoder Lab** está en `/<locale>/decoder/`: historial local, interpretación ERC-20/TRC-20 (EVM/HyperEVM/TRON) e inspección de direcciones EVM/TRON/Bitcoin. Ábrela desde el diálogo de About. Usa `theme.enableDecoderPage: false` en `src/site.config.ts` para desactivar la página y su enlace independientemente de About. No requiere RPC, cartera ni clave API.
+
 ## Requisitos
 
 - Node.js `22.12.0+` (LTS recomendado)

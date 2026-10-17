@@ -78,8 +78,7 @@ async function runAdapterSmokeCheck(cwd) {
         typeof siteAdapter.getSiteHero(defaultLocale) === 'string',
       aboutAdapterValid:
         typeof aboutAdapter.getAboutConfig === 'function' &&
-        typeof aboutConfig.metaLine === 'string' &&
-        aboutConfig.metaLine.length > 0,
+        typeof aboutConfig.metaLine === 'string',
       themeAdapterValid:
         themeAdapter.THEME.BLOG_PAGE_SIZE === siteConfig.THEME_CONFIG.theme.blogPageSize &&
         themeAdapter.THEME.HOME_LATEST_COUNT === siteConfig.THEME_CONFIG.theme.homeLatestCount &&

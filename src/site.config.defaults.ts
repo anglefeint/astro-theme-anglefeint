@@ -62,7 +62,7 @@ export const DEFAULT_ABOUT_CONFIG: AboutConfig = {
       ],
     },
     decryptor: {
-      title: 'Password Decryptor',
+      title: 'Hacker Decryptor',
       header: 'Calculating Hashes',
       keysLabel: 'keys tested',
       currentPassphraseLabel: 'Current passphrase:',
@@ -115,6 +115,7 @@ const defaultThemeConfig: ThemeConfig = {
     blogPageSize: 9,
     homeLatestCount: 3,
     enableAboutPage: true,
+    enableDecoderPage: true,
     tags: { enabled: true },
     math: { enabled: true },
     toc: { enabled: true },
@@ -289,7 +290,7 @@ const defaultThemeConfig: ThemeConfig = {
               ],
             },
             decryptor: {
-              title: 'Decodificador de senhas',
+              title: 'Hacker Decryptor',
               header: 'Calculando hashes',
               keysLabel: 'chaves testadas',
               currentPassphraseLabel: 'Frase-senha atual:',
@@ -395,7 +396,7 @@ const defaultThemeConfig: ThemeConfig = {
               ],
             },
             decryptor: {
-              title: 'Passwort-Entschlüsseler',
+              title: 'Hacker Decryptor',
               header: 'Hashes werden berechnet',
               keysLabel: 'getestete Schlüssel',
               currentPassphraseLabel: 'Aktuelle Passphrase:',
@@ -501,7 +502,7 @@ const defaultThemeConfig: ThemeConfig = {
               ],
             },
             decryptor: {
-              title: 'Дешифратор паролей',
+              title: 'Hacker Decryptor',
               header: 'Вычисление хешей',
               keysLabel: 'ключей проверено',
               currentPassphraseLabel: 'Текущая парольная фраза:',
@@ -607,7 +608,7 @@ const defaultThemeConfig: ThemeConfig = {
               ],
             },
             decryptor: {
-              title: '密碼解密器',
+              title: 'Hacker Decryptor',
               header: '計算雜湊值',
               keysLabel: '已測試金鑰',
               currentPassphraseLabel: '目前通行片語：',
