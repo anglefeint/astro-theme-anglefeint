@@ -11,7 +11,7 @@
 [Demo](https://demo.anglefeint.com/pt-br/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
-  <a href="#installation">Instalação</a> · <a href="#setup">Guia de configuração</a>
+  <a href="#installation">Instalação</a> · <a href="#setup">Guia de configuração</a> · <a href="#deployment">Publicar</a>
 </p>
 
 <p align="center">
@@ -356,9 +356,33 @@ A renderização ocorre na compilação, com estilos e fontes locais e MathML ac
 
 Projetos antigos precisam da migração inicial do starter e da configuração descrita no guia de atualização; atualizar apenas o pacote não conecta o processador Markdown.
 
+<a id="deployment"></a>
+
 ## Publicação estática
 
-Execute `npm run build` e envie todo o conteúdo de `dist/` para a raiz do site estático. O servidor deve servir o `index.html` de cada diretório. Cloudflare é opcional e não é necessário Node.js em produção. Configure `site.url` e qualquer substituição `PUBLIC_SITE_URL` antes da compilação; recompile após alterações. Comentários, GA4 e áudio remoto opcionais continuam acessando seus serviços.
+O starter é um site Astro estático, sem vínculo com Cloudflare, Wrangler, Miniflare ou adaptadores de servidor. Node.js é necessário para instalar e compilar, não para executar em produção.
+
+### Antes de publicar
+
+Defina `site.url` com seu domínio; `PUBLIC_SITE_URL` tem prioridade. Execute `npm run doctor` e `npm run preview`. A prévia não publica o site.
+
+Envie o blog gerado e o arquivo de lock ao seu próprio repositório Git e importe-o na hospedagem. Selecione a branch de publicação e a pasta com `package.json`. Não conecte o repositório original do tema.
+
+| Plataforma                                                                                         | Configuração                                                                                                                                            |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | Importe o repositório e selecione Astro. Build `npm run build`, publicação `dist`.                                                                      |
+| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | Importe o repositório e selecione Astro. Build `npm run build`, saída `dist`.                                                                           |
+| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Conecte Git no Pages. Build `npm run build`, saída `dist`; sem comando Wrangler adicional.                                                              |
+| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Em Settings → Pages, escolha GitHub Actions e siga o workflow oficial Astro. Use `USERNAME.github.io` ou domínio próprio na raiz `/`.                   |
+| Nginx / Apache / static hosting                                                                    | Execute `npm run build` e envie todo o conteúdo de `dist/` à raiz web. Sirva o `index.html` dos diretórios sem reescrever todas as rotas para o início. |
+
+Use Node.js mantido e compatível com `package.json` (`>=22.12.0`; referência atual: Node 24 LTS). Instale as dependências de desenvolvimento. Com pnpm use `pnpm build` e seu lockfile.
+
+A navegação inclui URLs relativas à raiz. Apenas configurar Astro `base` não garante uso em `/repository/`, inclusive em Pages de projetos GitHub. Use a raiz ou adapte e verifique os caminhos.
+
+Workers é uma alternativa opcional que envia `dist` via Wrangler. As ferramentas do demo não são requisitos do starter. A publicação estática não requer adaptadores SSR.
+
+Após publicar, abra e recarregue artigos diretamente; confira idiomas, busca, Decoder, `/<locale>/rss.xml`, `/sitemap-index.xml` e canonical. Envie todos os recursos, índices, imagens e JSON do terminal. Recompile após mudanças. Comentários, GA4 e áudio externo opcionais usam seus próprios serviços.
 
 ## Estatísticas dos artigos
 

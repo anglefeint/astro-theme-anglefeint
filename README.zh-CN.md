@@ -17,14 +17,14 @@
 </p>
 
 <p align="center">
-  <a href="#installation">安装</a> · <a href="#setup">配置指南</a>
+  <a href="#installation">安装</a> · <a href="#setup">配置指南</a> · <a href="#deployment">部署</a>
 </p>
 
 <p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
-  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
@@ -458,9 +458,33 @@ $$
 
 老项目需要按升级指南完成一次 starter/配置迁移，仅更新主题包不会接入 Markdown 处理器。
 
+<a id="deployment"></a>
+
 ## 静态部署
 
-执行 `npm run build`，将 `dist/` 内全部内容上传到静态网站根目录；服务器需支持目录下的 `index.html`。不依赖 Cloudflare，也不需要线上 Node.js 进程。构建前设置 `site.url` 及任何 `PUBLIC_SITE_URL` 覆盖，改动后重新构建部署。可选评论、GA4 和远程音频仍会访问各自服务。
+starter 是静态 Astro 网站，不绑定 Cloudflare，不包含 Wrangler、Miniflare 或托管平台适配器。现有功能不需要服务器适配器或线上 Node.js 进程；安装依赖和构建时需要 Node.js。
+
+### 部署前准备
+
+在 `src/site.config.ts` 中把 `site.url` 设置为生产域名，例如 `https://your-blog.example`；已配置的 `PUBLIC_SITE_URL` 会覆盖它。先运行 `npm run doctor`，再用 `npm run preview` 本地检查。Ctrl+C 停止预览；preview 不会发布网站。
+
+把生成的个人博客项目及锁文件提交到你自己的 Git 仓库，再在托管平台导入该仓库，选择发布分支及包含 `package.json` 的项目目录（通常为仓库根目录）。不要连接上游主题仓库，也不需要把个人博客切换到上游的 `starter` 分支。
+
+| 平台                                                                                               | 发布设置                                                                                                                                     |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | 导入仓库，选择 Astro；构建命令 `npm run build`，发布目录 `dist`。                                                                            |
+| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | 导入仓库，选择 Astro；构建命令 `npm run build`，输出目录 `dist`。                                                                            |
+| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | 在 Pages 中连接仓库；构建命令 `npm run build`，输出目录 `dist`。Pages 的 Git 集成不需要额外的 Wrangler 部署命令。                            |
+| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | 在 Settings → Pages 选择 GitHub Actions，按官方 Astro 工作流部署。优先使用 `USERNAME.github.io` 仓库或在 `/` 提供网站的自定义域名。          |
+| Nginx / Apache / static hosting                                                                    | 在本地或 CI 运行 `npm run build`，把 `dist/` 的**全部内容**上传到网站根目录。服务器需提供各目录的 `index.html`，不要把所有路径都重写为首页。 |
+
+构建环境使用满足 `package.json` 要求（`>=22.12.0`）且仍受支持的 Node.js；当前验收基线为 Node 24 LTS。安装时保留构建所需的开发依赖。pnpm 项目使用 `pnpm build` 和 pnpm 锁文件，不要混用包管理器。
+
+请部署到域名根目录。当前主题导航包含以 `/` 开头的路径，仅设置 Astro `base` 不能保证 `/repository/` 子路径部署正常；GitHub 项目 Pages 同样受此限制。使用根地址，或自行适配并验证所有相关路径。
+
+Cloudflare Workers 是另一种可选方式，通过 Wrangler 上传 `dist`；演示站的维护配置不是 starter 的前提。上表均按静态部署说明，不需要照搬平台教程中的 SSR 适配器。
+
+上线后直接打开并刷新文章，检查语言切换、搜索、Decoder、`/<locale>/rss.xml`、`/sitemap-index.xml` 和 canonical 域名。HTML、`_astro`、`pagefind`、`_social` 和生成的终端 JSON 等文件需一并上传，不要挑选遗漏。内容或配置修改后重新构建部署。可选评论、GA4 和远程音频仍会访问各自服务。
 
 ## 文章统计
 

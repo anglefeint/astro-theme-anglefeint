@@ -17,14 +17,14 @@
 </p>
 
 <p align="center">
-  <a href="#installation">インストール</a> · <a href="#setup">設定ガイド</a>
+  <a href="#installation">インストール</a> · <a href="#setup">設定ガイド</a> · <a href="#deployment">デプロイ</a>
 </p>
 
 <p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
-  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
@@ -452,9 +452,33 @@ $$
 
 既存サイトはアップグレードガイドに従って starter と設定を一度移行してください。パッケージ更新だけでは処理器は接続されません。
 
+<a id="deployment"></a>
+
 ## 静的ホスティング
 
-`npm run build` を実行し、`dist/` の全内容を静的サイトの公開ディレクトリへ配置します。サーバーはディレクトリの `index.html` を配信する必要があります。Cloudflare や本番 Node.js プロセスは不要です。ビルド前に `site.url` と `PUBLIC_SITE_URL` の上書きを設定し、変更後は再ビルドします。任意のコメント、GA4、外部音声はそれぞれのサービスへ接続します。
+starter は静的 Astro サイトです。Cloudflare、Wrangler、Miniflare、サーバーアダプターは必須ではなく、本番の Node.js プロセスも不要です。Node.js はインストールとビルドに使います。
+
+### 公開前の準備
+
+`site.url` に本番ドメインを設定します。`PUBLIC_SITE_URL` があれば優先されます。`npm run doctor` と `npm run preview` で確認します。preview は公開しません。
+
+生成したブログとロックファイルを自分の Git リポジトリへ push し、ホストへインポートします。公開ブランチと `package.json` のあるディレクトリを選びます。上流テーマのリポジトリを接続しないでください。
+
+| サービス                                                                                           | 公開設定                                                                                                                                   |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | リポジトリをインポートして Astro を選択。ビルド `npm run build`、公開先 `dist`。                                                           |
+| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | リポジトリをインポートして Astro を選択。ビルド `npm run build`、出力先 `dist`。                                                           |
+| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Pages で Git を接続。ビルド `npm run build`、出力先 `dist`。Wrangler コマンドは不要です。                                                  |
+| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | Settings → Pages で GitHub Actions を選び、公式 Astro ワークフローに従います。`USERNAME.github.io` またはルートの独自ドメインを使います。  |
+| Nginx / Apache / static hosting                                                                    | `npm run build` 後、`dist/` の全内容を Web ルートへ配置。各ディレクトリの `index.html` を配信し、全 URL をトップへ書き換えないでください。 |
+
+対応中の Node.js（`package.json` の `>=22.12.0` を満たすもの、現在の検証基準は Node 24 LTS）を使用し、開発依存もインストールします。pnpm では `pnpm build` と対応するロックファイルを使います。
+
+現在のナビゲーションにはルート相対 URL があります。Astro `base` だけでは `/repository/` 配下を保証できません。GitHub プロジェクト Pages も同様です。ルートで公開するか、関連パスを自分で修正・検証してください。
+
+Workers は別の任意の方法で、Wrangler から `dist` を送信します。デモの保守環境は starter の要件ではありません。静的公開に SSR アダプターは不要です。
+
+公開後、記事 URL の直接表示と再読み込み、言語切替、検索、Decoder、`/<locale>/rss.xml`、`/sitemap-index.xml`、canonical を確認します。資産・検索索引・共有画像・端末 JSON を含む全出力を配置してください。変更後は再ビルドして公開します。任意のコメント、GA4、外部音声は各サービスへ接続します。
 
 ## 記事の統計
 

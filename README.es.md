@@ -17,14 +17,14 @@
 </p>
 
 <p align="center">
-  <a href="#installation">Instalación</a> · <a href="#setup">Guía de configuración</a>
+  <a href="#installation">Instalación</a> · <a href="#setup">Guía de configuración</a> · <a href="#deployment">Desplegar</a>
 </p>
 
 <p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
-  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
@@ -452,9 +452,33 @@ Se renderiza durante la compilación, con estilos y fuentes locales y MathML acc
 
 Los proyectos anteriores necesitan la migración inicial del starter y la configuración explicada en la guía de actualización; actualizar solo el paquete no conecta el procesador Markdown.
 
+<a id="deployment"></a>
+
 ## Despliegue estático
 
-Ejecuta `npm run build` y sube todo el contenido de `dist/` a la raíz de tu sitio estático. El servidor debe servir el `index.html` de cada directorio. Cloudflare es opcional y no hace falta Node.js en producción. Configura `site.url` y cualquier sobrescritura `PUBLIC_SITE_URL` antes de compilar; vuelve a compilar tras los cambios. Comentarios, GA4 y audio remoto opcionales siguen conectándose a sus servicios.
+El starter es un sitio Astro estático sin dependencia de Cloudflare, Wrangler, Miniflare ni adaptadores de servidor. Node.js se necesita para instalar y compilar, no como proceso en producción.
+
+### Antes de publicar
+
+Configura `site.url` con tu dominio; `PUBLIC_SITE_URL` tiene prioridad. Ejecuta `npm run doctor` y `npm run preview`. La vista previa no publica el sitio.
+
+Sube tu blog generado y su archivo de bloqueo a tu propio repositorio Git e impórtalo en el alojamiento. Elige la rama de publicación y el directorio con `package.json`. No conectes el repositorio original del tema.
+
+| Plataforma                                                                                         | Configuración                                                                                                                                 |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Netlify](https://docs.astro.build/en/guides/deploy/netlify/)                                      | Importa el repositorio y selecciona Astro. Compilación `npm run build`, publicación `dist`.                                                   |
+| [Vercel](https://docs.astro.build/en/guides/deploy/vercel/)                                        | Importa el repositorio y selecciona Astro. Compilación `npm run build`, salida `dist`.                                                        |
+| [Cloudflare Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/) | Conecta Git en Pages. Compilación `npm run build`, salida `dist`; no requiere un comando Wrangler adicional.                                  |
+| [GitHub Pages](https://docs.astro.build/en/guides/deploy/github/)                                  | En Settings → Pages elige GitHub Actions y sigue el flujo oficial de Astro. Usa `USERNAME.github.io` o un dominio propio que sirva desde `/`. |
+| Nginx / Apache / static hosting                                                                    | Ejecuta `npm run build` y sube todo `dist/` a la raíz web. Sirve el `index.html` de cada directorio sin redirigir todas las rutas al inicio.  |
+
+Usa una versión mantenida de Node.js compatible con `package.json` (`>=22.12.0`; referencia actual: Node 24 LTS). Instala también las dependencias de desarrollo. Con pnpm usa `pnpm build` y su archivo de bloqueo.
+
+La navegación actual incluye URL relativas a la raíz: configurar solo Astro `base` no garantiza el funcionamiento bajo `/repository/`, tampoco en Pages de proyectos GitHub. Usa la raíz del dominio o adapta y verifica las rutas.
+
+Workers es una alternativa opcional que sube `dist` con Wrangler. Las herramientas del demo no son requisitos del starter. Este despliegue estático no necesita adaptadores SSR.
+
+Tras publicar, abre y recarga artículos directamente; prueba idiomas, búsqueda, Decoder, `/<locale>/rss.xml`, `/sitemap-index.xml` y canonical. Sube todos los recursos, índices, imágenes y JSON del terminal. Reconstruye tras cambios. Comentarios, GA4 y audio externo opcionales siguen usando sus servicios.
 
 ## Estadísticas del artículo
 

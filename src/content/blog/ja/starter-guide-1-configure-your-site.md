@@ -4,7 +4,7 @@ title: '利用ガイド 1：ブログを立ち上げる'
 subtitle: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 description: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-11'
+updatedDate: '2026-10-18'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -113,6 +113,8 @@ npm run preview
 `doctor` はプロジェクトを検査してビルドし、検索索引と既定の共有画像を含む静的出力を `dist/` に生成します。成功後に check や build を追加実行する必要はありません。`preview` はローカル確認用で、公開はしません。Ctrl+C で停止します。
 
 静的ホスティングのビルドコマンドを `npm run build`、出力ディレクトリを `dist` に設定し、先に `site.url` を実際のドメインに変更します。リポジトリ接続やドメイン、公開手順は [Astro のデプロイガイド](https://docs.astro.build/en/guides/deploy/) の各サービスの説明を参照してください。公開後はトップページ、記事、言語切り替え、検索、`/<言語コード>/rss.xml` を確認します。記事や設定の変更後は再ビルドと再デプロイが必要です。
+
+Cloudflare は任意です。各サービスの設定と現在のルート公開の制約は [README のデプロイ手順](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ja.md#deployment)を参照してください。
 
 ## 6. 設定の 3 つの基本
 
