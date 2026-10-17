@@ -52,7 +52,9 @@ for (const viewport of [
     } else {
       await expect(page.locator('.hacker-sidebar [data-modal]')).toHaveCount(5);
       for (const tool of await page.locator('.hacker-sidebar [data-modal]').all()) {
-        await expect(tool).toBeHidden();
+        if ((await tool.getAttribute('data-modal')) === 'decryptor')
+          await expect(tool).toBeVisible();
+        else await expect(tool).toBeHidden();
       }
       await expect(page.locator('[data-oracle]')).toBeVisible();
       await page.locator('[data-oracle]').click();
