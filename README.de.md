@@ -129,7 +129,7 @@ Veröffentliche im Stammverzeichnis der Domain und liefere die index.html jedes 
 
 ### Startseiteneffekte und Decoder
 
-Unter `theme.home` in `src/site.config.ts` steuert `showInitialize` Initialize/done, `showFollow` Wake Up/Follow und `showTrace` den Status unten rechts. Alle sind standardmäßig `true`; `false` blendet den jeweiligen Bereich aus.
+Unter `theme.home` in `src/site.config.ts` steuert `showInitialize` Initialize/done, `showFollow` Wake Up/Follow und `showTrace` den Status unten rechts. Alle sind standardmäßig `true`; `false` blendet den jeweiligen Bereich aus. 0.18.1: Die beiden unteren Statusanzeigen sind zunächst verborgen und erscheinen unabhängig bei Maus-Hover oder Textauswahl. Alles auswählen zeigt beide; der leuchtende Cursor folgt nur der rechten Trace-Anzeige.
 
 Die große Startseitenüberschrift lässt sich je Sprache über `i18n.locales.<code>.site.homeTitle` in `src/site.config.ts` setzen, etwa `de: { site: { homeTitle: "Mein digitaler Garten" } }`. Das gilt auch für zusätzlich konfigurierte Sprachen. Fehlende oder leere Werte folgen `meta.fallback`, danach gilt der globale `site.title` oder `PUBLIC_SITE_TITLE`. Nur die sichtbare Überschrift ändert sich; Browser-Titel, Navigation, Footer, RSS und SEO-Seitenname bleiben global. Anschließend neu bauen und bereitstellen.
 
@@ -281,6 +281,8 @@ theme: {
   music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] },
 },
 ```
+
+0.18.1: Der aktivierte Player startet auf jeder neuen Seite kompakt; OPEN klappt ihn auf. Wiedergabeposition, Lautstärke und Fortsetzen sind unabhängig von der Anfangsgröße.
 
 Titel enthalten title, src und optional artist. Ohne Titel bleibt der Player verborgen. Der erste Start braucht einen Klick. Die Sitzung merkt sich Titel, Position und Lautstärke; Fortsetzen hängt vom Browser ab und ist nicht lückenlos. Nach dem letzten Titel beginnt die Liste erneut.
 

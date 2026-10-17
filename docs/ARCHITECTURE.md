@@ -37,7 +37,13 @@ Coverage: `tests/math.unit.test.mjs` (syntax, MDX, escaping, disabled behavior, 
 
 ## Runtime Model
 
+### Hidden homepage status
+
+`HomePage.astro` retains the configured `theme.home.showTrace` row in the initial markup. `styles/home-page.css` reserves its layout space but independently hides the left pirate signal and right trace, including their glow and the trace cursor. Fine-pointer hover reveals only the hovered item. `scripts/home-effects.js` listens for `selectionchange` and `pageshow` through its existing AbortSignal, setting `data-selected` independently on each item intersected by a non-collapsed range and removing it on disposal. Select-all reveals both; selecting one reveals only that item. The non-text block cursor follows only the trace, without a new timer or rendering loop. Hover uses CSS; selection-driven reveal requires the initialized home script. Reduced motion keeps the revealed cursor static. The main panel's bottom padding is 0.8rem on desktop and 0.75rem on mobile. `tests/e2e/home-status.spec.mjs` covers independent hover/selection, select-all, stable geometry, compact bottom spacing and mobile selection under reduced motion; native mobile long-press handles are not automated.
+
 ### Music scene separation
+
+`MusicDeck.astro` defaults `initiallyCollapsed` to true, so its initial HTML already has the compact layout, track-title caption and matching OPEN/ARIA state. The default initial-state attribute keeps each new page compact even when session storage records an expanded deck; callers can pass false for an expanded entry on desktop or mobile. `ThemeFrame` forwards `musicInitiallyCollapsed` to this prop; it is not a new site-config field. Explicit false also prevents the narrow-screen breakpoint from forcing collapse on resize or BFCache restoration. `music/controller.js` retains manual expansion, mobile breakpoint handling and the latest saved presentation on BFCache restoration. Playback position, volume and resume intent are independent of the page-entry presentation. `scripts/check-music-browser.mjs` checks all four scenes before JavaScript and with an existing expanded session, alongside playback/navigation/seek coverage.
 
 `ThemeFrame.astro` resolves the parent shell's class tokens through `components/shared/music-scenes.ts` and passes `scene` to `MusicDeck.astro`. Supported scenes are `base`, `matrix`, `cyber`, `hacker`, and `ai`; unknown shells and standalone decks use base. Selection is independent of locale paths and track mood. Blog lists and tag archives intentionally share Cyber because they use the same shell.
 
@@ -189,7 +195,7 @@ The loader skips localhost, `.localhost`, IPv4 loopback, IPv6 loopback and `0.0.
 - `src/config/about.ts`: About adapter selector (`getAboutConfig(locale)` from `src/site.config.ts -> i18n.locales`)
 - `src/config/social.ts`: social adapter (header/footer social links)
 - Shared header navigation is implemented as Home, Blog and optional About in `CommonHeader.astro`; labels are localizable, but there is no arbitrary navigation-link array. `new-page` creates page routes without adding a header entry.
-- `packages/theme/src/components/shared/SocialMenu.astro`: both header and footer show Mastodon/Twitter/GitHub non-clickable placeholders when the social list is empty; a non-empty list renders only its configured links. Main's demo config leaves the list empty, like the neutral starter. About contact links and footer theme/Astro credits are configured separately.
+- `packages/theme/src/components/shared/SocialMenu.astro`: both header and footer show Mastodon/Twitter/GitHub non-clickable placeholders when the social list is empty; a non-empty list renders only its configured links. Main's demo config supplies X, Mastodon and GitHub links; the neutral starter defaults to an empty list. About contact links and footer theme/Astro credits are configured separately.
 - `packages/theme/src/config/*.ts`: package fallback defaults for non-starter/manual consumers
 
 ### Config Ownership Contract

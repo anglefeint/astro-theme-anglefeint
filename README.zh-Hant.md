@@ -129,7 +129,7 @@ npm run build
 
 ### 首頁效果與解碼工具
 
-首頁開關：`theme.home.showInitialize` 控制 Initialize/done，`showFollow` 控制 Wake Up/Follow，`showTrace` 控制右下角狀態。於 `src/site.config.ts` 設定，預設皆為 `true`，設為 `false` 可獨立隱藏。
+首頁開關：`theme.home.showInitialize` 控制 Initialize/done，`showFollow` 控制 Wake Up/Follow，`showTrace` 控制右下角狀態。於 `src/site.config.ts` 設定，預設皆為 `true`，設為 `false` 可獨立隱藏。 0.18.1:底部兩項狀態預設隱藏，分別回應滑鼠移入或文字選取；全選時兩項都顯現，發光游標只跟隨右側追蹤文字。
 
 可選的 `theme.footer.links` 在頁尾增加一行，每項填寫 `label` 與 `href`，連結以中間點分隔；省略或空陣列隱藏該行。標籤在各語言中保留設定原文，獨立於社群圖示與 `showCredits`。
 
@@ -281,6 +281,8 @@ theme: {
   music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] },
 },
 ```
+
+0.18.1:啟用播放器後，每次進入新頁面預設顯示小播放器，點擊 OPEN 展開；曲目進度、音量與續播不受初始大小影響。
 
 每首曲目包含 title、src 與選填 artist，空清單會隱藏播放器。首次播放需點擊。分頁工作階段會記住曲目、進度與音量，但恢復播放取決於瀏覽器政策，跨頁可能有短暫中斷。最後一首結束後回到第一首。
 

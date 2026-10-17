@@ -6,6 +6,35 @@ import '../styles/home-passage.css';
 
 const instances = new WeakMap();
 
+// Reveal each signal independently, including the trace's non-text cursor.
+function initHiddenStatus(signal) {
+  const items = document.querySelectorAll('.home-pirate-signal, .home-trace-text');
+  if (!items.length) return;
+  const syncSelection = () => {
+    const selection = document.getSelection();
+    for (const item of items) {
+      let selected = false;
+      if (selection && !selection.isCollapsed) {
+        for (let index = 0; index < selection.rangeCount; index++) {
+          if (selection.getRangeAt(index).intersectsNode(item)) {
+            selected = true;
+            break;
+          }
+        }
+      }
+      item.toggleAttribute('data-selected', selected);
+    }
+  };
+  document.addEventListener('selectionchange', syncSelection, { signal });
+  window.addEventListener('pageshow', syncSelection, { signal });
+  signal.addEventListener(
+    'abort',
+    () => items.forEach((item) => item.removeAttribute('data-selected')),
+    { once: true }
+  );
+  syncSelection();
+}
+
 // Interaction only: scene timing and rendering belong to the shared passage player.
 function initSignalPreview(signal) {
   const panel = document.querySelector('.home-signal-monitor');
@@ -166,6 +195,7 @@ export function initHomeEffects() {
   if (instances.has(canvas)) return instances.get(canvas);
   const listeners = new AbortController();
   const options = { signal: listeners.signal };
+  initHiddenStatus(listeners.signal);
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const rain = initHomeMatrix();
   let detachMirror;
