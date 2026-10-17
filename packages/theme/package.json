@@ -54,6 +54,7 @@
     "./utils/project-config": "./src/scaffold/project-config.mjs",
     "./utils/number": "./src/utils/number.ts",
     "./utils/tags": "./src/utils/tags.ts",
+    "./utils/terminal-document": "./src/utils/terminal-document.ts",
     "./utils/music": "./src/utils/music.ts",
     "./utils/pagination": "./src/utils/pagination.ts",
     "./utils/pagination-style": "./src/utils/pagination-style.ts",
