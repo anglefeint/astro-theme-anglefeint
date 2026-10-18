@@ -257,6 +257,14 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 | ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
+| 블로그 페이지 이동                                                                   | 관련 게시물                                                                  |
+| ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| ![블로그 페이지 이동](public/images/theme-previews/preview-blog-list-pagination.png) | ![관련 게시물](public/images/theme-previews/preview-blog-post-collapsed.png) |
+
+| Decoder Lab                                                      |
+| ---------------------------------------------------------------- |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+
 ## 라우트별 분위기
 
 - `/<default-locale>/` (기본적으로 `/` 는 여기로 리다이렉트): Matrix 스타일 터미널 랜딩

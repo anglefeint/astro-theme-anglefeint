@@ -257,6 +257,14 @@ Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh
 | ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
+| Paginación del blog                                                                   | Artículos relacionados                                                                  |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| ![Paginación del blog](public/images/theme-previews/preview-blog-list-pagination.png) | ![Artículos relacionados](public/images/theme-previews/preview-blog-post-collapsed.png) |
+
+| Decoder Lab                                                      |
+| ---------------------------------------------------------------- |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+
 ## Ambiente por ruta
 
 - `/<default-locale>/` (por defecto `/` redirige aquí): portada tipo terminal Matrix

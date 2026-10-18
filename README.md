@@ -257,6 +257,14 @@ Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `d
 | ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
+| Blog pagination                                                                   | Article related posts                                                                  |
+| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| ![Blog pagination](public/images/theme-previews/preview-blog-list-pagination.png) | ![Article related posts](public/images/theme-previews/preview-blog-post-collapsed.png) |
+
+| Decoder Lab                                                      |
+| ---------------------------------------------------------------- |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+
 ## Route Atmospheres
 
 - `/<default-locale>/` (with `/` redirecting there by default): Matrix-inspired terminal landing

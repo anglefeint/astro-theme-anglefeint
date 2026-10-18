@@ -850,7 +850,7 @@ body.page-home .home-archive-command {
 }
 
 .home-archive-row {
-  margin: 1.1rem 0 0.3rem;
+  margin: 1.1rem 0 0;
   text-align: end;
 }
 
@@ -893,7 +893,7 @@ body.page-home .home-archive-command {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem 1.5rem;
-  margin-top: 0.8rem;
+  margin-top: 0.15rem;
   color: var(--matrix-green-soft);
   font:
     0.75rem/1.5 'Courier New',

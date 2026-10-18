@@ -257,6 +257,14 @@ export const THEME_CONFIG = defineThemeConfig({
 | ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
+| 博客分页                                                                   | 文章相关推荐                                                                  |
+| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| ![博客分页](public/images/theme-previews/preview-blog-list-pagination.png) | ![文章相关推荐](public/images/theme-previews/preview-blog-post-collapsed.png) |
+
+| Decoder Lab                                                      |
+| ---------------------------------------------------------------- |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+
 ## 路由视觉氛围
 
 - `/<default-locale>/`（默认 `/` 会重定向到这里）：Matrix 终端风首页

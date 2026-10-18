@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.18.2] - 2026-10-18
+
+- Reduce the gap between the homepage ALL link and hidden status row while preserving the link's touch target and independent signal reveal.
+- Refresh the nine-language README screenshot gallery, including generic About content, blog pagination, related posts and Decoder Lab previews.
+- Compatible presentation update with no configuration or adapter migration. See the [release record](docs/releases/0.18.2.md) for delivery status.
+
 ## [0.18.1] - 2026-10-18
 
 - Start the music player compact in the initial HTML. Explicit `initiallyCollapsed={false}` opens it on desktop or mobile; explicit true keeps it compact. Preserve manual controls and playback/session state.
