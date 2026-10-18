@@ -20,7 +20,7 @@ depends_on:
 
 ## 1) Prepare release state
 
-Before a dry-run or real publish, bump the workspace package version first. `npm run release:npm` does not auto-increment the package version.
+Before publishing, bump the workspace package version first. `npm run release:npm` does not auto-increment the package version.
 
 Prepare release note state in the same release-prep change:
 
@@ -47,17 +47,17 @@ Dependency audits are blocking: main, isolated starter and delivered starter use
 
 `scripts/release-npm.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or completed CI. Those are maintainer workflow requirements: inspect them before running it. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
 
-Run the publish dry-run after committing the release-prep state. The release script checks that the local package version is newer than the npm registry version before packing or publishing.
+After committing the release-prep state, run the formal release entry once. It checks that the local package version is newer than the npm registry version before packing or publishing. Do not prepend a full dry-run to every routine release: that repeats the same main checks and installed build matrix.
 
 Include implementation, tests, changelog and release notes in the release-prep commit, not just the two version files in the example. Validate and push `main` before publishing; check any push-triggered automation first.
 
 For the public demo, use the [production demo deployment checks](MAINTAINER_WORKFLOW.md#production-demo-deployment): only `main` may deploy to production. After the final branch push, verify the live blog inventory, older articles and pagination as well as the changed pages. Starter template acceptance and a successful Cloudflare build check are not substitutes for this check.
 
 ```bash
-npm run release:npm -- --dry-run
+npm run release:npm
 ```
 
-By default this runs main checks, dependency audits, the independent installed-starter build matrix, `theme:pack` and `npm publish --dry-run`. Dry-run skips `npm whoami` and post-publication verification. A real run adds those steps. `--skip-checks` skips main checks and the installed build matrix, but retains main audit and isolated-starter installation/CLI checks/audit. `--skip-pack` skips the separate `theme:pack` step (npm publish still packs the package), and `--skip-registry-check` bypasses the initial newer-than-latest check. Skips must be justified in the release record.
+This one invocation runs main checks, dependency audits, the independent installed-starter build matrix, `theme:pack`, authentication, publication and post-publication verification. The `--dry-run` option remains available for diagnosing packaging or release configuration, but is not a routine prerequisite. It runs the same preflight gates and simulates publication, omitting authentication and post-publication verification. `--skip-checks` skips main checks and the installed build matrix, but retains main audit and isolated-starter installation/CLI checks/audit. `--skip-pack` skips the separate `theme:pack` step (npm publish still packs the package), and `--skip-registry-check` bypasses the initial newer-than-latest check. Skips must be justified in the release record.
 
 ### Temporary static-cache advisory review (2026-10-03)
 
@@ -108,7 +108,6 @@ npm version patch --workspace @anglefeint/astro-theme --no-git-tag-version
 git add packages/theme/package.json package-lock.json
 git commit -m "chore(release): bump @anglefeint/astro-theme to <version>"
 git push origin main
-npm run release:npm -- --dry-run
 npm run release:npm
 npm run release:starter
 git push origin starter

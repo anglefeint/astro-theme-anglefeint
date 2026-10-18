@@ -129,7 +129,7 @@ Use this sequence unless explicitly skipped for a documented reason.
    - commit the release-prep changes on `main`
 3. Run `npm run maintainer:sync-starter:check` on `main` to confirm the expected starter drift before mutating branches.
 4. Push the validated release-prep commit on `main` after checking push-triggered automation.
-5. If Class A/C affects shipped package behavior, publish npm with `npm run release:npm` and wait for its dist-tag and exact-version tarball verification. On verification timeout, confirm availability before syncing starter; never republish the accepted version.
+5. If Class A/C affects shipped package behavior, run `npm run release:npm` once with all default checks and wait for its dist-tag and exact-version tarball verification. A full `--dry-run` is optional for diagnostics, not a mandatory preceding pass; do not routinely repeat the same main checks and installed matrix. On verification timeout, confirm availability before syncing starter; never republish the accepted version.
 6. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
 7. Push `starter`.
 8. Create a temporary project from the remote `#starter` template. Verify install, CLI commands, checks, build, dev and preview; stop servers and remove the temporary project after success.

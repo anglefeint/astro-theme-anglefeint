@@ -116,7 +116,7 @@ If npm release is required:
 4. commit the release-prep changes on `main`
 5. run `npm run maintainer:sync-starter:check`
 6. push `main` after validation and checking push-triggered automation
-7. publish with `npm run release:npm`; wait for its dist-tag and exact-version tarball verification
+7. publish with one `npm run release:npm` invocation; do not prepend a full dry-run for routine releases. Keep all default checks, and wait for its dist-tag and exact-version tarball verification
 8. then sync and validate starter with `npm run release:starter`
 9. push `starter`
 10. test the remote template, record actual results, then tag the npm source commit and publish the GitHub Release following `docs/PACKAGE_RELEASE.md`
