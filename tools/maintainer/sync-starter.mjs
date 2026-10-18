@@ -536,7 +536,9 @@ async function runMain() {
       `[maintainer:sync-starter] starter drift detected (${drift.length} file(s)) against ${sourceRef}:`
     );
     for (const relPath of drift) console.error(`- ${relPath}`);
-    process.exit(1);
+    // Preserve the failing check result while allowing main's finally to release the lock.
+    process.exitCode = 1;
+    return;
   }
 
   if (!targetLocalRef) {

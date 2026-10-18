@@ -181,6 +181,8 @@ npm run release:starter
 npm run release:starter:push
 ```
 
+`maintainer:sync-starter:check` returns exit status 1 when drift is found, but still closes its maintainer session and releases the shared lock. Expected drift must not leave an interrupted-session lock for the next operation.
+
 Main release checks also rely on:
 
 ```bash
