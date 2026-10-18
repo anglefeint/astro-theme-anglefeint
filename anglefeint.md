@@ -38,9 +38,11 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 # Anglefeint 项目全景说明
 
+> Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
+
 这份中文项目地图解释当前工程的功能和代码入口，面向维护者和 coding agent。**代码定义已实现行为，文档负责记录它。** 遇到差异先读实现、配置、调用方和测试，再修正文档；不为了让旧文档成立而修改代码。
 
-此前全量核对基线为 `373ac4c`，覆盖依赖升级、数学公式和当时的发布收尾；2026-10-16 的增量核对以 `baaef62` 及其工作区变更为准，补充首页终端与共享 Oracle，见 [文档审查记录](docs/CODE_DOC_AUDIT.md)。具体交付与验收见 [0.13.0 发布记录](docs/releases/0.13.0.md)；当前源码版本读取 [package.json](packages/theme/package.json)，不要把这里的快照当作实时 npm 状态。
+此前全量核对基线为 `cf52432`，覆盖依赖升级、数学公式和当时的发布收尾；2026-10-16 的增量核对以 `d2d3cbd` 及其工作区变更为准，补充首页终端与共享 Oracle，见 [文档审查记录](docs/CODE_DOC_AUDIT.md)。具体交付与验收见 [0.13.0 发布记录](docs/releases/0.13.0.md)；当前源码版本读取 [package.json](packages/theme/package.json)，不要把这里的快照当作实时 npm 状态。
 
 ## 1. 工程边界
 

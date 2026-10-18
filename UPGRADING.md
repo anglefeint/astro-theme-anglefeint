@@ -10,6 +10,8 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+> Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
+
 ## 0.18.1: player initialization and hidden homepage signals
 
 This package-only update adds no configuration fields, routes, aliases or adapter exports. Projects already matching the 0.18.0 starter can run `npm update @anglefeint/astro-theme`, then `npm run doctor`, preview, rebuild and redeploy. See the [0.18.1 release record](docs/releases/0.18.1.md) for delivery status. Older starter contracts still require their corresponding migration.
@@ -154,7 +156,7 @@ The footer now links to Anglefeint and Astro by default. Set `theme.footer.showC
 
 ### Starter-side site URL override fix (2026-09-19)
 
-The corrected starter makes `PUBLIC_SITE_URL` override Astro's build-time `site`, including canonical URLs, RSS and sitemap output. It changes `astro.config.mjs`, adds `scripts/resolve-site-url.mjs` and declares Vite as a direct build dependency. Updating the theme npm package alone cannot install these starter changes. In older starters, set `site.url` directly in `src/site.config.ts` and remove conflicting `PUBLIC_SITE_URL` values, or follow the fresh-template migration below. After adopting the corrected starter, rebuild and inspect canonical, RSS, sitemap and social-image URLs with your deployment domain. The theme package remains 0.7.0; the corrected starter was delivered as `b2071b6`.
+The corrected starter makes `PUBLIC_SITE_URL` override Astro's build-time `site`, including canonical URLs, RSS and sitemap output. It changes `astro.config.mjs`, adds `scripts/resolve-site-url.mjs` and declares Vite as a direct build dependency. Updating the theme npm package alone cannot install these starter changes. In older starters, set `site.url` directly in `src/site.config.ts` and remove conflicting `PUBLIC_SITE_URL` values, or follow the fresh-template migration below. After adopting the corrected starter, rebuild and inspect canonical, RSS, sitemap and social-image URLs with your deployment domain. The theme package remains 0.7.0; the corrected starter was delivered as `2ede266`.
 
 ### 0.7.0: optional music player
 

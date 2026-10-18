@@ -12,9 +12,11 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+> Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
+
 ## 2026-10-18 0.18.1 发布交付核对
 
-播放器初始化与首页独立隐藏信号属于包内运行行为，因此按安全发布工作流交付 0.18.1。npm 源码为 `2f4a7ac`，starter 为 `9679f43`，依赖声明与 lockfile 均为 0.18.1 基线；九语 README 的待发布提示已在发布准备时改为版本说明，保持后部功能参考位置。此前未发布核对段落是当时状态，未反向改写历史。
+播放器初始化与首页独立隐藏信号属于包内运行行为，因此按安全发布工作流交付 0.18.1。npm 源码为 `63d28c6`，starter 为 `fa8e119`，依赖声明与 lockfile 均为 0.18.1 基线；九语 README 的待发布提示已在发布准备时改为版本说明，保持后部功能参考位置。此前未发布核对段落是当时状态，未反向改写历史。
 
 本轮通过 main 完整门禁、lint、14 组独立安装构建及 main/独立/生成/公开模板的零已知漏洞审计。完整 Chromium 首轮 105/109 通过，四项超时相关案例单进程复核全部通过，未为断言改动运行时。播放器独立夹具通过；npm 预演和正式发布复用已完成的完整门禁，仍执行不可跳过的审计、安装 CLI 与注册表验证。实际下载包哈希与准备产物相同。公开模板确认 0.18.1，14 个用户脚本、配置、dev/preview 和浏览器验收通过，临时项目与服务已清理。
 
@@ -22,7 +24,7 @@ starter 推送后，线上九语言 126 篇文章及分页、旧文章地址和�
 
 ## 2026-10-18 播放器初始状态与首页独立隐藏信号（未发布）
 
-本轮以 main `1ec77ea` 为基线，审阅其后的未提交工作区，包含新增的 `tests/e2e/home-status.spec.mjs`。初始输入共 17 个路径：九语 README、架构/视觉参考、`MusicDeck.astro`、`music/controller.js`、`home-effects.js`、`home-page.css`、音乐浏览器夹具与新增首页测试。`suggest:docs` 的元数据匹配给出 75 份直接候选、无额外传播项、零元数据错误；候选较广是路径分类结果，不代表全部需要改写。工具首次受沙箱内 Git 子进程限制，重新以可读取工作区的环境执行成功；没有为此修改工具或运行代码。
+本轮以 main `e08634f` 为基线，审阅其后的未提交工作区，包含新增的 `tests/e2e/home-status.spec.mjs`。初始输入共 17 个路径：九语 README、架构/视觉参考、`MusicDeck.astro`、`music/controller.js`、`home-effects.js`、`home-page.css`、音乐浏览器夹具与新增首页测试。`suggest:docs` 的元数据匹配给出 75 份直接候选、无额外传播项、零元数据错误；候选较广是路径分类结果，不代表全部需要改写。工具首次受沙箱内 Git 子进程限制，重新以可读取工作区的环境执行成功；没有为此修改工具或运行代码。
 
 沿 `theme.music` schema/defaults → adapter → ThemeFrame → MusicDeck → controller/storage → 生成 HTML/CSS/JS 核对：音乐功能仍默认关闭，空歌单不挂载；挂载后的播放器默认从 HTML 就显示小尺寸，`initiallyCollapsed=false` 优先于屏幕和历史记录，可在桌面或手机初始化为大尺寸。ThemeFrame 的转发参数是 `musicInitiallyCollapsed`，并非新站点配置项。手动切换、音量、曲目进度与播放恢复保留；BFCache 使用最新保存的表现状态，不机械重放初始化参数。音乐夹具使用 Astro 实际返回的预览端口，不再误测占用首选端口的其他服务。
 
@@ -38,11 +40,11 @@ starter 推送后，线上九语言 126 篇文章及分页、旧文章地址和�
 
 完整发布门禁额外发现 workspace 路径掩盖的 terminal-document 包导出和 Decoder 脚本声明缺失，已在 npm 发布前修正并通过干净独立安装的 14 组构建。播放器夹具补传场景参数，手机冒烟测试按实际保留 Decryptor 入口更新；没有为迎合过期断言修改运行时。
 
-npm 原始源码为 `cec10b4`，下载哈希与打包相同；starter 为 `9c77f49`。公开模板确认安装 0.18.0，14 个用户命令、dev/preview 及新增 Decoder 三类工作流均通过。同步期间的失败夹具隔离、换行索引刷新和无主空索引锁恢复均为本地发布状态处理，不是消费者运行代码变更。验收脚本强化与说明属于发布后 maintainer/docs closeout，不需要另发 npm。详见 [0.18.0 交付记录](releases/0.18.0.md)。初始演示站构建失败和 Cloudflare 未登录限制单独保留，未把包验收冒充线上部署验收。
+npm 原始源码为 `272a3b5`，下载哈希与打包相同；starter 为 `40d7c1b`。公开模板确认安装 0.18.0，14 个用户命令、dev/preview 及新增 Decoder 三类工作流均通过。同步期间的失败夹具隔离、换行索引刷新和无主空索引锁恢复均为本地发布状态处理，不是消费者运行代码变更。验收脚本强化与说明属于发布后 maintainer/docs closeout，不需要另发 npm。详见 [0.18.0 交付记录](releases/0.18.0.md)。初始演示站构建失败和 Cloudflare 未登录限制单独保留，未把包验收冒充线上部署验收。
 
 ## 2026-10-18 代码优先复核：纠正文档残留偏移
 
-在同一 `aeae6a9` 基线和当前未提交工作区上重新运行 `suggest:docs`，本轮重新检查配置/defaults/schema/adapter → About 与 Decoder 路由 → 组件/控制器/样式 → 测试链路，而不是以此前文档核对完成的声明代替源码验证。候选完整工作区路径保存在 `acceptance-results/doc-code-first-review.log`。直接候选包括架构、视觉参考、九语 README、包 README、升级/验收、核对记录、项目参考、打包边界及政策/历史发布文件；没有额外 propagated 项。项目参考补充 Decoder 入口，打包参考补充未发布新路由/依赖归属；其余政策规则和历史事实未改变，跳过更新。
+在同一 `6364a23` 基线和当前未提交工作区上重新运行 `suggest:docs`，本轮重新检查配置/defaults/schema/adapter → About 与 Decoder 路由 → 组件/控制器/样式 → 测试链路，而不是以此前文档核对完成的声明代替源码验证。候选完整工作区路径保存在 `acceptance-results/doc-code-first-review.log`。直接候选包括架构、视觉参考、九语 README、包 README、升级/验收、核对记录、项目参考、打包边界及政策/历史发布文件；没有额外 propagated 项。项目参考补充 Decoder 入口，打包参考补充未发布新路由/依赖归属；其余政策规则和历史事实未改变，跳过更新。
 
 此次确认并修正前一轮仍遗漏的描述：
 
@@ -56,7 +58,7 @@ npm 原始源码为 `cec10b4`，下载哈希与打包相同；starter 为 `9c77f
 
 ## 2026-10-18 Decoder Lab 与共享数字动画文档核对
 
-本轮以 `main` 的 `aeae6a9` 为已提交基线，审查当前未提交 Decoder 路由、配置/schema/适配器、共享组件、脚本、样式、消息、starter manifest 和对应测试。输入来自 `npm run suggest:docs` 的完整工作区变更；原始候选保存在 `acceptance-results/decoder-final-doc-suggestions.log`。本轮覆盖 Decoder 与数字动画，不把同一工作区其他未发布功能视为已交付。
+本轮以 `main` 的 `6364a23` 为已提交基线，审查当前未提交 Decoder 路由、配置/schema/适配器、共享组件、脚本、样式、消息、starter manifest 和对应测试。输入来自 `npm run suggest:docs` 的完整工作区变更；原始候选保存在 `acceptance-results/decoder-final-doc-suggestions.log`。本轮覆盖 Decoder 与数字动画，不把同一工作区其他未发布功能视为已交付。
 
 直接命中文档包括九语 README、包 README、UPGRADING、ARCHITECTURE、VISUAL_SYSTEMS、TEMPLATE_ACCEPTANCE 及本核对记录。建议器没有额外 propagated 项；其直接候选已包含这些依赖/同步目标。政策、代理入口、元数据规范、打包/发布流程、主题提交材料和历史 releases 亦被宽泛域命中，但本轮没有改变其规则或发布状态，因此跳过改写。README 仅修正独立页的 Decoder Lab 名称，详细内部参数留在技术参考。
 
@@ -72,7 +74,7 @@ npm 原始源码为 `cec10b4`，下载哈希与打包相同；starter 为 `9c77f
 
 ## 2026-10-16 首页终端、共享走廊与 Oracle 文档工作流
 
-本轮以 main `baaef62`（0.16.0 交付说明）为工作区基线，检查最近五次提交及全部未提交修改和新增测试。既有 0.16.0 标题配置已经有对应记录；本轮没有把已发布版本改写成包含新终端或探索功能。`npm run suggest:docs` 的原始候选保存在 `acceptance-results/doc-sync-suggestions.log`，输入覆盖 HomePage/MatrixShell、首页和 About 生命周期、全部变更的 `matrix-passage` 模块、样式、消息与适配器模板及单元/浏览器测试。最终文档仍描述尚未交付的当前源码，不表示 npm、starter 或 demo 已发布。
+本轮以 main `d2d3cbd`（0.16.0 交付说明）为工作区基线，检查最近五次提交及全部未提交修改和新增测试。既有 0.16.0 标题配置已经有对应记录；本轮没有把已发布版本改写成包含新终端或探索功能。`npm run suggest:docs` 的原始候选保存在 `acceptance-results/doc-sync-suggestions.log`，输入覆盖 HomePage/MatrixShell、首页和 About 生命周期、全部变更的 `matrix-passage` 模块、样式、消息与适配器模板及单元/浏览器测试。最终文档仍描述尚未交付的当前源码，不表示 npm、starter 或 demo 已发布。
 
 | 核对链路                                                                              | 观察结果与文档处置                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -88,7 +90,7 @@ npm 原始源码为 `cec10b4`，下载哈希与打包相同；starter 为 `9c77f
 
 ## 2026-10-11 Matrix、Oracle 与播放器场景文档同步
 
-以 main `dc78b98` 为已复核基线，读取该提交后的全部工作区变更（含新增文件），将路径交给 `suggest:docs`；报告保存在 `acceptance-results/release-0140-doc-suggestions.log`。直接候选包含九语 README、包 README、架构/视觉参考、升级、验收、发布、工作流和历史版本；无额外传播项，因为关系目标已在直接候选中。
+以 main `6bacf43` 为已复核基线，读取该提交后的全部工作区变更（含新增文件），将路径交给 `suggest:docs`；报告保存在 `acceptance-results/release-0140-doc-suggestions.log`。直接候选包含九语 README、包 README、架构/视觉参考、升级、验收、发布、工作流和历史版本；无额外传播项，因为关系目标已在直接候选中。
 
 沿 schema/defaults/site config → theme adapter → HomePage/MatrixShell、About route → 独立脚本/样式核对：首页穿越默认关闭且固定绿色；Oracle 独立可用，在点击时选配色并避免连续重复，点击/Escape 关闭；时长与键盘/减少动态效果边界以 player/timeline 和调用者为准。沿 ThemeFrame → music-scenes → MusicDeck → effects host 核对播放器场景仅影响视觉，不改变播放配置。新增包文件由既有包分发范围覆盖；修改的 starter 配置、About 路由和类型模板已由 manifest 管理；仅开发预览路由不进入 starter，生产静态路径为空。
 
@@ -96,7 +98,7 @@ npm 原始源码为 `cec10b4`，下载哈希与打包相同；starter 为 `9c77f
 
 ## 2026-10-10 全量文档候选复核与近期行为沉淀
 
-起点为干净的 main `373ac4c6802d1892c8cca82b2b89ae7a414dc6f7`。检查提交历史，并将 `0cfc07c..373ac4c` 的实际变更路径显式交给 `suggest:docs`，覆盖依赖升级、数学支持和发布收尾；另核对近期讨论涉及的统计、静态部署和主题介绍。候选报告保存于本地 `acceptance-results/docs-1010-suggestions.log`。本次按实现修正文档，没有修改运行代码来满足旧说明。
+起点为干净的 main `cf52432d7d419d7648ad53772952cc8de5c00b23`。检查提交历史，并将 `adc39c0..cf52432` 的实际变更路径显式交给 `suggest:docs`，覆盖依赖升级、数学支持和发布收尾；另核对近期讨论涉及的统计、静态部署和主题介绍。候选报告保存于本地 `acceptance-results/docs-1010-suggestions.log`。本次按实现修正文档，没有修改运行代码来满足旧说明。
 
 | 事实来源                                                                                      | 核对结果与处置                                                                                                                                                                                                                            |
 | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -112,27 +114,27 @@ npm 原始源码为 `cec10b4`，下载哈希与打包相同；starter 为 `9c77f
 
 ## 2026-10-09 Global mathematics
 
-Reviewed the working-tree delta against `982b5a6`: schema/defaults and generated adapter feed the package-owned Sätteri/KaTeX processor; BlogPost conditionally links local formula styles. Markdown and MDX share parsing, invalid input fails compilation, code and escaped dollars remain literal, formula subtrees are excluded from Pagefind, and RSS/share metadata remain plain text. The missing-adapter CSS fallback protects package-only updates before starter migration. Existing starter manifest entries already own the modified skeleton files; package files/exports own the new processor.
+Reviewed the working-tree delta against `3ef258b`: schema/defaults and generated adapter feed the package-owned Sätteri/KaTeX processor; BlogPost conditionally links local formula styles. Markdown and MDX share parsing, invalid input fails compilation, code and escaped dollars remain literal, formula subtrees are excluded from Pagefind, and RSS/share metadata remain plain text. The missing-adapter CSS fallback protects package-only updates before starter migration. Existing starter manifest entries already own the modified skeleton files; package files/exports own the new processor.
 
 The documentation helper's direct/propagated candidates were reviewed against implementation and tests. Updated nine READMEs, nine feature guides, package README, architecture/visual and acceptance references, UPGRADING, changelog and the release ledger. Metadata/workflow rules, agent entrypoints, route/SEO documentation and historical releases need no rewrites: no workflow, locale, route or SEO behavior changes. Current user-facing docs explain default-on global behavior, escaping, KaTeX scope, disabled MDX semantics and the one-time starter migration. Actual release validation and delivery are recorded in [0.13.0](releases/0.13.0.md).
 
 ## 2026-10-08 Astro 7.3.7 dependency refresh
 
-Reviewed against `0cfc07c`: root Astro moves from 7.3.5 to 7.3.7 and MDX from 8.0.2 to 8.0.3, with their transitive lockfile updates. Starter derives these dependencies from root through `scripts/starter-package.mjs`; package runtime and its compatible Astro peer range remain unchanged, so no npm theme release is required. Updated nine README badges and UPGRADING. Historical release records remain historical; configuration, architecture, routes, visual behavior and workflow contracts have no source changes. Mathematical rendering remains disabled. Lint, metadata validation, all 86 unit tests, full checks and a 190-page build passed, including nine About runtime checks; all 55 Chromium E2E tests passed. Installation audit reported zero vulnerabilities. Dependency commit `46f0e8d` is delivered on main; generated starter `af96c52` is delivered on starter with Astro 7.3.7, MDX 8.0.3 and the unchanged theme 0.12.0. Public-template acceptance passed all 14 script entries, new-post/new-page scenarios, partial-translation SEO and Chromium dev/preview checks; its installation audit reported zero vulnerabilities. Evidence: `acceptance-results/template-npm-1791466843658/report.json`, with Astro 7.3.7 confirmed in `43.log`; the temporary consumer project was removed. Firefox/WebKit were not rerun, and Cloudflare account branch settings were not inspected.
+Reviewed against `adc39c0`: root Astro moves from 7.3.5 to 7.3.7 and MDX from 8.0.2 to 8.0.3, with their transitive lockfile updates. Starter derives these dependencies from root through `scripts/starter-package.mjs`; package runtime and its compatible Astro peer range remain unchanged, so no npm theme release is required. Updated nine README badges and UPGRADING. Historical release records remain historical; configuration, architecture, routes, visual behavior and workflow contracts have no source changes. Mathematical rendering remains disabled. Lint, metadata validation, all 86 unit tests, full checks and a 190-page build passed, including nine About runtime checks; all 55 Chromium E2E tests passed. Installation audit reported zero vulnerabilities. Dependency commit `cd2b402` is delivered on main; generated starter `116d7c2` is delivered on starter with Astro 7.3.7, MDX 8.0.3 and the unchanged theme 0.12.0. Public-template acceptance passed all 14 script entries, new-post/new-page scenarios, partial-translation SEO and Chromium dev/preview checks; its installation audit reported zero vulnerabilities. Evidence: `acceptance-results/template-npm-1791466843658/report.json`, with Astro 7.3.7 confirmed in `43.log`; the temporary consumer project was removed. Firefox/WebKit were not rerun, and Cloudflare account branch settings were not inspected.
 
 ## 2026-10-08 Optional social link relations
 
-Reviewed changes against `8f66c80`: `SocialLink.rel` flows unchanged through the existing package-imported starter schema/social adapter, is normalized by the package resolver, and is emitted by shared header/footer anchors. The default remains `noopener noreferrer`; identity is never inferred from a platform. Updated nine README translations, package README, architecture/visual/acceptance references, upgrade guidance and release ledger. Existing starter guides do not define social relation configuration and need no changes; schemas/adapters/manifests, route/SEO behavior, workflow and metadata contracts are unchanged. README instructions distinguish the actual homepage from the root HTML redirect and local attribute verification from a real Mastodon server result. Unit and installed-build tests own normalization and rendered-HTML coverage; execution evidence belongs to the release ledger.
+Reviewed changes against `24e7f23`: `SocialLink.rel` flows unchanged through the existing package-imported starter schema/social adapter, is normalized by the package resolver, and is emitted by shared header/footer anchors. The default remains `noopener noreferrer`; identity is never inferred from a platform. Updated nine README translations, package README, architecture/visual/acceptance references, upgrade guidance and release ledger. Existing starter guides do not define social relation configuration and need no changes; schemas/adapters/manifests, route/SEO behavior, workflow and metadata contracts are unchanged. README instructions distinguish the actual homepage from the root HTML redirect and local attribute verification from a real Mastodon server result. Unit and installed-build tests own normalization and rendered-HTML coverage; execution evidence belongs to the release ledger.
 
 ## 2026-10-07 About plain-text line breaks
 
-Reviewed the working-tree delta against `247d4c1`: a scoped rule in package-owned About panel CSS preserves configured line feeds in direct body paragraphs/signature. Configuration parsing, About routes, language fallback, HTML escaping and interactive effects are unchanged. Nine READMEs and nine optional-feature guides, package README, visual/acceptance references and the release ledger explain plain-text behavior without promising Markdown support. Architecture, metadata/workflow rules and old releases need no edits. Browser geometry and independent installed-config checks cover presentation and build preservation separately; final execution/delivery results belong in the release record.
+Reviewed the working-tree delta against `b39e488`: a scoped rule in package-owned About panel CSS preserves configured line feeds in direct body paragraphs/signature. Configuration parsing, About routes, language fallback, HTML escaping and interactive effects are unchanged. Nine READMEs and nine optional-feature guides, package README, visual/acceptance references and the release ledger explain plain-text behavior without promising Markdown support. Architecture, metadata/workflow rules and old releases need no edits. Browser geometry and independent installed-config checks cover presentation and build preservation separately; final execution/delivery results belong in the release record.
 
 ## 2026-10-07 Grouped footer implementation review
 
 Release preflight subsequently found a new registry advisory in maintainer-only Miniflare's pinned sharp dependency. The root override/lockfile repair and its verification are documented in PACKAGE_RELEASE and the 0.11.2 ledger. Starter packaging excludes Wrangler and does not copy root overrides; user configuration and footer upgrade instructions remain unchanged.
 
-Reviewed the working-tree change against `c61d924`: CommonFooter groups copyright, credits and custom text; ThemeFrame passes localized footer labels from the existing message resolver; package dictionaries supply nine translations. Global `site.tagline`, environment precedence, the credits toggle and legacy-tagline deduplication are unchanged. No localized custom-tagline field or user schema/adapter migration is introduced.
+Reviewed the working-tree change against `32f3343`: CommonFooter groups copyright, credits and custom text; ThemeFrame passes localized footer labels from the existing message resolver; package dictionaries supply nine translations. Global `site.tagline`, environment precedence, the credits toggle and legacy-tagline deduplication are unchanged. No localized custom-tagline field or user schema/adapter migration is introduced.
 
 Updated nine READMEs, nine first-configuration guides, visual contracts and acceptance coverage. Package README receives the same usage boundary. Existing architecture, configuration schema, routing/SEO, metadata and maintainer workflows need no changes. Historical release notes remain historical. After visual review the maintainer authorized publication; the follow-up documentation workflow verified default-empty tagline behavior and prepared upgrading, changelog and the [0.11.2 release ledger](releases/0.11.2.md), which records actual delivery status.
 
@@ -140,7 +142,7 @@ Validation: lint and `check:no-build` passed (85 unit tests; Astro zero errors/w
 
 ## 2026-10-07 Reading-width release documentation follow-up
 
-Reviewed committed range `530e53a..5e4672c` (11 changed paths), including the CSS patch, persistent browser regression and release closeout. Passed the explicit paths to `suggest:docs`: direct candidates cover visual/architecture, acceptance, upgrading, package/release and workflow documents; propagation includes the eight translated READMEs. Metadata discovery reported no errors.
+Reviewed committed range `918eb65..dbf2d33` (11 changed paths), including the CSS patch, persistent browser regression and release closeout. Passed the explicit paths to `suggest:docs`: direct candidates cover visual/architecture, acceptance, upgrading, package/release and workflow documents; propagation includes the eight translated READMEs. Metadata discovery reported no errors.
 
 Compared package-owned Home/prose CSS and the global width rules with `tests/e2e/reading-width.spec.mjs`, the visual reference, changelog, upgrade instructions and release ledger. Corrected TEMPLATE_ACCEPTANCE's stale 34-test description and documented the actual nine-language width coverage, reduced-motion setting, rounding tolerance and separation from public-template acceptance. Kept exact counts in the release ledger. Added the already-completed final deployment/inventory evidence to the 0.11.1 repository note after reading back the GitHub Release and retained JSON results.
 
@@ -150,15 +152,15 @@ This audit reruns documentation metadata and local-link checks; browser, isolate
 
 ## 2026-10-06 Reading-width patch review
 
-Reviewed the 0.11.1 working-tree CSS/test delta against 530e53a using `suggest:docs`. Home and AI prose maximum widths now reserve their actual desktop padding/borders; mobile rules and wide-screen content widths are retained. Updated visual contracts, changelog, upgrading and release ledger. Nine READMEs and bundled guides need no changes because no setup, command or configuration contract changed. Architecture, metadata and release workflow are also unchanged. The [0.11.0 record](releases/0.11.0.md) remains historical evidence of the discovered defect; [0.11.1](releases/0.11.1.md) records the fix and new validation.
+Reviewed the 0.11.1 working-tree CSS/test delta against 918eb65 using `suggest:docs`. Home and AI prose maximum widths now reserve their actual desktop padding/borders; mobile rules and wide-screen content widths are retained. Updated visual contracts, changelog, upgrading and release ledger. Nine READMEs and bundled guides need no changes because no setup, command or configuration contract changed. Architecture, metadata and release workflow are also unchanged. The [0.11.0 record](releases/0.11.0.md) remains historical evidence of the discovered defect; [0.11.1](releases/0.11.1.md) records the fix and new validation.
 
 ## 2026-10-06 Social links documentation review
 
-Reviewed the 0.11.0 working-tree delta against 78a00f3. Code remains authoritative: the shared menu, icon registry, path resolver, starter schema and installed-package fixture determine the documented behavior. All nine READMEs and the nine bundled first-configuration guides now show the same configuration, twelve supported names, image priority and limitations, empty behavior and mobile visibility. Architecture, visual contracts, acceptance coverage, upgrading, changelog and release notes are synchronized. No new starter-managed file is needed: the existing schema is already manifest-owned; assets/helpers ship inside the npm package. Agent/release workflow and metadata contracts are unchanged, so candidate guidance documents and historical release notes are intentionally not rewritten. Validation and delivery evidence belongs to the [0.11.0 release record](releases/0.11.0.md).
+Reviewed the 0.11.0 working-tree delta against bc33cea. Code remains authoritative: the shared menu, icon registry, path resolver, starter schema and installed-package fixture determine the documented behavior. All nine READMEs and the nine bundled first-configuration guides now show the same configuration, twelve supported names, image priority and limitations, empty behavior and mobile visibility. Architecture, visual contracts, acceptance coverage, upgrading, changelog and release notes are synchronized. No new starter-managed file is needed: the existing schema is already manifest-owned; assets/helpers ship inside the npm package. Agent/release workflow and metadata contracts are unchanged, so candidate guidance documents and historical release notes are intentionally not rewritten. Validation and delivery evidence belongs to the [0.11.0 release record](releases/0.11.0.md).
 
 ## 2026-10-06 GA4 发布后文档工作流复核
 
-核对已提交范围 `c10eae9..e8cce3a`，包含 GA4 功能、维护文档解析依赖替换和 0.10.0 发布收尾。工作区开始时干净；将该范围的真实变更路径显式传给 `suggest:docs`，并检查提交历史，未把空工作区当作无需同步的证据。
+核对已提交范围 `1f4a9e0..e84c764`，包含 GA4 功能、维护文档解析依赖替换和 0.10.0 发布收尾。工作区开始时干净；将该范围的真实变更路径显式传给 `suggest:docs`，并检查提交历史，未把空工作区当作无需同步的证据。
 
 | 核对链路                                                                                                                                       | 对应文档与处置                                                                                                                                                                                                  |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -173,13 +175,13 @@ Reviewed the 0.11.0 working-tree delta against 78a00f3. Code remains authoritati
 
 ## 2026-10-04 缓存依赖与审计例外收尾
 
-在 `fd0955a` 基线上，将 main 锁文件中的 `http-cache-semantics` 从 4.2.0 更新为 4.3.0，Astro 保持 7.3.5。原始 npm audit 和维护者审计门禁均报告零漏洞，撤销旧静态缓存例外，新增验证旧 advisory、其他漏洞和不完整响应均被阻断的测试。当前 PACKAGE_RELEASE、AI_WORKFLOW、MAINTAINER_WORKFLOW、TEMPLATE_ACCEPTANCE 同步为无例外审计；历史 0.9.0/0.9.1 发布结果保留。
+在 `fc61f23` 基线上，将 main 锁文件中的 `http-cache-semantics` 从 4.2.0 更新为 4.3.0，Astro 保持 7.3.5。原始 npm audit 和维护者审计门禁均报告零漏洞，撤销旧静态缓存例外，新增验证旧 advisory、其他漏洞和不完整响应均被阻断的测试。当前 PACKAGE_RELEASE、AI_WORKFLOW、MAINTAINER_WORKFLOW、TEMPLATE_ACCEPTANCE 同步为无例外审计；历史 0.9.0/0.9.1 发布结果保留。
 
 上游对原报告提出异议，4.3.0 的明确修复提交对应另一项 Vary 漏洞，因此不把审计归零描述成原 advisory 已获官方修复确认。源码和讨论链接见 PACKAGE_RELEASE。修改不涉及 npm 包内容或 starter 模板；已交付 starter 锁定 4.3.0，无需发布 0.9.2 或重新同步 starter。
 
 ## 2026-10-04 最近改动与播放器配色复核
 
-核对已提交范围 `9ab1554..71e4aac`（九语言和 0.9.0 依赖/审计发布），以及随后本地 music-deck.css、check-music-browser.mjs 和视觉文档改动。显式提交路径和工作区分别交给 suggest:docs；以实际 locale registry、scaffold、组件样式、installed/template 检查代码为准。
+核对已提交范围 `ccbcc51..66d6c36`（九语言和 0.9.0 依赖/审计发布），以及随后本地 music-deck.css、check-music-browser.mjs 和视觉文档改动。显式提交路径和工作区分别交给 suggest:docs；以实际 locale registry、scaffold、组件样式、installed/template 检查代码为准。
 
 - 九语言配置、README、包说明和 0.9.0 发布事实已有记录；历史验收证据保留，不改写为本轮结果。
 - VISUAL_SYSTEMS 补全四种 shell 配色继承与 About 中性边框、等宽字体和圆角；ARCHITECTURE 补上 body token 来源及浏览器验证入口。
@@ -190,7 +192,7 @@ Reviewed the 0.11.0 working-tree delta against 78a00f3. Code remains authoritati
 
 ## 2026-10-01 文档工作流与当前实现复核
 
-核对基线为 main `8cf8fbc`，另含本地两个文档工具新增的 `acceptance-results/` 排除规则。按代码 → 文档方向检查配置默认、首页路由、文章功能、音乐播放、检查命令和发布脚本；没有按旧描述修改运行逻辑。
+核对基线为 main `d594fd3`，另含本地两个文档工具新增的 `acceptance-results/` 排除规则。按代码 → 文档方向检查配置默认、首页路由、文章功能、音乐播放、检查命令和发布脚本；没有按旧描述修改运行逻辑。
 
 - 将 `.cursor/skills/document-project-readme/SKILL.md` 收敛为主文档工作流入口，移除旧路径、旧特效示例和向 README 填入内部实现细节的固定模板。README 保持面向用户，内部结构与视觉细节仍由架构和视觉文档负责。
 - UPGRADING 补充音乐完整下载、外部音源 CORS 和自定义 CSP 的 0.8.3 升级影响，链接现有发布记录。五语 README、包 README 和发布记录已有这些事实，不重复改写。
@@ -211,7 +213,7 @@ Reviewed the 0.11.0 working-tree delta against 78a00f3. Code remains authoritati
 
 ## 2026-09-19 升级路径与验证命令复核
 
-基准 main `d7f131c`、starter `257b0ab`。对照 starter 的 `package.json`、`scripts/doctor.mjs`、`scripts/sync-adapters.mjs` 及 0.8.0 包的 Astro peer 要求，修正此前遗漏的升级说明：旧脚手架不能无条件安装 `@latest`，当前 starter 成功执行 `doctor` 已包含 `check` 和构建。
+基准 main `c5baedd`、starter `818d80f`。对照 starter 的 `package.json`、`scripts/doctor.mjs`、`scripts/sync-adapters.mjs` 及 0.8.0 包的 Astro peer 要求，修正此前遗漏的升级说明：旧脚手架不能无条件安装 `@latest`，当前 starter 成功执行 `doctor` 已包含 `check` 和构建。
 
 更新 UPGRADING、五语言 README 和五语言 `how-upgrade-works` 文章：先确认兼容性，区分包内更新与新模板迁移；说明 `npm update` 的版本范围和明确目标版本；仅在本地模板与生成适配文件不同步时运行 `sync-adapters` 后重跑 `doctor`，并明确不下载上游模板。旧工程须检查自己的脚本。验证成功后用 preview 人工检查，不重复构建。维护文档中的用户命令示例同步收敛，防止后续重新引入旧建议。
 
@@ -219,7 +221,7 @@ Reviewed the 0.11.0 working-tree delta against 78a00f3. Code remains authoritati
 
 ## 2026-09-19 自用前文档收尾核对
 
-检查开始时 main `e11954c` 工作区干净。对已提交范围 `595e000..e11954c` 的变更路径运行 `suggest:docs`，避免将干净工作区误认为无需核对。候选覆盖配置、架构、用户说明和维护/发布文档；对照实际 defaults/schema、site/theme/social adapters、CommonFooter、SocialMenu、内容 schema、Astro 集成和 starter source mapping，重点复核本轮发布及随后恢复社交占位图标的影响。
+检查开始时 main `662ae07` 工作区干净。对已提交范围 `09f5540..662ae07` 的变更路径运行 `suggest:docs`，避免将干净工作区误认为无需核对。候选覆盖配置、架构、用户说明和维护/发布文档；对照实际 defaults/schema、site/theme/social adapters、CommonFooter、SocialMenu、内容 schema、Astro 集成和 starter source mapping，重点复核本轮发布及随后恢复社交占位图标的影响。
 
 - 五语言指南 1、3 开头仍写 0.7.0，但指南 3 已包含 0.8.0 页脚配置：统一改为配套 0.8.0 starter。历史升级文章中的版本范围示例仍正确，不替换。
 - 五语言指南 1 原本只写清空 `social.links`，没有说明空状态：补充顶部/页脚仍显示 Mastodon、Twitter、GitHub 三个不可点击占位图标，非空时只显示配置条目。架构参考同步记录；About 联系入口和页脚技术署名与此列表独立。未修改组件行为。
@@ -240,7 +242,7 @@ main 的五语言首页/About 现在是 demo 专用内容；starter 的 `src/sit
 
 ## 2026-09-19 GitHub Linux 模板验收完成
 
-测试设施提交 `e2067623b50e257768588ae6bfaf0c0a805bddbe` 已推送 main。[Template acceptance 运行 35421636489](https://github.com/anglefeint/astro-theme-anglefeint/actions/runs/35421636489) 在 GitHub 托管 Ubuntu runner 上手动启动，两组任务最终均为 success：Node 22.23.2 / npm 10.9.8，以及 Node 24.20.0 / pnpm 10.34.5。
+测试设施提交 `fa1764946730ede902be9c59a6f072b47db56d45` 已推送 main。[Template acceptance 运行 35421636489](https://github.com/anglefeint/astro-theme-anglefeint/actions/runs/35421636489) 在 GitHub 托管 Ubuntu runner 上手动启动，两组任务最终均为 success：Node 22.23.2 / npm 10.9.8，以及 Node 24.20.0 / pnpm 10.34.5。
 
 - 两组分别从公开 `#starter` 创建工程，实际安装主题 0.7.0；各执行全部 14 个消费者脚本入口，各产生 46 条报告记录。安全审计、命令与参数边界、兼容范围内更新、适配器检测与修复、dev/preview 路由检查均通过；`check:workspace-link` 在消费者环境仍明确记为不适用。
 - 两组的默认及修改配置浏览器验收均通过，覆盖语言、首页数量、分页、功能开关、域名，以及音乐按需加载/播放和移动端展开。Node 22 任务另外执行主工程完整 Chromium 回归：28 项通过；Node 24 任务按工作流设计跳过这套重复回归，但执行自己的模板浏览器验收。
@@ -251,7 +253,7 @@ main 的五语言首页/About 现在是 demo 专用内容；starter 的 `src/sit
 
 ## 2026-09-19 公开模板命令与配置全链路验收
 
-基准为 main `50787375c41569a2b149c1647e17fc82abdc58e1`、公开 starter `b2071b661c81b7f31f02da28861d2a78fc6868f8`、npm 主题 0.7.0。本轮在 Windows / Node 24.14.1 本地执行；新增 Linux 手动工作流尚未推送或运行，不以本地结果代替 Linux 验收。
+基准为 main `6c2eab3e39c3434fea0e42422b5ccc1d28058152`、公开 starter `2ede26646f9675c5c10358c5412c579b233ed73f`、npm 主题 0.7.0。本轮在 Windows / Node 24.14.1 本地执行；新增 Linux 手动工作流尚未推送或运行，不以本地结果代替 Linux 验收。
 
 - `npm run check` 通过：56 项单元测试、165 个 Astro 文件零错误/警告、106 页构建及文档、字体、适配器、CLI、scaffold 等检查。`check:installed -- --build --audit` 通过独立安装、CLI/适配器、en/zh × 首页前缀矩阵及功能开关构建；审计零已知漏洞。
 - Chromium 完整回归最终 28 项通过，包含桌面与窄屏、搜索、目录、复制、图片预览、标签、About 和 reduced-motion。初次运行的四个失败来自两类测试问题：不存在结果的测试词包含真实可匹配的 `no`，以及动画时钟暂停时间可能早于安装时间；只修正测试，不修改搜索或动效实现。E2E 预期配置生成器同步使用实际域名解析器，修改后另跑四项 smoke 测试通过。
@@ -264,15 +266,15 @@ main 的五语言首页/About 现在是 demo 专用内容；starter 的 `src/sit
 
 ## 2026-09-19 文章与域名修复交付验收
 
-- 修复提交 `c123f75b1db250dbe25022bfa45b2a873e8f5f67` 已推送 main；生成的 starter `b2071b661c81b7f31f02da28861d2a78fc6868f8` 已推送并读回远程确认。`maintainer:sync-starter:check` 同步后无偏移。本次没有 npm 包代码改动，未发布 npm、未新建版本标签或 GitHub Release；注册表仍为 0.7.0。
+- 修复提交 `b5634d6d8b3106d8c6b8d19a31b0d47783c0f376` 已推送 main；生成的 starter `2ede26646f9675c5c10358c5412c579b233ed73f` 已推送并读回远程确认。`maintainer:sync-starter:check` 同步后无偏移。本次没有 npm 包代码改动，未发布 npm、未新建版本标签或 GitHub Release；注册表仍为 0.7.0。
 - 文档工作流重新检查当前修改，责任文档保持代码到配置、路由和文章的对应关系。主分支推送钩子的完整 `check` 通过。`check:installed -- --build --audit` 通过独立安装、CLI/迁移/适配器、en/zh × always/never 构建矩阵，以及搜索/标签关闭和音乐开启场景。main、隔离安装、同步后的 starter 和公开模板安装均审计零已知漏洞。
 - 使用公开 `npm create astro@latest -- --template anglefeint/astro-theme-anglefeint#starter` 新建临时工程，确认全部 15 篇教程、Astro 配置及域名解析脚本与 main 一致。通过新建文章、重复创建保护、新建 AI 页面、doctor（包含 check/build）、dev 与 preview HTTP 验收。五语教程、系列链接、RSS、搜索产物和 1200×630 分享图检查通过。
 - 公开模板构建设置 `PUBLIC_SITE_URL=https://remote-accept.example` 后，五语言首页 canonical、RSS 及 sitemap 均使用测试域名。测试服务器已停止，临时工程已清理；原本的本地 4323 开发服务已恢复。
-- Cloudflare 对 main `c123f75` 的 Workers Builds 检查成功；starter `b2071b6` 当时没有 GitHub check run。用户此前已确认修改分支部署设置，本轮未直接读取 Cloudflare 后台设置或生产活动版本 ID，不以 check run 代替这些证据。starter 推送后实测生产站：五语言各 14 篇、各 2 页列表，70 篇旧/新文章均 HTTP 200、标题与 main 一致；新版域名教程内容已经上线。后续仅推送本验收记录和升级说明，不改变运行时或文章库存。
+- Cloudflare 对 main `b5634d6` 的 Workers Builds 检查成功；starter `2ede266` 当时没有 GitHub check run。用户此前已确认修改分支部署设置，本轮未直接读取 Cloudflare 后台设置或生产活动版本 ID，不以 check run 代替这些证据。starter 推送后实测生产站：五语言各 14 篇、各 2 页列表，70 篇旧/新文章均 HTTP 200、标题与 main 一致；新版域名教程内容已经上线。后续仅推送本验收记录和升级说明，不改变运行时或文章库存。
 
 ## 2026-09-19 多语言文章逐项核对与站点域名修复（审阅时本地未发布）
 
-基准：main `ebbf7ecc64db5edbeadd89712a139ce44327eef0`，五种语言各 14 篇，共 70 篇。重点检查 15 篇使用指南的命令、配置片段、默认值、关闭状态、路由和升级边界；同时复核旧文章的视觉及架构描述。旧叙事文章篇幅不完全相同，不把设计理念视为功能保证。本轮不删除文章，不改变 slug 和 `pubDate`，25 篇修订文章的 `updatedDate` 更新为 2026-09-19。
+基准：main `8578ad61a2c03b33bab1ee952c655998563dadcb`，五种语言各 14 篇，共 70 篇。重点检查 15 篇使用指南的命令、配置片段、默认值、关闭状态、路由和升级边界；同时复核旧文章的视觉及架构描述。旧叙事文章篇幅不完全相同，不把设计理念视为功能保证。本轮不删除文章，不改变 slug 和 `pubDate`，25 篇修订文章的 `updatedDate` 更新为 2026-09-19。
 
 | 文章 / 事项                                                | 对照的实际实现                                                                                                                                                       | 处理                                                                                                    |
 | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
@@ -297,11 +299,11 @@ main 的五语言首页/About 现在是 demo 专用内容；starter 的 `src/sit
 
 ## 2026-09-19 教程交付与演示站部署复核
 
-核对 main `75402b4` 与其前序 `0f12176`、starter `b7b0d75` 与其前序 `8b503c7`：main 的 70 篇文章（每语言 14 篇）未删除，本次仅重写五语言的三篇教程。starter 在更新前后都只有 20 篇（每语言四篇），对应 [starter 内容清单](../scripts/starter-manifest.mjs) 中的欢迎文章及三篇指南。该清单不代表演示站完整文章库。
+核对 main `774921e` 与其前序 `c32416e`、starter `d9ee86b` 与其前序 `6d83be7`：main 的 70 篇文章（每语言 14 篇）未删除，本次仅重写五语言的三篇教程。starter 在更新前后都只有 20 篇（每语言四篇），对应 [starter 内容清单](../scripts/starter-manifest.mjs) 中的欢迎文章及三篇指南。该清单不代表演示站完整文章库。
 
 此前教程交付验证通过：45 段 TypeScript 示例按实际配置类型、默认合并及归一化函数检查；15 篇构建页面及系列链接验证；main 推送检查、隔离 starter 构建/审计、公开模板安装和 CLI/doctor/dev/preview 验收通过，审计为 0 个已知漏洞。这些是前一轮交付证据，不算本轮重新执行，也不能证明生产演示站内容完整。
 
-随后复查线上 `/en/blog/` 仅列四篇，`/en/blog/2/`、`/en/blog/hello-world/` 和 `/en/blog/neon-archive-blog-list/` 返回 404。GitHub 上 Cloudflare 检查显示 main `75402b4` 于 2026-09-18 15:32:30 UTC 构建成功，starter `b7b0d75` 于 16:26:29 UTC 构建成功。线上内容与 starter 一致，且后者构建更晚，指向演示站被 starter 内容替换；仅凭检查记录不能确定后台具体部署命令或活动版本。最初把“教程可访问”当成整体上线成功，遗漏了最后一次推送后的完整文章库复查。
+随后复查线上 `/en/blog/` 仅列四篇，`/en/blog/2/`、`/en/blog/hello-world/` 和 `/en/blog/neon-archive-blog-list/` 返回 404。GitHub 上 Cloudflare 检查显示 main `774921e` 于 2026-09-18 15:32:30 UTC 构建成功，starter `d9ee86b` 于 16:26:29 UTC 构建成功。线上内容与 starter 一致，且后者构建更晚，指向演示站被 starter 内容替换；仅凭检查记录不能确定后台具体部署命令或活动版本。最初把“教程可访问”当成整体上线成功，遗漏了最后一次推送后的完整文章库复查。
 
 用户于 2026-09-19 告知已在 Cloudflare 修改设置；此处记录为用户报告，不声称代理已读取并确认后台设置。本轮补充 [维护者部署规则](MAINTAINER_WORKFLOW.md#production-demo-deployment)，并在 AI 工作流、分支政策和包发布流程中接入：生产站只部署 main，starter 分发与演示站验收分开，最后一次推送后必须复查旧文章、各语言与分页。修复部署来源不需要恢复未删除的文件或发布 npm。
 
@@ -311,13 +313,13 @@ main 的五语言首页/About 现在是 demo 专用内容；starter 的 `src/sit
 
 ## 2026-09-18 Optional music release review
 
-Reviewed the music feature changes against `c700d40`, following config/schema/defaults → adapter/normalizer → conditional mount → controller/core/storage → CSS and installed output. The site now inherits `music.enabled: false` and an empty playlist; the local demonstration MP3 has been removed. Five-language README examples describe the actual public-path/HTTPS inputs, lazy audio loading and navigation/resume limitation. Architecture records source/test links; Visual Systems records lower-left placement, desktop session preference, mobile compact entry and return-to-top avoidance. UPGRADING and the package README explicitly require the matching starter configuration files.
+Reviewed the music feature changes against `1119b63`, following config/schema/defaults → adapter/normalizer → conditional mount → controller/core/storage → CSS and installed output. The site now inherits `music.enabled: false` and an empty playlist; the local demonstration MP3 has been removed. Five-language README examples describe the actual public-path/HTTPS inputs, lazy audio loading and navigation/resume limitation. Architecture records source/test links; Visual Systems records lower-left placement, desktop session preference, mobile compact entry and return-to-top avoidance. UPGRADING and the package README explicitly require the matching starter configuration files.
 
 `suggest:docs` returned broad direct candidates and no propagated-only candidates. Updated responsible configuration, architecture, visual, upgrade and release documents. Agent entrypoints, metadata/doc-sync/release algorithms, existing CLI commands, routing/SEO and theme-listing claims need no change for this optional feature; historical release evidence remains historical. Added an explicit `utils/music` package export and installed-starter enabled/disabled checks to cover the npm resolution boundary. Validation and delivery results are recorded in [0.7.0](releases/0.7.0.md), without treating earlier runs as new release evidence.
 
 ## 2026-09-16 Current package and command acceptance
 
-本轮基准为 main `623c4eb161e691add874fd0874db51b1cf691ff5`，主题包为 0.5.1。以当前实现为准审阅，不按历史文档修改运行时。
+本轮基准为 main `64abb51c562bad55c983d82cced3e60c9af0a974`，主题包为 0.5.1。以当前实现为准审阅，不按历史文档修改运行时。
 
 - 已运行 `suggest:docs`，显式输入 defaults、包 i18n、两个 CLI、搜索及分享图集成路径。直接候选包括五语 README、包 README、UPGRADING、ARCHITECTURE；传播候选包括工作流、发布记录和元数据说明。候选仅用于定位责任文档。
 - 核对 defaults → theme adapter → `astro.config.mjs` → `BlogPost.astro`、TOC/tag utilities、图片预览脚本与 `CyberAtmosphere.astro`。搜索、目录、标签、分享图的默认开关，图片预览源，标签特效以及语言名称说明与当前实现一致；保留架构和视觉说明。
@@ -329,7 +331,7 @@ Reviewed the music feature changes against `c700d40`, following config/schema/de
 ### 后续验收证据（复用已完成运行，本轮未重跑）
 
 - [文档命令验收](https://github.com/anglefeint/astro-theme-anglefeint/actions/runs/35074441939)：Linux npm + Node 22.23.2、pnpm 10.34.5 + Node 24.20.0 均成功，主题解析为 0.5.1，依赖审计零已知漏洞。
-- [固定版本的脚本](https://github.com/anglefeint/astro-theme-anglefeint/blob/c5fc3f87ff3ecb641bc382ea8629bd364386d9bd/tools/documented-commands.mjs) 覆盖 starter 14 个脚本入口；文章默认语言、显式参数、环境变量和优先级；五种页面模板与五语路由；帮助、npx/本地 bin；重复创建保护和非法输入；adapter 偏移检测及修复；开发和预览的 HTTP 检查。
+- [固定版本的脚本](https://github.com/anglefeint/astro-theme-anglefeint/blob/826a6a4a62571a42c63ad5127b181943b47ef410/tools/documented-commands.mjs) 覆盖 starter 14 个脚本入口；文章默认语言、显式参数、环境变量和优先级；五种页面模板与五语路由；帮助、npx/本地 bin；重复创建保护和非法输入；adapter 偏移检测及修复；开发和预览的 HTTP 检查。
 - `check:workspace-link` 在消费者工程中按设计跳过；不计为 workspace 链接验证。pnpm 跳过 esbuild 安装脚本的提示未阻断本轮 Linux 检查和构建。
 - 包更新仅验证当前 starter 结构下 0.5.0 → 0.5.1、配置与文章保持不变，不证明任意历史 starter 可原地升级。创建模板使用非交互参数，未测试交互式安装向导。裸 bin 通过本地可执行路径测试，不代表全局 PATH 可直接调用。
 - [Chromium 回归](https://github.com/anglefeint/astro-theme-anglefeint/actions/runs/35074441897) 在 Node 22/24 均通过：语言切换、目录链接数、复制与剪贴板、图片打开/Escape、分享图、preview 搜索和标签。390px 仅为首页语言选择器窄屏检查，不是真机手机测试；未覆盖 Firefox/Safari。
@@ -337,7 +339,7 @@ Reviewed the music feature changes against `c700d40`, following config/schema/de
 
 ## 2026-09-16 分享图与语言选择器核对
 
-输入为 `cd7007e179d762ba6858d6cf17059c2b0530432a` 之后的工作区变更：分享图生成器、字体资产、构建集成、文章 schema、head 传递链、配置与 adapter、相关测试，以及上一轮语言选择器单层边框调整。文档工具的嵌套 node_modules 排除也在核对范围。
+输入为 `ad02a06c6d60bcb37dd69525fcd1e9a201ec1cff` 之后的工作区变更：分享图生成器、字体资产、构建集成、文章 schema、head 传递链、配置与 adapter、相关测试，以及上一轮语言选择器单层边框调整。文档工具的嵌套 node_modules 排除也在核对范围。
 
 按 `suggest:docs` 的候选核对实际源码。已更新五种语言 README、包 README、UPGRADING、CHANGELOG、项目地图、ARCHITECTURE、VISUAL_SYSTEMS、PACKAGING_WORKFLOW、THEME_SUBMISSION_CHECKLIST 和 DOC_SYNC_WORKFLOW。架构的分享图章节记录代码到测试的对应关系。明确使用完整本地 Noto 字体（约 16.4 MB）、无需构建联网取字体、手动图优先、关闭回退、长标题限制和 package/starter 共同迁移要求。
 
@@ -351,9 +353,9 @@ AGENTS、工具入口、通用发布/元数据规则没有因本功能改变，�
 
 ## 输入与方法
 
-- 审阅开始时源码为 `54738b51ea37784a1500c8b63f31d6768ee218f7`，main 工作区干净。
-- 回顾范围为 `cb54464..54738b5`，覆盖目录、Pagefind、标签、复制、图片预览、阅读状态布局和 0.3.0 发布；同时核对变更涉及的既有配置、路由、SEO、CLI 与 starter 边界。
-- 通过 `git diff --name-only cb54464..HEAD` 获得路径，显式传给 `scripts/suggest-doc-updates.mjs --json`。也读取了 `git log`：临时图片文章先添加后删除，在最终净差异中可能不可见。
+- 审阅开始时源码为 `3ece7ed202191a01d6488295f71cd5dcf0fc00eb`，main 工作区干净。
+- 回顾范围为 `f8dbdea..3ece7ed`，覆盖目录、Pagefind、标签、复制、图片预览、阅读状态布局和 0.3.0 发布；同时核对变更涉及的既有配置、路由、SEO、CLI 与 starter 边界。
+- 通过 `git diff --name-only f8dbdea..HEAD` 获得路径，显式传给 `scripts/suggest-doc-updates.mjs --json`。也读取了 `git log`：临时图片文章先添加后删除，在最终净差异中可能不可见。
 - helper 直接命中原有 43 份维护文档，传播命中 0，元数据读取错误 0。广泛命中只是审阅候选，不代表 43 份都需要改写。
 - 对照代码中的配置默认值、collection schema、adapter、页面路由、构建集成、组件 DOM、客户端脚本、CSS 和测试断言。没有为了符合旧文档而修改运行时。
 
@@ -422,7 +424,7 @@ sidecar 元数据继续复用，职责和关联路径没有变化。普通博客
 
 ## 审计后的标签视觉调整
 
-用户随后授权保留光柱、雨滴和闪烁并调整标签背景。当前工作区新增 [CyberAtmosphere](../src/components/CyberAtmosphere.astro)，让博客列表与两个标签路由共用雨滴/尘埃初始化，标签使用冰蓝/淡紫配色和较慢扫光，并遵循减少动态效果设置。上表“只有博客列表挂载雨滴”的结论属于 `54738b5` 审计基线，已被这次代码调整替代；当前行为已同步到视觉系统、架构和工程总览。组件加入 starter 清单，尚未提交或分发。
+用户随后授权保留光柱、雨滴和闪烁并调整标签背景。当前工作区新增 [CyberAtmosphere](../src/components/CyberAtmosphere.astro)，让博客列表与两个标签路由共用雨滴/尘埃初始化，标签使用冰蓝/淡紫配色和较慢扫光，并遵循减少动态效果设置。上表“只有博客列表挂载雨滴”的结论属于 `3ece7ed` 审计基线，已被这次代码调整替代；当前行为已同步到视觉系统、架构和工程总览。组件加入 starter 清单，尚未提交或分发。
 
 ## 2026-09-14 本地依赖安全升级
 

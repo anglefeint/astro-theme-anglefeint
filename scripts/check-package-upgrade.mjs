@@ -65,8 +65,8 @@ try {
   const tarball = path.join(temporary, pack[0].filename);
   // Real distribution snapshots, not today's adapters overlaid onto an old route.
   for (const [version, ref] of [
-    ['0.8.3', 'ddd297330c0632aa4902f620ac6ce0d2d6f4fc6f'],
-    ['0.8.4', '143e8e1553b4c2bf2db3e8b1d72acf267b9a6fff'],
+    ['0.8.3', '559870f5075cac835c387c51900bac0dc351f9d8'],
+    ['0.8.4', 'a62e4b322751ed5798caeece4a360753594bc07c'],
   ]) {
     console.log(`Package-only upgrade from starter ${version} (${ref.slice(0, 7)})`);
     const project = path.join(temporary, version);
