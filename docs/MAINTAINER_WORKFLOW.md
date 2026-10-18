@@ -79,6 +79,14 @@ Class C: Cross-layer Contract Changes
 
 ## Mandatory Commands
 
+### Serial execution and reporting
+
+Run main push, npm release, starter sync/push, documentation closeout push and tag push sequentially; await each result before starting the next. Never parallelize operations that share the checkout, dependencies or build directory. The pre-push hook, npm release entry and starter sync entry share `scripts/maintainer-session.mjs`'s checkout-local lock. The hook serializes its checks, not Git's subsequent network transfer; operators must still await the whole push. Direct `npm run check` and other standalone commands do not acquire this lock.
+
+Each protected entry prints stage start/end, elapsed seconds, a running notice every 30 seconds for asynchronous work, and local log paths. Non-interactive child stdout/stderr is saved in full under ignored `acceptance-results/maintainer-*/`; failures show a bounded tail and remain blocking. `summary.json` records completed stage statuses, durations and command exit codes. npm publish retains inherited terminal input/output for authentication; its stage records duration/status, not interactive output or input. Synchronous registry/audit calls report start/end but cannot emit a heartbeat while blocking Node.
+
+The lock is released on normal success/failure. After a forcibly interrupted process, inspect `acceptance-results/.maintainer-lock/owner.json` and confirm that its process and children have stopped before removing a stale lock; never delete an active session's lock. This reporting change does not remove checks, alter existing skip flags, change dependency caches or reduce build matrices. Logs can contain sensitive tool output: keep them ignored and review/redact before sharing. These tools remain maintainer-only and need no npm release.
+
 Demo identity and translated introductions belong in main's `src/site.config.ts`. Starter sync and drift checks resolve that destination through `starterSourcePath()` to `scripts/starter-templates/site.config.ts.template`; keep this template generic. The independent installed-starter check uses the same mapping. Do not copy the demo config into starter or add the source template to its distributed files. Consumer configuration remains `src/site.config.ts`.
 
 For repeatable public-starter command/configuration acceptance, local headless browser checks and the manual Linux Actions workflow, see [Template acceptance](TEMPLATE_ACCEPTANCE.md). These maintainer tools remain outside the generated starter.

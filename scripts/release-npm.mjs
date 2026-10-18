@@ -7,21 +7,14 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { verifyPublishedPackage } from './verify-published-package.mjs';
 import { auditDependencies } from './audit-dependencies.mjs';
+import { createMaintainerSession } from './maintainer-session.mjs';
 
 const repoRoot = process.cwd();
 const packageName = '@anglefeint/astro-theme';
+let session;
 
 function run(cmd, args, options = {}) {
-  const [executable, finalArgs] = resolveCommand(cmd, args);
-  const result = spawnSync(executable, finalArgs, {
-    stdio: 'inherit',
-    cwd: options.cwd ?? repoRoot,
-    env: options.env ?? process.env,
-  });
-
-  if (result.status !== 0) {
-    throw new Error(`${cmd} ${args.join(' ')} failed with status ${result.status ?? 1}.`);
-  }
+  return session.run(cmd, args, options);
 }
 
 function runCapture(cmd, args, options = {}) {
@@ -199,6 +192,15 @@ function verifyRegistryVersion(pkg, env) {
 
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
+  session = await createMaintainerSession('npm release');
+  try {
+    await release(opts);
+  } finally {
+    await session.close();
+  }
+}
+
+async function release(opts) {
   const pkg = readThemePackage();
   const tarballName = resolveTarballName(pkg);
   const cacheDir = mkdtempSync(path.join(tmpdir(), 'npm-cache-anglefeint-'));
@@ -214,17 +216,17 @@ async function main() {
     }
 
     if (!opts.skipRegistryCheck) {
-      verifyRegistryVersion(pkg, npmEnv);
+      await session.stage('Verify registry version', () => verifyRegistryVersion(pkg, npmEnv));
     }
 
     console.log('\n[release] Auditing dependencies (cannot be skipped)...');
-    auditDependencies(repoRoot, npmEnv);
+    await session.stage('Audit main dependencies', () => auditDependencies(repoRoot, npmEnv));
 
     if (!opts.skipChecks) {
       console.log('\n[release] Running checks...');
-      run('npm', ['run', 'check'], { env: npmEnv });
+      await run('npm', ['run', 'check'], { env: npmEnv });
     }
-    run(
+    await run(
       'npm',
       ['run', 'check:installed', '--', '--audit', ...(!opts.skipChecks ? ['--build'] : [])],
       { env: npmEnv }
@@ -232,12 +234,12 @@ async function main() {
 
     if (!opts.skipPack) {
       console.log('\n[release] Packing workspace package...');
-      run('npm', ['run', 'theme:pack'], { env: npmEnv });
+      await run('npm', ['run', 'theme:pack'], { env: npmEnv });
     }
 
     if (!opts.dryRun) {
       console.log('\n[release] Verifying npm auth...');
-      run('npm', ['whoami'], { env: npmEnv });
+      await run('npm', ['whoami'], { env: npmEnv });
     }
 
     const publishArgs = ['publish', '--access', 'public'];
@@ -245,16 +247,22 @@ async function main() {
     if (opts.dryRun) publishArgs.push('--dry-run');
 
     console.log(`\n[release] Publishing ${packageName}${opts.tag ? ` (${opts.tag})` : ''}...`);
-    run('npm', publishArgs, { cwd: `${repoRoot}/packages/theme`, env: npmEnv });
+    await run('npm', publishArgs, {
+      cwd: `${repoRoot}/packages/theme`,
+      env: npmEnv,
+      interactive: true,
+    });
 
     if (!opts.dryRun) {
-      await verifyPublishedPackage({
-        name: pkg.name,
-        version: pkg.version,
-        tag: opts.tag || 'latest',
-        capture: (args) => runCapture('npm', args, { env: npmEnv }),
-        destination: cacheDir,
-      });
+      await session.stage('Verify published tag and downloaded package', () =>
+        verifyPublishedPackage({
+          name: pkg.name,
+          version: pkg.version,
+          tag: opts.tag || 'latest',
+          capture: (args) => runCapture('npm', args, { env: npmEnv }),
+          destination: cacheDir,
+        })
+      );
       console.log(
         '\n[release] npm verified. Next: sync/push starter, test the remote template, then publish the source tag and GitHub Release (docs/PACKAGE_RELEASE.md).'
       );

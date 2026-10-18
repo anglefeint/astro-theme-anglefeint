@@ -82,6 +82,8 @@ Before editing code, read in this order:
 
 ### 3. Validate Locally
 
+Serialize all release/push operations that share the checkout; wait for each command to finish before starting another. Follow [serial execution and reporting](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting) for stage durations, ignored logs and lock recovery. Reporting does not replace or reduce any validation gate.
+
 Minimum validation depends on change type:
 
 - Docs only:

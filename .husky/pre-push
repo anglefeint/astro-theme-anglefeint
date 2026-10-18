@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -e
 
-npm run check
+node scripts/pre-push-check.mjs

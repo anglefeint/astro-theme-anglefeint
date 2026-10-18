@@ -16,6 +16,8 @@ import {
 
 import { buildStarterPackage, starterPackageDrift } from '../../scripts/starter-package.mjs';
 import { auditDependencies } from '../../scripts/audit-dependencies.mjs';
+import { createMaintainerSession } from '../../scripts/maintainer-session.mjs';
+let session;
 
 const execFileAsync = promisify(execFile);
 
@@ -57,6 +59,7 @@ function validateManagedCoverage() {
 }
 
 async function run(command, args, options = {}) {
+  if (session) return session.run(command, args, options);
   const { cwd } = options;
   const [executable, finalArgs] = resolveCommand(command, args);
   const { stdout, stderr } = await execFileAsync(executable, finalArgs, {
@@ -421,7 +424,10 @@ async function commitStarterIfNeeded(sourceRef, changedFiles) {
 export async function syncStarter(
   { sourceRef, targetBranch, originalBranch, allowAnyBranch, push },
   operations = {
-    auditDependencies,
+    auditDependencies: (root) =>
+      session
+        ? session.stage('Audit starter dependencies', () => auditDependencies(root))
+        : auditDependencies(root),
     run,
     currentBranch,
     expectedStarterThemeRange,
@@ -499,6 +505,15 @@ export async function syncStarter(
 }
 
 async function main() {
+  session = await createMaintainerSession('starter sync');
+  try {
+    await runMain();
+  } finally {
+    await session.close();
+  }
+}
+
+async function runMain() {
   const { checkOnly, push, allowAnyBranch, allowDirty, from, target } = parseArgs(
     process.argv.slice(2)
   );

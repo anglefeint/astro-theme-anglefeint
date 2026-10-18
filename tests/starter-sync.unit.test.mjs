@@ -97,6 +97,16 @@ test('security audit failure prevents starter commit and push', async () => {
 test('sync pushes an already committed starter and restores main dependencies', async () => {
   const { calls, operations } = fixture();
   await syncStarter(options, operations);
+  assert.deepEqual(calls, [
+    'git checkout starter',
+    'npm update --prefer-online',
+    'dependency audit',
+    'npm run check',
+    'npm run build',
+    'git push origin starter',
+    'git checkout main',
+    'npm install',
+  ]);
   assert.ok(calls.includes('git push origin starter'));
   assert.deepEqual(calls.slice(-2), ['git checkout main', 'npm install']);
 });

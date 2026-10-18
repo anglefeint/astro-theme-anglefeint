@@ -39,6 +39,8 @@ git push origin main
 
 ## 2) Pre-release checks
 
+The npm release entry uses the shared maintainer session for serial execution, stage timing and log summaries; see [reporting and recovery](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting). Command order, audit gates, installed build matrix, existing skip flags, fresh cache and publish/download verification remain unchanged. All npm publish output stays on the terminal to preserve authentication behavior. Do not run release, starter sync or push checks concurrently.
+
 The maintainer root uses Wrangler `^4.151.1`, whose locked Miniflare `5.20261012.1-beta` directly requires patched `sharp@0.35.5`. The earlier scoped override was removed on 2026-10-18 after Cloudflare's clean install rejected missing Sharp 0.35.4 optional entries, despite local npm 11.11.0 accepting the previous lockfile. Fresh `npm ci`, the real Miniflare Images binding and dependency audit passed after this update. The previous override protected against [GHSA-wq5f-xc86-pv6w](https://github.com/advisories/GHSA-wq5f-xc86-pv6w); do not restore vulnerable Sharp to satisfy an old lockfile or use `npm audit fix --force` to downgrade Wrangler. This is maintainer tooling only; starter does not include Wrangler.
 
 Dependency audits are blocking: main, isolated starter and delivered starter use `scripts/audit-dependencies.mjs`. All reported vulnerabilities and registry errors block delivery, including with `--skip-checks`. The former static-cache exception was retired on 2026-10-04 after updating main to `http-cache-semantics@4.3.0`; the delivered starter already resolved that version.
