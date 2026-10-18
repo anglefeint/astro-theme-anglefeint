@@ -1,0 +1,38 @@
+.network-backdrop {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+.network-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+body:has(.network-backdrop) {
+  isolation: isolate;
+}
+.network-background-edges {
+  fill: none;
+  stroke: var(--network-accent, #8ee8c3);
+  stroke-opacity: 0.12;
+}
+.network-background-nodes {
+  fill: var(--network-surface, #090b10);
+  stroke: var(--network-accent, #8ee8c3);
+  stroke-opacity: 0.3;
+}
+.network-background-signal {
+  fill: var(--network-signal, #b9ffe1);
+  stroke: var(--network-accent, #8ee8c3);
+  stroke-width: 5px;
+  stroke-opacity: 0.13;
+}
+@media (prefers-reduced-motion: reduce) {
+  .network-background-signal {
+    display: none;
+  }
+}

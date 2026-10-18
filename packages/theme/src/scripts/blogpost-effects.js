@@ -6,71 +6,46 @@ import { initPostInteractions } from './blogpost/interactions.js';
 import { initReadProgressAndBackToTop } from './blogpost/read-progress.js';
 import { initRedQueenTv } from './blogpost/red-queen-tv.js';
 
-const NETWORK_FALLBACK_DELAY_MS = 120;
-const RED_QUEEN_FALLBACK_DELAY_MS = 460;
-const NETWORK_IDLE_TIMEOUT_MS = 1200;
-const RED_QUEEN_IDLE_TIMEOUT_MS = 2200;
+import { createEffectScope, mountOptionalEffect } from './effects/lifecycle.js';
 
-function prefersReducedMotionEnabled() {
-  try {
-    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  } catch (_e) {
-    return false;
-  }
-}
-
+let disposePost;
 export function initBlogpostEffects() {
-  initCodeCopy();
-  initImagePreview();
-  var prefersReducedMotion = prefersReducedMotionEnabled();
-  var networkStarted = false;
-  var redQueenStarted = false;
-
-  function startNetworkCanvas() {
-    if (networkStarted) return;
-    networkStarted = true;
-    initNetworkCanvas(prefersReducedMotion);
-  }
-
-  function startRedQueenTv() {
-    if (redQueenStarted) return;
-    if (!document.querySelector('.rq-tv-stage')) return;
-    redQueenStarted = true;
-    initRedQueenTv(prefersReducedMotion);
-  }
-
-  function scheduleDeferredStarts() {
-    function fallbackSchedule() {
-      function runAfterLoad() {
-        setTimeout(startNetworkCanvas, NETWORK_FALLBACK_DELAY_MS);
-        setTimeout(startRedQueenTv, RED_QUEEN_FALLBACK_DELAY_MS);
-      }
-
-      if (document.readyState === 'complete') runAfterLoad();
-      else window.addEventListener('load', runAfterLoad, { once: true });
-    }
-
-    if (typeof window.requestIdleCallback !== 'function') {
-      fallbackSchedule();
-      return;
-    }
-
-    window.requestIdleCallback(
-      function () {
-        startNetworkCanvas();
-        window.requestIdleCallback(
-          function () {
-            startRedQueenTv();
-          },
-          { timeout: RED_QUEEN_IDLE_TIMEOUT_MS }
-        );
+  disposePost?.();
+  const scope = createEffectScope('article');
+  const reduced = !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const mount = (label, init) => mountOptionalEffect(scope, label, () => init(reduced));
+  mount('code copy', initCodeCopy);
+  mount('image preview', initImagePreview);
+  mount('reading progress', initReadProgressAndBackToTop);
+  mount('hero', initHeroCanvas);
+  mount('interactions', initPostInteractions);
+  const startNetwork = () => mount('network', initNetworkCanvas);
+  const startTv = () => mount('red queen', initRedQueenTv);
+  if (typeof window.requestIdleCallback === 'function') {
+    scope.requestIdleCallback(
+      () => {
+        startNetwork();
+        scope.requestIdleCallback(startTv, { timeout: 2200 });
       },
-      { timeout: NETWORK_IDLE_TIMEOUT_MS }
+      { timeout: 1200 }
     );
+  } else {
+    const afterLoad = () => {
+      scope.setTimeout(startNetwork, 120);
+      scope.setTimeout(startTv, 460);
+    };
+    if (document.readyState === 'complete') afterLoad();
+    else scope.listen(window, 'load', afterLoad, { once: true });
   }
-
-  initReadProgressAndBackToTop(prefersReducedMotion);
-  initHeroCanvas(prefersReducedMotion);
-  initPostInteractions(prefersReducedMotion);
-  scheduleDeferredStarts();
+  const dispose = () => {
+    scope.dispose();
+    if (disposePost === dispose) disposePost = undefined;
+  };
+  disposePost = dispose;
+  // Keep a cached document alive; its modules already pause on visibility changes.
+  scope.listen(window, 'pagehide', (event) => {
+    if (!event.persisted) dispose();
+  });
+  scope.listen(document, 'astro:before-swap', dispose);
+  return dispose;
 }

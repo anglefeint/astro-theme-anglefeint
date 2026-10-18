@@ -1,4 +1,5 @@
-export function initHeroCanvas(prefersReducedMotion) {
+import { createEffectScope } from '../effects/lifecycle.js';
+function mount(prefersReducedMotion, scope) {
   var shell = document.querySelector('.hero-shell');
   if (!shell) return;
 
@@ -95,17 +96,28 @@ export function initHeroCanvas(prefersReducedMotion) {
         var iBelowLeft = iBelow - 4;
         var iBelowRight = iBelow + 4;
 
-        var lumAboveLeft = d[iAboveLeft] * 0.299 + d[iAboveLeft + 1] * 0.587 + d[iAboveLeft + 2] * 0.114;
+        var lumAboveLeft =
+          d[iAboveLeft] * 0.299 + d[iAboveLeft + 1] * 0.587 + d[iAboveLeft + 2] * 0.114;
         var lumAbove = d[iAbove] * 0.299 + d[iAbove + 1] * 0.587 + d[iAbove + 2] * 0.114;
-        var lumAboveRight = d[iAboveRight] * 0.299 + d[iAboveRight + 1] * 0.587 + d[iAboveRight + 2] * 0.114;
+        var lumAboveRight =
+          d[iAboveRight] * 0.299 + d[iAboveRight + 1] * 0.587 + d[iAboveRight + 2] * 0.114;
         var lumLeft = d[iLeft] * 0.299 + d[iLeft + 1] * 0.587 + d[iLeft + 2] * 0.114;
         var lumRight = d[iRight] * 0.299 + d[iRight + 1] * 0.587 + d[iRight + 2] * 0.114;
-        var lumBelowLeft = d[iBelowLeft] * 0.299 + d[iBelowLeft + 1] * 0.587 + d[iBelowLeft + 2] * 0.114;
+        var lumBelowLeft =
+          d[iBelowLeft] * 0.299 + d[iBelowLeft + 1] * 0.587 + d[iBelowLeft + 2] * 0.114;
         var lumBelow = d[iBelow] * 0.299 + d[iBelow + 1] * 0.587 + d[iBelow + 2] * 0.114;
-        var lumBelowRight = d[iBelowRight] * 0.299 + d[iBelowRight + 1] * 0.587 + d[iBelowRight + 2] * 0.114;
+        var lumBelowRight =
+          d[iBelowRight] * 0.299 + d[iBelowRight + 1] * 0.587 + d[iBelowRight + 2] * 0.114;
 
-        var gx = -lumAboveLeft - 2 * lumLeft - lumBelowLeft + lumAboveRight + 2 * lumRight + lumBelowRight;
-        var gy = -lumAboveLeft - 2 * lumAbove - lumAboveRight + lumBelowLeft + 2 * lumBelow + lumBelowRight;
+        var gx =
+          -lumAboveLeft - 2 * lumLeft - lumBelowLeft + lumAboveRight + 2 * lumRight + lumBelowRight;
+        var gy =
+          -lumAboveLeft -
+          2 * lumAbove -
+          lumAboveRight +
+          lumBelowLeft +
+          2 * lumBelow +
+          lumBelowRight;
         var mag = Math.min(255, Math.sqrt(gx * gx + gy * gy));
 
         od[i] = Math.min(255, mag * 0.4);
@@ -131,7 +143,7 @@ export function initHeroCanvas(prefersReducedMotion) {
     var elapsed = (t - heroStart) * 0.001;
     frameCount++;
     if (!canvas.img) {
-      heroRaf = requestAnimationFrame(heroRender);
+      heroRaf = scope.requestAnimationFrame(heroRender);
       return;
     }
 
@@ -197,24 +209,34 @@ export function initHeroCanvas(prefersReducedMotion) {
       ctx.fillStyle = barGrad;
       ctx.fillRect(0, scanPos - 30, w, 60);
 
-      if ((frameCount % 2) === 0 && Math.random() < 0.08) {
+      if (frameCount % 2 === 0 && Math.random() < 0.08) {
         var glitchY = Math.random() * h;
         var glitchH = 2 + Math.random() * 12;
         var shiftX = (Math.random() - 0.5) * 12;
         ctx.save();
         ctx.globalAlpha = 0.22;
-        ctx.drawImage(baseCanvas, 0, Math.floor(glitchY), w, Math.ceil(glitchH), Math.round(shiftX), Math.floor(glitchY), w, Math.ceil(glitchH));
+        ctx.drawImage(
+          baseCanvas,
+          0,
+          Math.floor(glitchY),
+          w,
+          Math.ceil(glitchH),
+          Math.round(shiftX),
+          Math.floor(glitchY),
+          w,
+          Math.ceil(glitchH)
+        );
         ctx.restore();
       }
 
-      if ((frameCount % 3) === 0 && elapsed >= 6 && Math.random() < 0.025) {
+      if (frameCount % 3 === 0 && elapsed >= 6 && Math.random() < 0.025) {
         var dropoutY = Math.floor(Math.random() * h);
         var dropoutH = 2 + Math.floor(Math.random() * 2);
         ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
         ctx.fillRect(0, dropoutY, w, dropoutH);
       }
 
-      if ((frameCount % 3) === 0 && Math.random() < 0.03) {
+      if (frameCount % 3 === 0 && Math.random() < 0.03) {
         var burstY = Math.random() * h * 0.8;
         var burstH = 4 + Math.random() * 20;
         if (noiseCanvas.width !== w) {
@@ -248,20 +270,28 @@ export function initHeroCanvas(prefersReducedMotion) {
     }
 
     if (!prefersReducedMotion && !document.hidden && isInViewport) {
-      heroRaf = requestAnimationFrame(heroRender);
+      heroRaf = scope.requestAnimationFrame(heroRender);
     } else {
       heroRaf = 0;
     }
   }
 
   function startHeroLoop() {
-    if (prefersReducedMotion || document.hidden || !isInViewport || !canvas.img || !heroEffectsPrepared || heroRaf) return;
-    heroRaf = requestAnimationFrame(heroRender);
+    if (
+      prefersReducedMotion ||
+      document.hidden ||
+      !isInViewport ||
+      !canvas.img ||
+      !heroEffectsPrepared ||
+      heroRaf
+    )
+      return;
+    heroRaf = scope.requestAnimationFrame(heroRender);
   }
 
   function stopHeroLoop() {
     if (!heroRaf) return;
-    cancelAnimationFrame(heroRaf);
+    scope.cancelAnimationFrame(heroRaf);
     heroRaf = 0;
   }
 
@@ -293,20 +323,20 @@ export function initHeroCanvas(prefersReducedMotion) {
     }
 
     if (typeof window.requestIdleCallback === 'function') {
-      prepareIdleHandle = window.requestIdleCallback(runPrepare, { timeout: 1200 });
+      prepareIdleHandle = scope.requestIdleCallback(runPrepare, { timeout: 1200 });
       return;
     }
 
     function afterLoad() {
-      prepareTimer = setTimeout(runPrepare, 180);
+      prepareTimer = scope.setTimeout(runPrepare, 180);
     }
 
     if (document.readyState === 'complete') afterLoad();
-    else window.addEventListener('load', afterLoad, { once: true });
+    else scope.listen(window, 'load', afterLoad, { once: true });
   }
 
   var img = new Image();
-  img.onload = function() {
+  img.onload = function () {
     canvas.img = img;
     sizeCanvas();
     drawStaticFrame(img);
@@ -317,21 +347,30 @@ export function initHeroCanvas(prefersReducedMotion) {
     // Keep first paint static for LCP, then prepare heavy effects when idle.
     scheduleHeroEffectsPrepare();
   };
-  img.onerror = function() {
+  img.onerror = function () {
     wrap.classList.add('ready');
   };
+  scope.add(() => {
+    img.onload = null;
+    img.onerror = null;
+  });
   img.src = new URL(src, window.location.href).href;
 
-  window.addEventListener('resize', function() {
-    if (!canvas.img) return;
-    if (resizeTimer) clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-      resizeTimer = 0;
-      sizeCanvas();
-      drawStaticFrame(canvas.img);
-      if (heroEffectsPrepared) buildEdge(canvas.img);
-    }, 180);
-  }, { passive: true });
+  scope.listen(
+    window,
+    'resize',
+    function () {
+      if (!canvas.img) return;
+      if (resizeTimer) scope.clearTimeout(resizeTimer);
+      resizeTimer = scope.setTimeout(function () {
+        resizeTimer = 0;
+        sizeCanvas();
+        drawStaticFrame(canvas.img);
+        if (heroEffectsPrepared) buildEdge(canvas.img);
+      }, 180);
+    },
+    { passive: true }
+  );
 
   function onHeroVisibilityChange() {
     if (prefersReducedMotion) return;
@@ -343,24 +382,38 @@ export function initHeroCanvas(prefersReducedMotion) {
   }
 
   if (!prefersReducedMotion && typeof IntersectionObserver !== 'undefined') {
-    heroObserver = new IntersectionObserver(function(entries) {
-      var entry = entries[0];
-      if (!entry) return;
-      isInViewport = entry.isIntersecting;
-      if (isInViewport) startHeroLoop();
-      else stopHeroLoop();
-    }, { threshold: 0.02 });
+    heroObserver = new IntersectionObserver(
+      function (entries) {
+        var entry = entries[0];
+        if (!entry) return;
+        isInViewport = entry.isIntersecting;
+        if (isInViewport) startHeroLoop();
+        else stopHeroLoop();
+      },
+      { threshold: 0.02 }
+    );
     heroObserver.observe(shell);
   }
 
-  document.addEventListener('visibilitychange', onHeroVisibilityChange);
-  window.addEventListener('beforeunload', function() {
-    if (resizeTimer) clearTimeout(resizeTimer);
+  scope.listen(document, 'visibilitychange', onHeroVisibilityChange);
+  scope.add(function () {
+    if (resizeTimer) scope.clearTimeout(resizeTimer);
     stopHeroLoop();
-    if (prepareTimer) clearTimeout(prepareTimer);
+    if (prepareTimer) scope.clearTimeout(prepareTimer);
     if (prepareIdleHandle && typeof window.cancelIdleCallback === 'function') {
-      window.cancelIdleCallback(prepareIdleHandle);
+      scope.cancelIdleCallback(prepareIdleHandle);
     }
     if (heroObserver) heroObserver.disconnect();
-  }, { once: true });
+  });
+}
+
+export function initHeroCanvas(prefersReducedMotion) {
+  const scope = createEffectScope('hero-canvas');
+  try {
+    mount(prefersReducedMotion, scope);
+  } catch (error) {
+    scope.dispose();
+    throw error;
+  }
+  return scope.dispose;
 }

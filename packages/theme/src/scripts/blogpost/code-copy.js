@@ -1,4 +1,5 @@
-export function initCodeCopy() {
+import { createEffectScope } from '../effects/lifecycle.js';
+function mount(scope) {
   document.querySelectorAll('.ai-prose-body[data-code-copy]').forEach((root) => {
     const labels = JSON.parse(root.dataset.codeCopy);
     root.querySelectorAll('pre > code').forEach((code) => {
@@ -21,22 +22,28 @@ export function initCodeCopy() {
       status.dataset.pagefindIgnore = '';
       pre.before(wrapper);
       wrapper.append(pre, button, status);
+      scope.add(() => {
+        wrapper.before(pre);
+        wrapper.remove();
+      });
       let timer;
-      button.addEventListener('click', async () => {
+      scope.listen(button, 'click', async () => {
         if (button.disabled) return;
-        clearTimeout(timer);
+        scope.clearTimeout(timer);
         button.disabled = true;
         status.textContent = '';
         button.classList.remove('is-copied');
         try {
           await navigator.clipboard.writeText(code.textContent ?? '');
+          if (scope.disposed) return;
           button.classList.add('is-copied');
           status.textContent = labels.copied;
         } catch {
+          if (scope.disposed) return;
           status.textContent = labels.failed;
         } finally {
           button.disabled = false;
-          timer = setTimeout(() => {
+          timer = scope.setTimeout(() => {
             status.textContent = '';
             button.classList.remove('is-copied');
           }, 2000);
@@ -44,4 +51,15 @@ export function initCodeCopy() {
       });
     });
   });
+}
+
+export function initCodeCopy() {
+  const scope = createEffectScope('code-copy');
+  try {
+    mount(scope);
+  } catch (error) {
+    scope.dispose();
+    throw error;
+  }
+  return scope.dispose;
 }

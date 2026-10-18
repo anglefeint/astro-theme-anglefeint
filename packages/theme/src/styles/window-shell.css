@@ -1,0 +1,176 @@
+/* Shared window structure; About owns individual tool layouts and palette overrides. */
+
+.hacker-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.hacker-modal-overlay.open {
+  display: flex;
+}
+.hacker-modal {
+  width: min(420px, 100%);
+  max-height: 88dvh;
+  border: 1px solid var(--hacker-border, rgba(157, 181, 166, 0.3));
+  border-radius: 6px;
+  background: var(--hacker-surface, rgba(7, 13, 10, 0.96));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.hacker-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  background: var(--hacker-titlebar, #111914);
+  border-bottom: 1px solid rgba(153, 180, 162, 0.18);
+}
+.hacker-modal-dots {
+  display: flex;
+  gap: 6px;
+}
+.hacker-modal-dots button {
+  width: 24px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.hacker-modal-dots button span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  color: rgba(0, 0, 0, 0.8);
+  font: bold 12px/14px monospace;
+  text-align: center;
+}
+.hacker-modal-dots button:nth-child(1) span {
+  background: #ff5f57;
+}
+.hacker-modal-dots button:nth-child(2) span {
+  background: #febc2e;
+}
+.hacker-modal-dots button:nth-child(3) span {
+  background: #28c840;
+}
+.hacker-modal-dots button:focus-visible {
+  outline: 1px solid #a8ffc2;
+  outline-offset: 1px;
+}
+.hacker-modal.is-expanded {
+  width: min(1200px, 100%);
+  height: 88dvh;
+}
+.hacker-modal.is-expanded .hacker-modal-body {
+  max-height: none;
+  flex: 1;
+}
+.hacker-modal.is-collapsed {
+  height: auto;
+}
+.hacker-modal-body[hidden] {
+  display: none;
+}
+.hacker-modal-header {
+  flex-shrink: 0;
+}
+.hacker-modal-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.hacker-modal-title {
+  position: relative;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8125rem;
+  color: #dde5df;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hacker-modal-overlay.open .hacker-modal {
+    animation: hacker-tool-power-on 420ms ease-out;
+  }
+}
+@keyframes hacker-tool-power-on {
+  0% {
+    box-shadow:
+      0 0 0 1px #fff,
+      0 0 32px rgba(150, 255, 185, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0);
+  }
+}
+.hacker-modal-close {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: #c5d0c8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.9;
+  border-radius: 4px;
+}
+.hacker-modal-close .hacker-modal-close-icon {
+  flex-shrink: 0;
+}
+.hacker-modal-close:hover {
+  opacity: 1;
+  background: rgba(96, 255, 128, 0.1);
+}
+.hacker-modal-body {
+  padding: 1rem 0.9rem 1.2rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-family: var(--hacker-ui-font, system-ui, sans-serif);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  max-height: 72dvh;
+  min-height: 0;
+  overflow-y: auto;
+}
+.hacker-modal-body pre {
+  font-family: var(--hacker-mono-font, monospace);
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.hacker-modal-header {
+  flex-wrap: wrap;
+}
+.hacker-modal-header .hacker-modal-title {
+  flex: 1 1 120px;
+}
+.hacker-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-left: auto;
+}
+.hacker-modal-actions .hacker-modal-close {
+  margin-left: 0;
+}
+.hacker-modal-actions [hidden] {
+  display: none;
+}
+
+.hacker-modal-actions {
+  max-width: 100%;
+}

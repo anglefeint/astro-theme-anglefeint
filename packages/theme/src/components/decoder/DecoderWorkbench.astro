@@ -1,5 +1,6 @@
 ---
 import type { Messages } from '../../i18n/messages';
+import NetworkBackdrop from '../shared/NetworkBackdrop.astro';
 import '../../styles/decoder.css';
 interface Props {
   labels: Messages['decoder'];
@@ -9,6 +10,7 @@ interface Props {
 const { labels, pageLabels, full = false } = Astro.props;
 ---
 
+{full && <NetworkBackdrop />}
 <form class="hacker-decoder-form">
   {
     full && (
@@ -126,6 +128,13 @@ const { labels, pageLabels, full = false } = Astro.props;
         </span>
       </p>
     </div>
+    {
+      full && (
+        <p id="decoder-address-hint" class="decoder-address-hint" data-address-control hidden>
+          {pageLabels.addressHint} <span>{pageLabels.addressNotice}</span>
+        </p>
+      )
+    }
     <div class="hacker-decoder-grid">
       <label class="hacker-decoder-input-label"
         >{labels.input}

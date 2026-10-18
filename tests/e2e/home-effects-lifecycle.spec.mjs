@@ -9,6 +9,8 @@ const { defaultLocale } = JSON.parse(
 test('terminal retains one paused preview, reuses it and releases idle GPU resources', async ({
   page,
 }) => {
+  // This scenario includes the intentional 15-second idle GPU release delay.
+  test.setTimeout(60_000);
   await page.setViewportSize({ width: 1764, height: 1000 });
   await page.addInitScript(() => {
     window.signalStats = { draws: 0, textures: 0 };

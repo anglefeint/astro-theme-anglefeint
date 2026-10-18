@@ -4,7 +4,7 @@ title: '使用指南 3：按需开启与定制功能'
 subtitle: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 description: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-12
+updatedDate: 2026-10-18
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -103,6 +103,18 @@ i18n: {
 示例只改变 `zh` 的 About；其他语言需要分别填写，不会自动翻译。`sidebar`、`labels`、`modals`、`effects` 也支持覆盖，普通使用先改正文和联系方式即可。About 的工具窗口是主题交互展示，不会因为填写文案就连接真实 AI 服务。
 
 访问 `/zh/about/` 核对正文和邮件/GitHub 链接。不需要 About 时设置 `theme.enableAboutPage: false`，会同时隐藏导航入口并停止生成 About 路由；修改后重新构建。
+
+### Decoder Lab：致敬密码朋克
+
+Decoder Lab 的视觉风格致敬 **Cypherpunk（密码朋克）**，纪念他们为人类自由、隐私与开放代码作出的贡献。点对点网络意象与本地处理方式，呼应了让工具与数据掌握在个人手中的理念。
+
+我们认同这样的信念：**隐私和自由不能只靠掌权者的善意。** 个人应当有能力保护自己的通信，自主决定向谁透露什么，并在可能时亲自验证，而不必把信任全部交给政府、平台或其他第三方。
+
+**“Cypherpunks write code.”——密码朋克写代码。** [《密码朋克宣言》](https://www.activism.net/cypherpunk/manifesto.html)中的这句话，也代表了一种行动方式：把理念变成可用的软件，公开代码，让其他人能够检查、使用和继续建设。我们向这种用技术守护个人自主权的精神致敬。
+
+Decoder Lab 以本地处理、可查看的源码和点对点网络意象回应这份精神。
+
+从 About 解码弹窗打开 **Decoder Lab**，或访问 `/zh/decoder/`，即可在浏览器本地进行文本解码、代币调用解释和地址检查，无需 RPC、连接钱包或 API Key。地址检查核对格式及支持的校验和，不查询余额，也不确认地址归属。在 `src/site.config.ts` 设置 `theme.enableDecoderPage: false` 可关闭页面及入口。
 
 ## 4. 调整文章数量与分页
 

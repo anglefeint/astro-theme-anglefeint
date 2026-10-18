@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release entry: [0.18.0](./0.18.0.md), Decoder Lab, reusable numeric reveal and modular About terminal/windows. See its delivery status and acceptance record.
+Latest feature release entry: [0.19.0](./0.19.0.md), cypherpunk Decoder Lab, shared components and isolated effect lifetimes. See its delivery status and acceptance record.
 
 Latest patch entry: [0.18.2](./0.18.2.md), tighter homepage status spacing and refreshed README previews. See its delivery status and validation record.
 

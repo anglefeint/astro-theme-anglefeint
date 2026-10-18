@@ -1,4 +1,5 @@
 ---
+import '../../styles/window-shell.css';
 interface Props {
   id?: string;
   title: string;
@@ -55,6 +56,6 @@ const { id = 'hacker-modal', title, closeLabel, controls } = Astro.props;
         </button>
       </div>
     </div>
-    <div class="hacker-modal-body" id={`${id}-body`}></div>
+    <div class="hacker-modal-body" id={`${id}-body`}><slot /></div>
   </div>
 </div>

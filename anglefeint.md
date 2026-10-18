@@ -206,3 +206,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 没有新增首次建站引导弹窗、专用引导 CLI、Expressive Code、代码文件名标记、目录 scroll-spy、图片画廊或请求时生成 OG 图片的服务。后续需求应从真实用户需要出发，不能由旧讨论或本文件中的提及自动变成产品承诺。
 
 本轮核对记录见 [代码与文档审阅记录](docs/CODE_DOC_AUDIT.md)。
+
+## Shared component boundaries
+
+Decoder Lab composes `packages/theme/src/components/shared/NetworkBackdrop.astro`, a randomized moving SVG peer network with reduced-motion and visibility lifecycle handling. `WindowShell.astro` owns its structural stylesheet and body/actions slots. Music retains one session and delegates mounting to `scripts/music/deck.js`; Oracle uses the shared matrix-passage engine and About retains its adapter. Page effect scopes isolate optional initialization and release owned resources; Home signal-preview interaction and About title reveal are separate modules. See [Architecture](docs/ARCHITECTURE.md) and [Visual Systems](docs/VISUAL_SYSTEMS.md) for implementation contracts.

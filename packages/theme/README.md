@@ -10,6 +10,8 @@ Optional `theme.footer.links` adds a separate dot-separated row of `{ label, hre
 
 The full **Decoder Lab** is available at `/<locale>/decoder/`, with local text-processing history, ERC-20/TRC-20 call interpretation (EVM/HyperEVM/TRON), and EVM/TRON/Bitcoin address inspection. Open it from the About decoder dialog. Set `theme.enableDecoderPage: false` in `src/site.config.ts` to omit the page and its link independently of About. No RPC, wallet connection or API key is required.
 
+Decoder Lab takes its visual inspiration from the **cypherpunk** movement, in tribute to its contributions to human freedom, privacy and open code. Its peer-to-peer network motif and local processing reflect the idea of keeping tools and data in the hands of the individual.
+
 About includes Hacker Decryptor for local Base64/Base64URL, URL, Hex, HTML entities, Unicode escapes and JWT header/payload decoding, with translated controls, automatic detection and a shared numeric result animation with host-specific colors.
 
 ## Install

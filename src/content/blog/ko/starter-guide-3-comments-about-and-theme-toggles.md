@@ -4,7 +4,7 @@ title: '사용 가이드 3: 필요한 기능 켜기와 사용자 설정'
 subtitle: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 description: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-12
+updatedDate: 2026-10-18
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -103,6 +103,18 @@ i18n: {
 이 예제는 한국어 About만 바꿉니다. 다른 언어도 각각 작성해야 하며 자동 번역하지 않습니다. `sidebar`, `labels`, `modals`, `effects`도 재정의할 수 있지만 먼저 본문과 연락처를 바꾸면 됩니다. About 도구 창은 테마의 상호작용 예시이며 문구를 채운다고 실제 AI 서비스와 연결되지 않습니다.
 
 `/ko/about/`에서 본문과 이메일·GitHub 링크를 확인하세요. `theme.enableAboutPage: false`는 메뉴를 숨기고 About 경로 생성도 중단합니다. 변경 후 다시 빌드하세요.
+
+### Decoder Lab: 사이퍼펑크에 대한 경의
+
+Decoder Lab의 시각적 스타일은 **cypherpunk(사이퍼펑크)** 운동에서 영감을 받아 인간의 자유, 프라이버시, 열린 코드에 대한 기여에 경의를 표합니다. P2P 네트워크 이미지와 로컬 처리는 도구와 데이터를 개인의 손에 두자는 생각을 반영합니다.
+
+우리는 **프라이버시와 자유를 권력자의 선의에만 맡길 수 없다**고 생각합니다. 개인은 자신의 통신을 보호하고 누구에게 무엇을 공개할지 선택하며, 가능하다면 직접 검증할 수 있어야 합니다. 정부나 플랫폼, 제삼자에게 모든 신뢰를 맡길 필요는 없어야 합니다.
+
+**“Cypherpunks write code.” — 사이퍼펑크는 코드를 쓴다.** [A Cypherpunk’s Manifesto](https://www.activism.net/cypherpunk/manifesto.html)의 이 말은 이상을 사용할 수 있는 소프트웨어로 만들고, 코드를 공개하여 다른 사람이 검토하고 사용하며 발전시키도록 하는 실천을 뜻합니다. 기술로 개인의 자율성을 지키려는 그 정신에 경의를 표합니다.
+
+Decoder Lab은 로컬 처리, 확인 가능한 소스 코드, P2P 네트워크 이미지로 그 정신을 담습니다.
+
+전체 **Decoder Lab**는 `/<locale>/decoder/`에서 로컬 처리 기록, EVM/HyperEVM/TRON의 ERC-20/TRC-20 호출 해석 및 EVM/TRON/Bitcoin 주소 확인을 제공합니다. About 디코더 창에서 열 수 있습니다. `src/site.config.ts`에서 `theme.enableDecoderPage: false`로 페이지와 링크를 독립적으로 끌 수 있습니다. RPC, 지갑 연결, API 키가 필요 없습니다.
 
 ## 4. 글 수와 페이지 나누기 조정
 

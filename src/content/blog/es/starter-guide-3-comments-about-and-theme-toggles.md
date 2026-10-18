@@ -4,7 +4,7 @@ title: 'Guía 3: Activa y personaliza funciones opcionales'
 subtitle: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 description: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-12
+updatedDate: 2026-10-18
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -103,6 +103,18 @@ i18n: {
 El ejemplo solo cambia About en español. Completa los demás idiomas por separado: no hay traducción automática. También puedes sobrescribir `sidebar`, `labels`, `modals` y `effects`; empieza por el cuerpo y los datos de contacto. Las ventanas de herramientas de About son demostraciones interactivas del tema, no conexiones a un servicio real de IA por rellenar textos.
 
 Visita `/es/about/` y comprueba el cuerpo y los enlaces de correo y GitHub. `theme.enableAboutPage: false` oculta la entrada del menú y detiene la generación de rutas de About. Vuelve a compilar después.
+
+### Decoder Lab: un homenaje a los cypherpunks
+
+La estética de Decoder Lab se inspira en el movimiento **cypherpunk**, como homenaje a sus contribuciones a la libertad humana, la privacidad y el código abierto. Su red entre pares y el procesamiento local reflejan la idea de mantener las herramientas y los datos en manos de cada persona.
+
+Compartimos esta convicción: **la privacidad y la libertad no pueden depender únicamente de la buena voluntad de quienes tienen el poder.** Cada persona debería poder proteger sus comunicaciones, elegir qué revelar y a quién, y verificar por sí misma cuando sea posible, sin depositar toda su confianza en gobiernos, plataformas u otros terceros.
+
+**«Cypherpunks write code».** Esta frase de [A Cypherpunk’s Manifesto](https://www.activism.net/cypherpunk/manifesto.html) expresa una forma de actuar: convertir ideales en software útil y publicar el código para que otros puedan examinarlo, usarlo y ampliarlo. Honramos ese compromiso con la autonomía individual mediante la tecnología.
+
+Decoder Lab refleja ese espíritu con procesamiento local, código fuente examinable y una red entre pares como motivo visual.
+
+La versión completa de **Decoder Lab** está en `/<locale>/decoder/`: historial local, interpretación ERC-20/TRC-20 (EVM/HyperEVM/TRON) e inspección de direcciones EVM/TRON/Bitcoin. Ábrela desde el diálogo de About. Usa `theme.enableDecoderPage: false` en `src/site.config.ts` para desactivar la página y su enlace independientemente de About. No requiere RPC, cartera ni clave API.
 
 ## 4. Ajusta las cantidades y la paginación
 

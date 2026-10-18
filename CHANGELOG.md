@@ -13,6 +13,13 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.19.0] - 2026-10-18
+
+- Give Decoder Lab a compact cypherpunk-inspired workbench, randomized moving SVG network and localized address-inspection guidance.
+- Extract reusable NetworkBackdrop and self-styled WindowShell components, and separate the music deck mount while preserving the single player session, track, progress and explicit initial-size behavior.
+- Isolate optional Home/About initialization failures, extract signal preview/title reveal, and give article effects cancellable resource lifetimes.
+- Add a concise cypherpunk tribute to nine-language READMEs and expand the starter tutorial with privacy, freedom and “Cypherpunks write code”. No configuration or adapter migration is required; see the [release record](docs/releases/0.19.0.md).
+
 ## [0.18.2] - 2026-10-18
 
 - Reduce the gap between the homepage ALL link and hidden status row while preserving the link's touch target and independent signal reveal.

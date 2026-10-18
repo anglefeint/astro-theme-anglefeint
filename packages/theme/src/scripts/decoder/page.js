@@ -9,8 +9,11 @@ export function initDecoderPage() {
   const clock = createDecoderClock();
   const controller = createDecoderController(root, data.decoder, clock, data.page);
   controller.start();
+  const onPageHide = () => cleanup?.();
   cleanup = () => {
+    window.removeEventListener('pagehide', onPageHide);
     controller.stop();
     clock.dispose();
   };
+  window.addEventListener('pagehide', onPageHide, { once: true });
 }

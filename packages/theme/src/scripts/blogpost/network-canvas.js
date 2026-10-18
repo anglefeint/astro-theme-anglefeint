@@ -1,4 +1,5 @@
-export function initNetworkCanvas(prefersReducedMotion) {
+import { createEffectScope } from '../effects/lifecycle.js';
+function mount(prefersReducedMotion, scope) {
   var canvas = document.querySelector('.ai-network-canvas');
   if (!canvas) return;
 
@@ -63,7 +64,7 @@ export function initNetworkCanvas(prefersReducedMotion) {
   function render(ts) {
     if (!start) start = ts;
     if (!prefersReducedMotion && ts - last < frameMs) {
-      rafId = requestAnimationFrame(render);
+      rafId = scope.requestAnimationFrame(render);
       return;
     }
 
@@ -135,23 +136,34 @@ export function initNetworkCanvas(prefersReducedMotion) {
       }
     }
 
-    if (!prefersReducedMotion) rafId = requestAnimationFrame(render);
+    if (!prefersReducedMotion) rafId = scope.requestAnimationFrame(render);
   }
 
   function stop() {
     if (!rafId) return;
-    cancelAnimationFrame(rafId);
+    scope.cancelAnimationFrame(rafId);
     rafId = 0;
   }
 
   resize();
   render(performance.now());
 
-  window.addEventListener('resize', resize, { passive: true });
-  document.addEventListener('visibilitychange', function () {
+  scope.listen(window, 'resize', resize, { passive: true });
+  scope.listen(document, 'visibilitychange', function () {
     if (prefersReducedMotion) return;
     if (document.hidden) stop();
-    else if (!rafId) rafId = requestAnimationFrame(render);
+    else if (!rafId) rafId = scope.requestAnimationFrame(render);
   });
-  window.addEventListener('beforeunload', stop, { once: true });
+  scope.add(stop);
+}
+
+export function initNetworkCanvas(prefersReducedMotion) {
+  const scope = createEffectScope('network-canvas');
+  try {
+    mount(prefersReducedMotion, scope);
+  } catch (error) {
+    scope.dispose();
+    throw error;
+  }
+  return scope.dispose;
 }

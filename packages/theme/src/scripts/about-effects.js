@@ -1,3 +1,4 @@
+import { createEffectScope, mountOptionalEffect } from './effects/lifecycle.js';
 import { initTerminalBackground } from './about/background.js';
 import { initAboutInteractions } from './about/interactions.js';
 import { initAboutModals } from './about/modals.js';
@@ -12,28 +13,24 @@ export function initAboutEffects() {
   const runtimeConfig = readAboutRuntimeConfig();
   const reduced = isReducedMotion();
   const decoderClock = createDecoderClock();
-  const cleanups = [];
+  const scope = createEffectScope('about');
+  const mount = (label, init) => mountOptionalEffect(scope, label, init);
   const listeners = new AbortController();
   let disposed = false;
   const dispose = () => {
     if (disposed) return;
     disposed = true;
     listeners.abort();
-    cleanups.reverse().forEach((cleanup) => cleanup?.());
-    decoderClock.dispose();
+    scope.dispose();
     if (disposeAbout === dispose) disposeAbout = undefined;
   };
   disposeAbout = dispose;
-  try {
-    cleanups.push(initTerminalBackground(runtimeConfig, reduced));
-    cleanups.push(initAboutReadingUi(runtimeConfig, reduced));
-    cleanups.push(initAboutModals(runtimeConfig, reduced, decoderClock));
-    cleanups.push(initAboutInteractions(reduced));
-    cleanups.push(initOracle());
-  } catch (error) {
-    dispose();
-    throw error;
-  }
+  scope.add(() => decoderClock.dispose());
+  mount('initTerminalBackground', () => initTerminalBackground(runtimeConfig, reduced));
+  mount('initAboutReadingUi', () => initAboutReadingUi(runtimeConfig, reduced));
+  mount('initAboutModals', () => initAboutModals(runtimeConfig, reduced, decoderClock));
+  mount('initAboutInteractions', () => initAboutInteractions(reduced));
+  mount('initOracle', () => initOracle());
   window.addEventListener('pagehide', dispose, { signal: listeners.signal });
   document.addEventListener('astro:before-swap', dispose, { signal: listeners.signal });
   return dispose;

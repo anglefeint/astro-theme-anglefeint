@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test('decoder reveal works independently when the terminal Canvas is unavailable', async ({
+test('decoder reveal works independently when terminal Canvas initialization throws', async ({
   page,
 }) => {
   await page.addInitScript(() => {
     const original = globalThis.HTMLCanvasElement.prototype.getContext;
     globalThis.HTMLCanvasElement.prototype.getContext = function (...args) {
-      if (this.classList.contains('hacker-bg-canvas')) return null;
+      if (this.classList.contains('hacker-bg-canvas'))
+        throw new Error('injected background failure');
       return original.apply(this, args);
     };
   });

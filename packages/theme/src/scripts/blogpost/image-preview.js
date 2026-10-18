@@ -1,7 +1,9 @@
-export function initImagePreview() {
+import { createEffectScope } from '../effects/lifecycle.js';
+function mount(scope) {
   const root = document.querySelector('.ai-prose-body[data-image-preview]');
   if (!root || root.dataset.imagePreviewReady) return;
   root.dataset.imagePreviewReady = 'true';
+  scope.add(() => delete root.dataset.imagePreviewReady);
   const labels = JSON.parse(root.dataset.imagePreview);
   const images = [...root.querySelectorAll('img')].filter((img) => !img.closest('a, button'));
   if (!images.length) return;
@@ -18,6 +20,10 @@ export function initImagePreview() {
   close.title = labels.close;
   dialog.append(enlarged, caption, close);
   document.body.append(dialog);
+  scope.add(() => {
+    dismiss();
+    dialog.remove();
+  });
   let trigger;
   let overflow;
   let locked = false;
@@ -39,18 +45,18 @@ export function initImagePreview() {
     dialog.close();
     restore();
   }
-  close.addEventListener('click', dismiss);
-  dialog.addEventListener('cancel', (event) => {
+  scope.listen(close, 'click', dismiss);
+  scope.listen(dialog, 'cancel', (event) => {
     event.preventDefault();
     dismiss();
   });
-  dialog.addEventListener('pointerdown', (event) => {
+  scope.listen(dialog, 'pointerdown', (event) => {
     pressedBackdrop = event.target === dialog && event.button === 0 && event.isPrimary;
   });
-  dialog.addEventListener('pointercancel', () => {
+  scope.listen(dialog, 'pointercancel', () => {
     pressedBackdrop = false;
   });
-  dialog.addEventListener('click', (event) => {
+  scope.listen(dialog, 'click', (event) => {
     if (pressedBackdrop && event.target === dialog) dismiss();
     pressedBackdrop = false;
   });
@@ -62,21 +68,44 @@ export function initImagePreview() {
     pressedBackdrop = false;
     trigger?.focus({ preventScroll: true });
   }
-  dialog.addEventListener('close', () => {
+  scope.listen(dialog, 'close', () => {
     if (!dialog.open) restore();
   });
   images.forEach((img) => {
+    const attrs = ['tabindex', 'role', 'aria-haspopup', 'aria-label'].map((key) => [
+      key,
+      img.getAttribute(key),
+    ]);
+    const hadClass = img.classList.contains('image-preview-trigger');
+    scope.add(() => {
+      if (!hadClass) img.classList.remove('image-preview-trigger');
+      for (const [key, value] of attrs) {
+        if (value === null) img.removeAttribute(key);
+        else img.setAttribute(key, value);
+      }
+    });
     img.classList.add('image-preview-trigger');
     img.tabIndex = 0;
     img.setAttribute('role', 'button');
     img.setAttribute('aria-haspopup', 'dialog');
     img.setAttribute('aria-label', `${labels.open}${img.alt ? ': ' + img.alt : ''}`);
-    img.addEventListener('click', () => open(img));
-    img.addEventListener('keydown', (event) => {
+    scope.listen(img, 'click', () => open(img));
+    scope.listen(img, 'keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         open(img);
       }
     });
   });
+}
+
+export function initImagePreview() {
+  const scope = createEffectScope('image-preview');
+  try {
+    mount(scope);
+  } catch (error) {
+    scope.dispose();
+    throw error;
+  }
+  return scope.dispose;
 }

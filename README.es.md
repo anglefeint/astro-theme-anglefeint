@@ -171,6 +171,8 @@ About incluye **Hacker Decryptor**: decodifica Base64/Base64URL, texto URL, hexa
 
 La versión completa de **Decoder Lab** está en `/<locale>/decoder/`: historial local, interpretación ERC-20/TRC-20 (EVM/HyperEVM/TRON) e inspección de direcciones EVM/TRON/Bitcoin. Ábrela desde el diálogo de About. Usa `theme.enableDecoderPage: false` en `src/site.config.ts` para desactivar la página y su enlace independientemente de About. No requiere RPC, cartera ni clave API.
 
+La estética de Decoder Lab se inspira en el movimiento **cypherpunk**, como homenaje a sus contribuciones a la libertad humana, la privacidad y el código abierto. Su red entre pares y el procesamiento local reflejan la idea de mantener las herramientas y los datos en manos de cada persona.
+
 ## Requisitos
 
 - Node.js `22.12.0+` (LTS recomendado)

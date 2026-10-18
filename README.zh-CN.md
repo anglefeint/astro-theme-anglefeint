@@ -169,6 +169,8 @@ About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL
 
 完整的 **Decoder Lab** 位于 `/<locale>/decoder/`，支持本地文本处理链路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 调用解释，以及 EVM／TRON／Bitcoin 地址检查。从 About 解码弹窗进入；在 `src/site.config.ts` 设置 `theme.enableDecoderPage: false` 可独立关闭页面和入口。无需 RPC、连接钱包或 API Key。
 
+Decoder Lab 的视觉风格致敬 **Cypherpunk（密码朋克）**，纪念他们为人类自由、隐私与开放代码作出的贡献。点对点网络意象与本地处理方式，呼应了让工具与数据掌握在个人手中的理念。
+
 ## 环境要求
 
 - Node.js `22.12.0+`（建议 LTS）

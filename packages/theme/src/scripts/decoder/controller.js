@@ -156,6 +156,13 @@ export function createDecoderController(container, labels, clock, pageLabels = {
       form.querySelectorAll('[data-crypto-control]').forEach((el) => {
         el.hidden = kind === 'text';
       });
+      form.querySelectorAll('[data-address-control]').forEach((el) => {
+        el.hidden = kind !== 'address';
+      });
+      if (task) {
+        if (kind === 'address') input.setAttribute('aria-describedby', 'decoder-address-hint');
+        else input.removeAttribute('aria-describedby');
+      }
       form.querySelectorAll('[data-decimals-control]').forEach((el) => {
         el.hidden = kind !== 'call';
       });

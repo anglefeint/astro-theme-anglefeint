@@ -1,4 +1,5 @@
-export function initReadProgressAndBackToTop(prefersReducedMotion) {
+import { createEffectScope } from '../effects/lifecycle.js';
+function mount(prefersReducedMotion, scope) {
   var progress = document.querySelector('.ai-read-progress');
   var toast = document.querySelector('.ai-stage-toast');
   var articlePanel = document.querySelector('.ai-article > .prose');
@@ -12,8 +13,10 @@ export function initReadProgressAndBackToTop(prefersReducedMotion) {
   }
   if (toast && articlePanel) {
     positionStageToast();
-    window.addEventListener('resize', positionStageToast, { passive: true });
-    new ResizeObserver(positionStageToast).observe(articlePanel);
+    scope.listen(window, 'resize', positionStageToast, { passive: true });
+    const observer = new ResizeObserver(positionStageToast);
+    observer.observe(articlePanel);
+    scope.add(() => observer.disconnect());
   }
   var stageSeen = { p10: false, p30: false, p60: false, done: false };
   var toastTimer = 0;
@@ -37,8 +40,8 @@ export function initReadProgressAndBackToTop(prefersReducedMotion) {
     positionStageToast();
     toast.textContent = msg;
     toast.classList.add('visible');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () {
+    scope.clearTimeout(toastTimer);
+    toastTimer = scope.setTimeout(function () {
       toast.classList.remove('visible');
     }, 1800);
   }
@@ -72,13 +75,24 @@ export function initReadProgressAndBackToTop(prefersReducedMotion) {
     }
 
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    scope.listen(window, 'scroll', onScroll, { passive: true });
   }
 
   var backTop = document.querySelector('.ai-back-to-top');
   if (backTop) {
-    backTop.addEventListener('click', function () {
+    scope.listen(backTop, 'click', function () {
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
   }
+}
+
+export function initReadProgressAndBackToTop(prefersReducedMotion) {
+  const scope = createEffectScope('read-progress');
+  try {
+    mount(prefersReducedMotion, scope);
+  } catch (error) {
+    scope.dispose();
+    throw error;
+  }
+  return scope.dispose;
 }

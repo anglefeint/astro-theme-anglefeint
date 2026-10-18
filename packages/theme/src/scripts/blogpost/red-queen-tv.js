@@ -1,4 +1,5 @@
-export function initRedQueenTv(prefersReducedMotion) {
+import { createEffectScope } from '../effects/lifecycle.js';
+function mount(prefersReducedMotion, scope) {
   var shell = document.querySelector('.rq-tv');
   var stage = document.querySelector('.rq-tv-stage');
   var toggle = document.querySelector('.rq-tv-toggle');
@@ -82,34 +83,34 @@ export function initRedQueenTv(prefersReducedMotion) {
 
   function clearSequenceTimer() {
     if (!sequenceTimer) return;
-    clearTimeout(sequenceTimer);
+    scope.clearTimeout(sequenceTimer);
     sequenceTimer = 0;
   }
 
   function clearRenderTimer() {
     if (!renderTimer) return;
-    clearTimeout(renderTimer);
+    scope.clearTimeout(renderTimer);
     renderTimer = 0;
   }
 
   function clearPreloadTimers() {
     if (preloadTimeoutTimer) {
-      clearTimeout(preloadTimeoutTimer);
+      scope.clearTimeout(preloadTimeoutTimer);
       preloadTimeoutTimer = 0;
     }
     preloadRetryTimers.forEach(function (id) {
-      clearTimeout(id);
+      scope.clearTimeout(id);
     });
     preloadRetryTimers.clear();
   }
 
   function clearAutoStartTimers() {
     if (autoDelayTimer) {
-      clearTimeout(autoDelayTimer);
+      scope.clearTimeout(autoDelayTimer);
       autoDelayTimer = 0;
     }
     if (autoIdleHandle && typeof window.cancelIdleCallback === 'function') {
-      window.cancelIdleCallback(autoIdleHandle);
+      scope.cancelIdleCallback(autoIdleHandle);
       autoIdleHandle = 0;
     }
     if (autoLoadHandler) {
@@ -120,9 +121,9 @@ export function initRedQueenTv(prefersReducedMotion) {
 
   function scheduleSequence(fn, delay) {
     clearSequenceTimer();
-    sequenceTimer = setTimeout(function runTask() {
+    sequenceTimer = scope.setTimeout(function runTask() {
       if (document.hidden) {
-        sequenceTimer = setTimeout(runTask, HIDDEN_POLL_MS);
+        sequenceTimer = scope.setTimeout(runTask, HIDDEN_POLL_MS);
         return;
       }
       fn();
@@ -130,7 +131,7 @@ export function initRedQueenTv(prefersReducedMotion) {
   }
 
   function schedulePreloadRetry(fn, delay) {
-    var id = setTimeout(function () {
+    var id = scope.setTimeout(function () {
       preloadRetryTimers.delete(id);
       fn();
     }, delay);
@@ -169,7 +170,7 @@ export function initRedQueenTv(prefersReducedMotion) {
       return;
     }
 
-    fetch(resolveItemUrl(item))
+    fetch(resolveItemUrl(item), { signal: scope.signal })
       .then(function (response) {
         return response.arrayBuffer();
       })
@@ -187,6 +188,10 @@ export function initRedQueenTv(prefersReducedMotion) {
     }
 
     var img = new Image();
+    scope.add(() => {
+      img.onload = null;
+      img.onerror = null;
+    });
     img.onload = function () {
       imageCache[item.url] = img;
       done(true);
@@ -215,7 +220,7 @@ export function initRedQueenTv(prefersReducedMotion) {
       done(ok);
     }
 
-    preloadTimeoutTimer = setTimeout(function () {
+    preloadTimeoutTimer = scope.setTimeout(function () {
       finish(false);
     }, PRELOAD_TIMEOUT_MS);
 
@@ -235,11 +240,11 @@ export function initRedQueenTv(prefersReducedMotion) {
   function revealMonitor(token) {
     if (hasRevealed) return;
     hasRevealed = true;
-    if (revealTimer) clearTimeout(revealTimer);
-    revealTimer = setTimeout(function runReveal() {
+    if (revealTimer) scope.clearTimeout(revealTimer);
+    revealTimer = scope.setTimeout(function runReveal() {
       if (token !== playToken || !isPlaying) return;
       if (document.hidden) {
-        revealTimer = setTimeout(runReveal, HIDDEN_POLL_MS);
+        revealTimer = scope.setTimeout(runReveal, HIDDEN_POLL_MS);
         return;
       }
       forceStaticUntil = performance.now() + WARMUP_STATIC_MS;
@@ -302,7 +307,7 @@ export function initRedQueenTv(prefersReducedMotion) {
     clearPreloadTimers();
     clearAutoStartTimers();
     if (revealTimer) {
-      clearTimeout(revealTimer);
+      scope.clearTimeout(revealTimer);
       revealTimer = 0;
     }
     stopRenderLoop();
@@ -381,7 +386,7 @@ export function initRedQueenTv(prefersReducedMotion) {
     if (!inStaticPhase && currentFrame) drawFrame(currentFrame);
     else drawFallback(elapsed);
     drawOverlay(elapsed);
-    renderTimer = setTimeout(renderTick, FRAME_MS);
+    renderTimer = scope.setTimeout(renderTick, FRAME_MS);
   }
 
   function startRenderLoop() {
@@ -430,6 +435,10 @@ export function initRedQueenTv(prefersReducedMotion) {
     }
 
     var img = new Image();
+    scope.add(() => {
+      img.onload = null;
+      img.onerror = null;
+    });
     img.onload = function () {
       if (token !== playToken || !isPlaying) return;
       if (item.type !== 'image/gif') imageCache[item.url] = img;
@@ -516,7 +525,7 @@ export function initRedQueenTv(prefersReducedMotion) {
       return;
     }
 
-    fetch(resolveItemUrl(item))
+    fetch(resolveItemUrl(item), { signal: scope.signal })
       .then(function (response) {
         return response.arrayBuffer();
       })
@@ -576,7 +585,7 @@ export function initRedQueenTv(prefersReducedMotion) {
       startPlayback();
     }
 
-    autoDelayTimer = setTimeout(function () {
+    autoDelayTimer = scope.setTimeout(function () {
       autoDelayTimer = 0;
       readyByDelay = true;
       tryAutoStart();
@@ -588,11 +597,11 @@ export function initRedQueenTv(prefersReducedMotion) {
         autoLoadHandler = null;
         tryAutoStart();
       };
-      window.addEventListener('load', autoLoadHandler, { once: true });
+      scope.listen(window, 'load', autoLoadHandler, { once: true });
     }
 
     if (typeof window.requestIdleCallback === 'function') {
-      autoIdleHandle = window.requestIdleCallback(
+      autoIdleHandle = scope.requestIdleCallback(
         function () {
           autoIdleHandle = 0;
           readyByIdle = true;
@@ -601,7 +610,7 @@ export function initRedQueenTv(prefersReducedMotion) {
         { timeout: 1500 }
       );
     } else {
-      setTimeout(function () {
+      scope.setTimeout(function () {
         readyByIdle = true;
         tryAutoStart();
       }, 600);
@@ -627,22 +636,30 @@ export function initRedQueenTv(prefersReducedMotion) {
     }
   }
 
-  window.addEventListener(
+  scope.listen(
+    window,
     'resize',
     function () {
       if (canvas) resizeCanvas();
     },
     { passive: true }
   );
-  document.addEventListener('visibilitychange', onTvVisibilityChange);
-  window.addEventListener(
-    'beforeunload',
-    function () {
-      teardownPlayback();
-    },
-    { once: true }
-  );
+  scope.listen(document, 'visibilitychange', onTvVisibilityChange);
+  scope.add(function () {
+    teardownPlayback();
+  });
 
   setCollapsed(true);
   queueAutoPlay();
+}
+
+export function initRedQueenTv(prefersReducedMotion) {
+  const scope = createEffectScope('red-queen-tv');
+  try {
+    mount(prefersReducedMotion, scope);
+  } catch (error) {
+    scope.dispose();
+    throw error;
+  }
+  return scope.dispose;
 }

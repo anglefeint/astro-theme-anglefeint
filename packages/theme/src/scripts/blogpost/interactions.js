@@ -1,15 +1,19 @@
-export function initPostInteractions(prefersReducedMotion) {
+import { createEffectScope } from '../effects/lifecycle.js';
+function mount(prefersReducedMotion, scope) {
   const glow = document.querySelector('.ai-mouse-glow');
   if (glow && window.__anglefeintPostGlowBound__ !== true) {
     window.__anglefeintPostGlowBound__ = true;
+    scope.add(() => {
+      window.__anglefeintPostGlowBound__ = false;
+    });
     let raf = 0;
     let x = 0;
     let y = 0;
-    document.addEventListener('mousemove', function (e) {
+    scope.listen(document, 'mousemove', function (e) {
       x = e.clientX;
       y = e.clientY;
       if (!raf) {
-        raf = requestAnimationFrame(function () {
+        raf = scope.requestAnimationFrame(function () {
           glow.style.setProperty('--mouse-x', x + 'px');
           glow.style.setProperty('--mouse-y', y + 'px');
           raf = 0;
@@ -50,9 +54,11 @@ export function initPostInteractions(prefersReducedMotion) {
       { rootMargin: '0px 0px -60px 0px', threshold: 0.1 }
     );
 
+    scope.add(() => io.disconnect());
     paras.forEach(function (p) {
       if (p.dataset.aiRevealObserved === 'true') return;
       p.dataset.aiRevealObserved = 'true';
+      scope.add(() => delete p.dataset.aiRevealObserved);
       io.observe(p);
     });
   } else {
@@ -67,7 +73,13 @@ export function initPostInteractions(prefersReducedMotion) {
   if (regen && article) {
     if (regen.dataset.aiRegenerateBound === 'true') return;
     regen.dataset.aiRegenerateBound = 'true';
-    regen.addEventListener('click', function () {
+    scope.add(() => {
+      delete regen.dataset.aiRegenerateBound;
+      regen.disabled = false;
+      regen.classList.remove('ai-regenerating');
+      article.classList.remove('ai-regenerate-flash');
+    });
+    scope.listen(regen, 'click', function () {
       regen.disabled = true;
       regen.classList.add('ai-regenerating');
       article.classList.add('ai-regenerate-flash');
@@ -78,7 +90,7 @@ export function initPostInteractions(prefersReducedMotion) {
         scan.style.top = '0';
         scan.style.opacity = '1';
       }
-      setTimeout(
+      scope.setTimeout(
         function () {
           article.classList.remove('ai-regenerate-flash');
           regen.classList.remove('ai-regenerating');
@@ -88,4 +100,15 @@ export function initPostInteractions(prefersReducedMotion) {
       );
     });
   }
+}
+
+export function initPostInteractions(prefersReducedMotion) {
+  const scope = createEffectScope('interactions');
+  try {
+    mount(prefersReducedMotion, scope);
+  } catch (error) {
+    scope.dispose();
+    throw error;
+  }
+  return scope.dispose;
 }

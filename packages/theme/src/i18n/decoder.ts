@@ -5,6 +5,7 @@ export type DecoderPageMessages = {
   textTask: string;
   callTask: string;
   addressTask: string;
+  addressHint: string;
   chain: string;
   decimals: string;
   precisionHint: string;
@@ -32,6 +33,8 @@ export type DecoderPageMessages = {
 };
 export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
   en: {
+    addressHint:
+      'Check cryptocurrency address format: EVM / HyperEVM (0x…), TRON (T… / 41…), Bitcoin. Inspect encoding, length and available checksums; Bitcoin also shows address type, network compatibility and scriptPubKey. No balance or transaction lookup.',
     loadFailed: 'Decoder module could not load. Refresh the page and try again.',
     description: 'Decode text in steps, inspect token calls and check addresses locally.',
     fullTool: 'DECODER LAB',
@@ -67,6 +70,8 @@ export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
       'Choose a task, paste the source data, then decode. Token calls require calldata, not a transaction hash.',
   },
   zh: {
+    addressHint:
+      '检查数字货币地址格式：EVM／HyperEVM（0x…）、TRON（T…／41…）、Bitcoin。解析编码、长度及可用的校验和；比特币还检查网络匹配，显示地址类型和 scriptPubKey。不查询余额或交易。',
     loadFailed: '解码模块加载失败，请刷新页面后重试。',
     description: '逐步解码文本，在本地解析代币调用并检查地址。',
     fullTool: '解码实验室',
@@ -100,6 +105,8 @@ export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
     inputHint: '选择任务并粘贴原始数据后解码；代币调用需要 calldata，不是交易哈希。',
   },
   'zh-hant': {
+    addressHint:
+      '檢查數位貨幣地址格式：EVM／HyperEVM（0x…）、TRON（T…／41…）、Bitcoin。解析編碼、長度及可用的校驗和；比特幣另檢查網路相容性，顯示地址類型和 scriptPubKey。不查詢餘額或交易。',
     loadFailed: '解碼模組載入失敗，請重新整理頁面後再試。',
     description: '逐步解碼文字，在本機解析代幣呼叫並檢查地址。',
     fullTool: '解碼實驗室',
@@ -132,6 +139,8 @@ export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
     inputHint: '選擇任務並貼上原始資料；代幣呼叫需要 calldata，而非交易雜湊。',
   },
   ja: {
+    addressHint:
+      '暗号資産アドレスの形式を確認：EVM / HyperEVM（0x…）、TRON（T… / 41…）、Bitcoin。エンコード、長さ、利用可能なチェックサムを解析。Bitcoinではネットワークとの一致、種類、scriptPubKeyも表示します。残高や取引は照会しません。',
     loadFailed: 'デコーダーを読み込めませんでした。ページを再読み込みしてお試しください。',
     description: 'テキストを段階的に解読し、トークン呼び出しとアドレスをローカルで確認します。',
     fullTool: 'デコードラボ',
@@ -167,6 +176,8 @@ export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
       'タスクを選びデータを貼り付けてください。トークン呼び出しには取引ハッシュではなくcalldataが必要です。',
   },
   ko: {
+    addressHint:
+      '암호화폐 주소 형식 검사: EVM / HyperEVM(0x…), TRON(T… / 41…), Bitcoin. 인코딩, 길이 및 제공된 체크섬을 분석합니다. Bitcoin은 네트워크 호환성, 주소 유형과 scriptPubKey도 표시합니다. 잔액이나 거래는 조회하지 않습니다.',
     loadFailed: '디코더 모듈을 불러오지 못했습니다. 페이지를 새로고침한 후 다시 시도하세요.',
     description: '텍스트를 단계별로 디코딩하고 토큰 호출과 주소를 로컬에서 확인합니다.',
     fullTool: '디코더 랩',
@@ -202,6 +213,8 @@ export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
       '작업을 선택하고 원본 데이터를 붙여 넣으세요. 토큰 호출에는 거래 해시가 아닌 calldata가 필요합니다.',
   },
   es: {
+    addressHint:
+      'Comprueba direcciones de criptomonedas: EVM / HyperEVM (0x…), TRON (T… / 41…), Bitcoin. Analiza codificación, longitud y sumas de comprobación disponibles; Bitcoin incluye compatibilidad de red, tipo y scriptPubKey. No consulta saldos ni transacciones.',
     loadFailed: 'No se pudo cargar el módulo. Actualiza la página e inténtalo de nuevo.',
     description: 'Decodifica texto por pasos e inspecciona llamadas y direcciones localmente.',
     fullTool: 'LAB DE DECODIFICACIÓN',
@@ -237,6 +250,8 @@ export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
       'Selecciona una tarea y pega los datos. Las llamadas requieren calldata, no un hash de transacción.',
   },
   'pt-br': {
+    addressHint:
+      'Verifica endereços de criptomoedas: EVM / HyperEVM (0x…), TRON (T… / 41…), Bitcoin. Analisa codificação, tamanho e checksums disponíveis; Bitcoin inclui compatibilidade de rede, tipo e scriptPubKey. Não consulta saldos nem transações.',
     loadFailed: 'Não foi possível carregar o módulo. Atualize a página e tente novamente.',
     description: 'Decodifique texto em etapas e inspecione chamadas e endereços localmente.',
     fullTool: 'LAB DE DECODIFICAÇÃO',
@@ -272,6 +287,8 @@ export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
       'Selecione uma tarefa e cole os dados. Chamadas exigem calldata, não o hash da transação.',
   },
   de: {
+    addressHint:
+      'Prüft Krypto-Adressen: EVM / HyperEVM (0x…), TRON (T… / 41…), Bitcoin. Analysiert Kodierung, Länge und vorhandene Prüfsummen; bei Bitcoin auch Netzwerkkompatibilität, Adresstyp und scriptPubKey. Keine Abfrage von Guthaben oder Transaktionen.',
     loadFailed:
       'Das Decoder-Modul konnte nicht geladen werden. Seite neu laden und erneut versuchen.',
     description: 'Text schrittweise decodieren und Token-Aufrufe sowie Adressen lokal prüfen.',
@@ -308,6 +325,8 @@ export const DECODER_PAGE_LABELS: Record<string, DecoderPageMessages> = {
       'Aufgabe wählen und Daten einfügen. Token-Aufrufe benötigen Calldata, keinen Transaktionshash.',
   },
   ru: {
+    addressHint:
+      'Проверка криптовалютных адресов: EVM / HyperEVM (0x…), TRON (T… / 41…), Bitcoin. Анализ кодировки, длины и доступных контрольных сумм; для Bitcoin — совместимость сети, тип и scriptPubKey. Без запроса баланса и транзакций.',
     loadFailed: 'Не удалось загрузить модуль декодера. Обновите страницу и повторите попытку.',
     description: 'Пошаговое декодирование текста и локальный разбор вызовов и адресов.',
     fullTool: 'ЛАБОРАТОРИЯ ДЕКОДИРОВАНИЯ',

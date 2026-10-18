@@ -4,6 +4,82 @@ import { URL } from 'node:url';
 import process from 'node:process';
 const input = '[name="decoder-input"]',
   output = '.hacker-decoder-output';
+
+for (const phase of ['initialization', 'animation']) {
+  test(`decoder remains usable when SVG background fails during ${phase}`, async ({ page }) => {
+    const injectFailure = () => {
+      const original = window.SVGElement.prototype.setAttribute;
+      window.SVGElement.prototype.setAttribute = function (name, value) {
+        if (name === 'cx' && this.closest('[data-network-background]')) {
+          window.SVGElement.prototype.setAttribute = original;
+          throw new Error('Injected decorative SVG failure');
+        }
+        return original.call(this, name, value);
+      };
+    };
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    if (phase === 'initialization') await page.addInitScript(injectFailure);
+    await open(page);
+    if (phase === 'animation') await page.evaluate(injectFailure);
+    await expect(page.locator('[data-network-background]')).toHaveAttribute('data-paused', 'true');
+    await page.locator('[name="decoder-format"]').selectOption('base64');
+    await page.locator(input).fill('SGVsbG8=');
+    await run(page);
+    await expect(page.locator(output)).toHaveText('Hello');
+  });
+}
+
+test('resize preserves the graph within a density band and adapts it for mobile', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await open(page);
+  const network = page.locator('[data-network-background]');
+  await network
+    .locator('.network-background-nodes circle')
+    .first()
+    .evaluate((el) => {
+      el.dataset.resizeWitness = 'kept';
+    });
+  await page.setViewportSize({ width: 1420, height: 880 });
+  await expect(network).toHaveAttribute('viewBox', '0 0 1420 880');
+  await expect(network.locator('[data-resize-witness="kept"]')).toHaveCount(1);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(network).toHaveAttribute('viewBox', '0 0 390 844');
+  await expect(network.locator('.network-background-nodes circle')).toHaveCount(8);
+  await expect(network.locator('.network-background-signal')).toHaveCount(3);
+});
+test('SVG network signals move along existing edges and stop for reduced motion and pagehide', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/en/decoder/');
+  const network = page.locator('[data-network-background]');
+  const signal = network.locator('.network-background-signal').first();
+  await expect(network).toHaveAttribute('aria-hidden', 'true');
+  await expect(network).toHaveAttribute('data-paused', 'false');
+  const node = network.locator('.network-background-nodes circle').first();
+  const before = await node.getAttribute('cx');
+  await expect.poll(() => node.getAttribute('cx')).not.toBe(before);
+  const edge = network.locator('line').first();
+  await expect.poll(() => edge.getAttribute('x1')).not.toBe(before);
+  await expect(network.locator('pattern')).toHaveCount(0);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(network).toHaveAttribute('data-paused', 'true');
+  const stopped = await node.getAttribute('cx');
+  await page.waitForTimeout(150);
+  await expect(node).toHaveAttribute('cx', stopped);
+  await expect(signal).toHaveCSS('display', 'none');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await expect(network).toHaveAttribute('data-paused', 'false');
+  await page.evaluate(() => window.dispatchEvent(new window.PageTransitionEvent('pagehide')));
+  await expect(network).toHaveAttribute('data-paused', 'true');
+  await page.evaluate(() =>
+    window.dispatchEvent(new window.PageTransitionEvent('pageshow', { persisted: true }))
+  );
+  await expect(network).toHaveAttribute('data-paused', 'false');
+});
 async function open(page, locale = 'en') {
   await page.goto(`/${locale}/decoder/`);
   await expect(page.locator('[data-decoder-page]')).toBeVisible();
@@ -68,6 +144,14 @@ test('localized static pages expose canonical, reciprocal languages and an indep
     await run(page);
     await expect(page.locator(output)).toHaveText('你好 🐇');
     await page.locator('[data-decoder-task="address"]').click();
+    await expect(page.locator('#decoder-address-hint')).toBeVisible();
+    await expect(page.locator(input)).toHaveAttribute('aria-describedby', 'decoder-address-hint');
+    if (locale === 'en') {
+      await expect(page.locator('#decoder-address-hint')).toContainText(
+        'No balance or transaction lookup'
+      );
+      await expect(page.locator('#decoder-address-hint')).toContainText('scriptPubKey');
+    }
     await page.locator('[name="decoder-chain"]').selectOption('btc');
     await page.locator('[data-decoder-example]').click();
     await run(page);
@@ -87,6 +171,7 @@ test('text pipeline records, branches and exports without leaking user input int
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await open(page);
+  await expect(page.locator('#decoder-address-hint')).toBeHidden();
   await page.locator('[name="decoder-format"]').selectOption('url');
   await page.locator(input).fill('SGVsbG8%3D');
   await run(page);

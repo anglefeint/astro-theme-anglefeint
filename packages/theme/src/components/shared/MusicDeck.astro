@@ -1,5 +1,6 @@
 ---
 import controllerUrl from '../../scripts/music/controller.js?url&no-inline';
+import mountUrl from '../../scripts/music/deck.js?url&no-inline';
 import coreUrl from '../../scripts/music/core.js?url&no-inline';
 import storageUrl from '../../scripts/music/storage.js?url&no-inline';
 import styleUrl from '../../styles/music-deck.css?url&no-inline';
@@ -36,6 +37,7 @@ const resolvedTracks = tracks.map((track) => ({
     ? undefined
     : String(initiallyCollapsed)}
   data-core={coreUrl}
+  data-mount={mountUrl}
   data-storage={storageUrl}
   data-tracks={JSON.stringify(resolvedTracks)}
   data-labels={JSON.stringify(labels)}

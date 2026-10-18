@@ -1,0 +1,34 @@
+---
+import '../../styles/network-background.css';
+---
+
+<div class="network-backdrop" aria-hidden="true">
+  <svg
+    class="network-background"
+    data-network-background
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 1440 900"
+    preserveAspectRatio="none"
+  >
+    <!-- Static fallback; the browser replaces this with one randomized network. -->
+    <path
+      class="network-background-edges"
+      d="M70 650 290 190 680 410 1100 90M290 190 950 790 680 410 1360 650M70 650 950 790 1360 650"
+    ></path>
+    <g class="network-background-nodes">
+      <circle cx="70" cy="650" r="4"></circle><circle cx="290" cy="190" r="5"></circle>
+      <circle cx="680" cy="410" r="5"></circle><circle cx="1100" cy="90" r="4"></circle>
+      <circle cx="950" cy="790" r="4"></circle><circle cx="1360" cy="650" r="4"></circle>
+    </g>
+  </svg>
+</div>
+
+<script>
+  import { initNetworkBackgrounds } from '../../scripts/effects/network-background-entry.js';
+  initNetworkBackgrounds();
+  document.addEventListener('astro:page-load', initNetworkBackgrounds);
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) initNetworkBackgrounds();
+  });
+</script>

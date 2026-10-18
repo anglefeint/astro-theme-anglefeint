@@ -58,5 +58,12 @@ for (const width of [1440, 390]) {
     await dialog.getByRole('button', { name: '关闭图片预览' }).click();
     await expect(dialog).not.toBeVisible();
     expect(await page.evaluate(() => document.documentElement.style.overflow)).toBe('');
+    await source.press('Enter');
+    await expect(dialog).toBeVisible();
+    await page.evaluate(() => document.dispatchEvent(new window.Event('astro:before-swap')));
+    await expect(page.locator('.article-image-preview')).toHaveCount(0);
+    await expect(page.locator('.image-preview-trigger')).toHaveCount(0);
+    await expect(page.locator('.code-copy')).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.style.overflow)).toBe('');
   });
 }

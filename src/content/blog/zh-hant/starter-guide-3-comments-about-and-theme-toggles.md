@@ -6,7 +6,7 @@ title: 使用指南 3：選用功能
 subtitle: 音樂、留言、關於頁、分頁與視覺設定。
 description: 音樂、留言、關於頁、分頁與視覺設定。
 pubDate: '2026-03-07'
-updatedDate: 2026-10-12
+updatedDate: 2026-10-18
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -47,6 +47,18 @@ mapping: 'pathname' 依路徑對應討論串；'specific' 需要 term，'number'
 About 正文段落與簽名保留設定字串中的換行：`\n` 換行，`\n\n` 留一空行，長句仍自動換行。內容仍是純文字，不解析 Markdown 或 HTML，請勿插入 `<br>`。
 
 編輯 i18n.locales['zh-hant'].about：sections（who、what、ethos、now、contactLead、signature）、contact（email、githubUrl、githubLabel）、sidebar、labels、modals、effects。ethos 是陣列，其他語言需分別編輯。頁面工具只是視覺示範，不是真實 AI 服務。email 空白可隱藏連結；theme.enableAboutPage: false 會移除頁面與導覽入口。
+
+### Decoder Lab：致敬密碼龐克
+
+Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他們為人類自由、隱私與開放程式碼作出的貢獻。點對點網路意象與本機處理方式，呼應了讓工具與資料掌握在個人手中的理念。
+
+我們認同這樣的信念：**隱私和自由不能只靠掌權者的善意。** 個人應當有能力保護自己的通訊，自主決定向誰透露什麼，並在可能時親自驗證，而不必把信任全部交給政府、平台或其他第三方。
+
+**「Cypherpunks write code.」——密碼龐克寫程式。** [《密碼龐克宣言》](https://www.activism.net/cypherpunk/manifesto.html)中的這句話，也代表了一種行動方式：把理念變成可用的軟體，公開程式碼，讓其他人能夠檢查、使用和繼續建設。我們向這種用技術守護個人自主權的精神致敬。
+
+Decoder Lab 以本機處理、可檢視的原始碼和點對點網路意象回應這份精神。
+
+完整的 **Decoder Lab** 位於 `/<locale>/decoder/`，支援本機文字處理鏈路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 呼叫解讀及 EVM／TRON／Bitcoin 地址檢查。從 About 解碼視窗開啟；在 `src/site.config.ts` 設定 `theme.enableDecoderPage: false` 可獨立關閉頁面與入口。無需 RPC、錢包連線或 API Key。
 
 ## 數量與功能開關
 
