@@ -87,6 +87,8 @@ Each protected entry prints stage start/end, elapsed seconds, a running notice e
 
 The lock is released on normal success/failure. After a forcibly interrupted process, inspect `acceptance-results/.maintainer-lock/owner.json` and confirm that its process and children have stopped before removing a stale lock; never delete an active session's lock. This reporting change does not remove checks, alter existing skip flags, change dependency caches or reduce build matrices. Logs can contain sensitive tool output: keep them ignored and review/redact before sharing. These tools remain maintainer-only and need no npm release.
 
+Keep scratch Astro projects and historical source clones outside the checkout, or remove/archive their source files after verification. Reports may stay in ignored `acceptance-results/`, but consumer TypeScript discovery during a local starter checkout can still inspect project copies there. Ensure local evidence stays ignored across branch switches; never commit it or weaken starter source checks to hide a scratch project.
+
 Demo identity and translated introductions belong in main's `src/site.config.ts`. Starter sync and drift checks resolve that destination through `starterSourcePath()` to `scripts/starter-templates/site.config.ts.template`; keep this template generic. The independent installed-starter check uses the same mapping. Do not copy the demo config into starter or add the source template to its distributed files. Consumer configuration remains `src/site.config.ts`.
 
 For repeatable public-starter command/configuration acceptance, local headless browser checks and the manual Linux Actions workflow, see [Template acceptance](TEMPLATE_ACCEPTANCE.md). These maintainer tools remain outside the generated starter.
