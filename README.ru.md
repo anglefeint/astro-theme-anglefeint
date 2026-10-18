@@ -363,6 +363,12 @@ footer.showCredits: false скрывает ссылки на тему и Astro, 
 
 ![About](public/images/theme-previews/preview-about.png)
 
+![Страницы блога](public/images/theme-previews/preview-blog-list-pagination.png)
+
+![Похожие статьи](public/images/theme-previews/preview-blog-post-collapsed.png)
+
+![Decoder Lab](public/images/theme-previews/preview-decoder.png)
+
 ## Лицензия
 
 MIT — [LICENSE](LICENSE).

@@ -363,6 +363,12 @@ footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 s
 
 ![About](public/images/theme-previews/preview-about.png)
 
+![部落格分頁](public/images/theme-previews/preview-blog-list-pagination.png)
+
+![文章相關推薦](public/images/theme-previews/preview-blog-post-collapsed.png)
+
+![Decoder Lab](public/images/theme-previews/preview-decoder.png)
+
 ## 授權
 
 MIT — [LICENSE](LICENSE).

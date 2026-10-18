@@ -6,9 +6,11 @@ Recommended files:
 
 - `preview-home.png`
 - `preview-blog-list.png`
+- `preview-blog-list-pagination.png`
 - `preview-blog-post-open.png`
 - `preview-blog-post-collapsed.png`
 - `preview-about.png`
+- `preview-decoder.png`
 - `preview-about-modal.png`
 
 Recommended size:

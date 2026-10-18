@@ -363,6 +363,12 @@ Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteri
 
 ![About](public/images/theme-previews/preview-about.png)
 
+![Paginação do blog](public/images/theme-previews/preview-blog-list-pagination.png)
+
+![Artigos relacionados](public/images/theme-previews/preview-blog-post-collapsed.png)
+
+![Decoder Lab](public/images/theme-previews/preview-decoder.png)
+
 ## Licença
 
 MIT — [LICENSE](LICENSE).

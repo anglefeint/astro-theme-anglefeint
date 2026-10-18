@@ -363,6 +363,12 @@ Alle Optionen im selben theme beziehungsweise i18n zusammenführen. Listen erset
 
 ![About](public/images/theme-previews/preview-about.png)
 
+![Blog-Seitennavigation](public/images/theme-previews/preview-blog-list-pagination.png)
+
+![Ähnliche Artikel](public/images/theme-previews/preview-blog-post-collapsed.png)
+
+![Decoder Lab](public/images/theme-previews/preview-decoder.png)
+
 ## Lizenz
 
 MIT — [LICENSE](LICENSE).

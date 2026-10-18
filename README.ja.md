@@ -257,6 +257,14 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 | ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.png) |
 
+| ブログのページ送り                                                                   | 記事の関連記事                                                                  |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| ![ブログのページ送り](public/images/theme-previews/preview-blog-list-pagination.png) | ![記事の関連記事](public/images/theme-previews/preview-blog-post-collapsed.png) |
+
+| Decoder Lab                                                      |
+| ---------------------------------------------------------------- |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+
 ## ルートごとの雰囲気
 
 - `/<default-locale>/`（デフォルトでは `/` がここへリダイレクト）：Matrix 風ターミナルのホーム
