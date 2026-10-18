@@ -6,7 +6,7 @@ title: 'Anleitung 3: Optionale Funktionen'
 subtitle: 'Musik, Kommentare, Profil, Seitennavigation und Darstellung.'
 description: 'Musik, Kommentare, Profil, Seitennavigation und Darstellung.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-12
+updatedDate: 2026-10-18
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -47,6 +47,18 @@ mapping: 'pathname' ordnet Diskussionen dem Pfad zu. 'specific' braucht term, 'n
 Absätze und Signatur auf der About-Seite behalten Zeilenumbrüche aus Konfigurationsstrings: `\n` beginnt eine neue Zeile, `\n\n` lässt eine Leerzeile. Lange Sätze werden weiterhin umgebrochen. Es bleibt Klartext, kein Markdown oder HTML; kein `<br>` einfügen.
 
 Bearbeite i18n.locales.de.about: sections (who, what, ethos, now, contactLead, signature), contact (email, githubUrl, githubLabel), sidebar, labels, modals und effects. ethos ist eine Liste. Andere Sprachen separat pflegen. Die Werkzeuge sind visuelle Demonstrationen, keine echten KI-Dienste. Eine leere E-Mail-Adresse verbirgt den Link. theme.enableAboutPage: false entfernt Seite und Navigation.
+
+### Decoder Lab: eine Hommage an die Cypherpunks
+
+Das Erscheinungsbild von Decoder Lab ist von der **Cypherpunk**-Bewegung inspiriert und würdigt ihren Beitrag zu menschlicher Freiheit, Privatsphäre und offenem Code. Das Peer-to-Peer-Netzmotiv und die lokale Verarbeitung greifen die Idee auf, Werkzeuge und Daten in den Händen des Einzelnen zu belassen.
+
+Wir teilen diese Überzeugung: **Privatsphäre und Freiheit dürfen nicht allein vom Wohlwollen der Mächtigen abhängen.** Menschen sollten ihre Kommunikation schützen, selbst entscheiden, wem sie was offenlegen, und nach Möglichkeit selbst prüfen können, ohne Regierungen, Plattformen oder anderen Dritten vollständig vertrauen zu müssen.
+
+**„Cypherpunks write code.“** Dieser Satz aus [A Cypherpunk’s Manifesto](https://www.activism.net/cypherpunk/manifesto.html) beschreibt eine Haltung: Ideale in nutzbare Software umsetzen und den Code veröffentlichen, damit andere ihn prüfen, verwenden und weiterentwickeln können. Wir würdigen diesen Einsatz für persönliche Selbstbestimmung durch Technik.
+
+Decoder Lab greift diesen Gedanken mit lokaler Verarbeitung, einsehbarem Quellcode und einem Peer-to-Peer-Netzmotiv auf.
+
+Der vollständige **Decoder Lab** unter `/<locale>/decoder/` bietet lokale Verarbeitungsschritte, ERC-20/TRC-20-Aufrufinterpretation (EVM/HyperEVM/TRON) und EVM/TRON/Bitcoin-Adressprüfung. Über den About-Dialog öffnen. `theme.enableDecoderPage: false` in `src/site.config.ts` deaktiviert Seite und Link unabhängig von About. Kein RPC, Wallet-Zugriff oder API-Schlüssel nötig.
 
 ## Anzahl und Funktionen
 

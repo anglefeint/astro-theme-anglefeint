@@ -139,6 +139,8 @@ About 頁內建 **Hacker Decryptor**：在瀏覽器本機解碼 Base64/Base64URL
 
 完整的 **Decoder Lab** 位於 `/<locale>/decoder/`，支援本機文字處理鏈路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 呼叫解讀及 EVM／TRON／Bitcoin 地址檢查。從 About 解碼視窗開啟；在 `src/site.config.ts` 設定 `theme.enableDecoderPage: false` 可獨立關閉頁面與入口。無需 RPC、錢包連線或 API Key。
 
+Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他們為人類自由、隱私與開放程式碼作出的貢獻。點對點網路意象與本機處理方式，呼應了讓工具與資料掌握在個人手中的理念。
+
 可選 Matrix 穿越：`theme.effects.enableHomePassage` 預設為 `false`。啟用後，首頁文章連結播放 8 秒綠色穿越再導覽。About 的 `Oracle` 按鈕獨立可用：每次點擊選擇四種場景配色之一，不連續重複；抵達後可拖曳環顧、按滑鼠右鍵退回走廊，按 Escape 或點擊 × 關閉。減少動態效果時，首頁直接導覽，Oracle 顯示靜態預覽。
 
 寬螢幕（1440px 以上）右下角終端預設顯示 `Knock, knock.`。文字可選取複製及捲動，點擊獨立鑰匙孔按鈕才解鎖共享走廊。在 `src/site.config.ts` 設定 `i18n.locales.en.messages.home.transmission` 即可供全部語言使用；需要不同文字時，再設定 `i18n.locales.<code>.messages.home.transmission`。順序為目前語言設定 → 英文設定 → `Knock, knock.`，與一般介面翻譯的回退規則不同。修改後重新建置並部署。

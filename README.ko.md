@@ -171,6 +171,8 @@ About의 **Hacker Decryptor**는 Base64/Base64URL, URL 인코딩, 16진수, HTML
 
 전체 **Decoder Lab**는 `/<locale>/decoder/`에서 로컬 처리 기록, EVM/HyperEVM/TRON의 ERC-20/TRC-20 호출 해석 및 EVM/TRON/Bitcoin 주소 확인을 제공합니다. About 디코더 창에서 열 수 있습니다. `src/site.config.ts`에서 `theme.enableDecoderPage: false`로 페이지와 링크를 독립적으로 끌 수 있습니다. RPC, 지갑 연결, API 키가 필요 없습니다.
 
+Decoder Lab의 시각적 스타일은 **cypherpunk(사이퍼펑크)** 운동에서 영감을 받아 인간의 자유, 프라이버시, 열린 코드에 대한 기여에 경의를 표합니다. P2P 네트워크 이미지와 로컬 처리는 도구와 데이터를 개인의 손에 두자는 생각을 반영합니다.
+
 ## 요구 사항
 
 - Node.js `22.12.0+` (LTS 권장)

@@ -4,7 +4,7 @@ title: 'User Guide 3: Enable and Customize Optional Features'
 subtitle: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 description: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-12
+updatedDate: 2026-10-18
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -103,6 +103,18 @@ i18n: {
 This changes only English About content; fill in other locales separately, as nothing is automatically translated. `sidebar`, `labels`, `modals`, and `effects` also support overrides. Start with the body and contact details. About tool windows are theme demonstrations; writing their text does not connect a real AI service.
 
 Visit `/en/about/` to check the body, email, and GitHub links. Set `theme.enableAboutPage: false` to hide the navigation item and stop generating About routes. Rebuild after changing it.
+
+### Decoder Lab: a tribute to cypherpunks
+
+Decoder Lab takes its visual inspiration from the **cypherpunk** movement, in tribute to its contributions to human freedom, privacy and open code. Its peer-to-peer network motif and local processing reflect the idea of keeping tools and data in the hands of the individual.
+
+We share this conviction: **privacy and freedom cannot depend solely on the goodwill of those in power.** Individuals should be able to protect their communications, choose what to reveal and to whom, and verify for themselves where possible, without placing all their trust in governments, platforms or other third parties.
+
+**“Cypherpunks write code.”** This line from [A Cypherpunk’s Manifesto](https://www.activism.net/cypherpunk/manifesto.html) describes a way to act: turn ideals into usable software and publish the code so others can inspect, use and build on it. We honour that commitment to defending individual autonomy through technology.
+
+Decoder Lab reflects this spirit through local processing, inspectable source code and a peer-to-peer network motif.
+
+Open **Decoder Lab** from the About decoder dialog or visit `/en/decoder/` for text decoding, token-call interpretation and address inspection in your browser. No RPC, wallet connection or API key is required. Address inspection checks format and supported checksums; it does not query balances or establish ownership. Set `theme.enableDecoderPage: false` in `src/site.config.ts` to disable the page and its entry links.
 
 ## 4. Adjust post counts and pagination
 
