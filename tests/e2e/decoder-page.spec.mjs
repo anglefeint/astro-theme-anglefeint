@@ -201,7 +201,8 @@ test('crypto loads only on demand and completes local call/address workflows', a
         new URL(process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:4321').origin
     )
       external.push(request.url());
-    if (/crypto|addresses/.test(request.url())) chunks.push(request.url());
+    if (request.resourceType() === 'script' && /crypto|addresses/.test(request.url()))
+      chunks.push(request.url());
   });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await open(page);
