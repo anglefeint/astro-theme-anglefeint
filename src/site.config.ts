@@ -16,6 +16,18 @@ export type {
 export { DEFAULT_ABOUT_CONFIG, defineThemeConfig } from './site.config.defaults.ts';
 export { normalizeI18nConfig } from './site.config.runtime.ts';
 
+// Decoder reading cards: configure i18n.locales.<code>.messages.decoderPage.readings.
+// Omit to keep localized defaults. tribute: '' hides the text; links: [] hides the cards.
+// The 12 default URLs include Anglefeint UTM attribution; custom href values are used unchanged.
+// A links array replaces the whole list. title/href are required; author/year/cover are optional.
+// cover: 'privacy-code' | 'cryptographic-autonomy' | 'cyberspace-freedom',
+// or 'virtual-communities', 'cypherpunk-archive', 'satoshi-institute', 'bitcoin', 'tor-project', 'signal', 'telegram', 'monero', 'gnupg', '/images/my-cover.webp' (public/images/) or an HTTPS image URL. Omit cover for no image.
+// Example inside a locale:
+// messages: { decoderPage: { readings: {
+//   tribute: 'Ideas and code in service of privacy and freedom.',
+//   links: [{ title: 'My reading', href: 'https://example.com/',
+//     author: 'Author', year: '2026', cover: 'privacy-code' }],
+// } } },
 export const THEME_CONFIG = defineThemeConfig({
   theme: {
     home: { showInitialize: true, showFollow: true, showTrace: true },

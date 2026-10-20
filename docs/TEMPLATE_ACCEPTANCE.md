@@ -53,6 +53,12 @@ The installed-starter matrix also pairs configured social links with the `always
 
 ## Local execution
 
+### Unreleased Frontier and Decoder readings
+
+The pending source adds an independent native Frontier dropdown controlled by `theme.enableDecoderPage`, and a starter-route call to the package-owned `DecoderReadings` component. About remains a direct link with its existing independent switch. No new route alias is created. The twelve defaults link four original texts and eight reference/project websites. Configuration uses the existing locale-message path; no generated adapter contract is changed.
+
+Local main-checkout browser evidence covers nine locales, default links/covers, desktop six-column rows, smaller-screen wrapping, dropdown Escape/outside-pointer dismissal, independent About navigation and 1/30 configured reading lists. Empty tribute/list and text-only cards were tested with temporary configuration restored afterward. The committed `tests/e2e/decoder-page.spec.mjs` also checks the Decoder Lab title prefix and static metadata. The 1/30 configuration checks and image/visual inspections are local acceptance scripts in ignored `acceptance-results/`, not additional committed E2E coverage. No installed starter, remote template, npm publish or production deployment is claimed for this unreleased work; those remain release-time gates.
+
 ### GA4 coverage
 
 `npm run test` includes `tests/analytics.unit.test.mjs`: Measurement ID validation, localhost/loopback exclusion, duplicate initialization prevention and preservation of queued consent commands. It executes the actual loader in a simulated browser environment; it does not contact Google.

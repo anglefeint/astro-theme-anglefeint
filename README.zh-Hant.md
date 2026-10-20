@@ -139,6 +139,8 @@ About 頁內建 **Hacker Decryptor**：在瀏覽器本機解碼 Base64/Base64URL
 
 完整的 **Decoder Lab** 位於 `/<locale>/decoder/`，支援本機文字處理鏈路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 呼叫解讀及 EVM／TRON／Bitcoin 地址檢查。從 About 解碼視窗開啟；在 `src/site.config.ts` 設定 `theme.enableDecoderPage: false` 可獨立關閉頁面與入口。無需 RPC、錢包連線或 API Key。
 
+自 0.20.0 起：頂部獨立的 **Frontier** 箭頭也可進入 Decoder Lab。配圖卡片連結四篇原文與八個資料／專案官網，不轉載文章正文。在 `src/site.config.ts` 的 `i18n.locales.<code>.messages.decoderPage.readings` 設定 `tribute` 文案與完整 `links` 清單；空文案隱藏致敬，`links: []` 隱藏卡片。設定多少項就顯示多少項，寬螢幕每列最多六個。參見[設定範例](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration)。
+
 Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他們為人類自由、隱私與開放程式碼作出的貢獻。點對點網路意象與本機處理方式，呼應了讓工具與資料掌握在個人手中的理念。
 
 可選 Matrix 穿越：`theme.effects.enableHomePassage` 預設為 `false`。啟用後，首頁文章連結播放 8 秒綠色穿越再導覽。About 的 `Oracle` 按鈕獨立可用：每次點擊選擇四種場景配色之一，不連續重複；抵達後可拖曳環顧、按滑鼠右鍵退回走廊，按 Escape 或點擊 × 關閉。減少動態效果時，首頁直接導覽，Oracle 顯示靜態預覽。

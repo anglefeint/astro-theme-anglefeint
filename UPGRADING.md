@@ -12,6 +12,14 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 > Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
 
+## 0.20.0: Frontier navigation and Decoder reading cards
+
+These changes require the matching 0.20.0 starter. Migrate personal settings deliberately. The package owns the independent Frontier dropdown in `CommonHeader`, the reading component, localized reading types, covers and styles. About remains a direct link. The existing `theme.enableDecoderPage` switch controls the independent dropdown; disabling About alone does not hide Decoder Lab. No schema field, adapter export or route alias is added.
+
+The starter-owned `src/pages/[lang]/decoder.astro` must import `DecoderReadings` and render `<DecoderReadings locale={locale} readings={messages.decoderPage.readings} />` below the functional explanations. Its title begins with `Decoder Lab`. A package-only upgrade cannot add those route changes or the twelve default cards to an old route. The route and starter configuration template are already managed by the starter manifest; new component/media files are covered by existing package directory exports.
+
+Customize `i18n.locales.<code>.messages.decoderPage.readings` in `src/site.config.ts`: `tribute` is plain text and `links` replaces the complete card list. Empty tribute text and `links: []` independently hide them; both empty omit the section. There is no total card-count cap. Entries accept title/link and optional author/year/cover. See the [configuration example and bundled cover names](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration). Existing message fallback rules apply. Rebuild and redeploy after changing configuration. Essays are linked externally, without bundled full text or translations; local decoder processing remains unchanged.
+
 ## 0.18.1: player initialization and hidden homepage signals
 
 This package-only update adds no configuration fields, routes, aliases or adapter exports. Projects already matching the 0.18.0 starter can run `npm update @anglefeint/astro-theme`, then `npm run doctor`, preview, rebuild and redeploy. See the [0.18.1 release record](docs/releases/0.18.1.md) for delivery status. Older starter contracts still require their corresponding migration.

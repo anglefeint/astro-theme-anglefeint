@@ -12,6 +12,28 @@ The full **Decoder Lab** is available at `/<locale>/decoder/`, with local text-p
 
 Decoder Lab takes its visual inspiration from the **cypherpunk** movement, in tribute to its contributions to human freedom, privacy and open code. Its peer-to-peer network motif and local processing reflect the idea of keeping tools and data in the hands of the individual.
 
+## Decoder reading configuration
+
+The twelve default links include `utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab` for referral attribution. Replace their `href` values through the configuration below to change or remove these parameters; custom links are used as supplied, without automatically adding attribution parameters.
+
+Since 0.20.0: the header's independent Frontier arrow opens Decoder Lab; About remains a direct link. Disabling Decoder Lab omits its arrow as well as its route and existing entries. The default twelve cards link to four original texts and eight resource/project websites; no full texts or translations are bundled.
+
+Configure its tribute and illustrated reading cards in `src/site.config.ts` under `i18n.locales.<code>.messages.decoderPage.readings`. Omit this field to retain the localized defaults. `tribute: ''` hides the text, `links: []` hides the cards; setting both removes the section. A supplied `links` array replaces the complete list without a total item-count limit; rows have up to six cards on wide screens. Each card takes `title`, `href`, and optional `author`, `year`, `cover`. Covers may use the bundled names `privacy-code`, `cryptographic-autonomy`, `cyberspace-freedom`, `virtual-communities`, `cypherpunk-archive`, `satoshi-institute`, `bitcoin`, `tor-project`, `signal`, `telegram`, `monero`, `gnupg`, a `/images/...` public path, or an HTTPS URL; omit `cover` for a text-only card. This requires the matching Decoder route that forwards `messages.decoderPage.readings` to `DecoderReadings`.
+
+These optional fields use the existing message fallback chain. An English-configured tribute or complete list can serve fallback locales; per-language overrides take precedence. Without these fields in site configuration, the component supplies localized built-in copy. Text is plain text, not HTML; recognized localized cypherpunk names receive automatic emphasis. Custom `links` entries need a nonempty title and an HTTP(S) or root-relative URL; invalid entries are omitted. Public image paths and internal links respect the Astro base path. Rebuild and redeploy after configuration changes.
+
+```ts
+// Inside i18n.locales.en (or another locale):
+messages: {
+  decoderPage: {
+    readings: {
+      tribute: 'Ideas and code in service of privacy and freedom.',
+      links: [{ title: 'My reading', href: 'https://example.com/', cover: 'privacy-code' }],
+    },
+  },
+},
+```
+
 About includes Hacker Decryptor for local Base64/Base64URL, URL, Hex, HTML entities, Unicode escapes and JWT header/payload decoding, with translated controls, automatic detection and a shared numeric result animation with host-specific colors.
 
 ## Install

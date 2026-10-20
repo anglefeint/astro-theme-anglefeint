@@ -14,6 +14,26 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 > Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
 
+## 2026-10-20 Frontier 与 Decoder 阅读区文档工作流（未发布）
+
+UTM 后续复核：十二个默认 URL 显式包含 `utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab`，自定义 href 不自动追加参数。省略配置保留十二项，显式 `links: []` 隐藏卡片；现有消息回退规则不变。同步包 README、架构、视觉说明、配置注释和 Unreleased 记录，其余候选沿用下述责任核对，九语 README 已链接到集中配置说明，无须重复展开 UTM。最新 main 检查、126 测试、199 页构建、九语 About runtime、lint 及生成 HTML 的十二个 UTM 链接断言均通过；本次文档收尾复跑元数据、本地链接与隐私检查，未运行正式发布或完整发布预演。
+
+基线为 `main` 的 `9006def`，输入为本轮完整未提交工作区，包含 Header、Decoder 路由、阅读组件与消息类型、样式、配图、配置示例及标题测试。`suggest:docs --json` 首次记录 12 个文件／目录输入，直接命中 78 份维护文档，额外依赖传播 0 份，元数据错误 0；原始候选存于忽略的 `acceptance-results/decoder-final-doc-workflow.json`。命中只代表候选，未把已发布 0.19.0 或旧版发布记录改成当前行为。
+
+| 源码链路                                                                                                | 实际行为与对应文档                                                                                                                                                                                              |
+| ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CommonHeader.astro` → 现有 theme/i18n 适配器                                                           | About 保持直接链接，Frontier 是独立原生 details 菜单，仅链接当前语言 Decoder；Decoder 开关独立于 About。14px 三角、48px 目标、4px 下移及标题对齐，以实际 CSS 为准；ARCHITECTURE 记录结构与交互。                |
+| `src/site.config.ts` → `DeepPartial<Messages>` → `getMessages` → Decoder 路由 → `DecoderReadings.astro` | 未新增 schema/适配器字段；`decoderPage.readings.tribute/links` 沿既有消息链合并。省略保留本地化默认值，数组整组替换，空值独立隐藏；无总数上限。九语 README 与包 README 给出用户入口和配置示例。                 |
+| 阅读组件 → 本地封面 → 静态 HTML                                                                         | 四篇原文、八个资料／项目首页，外链新窗口，不转载正文。内置图不请求第三方；自定义远程图会正常发起浏览器请求。旧图按要求保留但不被组件导入。VISUAL_SYSTEMS 记录十二个封面别名、响应式列数及最终 18px／16px 字号。 |
+| route → ThemeFrame/BaseHead → 标题断言                                                                  | 浏览器标题以 Decoder Lab 开头，保留 Base64、JWT 和本地化调用标签；canonical/hreflang/schema 沿原链路。`tests/e2e/decoder-page.spec.mjs` 的九语静态 SEO 检查已实际通过。                                         |
+| starter manifest → route/template；package files/exports → component/types/assets                       | 原有目录导出与 manifest 已覆盖新组件、媒体及既有路由／配置模板，无需追加单独图片到 starter。UPGRADING 和 CHANGELOG 明确属于未发布功能，需要匹配的 Decoder route，不能宣称 npm 更新会重写用户页面。              |
+
+本轮更新九语 README、包 README、UPGRADING、CHANGELOG、ARCHITECTURE、VISUAL_SYSTEMS、anglefeint、TEMPLATE_ACCEPTANCE 与本核对记录，共 17 份文档。README 开头的安装／写作／部署顺序未改，新增说明位于后部可选功能区。公用配置说明采用 GitHub 绝对链接，避免消费者 starter 中不存在 `packages/theme/` 路径。其余 61 份候选按元数据责任检查后保留：发布政策、代理入口和元数据规范没有变化；提交／上架材料的既有陈述仍成立；历史 releases 保持历史；未伪造安装、远端模板、npm 或生产部署验收。
+
+此前本会话已通过完整 main 检查（126 单元测试、Astro 无诊断、199 静态页面与九语 About runtime）、lint，以及本地十二卡片九语言、六项目官网链接、图片解码、宽屏两行／手机无横溢出、菜单打开／Escape／外部点击和独立 About 链接检查。配置验收实际临时写入并恢复用户配置，覆盖 1／30 条完整显示、全量替换、自定义封面、文本卡片、空文案／空列表和无效链接过滤；这些额外浏览器脚本保存在忽略的本地证据目录，未声称纳入常驻自动测试。此次文档收尾复核最终 18px／16px 字号与对应高亮，新增文档不重复跑发布演练或安装构建矩阵。
+
+本轮仅做文档同步与必要的只读／本地验证，没有提交、push、发布 npm、同步 starter、修改 Git 身份或向外发送审计原始数据。发布工作流与生产交付仍待后续明确执行。
+
 ## 2026-10-18 0.18.1 发布交付核对
 
 播放器初始化与首页独立隐藏信号属于包内运行行为，因此按安全发布工作流交付 0.18.1。npm 源码为 `63d28c6`，starter 为 `fa8e119`，依赖声明与 lockfile 均为 0.18.1 基线；九语 README 的待发布提示已在发布准备时改为版本说明，保持后部功能参考位置。此前未发布核对段落是当时状态，未反向改写历史。

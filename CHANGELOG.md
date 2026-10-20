@@ -13,6 +13,15 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.20.0] - 2026-10-20
+
+- Mark the twelve default Decoder reading links with Anglefeint referral UTM parameters; custom configured links remain unchanged.
+
+- Add an independent Frontier dropdown to the header, keeping About as a direct page link and following the existing Decoder enable switch.
+- Add twelve illustrated Decoder Lab reading/resource cards linking to original essays and project websites, without reproducing full texts. Configure tribute copy and the complete uncapped card list through locale messages in `src/site.config.ts`; empty text/list independently hide them.
+- Use locally bundled cypherpunk covers and responsive lazy-loaded images, up to six cards per wide-screen row, a highlighted monospace tribute, and tighter bottom spacing. Put Decoder Lab first in browser titles.
+- The matching starter-owned Decoder route is required for reading cards and title changes; package updates alone do not rewrite user routes. No new adapter export or configuration switch is introduced. See [pending migration guidance](UPGRADING.md#unreleased-frontier-navigation-and-decoder-reading-cards). No npm or starter release has been performed for these changes.
+
 ## [0.19.0] - 2026-10-18
 
 - Give Decoder Lab a compact cypherpunk-inspired workbench, randomized moving SVG network and localized address-inspection guidance.

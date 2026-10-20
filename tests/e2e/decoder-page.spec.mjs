@@ -319,7 +319,7 @@ test('SEO explanations, application schema and localized links are static HTML',
   const page = await context.newPage();
   for (const locale of ['en', 'zh', 'zh-hant', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru']) {
     await open(page, locale);
-    await expect(page).toHaveTitle(/Base64.*JWT/);
+    await expect(page).toHaveTitle(/^Decoder Lab \| Base64.*JWT/);
     await expect(page.locator('.decoder-guide h2')).toHaveCount(3);
     await expect(page.locator('.decoder-guide')).toContainText('SGVsbG8%3D');
     await expect(page.locator(`footer a[href="/${locale}/decoder/"]`)).toHaveCount(1);

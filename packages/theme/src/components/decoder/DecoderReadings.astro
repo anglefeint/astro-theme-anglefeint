@@ -1,0 +1,365 @@
+---
+import { Image } from 'astro:assets';
+import type { DecoderPageMessages, DecoderReading } from '../../i18n/decoder';
+import privacyCover from '../../assets/theme/readings/privacy-code-v3.webp';
+import autonomyCover from '../../assets/theme/readings/cryptographic-autonomy-v4.webp';
+import cyberspaceCover from '../../assets/theme/readings/cyberspace-freedom-v3.webp';
+import communitiesCover from '../../assets/theme/readings/virtual-communities.webp';
+import archiveCover from '../../assets/theme/readings/cypherpunk-archive-v2.webp';
+import instituteCover from '../../assets/theme/readings/satoshi-institute.webp';
+import bitcoinCover from '../../assets/theme/readings/bitcoin.webp';
+import torCover from '../../assets/theme/readings/tor-project.webp';
+import signalCover from '../../assets/theme/readings/signal.webp';
+import telegramCover from '../../assets/theme/readings/telegram.webp';
+import moneroCover from '../../assets/theme/readings/monero.webp';
+import gnupgCover from '../../assets/theme/readings/gnupg.webp';
+interface Props {
+  locale: string;
+  readings?: DecoderPageMessages['readings'];
+}
+const translations: Record<string, [string, string, string, string, string, string]> = {
+  en: [
+    'In tribute to the cypherpunks and pioneers of digital freedom, whose ideas and code advanced private communication, individual liberty and digital money.',
+    'A Cypherpunk’s Manifesto',
+    'The Crypto Anarchist Manifesto',
+    'A Declaration of the Independence of Cyberspace',
+    'Crypto Anarchy and Virtual Communities',
+    'Satoshi Nakamoto Institute',
+  ],
+  zh: [
+    '谨此致敬密码朋克与数字自由的先行者：他们以思想和代码，推动加密通信、个人隐私与自由，以及数字货币的发展。',
+    '密码朋克宣言',
+    '加密无政府主义宣言',
+    '网络空间独立宣言',
+    '加密无政府主义与虚拟社区',
+    '中本聪研究所',
+  ],
+  'zh-hant': [
+    '謹此致敬密碼龐克與數位自由的先行者：他們以思想和程式碼，推動加密通訊、個人隱私與自由，以及數位貨幣的發展。',
+    '密碼龐克宣言',
+    '加密無政府主義宣言',
+    '網路空間獨立宣言',
+    '加密無政府主義與虛擬社群',
+    '中本聰研究所',
+  ],
+  ja: [
+    '思想とコードを通じて、暗号通信、個人のプライバシーと自由、デジタル通貨の発展を後押ししたサイファーパンクとデジタル自由の先駆者たちに敬意を表します。',
+    'サイファーパンク宣言',
+    '暗号アナーキスト宣言',
+    'サイバースペース独立宣言',
+    '暗号アナーキーと仮想コミュニティ',
+    'サトシ・ナカモト研究所',
+  ],
+  ko: [
+    '사상과 코드로 암호화 통신, 개인의 프라이버시와 자유, 디지털 화폐의 발전에 기여한 사이퍼펑크와 디지털 자유의 선구자들에게 경의를 표합니다.',
+    '사이퍼펑크 선언',
+    '암호 아나키스트 선언',
+    '사이버스페이스 독립선언',
+    '암호 아나키와 가상 공동체',
+    '사토시 나카모토 연구소',
+  ],
+  es: [
+    'En homenaje a los cypherpunks y pioneros de la libertad digital, cuyas ideas y código impulsaron las comunicaciones privadas, la libertad individual y el dinero digital.',
+    'Manifiesto cypherpunk',
+    'Manifiesto criptoanarquista',
+    'Declaración de independencia del ciberespacio',
+    'Criptoanarquía y comunidades virtuales',
+    'Instituto Satoshi Nakamoto',
+  ],
+  'pt-br': [
+    'Em homenagem aos cypherpunks e pioneiros da liberdade digital, cujas ideias e código impulsionaram a comunicação privada, a liberdade individual e o dinheiro digital.',
+    'Manifesto de um cypherpunk',
+    'Manifesto criptoanarquista',
+    'Declaração de Independência do Ciberespaço',
+    'Criptoanarquia e comunidades virtuais',
+    'Instituto Satoshi Nakamoto',
+  ],
+  de: [
+    'Als Würdigung der Cypherpunks und Pioniere digitaler Freiheit, deren Ideen und Code private Kommunikation, individuelle Freiheit und digitales Geld voranbrachten.',
+    'Ein Cypherpunk-Manifest',
+    'Das kryptoanarchistische Manifest',
+    'Unabhängigkeitserklärung des Cyberspace',
+    'Kryptoanarchie und virtuelle Gemeinschaften',
+    'Satoshi Nakamoto Institute',
+  ],
+  ru: [
+    'В честь шифропанков и пионеров цифровой свободы, чьи идеи и код способствовали развитию защищённой связи, личной свободы, приватности и цифровых денег.',
+    'Манифест шифропанка',
+    'Манифест криптоанархиста',
+    'Декларация независимости киберпространства',
+    'Криптоанархия и виртуальные сообщества',
+    'Институт Сатоси Накамото',
+  ],
+};
+const copy = translations[Astro.props.locale.toLowerCase()] ?? translations.en;
+const defaults: DecoderReading[] = [
+  {
+    title: copy[1],
+    cover: 'privacy-code',
+    author: 'Eric Hughes',
+    year: '1993',
+    href: 'https://www.activism.net/cypherpunk/manifesto.html?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: copy[2],
+    cover: 'cryptographic-autonomy',
+    author: 'Timothy C. May',
+    year: '1988',
+    href: 'https://www.activism.net/cypherpunk/crypto-anarchy.html?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: copy[3],
+    cover: 'cyberspace-freedom',
+    author: 'John Perry Barlow',
+    year: '1996',
+    href: 'https://www.eff.org/cyberspace-independence?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: copy[4],
+    cover: 'virtual-communities',
+    author: 'Timothy C. May',
+    year: '1994',
+    href: 'https://nakamotoinstitute.org/library/virtual-communities/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: 'cryptoanarchy.wiki',
+    cover: 'cypherpunk-archive',
+    author: 'cryptoanarchy.wiki',
+    href: 'https://cryptoanarchy.wiki/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: copy[5],
+    cover: 'satoshi-institute',
+    author: 'nakamotoinstitute.org',
+    href: 'https://nakamotoinstitute.org/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: 'Bitcoin',
+    cover: 'bitcoin',
+    author: 'bitcoin.org',
+    href: 'https://bitcoin.org/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: 'Tor Project',
+    cover: 'tor-project',
+    author: 'torproject.org',
+    href: 'https://www.torproject.org/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: 'Signal',
+    cover: 'signal',
+    author: 'signal.org',
+    href: 'https://signal.org/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: 'Telegram',
+    cover: 'telegram',
+    author: 'telegram.org',
+    href: 'https://telegram.org/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: 'Monero',
+    cover: 'monero',
+    author: 'getmonero.org',
+    href: 'https://www.getmonero.org/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: 'GnuPG',
+    cover: 'gnupg',
+    author: 'gnupg.org',
+    href: 'https://gnupg.org/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+];
+const covers = {
+  'privacy-code': privacyCover,
+  'cryptographic-autonomy': autonomyCover,
+  'cyberspace-freedom': cyberspaceCover,
+  'virtual-communities': communitiesCover,
+  'cypherpunk-archive': archiveCover,
+  'satoshi-institute': instituteCover,
+  bitcoin: bitcoinCover,
+  'tor-project': torCover,
+  signal: signalCover,
+  telegram: telegramCover,
+  monero: moneroCover,
+  gnupg: gnupgCover,
+};
+const tribute = Astro.props.readings?.tribute ?? copy[0];
+// Keep configured copy as escaped plain text, adding emphasis only to the movement's name.
+const tributeParts = tribute.split(
+  /(cypherpunks?|密码朋克|密碼龐克|サイファーパンク|사이퍼펑크|шифропанков)/giu
+);
+const safeUrl = (value: string) => /^(https?:\/\/|\/(?!\/))/i.test(value);
+const readings = (Astro.props.readings?.links ?? defaults)
+  .filter((item) => item.title?.trim() && item.href && safeUrl(item.href))
+  .map((item) => {
+    const bundledCover = covers[item.cover as keyof typeof covers];
+    const customCover = !bundledCover && item.cover && safeUrl(item.cover) ? item.cover : '';
+    const withBase = (path: string) =>
+      path.startsWith('/') ? `${import.meta.env.BASE_URL.replace(/\/$/, '')}${path}` : path;
+    return {
+      ...item,
+      href: withBase(item.href),
+      bundledCover,
+      customCover: customCover ? withBase(customCover) : '',
+    };
+  });
+const columnCount = (maximum: number) => Math.max(1, Math.min(readings.length, maximum));
+const imageSizes = `(max-width: 720px) 100vw, (max-width: 1100px) ${Math.ceil(100 / columnCount(2))}vw, (max-width: 1439px) ${Math.ceil(100 / columnCount(3))}vw, ${Math.ceil(100 / columnCount(6))}vw`;
+---
+
+{
+  (tribute || readings.length > 0) && (
+    <section class="decoder-readings">
+      {tribute && (
+        <p class="decoder-tribute">
+          {tributeParts.map((part, index) => (index % 2 ? <strong>{part}</strong> : part))}
+        </p>
+      )}
+      {readings.length > 0 && (
+        <div
+          class="decoder-readings-grid"
+          style={`--reading-columns: ${Math.min(readings.length, 6)}; --reading-medium-columns: ${Math.min(readings.length, 3)}; --reading-small-columns: ${Math.min(readings.length, 2)}`}
+        >
+          {readings.map(({ title, author, year, href, bundledCover, customCover }) => (
+            <a class="decoder-reading" href={href} target="_blank" rel="noopener noreferrer">
+              {(bundledCover || customCover) && (
+                <div class="decoder-reading-cover">
+                  {bundledCover ? (
+                    <Image
+                      src={bundledCover}
+                      alt=""
+                      widths={[320, 480, 800]}
+                      sizes={imageSizes}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <img
+                      src={customCover}
+                      alt=""
+                      width="1200"
+                      height="675"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </div>
+              )}
+              <div class="decoder-reading-copy">
+                <span class="decoder-reading-meta">
+                  {[author, year].filter(Boolean).join(' · ')}
+                  <span aria-hidden="true">↗</span>
+                </span>
+                <h2>{title}</h2>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .decoder-readings {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--lab-edge, #303747);
+  }
+  .decoder-tribute {
+    position: relative;
+    padding-left: 1rem;
+    color: #e6edf3;
+    font-family:
+      ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', 'PingFang SC', 'Microsoft YaHei',
+      monospace;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.7;
+    margin: 0 0 1.5rem;
+  }
+  .decoder-tribute::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.25em;
+    width: 3px;
+    height: 1.2em;
+    background: #8ee8c3;
+  }
+  .decoder-tribute strong {
+    color: #8ee8c3;
+    font-weight: inherit;
+    text-shadow: 0 0 10px rgb(80 235 164 / 25%);
+  }
+  .decoder-readings-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--reading-columns), minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .decoder-reading {
+    display: block;
+    overflow: hidden;
+    background: #10151dcc;
+    border: 1px solid var(--lab-edge, #303747);
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  .decoder-reading-cover {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--lab-edge, #303747);
+  }
+  .decoder-reading-cover :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .decoder-reading-copy {
+    padding: 1rem 1.1rem;
+  }
+  .decoder-reading-meta {
+    overflow-wrap: anywhere;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.75rem;
+    color: #aeb8ca;
+  }
+  .decoder-reading h2 {
+    margin: 0.65rem 0 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #8ee8c3;
+  }
+  .decoder-reading:hover,
+  .decoder-reading:focus-visible {
+    background: #172a26;
+    border-color: #8ee8c3;
+  }
+  .decoder-reading:focus-visible {
+    outline: 2px solid #b8a6ff;
+    outline-offset: 3px;
+  }
+  @media (max-width: 1439px) {
+    .decoder-readings-grid {
+      grid-template-columns: repeat(var(--reading-medium-columns), minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 1100px) {
+    .decoder-readings-grid {
+      grid-template-columns: repeat(var(--reading-small-columns), minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 720px) {
+    .decoder-tribute {
+      font-size: 16px;
+    }
+    .decoder-readings-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+</style>

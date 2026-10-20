@@ -44,6 +44,7 @@ const labels = {
   language: props.labels?.language ?? 'Language',
 };
 const showAbout = THEME.ABOUT_PAGE_ENABLED;
+const showDecoder = THEME.DECODER_PAGE_ENABLED ?? true;
 const currentSubpath = stripLocaleFromPath(Astro.url.pathname, locale);
 const homeHref = props.homeHref ?? alternatePathForLocale(locale, '/');
 const buildLocaleHref = (targetLocale: Locale) => {
@@ -75,6 +76,23 @@ const localeOptions = ENABLED_LOCALES.map((targetLocale) => ({
           <HeaderLink href={alternatePathForLocale(locale, '/about/')}>{labels.about}</HeaderLink>
         )
       }
+      {
+        showDecoder && (
+          <details class="frontier-dropdown">
+            <summary aria-label="Frontier" title="Frontier">
+              <svg width="14" height="14" viewBox="0 0 8 8" aria-hidden="true">
+                <path d="M0 2h8L4 6Z" fill="currentColor" />
+              </svg>
+            </summary>
+            <div class="frontier-dropdown-links">
+              <div class="frontier-title">Frontier</div>
+              <HeaderLink href={alternatePathForLocale(locale, '/decoder/')}>
+                Decoder Lab
+              </HeaderLink>
+            </div>
+          </details>
+        )
+      }
     </div>
     <div class="nav-right">
       <div class="social-links">
@@ -92,7 +110,115 @@ const localeOptions = ENABLED_LOCALES.map((targetLocale) => ({
   </nav>
   {props.scanlines && <div class="ai-scanlines" aria-hidden="true" />}
 </header>
+<script>
+  document.addEventListener('pointerdown', (event) => {
+    if (!(event.target instanceof Node)) return;
+    for (const menu of document.querySelectorAll<HTMLDetailsElement>('.frontier-dropdown[open]')) {
+      if (!menu.contains(event.target)) menu.open = false;
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const menu of document.querySelectorAll<HTMLDetailsElement>('.frontier-dropdown[open]')) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+</script>
 <style>
+  .frontier-dropdown {
+    position: relative;
+    align-self: stretch;
+    margin-left: 0.65rem;
+  }
+  .frontier-title {
+    position: relative;
+    padding: 0.65rem 0.8rem 0.5rem;
+    margin-bottom: 0.2rem;
+    border-bottom: 1px solid var(--chrome-border, rgb(var(--border)));
+    color: #e6edf3;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .frontier-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+  }
+  .frontier-dropdown summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 48px;
+    height: 100%;
+    min-height: 44px;
+    border-bottom: 4px solid transparent;
+    cursor: pointer;
+    list-style: none;
+    color: var(--chrome-link, rgb(var(--text)));
+    border-radius: 4px;
+  }
+  .frontier-dropdown summary svg {
+    display: block;
+    opacity: 0.8;
+  }
+  .frontier-dropdown[open] summary {
+    border-bottom-color: var(--chrome-active, var(--accent));
+  }
+  .frontier-dropdown summary::-webkit-details-marker {
+    display: none;
+  }
+  .frontier-dropdown summary:hover,
+  .frontier-dropdown[open] summary {
+    color: var(--chrome-active, var(--accent));
+  }
+  .frontier-dropdown summary:hover svg,
+  .frontier-dropdown summary:focus-visible svg,
+  .frontier-dropdown[open] summary svg {
+    opacity: 1;
+  }
+  .frontier-dropdown summary:focus-visible {
+    outline: 1px solid var(--chrome-active, var(--accent));
+    outline-offset: -3px;
+  }
+  .frontier-dropdown[open] summary svg {
+    transform: rotate(180deg);
+  }
+  .frontier-dropdown-links {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: calc(-1.15rem - 1px);
+    z-index: 100;
+    min-width: 170px;
+    padding: 0.35rem;
+    border: 1px solid var(--chrome-border, rgb(var(--border)));
+    border-radius: 6px;
+    background: var(--bg);
+    box-shadow: 0 12px 30px rgb(0 0 0 / 0.4);
+  }
+  .internal-links .frontier-dropdown-links :global(a) {
+    display: block;
+    padding: 0.65rem 0.8rem;
+    border-bottom: none;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    border-radius: 3px;
+  }
+  .frontier-dropdown-links :global(a:hover),
+  .frontier-dropdown-links :global(a:focus-visible) {
+    background: color-mix(in srgb, var(--chrome-active, var(--accent)) 15%, transparent);
+  }
+  .internal-links .frontier-dropdown-links :global(a.active) {
+    color: var(--chrome-active, var(--accent));
+  }
   header {
     margin: 0;
     padding: 0 1em;

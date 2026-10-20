@@ -169,6 +169,8 @@ About includes **Hacker Decryptor**: decode Base64/Base64URL, URL-encoded text, 
 
 The full **Decoder Lab** is available at `/<locale>/decoder/`, with local text-processing history, ERC-20/TRC-20 call interpretation (EVM/HyperEVM/TRON), and EVM/TRON/Bitcoin address inspection. Open it from the About decoder dialog. Set `theme.enableDecoderPage: false` in `src/site.config.ts` to omit the page and its link independently of About. No RPC, wallet connection or API key is required.
 
+Since 0.20.0: the independent **Frontier** arrow in the header also opens Decoder Lab. The illustrated resources link to four original essays and eight reference/project websites; no essay text is reproduced. Customize the tribute and complete card list in `src/site.config.ts` at `i18n.locales.<code>.messages.decoderPage.readings` (`tribute`, `links`). Empty text hides the tribute; `links: []` hides the cards. All configured entries render, with up to six per desktop row. See the [configuration example](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration).
+
 Decoder Lab takes its visual inspiration from the **cypherpunk** movement, in tribute to its contributions to human freedom, privacy and open code. Its peer-to-peer network motif and local processing reflect the idea of keeping tools and data in the hands of the individual.
 
 ## Requirements

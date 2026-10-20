@@ -1,4 +1,19 @@
+export type DecoderReading = {
+  title: string;
+  href: string;
+  author?: string;
+  year?: string;
+  /** Built-in cover name, or a public image path / HTTP(S) URL. Empty omits the image. */
+  cover?: string;
+};
+
 export type DecoderPageMessages = {
+  readings?: {
+    /** Empty hides the tribute. */
+    tribute?: string;
+    /** Replaces the whole list with no item-count limit; [] hides the cards. */
+    links?: DecoderReading[];
+  };
   description: string;
   fullTool: string;
   task: string;
