@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import ThemeFrame from '@anglefeint/astro-theme/components/shared/ThemeFrame.astro';
 import DecoderWorkbench from '@anglefeint/astro-theme/components/decoder/DecoderWorkbench.astro';
+import DecoderReadings from '@anglefeint/astro-theme/components/decoder/DecoderReadings.astro';
 import decoderPageCss from '@anglefeint/astro-theme/styles/decoder-page.css?url';
 import { SITE_URL } from '../../config/site';
 import { THEME } from '../../config/theme';
@@ -31,7 +32,7 @@ const payload = JSON.stringify({ decoder: messages.decoder, page: messages.decod
 
 <ThemeFrame
   locale={locale}
-  title={`Base64 · JWT · ${messages.decoderPage.callTask} | ${messages.decoderPage.fullTool}`}
+  title={`Decoder Lab | Base64 · JWT · ${messages.decoderPage.callTask}`}
   description={messages.decoderPage.description}
   schema={{
     '@context': 'https://schema.org',
@@ -77,6 +78,7 @@ const payload = JSON.stringify({ decoder: messages.decoder, page: messages.decod
         </p>
       </section>
     </section>
+    <DecoderReadings locale={locale} readings={messages.decoderPage.readings} />
   </article>
   <script id="decoder-page-labels" type="application/json" set:html={payload} />
 </ThemeFrame>

@@ -171,6 +171,8 @@ About의 **Hacker Decryptor**는 Base64/Base64URL, URL 인코딩, 16진수, HTML
 
 전체 **Decoder Lab**는 `/<locale>/decoder/`에서 로컬 처리 기록, EVM/HyperEVM/TRON의 ERC-20/TRC-20 호출 해석 및 EVM/TRON/Bitcoin 주소 확인을 제공합니다. About 디코더 창에서 열 수 있습니다. `src/site.config.ts`에서 `theme.enableDecoderPage: false`로 페이지와 링크를 독립적으로 끌 수 있습니다. RPC, 지갑 연결, API 키가 필요 없습니다.
 
+0.20.0부터: 헤더의 독립된 **Frontier** 화살표에서도 Decoder Lab을 열 수 있습니다. 이미지 카드는 원문 4편과 자료·프로젝트 공식 사이트 8곳으로 연결되며 본문은 전재하지 않습니다. `src/site.config.ts`의 `i18n.locales.<code>.messages.decoderPage.readings`에서 `tribute`와 전체 `links` 목록을 설정합니다. 빈 문구는 헌사를, `links: []`는 카드를 숨깁니다. 설정한 항목을 모두 표시하며 데스크톱에서는 한 줄에 최대 6개입니다. [설정 예시](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration)를 참고하세요.
+
 Decoder Lab의 시각적 스타일은 **cypherpunk(사이퍼펑크)** 운동에서 영감을 받아 인간의 자유, 프라이버시, 열린 코드에 대한 기여에 경의를 표합니다. P2P 네트워크 이미지와 로컬 처리는 도구와 데이터를 개인의 손에 두자는 생각을 반영합니다.
 
 ## 요구 사항

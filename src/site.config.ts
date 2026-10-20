@@ -37,6 +37,16 @@ export const THEME_CONFIG = defineThemeConfig({
   // Automatic article share images: theme: { socialImage: { enabled: false } }
   // Per-post `ogImage` always takes priority and does not change the hero image.
   // Search is enabled by default; builds generate its index automatically.
+  // Decoder tribute/cards: i18n.locales.<code>.messages.decoderPage.readings.
+  // Omit for localized defaults. tribute: '' hides the text; links: [] hides the cards.
+  // The 12 default URLs include Anglefeint UTM attribution; custom href values are used unchanged.
+  // links replaces the whole list; title/href required, author/year/cover optional.
+  // Built-in covers: privacy-code, cryptographic-autonomy, cyberspace-freedom, virtual-communities, cypherpunk-archive, satoshi-institute, bitcoin, tor-project, signal, telegram, monero, gnupg.
+  // Or use '/images/my-cover.webp' from public/images/ or an HTTPS image URL.
+  // i18n: { locales: { en: { messages: { decoderPage: { readings: {
+  //   tribute: 'Ideas and code in service of privacy and freedom.',
+  //   links: [{ title: 'My reading', href: 'https://example.com/', cover: 'privacy-code' }],
+  // } } } } } },
   // To disable: theme: { search: { enabled: false } }
   // Example:
   // Language menu names use i18n.locales.<code>.meta.label.
