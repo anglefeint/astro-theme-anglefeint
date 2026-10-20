@@ -53,11 +53,11 @@ The installed-starter matrix also pairs configured social links with the `always
 
 ## Local execution
 
-### Unreleased Frontier and Decoder readings
+### Frontier and Decoder readings (0.20.0)
 
-The pending source adds an independent native Frontier dropdown controlled by `theme.enableDecoderPage`, and a starter-route call to the package-owned `DecoderReadings` component. About remains a direct link with its existing independent switch. No new route alias is created. The twelve defaults link four original texts and eight reference/project websites. Configuration uses the existing locale-message path; no generated adapter contract is changed.
+The 0.20.0 source adds an independent native Frontier dropdown controlled by `theme.enableDecoderPage`, and a starter-route call to the package-owned `DecoderReadings` component. About remains a direct link with its existing independent switch. No new route alias is created. The twelve defaults link four original texts and eight reference/project websites. Configuration uses the existing locale-message path; no generated adapter contract is changed. Actual npm, installed and public-starter delivery evidence is recorded in [0.20.0](releases/0.20.0.md).
 
-Local main-checkout browser evidence covers nine locales, default links/covers, desktop six-column rows, smaller-screen wrapping, dropdown Escape/outside-pointer dismissal, independent About navigation and 1/30 configured reading lists. Empty tribute/list and text-only cards were tested with temporary configuration restored afterward. The committed `tests/e2e/decoder-page.spec.mjs` also checks the Decoder Lab title prefix and static metadata. The 1/30 configuration checks and image/visual inspections are local acceptance scripts in ignored `acceptance-results/`, not additional committed E2E coverage. No installed starter, remote template, npm publish or production deployment is claimed for this unreleased work; those remain release-time gates.
+Local main-checkout browser evidence covers nine locales, default links/covers, desktop six-column rows, smaller-screen wrapping, dropdown Escape/outside-pointer dismissal, independent About navigation and 1/30 configured reading lists. Empty tribute/list and text-only cards were tested with temporary configuration restored afterward. The committed `tests/e2e/decoder-page.spec.mjs` also checks the Decoder Lab title prefix and static metadata. The 1/30 configuration checks and image/visual inspections are local acceptance scripts in ignored `acceptance-results/`, not additional committed E2E coverage. The 0.20.0 release record separately documents installed/public-starter acceptance, registry download verification and live page checks; local fixtures alone do not establish those delivery results.
 
 ### GA4 coverage
 

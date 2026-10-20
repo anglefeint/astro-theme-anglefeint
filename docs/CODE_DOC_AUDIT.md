@@ -14,6 +14,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 > Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
 
+## 2026-10-20 0.20.0 交付收尾
+
+npm 与公开 starter 已交付 0.20.0，完整门禁、十四组独立构建、113 项 Chromium 回归与远端用户模板验收通过。默认／空数组／自定义列表语义和 UTM 已核对；配置说明集中于包 README，九语用户入口保持简洁。npm 注册表延迟及 Windows 开发服务占用文件的恢复均有实际记录，没有重复上传或跳过检查。npm 源码、starter 提交、哈希、隐私检查与平台证据边界见 [发布记录](releases/0.20.0.md)。以下未发布段落保留为发布前文档核对的历史记录。
+
 ## 2026-10-20 Frontier 与 Decoder 阅读区文档工作流（未发布）
 
 UTM 后续复核：十二个默认 URL 显式包含 `utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab`，自定义 href 不自动追加参数。省略配置保留十二项，显式 `links: []` 隐藏卡片；现有消息回退规则不变。同步包 README、架构、视觉说明、配置注释和 Unreleased 记录，其余候选沿用下述责任核对，九语 README 已链接到集中配置说明，无须重复展开 UTM。最新 main 检查、126 测试、199 页构建、九语 About runtime、lint 及生成 HTML 的十二个 UTM 链接断言均通过；本次文档收尾复跑元数据、本地链接与隐私检查，未运行正式发布或完整发布预演。
