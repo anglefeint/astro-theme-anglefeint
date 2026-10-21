@@ -39,6 +39,8 @@ git push origin main
 
 ## 2) Pre-release checks
 
+On 2026-10-22, the blocking audit stopped 0.20.1 before upload because Vite 8.3.2 was newly flagged. Main/starter now use `^8.3.5` and a refreshed lock; no audit exemption or forced dependency downgrade was introduced. See [0.20.1](releases/0.20.1.md) for the actual execution and patched-version references.
+
 The npm release entry uses the shared maintainer session for serial execution, stage timing and log summaries; see [reporting and recovery](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting). Command order, audit gates, installed build matrix, existing skip flags, fresh cache and publish/download verification remain unchanged. All npm publish output stays on the terminal to preserve authentication behavior. Do not run release, starter sync or push checks concurrently.
 
 The maintainer root uses Wrangler `^4.151.1`, whose locked Miniflare `5.20261012.1-beta` directly requires patched `sharp@0.35.5`. The earlier scoped override was removed on 2026-10-18 after Cloudflare's clean install rejected missing Sharp 0.35.4 optional entries, despite local npm 11.11.0 accepting the previous lockfile. Fresh `npm ci`, the real Miniflare Images binding and dependency audit passed after this update. The previous override protected against [GHSA-wq5f-xc86-pv6w](https://github.com/advisories/GHSA-wq5f-xc86-pv6w); do not restore vulnerable Sharp to satisfy an old lockfile or use `npm audit fix --force` to downgrade Wrangler. This is maintainer tooling only; starter does not include Wrangler.

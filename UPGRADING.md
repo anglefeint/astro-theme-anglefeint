@@ -14,6 +14,8 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 ## 0.20.1: sixteen reading cards and eight-column layout
 
+The matching starter uses Vite `^8.3.5`, replacing the vulnerable 8.3.2 lock. Existing projects should also refresh Vite to a patched version in their supported version line; updating the theme package alone cannot update a project's root Vite declaration/lockfile. See the [release security record](docs/releases/0.20.1.md).
+
 Compatible with the 0.20.0 starter contract. Update the package within the declared range, run `npm run doctor`, preview, rebuild and redeploy. No route, schema or adapter change is required. Omitted reading configuration now uses sixteen default cards; an explicit custom list remains unchanged, and `links: []` still hides cards. Four new bundled cover keys are listed in the [package configuration guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration). Widths of 1440px and above use up to eight columns; smaller screens use four, two or one.
 
 ## 0.20.0: Frontier navigation and Decoder reading cards

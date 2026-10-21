@@ -15,6 +15,8 @@ All notable changes to this project are documented in this file.
 
 ## [0.20.1] - 2026-10-22
 
+- Update main/starter Vite to the patched 8.3.5 series after a blocking dependency audit; refresh locks without bypassing audit findings.
+
 - Fit sixteen Decoder reading cards into two wide-screen rows with up to eight columns, compact card gutters/padding, and four/two/one-column responsive layouts.
 
 - Expand Decoder Lab defaults from twelve to sixteen with Satoshi’s P2P/freedom reply, Szabo’s smart-contract essay, Chaum’s identity/privacy paper and Wei Dai’s b-money, nine-language titles, local cypherpunk covers and consistent UTM attribution. Configured lists remain complete replacements.
