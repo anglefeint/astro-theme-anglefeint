@@ -171,7 +171,7 @@ About の **Hacker Decryptor** は、Base64/Base64URL、URLエンコード、16�
 
 完全版の **Decoder Lab** は `/<locale>/decoder/` にあります。ローカル処理履歴、EVM/HyperEVM/TRONのERC-20/TRC-20呼び出し解釈、EVM/TRON/Bitcoinアドレス確認に対応。Aboutの解読ダイアログから開けます。`src/site.config.ts` の `theme.enableDecoderPage: false` でページとリンクを個別に無効化できます。RPC、ウォレット接続、APIキーは不要です。
 
-0.20.0 以降：ヘッダーの独立した **Frontier** 矢印からも Decoder Lab を開けます。画像付きカードは原文4篇と資料・プロジェクトの公式サイト8件にリンクし、本文は転載しません。`src/site.config.ts` の `i18n.locales.<code>.messages.decoderPage.readings` で `tribute` と `links` 全体を設定します。空の文章は謝辞を、`links: []` はカードを非表示にします。件数の上限はなく、デスクトップでは1行最大6件です。[設定例](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration)を参照してください。
+0.20.0 以降：ヘッダーの独立した **Frontier** 矢印からも Decoder Lab を開けます。画像付きカードは原文と資料・プロジェクトの公式サイトにリンクし、本文は転載しません。`src/site.config.ts` の `i18n.locales.<code>.messages.decoderPage.readings` で `tribute` と `links` 全体を設定します。空の文章は謝辞を、`links: []` はカードを非表示にします。件数の上限はなく、デスクトップでは1行最大8件です。[設定例](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration)を参照してください。
 
 Decoder Lab のビジュアルは **cypherpunk（サイファーパンク）** 運動に着想を得ており、人間の自由、プライバシー、オープンなコードへの貢献に敬意を表しています。ピアツーピアのネットワーク表現とローカル処理は、個人がツールとデータを自分の手に持つという理念を反映しています。
 

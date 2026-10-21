@@ -169,7 +169,7 @@ About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL
 
 完整的 **Decoder Lab** 位于 `/<locale>/decoder/`，支持本地文本处理链路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 调用解释，以及 EVM／TRON／Bitcoin 地址检查。从 About 解码弹窗进入；在 `src/site.config.ts` 设置 `theme.enableDecoderPage: false` 可独立关闭页面和入口。无需 RPC、连接钱包或 API Key。
 
-自 0.20.0 起：顶部独立的 **Frontier** 箭头也可进入 Decoder Lab。配图卡片链接到四篇原文与八个资料／项目官网，不转载文章正文。在 `src/site.config.ts` 的 `i18n.locales.<code>.messages.decoderPage.readings` 中配置 `tribute` 文案和完整的 `links` 列表；空文案隐藏致敬，`links: []` 隐藏卡片。配置多少项就显示多少项，宽屏每行最多六个。参见[配置示例](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration)。
+自 0.20.0 起：顶部独立的 **Frontier** 箭头也可进入 Decoder Lab。配图卡片链接到原文与资料／项目官网，不转载文章正文。在 `src/site.config.ts` 的 `i18n.locales.<code>.messages.decoderPage.readings` 中配置 `tribute` 文案和完整的 `links` 列表；空文案隐藏致敬，`links: []` 隐藏卡片。配置多少项就显示多少项，宽屏每行最多八个。参见[配置示例](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration)。
 
 Decoder Lab 的视觉风格致敬 **Cypherpunk（密码朋克）**，纪念他们为人类自由、隐私与开放代码作出的贡献。点对点网络意象与本地处理方式，呼应了让工具与数据掌握在个人手中的理念。
 
