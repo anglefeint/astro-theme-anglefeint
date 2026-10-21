@@ -14,6 +14,14 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 > Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
 
+## 2026-10-22 十六项阅读资源与八列布局文档核对
+
+基线 `a4d5fef`，核对完整未提交工作区：包内阅读组件、四张新配图、默认配置注释与九语用户说明。代码仍定义行为：八篇文章／邮件与八个项目资料入口；默认链接含三项 UTM，自定义列表完整替换，空数组隐藏。中本聪链接是 2008-11-06 回复，不是白皮书首发；Szabo 原文为 1996 年。新增封面本地懒加载，1440px 起八列，1101–1439px 四列，721–1100px 两列，更窄一列。消息／路由／schema／adapter／manifest 所有权不变。
+
+本轮候选直接命中 77 份、依赖传播 2 份，共审查 79 份：更新 17 份、保留 62 份，另新增本次版本发布记录。元数据零错误，文档本地链接通过，23 张阅读区 WebP 无 EXIF/XMP/IPTC，新增文本隐私扫描通过。候选／责任处置存于忽略的 `acceptance-results/release-0201-doc-audit.json`。加上新发布记录后，元数据验证覆盖 80 份文档。
+
+按候选元数据责任核对九语 README、包说明、项目概览、架构、视觉、升级与验收；补齐新封面别名、列数、默认项数及版本边界。保留旧版发布记录，不把历史十二项／六列事实改成现状。发布与代理流程没有改变，不重写其规则。正式发布和远端验收结果记入 [0.20.1](releases/0.20.1.md)，不将本地证据当作已发布结果。
+
 ## 2026-10-20 0.20.0 交付收尾
 
 npm 与公开 starter 已交付 0.20.0，完整门禁、十四组独立构建、113 项 Chromium 回归与远端用户模板验收通过。默认／空数组／自定义列表语义和 UTM 已核对；配置说明集中于包 README，九语用户入口保持简洁。npm 注册表延迟及 Windows 开发服务占用文件的恢复均有实际记录，没有重复上传或跳过检查。npm 源码、starter 提交、哈希、隐私检查与平台证据边界见 [发布记录](releases/0.20.0.md)。以下未发布段落保留为发布前文档核对的历史记录。

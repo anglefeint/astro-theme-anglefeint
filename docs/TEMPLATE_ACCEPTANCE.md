@@ -53,6 +53,10 @@ The installed-starter matrix also pairs configured social links with the `always
 
 ## Local execution
 
+### Sixteen readings and eight-column layout (0.20.1)
+
+Local browser acceptance verifies sixteen distinct default links with consistent Anglefeint UTM across nine locales, all sixteen cover images decoding, and eight columns/two rows at 1440/1600/1920px. Widths 1280/900/390px use four/two/one columns without horizontal overflow; all nine language card bodies fit at 1440px. These are ignored local acceptance scripts, not new committed E2E tests. Package installation, remote-template delivery and production checks remain release-time evidence in [0.20.1](releases/0.20.1.md). The route/configuration contract, full-list replacement and empty behavior are unchanged from 0.20.0.
+
 ### Frontier and Decoder readings (0.20.0)
 
 The 0.20.0 source adds an independent native Frontier dropdown controlled by `theme.enableDecoderPage`, and a starter-route call to the package-owned `DecoderReadings` component. About remains a direct link with its existing independent switch. No new route alias is created. The twelve defaults link four original texts and eight reference/project websites. Configuration uses the existing locale-message path; no generated adapter contract is changed. Actual npm, installed and public-starter delivery evidence is recorded in [0.20.0](releases/0.20.0.md).

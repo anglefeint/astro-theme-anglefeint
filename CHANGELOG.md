@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.20.1] - 2026-10-22
+
+- Fit sixteen Decoder reading cards into two wide-screen rows with up to eight columns, compact card gutters/padding, and four/two/one-column responsive layouts.
+
+- Expand Decoder Lab defaults from twelve to sixteen with Satoshi’s P2P/freedom reply, Szabo’s smart-contract essay, Chaum’s identity/privacy paper and Wei Dai’s b-money, nine-language titles, local cypherpunk covers and consistent UTM attribution. Configured lists remain complete replacements.
+
 ## [0.20.0] - 2026-10-20
 
 - Mark the twelve default Decoder reading links with Anglefeint referral UTM parameters; custom configured links remain unchanged.

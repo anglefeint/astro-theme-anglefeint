@@ -12,6 +12,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 > Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
 
+## 0.20.1: sixteen reading cards and eight-column layout
+
+Compatible with the 0.20.0 starter contract. Update the package within the declared range, run `npm run doctor`, preview, rebuild and redeploy. No route, schema or adapter change is required. Omitted reading configuration now uses sixteen default cards; an explicit custom list remains unchanged, and `links: []` still hides cards. Four new bundled cover keys are listed in the [package configuration guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration). Widths of 1440px and above use up to eight columns; smaller screens use four, two or one.
+
 ## 0.20.0: Frontier navigation and Decoder reading cards
 
 These changes require the matching 0.20.0 starter. Migrate personal settings deliberately. The package owns the independent Frontier dropdown in `CommonHeader`, the reading component, localized reading types, covers and styles. About remains a direct link. The existing `theme.enableDecoderPage` switch controls the independent dropdown; disabling About alone does not hide Decoder Lab. No schema field, adapter export or route alias is added.

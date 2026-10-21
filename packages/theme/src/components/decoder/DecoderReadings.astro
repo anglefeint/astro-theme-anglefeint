@@ -13,11 +13,18 @@ import signalCover from '../../assets/theme/readings/signal.webp';
 import telegramCover from '../../assets/theme/readings/telegram.webp';
 import moneroCover from '../../assets/theme/readings/monero.webp';
 import gnupgCover from '../../assets/theme/readings/gnupg.webp';
+import satoshiFreedomCover from '../../assets/theme/readings/satoshi-freedom.webp';
+import smartContractsCover from '../../assets/theme/readings/smart-contracts.webp';
+import securityCover from '../../assets/theme/readings/security-without-identification.webp';
+import bMoneyCover from '../../assets/theme/readings/b-money.webp';
 interface Props {
   locale: string;
   readings?: DecoderPageMessages['readings'];
 }
-const translations: Record<string, [string, string, string, string, string, string]> = {
+const translations: Record<
+  string,
+  [string, string, string, string, string, string, string, string, string, string]
+> = {
   en: [
     'In tribute to the cypherpunks and pioneers of digital freedom, whose ideas and code advanced private communication, individual liberty and digital money.',
     'A Cypherpunk’s Manifesto',
@@ -25,6 +32,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     'A Declaration of the Independence of Cyberspace',
     'Crypto Anarchy and Virtual Communities',
     'Satoshi Nakamoto Institute',
+    'Bitcoin P2P e-cash paper — on P2P and freedom',
+    'Smart Contracts: Building Blocks for Digital Markets',
+    'Security without Identification',
+    'b-money',
   ],
   zh: [
     '谨此致敬密码朋克与数字自由的先行者：他们以思想和代码，推动加密通信、个人隐私与自由，以及数字货币的发展。',
@@ -33,6 +44,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     '网络空间独立宣言',
     '加密无政府主义与虚拟社区',
     '中本聪研究所',
+    '比特币点对点电子现金论文——关于 P2P 与自由的回复',
+    '智能合约：数字市场的基石',
+    '不依赖身份识别的安全',
+    'b-money',
   ],
   'zh-hant': [
     '謹此致敬密碼龐克與數位自由的先行者：他們以思想和程式碼，推動加密通訊、個人隱私與自由，以及數位貨幣的發展。',
@@ -41,6 +56,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     '網路空間獨立宣言',
     '加密無政府主義與虛擬社群',
     '中本聰研究所',
+    '比特幣點對點電子現金論文——關於 P2P 與自由的回覆',
+    '智慧合約：數位市場的基石',
+    '不依賴身分識別的安全',
+    'b-money',
   ],
   ja: [
     '思想とコードを通じて、暗号通信、個人のプライバシーと自由、デジタル通貨の発展を後押ししたサイファーパンクとデジタル自由の先駆者たちに敬意を表します。',
@@ -49,6 +68,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     'サイバースペース独立宣言',
     '暗号アナーキーと仮想コミュニティ',
     'サトシ・ナカモト研究所',
+    'Bitcoin P2P電子現金論文 — P2Pと自由についての返信',
+    'スマートコントラクト：デジタル市場の構成要素',
+    '身元確認に依存しないセキュリティ',
+    'b-money',
   ],
   ko: [
     '사상과 코드로 암호화 통신, 개인의 프라이버시와 자유, 디지털 화폐의 발전에 기여한 사이퍼펑크와 디지털 자유의 선구자들에게 경의를 표합니다.',
@@ -57,6 +80,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     '사이버스페이스 독립선언',
     '암호 아나키와 가상 공동체',
     '사토시 나카모토 연구소',
+    '비트코인 P2P 전자화폐 논문 — P2P와 자유에 관한 답신',
+    '스마트 계약: 디지털 시장의 구성 요소',
+    '신원 확인에 의존하지 않는 보안',
+    'b-money',
   ],
   es: [
     'En homenaje a los cypherpunks y pioneros de la libertad digital, cuyas ideas y código impulsaron las comunicaciones privadas, la libertad individual y el dinero digital.',
@@ -65,6 +92,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     'Declaración de independencia del ciberespacio',
     'Criptoanarquía y comunidades virtuales',
     'Instituto Satoshi Nakamoto',
+    'Bitcoin: dinero electrónico P2P — respuesta sobre P2P y libertad',
+    'Contratos inteligentes: pilares de los mercados digitales',
+    'Seguridad sin identificación',
+    'b-money',
   ],
   'pt-br': [
     'Em homenagem aos cypherpunks e pioneiros da liberdade digital, cujas ideias e código impulsionaram a comunicação privada, a liberdade individual e o dinheiro digital.',
@@ -73,6 +104,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     'Declaração de Independência do Ciberespaço',
     'Criptoanarquia e comunidades virtuais',
     'Instituto Satoshi Nakamoto',
+    'Bitcoin: dinheiro eletrônico P2P — resposta sobre P2P e liberdade',
+    'Contratos inteligentes: bases dos mercados digitais',
+    'Segurança sem identificação',
+    'b-money',
   ],
   de: [
     'Als Würdigung der Cypherpunks und Pioniere digitaler Freiheit, deren Ideen und Code private Kommunikation, individuelle Freiheit und digitales Geld voranbrachten.',
@@ -81,6 +116,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     'Unabhängigkeitserklärung des Cyberspace',
     'Kryptoanarchie und virtuelle Gemeinschaften',
     'Satoshi Nakamoto Institute',
+    'Bitcoin-P2P-E-Cash-Papier — Antwort zu P2P und Freiheit',
+    'Smart Contracts: Bausteine digitaler Märkte',
+    'Sicherheit ohne Identifizierung',
+    'b-money',
   ],
   ru: [
     'В честь шифропанков и пионеров цифровой свободы, чьи идеи и код способствовали развитию защищённой связи, личной свободы, приватности и цифровых денег.',
@@ -89,6 +128,10 @@ const translations: Record<string, [string, string, string, string, string, stri
     'Декларация независимости киберпространства',
     'Криптоанархия и виртуальные сообщества',
     'Институт Сатоси Накамото',
+    'Bitcoin: одноранговые электронные деньги — ответ о P2P и свободе',
+    'Смарт-контракты: основа цифровых рынков',
+    'Безопасность без идентификации',
+    'b-money',
   ],
 };
 const copy = translations[Astro.props.locale.toLowerCase()] ?? translations.en;
@@ -120,6 +163,34 @@ const defaults: DecoderReading[] = [
     author: 'Timothy C. May',
     year: '1994',
     href: 'https://nakamotoinstitute.org/library/virtual-communities/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: copy[6],
+    cover: 'satoshi-freedom',
+    author: 'Satoshi Nakamoto',
+    year: '2008',
+    href: 'https://satoshi.nakamotoinstitute.org/emails/cryptography/4/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: copy[7],
+    cover: 'smart-contracts',
+    author: 'Nick Szabo',
+    year: '1996',
+    href: 'https://www.fon.hum.uva.nl/rob/Courses/InformationInSpeech/CDROM/Literature/LOTwinterschool2006/szabo.best.vwh.net/smart_contracts_2.html?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: copy[8],
+    cover: 'security-without-identification',
+    author: 'David Chaum',
+    year: '1985',
+    href: 'https://chaum.com/security-without-identification/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
+  },
+  {
+    title: copy[9],
+    cover: 'b-money',
+    author: 'Wei Dai',
+    year: '1998',
+    href: 'https://nakamotoinstitute.org/library/b-money/?utm_source=anglefeint&utm_medium=referral&utm_campaign=decoder_lab',
   },
   {
     title: 'cryptoanarchy.wiki',
@@ -183,6 +254,10 @@ const covers = {
   telegram: telegramCover,
   monero: moneroCover,
   gnupg: gnupgCover,
+  'satoshi-freedom': satoshiFreedomCover,
+  'smart-contracts': smartContractsCover,
+  'security-without-identification': securityCover,
+  'b-money': bMoneyCover,
 };
 const tribute = Astro.props.readings?.tribute ?? copy[0];
 // Keep configured copy as escaped plain text, adding emphasis only to the movement's name.
@@ -205,7 +280,7 @@ const readings = (Astro.props.readings?.links ?? defaults)
     };
   });
 const columnCount = (maximum: number) => Math.max(1, Math.min(readings.length, maximum));
-const imageSizes = `(max-width: 720px) 100vw, (max-width: 1100px) ${Math.ceil(100 / columnCount(2))}vw, (max-width: 1439px) ${Math.ceil(100 / columnCount(3))}vw, ${Math.ceil(100 / columnCount(6))}vw`;
+const imageSizes = `(max-width: 720px) 100vw, (max-width: 1100px) ${Math.ceil(100 / columnCount(2))}vw, (max-width: 1439px) ${Math.ceil(100 / columnCount(4))}vw, ${Math.ceil(100 / columnCount(8))}vw`;
 ---
 
 {
@@ -219,7 +294,7 @@ const imageSizes = `(max-width: 720px) 100vw, (max-width: 1100px) ${Math.ceil(10
       {readings.length > 0 && (
         <div
           class="decoder-readings-grid"
-          style={`--reading-columns: ${Math.min(readings.length, 6)}; --reading-medium-columns: ${Math.min(readings.length, 3)}; --reading-small-columns: ${Math.min(readings.length, 2)}`}
+          style={`--reading-columns: ${Math.min(readings.length, 8)}; --reading-medium-columns: ${Math.min(readings.length, 4)}; --reading-small-columns: ${Math.min(readings.length, 2)}`}
         >
           {readings.map(({ title, author, year, href, bundledCover, customCover }) => (
             <a class="decoder-reading" href={href} target="_blank" rel="noopener noreferrer">
@@ -342,6 +417,14 @@ const imageSizes = `(max-width: 720px) 100vw, (max-width: 1100px) ${Math.ceil(10
   .decoder-reading:focus-visible {
     outline: 2px solid #b8a6ff;
     outline-offset: 3px;
+  }
+  @media (min-width: 1440px) {
+    .decoder-readings-grid {
+      gap: 0.85rem;
+    }
+    .decoder-reading-copy {
+      padding: 0.8rem 0.85rem;
+    }
   }
   @media (max-width: 1439px) {
     .decoder-readings-grid {
