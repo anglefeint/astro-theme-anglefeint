@@ -208,7 +208,7 @@ Cursor、Codex、Claude Code でプロジェクトフォルダーを開いてく
 
 例：「AGENTS.md を読んで、サイト情報を設定し、日本語だけを有効にして。既存の記事は残して」「my-first-post という日本語記事を作って。本文はこちらで用意する」「使用許可のある MP3 を曲名と作者付きで追加して」。doctor と変更ページのプレビューを依頼してください。内容、翻訳、ドメイン、公開先は自分で決めます。
 
-対応する starter は `npm run build` 時に `/llms.txt`、言語別の索引・全文ファイル、記事の Markdown 版を自動生成します。追加設定は不要です。通常どおり `dist/` 全体を公開してください。生成ファイルはビルド後と preview で利用できます。既存プロジェクトは [UPGRADING.md](UPGRADING.md) を参照してください。
+対応する starter は `npm run build` 時に `/llms.txt`、言語別の索引・全文ファイル、記事の Markdown 版を自動生成します。追加設定は不要です。通常どおり `dist/` 全体を公開してください。生成ファイルはビルド後と preview で利用できます。既存プロジェクトは [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) を参照してください。
 
 ## 初期設定：サイト情報とホームの URL
 

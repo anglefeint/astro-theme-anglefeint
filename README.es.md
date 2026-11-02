@@ -208,7 +208,7 @@ Abre la carpeta del proyecto en Cursor, Codex o Claude Code. El starter incluye 
 
 Ejemplos: «Lee AGENTS.md, configura mi sitio y deja solo español; conserva mi contenido». «Crea un artículo en español con slug my-first-post; yo proporcionaré el texto». «Añade mis MP3 autorizados con título y autor». Pide que ejecute doctor y revise las páginas en preview. Tú decides el contenido, las traducciones, el dominio y dónde publicar.
 
-El starter correspondiente genera automáticamente `/llms.txt`, índices y archivos de texto completo por idioma, y versiones Markdown de los artículos al ejecutar `npm run build`. No requiere configuración adicional: publica todo `dist/` como siempre. Los archivos están disponibles tras la compilación y en preview. Para proyectos existentes, consulta [UPGRADING.md](UPGRADING.md).
+El starter correspondiente genera automáticamente `/llms.txt`, índices y archivos de texto completo por idioma, y versiones Markdown de los artículos al ejecutar `npm run build`. No requiere configuración adicional: publica todo `dist/` como siempre. Los archivos están disponibles tras la compilación y en preview. Para proyectos existentes, consulta [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ## Primera configuración: identidad del sitio y URL de inicio
 

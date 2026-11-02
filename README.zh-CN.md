@@ -206,7 +206,7 @@ pnpm 用户使用 `pnpm doctor`，再运行 `pnpm preview`；只构建时则使�
 
 例如：“阅读 AGENTS.md，设置我的站点信息，只保留中文，保留已有内容。”“新建 slug 为 my-first-post 的中文文章，正文由我提供。”“添加我有权使用的 MP3，填写歌名和作者。”让助手运行 doctor 并预览修改后的页面；正文、翻译、域名和部署目标仍由你决定。
 
-配套 starter 在 `npm run build` 时自动生成 `/llms.txt`、各语言索引与全文合集，以及文章 Markdown 版本，无需额外配置。照常部署整个 `dist/`；这些文件在构建后及 preview 中可用。已有项目见 [UPGRADING.md](UPGRADING.md)。
+配套 starter 在 `npm run build` 时自动生成 `/llms.txt`、各语言索引与全文合集，以及文章 Markdown 版本，无需额外配置。照常部署整个 `dist/`；这些文件在构建后及 preview 中可用。已有项目见 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 ## 首次配置：站点信息与首页地址
 

@@ -151,7 +151,7 @@ Ab 1440px Bildschirmbreite zeigt das Terminal unten rechts `Knock, knock.`. Der 
 
 Beispiele: „Lies AGENTS.md, richte meine Website ein und aktiviere nur Deutsch; erhalte meine Inhalte.“ „Erstelle einen deutschen Artikel mit dem Slug my-first-post; den Text liefere ich.“ „Füge meine erlaubten MP3-Dateien mit Titel und Urheber hinzu.“ Bitte um doctor und eine Vorschau der geänderten Seiten. Inhalte, Übersetzungen, Domain und Veröffentlichungsziel bestimmst du.
 
-Der passende Starter erzeugt bei `npm run build` automatisch `/llms.txt`, sprachbezogene Indizes und Volltextdateien sowie Markdown-Versionen der Beiträge. Zusätzliche Konfiguration ist nicht nötig; veröffentliche wie gewohnt den gesamten Inhalt von `dist/`. Die Dateien stehen nach dem Build und in preview bereit. Für bestehende Projekte siehe [UPGRADING.md](UPGRADING.md).
+Der passende Starter erzeugt bei `npm run build` automatisch `/llms.txt`, sprachbezogene Indizes und Volltextdateien sowie Markdown-Versionen der Beiträge. Zusätzliche Konfiguration ist nicht nötig; veröffentliche wie gewohnt den gesamten Inhalt von `dist/`. Die Dateien stehen nach dem Build und in preview bereit. Für bestehende Projekte siehe [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ## Social-Links
 
