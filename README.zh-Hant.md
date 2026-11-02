@@ -153,7 +153,7 @@ Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他�
 
 例如：「閱讀 AGENTS.md，設定站點資訊，只保留繁體中文，保留既有內容。」「新增 slug 為 my-first-post 的繁體中文文章，正文由我提供。」「加入我有權使用的 MP3，填入歌名與作者。」讓助手執行 doctor 並預覽修改後的頁面；正文、翻譯、網域與部署目標仍由你決定。
 
-發布前，請把選用的 `public/llms.txt` 佔位內容換成自己的網站資訊與實際語言網址，或刪除該檔案。它面向網站讀者與爬蟲；專案操作指引放在 AGENTS.md。
+配套 starter 在 `npm run build` 時自動產生 `/llms.txt`、各語言索引與全文合集，以及文章 Markdown 版本，無需額外設定。照常部署整個 `dist/`；這些檔案在建置後及 preview 中可用。既有專案見 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 ## 社群連結
 

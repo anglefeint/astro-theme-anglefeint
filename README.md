@@ -206,7 +206,7 @@ Open this project folder in Cursor, Codex or Claude Code. The starter includes a
 
 Try: “Read AGENTS.md. Set up my site identity and keep only English enabled; preserve my content.” Or: “Create a Chinese article with slug my-first-post; I will provide the body.” Or: “Add my licensed MP3 files with song titles and artists.” Ask the assistant to run doctor and preview the changed pages. You still choose the content, translations, domain and deployment destination.
 
-Before publishing, replace the placeholders in optional `public/llms.txt` with your site information and real locale URLs, or remove it. This file describes the public site for readers and crawlers; project instructions live in AGENTS.md.
+The matching starter automatically generates `/llms.txt`, per-language indexes/full-text bundles and article Markdown companions during `npm run build`. No extra configuration is needed; publish all of `dist/` as usual. Files are available after build/preview. Existing projects: see [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ## First Setup: Site Identity and Home URL
 
