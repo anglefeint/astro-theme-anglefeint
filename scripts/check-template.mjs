@@ -382,6 +382,19 @@ try {
     reason: 'Consumer installs intentionally skip the workspace-link check.',
   });
   await run('astro', ['--version']);
+  for (const locale of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
+    const index = await read(`dist/${locale}/llms.txt`);
+    assert.equal(index.charCodeAt(0), 0xfeff);
+    assert(index.includes(`/${locale}/blog/default-locales/index.md`));
+    assert(
+      (await read(`dist/${locale}/blog/default-locales/index.md`)).includes(`language: "${locale}"`)
+    );
+  }
+  assert((await read('dist/en/blog/default-locales/index.md')).includes('User content sentinel'));
+  results.push({
+    check: 'published package generates nine-language Markdown/indexes from remote starter',
+    status: 'passed',
+  });
   await server('dev', routes);
   await server('preview', routes, (base) => browserCheck(base));
   assert.deepEqual(
@@ -453,6 +466,18 @@ try {
   await writeFile(file('.env'), 'PUBLIC_SITE_URL=https://acceptance.example\n');
   await run('build');
   const home = await read('dist/en/index.html');
+  const machineIndex = await read('dist/llms.txt');
+  assert(machineIndex.includes('# Acceptance site'));
+  assert(machineIndex.includes('https://acceptance.example/zh/llms.txt'));
+  assert(!machineIndex.includes('/ja/llms.txt'));
+  await assert.rejects(access(file('dist/ja/llms.txt')), { code: 'ENOENT' });
+  const machineArticle = await read('dist/zh/blog/configured-locales/index.md');
+  assert(machineArticle.includes('author: "Acceptance author"'));
+  assert(machineArticle.includes('https://acceptance.example/zh/blog/configured-locales/'));
+  results.push({
+    check: 'machine exports reuse configured identity/origin/languages even with search disabled',
+    status: 'passed',
+  });
   assert.equal(home.match(/<h1\b[^>]*>(.*?)<\/h1>/s)?.[1], 'Acceptance home heading');
   assert.ok(home.includes('Acceptance shared signal'));
   const chineseHome = await read('dist/zh/index.html');
