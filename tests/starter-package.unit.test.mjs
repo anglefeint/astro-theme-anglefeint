@@ -21,9 +21,11 @@ test('starter generation fixes legacy commands, is idempotent and excludes maint
   assert.deepEqual(generated.scripts, STARTER_SCRIPTS);
   assert.equal(generated.workspaces, undefined);
   assert.equal(generated.devDependencies.husky, undefined);
+  assert.equal(generated.devDependencies.satori, undefined);
+  assert.deepEqual(generated.overrides, { fflate: '0.7.5' });
   assert.deepEqual(buildStarterPackage(source, generated, '^0.2.11'), generated);
   assert.deepEqual(starterPackageDrift(source, generated, '^0.2.11'), []);
-  for (const field of ['scripts', 'dependencies', 'devDependencies', 'engines']) {
+  for (const field of ['scripts', 'dependencies', 'devDependencies', 'engines', 'overrides']) {
     const broken = JSON.parse(JSON.stringify(generated));
     broken[field].unexpected = 'broken';
     assert.ok(starterPackageDrift(source, broken, '^0.2.11').includes(field));

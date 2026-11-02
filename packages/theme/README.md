@@ -50,6 +50,8 @@ npm install @anglefeint/astro-theme
 
 ## Upgrade
 
+For 0.21.0, merge root `"overrides": { "fflate": "0.7.5" }` into an existing consumer project before reinstalling. The matching starter already includes this patch for Satori's pinned compression dependency. A dependency package cannot enforce root overrides; see UPGRADING for the integration/config migration as well.
+
 ```bash
 npm update @anglefeint/astro-theme
 ```
@@ -145,6 +147,10 @@ npx anglefeint-new-page projects --theme matrix
 ```
 
 Run these inside a project with the theme installed. `npx` resolves the package's local binaries; a local npm installation does not put them on your ordinary terminal's PATH. Starter projects already provide `npm run new-post -- ...` and `npm run new-page -- ...`. The environment-variable example uses POSIX shell syntax. For most users, `#starter` is the recommended installation path.
+
+## Machine-readable articles
+
+The matching starter also preconfigures the build-only `@anglefeint/astro-theme/machine-readable` integration. Normal builds generate `/llms.txt`, per-language indexes/full-text bundles and article Markdown companions, with discovery links in article HTML. Site identity, URLs, languages and public metadata come from existing settings/pages; no extra configuration or server is needed. Custom integrations can call `machineReadable({ title, description })` in `astro.config.mjs`. Remove the old `public/llms.txt` placeholder when migrating; user-authored conflicting files are never overwritten. Exports skip noindex pages and exclude navigation/player/decorative content; `search: false` controls site search, not public Markdown. Files are available after build/preview, not during dev. See [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) for existing projects.
 
 ## Static article search
 

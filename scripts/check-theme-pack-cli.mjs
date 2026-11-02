@@ -60,6 +60,10 @@ function main() {
       'package/src/scaffold/new-page.mjs',
       'package/src/scaffold/shared.mjs',
       'package/src/scaffold/project-config.mjs',
+      'package/src/machine-readable.mjs',
+      'package/src/machine-readable.d.mts',
+      'package/src/machine/content.mjs',
+      'package/src/machine/generate.mjs',
     ];
 
     const missing = required.filter((entry) => !list.includes(entry));

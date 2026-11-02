@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {
   buildNewPostTemplate,
   parseNewPostArgs,
-  pickDefaultCoverBySlug,
+  pickDefaultCover,
   resolveLocales,
   validatePostSlug,
 } from '../packages/theme/src/scaffold/new-post.mjs';
@@ -28,17 +28,26 @@ test('validatePostSlug accepts lowercase-hyphen slugs', () => {
   assert.equal(validatePostSlug('Hello-world'), false);
 });
 
-test('pickDefaultCoverBySlug is deterministic for same slug', () => {
+test('pickDefaultCover samples a fresh index and supports empty libraries', () => {
   const covers = [
     '/tmp/covers/ai-01.webp',
     '/tmp/covers/cyber-01.webp',
     '/tmp/covers/matrix-01.webp',
   ];
-  const localeDir = '/tmp/project/src/content/blog/en';
-  const first = pickDefaultCoverBySlug('hello-world', localeDir, covers);
-  const second = pickDefaultCoverBySlug('hello-world', localeDir, covers);
-  assert.equal(first, second);
-  assert.match(first, /^(\.\.\/)+.+\.(webp|png|jpg|jpeg)$/);
+  let calls = 0;
+  const randomIndex = (size) => {
+    assert.equal(size, 3);
+    return calls++;
+  };
+  assert.equal(pickDefaultCover(covers, randomIndex), covers[0]);
+  assert.equal(pickDefaultCover(covers, randomIndex), covers[1]);
+  assert.equal(
+    pickDefaultCover([], () => {
+      throw Error('must not sample');
+    }),
+    ''
+  );
+  assert(covers.includes(pickDefaultCover(covers)));
 });
 
 test('buildNewPostTemplate emits expected locale strings', () => {

@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release entry: [0.20.0](./0.20.0.md), Frontier navigation and configurable cypherpunk reading cards. See its delivery status and acceptance record.
+Latest feature release entry: [0.21.0](./0.21.0.md), automatic machine-readable articles and compact publishing layouts. See its delivery status and acceptance record.
 
 Latest patch entry: [0.20.1](./0.20.1.md), sixteen cypherpunk reading cards, eight-column layout and the patched Vite starter dependency. See its delivery status and validation record.
 

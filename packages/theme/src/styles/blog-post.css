@@ -3,11 +3,102 @@ body.ai-page main {
   max-width: 100%;
   margin: 0;
 }
+body.ai-page main.ai-content {
+  --article-content-width: 780px;
+  --article-padding-inline: 0.625rem;
+  padding-top: calc(56px + 2em);
+}
 .hero-shell {
-  width: min(1020px, 100%);
-  margin: 0 auto;
+  width: 100%;
+  margin: 0 auto 1rem;
   position: relative;
   box-sizing: border-box;
+}
+body.ai-page .ai-response-wrap .article-tags {
+  margin: -0.25rem 0 0.6rem;
+  gap: 0.25rem 0.8rem;
+}
+body.ai-page .ai-content .ai-response-wrap .article-tags a {
+  --tag-color: var(--neon-accent, #aadcf4);
+  position: relative;
+  min-height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--tag-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-shadow: none;
+  animation: none;
+  transition:
+    color 160ms ease,
+    text-shadow 160ms ease;
+}
+body.ai-page .ai-content .ai-response-wrap .article-tags a::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--tag-color) 20%,
+    #fff 50%,
+    var(--tag-color) 80%,
+    transparent
+  );
+  box-shadow: 0 0 4px var(--tag-color);
+  pointer-events: none;
+  animation: article-tag-scan 3.6s linear infinite;
+}
+body.ai-page .ai-content .ai-response-wrap .article-tags a:nth-child(3n + 2)::after {
+  animation-delay: -1.2s;
+}
+body.ai-page .ai-content .ai-response-wrap .article-tags a:nth-child(3n)::after {
+  animation-delay: -2.4s;
+}
+@keyframes article-tag-scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  65% {
+    transform: translateY(1.45rem);
+    opacity: 0.85;
+  }
+  72%,
+  100% {
+    transform: translateY(1.45rem);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.ai-page .ai-content .ai-response-wrap .article-tags a::after {
+    animation: none;
+    display: none;
+  }
+}
+body.ai-page .ai-content .ai-response-wrap .article-tags a:visited {
+  color: var(--tag-color);
+}
+body.ai-page .ai-content .ai-response-wrap .article-tags a::before {
+  content: '#';
+  opacity: 0.85;
+}
+body.ai-page .ai-content .ai-response-wrap .article-tags a:hover,
+body.ai-page .ai-content .ai-response-wrap .article-tags a:focus-visible {
+  color: color-mix(in srgb, var(--tag-color) 65%, white);
+  background: transparent;
+  box-shadow: none;
+  text-shadow: 0 0 9px color-mix(in srgb, var(--tag-color) 35%, transparent);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+  animation: none;
+  opacity: 1;
 }
 .hero-image {
   width: 100%;
@@ -29,7 +120,7 @@ body.ai-page main {
 }
 .hero-stack {
   position: relative;
-  aspect-ratio: 1020 / 510;
+  aspect-ratio: 3 / 1;
   background: #0a1218;
 }
 .hero-base-wrap {
@@ -121,6 +212,9 @@ body.ai-page main {
   }
 }
 @media (max-width: 720px) {
+  .hero-stack {
+    aspect-ratio: 2 / 1;
+  }
   .hero-frame {
     font-size: 0.6rem;
     letter-spacing: 0.1em;
@@ -137,8 +231,30 @@ body.ai-page .prose {
   padding: 1em;
   color: rgb(var(--text));
 }
-body.ai-page .hero-shell + .prose {
-  margin-top: 1.1rem;
+/* Reclaim space inside the existing 802px reading panel rather than shrinking it. */
+body.ai-page .ai-content .ai-article > .prose {
+  width: var(--article-content-width);
+  padding: 0.75rem var(--article-padding-inline) 0.55rem;
+}
+body.ai-page .ai-content > .ai-related {
+  box-sizing: border-box;
+  width: calc(var(--article-content-width) + 2 * var(--article-padding-inline) + 2px);
+  max-width: 100%;
+}
+@media (min-width: 721px) {
+  body.ai-page .ai-content .ai-article > .prose {
+    max-width: calc(100% - 1.25rem - 2px);
+  }
+}
+@media (max-width: 720px) {
+  body.ai-page .ai-content > .ai-related {
+    width: var(--article-content-width);
+    max-width: calc(100% - 1rem - 2px);
+  }
+  body.ai-page .ai-content .ai-article > .prose {
+    max-width: calc(100% - 1rem - 2px);
+    padding: 0.75rem 0.5rem 0.5rem;
+  }
 }
 .rq-tv {
   position: fixed;
@@ -302,24 +418,21 @@ body.ai-page .hero-shell + .prose {
     transform: rotate(360deg);
   }
 }
-@media (max-width: 720px) {
-  body.ai-page .hero-shell + .prose {
-    margin-top: 0.85rem;
-  }
-}
 @media (max-width: 1300px) {
   .rq-tv {
     display: none;
   }
 }
 body.ai-page .title {
-  margin-bottom: 1em;
-  padding: 1em 0;
+  margin-bottom: 0.85rem;
+  padding: 0;
   text-align: center;
   line-height: 1;
 }
 body.ai-page .title h1 {
-  margin: 0 0 0.5em 0;
+  margin: 0 0 0.65rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.2;
 }
 .ai-subtitle-text {
   margin: -0.15rem 0 0.85rem;

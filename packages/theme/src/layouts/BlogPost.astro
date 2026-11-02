@@ -199,45 +199,13 @@ const hasCommentsConfig = Boolean(
     <div class="ai-thinking-dots" aria-hidden="true"><span></span><span></span><span></span></div>
   </Fragment>
   <div class="ai-load-scan" aria-hidden="true"></div>
-  <article class="ai-article">
-    {
-      heroImage && (
-        <div class="hero-shell">
-          <div class="hero-pane">
-            <div class="hero-image">
-              <div class="hero-stack">
-                <div class="hero-base-wrap">
-                  <Image
-                    class="hero-base-image"
-                    src={heroImage}
-                    alt=""
-                    loading="eager"
-                    decoding="async"
-                    fetchpriority="high"
-                  />
-                </div>
-                <div class="hero-canvas-wrap" aria-hidden="true">
-                  <canvas class="hero-canvas" data-hero-src={heroImage.src} />
-                </div>
-              </div>
-              <div class="hero-frame" aria-hidden="true">
-                <span>{messages.blog.heroMonitor}</span>
-                <span class="hero-frame-dot" />
-              </div>
-            </div>
-            <div class="hero-threat-bar" aria-hidden="true">
-              <span>{messages.blog.heroSignalSync}</span>
-              <span>{messages.blog.heroModelOnline}</span>
-            </div>
-          </div>
-        </div>
-      )
-    }
+  <article class="ai-article" data-machine-readable data-machine-locale={resolvedLocale}>
     <div
       class="prose"
       data-anglefeint-search={search && (THEME.SEARCH?.ENABLED ?? true) ? '' : undefined}
     >
       <div class="title ai-title">
+        <h1 class="ai-title-text" data-pagefind-body data-pagefind-meta="title">{title}</h1>
         <div class="ai-meta-terminal">
           $ {messages.blog.metaPublished}
           {fmt(pubDate)}
@@ -282,14 +250,18 @@ const hasCommentsConfig = Boolean(
         {
           contextText && (
             <div class="ai-prompt-line">
-              {messages.blog.promptContextLabel}: <span class="ai-prompt-topic">{contextText}</span>{' '}
-              →
+              {messages.blog.promptContextLabel}:{' '}
+              <span
+                class="ai-prompt-topic"
+                data-pagefind-body={subtitle === contextText ? '' : undefined}
+              >
+                {contextText}
+              </span>
             </div>
           )
         }
-        <h1 class="ai-title-text" data-pagefind-body data-pagefind-meta="title">{title}</h1>
         {
-          subtitle && (
+          subtitle && subtitle !== contextText && (
             <p class="ai-subtitle-text" data-pagefind-body>
               {subtitle}
             </p>
@@ -298,7 +270,39 @@ const hasCommentsConfig = Boolean(
         <hr />
         <div class="ai-title-flow" aria-hidden="true"></div>
       </div>
-      {THEME.TAGS.ENABLED && <TagLinks locale={resolvedLocale} tags={tags ?? []} article />}
+      {
+        heroImage && (
+          <div class="hero-shell">
+            <div class="hero-pane">
+              <div class="hero-image">
+                <div class="hero-stack">
+                  <div class="hero-base-wrap">
+                    <Image
+                      class="hero-base-image"
+                      src={heroImage}
+                      alt=""
+                      loading="eager"
+                      decoding="async"
+                      fetchpriority="high"
+                    />
+                  </div>
+                  <div class="hero-canvas-wrap" aria-hidden="true">
+                    <canvas class="hero-canvas" data-hero-src={heroImage.src} />
+                  </div>
+                </div>
+                <div class="hero-frame" aria-hidden="true">
+                  <span>{messages.blog.heroMonitor}</span>
+                  <span class="hero-frame-dot" />
+                </div>
+              </div>
+              <div class="hero-threat-bar" aria-hidden="true">
+                <span>{messages.blog.heroSignalSync}</span>
+                <span>{messages.blog.heroModelOnline}</span>
+              </div>
+            </div>
+          </div>
+        )
+      }
       <ArticleToc
         headings={headings}
         enabled={toc ?? THEME.TOC?.ENABLED ?? true}
@@ -309,12 +313,27 @@ const hasCommentsConfig = Boolean(
           <div class="ai-response-avatar" aria-hidden="true"></div>
           <span class="ai-response-label">{messages.blog.responseOutput}</span>
           {
-            hasResponseMeta && (
+            (hasResponseMeta || hasStats) && (
               <div class="ai-response-meta">
+                {aiModel && (
+                  <span class="ai-model-id">
+                    {messages.blog.systemModelLabel} <strong>{aiModel}</strong>
+                  </span>
+                )}
+                {wordCount !== undefined && (
+                  <span>
+                    {messages.blog.statsWords} <strong>{compact(wordCount)}</strong>
+                  </span>
+                )}
+                {tokenCount !== undefined && (
+                  <span>
+                    {messages.blog.statsTokens} <strong>{compact(tokenCount)}</strong>
+                  </span>
+                )}
                 {aiLatencyMs !== undefined && (
                   <span>
                     {messages.blog.latencyLabel}{' '}
-                    <strong>{aiLatencyEstimated ? `~${aiLatencyMs}` : aiLatencyMs}</strong> ms
+                    <strong>{aiLatencyEstimated ? `~${aiLatencyMs}` : aiLatencyMs} ms</strong>
                   </span>
                 )}
                 {confidenceText !== undefined && (
@@ -327,6 +346,7 @@ const hasCommentsConfig = Boolean(
             )
           }
         </div>
+        {THEME.TAGS.ENABLED && <TagLinks locale={resolvedLocale} tags={tags ?? []} article />}
         <div
           class="ai-prose-body ai-prose-fade"
           data-code-copy={JSON.stringify(messages.codeCopy)}
@@ -337,25 +357,6 @@ const hasCommentsConfig = Boolean(
           <span class="ai-block-cursor" aria-hidden="true"></span>
         </div>
       </div>
-      {
-        hasStats && (
-          <div class="ai-stats-corner">
-            {aiModel && <span class="ai-model-id">{aiModel}</span>}
-            {aiModel && (wordCount !== undefined || tokenCount !== undefined) && ' · '}
-            {wordCount !== undefined && (
-              <span>
-                {compact(wordCount)} {messages.blog.statsWords}
-              </span>
-            )}
-            {wordCount !== undefined && tokenCount !== undefined && ' · '}
-            {tokenCount !== undefined && (
-              <span>
-                {compact(tokenCount)} {messages.blog.statsTokens}
-              </span>
-            )}
-          </div>
-        )
-      }
       <button
         type="button"
         class="ai-regenerate"

@@ -36,7 +36,6 @@ for (const viewport of [
     await paragraph.evaluate((element) =>
       element.scrollIntoView({ block: 'center', behavior: 'instant' })
     );
-    await expect(paragraph).toHaveClass(/ai-para-visible/);
     await expect(paragraph).toHaveCSS('opacity', '1');
     await expect(page.locator('.ai-prose-body')).toHaveCSS('opacity', '1');
     await page.screenshot({ path: testInfo.outputPath('article.png') });

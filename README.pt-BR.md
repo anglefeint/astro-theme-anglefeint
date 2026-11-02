@@ -151,7 +151,7 @@ Abra a pasta do projeto no Cursor, Codex ou Claude Code. O starter inclui um [AG
 
 Exemplos: “Leia AGENTS.md, configure meu site e mantenha apenas pt-br; preserve meu conteúdo”. “Crie um artigo em português com slug my-first-post; eu fornecerei o texto”. “Adicione meus MP3 autorizados com título e artista”. Peça para executar doctor e revisar as páginas em preview. Você decide conteúdo, traduções, domínio e destino da publicação.
 
-Antes de publicar, substitua os marcadores do arquivo opcional `public/llms.txt` pelos dados do site e URLs reais dos idiomas, ou remova o arquivo. Ele descreve o site para leitores e rastreadores; as instruções do projeto ficam em AGENTS.md.
+O starter correspondente gera automaticamente `/llms.txt`, índices e arquivos de texto completo por idioma e versões Markdown dos artigos durante `npm run build`. Não é necessária configuração extra: publique todo o conteúdo de `dist/` como de costume. Os arquivos ficam disponíveis após o build e no preview. Para projetos existentes, veja [UPGRADING.md](UPGRADING.md).
 
 ## Links sociais
 

@@ -13,6 +13,14 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.21.0] - 2026-11-03
+
+- Generate machine-readable article Markdown, root/language indexes and language full-text bundles automatically during static builds. Use public rendered metadata, respect noindex, resolve links and preserve MDX prose, code, GFM tables and formulas. UTF-8 markers preserve non-ASCII browser reading even without charset headers.
+- Make article prose visible without JavaScript; place title/metadata before a compact monitor cover, group statistics in OUTPUT, tighten reading-panel padding and align Related with its outer edges.
+- Compact the leading blog card and replace the blog index navigation buttons with a right-aligned Tags shortcut. Share nine neon palettes across tags/pagination; the shortcut changes color every three seconds with a 1.5-second transition and pauses while hovered/focused or hidden.
+- Add four unbranded local WebP covers and select new-post covers with Node crypto randomness, sharing one selection across languages created by one command.
+- Existing projects must add the build integration and migrate the old public llms placeholder; the matching starter is preconfigured. See [0.21.0](docs/releases/0.21.0.md) for delivery status, dependency updates and validation.
+
 ## [0.20.1] - 2026-10-22
 
 - Update main/starter Vite to the patched 8.3.5 series after a blocking dependency audit; refresh locks without bypassing audit findings.

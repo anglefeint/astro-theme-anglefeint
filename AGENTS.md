@@ -57,6 +57,8 @@ Before changing signature effects, identify the intended visual gain, compare ag
 
 ## Priority
 
+For local visual iteration, make the requested code changes directly and let the user inspect the running page. Before doing your own optional screenshot/render-and-inspect or visual-measurement step, ask whether the user wants that step; do not automatically run scripts such as `article-first-preview.mjs` after every edit. This consent requirement concerns the agent's visual review only, not ordinary server management, code edits or functional tests. Follow [local visual feedback](docs/AI_WORKFLOW.md#local-visual-feedback-and-consent). Required validation and release gates remain unchanged.
+
 Implemented behavior is defined by code. Documentation records it; when they disagree, inspect the implementation and correct the documentation without changing runtime merely to match prose. Use `docs/DOC_SYNC_WORKFLOW.md` to trace code, configuration and tests to their responsible documents, including already committed changes.
 
 1. Preserve the public theme UX.

@@ -63,6 +63,7 @@ export const STARTER_CONTENT_MANAGED_FILES = STARTER_CONTENT_LOCALES.flatMap((lo
 );
 
 export const STARTER_OBSOLETE_FILES = [
+  'public/llms.txt',
   'scripts/regenerate-starter.mjs',
   'scripts/new-page.mjs',
   'scripts/new-post.mjs',
@@ -90,7 +91,6 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'AGENTS.md',
   'CLAUDE.md',
   '.cursor/rules/00-repo.mdc',
-  'public/llms.txt',
   'astro.config.mjs',
   'src/pages/index.astro',
   'src/pages/robots.txt.ts',
@@ -149,6 +149,10 @@ export const REQUIRED_STARTER_MANAGED_FILES = [
 ];
 
 export const STARTER_MANAGED_FILES = [
+  'src/assets/blog/default-covers/architecture-01.webp',
+  'src/assets/blog/default-covers/study-01.webp',
+  'src/assets/blog/default-covers/cinematic-01.webp',
+  'src/assets/blog/default-covers/horizon-01.webp',
   ...STARTER_CONTENT_MANAGED_FILES,
   ...STARTER_STATIC_MANAGED_FILES,
   ...STARTER_SUPPORT_SCRIPTS,

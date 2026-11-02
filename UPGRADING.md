@@ -10,6 +10,14 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.21.0: automatic machine-readable articles
+
+The rendering dependency moves to Satori 0.33.5. Its upstream package pins vulnerable fflate 0.7.3, so the matching starter includes root `"overrides": { "fflate": "0.7.5" }`. Existing projects installing this theme version must merge that override into their own root package.json, preserve other overrides, reinstall, audit and rebuild. Overrides inside an installed dependency do not apply to a consumer's project. The maintainer checkout separately overrides ESLint's minimatch dependencies to 11.0.4 and anchors the same Satori version at its root so npm workspace resolution honors the fflate patch; these maintainer entries are not distributed in starter.
+
+The matching starter preconfigures `@anglefeint/astro-theme/machine-readable` in `astro.config.mjs`, passing the existing site title/description. Builds generate a root `llms.txt`, language indexes/full-text bundles and per-article `index.md` companions from rendered public article HTML. No API key, new site-config field or production server is required. Build-generated article head links discover the exports; they are available after build/preview, not injected into dev HTML.
+
+Existing projects need the matching package **and** the integration added to their project-owned Astro config. Remove the old `public/llms.txt` placeholder; the integration refuses to overwrite pre-existing user files. If that file contains custom guidance, preserve and review it before removing it. Package updates alone do not edit the project config or delete custom files. Upload all of `dist` as usual; clean rebuilds remove deleted content, and a local cache manifest also cleans integration-owned exports during non-clean rebuilds. A page's existing `noindex` excludes it; the article's `search` setting controls site search only. No unrendered source files or internal frontmatter are exported. This is a machine-reading aid, not a promise of indexing, training or citation.
+
 > Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
 
 ## 0.20.1: sixteen reading cards and eight-column layout

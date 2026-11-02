@@ -24,6 +24,10 @@ export function buildStarterPackage(source, previous, themeRange) {
   result.engines = source.engines;
   result.scripts = { ...STARTER_SCRIPTS };
   result.dependencies = { ...source.dependencies, '@anglefeint/astro-theme': themeRange };
+  // Distribute the rendering dependency patch, not maintainer-only ESLint overrides.
+  const renderingOverride = source.overrides?.fflate;
+  if (renderingOverride) result.overrides = { fflate: renderingOverride };
+  else delete result.overrides;
   result.devDependencies = Object.fromEntries(
     ['@astrojs/check', 'typescript'].map((name) => [name, source.devDependencies[name]])
   );
@@ -37,6 +41,7 @@ export function starterPackageDrift(source, actual, themeRange) {
     'dependencies',
     'devDependencies',
     'engines',
+    'overrides',
     'workspaces',
     'lint-staged',
   ].filter((key) => {

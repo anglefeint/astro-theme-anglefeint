@@ -256,11 +256,13 @@ body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
 }
 .ai-response-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.6em;
   margin-bottom: 0.8em;
 }
 .ai-response-avatar {
+  flex-shrink: 0;
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -281,7 +283,10 @@ body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
   margin-left: auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.85rem;
+  flex: 1 1 24rem;
+  min-width: 0;
+  justify-content: flex-end;
+  gap: 0.35rem 0.85rem;
   font-family: ui-monospace, monospace;
   font-size: 0.68em;
   color: rgba(188, 226, 248, 0.76);
@@ -289,18 +294,14 @@ body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
 .ai-response-meta strong {
   color: rgba(194, 236, 252, 0.96);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
-/* 字数/Token 角落 */
-.ai-stats-corner {
-  position: absolute;
-  top: 0.5em;
-  right: 1em;
-  font-family: ui-monospace, monospace;
-  font-size: 0.7em;
-  color: rgba(176, 218, 240, 0.58);
+.ai-response-meta > span {
+  white-space: nowrap;
 }
-.ai-model-id {
-  color: rgba(158, 218, 246, 0.82);
+.ai-response-meta > .ai-model-id {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 /* Regenerate 按钮 */
 .ai-regenerate {
@@ -346,22 +347,4 @@ body.ai-page .ai-content .prose .ai-prose-body > p:first-of-type::first-letter {
   margin-right: 0.1em;
   color: rgba(160, 226, 252, 0.94);
   text-shadow: 0 0 22px rgba(124, 206, 246, 0.3);
-}
-/* 段落滚动浮现 */
-.ai-prose-body p,
-.ai-prose-body h2,
-.ai-prose-body h3,
-.ai-prose-body pre,
-.ai-prose-body blockquote,
-.ai-prose-body ul,
-.ai-prose-body ol {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-}
-.ai-prose-body .ai-para-visible {
-  opacity: 1;
-  transform: translateY(0);
 }

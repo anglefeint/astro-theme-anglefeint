@@ -1,4 +1,5 @@
 import { clamp, int } from './number';
+import { selectVisualVariant } from './visual-variant.js';
 
 type PaginationStyleMode = 'random' | 'sequential' | 'fixed';
 
@@ -38,9 +39,17 @@ export function resolvePaginationVariant(options: ResolvePaginationVariantOption
   let variant = 1;
 
   if (mode === 'fixed') {
-    variant = clamp(int(options.config.FIXED_VARIANT), 1, variants);
+    variant = selectVisualVariant({
+      count: variants,
+      mode,
+      fixed: int(options.config.FIXED_VARIANT),
+    });
   } else if (mode === 'sequential') {
-    variant = ((Math.max(1, int(options.currentPage)) - 1) % variants) + 1;
+    variant = selectVisualVariant({
+      count: variants,
+      mode,
+      index: Math.max(1, int(options.currentPage)) - 1,
+    });
   } else {
     const seedKey = `${options.locale}:${options.pathname}:${options.currentPage}:${options.totalPages}`;
     variant = (hashString(seedKey) % variants) + 1;
@@ -70,9 +79,13 @@ export function resolvePaginationItemVariant(options: ResolvePaginationItemVaria
   const mode = options.config.MODE;
   let variant = 1;
   if (mode === 'fixed') {
-    variant = clamp(int(options.config.FIXED_VARIANT), 1, variants);
+    variant = selectVisualVariant({
+      count: variants,
+      mode,
+      fixed: int(options.config.FIXED_VARIANT),
+    });
   } else if (mode === 'sequential') {
-    variant = (int(options.index) % variants) + 1;
+    variant = selectVisualVariant({ count: variants, mode, index: int(options.index) });
   } else {
     variant = (hashString(options.seed) % variants) + 1;
   }

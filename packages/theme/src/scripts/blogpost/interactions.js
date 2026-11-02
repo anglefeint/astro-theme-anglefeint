@@ -38,35 +38,6 @@ function mount(prefersReducedMotion, scope) {
     }
   });
 
-  const paras = document.querySelectorAll(
-    '.ai-prose-body p, .ai-prose-body h2, .ai-prose-body h3, .ai-prose-body pre, .ai-prose-body blockquote, .ai-prose-body ul, .ai-prose-body ol'
-  );
-  if (window.IntersectionObserver) {
-    const io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('ai-para-visible');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: '0px 0px -60px 0px', threshold: 0.1 }
-    );
-
-    scope.add(() => io.disconnect());
-    paras.forEach(function (p) {
-      if (p.dataset.aiRevealObserved === 'true') return;
-      p.dataset.aiRevealObserved = 'true';
-      scope.add(() => delete p.dataset.aiRevealObserved);
-      io.observe(p);
-    });
-  } else {
-    paras.forEach(function (p) {
-      p.classList.add('ai-para-visible');
-    });
-  }
-
   const regen = document.querySelector('.ai-regenerate');
   const article = document.querySelector('.ai-article');
   const scan = document.querySelector('.ai-load-scan');

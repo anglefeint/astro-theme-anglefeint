@@ -1,11 +1,7 @@
 import path from 'node:path';
 import { readdir } from 'node:fs/promises';
-import {
-  hashString,
-  normalizePathForFrontmatter,
-  toTitleFromSlug,
-  validatePostSlug,
-} from './shared.mjs';
+import { randomInt } from 'node:crypto';
+import { toTitleFromSlug, validatePostSlug } from './shared.mjs';
 
 export function usageNewPost() {
   return 'Usage: anglefeint-new-post <slug> [--locales en,fr,...]';
@@ -117,10 +113,9 @@ export async function loadDefaultCovers(defaultCoversRoot) {
   }
 }
 
-export function pickDefaultCoverBySlug(slug, localeDir, defaultCovers) {
+export function pickDefaultCover(defaultCovers, randomIndex = randomInt) {
   if (defaultCovers.length === 0) return '';
-  const coverPath = defaultCovers[hashString(slug) % defaultCovers.length];
-  return normalizePathForFrontmatter(path.relative(localeDir, coverPath));
+  return defaultCovers[randomIndex(defaultCovers.length)];
 }
 
 export { validatePostSlug };

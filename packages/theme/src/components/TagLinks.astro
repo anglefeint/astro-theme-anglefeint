@@ -2,6 +2,8 @@
 import { localePath, type Locale } from '@anglefeint/site-i18n/config';
 import { getMessages } from '@anglefeint/site-i18n/messages';
 import { cleanTags, tagSlug } from '../utils/tags';
+import { NEON_COLOR_COUNT } from '../scripts/effects/neon-palette.js';
+import '../styles/neon-palette.css';
 interface Props {
   locale: Locale;
   active?: 'posts' | 'tags';
@@ -16,35 +18,46 @@ const items = cleanTags(tags);
 {
   (!article || items.length > 0) && (
     <nav
-      class:list={['tag-links', { 'article-tags': article }]}
+      class:list={[
+        'tag-links',
+        { 'article-tags': article, 'tag-shortcut': !article && active === 'posts' },
+      ]}
       aria-label={labels.tags}
       data-pagefind-ignore
+      data-neon-tags={article ? '' : undefined}
     >
       {article ? (
-        items.map((label) => (
-          <a rel="tag" href={localePath(locale, `/tags/${tagSlug(label)}/`)}>
+        items.map((label, index) => (
+          <a
+            class={`neon-v${(index % NEON_COLOR_COUNT) + 1}`}
+            rel="tag"
+            href={localePath(locale, `/tags/${tagSlug(label)}/`)}
+          >
             {label}
           </a>
         ))
       ) : (
         <>
-          <a
-            href={localePath(locale, '/blog/')}
-            aria-current={active === 'posts' ? 'page' : undefined}
-          >
-            {labels.allPosts}
-          </a>
+          {active !== 'posts' && <a href={localePath(locale, '/blog/')}>{labels.allPosts}</a>}
           <a
             href={localePath(locale, '/tags/')}
+            data-tag-shortcut={active === 'posts' ? '' : undefined}
             aria-current={active === 'tags' ? 'page' : undefined}
           >
             {labels.tags}
+            {active === 'posts' && <span aria-hidden="true">↗</span>}
           </a>
         </>
       )}
     </nav>
   )
 }
+<script>
+  import { initTagColors } from '../scripts/tag-colors.js';
+  initTagColors();
+  import { initTagShortcut } from '../scripts/tag-shortcut.js';
+  initTagShortcut();
+</script>
 <style>
   .tag-links {
     display: flex;
@@ -79,14 +92,59 @@ const items = cleanTags(tags);
   .tag-links.article-tags {
     margin: 0.75rem 0 1.5rem;
   }
+  .tag-links:not(.article-tags) {
+    margin-bottom: 0.75rem;
+  }
+  .tag-links:not(.article-tags) a {
+    min-height: 0;
+    padding: 0.075rem 0.425rem;
+  }
   .tag-links.article-tags a {
     border-color: rgba(142, 218, 255, 0.3);
     background: rgba(14, 34, 54, 0.35);
     color: #aadcf4;
   }
+  .tag-links.tag-shortcut {
+    justify-content: flex-end;
+    margin: 0 0 0.35rem;
+  }
+  .tag-links.tag-shortcut a {
+    gap: 0.35rem;
+    padding: 0.15rem 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--neon-accent, #a2f5d4);
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    transform-origin: right center;
+    transition:
+      color 1.5s ease,
+      transform 160ms ease;
+  }
+  .tag-links.tag-shortcut a span {
+    display: inline-block;
+  }
+  .tag-links.tag-shortcut a:hover,
+  .tag-links.tag-shortcut a:focus-visible {
+    background: none;
+    color: var(--neon-accent, #a2f5d4);
+    transform: scale(1.06);
+    text-shadow: 0 0 8px var(--neon-glow, rgba(120, 245, 196, 0.45));
+    text-decoration: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tag-links.tag-shortcut a span {
+      animation: none;
+    }
+    .tag-links.tag-shortcut a {
+      transition: none;
+    }
+  }
   @media (max-width: 720px) {
-    .tag-links:not(.article-tags) {
-      margin-top: 3.5rem;
+    .tag-links:not(.article-tags):not(.tag-shortcut) {
+      margin-top: 1.75rem;
     }
   }
 </style>

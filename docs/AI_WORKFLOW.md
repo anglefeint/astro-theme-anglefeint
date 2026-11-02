@@ -82,6 +82,16 @@ Before editing code, read in this order:
 
 ### 3. Validate Locally
 
+#### Local visual feedback and consent
+
+During interactive layout/style tuning, make the requested code changes directly, let the dev server refresh and let the user inspect the page and give feedback. Do not automatically insert your own screenshot-and-inspection step between the edit and the user's review.
+
+- Before doing your own optional local visual review (opening/rendering the page to judge its appearance, taking screenshots or measuring layout for that purpose), ask whether the user wants that step. Wait for the answer; the user can perform the visual review instead. Approval for one such run does not authorize repeating it after every tweak.
+- In particular, do not automatically run temporary scripts such as `acceptance-results/article-first-preview.mjs` or wait through animations to capture and inspect images after each edit. If the user explicitly asks for a screenshot or agent visual inspection, that already authorizes the requested step; do not ask twice.
+- This is a narrow rule about who checks the local appearance. It does not add confirmation requirements for code edits, starting/reusing a local server, lint, type checks, builds or functional tests. Use the existing task authorization and validation requirements for those actions. Do not report all validation as omitted merely because no screenshot was taken.
+- A functional browser test is not automatically a visual-inspection step. Keep required functional/regression checks and documented release gates intact; do not add optional screenshot review to a routine edit or release without asking.
+- User observation and feedback may supply the before/after appearance comparison for signature effects. Routine visual tuning does not require agent-generated screenshots as evidence.
+
 Serialize all release/push operations that share the checkout; wait for each command to finish before starting another. Follow [serial execution and reporting](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting) for stage durations, ignored logs and lock recovery. Reporting does not replace or reduce any validation gate.
 
 Minimum validation depends on change type:

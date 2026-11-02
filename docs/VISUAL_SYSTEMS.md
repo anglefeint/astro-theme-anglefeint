@@ -10,6 +10,18 @@ sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
 
 # Visual Systems
 
+Article prose is visible by default. Paragraphs, headings, code blocks, quotes and lists no longer start transparent or translated; the scroll-reveal IntersectionObserver and its visibility classes are removed. Static HTML reading does not depend on this JavaScript effect. Other article interactions and cinematic backgrounds remain unchanged.
+
+The blog Tags shortcut samples the shared nine neon palettes every three seconds, excluding the immediately previous color. Color changes interpolate over 1.5 seconds through CSS; the arrow stays still. Hover/focus pauses color changes, retains the current color and adds a 1.06 CSS scale plus static same-color glow without an underline. Hidden pages and pagehide stop the timer; visible pages and BFCache restoration resume it. Reduced motion retains a static initial color and removes the scale transition. There is no per-frame JavaScript, animated blur or persistent will-change layer.
+
+On the blog index, TagLinks renders only a right-aligned localized `Tags ↗` text shortcut above the cards, with no button border/background and a compact bottom gap. All posts is omitted there because the current page already lists posts. Individual tag archives retain their navigation links; article hashtags and the tag directory's back link are unchanged. The shortcut retains the existing enabled/nonempty-tag gate and locale/base-aware destination.
+
+BlogCards' leading card retains its full-row placement but uses a 3:1 cover viewport on desktop and 2:1 at <=720px, with object-fit cover. Its title/date are left-aligned, title minimum height is removed and spacing is compact. Subsequent cards, All posts/Tags navigation, image scan effects and cinematic backgrounds remain unchanged. The shared BlogCards styling also applies on tag archive pages.
+
+The default article-cover library contains sixteen WebP images: the existing twelve Matrix/Cyberpunk/Hacker/AI covers plus `architecture-01` (architectural drawing), `study-01` (desk at dusk), `cinematic-01` (four atmospheric panels) and `horizon-01` (traveler overlooking a bay). The four additions remove promotional lettering and branding while retaining scene details, including decorative code rain and street signs. They are local assets without EXIF/XMP/IPTC metadata. `new-post` discovers the local cover directory automatically; existing posts keep their explicit cover paths. The starter manifest includes the four new local files.
+
+Article tags and Cyber pagination share the nine palettes in `styles/neon-palette.css`. Article tags independently receive a fresh browser-random color on each page load; colors are not tied to tag names or article paths and are not saved. Pagination's random mode uses the same selection utility; fixed/sequential modes remain available. Random choices may repeat by chance. Color assignment runs once per document without JavaScript animation loops or timers. Article tags use 0.875rem text at constant opacity, with a separate 1px CSS scan line sweeping downward in staggered 3.6-second cycles. Only the decorative line fades between passes; text color does not dim. Hover/focus adds local glow and underline; reduced motion hides the scan line. Backgrounds remain transparent. No-JavaScript output has static fallback colors.
+
 Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently. The adapter maps these flags to `THEME.HOME`. Explicit startup/message CSS classes avoid selector ambiguity when one sequence is absent. With startup disabled, Wake Up begins immediately and Follow retains its relative pause. No dynamic JavaScript character/width calculation or client-side switch logic is added; the fixed text retains CSS width/steps animations. Disabled sections are omitted during Astro rendering, so their text and cursor animations do not exist in the generated page. These switches do not disable the background rain, mirror or rabbit effects.
 
 ## Article mathematics
@@ -24,7 +36,7 @@ The built-in locales use horizontal LTR. Narrow article panels include padding a
 
 ## Reading-panel width caps
 
-Above 720px, Home reserves its existing two 2rem paddings and two 1px borders in `max-width`; article prose reserves its two 2em paddings and borders. Both keep their 720px content-width cap on wide screens. Existing <=720px rules, cinematic effects and animations are unchanged; no global overflow clipping is introduced. The nine-language browser regression covers Home and a representative article at 320/390/720/721/740/768/800/820/900/1440px and asserts the wide-screen content width.
+Above 720px, Home reserves its existing two 2rem paddings and two 1px borders in `max-width`; article prose reserves its two 0.625rem paddings and borders. Home keeps its 720px content-width cap; articles use 780px. Existing <=720px rules, cinematic effects and animations are unchanged; no global overflow clipping is introduced. The nine-language browser regression covers Home and a representative article at 320/390/720/721/740/768/800/820/900/1440px and asserts the wide-screen content width.
 
 ## Shared social menus
 
@@ -37,6 +49,8 @@ The shared footer groups copyright, optional localized theme/Astro credits and o
 Header and footer use the same configured order. The twelve built-in SVGs retain `currentColor` and existing menu hover colors; custom images use a fixed square box with `object-fit: contain` and retain source colors. Text-only links have readable line height and wrap. Footer menus wrap. Header menus stay in one horizontally scrollable row so fixed headers do not grow over page content; desktop headers with four or more links allocate remaining space to the controls. Keyboard links have a visible focus outline and can scroll into view. Header social links remain hidden at <=720px; footer links remain available. Empty configuration keeps three non-interactive placeholders. This does not alter the four scene effects.
 
 ## Design Intent and Change Principles
+
+For local tuning, make the requested edits and default to the user's own appearance review. Ask before adding the agent's optional screenshot/render-and-inspect or visual-measurement step, following [local visual feedback and consent](AI_WORKFLOW.md#local-visual-feedback-and-consent). This rule does not introduce approval requirements for server management, code edits or ordinary functional tests; required validation and release gates remain unchanged.
 
 The product positioning is defined in [AGENTS.md](../AGENTS.md#product-identity-and-design-intent): lightweight, simple publishing with conspicuous cinematic character. The following describes creative intent; the route sections below describe implemented behavior.
 
@@ -120,6 +134,14 @@ The shared footer uses understated inherited-color Anglefeint and Astro links, s
 
 ## 3) Blog Post (`body.ai-page`)
 
+- In articles, tags live inside the response panel between the OUTPUT metadata row and `.ai-prose-body`. They use compact, background-free hashtag links randomly selected from the shared nine neon palettes on each browser page load, with wrapping and the existing locale-aware destinations, keyboard focus and search exclusion. Hover/focus brightens the text with a small glow and underline; visited links retain their assigned color, and generic prose-link boxes/glitch are overridden only for these tags. Empty/disabled tags produce no row. Tag archive/list navigation styling is unchanged.
+
+- The article header groups word/token/model statistics with latency and confidence on the right of the OUTPUT row; the flex header wraps on narrow screens instead of using an absolute top corner. Date/read-time and context remain above the cover. Context has no trailing arrow or implied navigation action.
+
+- The compact article layout preserves the existing 802px outer panel cap while reclaiming its inner padding: desktop content grows from 720px to 780px, horizontal insets become 0.625rem, top padding is 0.75rem, and bottom padding is 0.55rem. Mobile uses 0.5rem horizontal/bottom insets. Narrow desktop caps account for padding and borders. These article-scoped overrides do not change other AI-page hosts or TOC gutter geometry.
+
+- Article layout: the article reading panel starts with its title, then date/read-time/system metadata and context/subtitle. The existing monitor-styled cover sits inside the panel below that header, before tags/TOC/body. Desktop covers use a 3:1 viewport at the reading-column width; mobile retains 2:1. Border, 12px radius, shadows, monitor badge, signal bar and Canvas reveal are unchanged. Header spacing/title size and the desktop top inset are compacted. When subtitle equals context, show it once while retaining its `data-pagefind-body` indexing. No cover is emitted when absent; no new script, image or configuration flag is added.
+
 - A scoped `.ai-article-toc` panel uses an article-height right gutter rail at viewport widths of 1360px and above, preserving the centered body width. It sticks 6rem from the viewport top, below the fixed header, with a viewport-bounded scroll area for long lists, and stops at the article panel end. Below this breakpoint the same panel sits before the body in normal flow. Native `details` opens by default and supports keyboard collapse; a nested unnumbered list links to Astro's heading slugs. Long text wraps. Only Markdown h2/h3 are included; empty lists are omitted. There is no active-heading tracking script.
 
 - AI-interface reading environment
@@ -191,7 +213,7 @@ Direct body paragraphs and the signature use `white-space: pre-line`: actual lin
 
 ## Tag browsing
 
-Tag archives use CyberShell and existing blog card/pagination styling. Directory links are uniform wrapping chips with counts. Blog navigation uses a compact All posts / Tags row only when tags exist. Article tags use the blue article palette, separate from the title's search-indexed text. No extra animation or client-side tag filtering is introduced.
+Tag archives use CyberShell and existing blog card/pagination styling. Directory links are uniform wrapping chips with counts. The blog index shows a compact right-aligned Tags shortcut only when tags exist; tag archives retain All posts / Tags navigation. Article tags use the shared nine-color palette, separate from the title's search-indexed text. No extra animation or client-side tag filtering is introduced.
 
 The tag directory uses a centered 680px content column, a text return link, a title/count row with a subtle divider, and compact count badges. Both tag routes mount the starter-owned `src/components/CyberAtmosphere.astro` with `variant="tags"`, sharing the blog rain/dust initializer (48 drops and 22 particles). CyberShell still owns the spotlight, flicker, haze and glitch layers.
 

@@ -1,0 +1,64 @@
+/* Shared neon tokens; components choose their own presentation. */
+:where(.pagination-wrap),
+.neon-v1 {
+  --neon-accent: rgba(224, 170, 236, 0.95);
+  --neon-border: rgba(198, 156, 224, 0.42);
+  --neon-bg: rgba(126, 67, 142, 0.12);
+  --neon-glow: rgba(226, 166, 236, 0.45);
+}
+
+.neon-v2 {
+  --neon-accent: rgba(144, 237, 255, 0.95);
+  --neon-border: rgba(117, 210, 255, 0.52);
+  --neon-bg: rgba(54, 114, 134, 0.2);
+  --neon-glow: rgba(127, 221, 255, 0.5);
+}
+
+.neon-v3 {
+  --neon-accent: rgba(247, 132, 214, 0.95);
+  --neon-border: rgba(231, 116, 201, 0.58);
+  --neon-bg: rgba(140, 40, 110, 0.23);
+  --neon-glow: rgba(244, 126, 210, 0.58);
+}
+
+.neon-v4 {
+  --neon-accent: rgba(183, 139, 255, 0.95);
+  --neon-border: rgba(168, 123, 245, 0.55);
+  --neon-bg: rgba(95, 61, 173, 0.23);
+  --neon-glow: rgba(185, 140, 255, 0.54);
+}
+
+.neon-v5 {
+  --neon-accent: rgba(157, 255, 168, 0.95);
+  --neon-border: rgba(125, 240, 144, 0.55);
+  --neon-bg: rgba(44, 118, 56, 0.26);
+  --neon-glow: rgba(145, 252, 167, 0.48);
+}
+
+.neon-v6 {
+  --neon-accent: rgba(255, 194, 120, 0.95);
+  --neon-border: rgba(241, 176, 96, 0.56);
+  --neon-bg: rgba(123, 75, 20, 0.26);
+  --neon-glow: rgba(255, 188, 110, 0.45);
+}
+
+.neon-v7 {
+  --neon-accent: rgba(162, 214, 255, 0.95);
+  --neon-border: rgba(131, 189, 238, 0.58);
+  --neon-bg: rgba(54, 89, 133, 0.24);
+  --neon-glow: rgba(160, 211, 255, 0.52);
+}
+
+.neon-v8 {
+  --neon-accent: rgba(255, 132, 189, 0.95);
+  --neon-border: rgba(239, 107, 172, 0.58);
+  --neon-bg: rgba(132, 42, 90, 0.25);
+  --neon-glow: rgba(255, 130, 185, 0.56);
+}
+
+.neon-v9 {
+  --neon-accent: rgba(243, 244, 250, 0.92);
+  --neon-border: rgba(210, 214, 232, 0.58);
+  --neon-bg: rgba(113, 125, 164, 0.22);
+  --neon-glow: rgba(223, 229, 255, 0.56);
+}

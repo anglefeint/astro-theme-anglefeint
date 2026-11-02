@@ -26,7 +26,7 @@ for (const locale of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-han
         });
         expect(geometry.left).toBeGreaterThanOrEqual(-1);
         expect(geometry.right).toBeLessThanOrEqual(width + 1);
-        if (width === 1440) expect(geometry.contentWidth).toBe(720);
+        if (width === 1440) expect(geometry.contentWidth).toBe(selector === 'main' ? 720 : 780);
       }
     }
   });

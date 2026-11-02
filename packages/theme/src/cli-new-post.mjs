@@ -6,7 +6,7 @@ import {
   buildNewPostTemplate,
   loadDefaultCovers,
   parseNewPostArgs,
-  pickDefaultCoverBySlug,
+  pickDefaultCover,
   resolveLocales,
   usageNewPost,
   validatePostSlug,
@@ -33,6 +33,7 @@ async function main() {
   });
   const contentRoot = path.resolve('src/content/blog');
   const defaultCovers = await loadDefaultCovers(path.resolve('src/assets/blog/default-covers'));
+  const selectedCover = pickDefaultCover(defaultCovers);
   const pubDate = new Date().toISOString().slice(0, 10);
   const created = [];
   const skipped = [];
@@ -41,7 +42,9 @@ async function main() {
     const localeDir = path.join(contentRoot, locale);
     const filePath = path.join(localeDir, `${slug}.md`);
     await mkdir(localeDir, { recursive: true });
-    const heroImage = pickDefaultCoverBySlug(slug, localeDir, defaultCovers);
+    const heroImage = selectedCover
+      ? path.relative(localeDir, selectedCover).split(path.sep).join('/')
+      : '';
     try {
       await writeFile(filePath, buildNewPostTemplate(locale, slug, pubDate, heroImage), {
         encoding: 'utf8',

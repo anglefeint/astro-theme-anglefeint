@@ -1,10 +1,10 @@
 /* Cyber pagination system: base + variant styles */
 body.cyber-page .pagination-wrap {
-  --pg-accent: rgba(224, 170, 236, 0.95);
-  --pg-border: rgba(198, 156, 224, 0.42);
+  --pg-accent: var(--neon-accent);
+  --pg-border: var(--neon-border);
   --pg-fg: rgb(212, 196, 232);
-  --pg-bg: rgba(126, 67, 142, 0.12);
-  --pg-glow: rgba(226, 166, 236, 0.45);
+  --pg-bg: var(--neon-bg);
+  --pg-glow: var(--neon-glow);
   margin-top: 2.4rem;
   display: grid;
   gap: 0.8rem;
@@ -36,10 +36,10 @@ body.cyber-page .pagination .pg-item {
     box-shadow 0.25s ease,
     border-color 0.25s ease,
     background 0.25s ease;
-  --item-accent: var(--pg-accent);
-  --item-border: var(--pg-border);
-  --item-bg: var(--pg-bg);
-  --item-glow: var(--pg-glow);
+  --item-accent: var(--neon-accent, var(--pg-accent));
+  --item-border: var(--neon-border, var(--pg-border));
+  --item-bg: var(--neon-bg, var(--pg-bg));
+  --item-glow: var(--neon-glow, var(--pg-glow));
   border-color: var(--item-border);
 }
 
@@ -120,134 +120,6 @@ body.cyber-page .pagination-jump-btn {
 body.cyber-page .pagination-jump-btn:hover {
   border-color: var(--pg-accent);
   box-shadow: 0 0 12px var(--pg-glow);
-}
-
-/* v1: soft neon default */
-body.cyber-page .pagination-wrap.cyber-pg-v1 {
-  --pg-accent: rgba(224, 170, 236, 0.95);
-  --pg-border: rgba(198, 156, 224, 0.42);
-  --pg-bg: rgba(126, 67, 142, 0.12);
-  --pg-glow: rgba(226, 166, 236, 0.45);
-}
-
-/* v2: cyan edge */
-body.cyber-page .pagination-wrap.cyber-pg-v2 {
-  --pg-accent: rgba(144, 237, 255, 0.95);
-  --pg-border: rgba(117, 210, 255, 0.52);
-  --pg-bg: rgba(54, 114, 134, 0.2);
-  --pg-glow: rgba(127, 221, 255, 0.5);
-}
-
-/* v3: magenta pulse */
-body.cyber-page .pagination-wrap.cyber-pg-v3 {
-  --pg-accent: rgba(247, 132, 214, 0.95);
-  --pg-border: rgba(231, 116, 201, 0.58);
-  --pg-bg: rgba(140, 40, 110, 0.23);
-  --pg-glow: rgba(244, 126, 210, 0.58);
-}
-
-/* v4: electric violet */
-body.cyber-page .pagination-wrap.cyber-pg-v4 {
-  --pg-accent: rgba(183, 139, 255, 0.95);
-  --pg-border: rgba(168, 123, 245, 0.55);
-  --pg-bg: rgba(95, 61, 173, 0.23);
-  --pg-glow: rgba(185, 140, 255, 0.54);
-}
-
-/* v5: acid green */
-body.cyber-page .pagination-wrap.cyber-pg-v5 {
-  --pg-accent: rgba(157, 255, 168, 0.95);
-  --pg-border: rgba(125, 240, 144, 0.55);
-  --pg-bg: rgba(44, 118, 56, 0.26);
-  --pg-glow: rgba(145, 252, 167, 0.48);
-}
-
-/* v6: amber warning */
-body.cyber-page .pagination-wrap.cyber-pg-v6 {
-  --pg-accent: rgba(255, 194, 120, 0.95);
-  --pg-border: rgba(241, 176, 96, 0.56);
-  --pg-bg: rgba(123, 75, 20, 0.26);
-  --pg-glow: rgba(255, 188, 110, 0.45);
-}
-
-/* v7: frosted blue */
-body.cyber-page .pagination-wrap.cyber-pg-v7 {
-  --pg-accent: rgba(162, 214, 255, 0.95);
-  --pg-border: rgba(131, 189, 238, 0.58);
-  --pg-bg: rgba(54, 89, 133, 0.24);
-  --pg-glow: rgba(160, 211, 255, 0.52);
-}
-
-/* v8: hot pink grid */
-body.cyber-page .pagination-wrap.cyber-pg-v8 {
-  --pg-accent: rgba(255, 132, 189, 0.95);
-  --pg-border: rgba(239, 107, 172, 0.58);
-  --pg-bg: rgba(132, 42, 90, 0.25);
-  --pg-glow: rgba(255, 130, 185, 0.56);
-}
-
-/* v9: ghost white phosphor */
-body.cyber-page .pagination-wrap.cyber-pg-v9 {
-  --pg-accent: rgba(243, 244, 250, 0.92);
-  --pg-border: rgba(210, 214, 232, 0.58);
-  --pg-bg: rgba(113, 125, 164, 0.22);
-  --pg-glow: rgba(223, 229, 255, 0.56);
-}
-
-/* Per-item variant map: each pagination button can use a different neon style */
-body.cyber-page .pagination .pg-item.pg-var-1 {
-  --item-accent: rgba(224, 170, 236, 0.95);
-  --item-border: rgba(198, 156, 224, 0.42);
-  --item-bg: rgba(126, 67, 142, 0.12);
-  --item-glow: rgba(226, 166, 236, 0.45);
-}
-body.cyber-page .pagination .pg-item.pg-var-2 {
-  --item-accent: rgba(144, 237, 255, 0.95);
-  --item-border: rgba(117, 210, 255, 0.52);
-  --item-bg: rgba(54, 114, 134, 0.2);
-  --item-glow: rgba(127, 221, 255, 0.5);
-}
-body.cyber-page .pagination .pg-item.pg-var-3 {
-  --item-accent: rgba(247, 132, 214, 0.95);
-  --item-border: rgba(231, 116, 201, 0.58);
-  --item-bg: rgba(140, 40, 110, 0.23);
-  --item-glow: rgba(244, 126, 210, 0.58);
-}
-body.cyber-page .pagination .pg-item.pg-var-4 {
-  --item-accent: rgba(183, 139, 255, 0.95);
-  --item-border: rgba(168, 123, 245, 0.55);
-  --item-bg: rgba(95, 61, 173, 0.23);
-  --item-glow: rgba(185, 140, 255, 0.54);
-}
-body.cyber-page .pagination .pg-item.pg-var-5 {
-  --item-accent: rgba(157, 255, 168, 0.95);
-  --item-border: rgba(125, 240, 144, 0.55);
-  --item-bg: rgba(44, 118, 56, 0.26);
-  --item-glow: rgba(145, 252, 167, 0.48);
-}
-body.cyber-page .pagination .pg-item.pg-var-6 {
-  --item-accent: rgba(255, 194, 120, 0.95);
-  --item-border: rgba(241, 176, 96, 0.56);
-  --item-bg: rgba(123, 75, 20, 0.26);
-  --item-glow: rgba(255, 188, 110, 0.45);
-}
-body.cyber-page .pagination .pg-item.pg-var-7 {
-  --item-accent: rgba(162, 214, 255, 0.95);
-  --item-border: rgba(131, 189, 238, 0.58);
-  --item-bg: rgba(54, 89, 133, 0.24);
-  --item-glow: rgba(160, 211, 255, 0.52);
-}
-body.cyber-page .pagination .pg-item.pg-var-8 {
-  --item-accent: rgba(255, 132, 189, 0.95);
-  --item-border: rgba(239, 107, 172, 0.58);
-  --item-bg: rgba(132, 42, 90, 0.25);
-  --item-glow: rgba(255, 130, 185, 0.56);
-}
-body.cyber-page .pagination .pg-item.pg-var-9 {
-  --item-accent: rgba(243, 244, 250, 0.92);
-  --item-border: rgba(210, 214, 232, 0.58);
-  --item-bg: rgba(113, 125, 164, 0.22);
-  --item-glow: rgba(223, 229, 255, 0.56);
 }
 
 @media (max-width: 720px) {
