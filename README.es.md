@@ -255,23 +255,23 @@ Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh
 
 | Inicio                                                         | Lista del blog                                                           |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
 
-| Post                                                                          |
-| ----------------------------------------------------------------------------- |
-| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
+| Post                                                                     |
+| ------------------------------------------------------------------------ |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post.jpg) |
 
 | About                                                            |
 | ---------------------------------------------------------------- |
-| ![About preview](public/images/theme-previews/preview-about.png) |
+| ![About preview](public/images/theme-previews/preview-about.jpg) |
 
-| Paginación del blog                                                                   | Artículos relacionados                                                                  |
-| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| ![Paginación del blog](public/images/theme-previews/preview-blog-list-pagination.png) | ![Artículos relacionados](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| Paginación del blog                                                                   | Artículos relacionados                                                                |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| ![Paginación del blog](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![Artículos relacionados](public/images/theme-previews/preview-blog-post-related.jpg) |
 
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
-| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
 
 ## Ambiente por ruta
 

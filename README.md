@@ -255,23 +255,23 @@ Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `d
 
 | Home                                                           | Blog List                                                                |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
 
-| Blog Post                                                                     |
-| ----------------------------------------------------------------------------- |
-| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
+| Blog Post                                                                |
+| ------------------------------------------------------------------------ |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post.jpg) |
 
 | About                                                            |
 | ---------------------------------------------------------------- |
-| ![About preview](public/images/theme-previews/preview-about.png) |
+| ![About preview](public/images/theme-previews/preview-about.jpg) |
 
-| Blog pagination                                                                   | Article related posts                                                                  |
-| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| ![Blog pagination](public/images/theme-previews/preview-blog-list-pagination.png) | ![Article related posts](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| Blog pagination                                                                   | Article related posts                                                                |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| ![Blog pagination](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![Article related posts](public/images/theme-previews/preview-blog-post-related.jpg) |
 
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
-| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
 
 ## Route Atmospheres
 

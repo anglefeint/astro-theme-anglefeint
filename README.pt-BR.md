@@ -363,19 +363,19 @@ Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteri
 
 ## Prévia
 
-![Home](public/images/theme-previews/preview-home.png)
+![Home](public/images/theme-previews/preview-home.jpg)
 
-![Blog](public/images/theme-previews/preview-blog-list.png)
+![Blog](public/images/theme-previews/preview-blog-list.jpg)
 
-![Article](public/images/theme-previews/preview-blog-post-open.png)
+![Article](public/images/theme-previews/preview-blog-post.jpg)
 
-![About](public/images/theme-previews/preview-about.png)
+![About](public/images/theme-previews/preview-about.jpg)
 
-![Paginação do blog](public/images/theme-previews/preview-blog-list-pagination.png)
+![Paginação do blog](public/images/theme-previews/preview-blog-list-pagination.jpg)
 
-![Artigos relacionados](public/images/theme-previews/preview-blog-post-collapsed.png)
+![Artigos relacionados](public/images/theme-previews/preview-blog-post-related.jpg)
 
-![Decoder Lab](public/images/theme-previews/preview-decoder.png)
+![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
 
 ## Licença
 

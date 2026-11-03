@@ -255,23 +255,23 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 
 | 홈                                                             | 블로그 목록                                                              |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
 
-| 글 상세                                                                       |
-| ----------------------------------------------------------------------------- |
-| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
+| 글 상세                                                                  |
+| ------------------------------------------------------------------------ |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post.jpg) |
 
 | About                                                            |
 | ---------------------------------------------------------------- |
-| ![About preview](public/images/theme-previews/preview-about.png) |
+| ![About preview](public/images/theme-previews/preview-about.jpg) |
 
-| 블로그 페이지 이동                                                                   | 관련 게시물                                                                  |
-| ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
-| ![블로그 페이지 이동](public/images/theme-previews/preview-blog-list-pagination.png) | ![관련 게시물](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| 블로그 페이지 이동                                                                   | 관련 게시물                                                                |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| ![블로그 페이지 이동](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![관련 게시물](public/images/theme-previews/preview-blog-post-related.jpg) |
 
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
-| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
 
 ## 라우트별 분위기
 
