@@ -6,7 +6,7 @@
   </a>
 </p>
 
-<p align="center">Um tema Astro cinematográfico para publicar com personalidade.</p>
+<p align="center">Um tema Astro cinematográfico com múltiplas atmosferas para publicação pessoal — feito para leitores humanos e agentes de IA.</p>
 
 [Demo](https://demo.anglefeint.com/pt-br/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
@@ -153,7 +153,7 @@ Abra a pasta do projeto no Cursor, Codex ou Claude Code. O starter inclui um [AG
 
 Exemplos: “Leia AGENTS.md, configure meu site e mantenha apenas pt-br; preserve meu conteúdo”. “Crie um artigo em português com slug my-first-post; eu fornecerei o texto”. “Adicione meus MP3 autorizados com título e artista”. Peça para executar doctor e revisar as páginas em preview. Você decide conteúdo, traduções, domínio e destino da publicação.
 
-O starter correspondente gera automaticamente `/llms.txt`, índices e arquivos de texto completo por idioma e versões Markdown dos artigos durante `npm run build`. Não é necessária configuração extra: publique todo o conteúdo de `dist/` como de costume. Os arquivos ficam disponíveis após o build e no preview. Para projetos existentes, veja [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+**Conteúdo legível por IA.** O starter correspondente gera automaticamente `/llms.txt`, índices e arquivos de texto completo por idioma e versões Markdown dos artigos durante `npm run build`. Não é necessária configuração extra: publique todo o conteúdo de `dist/` como de costume. Os arquivos ficam disponíveis após o build e no preview. Para projetos existentes, veja [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 As opções `aiReadableContent.notes` (Markdown) e `aiReadableContent.links` (`{ label, href }[]`) em `src/site.config.ts` acrescentam contexto aos índices, coletâneas e artigos Markdown. Cada campo pode ser substituído em `i18n.locales.<code>.aiReadableContent`: campos omitidos herdam o valor global; `notes: ''` / `links: []` os ocultam. [Detalhes](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 

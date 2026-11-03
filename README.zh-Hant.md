@@ -6,7 +6,7 @@
   </a>
 </p>
 
-<p align="center">為個人部落格打造的電影感 Astro 主題。</p>
+<p align="center">為人類讀者與 AI 智慧代理打造的多氛圍電影感 Astro 個人發布主題。</p>
 
 [Demo](https://demo.anglefeint.com/zh-hant/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
@@ -155,7 +155,7 @@ Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他�
 
 例如：「閱讀 AGENTS.md，設定站點資訊，只保留繁體中文，保留既有內容。」「新增 slug 為 my-first-post 的繁體中文文章，正文由我提供。」「加入我有權使用的 MP3，填入歌名與作者。」讓助手執行 doctor 並預覽修改後的頁面；正文、翻譯、網域與部署目標仍由你決定。
 
-配套 starter 在 `npm run build` 時自動產生 `/llms.txt`、各語言索引與全文合集，以及文章 Markdown 版本，無需額外設定。照常部署整個 `dist/`；這些檔案在建置後及 preview 中可用。既有專案見 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+**支援 AI 閱讀的內容。** 配套 starter 在 `npm run build` 時自動產生 `/llms.txt`、各語言索引與全文合集，以及文章 Markdown 版本，無需額外設定。照常部署整個 `dist/`；這些檔案在建置後及 preview 中可用。既有專案見 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 可在 `src/site.config.ts` 設定 `aiReadableContent.notes`（Markdown 說明）與 `aiReadableContent.links`（`{ label, href }[]`），自動加入索引、全文合集及單篇 Markdown。語言覆寫放在 `i18n.locales.<code>.aiReadableContent`；未設定欄位沿用全域值，`notes: ''` / `links: []` 明確隱藏。參見[設定與升級說明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 

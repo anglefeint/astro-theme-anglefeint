@@ -6,7 +6,7 @@
   </a>
 </p>
 
-<p align="center">개인 퍼블리싱을 위한 시네마틱 멀티 무드 Astro 테마입니다.</p>
+<p align="center">사람과 AI 에이전트 모두를 위해 설계된, 다양한 분위기의 시네마틱 Astro 개인 퍼블리싱 테마.</p>
 
 <p align="center">
   <a href="https://demo.anglefeint.com/">라이브 데모</a>
@@ -210,7 +210,7 @@ Cursor, Codex 또는 Claude Code에서 프로젝트 폴더를 여세요. starter
 
 예: “AGENTS.md를 읽고 사이트 정보를 설정해 주세요. 한국어만 켜고 기존 콘텐츠는 보존하세요.” “my-first-post라는 한국어 글을 만들어 주세요. 본문은 제가 제공합니다.” “사용 권한이 있는 MP3를 곡명과 아티스트와 함께 추가하세요.” doctor 실행과 변경 페이지 미리보기를 요청하세요. 콘텐츠, 번역, 도메인과 배포 대상은 직접 결정합니다.
 
-해당 starter는 `npm run build` 시 `/llms.txt`, 언어별 색인·전체 본문 파일, 글의 Markdown 버전을 자동 생성합니다. 추가 설정 없이 평소처럼 `dist/` 전체를 배포하면 됩니다. 생성 파일은 빌드 후와 preview에서 사용할 수 있습니다. 기존 프로젝트는 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
+**AI가 읽을 수 있는 콘텐츠.** 해당 starter는 `npm run build` 시 `/llms.txt`, 언어별 색인·전체 본문 파일, 글의 Markdown 버전을 자동 생성합니다. 추가 설정 없이 평소처럼 `dist/` 전체를 배포하면 됩니다. 생성 파일은 빌드 후와 preview에서 사용할 수 있습니다. 기존 프로젝트는 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
 
 `src/site.config.ts`의 선택 설정 `aiReadableContent.notes`(Markdown)와 `aiReadableContent.links`(`{ label, href }[]`)로 색인, 전체 본문 모음, 개별 Markdown에 사이트 설명을 추가할 수 있습니다. `i18n.locales.<code>.aiReadableContent`에서 필드별로 재정의하며, 생략하면 전역 설정을 상속하고 `notes: ''` / `links: []`이면 숨깁니다. [자세히](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 
