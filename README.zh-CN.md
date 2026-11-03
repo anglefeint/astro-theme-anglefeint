@@ -208,6 +208,8 @@ pnpm 用户使用 `pnpm doctor`，再运行 `pnpm preview`；只构建时则使�
 
 配套 starter 在 `npm run build` 时自动生成 `/llms.txt`、各语言索引与全文合集，以及文章 Markdown 版本，无需额外配置。照常部署整个 `dist/`；这些文件在构建后及 preview 中可用。已有项目见 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
+可在 `src/site.config.ts` 配置 `aiReadableContent.notes`（Markdown 说明）和 `aiReadableContent.links`（`{ label, href }[]`），自动加入索引、全文合集及单篇 Markdown。语言覆盖放在 `i18n.locales.<code>.aiReadableContent`；未配置字段回退全局，`notes: ''` / `links: []` 显式隐藏。参见[配置与升级说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
+
 ## 首次配置：站点信息与首页地址
 
 首页大标题可按语言设置：在 `src/site.config.ts` 中填写 `i18n.locales.<code>.site.homeTitle`，例如 `zh: { site: { homeTitle: '我的数字花园' } }`。内置语言和自行新增的语言都适用。未填写或只有空白时，沿该语言的 `meta.fallback` 链查找，最后使用全局 `site.title`（或 `PUBLIC_SITE_TITLE`）。它只改变首页可见大标题；浏览器标题、导航、页脚、RSS 和 SEO 站点名称继续使用全局站名。修改后重新构建并部署。

@@ -210,6 +210,8 @@ Cursor、Codex、Claude Code でプロジェクトフォルダーを開いてく
 
 対応する starter は `npm run build` 時に `/llms.txt`、言語別の索引・全文ファイル、記事の Markdown 版を自動生成します。追加設定は不要です。通常どおり `dist/` 全体を公開してください。生成ファイルはビルド後と preview で利用できます。既存プロジェクトは [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) を参照してください。
 
+`src/site.config.ts` の任意設定 `aiReadableContent.notes`（Markdown）と `aiReadableContent.links`（`{ label, href }[]`）は、索引・全文・各記事の Markdown にサイトの補足情報を追加します。`i18n.locales.<code>.aiReadableContent` で項目ごとに上書きでき、省略時は全体設定を継承し、`notes: ''` / `links: []` で非表示にします。[詳細](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
+
 ## 初期設定：サイト情報とホームの URL
 
 公開前に、`src/site.config.ts` 内の既存の `defineThemeConfig({...})` オブジェクトを編集してください。以下の項目を既存の設定に統合し、ファイルの import/export、言語設定、機能設定は残します。タイトル、著者名、`https://your-domain.example` は自分の情報に置き換えてください。

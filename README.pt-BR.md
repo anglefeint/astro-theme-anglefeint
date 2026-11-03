@@ -153,6 +153,8 @@ Exemplos: “Leia AGENTS.md, configure meu site e mantenha apenas pt-br; preserv
 
 O starter correspondente gera automaticamente `/llms.txt`, índices e arquivos de texto completo por idioma e versões Markdown dos artigos durante `npm run build`. Não é necessária configuração extra: publique todo o conteúdo de `dist/` como de costume. Os arquivos ficam disponíveis após o build e no preview. Para projetos existentes, veja [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
+As opções `aiReadableContent.notes` (Markdown) e `aiReadableContent.links` (`{ label, href }[]`) em `src/site.config.ts` acrescentam contexto aos índices, coletâneas e artigos Markdown. Cada campo pode ser substituído em `i18n.locales.<code>.aiReadableContent`: campos omitidos herdam o valor global; `notes: ''` / `links: []` os ocultam. [Detalhes](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
+
 ## Links sociais
 
 Configure `social.links` em `src/site.config.ts`; cabeçalho e rodapé compartilham a ordem do array. Adicione apenas os links que você usa:

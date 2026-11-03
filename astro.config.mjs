@@ -6,6 +6,7 @@ import search from '@anglefeint/astro-theme/search';
 import socialImage from '@anglefeint/astro-theme/social-image';
 import machineReadable from '@anglefeint/astro-theme/machine-readable';
 import markdown from '@anglefeint/astro-theme/markdown';
+import { THEME_CONFIG } from './src/site.config';
 import { THEME } from './src/config/theme';
 import { defineConfig } from 'astro/config';
 import { URL, fileURLToPath } from 'node:url';
@@ -35,7 +36,12 @@ export default defineConfig({
   integrations: [
     mdx(),
     socialImage(),
-    machineReadable({ title: SITE_TITLE, description: SITE_DESCRIPTION }),
+    machineReadable({
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
+      aiReadableContent: THEME_CONFIG.aiReadableContent,
+      locales: THEME_CONFIG.i18n.locales,
+    }),
     search({ enabled: THEME.SEARCH.ENABLED }),
     sitemap({
       filter: (page) => {

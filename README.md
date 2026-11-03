@@ -208,6 +208,8 @@ Try: “Read AGENTS.md. Set up my site identity and keep only English enabled; p
 
 The matching starter automatically generates `/llms.txt`, per-language indexes/full-text bundles and article Markdown companions during `npm run build`. No extra configuration is needed; publish all of `dist/` as usual. Files are available after build/preview. Existing projects: see [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
+Optional `aiReadableContent.notes` (Markdown) and `aiReadableContent.links` (`{ label, href }[]`) in `src/site.config.ts` add site-provided context to indexes, full-text bundles and individual Markdown articles. Override either field at `i18n.locales.<code>.aiReadableContent`; omitted fields inherit globally, while `notes: ''` / `links: []` hide them. See [configuration and upgrade details](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
+
 ## First Setup: Site Identity and Home URL
 
 Before publishing, edit the existing `defineThemeConfig({...})` object in `src/site.config.ts`. Merge these fields into your settings; keep the file's imports/exports and any existing locale or feature configuration. Replace the example title, author and `https://your-domain.example` with your own values.

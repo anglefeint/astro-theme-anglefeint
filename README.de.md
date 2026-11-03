@@ -153,6 +153,8 @@ Beispiele: „Lies AGENTS.md, richte meine Website ein und aktiviere nur Deutsch
 
 Der passende Starter erzeugt bei `npm run build` automatisch `/llms.txt`, sprachbezogene Indizes und Volltextdateien sowie Markdown-Versionen der Beiträge. Zusätzliche Konfiguration ist nicht nötig; veröffentliche wie gewohnt den gesamten Inhalt von `dist/`. Die Dateien stehen nach dem Build und in preview bereit. Für bestehende Projekte siehe [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
+Mit `aiReadableContent.notes` (Markdown) und `aiReadableContent.links` (`{ label, href }[]`) in `src/site.config.ts` lassen sich Hinweise in Indizes, Volltextsammlungen und einzelne Markdown-Artikel aufnehmen. Unter `i18n.locales.<code>.aiReadableContent` kann jedes Feld überschrieben werden: fehlende Felder erben den globalen Wert; `notes: ''` / `links: []` blenden ihn aus. [Details](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
+
 ## Social-Links
 
 Konfiguriere `social.links` in `src/site.config.ts`. Kopf- und Fußbereich übernehmen die Reihenfolge des Arrays. Füge nur benötigte Links hinzu:

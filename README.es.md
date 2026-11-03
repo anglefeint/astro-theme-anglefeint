@@ -210,6 +210,8 @@ Ejemplos: «Lee AGENTS.md, configura mi sitio y deja solo español; conserva mi 
 
 El starter correspondiente genera automáticamente `/llms.txt`, índices y archivos de texto completo por idioma, y versiones Markdown de los artículos al ejecutar `npm run build`. No requiere configuración adicional: publica todo `dist/` como siempre. Los archivos están disponibles tras la compilación y en preview. Para proyectos existentes, consulta [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
+Las opciones `aiReadableContent.notes` (Markdown) y `aiReadableContent.links` (`{ label, href }[]`) en `src/site.config.ts` añaden contexto a los índices, textos completos y artículos Markdown. Cada campo se puede sustituir en `i18n.locales.<code>.aiReadableContent`: si se omite, hereda el valor global; `notes: ''` / `links: []` lo ocultan. [Detalles](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
+
 ## Primera configuración: identidad del sitio y URL de inicio
 
 Antes de publicar, edita el objeto `defineThemeConfig({...})` que ya existe en `src/site.config.ts`. Integra estos campos en tus ajustes y conserva los import/export del archivo y la configuración de idiomas y funciones existente. Sustituye el título, el autor y `https://your-domain.example` por tus propios datos.

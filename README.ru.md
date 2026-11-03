@@ -153,6 +153,8 @@ npm run build
 
 Соответствующий starter автоматически создаёт `/llms.txt`, индексы и полные тексты по языкам, а также Markdown-версии статей при `npm run build`. Дополнительная настройка не нужна: публикуйте всё содержимое `dist/` как обычно. Файлы доступны после сборки и в preview. Для существующих проектов см. [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
+Необязательные `aiReadableContent.notes` (Markdown) и `aiReadableContent.links` (`{ label, href }[]`) в `src/site.config.ts` добавляют пояснения в индексы, сборники и отдельные Markdown-статьи. Поля можно переопределить в `i18n.locales.<code>.aiReadableContent`: пропущенные наследуются из общей настройки, `notes: ''` / `links: []` скрывают их. [Подробнее](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
+
 ## Социальные ссылки
 
 Настройте `social.links` в `src/site.config.ts`: шапка и подвал используют порядок массива. Добавляйте только нужные ссылки:
