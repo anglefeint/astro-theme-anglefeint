@@ -6,7 +6,7 @@
   </a>
 </p>
 
-<p align="center">映画的な表現と複数の雰囲気を持つ Astro テーマです。</p>
+<p align="center">人間の読者と AI エージェントのために作られた、多彩な雰囲気と映画的な表現を持つ個人発信向け Astro テーマ。</p>
 
 <p align="center">
   <a href="https://demo.anglefeint.com/">デモ</a>
@@ -210,7 +210,7 @@ Cursor、Codex、Claude Code でプロジェクトフォルダーを開いてく
 
 例：「AGENTS.md を読んで、サイト情報を設定し、日本語だけを有効にして。既存の記事は残して」「my-first-post という日本語記事を作って。本文はこちらで用意する」「使用許可のある MP3 を曲名と作者付きで追加して」。doctor と変更ページのプレビューを依頼してください。内容、翻訳、ドメイン、公開先は自分で決めます。
 
-対応する starter は `npm run build` 時に `/llms.txt`、言語別の索引・全文ファイル、記事の Markdown 版を自動生成します。追加設定は不要です。通常どおり `dist/` 全体を公開してください。生成ファイルはビルド後と preview で利用できます。既存プロジェクトは [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) を参照してください。
+**AI が読み取れるコンテンツ。** 対応する starter は `npm run build` 時に `/llms.txt`、言語別の索引・全文ファイル、記事の Markdown 版を自動生成します。追加設定は不要です。通常どおり `dist/` 全体を公開してください。生成ファイルはビルド後と preview で利用できます。既存プロジェクトは [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) を参照してください。
 
 `src/site.config.ts` の任意設定 `aiReadableContent.notes`（Markdown）と `aiReadableContent.links`（`{ label, href }[]`）は、索引・全文・各記事の Markdown にサイトの補足情報を追加します。`i18n.locales.<code>.aiReadableContent` で項目ごとに上書きでき、省略時は全体設定を継承し、`notes: ''` / `links: []` で非表示にします。[詳細](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 

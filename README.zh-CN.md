@@ -6,7 +6,7 @@
   </a>
 </p>
 
-<p align="center">一个具有电影感、多氛围切换的 Astro 个人发布主题。</p>
+<p align="center">为人类读者与 AI 智能体打造的多氛围电影感 Astro 个人发布主题。</p>
 
 <p align="center">
   <a href="https://demo.anglefeint.com/">在线演示</a>
@@ -208,7 +208,7 @@ pnpm 用户使用 `pnpm doctor`，再运行 `pnpm preview`；只构建时则使�
 
 例如：“阅读 AGENTS.md，设置我的站点信息，只保留中文，保留已有内容。”“新建 slug 为 my-first-post 的中文文章，正文由我提供。”“添加我有权使用的 MP3，填写歌名和作者。”让助手运行 doctor 并预览修改后的页面；正文、翻译、域名和部署目标仍由你决定。
 
-配套 starter 在 `npm run build` 时自动生成 `/llms.txt`、各语言索引与全文合集，以及文章 Markdown 版本，无需额外配置。照常部署整个 `dist/`；这些文件在构建后及 preview 中可用。已有项目见 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+**支持 AI 阅读的内容。** 配套 starter 在 `npm run build` 时自动生成 `/llms.txt`、各语言索引与全文合集，以及文章 Markdown 版本，无需额外配置。照常部署整个 `dist/`；这些文件在构建后及 preview 中可用。已有项目见 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 可在 `src/site.config.ts` 配置 `aiReadableContent.notes`（Markdown 说明）和 `aiReadableContent.links`（`{ label, href }[]`），自动加入索引、全文合集及单篇 Markdown。语言覆盖放在 `i18n.locales.<code>.aiReadableContent`；未配置字段回退全局，`notes: ''` / `links: []` 显式隐藏。参见[配置与升级说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 

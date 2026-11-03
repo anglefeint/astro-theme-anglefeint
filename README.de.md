@@ -6,7 +6,7 @@
   </a>
 </p>
 
-<p align="center">Ein filmisches Astro-Theme für deinen persönlichen Blog.</p>
+<p align="center">Ein filmisch gestaltetes Astro-Theme mit vielseitigen Atmosphären für persönliche Veröffentlichungen — für menschliche Leser und KI-Agenten.</p>
 
 [Demo](https://demo.anglefeint.com/de/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
@@ -153,7 +153,7 @@ Ab 1440px Bildschirmbreite zeigt das Terminal unten rechts `Knock, knock.`. Der 
 
 Beispiele: „Lies AGENTS.md, richte meine Website ein und aktiviere nur Deutsch; erhalte meine Inhalte.“ „Erstelle einen deutschen Artikel mit dem Slug my-first-post; den Text liefere ich.“ „Füge meine erlaubten MP3-Dateien mit Titel und Urheber hinzu.“ Bitte um doctor und eine Vorschau der geänderten Seiten. Inhalte, Übersetzungen, Domain und Veröffentlichungsziel bestimmst du.
 
-Der passende Starter erzeugt bei `npm run build` automatisch `/llms.txt`, sprachbezogene Indizes und Volltextdateien sowie Markdown-Versionen der Beiträge. Zusätzliche Konfiguration ist nicht nötig; veröffentliche wie gewohnt den gesamten Inhalt von `dist/`. Die Dateien stehen nach dem Build und in preview bereit. Für bestehende Projekte siehe [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+**KI-lesbare Inhalte.** Der passende Starter erzeugt bei `npm run build` automatisch `/llms.txt`, sprachbezogene Indizes und Volltextdateien sowie Markdown-Versionen der Beiträge. Zusätzliche Konfiguration ist nicht nötig; veröffentliche wie gewohnt den gesamten Inhalt von `dist/`. Die Dateien stehen nach dem Build und in preview bereit. Für bestehende Projekte siehe [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 Mit `aiReadableContent.notes` (Markdown) und `aiReadableContent.links` (`{ label, href }[]`) in `src/site.config.ts` lassen sich Hinweise in Indizes, Volltextsammlungen und einzelne Markdown-Artikel aufnehmen. Unter `i18n.locales.<code>.aiReadableContent` kann jedes Feld überschrieben werden: fehlende Felder erben den globalen Wert; `notes: ''` / `links: []` blenden ihn aus. [Details](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 
