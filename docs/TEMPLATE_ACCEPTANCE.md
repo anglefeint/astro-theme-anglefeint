@@ -169,3 +169,7 @@ Network geometry, shared component isolation and player session fixtures complem
 ## Optional AI-readable context (0.22.0)
 
 Local machine-readable tests cover global/root and per-language notes/links, field-wise inheritance and explicit clearing, individual article context separation, once-only full-text context, deployment-base/origin-relative destinations, reference links and images, code preservation and invalid URLs/configuration. Default export/discovery/collision/stale-cleanup tests remain enabled. These are local generator checks; public-template acceptance also exercises custom global/localized context through the delivered Astro integration, including independent link suppression and once-only bundle notes. Actual release results belong in the 0.22.0 ledger, not the earlier 0.21.0 delivery.
+
+## About navigation regression coverage
+
+`tests/e2e/about-navigation.spec.mjs` checks nine-language directory/heading correspondence, separate tool sidebar ownership, localized header Contact destinations, native anchor navigation without page JavaScript, and dropdown link/outside-click/Escape dismissal with keyboard focus restoration. Screenshots and traces are disabled for these functional tests; this is not a visual appearance review. Existing social-image tests continue to validate offline multilingual 1200×630 PNG generation after lossless encoder changes.

@@ -1,4 +1,6 @@
 ---
+import AboutContents from '@anglefeint/astro-theme/components/about/AboutContents.astro';
+import { ABOUT_CONTACT_ID, ABOUT_SECTION_IDS } from '@anglefeint/astro-theme/utils/about-sections';
 import type { GetStaticPaths } from 'astro';
 import { terminalDocumentId } from '@anglefeint/astro-theme/utils/terminal-document';
 import TerminalBackdrop from '@anglefeint/astro-theme/components/shared/TerminalBackdrop.astro';
@@ -30,6 +32,7 @@ const langParam = Astro.params.lang ?? DEFAULT_LOCALE;
 const locale: Locale = isLocale(langParam) ? langParam : DEFAULT_LOCALE;
 const messages = getMessages(locale);
 const ABOUT_CONFIG = getAboutConfig(locale);
+const aboutHeadings = ABOUT_SECTION_IDS.map((id) => ({ id, label: messages.about[id] }));
 
 const pageTitle = messages.about.title;
 const pageDescription = messages.about.description;
@@ -239,6 +242,7 @@ const aboutRuntimeConfig = {
         <span>Oracle</span>
       </button>
     </nav>
+
     <template id="hacker-scripts-folders-tpl">
       <div class="hacker-modal-scripts">
         <div class="hacker-modal-scripts-path">{ABOUT_CONFIG.scriptsPath}</div>
@@ -324,25 +328,32 @@ const aboutRuntimeConfig = {
           </div>
           <span class="hacker-response-label">{ABOUT_CONFIG.labels.responseOutput}</span>
         </div>
+        <AboutContents headings={aboutHeadings} label={messages.blog.toc} />
         <div class="hacker-body">
-          <h2 class="about-section-title">01 / {messages.about.who}</h2>
+          <h2 id="who" class="about-section-title">01 / {messages.about.who}</h2>
           <p>{ABOUT_CONFIG.sections.who}</p>
 
-          <h2 class="about-section-title">02 / {messages.about.what}</h2>
+          <h2 id="what" class="about-section-title">02 / {messages.about.what}</h2>
           <p>{ABOUT_CONFIG.sections.what}</p>
 
-          <h2 class="about-section-title">03 / {messages.about.ethos}</h2>
+          <h2 id="ethos" class="about-section-title">03 / {messages.about.ethos}</h2>
           <div class="about-manifest">
             <ul>
               {ABOUT_CONFIG.sections.ethos.map((item) => <li>{item}</li>)}
             </ul>
           </div>
 
-          <h2 class="about-section-title">04 / {messages.about.now}</h2>
+          <h2 id="now" class="about-section-title">04 / {messages.about.now}</h2>
           <p>{ABOUT_CONFIG.sections.now}</p>
 
-          <h2 class="about-section-title">05 / {messages.about.contact}</h2>
-          <p>
+          <h2
+            id={ABOUT_CONTACT_ID}
+            class="about-section-title about-contact-title"
+            data-static-title
+          >
+            05 / {messages.about.contact}
+          </h2>
+          <p class="about-contact-copy">
             {ABOUT_CONFIG.sections.contactLead}
             {
               ABOUT_CONFIG.contact.email.trim() && (

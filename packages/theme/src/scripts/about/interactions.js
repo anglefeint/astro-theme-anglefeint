@@ -49,7 +49,7 @@ export function initAboutInteractions(prefersReducedMotion) {
     });
   }
 
-  var titles = document.querySelectorAll('.about-section-title');
+  var titles = document.querySelectorAll('.about-section-title:not([data-static-title])');
   if (prefersReducedMotion && titles.length) {
     titles.forEach(function (el) {
       var fullText = el.getAttribute('data-full-text') || el.textContent || '';

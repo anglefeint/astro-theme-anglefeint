@@ -13,6 +13,13 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.23.0] - 2026-11-03
+
+- Add a localized About contents rail beside the reading panel on wide screens, native section anchors and a highlighted Contact section; existing tool shortcuts remain independently positioned. Frontier provides a localized direct Contact link that respects the About switch.
+- Extract About contents and Frontier menus into package-owned components, share section anchors and reading-width tokens, and separate typography from palette ownership. No new user configuration is required.
+- Apply lossless PNG compression level 7 with adaptive filtering to static OG images, and refresh their versioned cache keys. The measured 126-image average fell from about 815 KiB to 643 KiB without palette quantization.
+- Existing projects need the matching About route as well as the updated package. See [0.23.0](docs/releases/0.23.0.md) for migration and delivery evidence.
+
 ## [0.22.0] - 2026-11-03
 
 - Add optional machine-readable site notes and links, field-wise locale overrides, explicit empty-value suppression and separate context in individual Markdown exports. Preserve default output when unconfigured; resolve standard Markdown destinations using the deployment URL/base without changing code examples. Updated package and project integration wiring are required; see the [0.22.0 delivery record](docs/releases/0.22.0.md).

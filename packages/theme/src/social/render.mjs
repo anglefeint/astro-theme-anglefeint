@@ -120,6 +120,6 @@ export async function renderSocialImage(data) {
   });
   return sharp(await background)
     .composite([{ input: Buffer.from(svg) }])
-    .png()
+    .png({ compressionLevel: 7, adaptiveFiltering: true })
     .toBuffer();
 }

@@ -17,7 +17,7 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 .about-shell {
-  width: 720px;
+  width: var(--about-panel-width);
   max-width: calc(100% - 2em);
   margin: 0 auto 2rem;
 }
@@ -457,4 +457,38 @@
   .about-shell .title h1 {
     letter-spacing: 0.04em;
   }
+}
+
+.about-page .hacker-body .about-section-title {
+  scroll-margin-top: 7rem;
+  font-family: var(--hacker-ui-font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: none;
+  color: #f5dbab;
+  padding-left: 0.65rem;
+  border-left: 2px solid #ad8c55;
+  letter-spacing: 0.015em;
+  opacity: 1;
+  transform: none;
+}
+.about-page .hacker-body .about-contact-title {
+  color: #ffda93;
+  border-left: 3px solid #efbd66;
+  padding: 0.55rem 0.65rem;
+  background: linear-gradient(90deg, #efbd661a, transparent);
+  text-shadow: 0 0 14px #efbd6630;
+}
+.about-page .hacker-body .about-contact-copy {
+  opacity: 1;
+  transform: none;
+}
+.about-page .about-contact-copy a {
+  color: #ffda93;
+  text-decoration-color: #ad8c55;
+  text-underline-offset: 0.2em;
+  font-weight: 600;
+}
+.about-page .hacker-body .about-section-title:target {
+  border-left-color: #ffda93;
 }

@@ -1,5 +1,6 @@
 /* About base layer: hacker-page chrome variables and shell baselines. */
 body.hacker-page {
+  --about-panel-width: 720px;
   --hacker-surface: rgba(7, 13, 10, 0.96);
   --hacker-titlebar: #111914;
   --hacker-border: rgba(157, 181, 166, 0.3);

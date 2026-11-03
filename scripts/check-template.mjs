@@ -13,6 +13,7 @@ import {
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { parse } from 'node-html-parser';
 import { chromium, expect } from '@playwright/test';
 import { checkReadmeLinks } from './check-readme-links.mjs';
 import { checkStarterGuidance } from './check-starter-guidance.mjs';
@@ -383,6 +384,17 @@ try {
   });
   await run('astro', ['--version']);
   for (const locale of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
+    const about = parse(await read(`dist/${locale}/about/index.html`));
+    const directory = about.querySelector('.about-navigation');
+    assert.equal(directory.querySelectorAll('a').length, 5);
+    assert.equal(directory.querySelector('.hacker-sidebar'), null);
+    assert.equal(about.querySelectorAll('.hacker-sidebar').length, 1);
+    for (const link of directory.querySelectorAll('a'))
+      assert(about.querySelector(link.getAttribute('href')));
+    assert.equal(
+      about.querySelector('.frontier-contact').getAttribute('href'),
+      `/${locale}/about/#contact`
+    );
     const index = await read(`dist/${locale}/llms.txt`);
     assert.equal(index.charCodeAt(0), 0xfeff);
     assert(index.includes(`/${locale}/blog/default-locales/index.md`));
@@ -500,6 +512,8 @@ try {
     check: 'machine exports reuse configured identity/origin/languages even with search disabled',
     status: 'passed',
   });
+  assert.equal(parse(home).querySelector('.frontier-contact'), null);
+  assert(parse(home).querySelector('.frontier-dropdown a[href$="/decoder/"]'));
   assert.equal(home.match(/<h1\b[^>]*>(.*?)<\/h1>/s)?.[1], 'Acceptance home heading');
   assert.ok(home.includes('Acceptance shared signal'));
   const chineseHome = await read('dist/zh/index.html');

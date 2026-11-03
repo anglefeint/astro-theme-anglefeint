@@ -1,0 +1,112 @@
+---
+import { ABOUT_CONTACT_ID } from '../../utils/about-sections';
+interface Props {
+  label: string;
+  headings: { id: string; label: string }[];
+}
+const { label, headings } = Astro.props;
+---
+
+{
+  headings.length > 0 && (
+    <div class="about-navigation">
+      <nav class="about-toc" aria-label={label}>
+        <span class="about-toc-label">{label}</span>
+        <div class="about-toc-links">
+          {headings.map((heading) => (
+            <a
+              href={`#${encodeURIComponent(heading.id)}`}
+              class:list={[{ 'about-contact-link': heading.id === ABOUT_CONTACT_ID }]}
+            >
+              {heading.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </div>
+  )
+}
+<style>
+  /* Native section navigation: visible without scripting and safe below the header. */
+  .about-toc {
+    padding: 0.85rem 1.4rem;
+    border-bottom: 1px solid var(--hacker-border);
+  }
+  .about-toc-label {
+    display: block;
+    margin-bottom: 0.55rem;
+    color: #bbb9b4;
+    font:
+      0.72rem ui-monospace,
+      monospace;
+    letter-spacing: 0.08em;
+  }
+  .about-toc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+  }
+  .about-toc-links a {
+    padding: 0.3rem 0;
+    color: #e6e3dc;
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+  .about-toc-links a:hover,
+  .about-toc-links a:focus-visible {
+    color: #ffda93;
+    text-shadow: 0 0 10px #efbd6650;
+  }
+  .about-toc-links a:focus-visible {
+    outline: 1px solid currentColor;
+    outline-offset: 3px;
+  }
+  .about-toc-links .about-contact-link {
+    color: #ffda93;
+    font-weight: 700;
+  }
+  @media (max-width: 600px) {
+    .about-toc {
+      padding: 0.8rem 1.1rem;
+    }
+  }
+
+  @media (min-width: 1360px) {
+    .about-navigation {
+      position: fixed;
+      top: 6rem;
+      left: calc(50% + var(--about-panel-width) / 2 + 1.2rem);
+      right: auto;
+      bottom: 2rem;
+      width: 14rem;
+      z-index: 50;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+    .about-navigation .about-toc {
+      padding: 1rem;
+      border: 1px solid var(--hacker-border);
+      border-radius: 6px;
+      background: rgba(10, 10, 12, 0.94);
+      margin-bottom: 1rem;
+    }
+    .about-navigation .about-toc-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .about-navigation .about-toc-links {
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .about-navigation .about-toc-links a {
+      display: block;
+      padding: 0.35rem 0.4rem;
+    }
+  }
+  @media (max-width: 1359px) {
+    .about-navigation {
+      display: contents;
+    }
+  }
+</style>

@@ -2,8 +2,8 @@ import { createHash } from 'node:crypto';
 
 export const WIDTH = 1200;
 export const HEIGHT = 630;
-// Bump when the template or bundled font changes to invalidate generated URLs.
-const TEMPLATE_VERSION = 2;
+// Bump when the template, bundled font or encoding changes to invalidate generated URLs.
+const TEMPLATE_VERSION = 3;
 
 export function socialKey({ title, author, site, locale, showCredits = true }) {
   return createHash('sha256')

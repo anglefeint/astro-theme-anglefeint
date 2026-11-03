@@ -10,6 +10,14 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.23.0: About navigation and lossless OG images
+
+Use the matching starter, or deliberately merge its `src/pages/[lang]/about.astro` changes into your customized route. The updated package supplies AboutContents, FrontierMenu and the shared section IDs, but cannot modify an existing project-owned About page. Avoid replacing a customized route blindly. Without the route merge, the package header's Contact link can point to a missing `#contact` anchor in an older project.
+
+About directories reuse existing translated labels and need no new settings. The directory uses the reading panel’s right gutter from 1360px upward and wraps inside the panel below that breakpoint; DL Data and other tools retain their original sidebar. `theme.enableAboutPage: false` removes About/Contact navigation independently of Decoder Lab.
+
+OG PNGs retain their pixels and dimensions with stronger lossless encoding. Versioned image URLs change on rebuild; deploy the full rebuilt output. The large CJK font remains build-only and is not downloaded by page visitors. No font change is included in this release.
+
 ## Optional machine-readable context
 
 Available with theme 0.22.0 and its matching starter wiring; it is not included in 0.21.0. Existing projects should import `THEME_CONFIG` from `./src/site.config` in `astro.config.mjs` and pass these additional integration options:
