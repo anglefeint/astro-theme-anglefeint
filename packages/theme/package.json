@@ -53,6 +53,7 @@
     "./i18n/*": "./src/i18n/*",
     "./styles/*": "./src/styles/*",
     "./assets/*": "./src/assets/*",
+    "./utils/about-sections": "./src/utils/about-sections.ts",
     "./utils/merge": "./src/utils/merge.ts",
     "./utils/project-config": "./src/scaffold/project-config.mjs",
     "./utils/number": "./src/utils/number.ts",

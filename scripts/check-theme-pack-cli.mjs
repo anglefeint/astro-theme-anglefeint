@@ -64,9 +64,17 @@ function main() {
       'package/src/machine-readable.d.mts',
       'package/src/machine/content.mjs',
       'package/src/machine/generate.mjs',
+      'package/src/components/about/AboutContents.astro',
+      'package/src/components/shared/FrontierMenu.astro',
+      'package/src/utils/about-sections.ts',
     ];
 
-    const missing = required.filter((entry) => !list.includes(entry));
+    const entries = new Set(list.split(/\r?\n/));
+    const packedManifest = JSON.parse(run('tar', ['-xOf', tarball, 'package/package.json']).stdout);
+    const aboutExport = packedManifest.exports?.['./utils/about-sections'];
+    const missing = required.filter((entry) => !entries.has(entry));
+    if (typeof aboutExport !== 'string' || !entries.has(`package/${aboutExport.slice(2)}`))
+      missing.push('resolvable ./utils/about-sections export');
     const missingShebang = ['package/src/cli-new-post.mjs', 'package/src/cli-new-page.mjs'].filter(
       (entry) => {
         const packedFile = run('tar', ['-xOf', tarball, entry]).stdout ?? '';
