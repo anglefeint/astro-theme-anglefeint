@@ -135,6 +135,8 @@ npm run build
 
 首頁大標題可在 `src/site.config.ts` 透過 `i18n.locales.<code>.site.homeTitle` 按語言設定，例如 `"zh-hant": { site: { homeTitle: "我的數位花園" } }`。內建及自行新增的語言都適用。未填或只有空白時，沿 `meta.fallback` 鏈查找，最後使用全域 `site.title`（或 `PUBLIC_SITE_TITLE`）。它只改變首頁可見大標題；瀏覽器標題、導覽列、頁尾、RSS 與 SEO 站點名稱維持全域設定。修改後重新建置並部署。
 
+About 提供在地化目錄與醒目的 Contact 欄目：寬螢幕目錄位於正文框右側，小螢幕回到正文內。頂部 Frontier 選單可直達 `/<locale>/about/#contact`；關閉 About 會移除此入口，Decoder Lab 仍由獨立開關控制。
+
 About 頁內建 **Hacker Decryptor**：在瀏覽器本機解碼 Base64/Base64URL、URL 編碼、十六進位、HTML 實體、Unicode 跳脫及 JWT 標頭與酬載，支援自動辨識與頁面配色一致的數字結果動畫。從側邊欄開啟 Decryptor 即可使用，無需設定介面。
 
 完整的 **Decoder Lab** 位於 `/<locale>/decoder/`，支援本機文字處理鏈路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 呼叫解讀及 EVM／TRON／Bitcoin 地址檢查。從 About 解碼視窗開啟；在 `src/site.config.ts` 設定 `theme.enableDecoderPage: false` 可獨立關閉頁面與入口。無需 RPC、錢包連線或 API Key。

@@ -167,6 +167,8 @@ npm run build
 
 言語別のホーム大見出しは `src/site.config.ts` の `i18n.locales.<code>.site.homeTitle` で設定できます（例：`ja: { site: { homeTitle: "私のデジタルガーデン" } }`）。追加した言語にも対応します。未設定・空白の場合は `meta.fallback` の順に探し、最後に全体の `site.title`（または `PUBLIC_SITE_TITLE`）を使います。ホームの見出しだけが変わり、ブラウザータイトル、ナビゲーション、フッター、RSS、SEO のサイト名は共通です。変更後は再ビルドして公開してください。
 
+About には各言語の目次と強調された Contact 欄があります。目次は広い画面では本文枠の右側、小さい画面では本文内に表示されます。Frontier の Contact から `/<locale>/about/#contact` へ直接移動できます。About を無効にするとこのリンクは消えますが、Decoder Lab は独立した設定を維持します。
+
 About の **Hacker Decryptor** は、Base64/Base64URL、URLエンコード、16進数、HTMLエンティティ、Unicodeエスケープ、JWTのヘッダーとペイロードをブラウザー内でデコードします。形式の自動判定とページ配色に合わせた数字の結果アニメーションに対応。サイドバーのDecryptorから開けます。APIや追加設定は不要です。
 
 完全版の **Decoder Lab** は `/<locale>/decoder/` にあります。ローカル処理履歴、EVM/HyperEVM/TRONのERC-20/TRC-20呼び出し解釈、EVM/TRON/Bitcoinアドレス確認に対応。Aboutの解読ダイアログから開けます。`src/site.config.ts` の `theme.enableDecoderPage: false` でページとリンクを個別に無効化できます。RPC、ウォレット接続、APIキーは不要です。
