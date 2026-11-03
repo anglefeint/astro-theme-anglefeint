@@ -10,6 +10,7 @@ export type {
   LocaleConfig,
   LocaleMetaConfig,
   LocaleSiteConfig,
+  MachineReadableSupplement,
   NormalizedLocaleConfig,
   NormalizedThemeI18nConfig,
   SocialLink,
@@ -23,6 +24,8 @@ export { normalizeI18nConfig } from './site.config.runtime.ts';
  * Edit this object only.
  * Omitted fields safely fall back to theme defaults.
  */
+// Optional export context: aiReadableContent: { notes: 'Your Markdown policy.', links: [] }.
+// Locale overrides: i18n.locales.<code>.aiReadableContent; empty values hide each field.
 export const THEME_CONFIG = defineThemeConfig({
   analytics: { googleAnalyticsId: '' }, // Optional GA4 Measurement ID (G-...).
   // Markdown/MDX math is enabled globally. Disable with theme: { math: { enabled: false } }.

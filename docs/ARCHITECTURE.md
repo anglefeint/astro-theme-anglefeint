@@ -433,3 +433,7 @@ The shared effect accepts `durationRangeMs`, `inputLength`, `fadeMs`, optional f
 | Host appearance                    | `styles/decoder-page.css`, `styles/about/palette.css`                        | host-palette Canvas assertions, layout screenshots                                           |
 
 The maintainer root TypeScript configuration excludes ignored `acceptance-results/` audit copies, in addition to build output and adapter source templates. Shipped source and generated site types remain checked by the unchanged `npm run check` gate.
+
+## Machine-readable site context
+
+`machine/supplements.mjs` parses Markdown destinations with `mdast-util-from-markdown` and patches only link/image/definition source spans, preserving surrounding prose/code. The integration accepts global `aiReadableContent` and raw configured `locales`; each locale's optional `aiReadableContent` overrides notes/links independently, without UI-message fallback. Root indexes use global values; localized indexes/full-text bundles use resolved values once; individual companions append context outside the article body/frontmatter. HTTP(S) destinations resolve against Astro site/base, with origin-root semantics for leading slashes. Empty values omit headings, explicit empty fields suppress inheritance, and defaults add no policy. No network requests or browser dependencies are introduced. Starter-owned config/schema/integration wiring carries values to the package-owned generator; the matching 0.22.0 starter carries that wiring.

@@ -7,6 +7,7 @@ export type {
   LocaleConfig,
   LocaleMetaConfig,
   LocaleSiteConfig,
+  MachineReadableSupplement,
   NormalizedLocaleConfig,
   NormalizedThemeI18nConfig,
   SocialLink,
@@ -28,6 +29,8 @@ export { normalizeI18nConfig } from './site.config.runtime.ts';
 //   links: [{ title: 'My reading', href: 'https://example.com/',
 //     author: 'Author', year: '2026', cover: 'privacy-code' }],
 // } } },
+// Optional export context: aiReadableContent: { notes: 'Your Markdown policy.', links: [] }.
+// Locale overrides: i18n.locales.<code>.aiReadableContent; empty values hide each field.
 export const THEME_CONFIG = defineThemeConfig({
   theme: {
     home: { showInitialize: true, showFollow: true, showTrace: true },

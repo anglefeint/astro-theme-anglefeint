@@ -210,6 +210,8 @@ Cursor, Codex 또는 Claude Code에서 프로젝트 폴더를 여세요. starter
 
 해당 starter는 `npm run build` 시 `/llms.txt`, 언어별 색인·전체 본문 파일, 글의 Markdown 버전을 자동 생성합니다. 추가 설정 없이 평소처럼 `dist/` 전체를 배포하면 됩니다. 생성 파일은 빌드 후와 preview에서 사용할 수 있습니다. 기존 프로젝트는 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
 
+`src/site.config.ts`의 선택 설정 `aiReadableContent.notes`(Markdown)와 `aiReadableContent.links`(`{ label, href }[]`)로 색인, 전체 본문 모음, 개별 Markdown에 사이트 설명을 추가할 수 있습니다. `i18n.locales.<code>.aiReadableContent`에서 필드별로 재정의하며, 생략하면 전역 설정을 상속하고 `notes: ''` / `links: []`이면 숨깁니다. [자세히](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
+
 ## 첫 설정: 사이트 정보와 홈 주소
 
 배포 전에 `src/site.config.ts`의 기존 `defineThemeConfig({...})` 객체를 편집하세요. 아래 항목을 기존 설정에 합치고, 파일의 import/export와 기존 언어 및 기능 설정은 유지하세요. 예시 제목, 작성자와 `https://your-domain.example`을 자신의 정보로 바꾸세요.

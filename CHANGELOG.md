@@ -13,6 +13,10 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.22.0] - 2026-11-03
+
+- Add optional machine-readable site notes and links, field-wise locale overrides, explicit empty-value suppression and separate context in individual Markdown exports. Preserve default output when unconfigured; resolve standard Markdown destinations using the deployment URL/base without changing code examples. Updated package and project integration wiring are required; see the [0.22.0 delivery record](docs/releases/0.22.0.md).
+
 ## [0.21.0] - 2026-11-03
 
 - Generate machine-readable article Markdown, root/language indexes and language full-text bundles automatically during static builds. Use public rendered metadata, respect noindex, resolve links and preserve MDX prose, code, GFM tables and formulas. UTF-8 markers preserve non-ASCII browser reading even without charset headers.

@@ -1,5 +1,6 @@
 import { mkdir, readFile, readdir, rm, writeFile, access } from 'node:fs/promises';
 import path from 'node:path';
+import { siteSupplement, appendSupplement } from './supplements.mjs';
 import { extractArticle } from './content.mjs';
 
 const line = (text = '') => text.replace(/[\r\n]+/g, ' ').trim();
@@ -39,6 +40,8 @@ export async function generateMachineReadable({
   title,
   description = '',
   manifestPath,
+  aiReadableContent = {},
+  locales = {},
 }) {
   if (!site) throw new Error('Machine-readable exports require the existing Astro site URL.');
   const siteURL = new URL(site);
@@ -93,26 +96,32 @@ export async function generateMachineReadable({
   const siteTitle = line(title || siteURL.hostname);
   const intro = `# ${siteTitle}\n\n${description ? `> ${line(description)}\n\n` : ''}`;
   const outputs = new Map();
-  let rootIndex = `${intro}Canonical website: ${publicURL('')}\n\n## Languages\n\n`;
+  const globalSupplement = siteSupplement(aiReadableContent, {}, publicURL(''));
+  let rootIndex = `${intro}Canonical website: ${publicURL('')}\n\n${globalSupplement.notes}## Languages\n\n`;
   for (const [locale, posts] of [...groups].sort(([a], [b]) => a.localeCompare(b))) {
     rootIndex += `- [${label(locale)}](${publicURL(`${locale}/llms.txt`)}): ${posts.length} articles\n`;
-    let index = `${intro}Language: ${locale}\n\n## Articles\n\n`;
+    const supplement = siteSupplement(
+      aiReadableContent,
+      locales[locale]?.aiReadableContent,
+      publicURL('')
+    );
+    let index = `${intro}Language: ${locale}\n\n${supplement.notes}## Articles\n\n`;
     for (const post of posts) {
-      outputs.set(post.markdownFile, post.markdown);
+      outputs.set(post.markdownFile, appendSupplement(post.markdown, supplement));
       index += `- [${label(post.title)}](${post.markdownURL})${post.description ? `: ${line(post.description)}` : ''}\n`;
     }
     index += `\n## Optional\n\n- [Full text](${publicURL(`${locale}/llms-full.txt`)}): All exported articles in this language\n`;
-    outputs.set(`${locale}/llms.txt`, index);
+    outputs.set(`${locale}/llms.txt`, index + (supplement.links ? `\n${supplement.links}` : ''));
     outputs.set(
       `${locale}/llms-full.txt`,
-      `${intro}Language: ${locale}\n\n${posts.map((post) => `---\n\n${post.markdown}`).join('\n')}`
+      `${intro}Language: ${locale}\n\n${supplement.notes}${supplement.links}${posts.map((post) => `---\n\n${post.markdown}`).join('\n')}`
     );
   }
   outputs.set(
     'llms.txt',
     groups.size
-      ? rootIndex
-      : `${intro}Canonical website: ${publicURL('')}\n\nNo public articles are currently exported.\n`
+      ? rootIndex + (globalSupplement.links ? `\n${globalSupplement.links}` : '')
+      : `${intro}Canonical website: ${publicURL('')}\n\n${globalSupplement.notes}No public articles are currently exported.\n${globalSupplement.links ? `\n${globalSupplement.links}` : ''}`
   );
   // Refuse to overwrite user-authored files; only our prior manifest grants ownership.
   for (const relative of outputs.keys()) {

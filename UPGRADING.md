@@ -10,6 +10,41 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## Optional machine-readable context
+
+Available with theme 0.22.0 and its matching starter wiring; it is not included in 0.21.0. Existing projects should import `THEME_CONFIG` from `./src/site.config` in `astro.config.mjs` and pass these additional integration options:
+
+```js
+machineReadable({
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  aiReadableContent: THEME_CONFIG.aiReadableContent,
+  locales: THEME_CONFIG.i18n.locales,
+});
+```
+
+Merge optional values into `src/site.config.ts`:
+
+```ts
+aiReadableContent: {
+  notes: 'Please cite the article title, author, date and canonical URL.',
+  links: [{ label: 'About', href: 'en/about/' }],
+},
+i18n: {
+  locales: {
+    zh: {
+      aiReadableContent: { notes: '引用时请注明文章标题、作者、日期和规范网址。' },
+    },
+  },
+},
+```
+
+Both fields are optional; no configuration preserves the previous output. Each language field independently inherits the global value when omitted. An empty `notes` string or `links: []` explicitly hides that field; arrays replace, rather than append. No automatic policy translation or cross-language fallback occurs. The root index uses global context; language indexes, full-text bundles and individual article Markdown use the corresponding language context. Empty values produce no empty headings.
+
+Notes support standard Markdown, including inline/reference links and images. Parsed destinations become absolute: `en/about/` resolves under the configured deployment base, while `/en/about/` resolves from the origin root; language prefixes are never inferred. Code examples remain unchanged. Raw HTML is retained as authored, so use absolute URLs in HTML attributes. Destinations in notes and configured links must use HTTP(S), without URL credentials. Labels must be nonempty. Invalid configuration fails the build; targets are not fetched or checked for availability. Use actual public pages, not repository/workstation paths.
+
+Individual exports append a rule, a site-context comment and separately headed notes/links after the article; the source article and its frontmatter remain unchanged. Full-text bundles include the context once. The template supplies no content license and does not promise compliance by AI systems or crawlers. To migrate an old customized `public/llms.txt`, move its relevant guidance into these fields and remove the conflicting public file after preserving any other content.
+
 ## 0.21.0: automatic machine-readable articles
 
 The rendering dependency moves to Satori 0.33.5. Its upstream package pins vulnerable fflate 0.7.3, so the matching starter includes root `"overrides": { "fflate": "0.7.5" }`. Existing projects installing this theme version must merge that override into their own root package.json, preserve other overrides, reinstall, audit and rebuild. Overrides inside an installed dependency do not apply to a consumer's project. The maintainer checkout separately overrides ESLint's minimatch dependencies to 11.0.4 and anchors the same Satori version at its root so npm workspace resolution honors the fflate patch; these maintainer entries are not distributed in starter.

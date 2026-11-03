@@ -1,3 +1,5 @@
+import type { MachineReadableSupplement } from '@anglefeint/astro-theme/machine-readable';
+export type { MachineReadableSupplement };
 import type { DeepPartial } from '@anglefeint/astro-theme/utils/merge';
 import type { Messages } from '@anglefeint/theme-default-i18n';
 
@@ -77,6 +79,7 @@ export interface AboutConfig {
 }
 
 export interface ThemeConfig {
+  aiReadableContent?: MachineReadableSupplement;
   analytics: { googleAnalyticsId: string };
   site: {
     title: string;
@@ -159,6 +162,7 @@ export interface LocaleSiteConfig {
 }
 
 export interface LocaleConfig {
+  aiReadableContent?: MachineReadableSupplement;
   meta: LocaleMetaConfig;
   site?: LocaleSiteConfig;
   about?: DeepPartial<AboutConfig>;

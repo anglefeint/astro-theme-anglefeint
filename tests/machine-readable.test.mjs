@@ -149,3 +149,80 @@ test('build refuses user-file collisions and unsafe cleanup manifests', async ()
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test('site context reaches every export, with field-wise locale fallback and explicit clearing', async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'anglefeint-context-'));
+  const dir = path.join(root, 'dist');
+  try {
+    for (const locale of ['en', 'zh', 'ja']) {
+      const folder = path.join(dir, locale, 'blog/nested/hello');
+      await mkdir(folder, { recursive: true });
+      await writeFile(path.join(folder, 'index.html'), page({ locale }));
+    }
+    await generateMachineReadable({
+      dir,
+      site: 'https://example.com',
+      base: '/project/',
+      aiReadableContent: {
+        notes:
+          'Global policy. [About](about/)\n\n`[code](relative/)`\n\n[Terms][policy]\n\n[policy]: /terms/ "Terms"',
+        links: [{ label: 'Public page', href: '/copyright/' }],
+      },
+      locales: {
+        zh: { aiReadableContent: { notes: '中文说明。', links: [] } },
+        ja: { aiReadableContent: { notes: '' } },
+      },
+    });
+    const read = (file) => readFile(path.join(dir, file), 'utf8');
+    assert.match(await read('llms.txt'), /Global policy/);
+    assert.match(await read('llms.txt'), /https:\/\/example.com\/project\/about\//);
+    assert.match(await read('llms.txt'), /https:\/\/example.com\/copyright\//);
+    const english = await read('en/blog/nested/hello/index.md');
+    assert(english.indexOf('Site notes') > english.indexOf('Public content'));
+    assert.match(english, /not part of the article/);
+    assert.match(english, /`\[code\]\(relative\/\)`/);
+    assert.match(english, /\[policy\]: <https:\/\/example.com\/terms\/> "Terms"/);
+    for (const file of ['zh/llms.txt', 'zh/llms-full.txt', 'zh/blog/nested/hello/index.md']) {
+      const text = await read(file);
+      assert.match(text, /中文说明/);
+      assert(!text.includes('Global policy'));
+      assert(!text.includes('Additional links'));
+    }
+    const japanese = await read('ja/blog/nested/hello/index.md');
+    assert(!japanese.includes('Site notes'));
+    assert.match(japanese, /Additional links/);
+    const full = await read('en/llms-full.txt');
+    assert.equal(full.match(/Global policy/g).length, 1);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('site context validates destinations and leaves fenced examples and inline formatting intact', async () => {
+  const { siteSupplement } = await import('../packages/theme/src/machine/supplements.mjs');
+  const base = 'https://example.com/project/';
+  const input =
+    '**Policy** [nested *label*](../policy/ "Terms") ![cover](images/a.png)\n\n```md\n[x](relative/)\n```';
+  const result = siteSupplement({ notes: input }, {}, base);
+  assert.match(
+    result.notes,
+    /\*\*Policy\*\* \[nested \*label\*\]\(<https:\/\/example.com\/policy\/> "Terms"\)/
+  );
+  assert.match(result.notes, /!\[cover\]\(<https:\/\/example.com\/project\/images\/a.png>\)/);
+  assert.match(result.notes, /```md\n\[x\]\(relative\/\)\n```/);
+  const nested = siteSupplement({ notes: '[![a \\] b](images/a.png)](about/)' }, {}, base).notes;
+  assert(nested.includes('](<https://example.com/project/images/a.png>)'));
+  assert(nested.includes('](<https://example.com/project/about/>)'));
+  assert.deepEqual(siteSupplement({}, {}, base), { notes: '', links: '' });
+  for (const href of [
+    'javascript:alert(1)',
+    'file:///private',
+    'https://user:secret@example.com/',
+  ]) {
+    assert.throws(() => siteSupplement({ links: [{ label: 'Bad', href }] }, {}, base));
+    assert.throws(() => siteSupplement({ notes: `[Bad](${href})` }, {}, base));
+  }
+  assert.throws(() => siteSupplement({ notes: 42 }, {}, base), /notes/);
+  assert.throws(() => siteSupplement({ links: {} }, {}, base), /array/);
+  assert.throws(() => siteSupplement({ links: [{ label: '', href: '/' }] }, {}, base), /label/);
+});

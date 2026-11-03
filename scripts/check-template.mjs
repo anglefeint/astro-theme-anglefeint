@@ -406,6 +406,10 @@ try {
   await writeFile(
     file('src/site.config.ts'),
     config({
+      aiReadableContent: {
+        notes: 'Acceptance global policy. [About](en/about/)',
+        links: [{ label: 'Public resource', href: 'https://example.org/' }],
+      },
       site: {
         title: 'Acceptance site',
         url: 'https://config.example',
@@ -418,6 +422,7 @@ try {
             messages: { home: { transmission: 'Acceptance shared signal' } },
           },
           zh: {
+            aiReadableContent: { notes: '验收引用说明。', links: [] },
             meta: { label: '测试中文' },
             site: { homeTitle: '验收中文首页' },
             messages: { home: { transmission: '验收中文信号' } },
@@ -468,11 +473,28 @@ try {
   const home = await read('dist/en/index.html');
   const machineIndex = await read('dist/llms.txt');
   assert(machineIndex.includes('# Acceptance site'));
+  assert(machineIndex.includes('Acceptance global policy'));
+  assert(machineIndex.includes('https://acceptance.example/en/about/'));
+  assert(machineIndex.includes('https://example.org/'));
   assert(machineIndex.includes('https://acceptance.example/zh/llms.txt'));
   assert(!machineIndex.includes('/ja/llms.txt'));
   await assert.rejects(access(file('dist/ja/llms.txt')), { code: 'ENOENT' });
   const machineArticle = await read('dist/zh/blog/configured-locales/index.md');
   assert(machineArticle.includes('author: "Acceptance author"'));
+  assert(machineArticle.includes('验收引用说明。'));
+  assert(machineArticle.includes('not part of the article'));
+  assert(!machineArticle.includes('Acceptance global policy'));
+  assert(!machineArticle.includes('Additional links'));
+  assert(
+    (await read('dist/en/blog/configured-locales/index.md')).includes('Acceptance global policy')
+  );
+  assert.equal((await read('dist/en/llms-full.txt')).match(/Acceptance global policy/g).length, 1);
+  assert((await read('dist/zh/llms.txt')).includes('验收引用说明。'));
+  assert((await read('dist/zh/llms-full.txt')).includes('验收引用说明。'));
+  results.push({
+    check: 'AI context ships through global/localized indexes, bundles and single articles',
+    status: 'passed',
+  });
   assert(machineArticle.includes('https://acceptance.example/zh/blog/configured-locales/'));
   results.push({
     check: 'machine exports reuse configured identity/origin/languages even with search disabled',

@@ -155,6 +155,8 @@ Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他�
 
 配套 starter 在 `npm run build` 時自動產生 `/llms.txt`、各語言索引與全文合集，以及文章 Markdown 版本，無需額外設定。照常部署整個 `dist/`；這些檔案在建置後及 preview 中可用。既有專案見 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
+可在 `src/site.config.ts` 設定 `aiReadableContent.notes`（Markdown 說明）與 `aiReadableContent.links`（`{ label, href }[]`），自動加入索引、全文合集及單篇 Markdown。語言覆寫放在 `i18n.locales.<code>.aiReadableContent`；未設定欄位沿用全域值，`notes: ''` / `links: []` 明確隱藏。參見[設定與升級說明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
+
 ## 社群連結
 
 在 `src/site.config.ts` 設定 `social.links`，頂欄與頁尾共用陣列順序。只加入需要的連結：

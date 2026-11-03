@@ -3,7 +3,7 @@ import path from 'node:path';
 import { generateMachineReadable } from './machine/generate.mjs';
 
 /** Build-only export of public article content; no production server is needed. */
-export default function machineReadable({ title, description } = {}) {
+export default function machineReadable({ title, description, aiReadableContent, locales } = {}) {
   let config;
   return {
     name: 'anglefeint-machine-readable',
@@ -19,6 +19,8 @@ export default function machineReadable({ title, description } = {}) {
           base: config.base,
           title,
           description,
+          aiReadableContent,
+          locales,
           manifestPath: path.join(fileURLToPath(config.cacheDir), 'machine-readable.json'),
         });
         logger.info(
