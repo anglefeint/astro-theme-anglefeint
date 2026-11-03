@@ -363,19 +363,19 @@ Alle Optionen im selben theme beziehungsweise i18n zusammenführen. Listen erset
 
 ## Vorschau
 
-![Home](public/images/theme-previews/preview-home.png)
+![Home](public/images/theme-previews/preview-home.jpg)
 
-![Blog](public/images/theme-previews/preview-blog-list.png)
+![Blog](public/images/theme-previews/preview-blog-list.jpg)
 
-![Article](public/images/theme-previews/preview-blog-post-open.png)
+![Article](public/images/theme-previews/preview-blog-post.jpg)
 
-![About](public/images/theme-previews/preview-about.png)
+![About](public/images/theme-previews/preview-about.jpg)
 
-![Blog-Seitennavigation](public/images/theme-previews/preview-blog-list-pagination.png)
+![Blog-Seitennavigation](public/images/theme-previews/preview-blog-list-pagination.jpg)
 
-![Ähnliche Artikel](public/images/theme-previews/preview-blog-post-collapsed.png)
+![Ähnliche Artikel](public/images/theme-previews/preview-blog-post-related.jpg)
 
-![Decoder Lab](public/images/theme-previews/preview-decoder.png)
+![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
 
 ## Lizenz
 

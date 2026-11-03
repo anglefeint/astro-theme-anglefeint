@@ -363,19 +363,19 @@ footer.showCredits: false скрывает ссылки на тему и Astro, 
 
 ## Предпросмотр
 
-![Home](public/images/theme-previews/preview-home.png)
+![Home](public/images/theme-previews/preview-home.jpg)
 
-![Blog](public/images/theme-previews/preview-blog-list.png)
+![Blog](public/images/theme-previews/preview-blog-list.jpg)
 
-![Article](public/images/theme-previews/preview-blog-post-open.png)
+![Article](public/images/theme-previews/preview-blog-post.jpg)
 
-![About](public/images/theme-previews/preview-about.png)
+![About](public/images/theme-previews/preview-about.jpg)
 
-![Страницы блога](public/images/theme-previews/preview-blog-list-pagination.png)
+![Страницы блога](public/images/theme-previews/preview-blog-list-pagination.jpg)
 
-![Похожие статьи](public/images/theme-previews/preview-blog-post-collapsed.png)
+![Похожие статьи](public/images/theme-previews/preview-blog-post-related.jpg)
 
-![Decoder Lab](public/images/theme-previews/preview-decoder.png)
+![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
 
 ## Лицензия
 

@@ -363,19 +363,19 @@ footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 s
 
 ## 預覽
 
-![Home](public/images/theme-previews/preview-home.png)
+![Home](public/images/theme-previews/preview-home.jpg)
 
-![Blog](public/images/theme-previews/preview-blog-list.png)
+![Blog](public/images/theme-previews/preview-blog-list.jpg)
 
-![Article](public/images/theme-previews/preview-blog-post-open.png)
+![Article](public/images/theme-previews/preview-blog-post.jpg)
 
-![About](public/images/theme-previews/preview-about.png)
+![About](public/images/theme-previews/preview-about.jpg)
 
-![部落格分頁](public/images/theme-previews/preview-blog-list-pagination.png)
+![部落格分頁](public/images/theme-previews/preview-blog-list-pagination.jpg)
 
-![文章相關推薦](public/images/theme-previews/preview-blog-post-collapsed.png)
+![文章相關推薦](public/images/theme-previews/preview-blog-post-related.jpg)
 
-![Decoder Lab](public/images/theme-previews/preview-decoder.png)
+![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
 
 ## 授權
 

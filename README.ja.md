@@ -255,23 +255,23 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 
 | ホーム                                                         | ブログ一覧                                                               |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
 
-| 記事ページ                                                                    |
-| ----------------------------------------------------------------------------- |
-| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
+| 記事ページ                                                               |
+| ------------------------------------------------------------------------ |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post.jpg) |
 
 | About                                                            |
 | ---------------------------------------------------------------- |
-| ![About preview](public/images/theme-previews/preview-about.png) |
+| ![About preview](public/images/theme-previews/preview-about.jpg) |
 
-| ブログのページ送り                                                                   | 記事の関連記事                                                                  |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
-| ![ブログのページ送り](public/images/theme-previews/preview-blog-list-pagination.png) | ![記事の関連記事](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| ブログのページ送り                                                                   | 記事の関連記事                                                                |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| ![ブログのページ送り](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![記事の関連記事](public/images/theme-previews/preview-blog-post-related.jpg) |
 
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
-| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
 
 ## ルートごとの雰囲気
 

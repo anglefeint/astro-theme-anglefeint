@@ -255,23 +255,23 @@ export const THEME_CONFIG = defineThemeConfig({
 
 | 首页                                                           | 博客列表                                                                 |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.png) | ![Blog list preview](public/images/theme-previews/preview-blog-list.png) |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
 
-| 文章页                                                                        |
-| ----------------------------------------------------------------------------- |
-| ![Blog post preview](public/images/theme-previews/preview-blog-post-open.png) |
+| 文章页                                                                   |
+| ------------------------------------------------------------------------ |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post.jpg) |
 
 | About                                                            |
 | ---------------------------------------------------------------- |
-| ![About preview](public/images/theme-previews/preview-about.png) |
+| ![About preview](public/images/theme-previews/preview-about.jpg) |
 
-| 博客分页                                                                   | 文章相关推荐                                                                  |
-| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| ![博客分页](public/images/theme-previews/preview-blog-list-pagination.png) | ![文章相关推荐](public/images/theme-previews/preview-blog-post-collapsed.png) |
+| 博客分页                                                                   | 文章相关推荐                                                                |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| ![博客分页](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![文章相关推荐](public/images/theme-previews/preview-blog-post-related.jpg) |
 
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
-| ![Decoder Lab](public/images/theme-previews/preview-decoder.png) |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
 
 ## 路由视觉氛围
 
