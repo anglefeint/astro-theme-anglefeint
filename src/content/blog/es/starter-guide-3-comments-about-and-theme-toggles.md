@@ -123,7 +123,7 @@ Puedes configurar solo las dos primeras cantidades. Añade `pagination` si quier
 ```ts
 theme: {
   homeLatestCount: 3,
-  blogPageSize: 9,
+  blogPageSize: 10,
   pagination: {
     windowSize: 7,
     showJumpThreshold: 12,

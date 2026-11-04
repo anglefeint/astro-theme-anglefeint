@@ -123,7 +123,7 @@ Decoder Lab はローカル処理、確認できるソースコード、ピア�
 ```ts
 theme: {
   homeLatestCount: 3,
-  blogPageSize: 9,
+  blogPageSize: 10,
   pagination: {
     windowSize: 7,
     showJumpThreshold: 12,

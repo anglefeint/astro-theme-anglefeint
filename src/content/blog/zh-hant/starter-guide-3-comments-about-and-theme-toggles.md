@@ -64,7 +64,7 @@ Decoder Lab 以本機處理、可檢視的原始碼和點對點網路意象回�
 
 ```ts
 theme: {
-  homeLatestCount: 3, blogPageSize: 9,
+  homeLatestCount: 3, blogPageSize: 10,
   enableAboutPage: true, effects: { enableRedQueen: true },
   search: { enabled: true }, toc: { enabled: true }, tags: { enabled: true },
   socialImage: { enabled: true }, footer: { showCredits: true },
