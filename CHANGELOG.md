@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.25.0] - 2026-11-05
+
+- Show localized article authors beside the date, linking the site author to About and including the same URL in article structured data; guest names and disabled About remain unlinked.
+- Add H2/H3 section-link copying with canonical URLs, inline success feedback, manual-copy fallback and keyboard/touch support. Keep existing heading IDs and omit generic domain-preview tooltips on copy controls.
+- Package-only upgrade from the matching 0.24.1 starter; no new required configuration. See [0.25.0](docs/releases/0.25.0.md) for delivery evidence and migration.
+
 ## [0.24.1] - 2026-11-05
 
 - Default archive pages to ten posts so a leading card plus nine regular cards fills three desktop rows. Keep explicit project overrides and final partial pages intact; update the matching starter defaults and guide examples. See [0.24.1](docs/releases/0.24.1.md) for migration and delivery.
@@ -58,7 +64,7 @@ All notable changes to this project are documented in this file.
 - Add an independent Frontier dropdown to the header, keeping About as a direct page link and following the existing Decoder enable switch.
 - Add twelve illustrated Decoder Lab reading/resource cards linking to original essays and project websites, without reproducing full texts. Configure tribute copy and the complete uncapped card list through locale messages in `src/site.config.ts`; empty text/list independently hide them.
 - Use locally bundled cypherpunk covers and responsive lazy-loaded images, up to six cards per wide-screen row, a highlighted monospace tribute, and tighter bottom spacing. Put Decoder Lab first in browser titles.
-- The matching starter-owned Decoder route is required for reading cards and title changes; package updates alone do not rewrite user routes. No new adapter export or configuration switch is introduced. See [pending migration guidance](UPGRADING.md#unreleased-frontier-navigation-and-decoder-reading-cards). No npm or starter release has been performed for these changes.
+- The matching starter-owned Decoder route is required for reading cards and title changes; package updates alone do not rewrite user routes. No new adapter export or configuration switch is introduced. See [pending migration guidance](UPGRADING.md#0200-frontier-navigation-and-decoder-reading-cards). No npm or starter release has been performed for these changes.
 
 ## [0.19.0] - 2026-10-18
 

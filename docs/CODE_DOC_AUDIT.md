@@ -12,6 +12,16 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-05 作者署名与小节链接
+
+以 `4ceef3fd41099a3d0f4339a1ee465779cad1d5d6` 之上的工作区为输入，按代码优先核对现有作者字段／About 开关 → BlogPost／BaseHead／JSON-LD → 小节链接模块、样式与生命周期 → 本地功能测试和安装矩阵。文档修正不驱动运行代码；原有源字段、路由、adapter、manifest 与默认配置均不新增。
+
+更新架构、视觉参考、验收指南、包说明、升级指南、CHANGELOG、release 索引、新版本记录与本节，共九份文档；其余候选保留：九语 README 的简洁介绍与用户设置没有变化，代理／文档／发布政策不变，历史记录不重写。仅修复 CHANGELOG 中失效的旧升级锚点。元数据候选覆盖 86 份文档，传播项与元数据错误均为零；候选和逐文件处置存于忽略的 `acceptance-results/release-0250-doc-map.json`、`release-0250-doc-dispositions.json`。
+
+实现以实际行为为准：作者名匹配站长且 About 启用时才生成可见链接和结构化作者 URL；不推断社交身份。小节复用既有 ID，复制 canonical URL，成功提示在图标右侧，失败保留手动复制，排除域名浮层。新增模块在既有包目录覆盖范围内，pack 检查要求它实际入包。安装矩阵新增 guest 作者和 About 关闭的断言。没有把这些功能宣传为 GEO 排名或 AI 引用保证。
+
+本地 14 项文章相关浏览器检查通过；源码完整检查、构建和 lint 已执行通过，文档元数据及本地链接核验通过，隐私检查未发现凭据／私人邮箱等模式。没有自动执行外观截图审查。正式发布、安装与远程交付的实际证据和边界记录在 [0.25.0](releases/0.25.0.md)，不将发布前本地测试当作交付证明。
+
 > Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
 
 ## 2026-11-04 Home and archive documentation sync

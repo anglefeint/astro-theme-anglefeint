@@ -216,6 +216,39 @@ body.ai-page .ai-content .prose a.ai-link-preview:hover::after {
   margin-bottom: 0.62em;
   letter-spacing: 0.04em;
 }
+.ai-article-author {
+  overflow-wrap: anywhere;
+}
+body.ai-page .ai-content .prose .ai-article-author a,
+body.ai-page .ai-content .prose .ai-article-author a:visited {
+  display: inline-block;
+  transform-origin: center;
+  color: inherit;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  text-shadow: none;
+  text-decoration: none;
+  animation: none;
+  transition:
+    transform 150ms ease,
+    color 150ms ease,
+    text-shadow 150ms ease;
+}
+body.ai-page .ai-content .prose .ai-article-author a:hover {
+  color: #d0f5ff;
+  font-weight: 700;
+  transform: scale(1.06);
+  background: transparent;
+  box-shadow: none;
+  text-decoration: none;
+  text-shadow: 0 0 6px rgba(142, 220, 248, 0.35);
+  animation: none;
+}
+body.ai-page .ai-content .prose .ai-article-author a:focus-visible {
+  outline: 1px solid #8edfff;
+  outline-offset: 3px;
+}
 .ai-system-row {
   display: flex;
   flex-wrap: wrap;

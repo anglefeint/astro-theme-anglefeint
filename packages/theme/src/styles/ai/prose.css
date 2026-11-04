@@ -3,6 +3,83 @@
 .ai-prose-body {
   overflow-wrap: anywhere;
 }
+.ai-section-actions {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+.ai-section-status {
+  color: #9cd8eb;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: normal;
+  white-space: nowrap;
+}
+.ai-section-status:not(:empty) {
+  margin-inline-start: 0.25rem;
+}
+.ai-prose-body .ai-section-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  min-height: 32px;
+  margin-inline-start: 0.25em;
+  vertical-align: middle;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #8dcde2;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+.ai-prose-body :is(h2, h3):hover .ai-section-link,
+.ai-prose-body :is(h2, h3):focus-within .ai-section-link {
+  opacity: 1;
+}
+.ai-prose-body .ai-section-link:hover {
+  color: #b3efff;
+  background: rgba(108, 207, 255, 0.07);
+  text-shadow: none;
+}
+.ai-prose-body .ai-section-link:focus-visible {
+  outline: 1px solid #8edfff;
+  outline-offset: 2px;
+}
+.ai-section-feedback {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #9cd8eb;
+}
+.ai-section-feedback:empty {
+  display: none;
+}
+.ai-section-feedback input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin-block: 0.4rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid rgba(140, 210, 242, 0.4);
+  background: #101820;
+  color: #c4e5ee;
+  font: inherit;
+}
+@media (hover: none), (pointer: coarse) {
+  .ai-prose-body .ai-section-link {
+    opacity: 0.8;
+    min-width: 36px;
+    min-height: 36px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-prose-body .ai-section-link {
+    transition: none;
+  }
+}
 
 /* Desktop prose remains content-box: reserve both 2em paddings and the 1px borders. */
 @media (min-width: 721px) {

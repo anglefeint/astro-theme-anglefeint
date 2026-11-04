@@ -65,6 +65,7 @@ function main() {
       'package/src/machine/content.mjs',
       'package/src/machine/generate.mjs',
       'package/src/components/about/AboutContents.astro',
+      'package/src/scripts/blogpost/section-links.js',
       'package/src/components/shared/FrontierMenu.astro',
       'package/src/utils/about-sections.ts',
     ];

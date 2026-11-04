@@ -122,6 +122,8 @@ export type Messages = {
     responseOutput: string;
     rqBadge: string;
     rqReplayAria: string;
+    metaAuthor: string;
+    copySectionLink: string;
     metaPublished: string;
     metaUpdated: string;
     metaReadMinutes: string;
@@ -570,6 +572,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: 'Saída',
       rqBadge: 'sinal do monitor',
       rqReplayAria: 'Repetir sinal do monitor',
+      metaAuthor: 'autor',
+      copySectionLink: 'Copiar link desta seção',
       metaPublished: 'publicado',
       metaUpdated: 'atualizado',
       metaReadMinutes: 'min de leitura',
@@ -697,6 +701,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: 'Ausgabe',
       rqBadge: 'Monitorsignal',
       rqReplayAria: 'Monitorsignal erneut abspielen',
+      metaAuthor: 'Autor',
+      copySectionLink: 'Link zu diesem Abschnitt kopieren',
       metaPublished: 'veröffentlicht',
       metaUpdated: 'aktualisiert',
       metaReadMinutes: 'Min. Lesezeit',
@@ -822,6 +828,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: 'Вывод',
       rqBadge: 'сигнал монитора',
       rqReplayAria: 'Повторить сигнал монитора',
+      metaAuthor: 'автор',
+      copySectionLink: 'Скопировать ссылку на раздел',
       metaPublished: 'опубликовано',
       metaUpdated: 'обновлено',
       metaReadMinutes: 'мин чтения',
@@ -947,6 +955,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: '輸出',
       rqBadge: '監視器訊號',
       rqReplayAria: '重播監視器訊號',
+      metaAuthor: '作者',
+      copySectionLink: '複製本節連結',
       metaPublished: '發布',
       metaUpdated: '更新',
       metaReadMinutes: '分鐘閱讀',
@@ -1069,6 +1079,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: 'Output',
       rqBadge: 'monitor feed',
       rqReplayAria: 'Replay monitor feed',
+      metaAuthor: 'by',
+      copySectionLink: 'Copy section link',
       metaPublished: 'published',
       metaUpdated: 'updated',
       metaReadMinutes: 'min read',
@@ -1191,6 +1203,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: '出力',
       rqBadge: 'モニターフィード',
       rqReplayAria: 'モニターフィードを再生',
+      metaAuthor: '著者',
+      copySectionLink: 'この節へのリンクをコピー',
       metaPublished: '公開',
       metaUpdated: '更新',
       metaReadMinutes: '分で読了',
@@ -1313,6 +1327,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: '출력',
       rqBadge: '모니터 피드',
       rqReplayAria: '모니터 피드 다시 재생',
+      metaAuthor: '작성자',
+      copySectionLink: '이 절 링크 복사',
       metaPublished: '게시',
       metaUpdated: '수정',
       metaReadMinutes: '분 읽기',
@@ -1436,6 +1452,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: 'Salida',
       rqBadge: 'monitor de señal',
       rqReplayAria: 'Reproducir monitor de señal',
+      metaAuthor: 'autor',
+      copySectionLink: 'Copiar enlace a esta sección',
       metaPublished: 'publicado',
       metaUpdated: 'actualizado',
       metaReadMinutes: 'min de lectura',
@@ -1554,6 +1572,8 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
       responseOutput: '输出',
       rqBadge: '监视器信号',
       rqReplayAria: '重放监视器信号',
+      metaAuthor: '作者',
+      copySectionLink: '复制本节链接',
       metaPublished: '发布',
       metaUpdated: '更新',
       metaReadMinutes: '分钟阅读',

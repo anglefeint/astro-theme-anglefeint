@@ -66,6 +66,11 @@ const {
   seoLocaleHrefs,
 } = Astro.props;
 const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
+const articleAuthor = author?.trim() || SITE_AUTHOR;
+const authorHref =
+  THEME.ABOUT_PAGE_ENABLED && articleAuthor === SITE_AUTHOR
+    ? localePath(resolvedLocale, '/about/')
+    : undefined;
 const articleLocaleHrefs = await resolveArticleLocaleHrefs({
   pathname: Astro.url.pathname,
   locale: resolvedLocale,
@@ -78,7 +83,7 @@ const shareImage = await resolveSocialImage({
   enabled: THEME.SOCIAL_IMAGE.ENABLED,
   data: imageData(
     title,
-    author ?? SITE_AUTHOR,
+    articleAuthor,
     SITE_TITLE,
     resolvedLocale,
     THEME.FOOTER?.SHOW_CREDITS ?? true
@@ -127,7 +132,7 @@ const hasCommentsConfig = Boolean(
   pageType="article"
   publishedTime={pubDate}
   modifiedTime={updatedDate}
-  author={author ?? SITE_AUTHOR}
+  author={articleAuthor}
   tags={tags}
   localeHrefs={localeHrefs}
   seoLocaleHrefs={articleLocaleHrefs}
@@ -209,6 +214,19 @@ const hasCommentsConfig = Boolean(
         <div class="ai-meta-terminal">
           $ {messages.blog.metaPublished}
           {fmt(pubDate)}
+          {' | '}
+          <span class="ai-article-author">
+            {messages.blog.metaAuthor}{' '}
+            {
+              authorHref ? (
+                <a href={authorHref} rel="author">
+                  {articleAuthor}
+                </a>
+              ) : (
+                <span>{articleAuthor}</span>
+              )
+            }
+          </span>
           {
             updatedDate && (
               <>
@@ -351,6 +369,11 @@ const hasCommentsConfig = Boolean(
           class="ai-prose-body ai-prose-fade"
           data-code-copy={JSON.stringify(messages.codeCopy)}
           data-image-preview={JSON.stringify(messages.imagePreview)}
+          data-section-links={JSON.stringify({
+            copy: messages.blog.copySectionLink,
+            copied: messages.codeCopy.copied,
+            failed: messages.codeCopy.failed,
+          })}
           data-pagefind-body
         >
           <slot />

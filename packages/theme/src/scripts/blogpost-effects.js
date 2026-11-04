@@ -1,5 +1,6 @@
 import { initHeroCanvas } from './blogpost/hero-canvas.js';
 import { initCodeCopy } from './blogpost/code-copy.js';
+import { initSectionLinks } from './blogpost/section-links.js';
 import { initImagePreview } from './blogpost/image-preview.js';
 import { initNetworkCanvas } from './blogpost/network-canvas.js';
 import { initPostInteractions } from './blogpost/interactions.js';
@@ -15,6 +16,7 @@ export function initBlogpostEffects() {
   const reduced = !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const mount = (label, init) => mountOptionalEffect(scope, label, () => init(reduced));
   mount('code copy', initCodeCopy);
+  mount('section links', initSectionLinks);
   mount('image preview', initImagePreview);
   mount('reading progress', initReadProgressAndBackToTop);
   mount('hero', initHeroCanvas);

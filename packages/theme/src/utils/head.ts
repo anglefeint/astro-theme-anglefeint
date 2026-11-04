@@ -71,6 +71,7 @@ export function buildJsonLdSchemas({
   canonicalURL,
   isArticle,
   author,
+  authorURL,
   publishedTime,
   modifiedTime,
   tags,
@@ -85,6 +86,7 @@ export function buildJsonLdSchemas({
   canonicalURL: URL;
   isArticle: boolean;
   author: string;
+  authorURL?: string;
   publishedTime?: Date;
   modifiedTime?: Date;
   tags?: string[];
@@ -119,6 +121,7 @@ export function buildJsonLdSchemas({
         author: {
           '@type': 'Person',
           name: author,
+          ...(authorURL ? { url: authorURL } : {}),
         },
         publisher: {
           '@type': 'Person',

@@ -10,6 +10,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.25.0: Article authors and section links
+
+From the matching 0.24.1 starter, run `npm install @anglefeint/astro-theme@0.25.0`, then `npm run doctor` and `npm run preview`, and deploy the complete output. No new schema, adapter, project route or mandatory configuration is needed. Authors use the existing article `author` field or site author fallback; only a name matching the site author links to About, and only when About is enabled. Heading links reuse existing IDs; renaming a heading can still change its generated fragment. Older projects must also complete the earlier migrations below. See [0.25.0](docs/releases/0.25.0.md) for delivery status.
+
 ## 0.24.1: Ten posts per archive page
 
 New projects from the matching 0.24.1 starter already default to ten posts: one leading card and nine regular cards, filling three desktop rows on a full page. Final partial pages still show only the remaining posts. No manual page-size setting is needed for those new projects.

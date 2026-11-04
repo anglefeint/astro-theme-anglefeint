@@ -34,6 +34,8 @@ Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls 
 
 ## Stack
 
+Article byline/section-link work is package-owned: `layouts/BlogPost.astro` renders the author and localized link labels; `components/BaseHead.astro` and `utils/head.ts` add the matching About URL only for the site author when About is enabled. `scripts/blogpost/section-links.js` mounts through the existing article effect scope, preserving Astro heading IDs and copying canonical section URLs with manual-copy fallback. Styles stay in the AI prose/controls layers. No schema, project route, configuration or starter-manifest destination changes are required; existing package directory inclusion covers the new module. Tests: `tests/e2e/article-byline-links.spec.mjs` and the existing TOC suite. See [0.25.0](releases/0.25.0.md) for delivery status and validation.
+
 - Framework: Astro 7 (root `package.json` declares the compatible range; `package-lock.json` records the resolved version)
 - Content: Astro Content Collections (`md` + `mdx`)
 - Styling: package-owned plain CSS files + Astro scoped component styles (not CSS Modules)

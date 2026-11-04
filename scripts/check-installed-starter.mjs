@@ -17,6 +17,7 @@ import { checkStarterGuidance } from './check-starter-guidance.mjs';
 import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
 import { auditDependencies } from './audit-dependencies.mjs';
 import sharp from 'sharp';
+import { parse } from 'node-html-parser';
 const socialIconNames = [
   'mastodon',
   'twitter',
@@ -166,6 +167,10 @@ try {
   );
 
   if (process.argv.includes('--build')) {
+    await writeFile(
+      path.join(project, 'src/content/blog/en/guest-author.md'),
+      '---\ntitle: Guest author fixture\ndescription: Guest byline\npubDate: 2026-01-01\nauthor: Guest Writer\n---\n## Guest section\n\nGuest text.\n'
+    );
     for (const extension of ['md', 'mdx']) {
       await writeFile(
         path.join(project, `src/content/blog/en/math-${extension}.${extension}`),
@@ -260,6 +265,18 @@ try {
         console.log(`Building installed starter: default=${locale}, prefix=${mode}`);
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
         await npm(['run', 'build']);
+        const guest = parse(await read('dist/en/blog/guest-author/index.html'));
+        const guestSchema = guest
+          .querySelectorAll('script[type="application/ld+json"]')
+          .flatMap((node) => JSON.parse(node.textContent))
+          .find((item) => item['@type'] === 'BlogPosting');
+        assert.equal(
+          guest.querySelector('.ai-article-author').textContent.replace(/\s+/g, ' ').trim(),
+          'by Guest Writer'
+        );
+        assert.equal(guest.querySelector('.ai-article-author a'), null);
+        assert.equal(guestSchema.author.name, 'Guest Writer');
+        assert.equal(guestSchema.author.url, undefined);
         for (const extension of ['md', 'mdx']) {
           const mathHtml = await read(`dist/en/blog/math-${extension}/index.html`);
           assert.match(mathHtml, /anglefeint-math-inline/);
@@ -276,6 +293,22 @@ try {
         }
         for (const lang of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
           const html = await read(`dist/${lang}/blog/installed-default/index.html`);
+          const articleDoc = parse(html);
+          const byline = articleDoc.querySelector('.ai-article-author');
+          assert(byline);
+          const authorLink = byline.querySelector('a');
+          const articleSchema = articleDoc
+            .querySelectorAll('script[type="application/ld+json"]')
+            .flatMap((node) => JSON.parse(node.textContent))
+            .find((item) => item['@type'] === 'BlogPosting');
+          if (mode === 'always') {
+            assert.equal(authorLink.getAttribute('href'), `/${lang}/about/`);
+            assert.equal(authorLink.textContent.trim(), articleSchema.author.name);
+            assert.equal(new URL(articleSchema.author.url).pathname, `/${lang}/about/`);
+          } else {
+            assert.equal(authorLink, null);
+            assert.equal(articleSchema.author.url, undefined);
+          }
           for (const page of [
             html,
             await read(`dist/${lang}/blog/index.html`),

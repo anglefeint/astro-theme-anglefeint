@@ -27,7 +27,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 ## Contract
 
-Latest feature release entry: [0.24.0](./0.24.0.md), persistent archive views, diagonal frames and cinematic homepage feedback. See its delivery status and acceptance record.
+Latest feature release entry: [0.25.0](./0.25.0.md), localized article bylines, author profile URLs and heading-link copying. See its delivery status and acceptance record.
 
 Latest patch entry: [0.24.1](./0.24.1.md), ten-post archive defaults to complete the desktop card rows. See its delivery status and validation record.
 

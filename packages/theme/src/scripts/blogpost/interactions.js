@@ -22,21 +22,23 @@ function mount(prefersReducedMotion, scope) {
     });
   }
 
-  document.querySelectorAll('.ai-prose-body a[href]').forEach(function (a) {
-    if (a.dataset.aiLinkPreviewBound === 'true') return;
-    var href = a.getAttribute('href') || '';
-    if (!href || href.startsWith('#')) return;
-    a.dataset.aiLinkPreviewBound = 'true';
-    a.classList.add('ai-link-preview');
-    try {
-      a.setAttribute(
-        'data-preview',
-        href.startsWith('http') ? new URL(href, location.origin).hostname : href
-      );
-    } catch (_err) {
-      a.setAttribute('data-preview', href);
-    }
-  });
+  document
+    .querySelectorAll('.ai-prose-body a[href]:not([data-section-link])')
+    .forEach(function (a) {
+      if (a.dataset.aiLinkPreviewBound === 'true') return;
+      var href = a.getAttribute('href') || '';
+      if (!href || href.startsWith('#')) return;
+      a.dataset.aiLinkPreviewBound = 'true';
+      a.classList.add('ai-link-preview');
+      try {
+        a.setAttribute(
+          'data-preview',
+          href.startsWith('http') ? new URL(href, location.origin).hostname : href
+        );
+      } catch (_err) {
+        a.setAttribute('data-preview', href);
+      }
+    });
 
   const regen = document.querySelector('.ai-regenerate');
   const article = document.querySelector('.ai-article');

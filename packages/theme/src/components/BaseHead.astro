@@ -6,7 +6,8 @@ import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/theme/placeholders/theme-placeholder-1.jpg';
 import { buildHeadLocaleState, buildJsonLdSchemas } from '../utils/head';
 import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '@anglefeint/site-config/site';
-import type { Locale } from '@anglefeint/site-i18n/config';
+import { localePath, type Locale } from '@anglefeint/site-i18n/config';
+import { THEME } from '@anglefeint/site-config/theme';
 
 interface Props {
   title: string;
@@ -62,6 +63,10 @@ const jsonLdSchemas = buildJsonLdSchemas({
   canonicalURL,
   isArticle,
   author,
+  authorURL:
+    isArticle && THEME.ABOUT_PAGE_ENABLED && author === SITE_AUTHOR
+      ? new URL(localePath(currentLocale as Locale, '/about/'), siteURL).toString()
+      : undefined,
   publishedTime,
   modifiedTime,
   tags,
