@@ -16,6 +16,8 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 ## 2026-11-04 Home and archive documentation sync
 
+后续交付：本节记录发布前的代码优先审查过程；0.24.0 已通过 npm 下载／源码核验、starter 交付和公开模板验收。实际提交、门禁、失败恢复和验证边界见 [0.24.0 发布记录](releases/0.24.0.md)，不以本节早期“未发布”状态描述当前交付。
+
 本轮按 [文档同步工作流](DOC_SYNC_WORKFLOW.md) 审阅 `main` 基线 `91fef2c41ceaa04f55a1befeaef39a800b6b161d` 之上的完整未提交工作区，涵盖首页、博客／标签归档、About 目录、Decoder 阅读资源、18 篇九语 Demo 文章与新增功能测试。代码定义当前事实，未执行提交、npm 发布、starter 同步或线上部署。
 
 ### 工作流与责任处置
