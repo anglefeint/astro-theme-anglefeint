@@ -28,10 +28,6 @@ Automatically generates `llms.txt`, multilingual indexes, full-text bundles and 
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Archive views
-
-Blog and tag archives offer Cards and List views, with your choice remembered in this browser. Cards show a full-width leading cover and up to three columns; List shows continuous numbering, linked tags, numeric dates and the current range/total. Use the connected control at the top right to switch views.
-
 <a id="installation"></a>
 
 ## Install
@@ -162,6 +158,8 @@ Serve the site at the domain root, with directory index support. Subpath hosting
 <a id="reference"></a>
 
 ## Feature and configuration reference
+
+Blog and tag archives support Cards/List switching and remember your choice in this browser.
 
 ### Homepage effects and decoder tools
 
