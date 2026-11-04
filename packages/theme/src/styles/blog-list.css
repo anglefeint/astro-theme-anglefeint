@@ -3,6 +3,19 @@ body.cyber-page main:has(.blog-browser) {
   width: 1280px;
 }
 
+/* Keep the archive shortcut clear of the viewport-fixed view control. */
+body.cyber-page main:has(.blog-browser) .tag-shortcut {
+  padding-inline-end: clamp(0px, calc(840px - 50vw), 160px);
+}
+@media (max-width: 720px) {
+  body.cyber-page main:has(.blog-browser) {
+    padding-top: 128px;
+  }
+  body.cyber-page .blog-view-toolbar {
+    top: calc(128px + env(safe-area-inset-top, 0px));
+  }
+}
+
 .blog-view-toolbar {
   position: fixed;
   top: calc(88px + env(safe-area-inset-top, 0px));
