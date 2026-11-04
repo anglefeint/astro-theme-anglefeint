@@ -11,6 +11,7 @@ const { label, headings } = Astro.props;
   headings.length > 0 && (
     <div class="about-navigation">
       <nav class="about-toc" aria-label={label}>
+        <span class="about-toc-runner" aria-hidden="true" />
         <span class="about-toc-label">{label}</span>
         <div class="about-toc-links">
           {headings.map((heading) => (
@@ -29,8 +30,30 @@ const { label, headings } = Astro.props;
 <style>
   /* Native section navigation: visible without scripting and safe below the header. */
   .about-toc {
+    position: relative;
+    --toc-cut: 12px;
+    clip-path: polygon(
+      var(--toc-cut) 0,
+      100% 0,
+      100% calc(100% - var(--toc-cut)),
+      calc(100% - var(--toc-cut)) 100%,
+      0 100%,
+      0 var(--toc-cut)
+    );
     padding: 0.85rem 1.4rem;
-    border-bottom: 1px solid var(--hacker-border);
+    border: 1px solid var(--hacker-border);
+    background: rgba(10, 10, 12, 0.94);
+  }
+  .about-toc::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    background:
+      linear-gradient(135deg, transparent calc(50% - 1px), #bbb9b4 50%, transparent calc(50% + 1px))
+        top left / var(--toc-cut) var(--toc-cut) no-repeat,
+      linear-gradient(135deg, transparent calc(50% - 1px), #efbd66 50%, transparent calc(50% + 1px))
+        bottom right / var(--toc-cut) var(--toc-cut) no-repeat;
   }
   .about-toc-label {
     display: block;
@@ -40,6 +63,71 @@ const { label, headings } = Astro.props;
       0.72rem ui-monospace,
       monospace;
     letter-spacing: 0.08em;
+  }
+  .about-toc-runner {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 3px;
+    pointer-events: none;
+    z-index: 2;
+    background: linear-gradient(90deg, transparent, #efbd66);
+    box-shadow: 2px 0 5px #efbd6690;
+    offset-anchor: 100% 50%;
+    offset-rotate: auto;
+    offset-path: polygon(
+      12px 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) calc(100% - 12px),
+      calc(100% - 12px) calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px 12px
+    );
+  }
+  .about-toc-runner::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -1px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #ffe6aa;
+    box-shadow: 0 0 6px #ffce7d;
+  }
+  @supports (offset-path: polygon(0 0, 100% 0, 100% 100%)) {
+    @media (prefers-reduced-motion: no-preference) {
+      .about-toc-runner {
+        display: block;
+        animation: about-toc-orbit 6s linear infinite;
+      }
+      .about-toc:is(:hover, :focus-within) .about-toc-runner {
+        animation-play-state: paused;
+      }
+    }
+  }
+  .about-toc:is(:hover, :focus-within) {
+    border-color: #efbd6680;
+    box-shadow: inset 0 0 12px #efbd6610;
+  }
+  @keyframes about-toc-orbit {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    2% {
+      opacity: 1;
+    }
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
   }
   .about-toc-links {
     display: flex;
@@ -87,7 +175,7 @@ const { label, headings } = Astro.props;
     .about-navigation .about-toc {
       padding: 1rem;
       border: 1px solid var(--hacker-border);
-      border-radius: 6px;
+      border-radius: 0;
       background: rgba(10, 10, 12, 0.94);
       margin-bottom: 1rem;
     }

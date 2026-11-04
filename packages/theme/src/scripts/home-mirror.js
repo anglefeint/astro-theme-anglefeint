@@ -20,7 +20,7 @@ export function createHomeMirror(background, { onDispose } = {}) {
   const fragment = `precision mediump float;
     varying vec2 uv;
     uniform sampler2D rain;
-    uniform float liquid, time, repair;
+    uniform float liquid, time, repair, signalMotion;
     uniform vec2 pointer, size;
     uniform vec4 seamColor;
     float segment(vec2 p, vec2 a, vec2 b){
@@ -61,6 +61,18 @@ export function createHomeMirror(background, { onDispose } = {}) {
       vec3 glass=code*mix(.66,.62,liquid)+vec3(.065,.09,.08)*(sheen*.65+.18);
       glass*=1.-shadow*.48*(1.-liquid);
       glass+=seamColor.rgb*seamColor.a*rim*(1.-liquid)*(1.-repair);
+      // A quiet data pulse follows the existing fracture, never a second overlay.
+      float phase=mod(time,4.5);
+      float packet=(1.-smoothstep(.015,.07,abs(p.y-(phase-1.)/1.5)))
+        *step(1.,phase)*(1.-step(2.5,phase))*signalMotion;
+      glass+=vec3(.25,1.,.48)*rim*(.18+packet*.8)*(1.-liquid)*(1.-repair);
+      // Junction arrivals briefly excite only the sampled code, not the glass surface.
+      float arrival=(phase-1.)/1.5;
+      float gate=step(1.,phase)*(1.-step(2.5,phase))*signalMotion;
+      float junctionA=exp(-abs(arrival-.28)*28.)*exp(-abs(p.x-.52)*16.);
+      float junctionB=exp(-abs(arrival-.59)*28.)*exp(-abs(p.x-.67)*16.);
+      float codeMask=smoothstep(.12,.5,code.g)*max(0.,code.g-code.r);
+      glass+=vec3(.42,1.,.58)*(junctionA+junctionB)*codeMask*.65*gate*(1.-liquid)*(1.-repair);
       float silver=pow(max(0.,wave),7.)*exp(-radius*1.9);
       glass+=vec3(.45,.57,.51)*silver*liquid;
       float fold=pow(.5+.5*sin(p.x*15.+p.y*3.+wave*2.5+time*.55),12.);
@@ -111,7 +123,7 @@ export function createHomeMirror(background, { onDispose } = {}) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   const locations = Object.fromEntries(
-    ['liquid', 'time', 'pointer', 'size', 'seamColor', 'repair'].map((name) => [
+    ['liquid', 'time', 'pointer', 'size', 'seamColor', 'repair', 'signalMotion'].map((name) => [
       name,
       gl.getUniformLocation(program, name),
     ])
@@ -203,6 +215,7 @@ export function createHomeMirror(background, { onDispose } = {}) {
     } else gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, gl.RGBA, gl.UNSIGNED_BYTE, sample);
     gl.uniform1f(locations.liquid, blend);
     gl.uniform1f(locations.time, now / 1000);
+    gl.uniform1f(locations.signalMotion, reduced.matches ? 0 : 1);
     gl.uniform1f(locations.repair, repair);
     gl.uniform2fv(locations.pointer, pointer);
     gl.uniform2f(locations.size, rect.width, rect.height);

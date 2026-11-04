@@ -59,7 +59,7 @@ const title = `${labels.tags}: ${label}${page.currentPage > 1 ? ` · ${labels.pa
     <div class="tag-heading">
       <h1>{labels.tags}: {label}</h1><p>{labels.taggedPosts}: {page.total}</p>
     </div>
-    <BlogCards posts={page.data} locale={locale} />
+    <BlogCards posts={page.data} locale={locale} startIndex={page.start} totalPosts={page.total} />
   </section>
   {
     page.lastPage > 1 && (

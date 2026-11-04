@@ -23,7 +23,7 @@ Multi-atmosphere Astro theme: Matrix home, cyberpunk archive, AI-style article p
 Anglefeint is a static Astro blog theme with four cinematic atmospheres:
 
 - Home: Matrix-inspired code rain and terminal visuals
-- Blog archive: rain-soaked cyberpunk neon
+- Blog archive: rain-soaked cyberpunk neon, with Cards/List views and browser-local view memory
 - Articles: an AI-inspired reading interface
 - About: an optional hacker-style profile page
 

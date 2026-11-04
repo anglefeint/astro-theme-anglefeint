@@ -16,9 +16,10 @@ import { THEME } from '@anglefeint/site-config/theme';
 interface Props {
   locale: Locale;
   latestPosts: CollectionEntry<'blog'>[];
+  totalPosts?: number;
 }
 
-const { locale, latestPosts } = Astro.props;
+const { locale, latestPosts, totalPosts = latestPosts.length } = Astro.props;
 const messages = getMessages(locale);
 const heroText = getSiteHero(locale) ?? messages.home.hero;
 const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
@@ -99,7 +100,12 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
   <p class="home-hero-copy">{heroText}</p>
 
   <section class="home-latest">
-    <h2 class="home-section-title">{messages.home.latest}</h2>
+    <div class="home-latest-heading">
+      <h2 class="home-section-title">{messages.home.latest}</h2>
+      <span class="home-latest-count" title={messages.blog.allPosts}
+        >{String(latestPosts.length).padStart(2, '0')} / {String(totalPosts).padStart(2, '0')}</span
+      >
+    </div>
     <ul
       class="home-post-list"
       data-home-passage-enabled={String(THEME.EFFECTS.ENABLE_HOME_PASSAGE)}

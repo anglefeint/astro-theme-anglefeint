@@ -2,40 +2,203 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
+import { cleanTags, tagSlug } from '../utils/tags';
+import { THEME } from '@anglefeint/site-config/theme';
+import '../styles/neon-palette.css';
 import { localePath, blogIdToSlugAnyLocale, type Locale } from '@anglefeint/site-i18n/config';
 interface Props {
   posts: CollectionEntry<'blog'>[];
   locale: Locale;
+  startIndex?: number;
+  totalPosts?: number;
 }
-const { posts, locale: resolvedLocale } = Astro.props;
+const { posts, locale: resolvedLocale, startIndex = 0, totalPosts = posts.length } = Astro.props;
+const rangeStart = posts.length ? startIndex + 1 : 0;
+const rangeEnd = startIndex + posts.length;
+const numericDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
+const viewLabels: Record<string, [string, string, string]> = {
+  en: ['Article view', 'Cards', 'List'],
+  zh: ['文章展示方式', '卡片', '列表'],
+  'zh-hant': ['文章顯示方式', '卡片', '列表'],
+  ja: ['記事の表示方法', 'カード', 'リスト'],
+  ko: ['글 보기 방식', '카드', '목록'],
+  es: ['Vista de artículos', 'Tarjetas', 'Lista'],
+  'pt-br': ['Visualização dos artigos', 'Cartões', 'Lista'],
+  de: ['Artikelansicht', 'Karten', 'Liste'],
+  ru: ['Вид статей', 'Карточки', 'Список'],
+};
+const labels = viewLabels[resolvedLocale] ?? viewLabels.en;
+const archiveLabels: Record<string, [string, string]> = {
+  en: ['Articles', 'Published'],
+  zh: ['文章档案', '发布日期'],
+  'zh-hant': ['文章檔案', '發布日期'],
+  ja: ['記事アーカイブ', '公開日'],
+  ko: ['글 보관함', '게시일'],
+  es: ['Artículos', 'Publicación'],
+  'pt-br': ['Artigos', 'Publicação'],
+  de: ['Artikel', 'Veröffentlicht'],
+  ru: ['Статьи', 'Дата публикации'],
+};
+const archive = archiveLabels[resolvedLocale] ?? archiveLabels.en;
 ---
 
-<ul>
-  {
-    posts.map((post, index) => (
-      <li>
-        <a href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}>
-          {post.data.heroImage && (
-            <div class="img-wrapper">
-              <Image
-                width={index === 0 ? 1200 : 720}
-                height={index === 0 ? 600 : 360}
-                sizes={
-                  index === 0
-                    ? '(max-width: 720px) 100vw, 960px'
-                    : '(max-width: 720px) 100vw, 480px'
-                }
-                src={post.data.heroImage}
-                alt=""
-              />
+<div class="blog-browser" data-blog-browser data-view="cards">
+  <script is:inline>
+    try {
+      if (localStorage.getItem('anglefeint:blog-view') === 'list') {
+        document.currentScript.parentElement.dataset.view = 'list';
+      }
+    } catch {
+      /* Storage may be unavailable; keep the default card view. */
+    }
+  </script>
+  <div class="blog-view-toolbar" role="group" aria-label={labels[0]} hidden>
+    <button type="button" data-blog-view="cards" aria-pressed="true">
+      <svg
+        viewBox="0 0 20 20"
+        width="16"
+        height="16"
+        fill="none"
+        stroke="currentColor"
+        aria-hidden="true"
+        ><rect x="2" y="2" width="6" height="6" rx="1"></rect><rect
+          x="12"
+          y="2"
+          width="6"
+          height="6"
+          rx="1"></rect><rect x="2" y="12" width="6" height="6" rx="1"></rect><rect
+          x="12"
+          y="12"
+          width="6"
+          height="6"
+          rx="1"></rect></svg
+      >
+      {labels[1]}
+    </button>
+    <button type="button" data-blog-view="list" aria-pressed="false">
+      <svg
+        viewBox="0 0 20 20"
+        width="16"
+        height="16"
+        fill="none"
+        stroke="currentColor"
+        aria-hidden="true"><path d="M7 4h11M7 10h11M7 16h11M2 4h2M2 10h2M2 16h2"></path></svg
+      >
+      {labels[2]}
+    </button>
+  </div>
+  <div class="archive-panel">
+    <div class="archive-heading" aria-hidden="true">
+      <span class="archive-heading-title"
+        >{archive[0]}
+        <span class="archive-count"
+          >{String(rangeStart).padStart(2, '0')}–{String(rangeEnd).padStart(2, '0')} / {
+            totalPosts
+          }</span
+        ></span
+      >
+      <span class="archive-date-label">{archive[1]}</span>
+    </div>
+    <ul class="blog-cards">
+      {
+        posts.map((post, index) => (
+          <li>
+            <div class="blog-entry">
+              <span class="archive-index" aria-hidden="true">
+                {String(startIndex + index + 1).padStart(2, '0')}
+              </span>
+              {post.data.heroImage && (
+                <div class="img-wrapper">
+                  <Image
+                    width={index === 0 ? 1200 : 720}
+                    height={index === 0 ? 600 : 360}
+                    sizes={
+                      index === 0
+                        ? '(max-width: 720px) 100vw, 1280px'
+                        : '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 410px'
+                    }
+                    src={post.data.heroImage}
+                    alt=""
+                  />
+                </div>
+              )}
+              <div class="archive-copy">
+                <h2 class="title">
+                  <a
+                    class="archive-post-link"
+                    href={localePath(resolvedLocale, `/blog/${blogIdToSlugAnyLocale(post.id)}`)}
+                  >
+                    {post.data.title}
+                  </a>
+                </h2>
+                {THEME.TAGS.ENABLED && cleanTags(post.data.tags).length > 0 && (
+                  <div class="archive-tags">
+                    {cleanTags(post.data.tags)
+                      .slice(0, 2)
+                      .map((tag) => (
+                        <a rel="tag" href={localePath(resolvedLocale, `/tags/${tagSlug(tag)}/`)}>
+                          {tag}
+                        </a>
+                      ))}
+                  </div>
+                )}
+              </div>
+              <p class="date">
+                <span class="archive-card-date">
+                  <FormattedDate date={post.data.pubDate} locale={resolvedLocale} />
+                </span>
+                <time class="archive-numeric-date" datetime={post.data.pubDate.toISOString()}>
+                  {numericDate(post.data.pubDate)}
+                </time>
+              </p>
+              <span class="archive-arrow" aria-hidden="true">
+                ↗
+              </span>
             </div>
-          )}
-          <h2 class="title">{post.data.title}</h2>
-          <p class="date">
-            <FormattedDate date={post.data.pubDate} locale={resolvedLocale} />
-          </p>
-        </a>
-      </li>
-    ))
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script>
+  import { applyNeonVariant, NEON_COLOR_COUNT } from '../scripts/effects/neon-palette.js';
+  import { selectVisualVariant } from '../utils/visual-variant.js';
+
+  function initBlogViews() {
+    document.querySelectorAll<HTMLElement>('[data-blog-browser]').forEach((browser) => {
+      if (browser.dataset.viewReady) return;
+      browser.dataset.viewReady = 'true';
+      const buttons = browser.querySelectorAll<HTMLButtonElement>('[data-blog-view]');
+      const update = (view: string) => {
+        browser.dataset.view = view === 'list' ? 'list' : 'cards';
+        buttons.forEach((button) => {
+          button.setAttribute(
+            'aria-pressed',
+            String(button.dataset.blogView === browser.dataset.view)
+          );
+        });
+      };
+      update(browser.dataset.view ?? 'cards');
+      const toolbar = browser.querySelector<HTMLElement>('.blog-view-toolbar')!;
+      const variant = selectVisualVariant({ count: NEON_COLOR_COUNT });
+      applyNeonVariant(browser, variant);
+      applyNeonVariant(toolbar, variant);
+      toolbar.hidden = false;
+      buttons.forEach((button) =>
+        button.addEventListener('click', () => {
+          const view = button.dataset.blogView ?? 'cards';
+          update(view);
+          try {
+            localStorage.setItem('anglefeint:blog-view', view);
+          } catch {
+            /* Switching still works without storage. */
+          }
+        })
+      );
+    });
   }
-</ul>
+  initBlogViews();
+  document.addEventListener('astro:page-load', initBlogViews);
+</script>

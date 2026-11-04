@@ -20,6 +20,10 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+## 文章歸檔檢視
+
+部落格與標籤文章頁支援卡片／列表切換，並在目前瀏覽器記住選擇。卡片首篇封面占整行，下方最多三欄；列表顯示連續編號、可點擊標籤、數字日期與目前範圍／總數，使用右上角連體按鈕切換。
+
 <a id="installation"></a>
 
 ## 安裝

@@ -14,6 +14,50 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 > Commit references in this record follow the cleaned Git history. Published npm metadata retains original commit IDs; historical text normalization may differ from archived npm tarballs.
 
+## 2026-11-04 Home and archive documentation sync
+
+本轮按 [文档同步工作流](DOC_SYNC_WORKFLOW.md) 审阅 `main` 基线 `91fef2c41ceaa04f55a1befeaef39a800b6b161d` 之上的完整未提交工作区，涵盖首页、博客／标签归档、About 目录、Decoder 阅读资源、18 篇九语 Demo 文章与新增功能测试。代码定义当前事实，未执行提交、npm 发布、starter 同步或线上部署。
+
+### 工作流与责任处置
+
+执行 `npm run suggest:docs` 获取初始直接命中与依赖传播集合；文档修订后再运行 `node scripts/suggest-doc-updates.mjs --json`，最终责任清单覆盖 83 份维护文档。广泛匹配来自架构、路由、视觉与公开文档的传播，不代表每份都需要修改。候选、输入路径、元数据与逐文件处置存于忽略的 `acceptance-results/final-doc-sync-routing.json` 和 `final-doc-sync-dispositions.json`；长期结论保存在本节。
+
+| 文档责任                                                                                          | 处置                                                                                                                              |
+| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [视觉系统](VISUAL_SYSTEMS.md)                                                                     | 将迭代中累积的长段落归入 Home、Blog List、About 目录和 Decoder 阅读资源；记录最终颜色、尺寸、计时、存储、键盘／减少动态效果边界。 |
+| [架构](ARCHITECTURE.md)、[项目总览](../anglefeint.md)                                             | 补齐项目路由 → 包组件／脚本／CSS → 输出 → 功能测试映射，明确总数／偏移 props 与共享循环生命周期。                                 |
+| 九语 README、[主题包说明](../packages/theme/README.md)、[主题目录文案](../ASTRO_THEME_LISTING.md) | README 仅增加用户可理解的 Cards/List 操作说明；包说明保留组件接入边界，目录文案补充归档能力，不搬入维护流程。                     |
+| [升级指南](../UPGRADING.md)                                                                       | 新增 pending source 段落，列出四个需要配套合并的项目路由；不虚构版本号或声称当前 npm 已包含改动。                                 |
+| [验收指南](TEMPLATE_ACCEPTANCE.md)                                                                | 列出新增永久功能测试及其边界，区分本地源码验收、视觉反馈与发布交付验收。                                                          |
+| AGENTS、CLAUDE、Cursor、AI／文档工作流与元数据规范                                                | 规则、命令和元数据契约未变，保留。                                                                                                |
+| 打包、发布、维护 runbook 与贡献指南                                                               | 既有 package files 和 starter manifest 已覆盖相关组件／脚本／路由；流程未变，保留。新 Demo slug 不进入 starter 内容白名单。       |
+| 提交检查单、历史 release notes 与 release 索引                                                    | 检查责任和既有历史未变；没有本轮正式发布，不重写历史、不新增虚构发布记录，也未自动刷新截图。                                      |
+
+### 核对后的实现事实
+
+- 博客与标签文章页共用视图切换，浏览器存储键为 `anglefeint:blog-view`；本地存储只记视图，不改变每页九篇的静态分页。`startIndex` 和 `totalPosts` 由项目路由提供，标签路由使用 Astro 的 `page.start`／`page.total`；省略时组件只知道当前 slice。无 JavaScript 显示卡片，存储不可用仍能切换。
+- 卡片宽屏首篇全行、其余三列，平板两列、手机一列；List 使用固定青色／洋红档案边角、连续编号、范围／总数、数字日期和最多两个独立标签链接。卡片链接使用 sibling tag anchors 与 stretched title link，避免嵌套链接；禁用 tags 时不生成标签链接。
+- 卡片保留原 0.45 秒光晕闪烁与斜切边角，透明矩形描边和 polygon 裁剪避免双框；标题故障抖动保持关闭。分页使用九色斜切样式。About 目录光点三秒一圈、停三秒，hover/focus 暂停；Decoder 阅读卡片八秒错峰边角脉冲，hover/focus 固定点亮。减少动态效果保留静态反馈。
+- 首页路由传入真实的最新文章数／本语言总数；LATEST 光标、文章行 650ms 单次信号与 ALL 圆角渐隐底光归前景 CSS。ALL 的兔子、提示符和文字都在同一点击范围，手机使用更小兔子槽位。
+- 代码雨保留密度、速度与仅头字符模糊发光，鼠标 110px 内的局部唤醒复用原循环；裂纹脉冲每 4.5 秒触发，单次 1.5 秒，在交点唤醒已采样雨列，修复／液态状态使其淡出。右下角门入口的 120px 靠近提示不激活／加载场景，触摸忽略；共享隐藏页面、BFCache、减少动态效果与资源释放机制不变。
+- 两篇 Demo 动机文章各九语，使用既有封面和日期 2026-11-04。AI 阅读篇讲 GEO 与人类／Agent 共存；Decoder 篇先致敬密码朋克对全人类的贡献，再讲本地工具与可自定义的底部资源链接。实际字段为 `i18n.locales.<code>.messages.decoderPage.readings.links`，数组完整替换、空数组隐藏。Demo 文章不是维护文档，也不需要 `doc_id` 元数据。
+
+### 修正、验证与边界
+
+修正了视觉参考中散落的旧迭代描述、List 范围／计数语句、About 的旧六秒转圈／两秒停顿时序、旧九秒裂纹周期和 ALL 下划线／背景说明，并将已交付的 Decoder 阅读区标题中陈旧的 “unreleased” 去掉；本轮新增样式与交互本身仍未发布。
+
+本次更新 17 份维护文档，保留其余 66 份候选。新执行的元数据检查覆盖 83 份文档且零错误，文档格式检查通过，431 个本地文件／锚点引用全部通过；文档元数据／配置测试 3 项、README／收尾验证器测试 5 项通过。验证器单测使用夹具，不当作发布验收。本次仅修改文档，不为文档整理重跑构建。此前同一源码工作区的 `home-interaction-check.log` 记录单元测试、scaffold／adapter／类型检查通过且零诊断；`home-interaction-build.log` 记录 262 页构建和 144 篇文章导出／搜索索引。`home-interaction-e2e.log` 有 6 项通过（含九语计数、指针、入口、生命周期与修复），`blog-views-e2e.log` 有 5 项通过，`diagonal-panels-e2e.log` 有 2 项 About 导航通过；这些是复用的本地证据，没有把场景数量相加当作无重复总覆盖。
+
+本次逐项核对发现：封面反射 CSS 将键盘分支指向不可聚焦的 `.blog-entry:focus-visible`；文档整理时只记录，未改运行代码。随后用户明确要求修复，选择器改为 `.blog-entry:focus-within`，并在 `tests/e2e/blog-views.spec.mjs` 增加 Tab 聚焦与移走焦点时反射透明度变化的功能回归检查；视觉参考同步恢复 hover／键盘反射说明。自动化测试不证明视觉动效已逐帧验收，视觉取舍以本次聊天用户实际反馈为准；未执行安装包矩阵、公开模板验收、安全审计、线上核验或发布门禁。README 预览图未重新生成。
+
+### 封面键盘反射修复后的文档复核
+
+用户要求修复后的本轮复核仍以代码为准，仅修改文档。实际链路为 `BlogCards.astro` 的可聚焦 `.archive-post-link` → `.blog-entry:focus-within` → `theme-cyber.css` 的封面 `::after`：反射透明度由 0.65 提升到 1，焦点离开且无 hover 时恢复。扫描线的 `::before` 仍仅由 hover 触发；本次未将键盘反射描述扩展为键盘扫描效果。
+
+沿用上述完整工作区作为输入，重新生成的责任集合为 52 个输入文件、83 份直接命中文档、0 份传播文档、0 个元数据错误。此前 17 份文档修订保留；本轮补充本记录、架构源码映射与验收指南，其他候选沿用上表责任处置，不改用户操作说明、配置或历史发布记录。候选存于 `acceptance-results/cover-focus-doc-routing.json`。
+
+复用上一轮修复后实际执行的证据：`cover-focus-e2e.log` 中归档测试 6 项通过，包含无鼠标 hover 的 Tab 聚焦和移焦恢复；`cover-focus-check.log` 中单元测试、scaffold 与 Astro 检查通过（308 个文件零错误／警告／提示），`cover-focus-lint.log` 对应 lint 成功，`cover-focus-build.log` 中构建 262 页并导出／索引 144 篇文章。本轮只新执行文档元数据、格式和本地链接核验，不重复运行构建，也不把复用证据记作本轮新测试。
+
 ## 2026-10-22 十六项阅读资源与八列布局文档核对
 
 交付收尾：0.20.1 已通过 npm 实际下载／源码哈希核验、starter 同步与公开用户模板验收，所有正式门禁保留。主工程及隔离／公开 starter 审计为零；成功的十四组构建完成一次，npm 上传一次。前置 Vite 漏洞和 npm 安装进程异常均在上传前阻断并恢复，未以跳过检查掩盖问题。源码／starter 提交、已执行检查与平台验证边界见 [0.20.1 发布记录](releases/0.20.1.md)。

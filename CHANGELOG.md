@@ -13,6 +13,13 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.24.0] - 2026-11-04
+
+- Add persistent Cards/List archive views, compact responsive cards, continuous list numbering and totals, numeric dates and independently clickable tags.
+- Add diagonal card/pagination frames, keyboard cover reflection, an amber About contents runner and mint/violet Decoder reading-card pulses with reduced-motion fallbacks.
+- Improve Home counts, code-rain pointer feedback, mirror-crack signals, article hover feedback and the rabbit/ALL link without automatically activating the passage.
+- Matching project-owned archive and Home routes provide full totals and offsets. No new configuration is required. See [0.24.0](docs/releases/0.24.0.md) for migration and delivery evidence.
+
 ## [0.23.0] - 2026-11-03
 
 - Add a localized About contents rail beside the reading panel on wide screens, native section anchors and a highlighted Contact section; existing tool shortcuts remain independently positioned. Frontier provides a localized direct Contact link that respects the About switch.

@@ -22,9 +22,8 @@ export const getStaticPaths = (async () =>
 const langParam = Astro.params.lang ?? DEFAULT_LOCALE;
 const locale: Locale = isLocale(langParam) ? langParam : DEFAULT_LOCALE;
 const shouldRedirect = shouldRedirectLocalizedDefaultLocaleHome(locale);
-const latestPosts = shouldRedirect
-  ? []
-  : postsForLocale(await getCollection('blog'), locale).slice(0, THEME.HOME_LATEST_COUNT);
+const localizedPosts = shouldRedirect ? [] : postsForLocale(await getCollection('blog'), locale);
+const latestPosts = shouldRedirect ? [] : localizedPosts.slice(0, THEME.HOME_LATEST_COUNT);
 const siteURL = Astro.site ?? SITE_URL;
 const redirectHref = getDefaultLocaleHomePath();
 ---
@@ -46,6 +45,6 @@ const redirectHref = getDefaultLocaleHomePath();
       </body>
     </html>
   ) : (
-    <HomePage locale={locale} latestPosts={latestPosts} />
+    <HomePage locale={locale} latestPosts={latestPosts} totalPosts={localizedPosts.length} />
   )
 }

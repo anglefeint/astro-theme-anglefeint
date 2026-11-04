@@ -13,9 +13,8 @@ import { postsForLocale } from '../i18n/posts';
 const locale = DEFAULT_LOCALE;
 const shouldRedirect = shouldRedirectRootToDefaultLocale();
 const allPosts = shouldRedirect ? [] : await getCollection('blog');
-const latestPosts = shouldRedirect
-  ? []
-  : postsForLocale(allPosts, locale).slice(0, THEME.HOME_LATEST_COUNT);
+const localizedPosts = postsForLocale(allPosts, locale);
+const latestPosts = shouldRedirect ? [] : localizedPosts.slice(0, THEME.HOME_LATEST_COUNT);
 const redirectHref = getDefaultLocaleHomePath();
 const siteURL = Astro.site ?? SITE_URL;
 ---
@@ -37,6 +36,6 @@ const siteURL = Astro.site ?? SITE_URL;
       </body>
     </html>
   ) : (
-    <HomePage locale={locale} latestPosts={latestPosts} />
+    <HomePage locale={locale} latestPosts={latestPosts} totalPosts={localizedPosts.length} />
   )
 }

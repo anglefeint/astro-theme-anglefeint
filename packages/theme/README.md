@@ -12,6 +12,10 @@ The full **Decoder Lab** is available at `/<locale>/decoder/`, with local text-p
 
 Decoder Lab takes its visual inspiration from the **cypherpunk** movement, in tribute to its contributions to human freedom, privacy and open code. Its peer-to-peer network motif and local processing reflect the idea of keeping tools and data in the hands of the individual.
 
+## Archive and homepage component wiring
+
+The current source provides Cards/List archives with browser-local view memory, linked List tags and continuous range/count metadata. Custom routes pass `BlogCards` its existing `posts` / `locale` and optional zero-based `startIndex` / full filtered `totalPosts`. Without these props, offset defaults to zero and total to the supplied list length. Custom home routes pass the complete locale-filtered count as `HomePage.totalPosts` alongside the latest-post slice. These are component props; no site-schema or adapter update is needed. The matching project-owned routes must also be merged to get accurate cross-page totals. See the 0.24.0 section of [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0240-archive-views-and-homepage-counts).
+
 ## Decoder reading configuration
 
 Since 0.20.1: four additional cards link to Satoshi Nakamoto’s November 6, 2008 reply on P2P and freedom, Nick Szabo’s 1996 smart-contract essay, David Chaum’s 1985 privacy paper and Wei Dai’s 1998 b-money proposal. Version 0.20.1 has sixteen cards, arranged in two eight-column rows on wide screens. The email is not the whitepaper announcement.

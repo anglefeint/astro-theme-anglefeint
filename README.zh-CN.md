@@ -26,6 +26,10 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+## 文章归档视图
+
+博客和标签文章页支持卡片／列表切换，并在当前浏览器记住选择。卡片首篇封面占整行，下方最多三列；列表显示连续编号、可点击标签、数字日期与当前范围／总数。右上角连体按钮可切换视图。
+
 <a id="installation"></a>
 
 ## 安装

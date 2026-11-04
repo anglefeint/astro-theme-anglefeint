@@ -20,6 +20,10 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+## Archivansichten
+
+Blog- und Tag-Archive bieten Karten- und Listenansicht; der Browser merkt sich die Auswahl. Karten zeigen ein Titelbild über die volle Breite und danach bis zu drei Spalten; die Liste enthält fortlaufende Nummern, verlinkte Tags, numerische Datumsangaben und Bereich/Gesamtzahl. Umschalten lässt sich oben rechts.
+
 <a id="installation"></a>
 
 ## Installation

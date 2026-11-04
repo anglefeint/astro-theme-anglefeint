@@ -310,7 +310,7 @@ body.cyber-page ul li:first-child .title {
   min-height: 0;
   margin-bottom: 0.35rem;
 }
-body.cyber-page ul li a {
+body.cyber-page ul li > .blog-entry {
   display: block;
   position: relative;
   padding: 1rem;
@@ -324,7 +324,7 @@ body.cyber-page ul li a {
     border-color 0.2s,
     box-shadow 0.3s;
 }
-body.cyber-page ul li a:hover {
+body.cyber-page ul li > .blog-entry:hover {
   border-color: rgba(124, 204, 255, 0.62);
   box-shadow:
     0 0 10px rgba(112, 196, 255, 0.3),
@@ -347,7 +347,7 @@ body.cyber-page ul li a:hover {
       inset 0 0 10px rgba(136, 204, 255, 0.06);
   }
 }
-body.cyber-page ul li a:hover .title {
+body.cyber-page ul li > .blog-entry:hover .title {
   animation: cyber-glitch 0.3s ease-in-out;
   color: rgb(212, 236, 255);
   text-shadow:
@@ -383,7 +383,7 @@ body.cyber-page ul li a:hover .title {
     text-shadow: 0 0 8px rgba(120, 200, 255, 0.55);
   }
 }
-body.cyber-page ul li a:hover .date {
+body.cyber-page ul li > .blog-entry:hover .date {
   color: rgba(196, 226, 255, 0.95);
   text-shadow:
     0 0 10px rgba(120, 194, 255, 0.45),
@@ -420,7 +420,7 @@ body.cyber-page .img-wrapper::before {
   pointer-events: none;
   transition: top 1.2s linear;
 }
-body.cyber-page ul li a:hover .img-wrapper::before {
+body.cyber-page ul li > .blog-entry:hover .img-wrapper::before {
   top: 100%;
 }
 body.cyber-page .img-wrapper::after {
@@ -439,8 +439,8 @@ body.cyber-page .img-wrapper::after {
   opacity: 0.65;
   transition: opacity 0.4s ease;
 }
-body.cyber-page ul li a:hover .img-wrapper::after,
-body.cyber-page ul li a:focus-visible .img-wrapper::after {
+body.cyber-page ul li > .blog-entry:hover .img-wrapper::after,
+body.cyber-page ul li > .blog-entry:focus-within .img-wrapper::after {
   opacity: 1;
 }
 body.cyber-page ul li img {
@@ -452,7 +452,7 @@ body.cyber-page ul li img {
     filter 0.3s,
     box-shadow 0.3s;
 }
-body.cyber-page ul li a:hover img {
+body.cyber-page ul li > .blog-entry:hover img {
   filter: saturate(0.88) contrast(1.11) brightness(0.94) sepia(0.08) hue-rotate(-6deg);
   box-shadow:
     0 0 15px rgba(116, 194, 255, 0.22),

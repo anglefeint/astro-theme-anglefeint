@@ -10,6 +10,16 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.24.0: Archive views and homepage counts
+
+Theme 0.24.0 and its matching starter supply these changes. See the [release record](docs/releases/0.24.0.md) for delivery status. Merge the matching project-owned route changes deliberately:
+
+- `src/pages/[lang]/blog/[...page].astro`: carry the full localized total in static props; pass `startIndex={(page.currentPage - 1) * BLOG_PAGE_SIZE}` and `totalPosts={page.total}` to BlogCards.
+- `src/pages/[lang]/tags/[tag]/[...page].astro`: pass Astro pagination's `page.start` and `page.total` to the same props.
+- `src/pages/index.astro` and `src/pages/[lang]/index.astro`: compute the full locale-filtered collection before slicing and pass its length as `HomePage.totalPosts`.
+
+Package-owned components supply view switching, styles and effects. Older callers still render, but omitted metadata defaults to the current slice (zero offset), so counts cannot describe the complete archive. No new schema keys, adapters or storage migration are required. The view preference key is `anglefeint:blog-view`; nine-item static pagination remains unchanged. These four routes are already starter-manifest-owned, and package components/scripts/styles are already included in package files. Demo essays are outside the starter content whitelist. Local validation does not replace installed-package, remote-template or release gates; see [the dated audit](docs/CODE_DOC_AUDIT.md#2026-11-04-home-and-archive-documentation-sync).
+
 ## 0.23.0: About navigation and lossless OG images
 
 Use the matching starter, or deliberately merge its `src/pages/[lang]/about.astro` changes into your customized route. The updated package supplies AboutContents, FrontierMenu and the shared section IDs, but cannot modify an existing project-owned About page. Avoid replacing a customized route blindly. Without the route merge, the package header's Contact link can point to a missing `#contact` anchor in an older project.

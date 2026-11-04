@@ -4,6 +4,8 @@ export function initSignalPreview(signal) {
   const viewport = panel?.querySelector('.home-signal-viewport');
   if (!viewport) return;
   const entrance = panel.querySelector('.home-signal-enter');
+  const fine = matchMedia('(hover: hover) and (pointer: fine)');
+  let proximityBounds = panel.getBoundingClientRect();
   let activated = false;
   let close,
     loading,
@@ -86,6 +88,40 @@ export function initSignalPreview(signal) {
     clear(false);
   };
   const options = { signal };
+  document.addEventListener(
+    'pointermove',
+    (event) => {
+      if (
+        paused ||
+        activated ||
+        !fine.matches ||
+        event.pointerType === 'touch' ||
+        !proximityBounds.width
+      ) {
+        delete panel.dataset.near;
+        return;
+      }
+      const dx = Math.max(
+        proximityBounds.left - event.clientX,
+        0,
+        event.clientX - proximityBounds.right
+      );
+      const dy = Math.max(
+        proximityBounds.top - event.clientY,
+        0,
+        event.clientY - proximityBounds.bottom
+      );
+      panel.toggleAttribute('data-near', dx * dx + dy * dy < 14400);
+    },
+    { signal, passive: true }
+  );
+  document.addEventListener(
+    'pointerleave',
+    () => {
+      delete panel.dataset.near;
+    },
+    options
+  );
   panel.addEventListener(
     'pointerenter',
     () => {
@@ -134,6 +170,7 @@ export function initSignalPreview(signal) {
       clear();
       panel.style.removeProperty('--signal-rest-width');
       panel.style.removeProperty('--signal-rest-height');
+      proximityBounds = panel.getBoundingClientRect();
     },
     options
   );
@@ -141,6 +178,7 @@ export function initSignalPreview(signal) {
   return {
     pause() {
       paused = true;
+      delete panel.dataset.near;
       clear(false);
     },
     resume() {

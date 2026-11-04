@@ -26,6 +26,10 @@ export function initHomeMatrix() {
   const frameIntervalMs = 1000 / matrixFps;
   let width = 0;
   let height = 0;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)');
+  let pointerX = -1000,
+    pointerY = -1000,
+    pointerAt = -Infinity;
 
   function randomChar() {
     return chars[Math.floor(Math.random() * chars.length)];
@@ -74,7 +78,8 @@ export function initHomeMatrix() {
       return;
     }
     lastFrameTime = now;
-    const dt = lastTime ? Math.min(now - lastTime, 80) / 200 : 0;
+    const elapsed = lastTime ? Math.min(now - lastTime, 80) / 1000 : 0;
+    const dt = elapsed * 5;
     lastTime = now;
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, width, height);
@@ -82,6 +87,9 @@ export function initHomeMatrix() {
     for (let i = 0; i < cols.length; i += 1) {
       const col = cols[i];
       const x = Math.round(col.x);
+      const dx = x - pointerX;
+      const nearby = fine.matches && now - pointerAt < 140 && Math.abs(dx) < 110;
+      const fade = Math.exp(-elapsed * 3.2);
       ctx.font = `${col.size}px ${matrixFont}`;
 
       const prevRow = Math.floor(col.y / col.size);
@@ -96,9 +104,19 @@ export function initHomeMatrix() {
       while (col.drops.length > col.trail) col.drops.pop();
 
       for (let j = col.drops.length - 1; j >= 0; j -= 1) {
+        const drop = col.drops[j];
+        drop.wake = (drop.wake ?? 0) * fade;
+        if (nearby) {
+          const dy = drop.y - pointerY;
+          const distance = dx * dx + dy * dy;
+          if (distance < 12100) drop.wake = Math.max(drop.wake, (1 - distance / 12100) * 0.85);
+        }
         const opacity = j === 0 ? 1 : 0.2 + 0.6 * (1 - j / col.trail);
-        const alpha = opacity * col.brightness;
-        ctx.fillStyle = j === 0 ? `rgba(216, 255, 229, ${alpha})` : `rgba(0, 255, 65, ${alpha})`;
+        const alpha = Math.min(1, opacity * col.brightness + drop.wake * 0.35);
+        ctx.fillStyle =
+          j === 0
+            ? `rgba(216, 255, 229, ${alpha})`
+            : `rgba(${Math.round(216 * drop.wake)}, 255, ${Math.round(65 + 164 * drop.wake)}, ${alpha})`;
         // Only the leading glyph gets bloom, keeping canvas blur work bounded.
         ctx.shadowColor = '#50ff90';
         ctx.shadowBlur = j === 0 ? col.glow : 0;
@@ -119,6 +137,7 @@ export function initHomeMatrix() {
   resize();
   const pause = () => {
     running = false;
+    pointerAt = -Infinity;
     cancelAnimationFrame(animationId);
     animationId = 0;
   };
@@ -154,10 +173,22 @@ export function initHomeMatrix() {
     'mousemove',
     (event) => {
       if (!running) return;
+      if (fine.matches) {
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        pointerAt = performance.now();
+      }
       document.body.style.setProperty('--matrix-mx', `${event.clientX}px`);
       document.body.style.setProperty('--matrix-my', `${event.clientY}px`);
     },
     { signal: listeners.signal, passive: true }
+  );
+  document.addEventListener(
+    'pointerleave',
+    () => {
+      pointerAt = -Infinity;
+    },
+    { signal: listeners.signal }
   );
   return controller;
 }
