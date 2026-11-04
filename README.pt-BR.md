@@ -22,10 +22,6 @@ Gera automaticamente `llms.txt`, índices multilíngues, coletâneas de texto co
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Visualizações do arquivo
-
-Os arquivos do blog e de tags oferecem cartões e lista, lembrando sua escolha neste navegador. Os cartões exibem uma capa principal em largura total e até três colunas; a lista mostra numeração contínua, tags clicáveis, datas numéricas e intervalo/total. Use o controle no canto superior direito para alternar.
-
 <a id="installation"></a>
 
 ## Instalação
@@ -132,6 +128,8 @@ Publique na raiz do domínio e sirva o index.html de cada diretório. Subdiretó
 <a id="reference"></a>
 
 ## Referência de recursos e configuração
+
+Os arquivos do blog e de tags permitem alternar entre cartões e lista e lembram a escolha neste navegador.
 
 ### Efeitos da página inicial e decodificadores
 

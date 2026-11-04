@@ -28,10 +28,6 @@ Genera automáticamente `llms.txt`, índices multilingües, recopilaciones de te
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Vistas del archivo
-
-Los archivos del blog y de etiquetas ofrecen vistas de tarjetas y lista; el navegador recuerda tu elección. Las tarjetas muestran una portada principal a todo el ancho y hasta tres columnas; la lista incluye numeración continua, etiquetas enlazadas, fechas numéricas y el intervalo/total. Cambia de vista con el control de la esquina superior derecha.
-
 <a id="installation"></a>
 
 ## Instalación
@@ -162,6 +158,8 @@ Publica en la raíz del dominio y sirve el index.html de cada directorio. Las su
 <a id="reference"></a>
 
 ## Referencia de funciones y configuración
+
+Los archivos del blog y de etiquetas permiten alternar entre tarjetas y lista y recuerdan la elección en este navegador.
 
 ### Efectos de inicio y herramientas de decodificación
 
