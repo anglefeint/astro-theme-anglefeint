@@ -39,6 +39,7 @@ export const getStaticPaths = (async () => {
             data,
             currentPage,
             lastPage: totalPages,
+            total: localizedPosts.length,
           },
         },
       };
@@ -103,7 +104,12 @@ const pageDescription =
   }
   <section>
     <h2 class="sr-only">{messages.blog.title}</h2>
-    <BlogCards posts={posts} locale={resolvedLocale} />
+    <BlogCards
+      posts={posts}
+      locale={resolvedLocale}
+      startIndex={(page.currentPage - 1) * BLOG_PAGE_SIZE}
+      totalPosts={page.total}
+    />
   </section>
   {
     page.lastPage > 1 && (

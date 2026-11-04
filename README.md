@@ -26,6 +26,10 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+## Archive views
+
+Blog and tag archives offer Cards and List views, with your choice remembered in this browser. Cards show a full-width leading cover and up to three columns; List shows continuous numbering, linked tags, numeric dates and the current range/total. Use the connected control at the top right to switch views.
+
 <a id="installation"></a>
 
 ## Install
