@@ -8,7 +8,7 @@ export const THEME = {
   ANALYTICS: { GOOGLE_ANALYTICS_ID: '' },
   FOOTER: { SHOW_CREDITS: true, LINKS: [] as { label: string; href: string }[] },
   /** Posts per page on blog list */
-  BLOG_PAGE_SIZE: 9,
+  BLOG_PAGE_SIZE: 10,
   /** Number of latest posts shown on home page */
   HOME_LATEST_COUNT: 3,
   /** Whether to enable the About page (disable to hide from nav/routes if needed) */

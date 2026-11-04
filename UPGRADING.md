@@ -10,6 +10,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.24.1: Ten posts per archive page
+
+The matching starter defaults to ten posts: one leading card and nine regular cards, filling three desktop rows on a full page. Final partial pages still show only the remaining posts. Existing projects should set `theme.blogPageSize: 10` in `src/site.config.ts` or merge the updated project defaults; updating the package alone cannot change a project-owned or explicitly overridden value. Rebuild/deploy all pages so blog and tag boundaries move together. See [0.24.1](docs/releases/0.24.1.md) for delivery evidence.
+
 ## 0.24.0: Archive views and homepage counts
 
 Theme 0.24.0 and its matching starter supply these changes. See the [release record](docs/releases/0.24.0.md) for delivery status. Merge the matching project-owned route changes deliberately:
@@ -18,7 +22,7 @@ Theme 0.24.0 and its matching starter supply these changes. See the [release rec
 - `src/pages/[lang]/tags/[tag]/[...page].astro`: pass Astro pagination's `page.start` and `page.total` to the same props.
 - `src/pages/index.astro` and `src/pages/[lang]/index.astro`: compute the full locale-filtered collection before slicing and pass its length as `HomePage.totalPosts`.
 
-Package-owned components supply view switching, styles and effects. Older callers still render, but omitted metadata defaults to the current slice (zero offset), so counts cannot describe the complete archive. No new schema keys, adapters or storage migration are required. The view preference key is `anglefeint:blog-view`; nine-item static pagination remains unchanged. These four routes are already starter-manifest-owned, and package components/scripts/styles are already included in package files. Demo essays are outside the starter content whitelist. Local validation does not replace installed-package, remote-template or release gates; see [the dated audit](docs/CODE_DOC_AUDIT.md#2026-11-04-home-and-archive-documentation-sync).
+Package-owned components supply view switching, styles and effects. Older callers still render, but omitted metadata defaults to the current slice (zero offset), so counts cannot describe the complete archive. No new schema keys, adapters or storage migration are required. The view preference key is `anglefeint:blog-view`; page size remains build-time configuration (ten by default from 0.24.1). These four routes are already starter-manifest-owned, and package components/scripts/styles are already included in package files. Demo essays are outside the starter content whitelist. Local validation does not replace installed-package, remote-template or release gates; see [the dated audit](docs/CODE_DOC_AUDIT.md#2026-11-04-home-and-archive-documentation-sync).
 
 ## 0.23.0: About navigation and lossless OG images
 

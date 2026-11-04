@@ -61,7 +61,7 @@ Coverage: `tests/math.unit.test.mjs` (syntax, MDX, escaping, disabled behavior, 
 
 The root and localized home routes compute the complete locale-filtered collection once, slice it using `THEME.HOME_LATEST_COUNT`, and pass both `latestPosts` and `totalPosts` to `layouts/HomePage.astro`. No new configuration or generated adapter is required; custom route callers may omit the total but then the counter only knows the supplied slice length.
 
-Archive routes supply `BlogCards` with zero-based `startIndex` and full filtered `totalPosts`. The blog route carries the total in static props; tag pagination uses Astro's `page.start` and `page.total`. These are component props, not schema settings or client pagination. The nine-item static page size, route URLs and SEO generation are unchanged.
+Archive routes supply `BlogCards` with zero-based `startIndex` and full filtered `totalPosts`. The blog route carries the total in static props; tag pagination uses Astro's `page.start` and `page.total`. These are component props, not schema settings or client pagination. The default static page size is ten from 0.24.1, shared by blog and tag archives; explicit project overrides remain authoritative. Route structure and SEO generation are unchanged.
 
 `home-effects.js` remains the lifecycle owner for pointer-aware rain, sampled mirror and the signal preview. Rain wake uses the existing frame loop; mirror signals remain in its existing shader/frame subscription; proximity uses cached bounds and the existing AbortSignal, without loading the corridor. Foreground CSS owns cursor, divider and border animation. See [Visual Systems](VISUAL_SYSTEMS.md) for timings and reduced-motion behavior.
 

@@ -340,7 +340,7 @@ mapping: 'pathname' связывает обсуждения с путём. 'spec
 
 ```ts
 theme: {
-  homeLatestCount: 3, blogPageSize: 9,
+  homeLatestCount: 3, blogPageSize: 10,
   enableAboutPage: true, effects: { enableRedQueen: true },
   search: { enabled: true }, toc: { enabled: true }, tags: { enabled: true },
   socialImage: { enabled: true }, footer: { showCredits: true },

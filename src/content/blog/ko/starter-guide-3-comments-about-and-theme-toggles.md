@@ -123,7 +123,7 @@ Decoder Lab은 로컬 처리, 확인 가능한 소스 코드, P2P 네트워크 �
 ```ts
 theme: {
   homeLatestCount: 3,
-  blogPageSize: 9,
+  blogPageSize: 10,
   pagination: {
     windowSize: 7,
     showJumpThreshold: 12,

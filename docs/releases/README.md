@@ -29,7 +29,7 @@ This directory is the structured release-notes ledger for `@anglefeint/astro-the
 
 Latest feature release entry: [0.24.0](./0.24.0.md), persistent archive views, diagonal frames and cinematic homepage feedback. See its delivery status and acceptance record.
 
-Latest patch entry: [0.20.1](./0.20.1.md), sixteen cypherpunk reading cards, eight-column layout and the patched Vite starter dependency. See its delivery status and validation record.
+Latest patch entry: [0.24.1](./0.24.1.md), ten-post archive defaults to complete the desktop card rows. See its delivery status and validation record.
 
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.

@@ -13,6 +13,10 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.24.1] - 2026-11-05
+
+- Default archive pages to ten posts so a leading card plus nine regular cards fills three desktop rows. Keep explicit project overrides and final partial pages intact; update the matching starter defaults and guide examples. See [0.24.1](docs/releases/0.24.1.md) for migration and delivery.
+
 ## [0.24.0] - 2026-11-04
 
 - Add persistent Cards/List archive views, compact responsive cards, continuous list numbering and totals, numeric dates and independently clickable tags.

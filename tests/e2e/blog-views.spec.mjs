@@ -72,6 +72,8 @@ test('list ranges and row numbers continue on the next static page', async ({ pa
   await page.goto('/en/blog/');
   await page.locator('[data-blog-view="list"]').click();
   const firstCount = await page.locator('.blog-cards > li').count();
+  expect(firstCount).toBe(10);
+  expect((firstCount - 1) % 3).toBe(0);
   const total = (await page.locator('.archive-count').innerText()).split('/').at(-1).trim();
   if (Number(total) <= firstCount) return;
   await page.goto('/en/blog/2/');

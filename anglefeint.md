@@ -59,7 +59,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 首页保持 Matrix 代码雨强度，补充鼠标局部唤醒、裂纹信号与镜面内字符联动、右下角门入口的靠近提示，以及文章行的一次性分隔线信号。LATEST 显示真实的展示数／总数；ALL 的兔子、提示符、文字和箭头纳入同一圆角渐隐底光与点击区域。原有共享帧循环、裂纹修复和隐藏页面／减少动态效果生命周期保持；细节见 [视觉参考](docs/VISUAL_SYSTEMS.md#1-home-bodypage-home)。
 
-博客与标签文章页共用 Cards/List：卡片首篇整行、下方宽屏三列；List 是无图档案面板，显示跨页编号、当前范围／总数、最多两个可点击真实标签与数字日期。浏览器只保存视图选择，分页仍由构建按九篇生成。分页、卡片、About 目录与 Decoder 阅读卡片使用各自配色的斜切边框；About 光点转三秒停三秒，Decoder 边角错峰脉冲，减少动态效果保留静态呈现。
+博客与标签文章页共用 Cards/List：卡片首篇整行、下方宽屏三列；List 是无图档案面板，显示跨页编号、当前范围／总数、最多两个可点击真实标签与数字日期。浏览器只保存视图选择，分页由构建生成，0.24.1 起默认每页十篇（首篇加下方三行三列，最后不足一页时按实际数量）。分页、卡片、About 目录与 Decoder 阅读卡片使用各自配色的斜切边框；About 光点转三秒停三秒，Decoder 边角错峰脉冲，减少动态效果保留静态呈现。
 
 新增 AI 阅读与 Decoder Lab 动机文章各九语，日期为 2026-11-04；后者先致敬密码朋克，再说明本地小工具与底部资源链接自定义。新增文章仅在 Demo 内容库，starter 白名单不变。交付状态见 [0.24.0 发布记录](docs/releases/0.24.0.md)；源码责任映射见 [审查记录](docs/CODE_DOC_AUDIT.md#2026-11-04-home-and-archive-documentation-sync)。
 

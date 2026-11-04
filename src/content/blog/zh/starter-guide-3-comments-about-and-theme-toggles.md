@@ -123,7 +123,7 @@ Decoder Lab 以本地处理、可查看的源码和点对点网络意象回应�
 ```ts
 theme: {
   homeLatestCount: 3,
-  blogPageSize: 9,
+  blogPageSize: 10,
   pagination: {
     windowSize: 7,
     showJumpThreshold: 12,
