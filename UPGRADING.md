@@ -12,7 +12,23 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 ## 0.24.1: Ten posts per archive page
 
-The matching starter defaults to ten posts: one leading card and nine regular cards, filling three desktop rows on a full page. Final partial pages still show only the remaining posts. Existing projects should set `theme.blogPageSize: 10` in `src/site.config.ts` or merge the updated project defaults; updating the package alone cannot change a project-owned or explicitly overridden value. Rebuild/deploy all pages so blog and tag boundaries move together. See [0.24.1](docs/releases/0.24.1.md) for delivery evidence.
+New projects from the matching 0.24.1 starter already default to ten posts: one leading card and nine regular cards, filling three desktop rows on a full page. Final partial pages still show only the remaining posts. No manual page-size setting is needed for those new projects.
+
+Existing 0.24.0 projects keep their own `src/site.config.defaults.ts` with a default of nine. Installing a newer package does not replace that file, even if you never configured a page size yourself. To upgrade a project already using the matching 0.24.0 routes:
+
+1. Run `npm install @anglefeint/astro-theme@0.24.1`.
+2. Merge `blogPageSize: 10` into the existing `theme` object in `src/site.config.ts`, preserving other settings:
+
+   ```ts
+   theme: {
+     // Keep your other theme settings here.
+     blogPageSize: 10,
+   },
+   ```
+
+3. Run `npm run doctor`, which includes checks/build in the matching starter; inspect with `npm run preview`, then deploy the complete rebuilt output so blog and tag boundaries move together.
+
+No additional schema, adapter or route changes are needed for this patch from the matching 0.24.0 starter. Older projects must also follow the [0.24.0 route migration](#0240-archive-views-and-homepage-counts), or migrate content/configuration to a fresh starter; old/customized scripts can differ. Intentional page-size overrides remain supported. See [0.24.1](docs/releases/0.24.1.md) for delivery evidence.
 
 ## 0.24.0: Archive views and homepage counts
 
