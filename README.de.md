@@ -8,6 +8,8 @@
 
 <p align="center">Ein filmisch gestaltetes Astro-Theme mit vielseitigen Atmosphären für persönliche Veröffentlichungen — für menschliche Leser und KI-Agenten.</p>
 
+Erzeugt automatisch `llms.txt`, mehrsprachige Indizes, Volltextsammlungen und Artikel-Markdown für das Lesen und Zitieren durch KI-Agenten und unterstützt GEO (Generative Engine Optimization).
+
 [Demo](https://demo.anglefeint.com/de/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">

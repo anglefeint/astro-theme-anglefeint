@@ -8,6 +8,8 @@
 
 <p align="center">Um tema Astro cinematográfico com múltiplas atmosferas para publicação pessoal — feito para leitores humanos e agentes de IA.</p>
 
+Gera automaticamente `llms.txt`, índices multilíngues, coletâneas de texto completo e artigos em Markdown para facilitar a leitura e a citação por agentes de IA e apoiar o GEO (otimização para mecanismos generativos).
+
 [Demo](https://demo.anglefeint.com/pt-br/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">

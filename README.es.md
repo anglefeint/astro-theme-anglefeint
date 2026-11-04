@@ -8,6 +8,8 @@
 
 <p align="center">Un tema Astro cinematográfico con múltiples atmósferas para publicación personal, pensado para lectores humanos y agentes de IA.</p>
 
+Genera automáticamente `llms.txt`, índices multilingües, recopilaciones de texto completo y artículos en Markdown para facilitar la lectura y las citas de agentes de IA y apoyar el GEO (optimización para motores generativos).
+
 <p align="center">
   <a href="https://demo.anglefeint.com/">Demo en vivo</a>
   ·

@@ -8,6 +8,8 @@
 
 <p align="center">사람과 AI 에이전트 모두를 위해 설계된, 다양한 분위기의 시네마틱 Astro 개인 퍼블리싱 테마.</p>
 
+`llms.txt`, 다국어 색인, 전문 모음과 글의 Markdown을 자동 생성해 AI 에이전트의 읽기·인용과 GEO(생성형 엔진 최적화)를 지원합니다.
+
 <p align="center">
   <a href="https://demo.anglefeint.com/">라이브 데모</a>
   ·

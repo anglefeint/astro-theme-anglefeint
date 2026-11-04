@@ -8,6 +8,8 @@
 
 <p align="center">為人類讀者與 AI 智慧代理打造的多氛圍電影感 Astro 個人發布主題。</p>
 
+自動產生 `llms.txt`、多語言索引、全文合集與文章 Markdown，方便 AI Agent 讀取和引用內容，支援 GEO（生成式引擎最佳化）。
+
 [Demo](https://demo.anglefeint.com/zh-hant/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
