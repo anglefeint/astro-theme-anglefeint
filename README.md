@@ -8,6 +8,8 @@
 
 <p align="center">A cinematic, multi-atmosphere Astro theme for personal publishing — built for human readers and AI agents.</p>
 
+Automatically generates `llms.txt`, multilingual indexes, full-text bundles and article Markdown for AI agents to read and cite, supporting GEO (Generative Engine Optimization).
+
 <p align="center">
   <a href="https://demo.anglefeint.com/">Live Demo</a>
   ·

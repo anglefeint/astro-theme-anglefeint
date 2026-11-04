@@ -8,6 +8,8 @@
 
 <p align="center">人間の読者と AI エージェントのために作られた、多彩な雰囲気と映画的な表現を持つ個人発信向け Astro テーマ。</p>
 
+`llms.txt`、多言語インデックス、全文バンドル、記事の Markdown を自動生成し、AI エージェントによる閲覧・引用と GEO（生成エンジン最適化）を支援します。
+
 <p align="center">
   <a href="https://demo.anglefeint.com/">デモ</a>
   ·

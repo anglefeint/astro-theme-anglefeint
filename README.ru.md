@@ -8,6 +8,8 @@
 
 <p align="center">Кинематографичная тема Astro с разными атмосферами для личных публикаций — для читателей и ИИ-агентов.</p>
 
+Автоматически создаёт `llms.txt`, многоязычные индексы, полнотекстовые сборники и статьи в Markdown для чтения и цитирования ИИ-агентами и поддержки GEO (оптимизации для генеративных систем).
+
 [Demo](https://demo.anglefeint.com/ru/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
