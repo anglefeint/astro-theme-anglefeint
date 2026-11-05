@@ -371,6 +371,10 @@ Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteri
 
 ![Blog](public/images/theme-previews/preview-blog-list.jpg)
 
+| Blog · Visualização em lista                                               |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
+
 ![Article](public/images/theme-previews/preview-blog-post.jpg)
 
 ![About](public/images/theme-previews/preview-about.jpg)
@@ -380,6 +384,10 @@ Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteri
 ![Artigos relacionados](public/images/theme-previews/preview-blog-post-related.jpg)
 
 ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
+
+| Decoder Lab · Recursos cypherpunk                                                    |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## Licença
 

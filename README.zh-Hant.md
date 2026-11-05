@@ -371,6 +371,10 @@ footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 s
 
 ![Blog](public/images/theme-previews/preview-blog-list.jpg)
 
+| Blog · 清單模式                                                            |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
+
 ![Article](public/images/theme-previews/preview-blog-post.jpg)
 
 ![About](public/images/theme-previews/preview-about.jpg)
@@ -380,6 +384,10 @@ footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 s
 ![文章相關推薦](public/images/theme-previews/preview-blog-post-related.jpg)
 
 ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
+
+| Decoder Lab · 密碼龐克資源                                                           |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## 授權
 

@@ -257,9 +257,13 @@ export const THEME_CONFIG = defineThemeConfig({
 
 ## 预览
 
-| 首页                                                           | 博客列表                                                                 |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
+| 首页                                                           | 博客列表                                                                  |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog Cards preview](public/images/theme-previews/preview-blog-list.jpg) |
+
+| Blog · 列表模式                                                            |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
 
 | 文章页                                                                   |
 | ------------------------------------------------------------------------ |
@@ -276,6 +280,10 @@ export const THEME_CONFIG = defineThemeConfig({
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
 | ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
+
+| Decoder Lab · 密码朋克资源                                                           |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## 路由视觉氛围
 

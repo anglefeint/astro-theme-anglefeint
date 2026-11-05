@@ -128,6 +128,8 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'public/images/theme-previews/preview-about.jpg',
   'public/images/theme-previews/preview-decoder.jpg',
   'public/images/theme-previews/preview-blog-list.jpg',
+  'public/images/theme-previews/preview-blog-list-mode.jpg',
+  'public/images/theme-previews/preview-decoder-resources.jpg',
   'public/images/theme-previews/preview-blog-list-pagination.jpg',
   'public/images/theme-previews/preview-blog-post-related.jpg',
   'public/images/theme-previews/preview-blog-post.jpg',

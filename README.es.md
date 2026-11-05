@@ -257,9 +257,13 @@ Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh
 
 ## Vista previa
 
-| Inicio                                                         | Lista del blog                                                           |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
+| Inicio                                                         | Lista del blog                                                            |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog Cards preview](public/images/theme-previews/preview-blog-list.jpg) |
+
+| Blog · Vista de lista                                                      |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
 
 | Post                                                                     |
 | ------------------------------------------------------------------------ |
@@ -276,6 +280,10 @@ Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
 | ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
+
+| Decoder Lab · Recursos cypherpunk                                                    |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## Ambiente por ruta
 
