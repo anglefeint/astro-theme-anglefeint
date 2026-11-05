@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://demo.anglefeint.com/zh/">
-    <img src="public/images/theme-previews/promo-overview.jpg" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
   </a>
 </p>
 
@@ -257,14 +257,15 @@ export const THEME_CONFIG = defineThemeConfig({
 
 ## 预览
 
+![Anglefeint — Four cinematic worlds](public/images/theme-previews/promo-overview.jpg)
+
 ![Anglefeint — Cyberpunk Cards and List](public/images/theme-previews/promo-cyberpunk.jpg)
 
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
-<details>
-<summary>页面截图</summary>
+### 页面截图
 
 | 首页                                                           | 博客列表                                                                  |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -293,8 +294,6 @@ export const THEME_CONFIG = defineThemeConfig({
 | Decoder Lab · 密码朋克资源                                                           |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
-
-</details>
 
 ## 路由视觉氛围
 

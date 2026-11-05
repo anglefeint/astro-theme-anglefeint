@@ -2,7 +2,7 @@
 
 ## Promotional gallery
 
-Four AI-composed promotional images based on the real demo screenshots were created with the built-in image-generation tool on 2026-11-05. They are marketing compositions, rather than unmodified browser captures. Each is a 1600×900 (16:9) JPEG; together they total 1,160,332 bytes. All nine READMEs use the overview as the hero and the other three in the preview section, with the original screenshot gallery retained in an expandable section.
+Four AI-composed promotional images based on the real demo screenshots were created with the built-in image-generation tool on 2026-11-05. They are marketing compositions, rather than unmodified browser captures. Each is a 1600×900 (16:9) JPEG; together they total 1,160,332 bytes. All nine READMEs retain the original brand hero and directly display all four promotional images followed by the full browser screenshot gallery, without folding the screenshots.
 
 | File                  | Content                                                              |
 | --------------------- | -------------------------------------------------------------------- |
@@ -11,7 +11,7 @@ Four AI-composed promotional images based on the real demo screenshots were crea
 | `promo-hacker.jpg`    | About, Decoder Lab and cypherpunk resources                          |
 | `promo-ai.jpg`        | AI reading, Markdown exports and GEO                                 |
 
-The original `anglefeint-brand.webp` remains available. Temporary generation records and upload ZIPs are not distributed with starter.
+The original `anglefeint-brand.webp` remains the README hero. Temporary generation records and upload ZIPs are not distributed with starter.
 
 ## Browser screenshots
 

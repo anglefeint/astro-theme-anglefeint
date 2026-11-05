@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://demo.anglefeint.com/zh-hant/">
-    <img src="public/images/theme-previews/promo-overview.jpg" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
   </a>
 </p>
 
@@ -367,14 +367,15 @@ footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 s
 
 ## 預覽
 
+![Anglefeint — Four cinematic worlds](public/images/theme-previews/promo-overview.jpg)
+
 ![Anglefeint — Cyberpunk Cards and List](public/images/theme-previews/promo-cyberpunk.jpg)
 
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
-<details>
-<summary>頁面截圖</summary>
+### 頁面截圖
 
 ![Home](public/images/theme-previews/preview-home.jpg)
 
@@ -397,8 +398,6 @@ footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 s
 | Decoder Lab · 密碼龐克資源                                                           |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
-
-</details>
 
 ## 授權
 

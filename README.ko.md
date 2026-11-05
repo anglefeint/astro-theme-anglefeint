@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://demo.anglefeint.com/ko/">
-    <img src="public/images/theme-previews/promo-overview.jpg" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
   </a>
 </p>
 
@@ -257,14 +257,15 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 
 ## 미리보기
 
+![Anglefeint — Four cinematic worlds](public/images/theme-previews/promo-overview.jpg)
+
 ![Anglefeint — Cyberpunk Cards and List](public/images/theme-previews/promo-cyberpunk.jpg)
 
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
-<details>
-<summary>페이지 스크린샷</summary>
+### 페이지 스크린샷
 
 | 홈                                                             | 블로그 목록                                                               |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -293,8 +294,6 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 | Decoder Lab · 사이퍼펑크 자료                                                        |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
-
-</details>
 
 ## 라우트별 분위기
 
