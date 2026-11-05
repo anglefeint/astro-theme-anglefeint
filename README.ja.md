@@ -257,9 +257,13 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 
 ## プレビュー
 
-| ホーム                                                         | ブログ一覧                                                               |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
+| ホーム                                                         | ブログ一覧                                                                |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog Cards preview](public/images/theme-previews/preview-blog-list.jpg) |
+
+| Blog · リスト表示                                                          |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
 
 | 記事ページ                                                               |
 | ------------------------------------------------------------------------ |
@@ -276,6 +280,10 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
 | ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
+
+| Decoder Lab · サイファーパンク資料                                                   |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## ルートごとの雰囲気
 

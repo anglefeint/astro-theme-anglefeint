@@ -371,6 +371,10 @@ footer.showCredits: false скрывает ссылки на тему и Astro, 
 
 ![Blog](public/images/theme-previews/preview-blog-list.jpg)
 
+| Blog · Список                                                              |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
+
 ![Article](public/images/theme-previews/preview-blog-post.jpg)
 
 ![About](public/images/theme-previews/preview-about.jpg)
@@ -380,6 +384,10 @@ footer.showCredits: false скрывает ссылки на тему и Astro, 
 ![Похожие статьи](public/images/theme-previews/preview-blog-post-related.jpg)
 
 ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
+
+| Decoder Lab · Ресурсы шифропанков                                                    |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## Лицензия
 

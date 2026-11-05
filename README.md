@@ -257,9 +257,13 @@ Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `d
 
 ## Preview
 
-| Home                                                           | Blog List                                                                |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
+| Home                                                           | Blog Cards                                                                |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog Cards preview](public/images/theme-previews/preview-blog-list.jpg) |
+
+| Blog · List                                                                |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
 
 | Blog Post                                                                |
 | ------------------------------------------------------------------------ |
@@ -276,6 +280,10 @@ Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `d
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
 | ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
+
+| Decoder Lab · Cypherpunk resources                                                   |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## Route Atmospheres
 

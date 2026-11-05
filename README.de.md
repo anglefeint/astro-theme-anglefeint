@@ -371,6 +371,10 @@ Alle Optionen im selben theme beziehungsweise i18n zusammenführen. Listen erset
 
 ![Blog](public/images/theme-previews/preview-blog-list.jpg)
 
+| Blog · Listenansicht                                                       |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
+
 ![Article](public/images/theme-previews/preview-blog-post.jpg)
 
 ![About](public/images/theme-previews/preview-about.jpg)
@@ -380,6 +384,10 @@ Alle Optionen im selben theme beziehungsweise i18n zusammenführen. Listen erset
 ![Ähnliche Artikel](public/images/theme-previews/preview-blog-post-related.jpg)
 
 ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
+
+| Decoder Lab · Cypherpunk-Ressourcen                                                  |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## Lizenz
 

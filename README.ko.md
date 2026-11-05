@@ -257,9 +257,13 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 
 ## 미리보기
 
-| 홈                                                             | 블로그 목록                                                              |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog list preview](public/images/theme-previews/preview-blog-list.jpg) |
+| 홈                                                             | 블로그 목록                                                               |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog Cards preview](public/images/theme-previews/preview-blog-list.jpg) |
+
+| Blog · 목록 보기                                                           |
+| -------------------------------------------------------------------------- |
+| ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
 
 | 글 상세                                                                  |
 | ------------------------------------------------------------------------ |
@@ -276,6 +280,10 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
 | ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
+
+| Decoder Lab · 사이퍼펑크 자료                                                        |
+| ------------------------------------------------------------------------------------ |
+| ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
 
 ## 라우트별 분위기
 
