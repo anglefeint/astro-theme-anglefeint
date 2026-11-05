@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://demo.anglefeint.com/ja/">
-    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+    <img src="public/images/theme-previews/promo-overview.jpg" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
   </a>
 </p>
 
@@ -257,6 +257,15 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 
 ## プレビュー
 
+![Anglefeint — Cyberpunk Cards and List](public/images/theme-previews/promo-cyberpunk.jpg)
+
+![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
+
+![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
+
+<details>
+<summary>ページのスクリーンショット</summary>
+
 | ホーム                                                         | ブログ一覧                                                                |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog Cards preview](public/images/theme-previews/preview-blog-list.jpg) |
@@ -284,6 +293,8 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 | Decoder Lab · サイファーパンク資料                                                   |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
+
+</details>
 
 ## ルートごとの雰囲気
 
