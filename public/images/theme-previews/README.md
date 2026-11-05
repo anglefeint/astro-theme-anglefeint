@@ -1,5 +1,20 @@
 # Theme Preview Images
 
+## Promotional gallery
+
+Four AI-composed promotional images based on the real demo screenshots were created with the built-in image-generation tool on 2026-11-05. They are marketing compositions, rather than unmodified browser captures. Each is a 1600×900 (16:9) JPEG; together they total 1,160,332 bytes. All nine READMEs use the overview as the hero and the other three in the preview section, with the original screenshot gallery retained in an expandable section.
+
+| File                  | Content                                                              |
+| --------------------- | -------------------------------------------------------------------- |
+| `promo-overview.jpg`  | Matrix Home, Cyberpunk archive, Hacker About and AI article overview |
+| `promo-cyberpunk.jpg` | Cards and List archive layouts                                       |
+| `promo-hacker.jpg`    | About, Decoder Lab and cypherpunk resources                          |
+| `promo-ai.jpg`        | AI reading, Markdown exports and GEO                                 |
+
+The original `anglefeint-brand.webp` remains available. Temporary generation records and upload ZIPs are not distributed with starter.
+
+## Browser screenshots
+
 The gallery contains nine screenshots from the public English demo, with no account/profile UI or browser chrome. On 2026-11-05, Home, Cards, pagination, article and About screenshots were refreshed, and List and Decoder resources were added using the built-in browser. Related posts and the Decoder workbench retain their 2026-11-04 captures. The cinematic brand artwork remains unchanged. All nine localized READMEs share these JPG assets.
 
 | File                               | Actual view                                                                     |
