@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://demo.anglefeint.com/es/">
-    <img src="public/images/theme-previews/promo-overview.jpg" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
+    <img src="public/images/theme-previews/anglefeint-brand.webp" alt="Anglefeint — Matrix / Cyberpunk / Hacker / AI" width="1600" />
   </a>
 </p>
 
@@ -257,14 +257,15 @@ Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh
 
 ## Vista previa
 
+![Anglefeint — Four cinematic worlds](public/images/theme-previews/promo-overview.jpg)
+
 ![Anglefeint — Cyberpunk Cards and List](public/images/theme-previews/promo-cyberpunk.jpg)
 
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
-<details>
-<summary>Capturas de las páginas</summary>
+### Capturas de las páginas
 
 | Inicio                                                         | Lista del blog                                                            |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -293,8 +294,6 @@ Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh
 | Decoder Lab · Recursos cypherpunk                                                    |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
-
-</details>
 
 ## Ambiente por ruta
 
