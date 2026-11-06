@@ -95,3 +95,19 @@
 .hacker-folder:last-child:is(:hover, :focus-visible) {
   border-bottom-left-radius: 8px;
 }
+.about-window-open[hidden] {
+  display: none !important;
+}
+.hacker-sidebar .about-window-open {
+  margin-top: 0.35rem;
+  border: 1px solid #b48c4970;
+  border-radius: 5px;
+  background: #efbd660a;
+  color: #e9c783;
+}
+.hacker-sidebar .about-window-open:is(:hover, :focus-visible) {
+  border-color: #efbd66;
+  background: #efbd6614;
+  color: #ffe0a3;
+  text-shadow: 0 0 9px #efbd6650;
+}

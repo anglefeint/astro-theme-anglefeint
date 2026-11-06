@@ -59,3 +59,42 @@ test('native About anchors remain usable without page JavaScript', async ({ brow
     await context.close();
   }
 });
+
+test('About border runner never creates horizontal scrolling and retains short-screen access', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  for (const viewport of [
+    { width: 1920, height: 1080 },
+    { width: 1360, height: 220 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/en/about/');
+    const measurements = await page.locator('.about-navigation').evaluate((rail) => {
+      const runner = rail.querySelector('.about-toc-runner');
+      const orbit = runner.getAnimations()[0];
+      if (!orbit) throw new Error('Expected the border runner animation to be enabled');
+      orbit.pause();
+      let maxHorizontalOverflow = 0;
+      for (let time = 0; time <= 6000; time += 50) {
+        orbit.currentTime = time;
+        runner.getBoundingClientRect();
+        maxHorizontalOverflow = Math.max(
+          maxHorizontalOverflow,
+          rail.scrollWidth - rail.clientWidth
+        );
+      }
+      rail.scrollTop = rail.scrollHeight;
+      return {
+        maxHorizontalOverflow,
+        verticallyScrollable: rail.scrollHeight > rail.clientHeight,
+        scrolledVertically: rail.scrollTop > 0,
+      };
+    });
+    expect(measurements.maxHorizontalOverflow).toBeLessThanOrEqual(1);
+    if (viewport.height === 220) {
+      expect(measurements.verticallyScrollable).toBeTruthy();
+      expect(measurements.scrolledVertically).toBeTruthy();
+    }
+  }
+});

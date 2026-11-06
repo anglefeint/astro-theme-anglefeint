@@ -2,6 +2,7 @@
 @import './about/base.css';
 @import './about/background.css';
 @import './about/panel.css';
+@import './about/window.css';
 @import './about/sidebar.css';
 @import './about/modals.css';
 @import './about/keyboard.css';

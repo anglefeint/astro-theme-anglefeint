@@ -7,7 +7,7 @@
     bottom: 10rem;
     right: 1rem;
   }
-  .hacker-sidebar > :not([data-oracle]):not([data-modal='decryptor']) {
+  .hacker-sidebar > :not([data-oracle]):not([data-modal='decryptor']):not([data-about-open]) {
     display: none;
   }
 }

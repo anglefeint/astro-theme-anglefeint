@@ -10,6 +10,8 @@ sync_targets: [README.md, CLAUDE.md]
 
 # Architecture Notes
 
+About reading-window state is package-owned by `scripts/about/window.js` and mounted/disposed by `scripts/about-effects.js`; `scripts/about/background.js` adds host-specific window commands without changing the shared virtual filesystem session. `components/about/AboutWindowControls.astro` and `styles/about/window.css` supply the localized outer controls, a body-end restore entry, and expanded/hidden layout states. The starter-owned `src/pages/[lang]/about.astro` composes those package exports and keeps OUTPUT as an inner content label. Native section anchors override a persisted hidden state, while blocked storage and no-JavaScript reading remain usable. Functional coverage is in `tests/e2e/about-window.spec.mjs` and `tests/e2e/about-navigation.spec.mjs`; appearance and storage details are recorded in `docs/VISUAL_SYSTEMS.md`.
+
 ## Machine-readable article build
 
 Distribution dependency policy: the root's fflate 0.7.5 override patches Satori 0.33.5's pinned subdependency. `scripts/starter-package.mjs` copies only this consumer override to generated starters and includes overrides in drift detection; it excludes maintainer-only ESLint overrides and the root Satori dependency anchor. Maintainer ESLint 9 uses Minimatch 11 through scoped overrides; Lint remains a blocking check. See UPGRADING for existing consumers, whose root override is required independently of installing the theme package.

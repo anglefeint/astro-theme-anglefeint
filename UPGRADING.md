@@ -10,6 +10,16 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.26.0: About reading window
+
+Use the matching 0.26.0 starter, or deliberately merge its `src/pages/[lang]/about.astro` changes into your customized route before installing `@anglefeint/astro-theme@0.26.0`. The package supplies the controller, controls component, styles and localized labels; it cannot rewrite a project-owned route. No new site configuration, schema or adapter keys are required.
+
+The route imports `components/about/AboutWindowControls.astro`, sets `id="about-reading-window"` on the About article, and places the controls inside the outer `.prose` before the title, using the localized About title, modal-close label and `messages.windowControls`. Remove the old decorative dots beside OUTPUT. Add the initially hidden `data-about-open` button at the end of `.hacker-sidebar` and the initially hidden `data-about-restore` button in the body-end slot, both controlling `about-reading-window`; keep the existing contents and section IDs. These three control surfaces must be present together. Compare with the matching route and preserve your custom content rather than overwriting it.
+
+Red closes and resets reading position, leaving a sidebar About entry. Yellow retains layout space and reading position while minimizing to the bottom-right dock. Green requests fullscreen on the About article; Escape or the green button restores the page. The terminal commands `open`, `close`, `minimize`, `maximize` and `restore` use the same state. Preferences are local to this browser/path; fullscreen is never restored automatically. Contact links reopen hidden content. Without JavaScript the content remains readable and inactive controls stay hidden.
+
+After merging, run `npm run doctor`, inspect with `npm run preview`, then deploy the complete rebuilt output. Projects with substantially different routes/scripts should create a fresh starter in a new directory and migrate content/configuration. See [0.26.0](docs/releases/0.26.0.md) for delivery status.
+
 ## 0.25.0: Article authors and section links
 
 From the matching 0.24.1 starter, run `npm install @anglefeint/astro-theme@0.25.0`, then `npm run doctor` and `npm run preview`, and deploy the complete output. No new schema, adapter, project route or mandatory configuration is needed. Authors use the existing article `author` field or site author fallback; only a name matching the site author links to About, and only when About is enabled. Heading links reuse existing IDs; renaming a heading can still change its generated fragment. Older projects must also complete the earlier migrations below. See [0.25.0](docs/releases/0.25.0.md) for delivery status.

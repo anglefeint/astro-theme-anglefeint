@@ -290,6 +290,12 @@ try {
           const aboutHtml = await read('dist/en/about/index.html');
           assert(aboutHtml.includes('ABOUT_LINE_ONE\n\nABOUT_LINE_TWO'));
           assert(aboutHtml.includes('SIGNATURE_ONE\nSIGNATURE_TWO'));
+          const aboutDoc = parse(aboutHtml);
+          assert.equal(aboutDoc.querySelectorAll('[data-about-action]').length, 3);
+          assert(aboutDoc.querySelector('#about-reading-window .about-window-bar'));
+          assert(aboutDoc.querySelector('.hacker-sidebar [data-about-open]'));
+          assert(aboutDoc.querySelector('[data-about-restore]'));
+          assert.equal(aboutDoc.querySelector('main [data-about-restore]'), null);
         }
         for (const lang of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
           const html = await read(`dist/${lang}/blog/installed-default/index.html`);

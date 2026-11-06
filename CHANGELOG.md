@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.26.0] - 2026-11-07
+
+- Add About window controls and terminal commands: close to a sidebar About entry, minimize without changing document height or reading position, and fullscreen the reading panel with Escape/native exit handling. Remember local preferences without automatically restoring fullscreen; keep native Contact navigation and no-JavaScript reading usable.
+- Refine the compact amber contents frame, rounded link hover, neutral Contact text with CRT/waveform cues, and contain border-runner overflow so it cannot produce a horizontal scrollbar.
+- Existing projects must merge the matching project-owned About route as well as update the package. No new configuration keys. See [0.26.0](docs/releases/0.26.0.md) and [Upgrading](UPGRADING.md#0260-about-reading-window).
+
 ## [0.25.0] - 2026-11-05
 
 - Show localized article authors beside the date, linking the site author to About and including the same URL in article structured data; guest names and disabled About remain unlinked.

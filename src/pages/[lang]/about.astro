@@ -1,5 +1,6 @@
 ---
 import AboutContents from '@anglefeint/astro-theme/components/about/AboutContents.astro';
+import AboutWindowControls from '@anglefeint/astro-theme/components/about/AboutWindowControls.astro';
 import { ABOUT_CONTACT_ID, ABOUT_SECTION_IDS } from '@anglefeint/astro-theme/utils/about-sections';
 import type { GetStaticPaths } from 'astro';
 import { terminalDocumentId } from '@anglefeint/astro-theme/utils/terminal-document';
@@ -241,6 +242,26 @@ const aboutRuntimeConfig = {
         </svg>
         <span>Oracle</span>
       </button>
+      <button
+        type="button"
+        class="hacker-folder about-window-open"
+        data-about-open
+        hidden
+        aria-controls="about-reading-window"
+        title={`${messages.windowControls.restore}: ${messages.nav.about}`}
+      >
+        <svg
+          class="hacker-folder-icon"
+          viewBox="0 0 24 20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path d="M2 2h20v16H2zM2 6h20M5 4h1m2 0h1m-4 6 3 2-3 2m6 0h5"></path>
+        </svg>
+        <span>{messages.nav.about}</span>
+      </button>
     </nav>
 
     <template id="hacker-scripts-folders-tpl">
@@ -312,8 +333,13 @@ const aboutRuntimeConfig = {
     </WindowShell>
   </Fragment>
   <div class="hacker-load-scan" aria-hidden="true"></div>
-  <article class="about-shell">
+  <article class="about-shell" id="about-reading-window">
     <div class="prose">
+      <AboutWindowControls
+        title={messages.about.title}
+        close={ABOUT_CONFIG.labels.modalClose}
+        {...messages.windowControls}
+      />
       <div class="title about-title">
         {ABOUT_CONFIG.metaLine && <div class="hacker-meta">{ABOUT_CONFIG.metaLine}</div>}
         <h1>{messages.about.title}</h1>
@@ -323,9 +349,6 @@ const aboutRuntimeConfig = {
 
       <div class="hacker-response">
         <div class="hacker-response-header">
-          <div class="hacker-window-dots" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
           <span class="hacker-response-label">{ABOUT_CONFIG.labels.responseOutput}</span>
         </div>
         <AboutContents headings={aboutHeadings} label={messages.blog.toc} />
@@ -384,6 +407,18 @@ const aboutRuntimeConfig = {
     </div>
   </article>
   <Fragment slot="body-end">
+    <button
+      type="button"
+      class="about-window-dock"
+      data-about-restore
+      hidden
+      aria-controls="about-reading-window"
+      title={`${messages.windowControls.restore}: ${messages.about.title}`}
+    >
+      <span aria-hidden="true">&gt;_</span>
+      {messages.windowControls.restore}
+      <kbd>open</kbd>
+    </button>
     <script
       is:inline
       id="hacker-runtime-config"

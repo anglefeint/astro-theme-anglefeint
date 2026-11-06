@@ -1,0 +1,120 @@
+/* About's outer reading window; the background terminal remains independent. */
+.about-shell[data-minimized] {
+  visibility: hidden;
+  pointer-events: none;
+}
+.about-shell[hidden],
+.about-window-bar[hidden],
+.about-window-dock[hidden] {
+  display: none !important;
+}
+.about-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: -1rem -1rem 1rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--hacker-border);
+  border-radius: 6px 6px 0 0;
+  background: var(--hacker-titlebar);
+}
+.about-window-caption {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #b7b4ad;
+  font: 15px/1.4 var(--hacker-mono-font);
+}
+.about-window-controls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.about-window-controls button {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #261b13;
+  font: 700 11px/1 var(--hacker-ui-font);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.about-window-controls button:nth-child(1) {
+  background: #ff5f57;
+}
+.about-window-controls button:nth-child(2) {
+  background: #febc2e;
+}
+.about-window-controls button:nth-child(3) {
+  background: #28c840;
+}
+.about-window-controls button span {
+  opacity: 0;
+}
+.about-window-controls:is(:hover, :focus-within) button span {
+  opacity: 1;
+}
+.about-window-controls button:focus-visible,
+.about-window-dock:focus-visible {
+  outline: 2px solid #ffda93;
+  outline-offset: 4px;
+}
+.about-window-dock {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  max-width: calc(100vw - 2.5rem);
+  padding: 0.75rem 1rem;
+  border: 1px solid #b48c4970;
+  border-radius: 6px;
+  background: #101012f5;
+  color: #e2d5ba;
+  box-shadow: 0 0 16px #efbd6618;
+  font: 0.8rem/1.5 var(--hacker-mono-font);
+  cursor: pointer;
+}
+.about-window-dock:hover {
+  border-color: #efbd66;
+  color: #ffda93;
+}
+.about-shell:fullscreen {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #0a0a0c;
+  box-sizing: border-box;
+}
+.about-shell:fullscreen > .prose {
+  width: 100%;
+  max-width: none;
+  min-height: 100%;
+  margin: 0;
+  border-radius: 0;
+}
+body[data-about-window='maximized'] :is(.hacker-sidebar, .about-navigation, .hacker-toast),
+body:is([data-about-window='closed'], [data-about-window='minimized'])
+  :is(.hacker-progress, .hacker-back-to-top, .hacker-toast) {
+  display: none;
+}
+@media (pointer: coarse) {
+  .about-window-controls button {
+    width: 28px;
+    height: 28px;
+  }
+  .about-window-controls button span {
+    opacity: 1;
+  }
+}

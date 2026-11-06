@@ -173,6 +173,8 @@ Configura el encabezado principal de inicio por idioma mediante `i18n.locales.<c
 
 About incluye un índice localizado y una sección Contact destacada. El índice aparece junto al panel de lectura en pantallas amplias y dentro en pantallas pequeñas. Contact en Frontier abre `/<locale>/about/#contact`; desactivar About elimina ese enlace, mientras Decoder Lab conserva su opción independiente.
 
+La ventana About permite cerrar, minimizar o leer a pantalla completa, recuerda el estado local y ofrece comandos de terminal; los proyectos existentes deben integrar la ruta About correspondiente ([actualización](UPGRADING.md#0260-about-reading-window)).
+
 About incluye **Hacker Decryptor**: decodifica Base64/Base64URL, texto URL, hexadecimal, entidades HTML, escapes Unicode y cabecera/carga JWT en el navegador, con detección automática y una animación numérica con los colores de la página. Ábrelo desde Decryptor en la barra lateral; no requiere API ni configuración adicional.
 
 La versión completa de **Decoder Lab** está en `/<locale>/decoder/`: historial local, interpretación ERC-20/TRC-20 (EVM/HyperEVM/TRON) e inspección de direcciones EVM/TRON/Bitcoin. Ábrela desde el diálogo de About. Usa `theme.enableDecoderPage: false` en `src/site.config.ts` para desactivar la página y su enlace independientemente de About. No requiere RPC, cartera ni clave API.

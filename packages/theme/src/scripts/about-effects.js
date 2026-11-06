@@ -6,6 +6,7 @@ import { initAboutReadingUi } from './about/reading-ui.js';
 import { isReducedMotion, readAboutRuntimeConfig } from './about/runtime.js';
 import { initOracle } from './about/oracle.js';
 import { createDecoderClock } from './decoder/clock.js';
+import { initAboutWindow } from './about/window.js';
 
 let disposeAbout;
 export function initAboutEffects() {
@@ -26,7 +27,11 @@ export function initAboutEffects() {
   };
   disposeAbout = dispose;
   scope.add(() => decoderClock.dispose());
-  mount('initTerminalBackground', () => initTerminalBackground(runtimeConfig, reduced));
+  const aboutWindow = initAboutWindow();
+  scope.add(() => aboutWindow.dispose());
+  mount('initTerminalBackground', () =>
+    initTerminalBackground(runtimeConfig, reduced, aboutWindow)
+  );
   mount('initAboutReadingUi', () => initAboutReadingUi(runtimeConfig, reduced));
   mount('initAboutModals', () => initAboutModals(runtimeConfig, reduced, decoderClock));
   mount('initAboutInteractions', () => initAboutInteractions(reduced));

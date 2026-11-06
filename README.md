@@ -171,6 +171,8 @@ Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls 
 
 About includes a localized section directory and a highlighted Contact section. The directory sits beside the reading panel on wide screens and inside it on smaller screens. Frontier’s Contact link opens `/<locale>/about/#contact`; disabling About removes that link while Decoder Lab keeps its own switch.
 
+About window controls close, minimize or fullscreen the reading panel, with browser-local state and matching terminal commands; existing projects need the matching About route merge ([upgrade guide](UPGRADING.md#0260-about-reading-window)).
+
 About includes **Hacker Decryptor**: decode Base64/Base64URL, URL-encoded text, hexadecimal, HTML entities, Unicode escapes and JWT header/payload locally in your browser, with automatic format detection and a numeric result reveal matched to the page palette. Open Decryptor from the About sidebar; no API or extra setup is needed.
 
 The full **Decoder Lab** is available at `/<locale>/decoder/`, with local text-processing history, ERC-20/TRC-20 call interpretation (EVM/HyperEVM/TRON), and EVM/TRON/Bitcoin address inspection. Open it from the About decoder dialog. Set `theme.enableDecoderPage: false` in `src/site.config.ts` to omit the page and its link independently of About. No RPC, wallet connection or API key is required.

@@ -82,7 +82,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 | 文章详情     | [文章路由](src/pages/[lang]/blog/[...slug].astro)、[BlogPost](packages/theme/src/layouts/BlogPost.astro)      | AI 阅读布局，目录、标签、代码复制、正文图片预览、阅读状态、相关文章和可选评论/侧屏        |
 | 标签目录     | [目录路由](src/pages/[lang]/tags/index.astro)                                                                 | 每个启用语言的 `/:lang/tags/`，标签文章数量，680px 紧凑内容列                             |
 | 标签文章列表 | [标签分页路由](src/pages/[lang]/tags/[tag]/[...page].astro)                                                   | `/:lang/tags/<slug>/` 及后续页，复用博客卡片和分页                                        |
-| 关于         | [About 路由](src/pages/[lang]/about.astro)                                                                    | Hacker 风格；配置控制路由和导航，侧栏模态内容按语言读取                                   |
+| 关于         | [About 路由](src/pages/[lang]/about.astro)                                                                    | Hacker 风格；外层窗口支持关闭／最小化／大框全屏与终端命令，目录及侧栏入口按语言读取       |
 | 解码实验室   | [Decoder 路由](src/pages/[lang]/decoder.astro)                                                                | 独立多语言静态工具页，与 About 弹窗共用解码与数字动画；配置独立控制启用，不请求链上数据   |
 
 构建采用 Astro 默认静态输出，内容来自 Markdown/MDX collections。不需要全文搜索后端或 SSR 服务。搜索、目录、标签都使用已有文章内容生成；不是手工给示例文章单独搭建的页面功能。

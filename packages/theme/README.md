@@ -14,6 +14,8 @@ Decoder Lab takes its visual inspiration from the **cypherpunk** movement, in tr
 
 ## Archive and homepage component wiring
 
+About window controls require 0.26.0 and the matching project-owned `src/pages/[lang]/about.astro`: red closes to the sidebar About entry, yellow minimizes without collapsing page height, and green makes the reading panel fullscreen. `open`, `close`, `minimize`, `maximize` and `restore` share those controls; mode and normal reading position are remembered locally, while fullscreen always requires a fresh user action. Merge the route changes or migrate to a fresh starter; installing the package alone cannot add controls to a customized route. See [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window).
+
 The current source provides Cards/List archives with browser-local view memory, linked List tags and continuous range/count metadata. Custom routes pass `BlogCards` its existing `posts` / `locale` and optional zero-based `startIndex` / full filtered `totalPosts`. Without these props, offset defaults to zero and total to the supplied list length. Custom home routes pass the complete locale-filtered count as `HomePage.totalPosts` alongside the latest-post slice. These are component props; no site-schema or adapter update is needed. The matching project-owned routes must also be merged to get accurate cross-page totals. See the 0.24.0 section of [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0240-archive-views-and-homepage-counts).
 
 ## Decoder reading configuration

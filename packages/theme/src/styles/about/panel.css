@@ -10,7 +10,7 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
-  padding: clamp(1rem, 3vw, 1.75rem);
+  padding: 1rem;
   background: linear-gradient(160deg, rgba(12, 20, 15, 0.72), rgba(4, 9, 6, 0.84));
   border: 1px solid rgba(157, 181, 166, 0.26);
   border-radius: 6px;
@@ -108,7 +108,7 @@
 }
 /* ── title ── */
 .about-title {
-  margin-bottom: 1.4rem;
+  margin-bottom: 1rem;
 }
 .hacker-meta {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -198,7 +198,7 @@
   text-transform: uppercase;
 }
 .hacker-body {
-  padding: 1.4rem;
+  padding: 1rem;
   background: transparent;
   font-family: var(--hacker-ui-font);
   font-size: 0.9375rem;

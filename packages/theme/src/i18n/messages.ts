@@ -58,7 +58,7 @@ export type Messages = {
     viewAll: string;
     noPosts: string;
   };
-  windowControls: { collapse: string; expand: string; restore: string };
+  windowControls: { collapse: string; expand: string; restore: string; fullscreen: string };
   terminal: TerminalMessages;
   scriptFolders: { copyTitle: string; copied: string; failed: string };
   decoderPage: DecoderPageMessages;
@@ -199,19 +199,50 @@ const SCRIPT_FOLDER_LABELS: Record<string, Messages['scriptFolders']> = {
 };
 
 const WINDOW_LABELS: Record<string, Messages['windowControls']> = {
-  en: { collapse: 'Collapse content', expand: 'Expand window', restore: 'Restore window' },
-  zh: { collapse: '折叠内容', expand: '放大窗口', restore: '还原窗口' },
-  'zh-hant': { collapse: '摺疊內容', expand: '放大視窗', restore: '還原視窗' },
-  ja: { collapse: '内容を折りたたむ', expand: 'ウィンドウを拡大', restore: 'ウィンドウを戻す' },
-  ko: { collapse: '내용 접기', expand: '창 확대', restore: '창 복원' },
-  es: { collapse: 'Contraer contenido', expand: 'Ampliar ventana', restore: 'Restaurar ventana' },
-  'pt-br': { collapse: 'Recolher conteúdo', expand: 'Ampliar janela', restore: 'Restaurar janela' },
+  en: {
+    collapse: 'Collapse content',
+    expand: 'Expand window',
+    restore: 'Restore window',
+    fullscreen: 'Full screen',
+  },
+  zh: { collapse: '折叠内容', expand: '放大窗口', restore: '还原窗口', fullscreen: '全屏阅读' },
+  'zh-hant': {
+    collapse: '摺疊內容',
+    expand: '放大視窗',
+    restore: '還原視窗',
+    fullscreen: '全螢幕閱讀',
+  },
+  ja: {
+    collapse: '内容を折りたたむ',
+    expand: 'ウィンドウを拡大',
+    restore: 'ウィンドウを戻す',
+    fullscreen: '全画面表示',
+  },
+  ko: { collapse: '내용 접기', expand: '창 확대', restore: '창 복원', fullscreen: '전체 화면' },
+  es: {
+    collapse: 'Contraer contenido',
+    expand: 'Ampliar ventana',
+    restore: 'Restaurar ventana',
+    fullscreen: 'Pantalla completa',
+  },
+  'pt-br': {
+    collapse: 'Recolher conteúdo',
+    expand: 'Ampliar janela',
+    restore: 'Restaurar janela',
+    fullscreen: 'Tela cheia',
+  },
   de: {
     collapse: 'Inhalt einklappen',
     expand: 'Fenster vergrößern',
     restore: 'Fenster wiederherstellen',
+    fullscreen: 'Vollbild',
   },
-  ru: { collapse: 'Свернуть содержимое', expand: 'Развернуть окно', restore: 'Восстановить окно' },
+  ru: {
+    collapse: 'Свернуть содержимое',
+    expand: 'Развернуть окно',
+    restore: 'Восстановить окно',
+    fullscreen: 'Полный экран',
+  },
 };
 
 const DECODER_LABELS: Record<string, Messages['decoder']> = {

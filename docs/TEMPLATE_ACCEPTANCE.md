@@ -176,4 +176,6 @@ Local machine-readable tests cover global/root and per-language notes/links, fie
 
 ## About navigation regression coverage
 
+`tests/e2e/about-window.spec.mjs` validates the outer controls, distinct close/minimize recovery entries, stable minimized document height, local mode/position restoration, top About and Contact recovery, panel-target fullscreen and independent scrolling, native/Escape exit, denied requests, terminal commands/path completion, storage denial and no-JavaScript content. Screenshots/traces are disabled for these cases. The installed build matrix checks control markup and restore-entry ownership; the public-template browser check exercises close, minimize and actual panel fullscreen from the delivered npm package. These checks do not establish acceptance in browsers/platforms that were not run.
+
 `tests/e2e/about-navigation.spec.mjs` checks nine-language directory/heading correspondence, separate tool sidebar ownership, localized header Contact destinations, native anchor navigation without page JavaScript, and dropdown link/outside-click/Escape dismissal with keyboard focus restoration. Screenshots and traces are disabled for these functional tests; this is not a visual appearance review. Existing social-image tests continue to validate offline multilingual 1200×630 PNG generation after lossless encoder changes.

@@ -215,6 +215,25 @@ async function browserCheck(base, customized = false) {
         await expect(page.locator('.ai-article-toc')).toBeVisible();
         await expect(page.locator('.code-copy').first()).toBeVisible();
       }
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.goto(base + '/en/about/');
+      const aboutPanel = page.locator('#about-reading-window');
+      await page.locator('[data-about-action="close"]').click();
+      await expect(aboutPanel).toBeHidden();
+      await expect(page.locator('[data-about-restore]')).toBeHidden();
+      await page.locator('[data-about-open]').click();
+      await expect(aboutPanel).toBeVisible();
+      await page.locator('[data-about-action="minimize"]').click();
+      await page.locator('[data-about-restore]').click();
+      await expect(aboutPanel).toBeVisible();
+      await page.locator('[data-about-action="maximize"]').click();
+      await expect
+        .poll(() => page.evaluate(() => globalThis.document.fullscreenElement?.id))
+        .toBe('about-reading-window');
+      await page.keyboard.press('Escape');
+      await expect
+        .poll(() => page.evaluate(() => !!globalThis.document.fullscreenElement))
+        .toBeFalsy();
     }
     assert.deepEqual(errors, []);
     await page.screenshot({
@@ -389,6 +408,9 @@ try {
     assert.equal(directory.querySelectorAll('a').length, 5);
     assert.equal(directory.querySelector('.hacker-sidebar'), null);
     assert.equal(about.querySelectorAll('.hacker-sidebar').length, 1);
+    assert.equal(about.querySelectorAll('[data-about-action]').length, 3);
+    assert(about.querySelector('.hacker-sidebar [data-about-open]'));
+    assert(about.querySelector('[data-about-restore]'));
     for (const link of directory.querySelectorAll('a'))
       assert(about.querySelector(link.getAttribute('href')));
     assert.equal(

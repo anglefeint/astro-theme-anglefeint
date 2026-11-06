@@ -1,0 +1,40 @@
+---
+interface Props {
+  title: string;
+  close: string;
+  collapse: string;
+  fullscreen: string;
+  restore: string;
+}
+const { title, close, collapse, fullscreen, restore } = Astro.props;
+---
+
+<div class="about-window-bar" hidden>
+  <div class="about-window-controls">
+    <button
+      type="button"
+      data-about-action="close"
+      aria-label={close}
+      title={`${close} · close`}
+      aria-controls="about-reading-window"><span aria-hidden="true">×</span></button
+    >
+    <button
+      type="button"
+      data-about-action="minimize"
+      aria-label={collapse}
+      title={`${collapse} · minimize`}
+      aria-controls="about-reading-window"><span aria-hidden="true">−</span></button
+    >
+    <button
+      type="button"
+      data-about-action="maximize"
+      aria-label={fullscreen}
+      title={`${fullscreen} · maximize`}
+      aria-controls="about-reading-window"
+      aria-pressed="false"
+      data-expand-label={fullscreen}
+      data-restore-label={restore}><span aria-hidden="true">+</span></button
+    >
+  </div>
+  <span class="about-window-caption">{title}</span>
+</div>

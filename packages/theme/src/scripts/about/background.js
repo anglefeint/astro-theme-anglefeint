@@ -4,7 +4,7 @@ import { createTerminalLoader } from '../terminal/loader.js';
 import { createTerminal } from '../terminal/controller.js';
 
 // About owns activation/layout policy; terminal rendering is page-independent.
-export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
+export function initTerminalBackground(runtimeConfig, prefersReducedMotion, aboutWindow) {
   const canvas = document.querySelector('.hacker-bg-canvas');
   if (!canvas) return () => {};
   const listeners = new AbortController();
@@ -32,7 +32,12 @@ export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
       canvas.closest('.terminal-backdrop')?.classList.toggle('terminal-backdrop--reading', reading);
       position();
     },
-    onComplete: session ? (input) => session.complete(input) : undefined,
+    onComplete: session
+      ? (input) => {
+          const completed = aboutWindow?.complete(input);
+          return completed && completed !== input ? completed : session.complete(input);
+        }
+      : undefined,
     acceptsWheel: (event) =>
       !(
         event.target instanceof Element &&
@@ -42,7 +47,11 @@ export function initTerminalBackground(runtimeConfig, prefersReducedMotion) {
       ),
     onCommand: session
       ? async (input) => {
+          const windowResult = await aboutWindow?.command(input);
+          if (windowResult) return { ...windowResult, prompt: session.prompt };
           const result = await session.execute(input);
+          if (input.trim() === 'help')
+            result.lines.push('open · close · minimize · maximize · restore');
           if (listeners.signal.aborted) return;
           return { ...result, prompt: session.prompt };
         }
