@@ -171,7 +171,7 @@ npm run build
 
 About 提供本地化目录和醒目的 Contact 栏目：宽屏目录位于正文框右侧，小屏回到正文内。顶部 Frontier 菜单可直达 `/<locale>/about/#contact`；关闭 About 会移除此入口，Decoder Lab 仍由独立开关控制。
 
-About 支持关闭、最小化与正文框全屏，记住本地状态并提供对应终端命令；现有项目需合并匹配的 About 路由（[升级指南](UPGRADING.md#0260-about-reading-window)）。
+About 支持关闭、最小化与正文框全屏，记住本地状态并提供对应终端命令；现有项目需合并匹配的 About 路由（[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)）。
 
 About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL、URL 编码、十六进制、HTML 实体、Unicode 转义及 JWT 头部和载荷，支持自动识别和与页面配色一致的数字结果动画。从侧边栏打开 Decryptor 即可使用，无需配置接口。
 

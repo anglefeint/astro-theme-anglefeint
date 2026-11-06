@@ -173,7 +173,7 @@ npm run build
 
 About には各言語の目次と強調された Contact 欄があります。目次は広い画面では本文枠の右側、小さい画面では本文内に表示されます。Frontier の Contact から `/<locale>/about/#contact` へ直接移動できます。About を無効にするとこのリンクは消えますが、Decoder Lab は独立した設定を維持します。
 
-About の閲覧ウィンドウは閉じる・最小化・全画面表示に対応し、状態をブラウザーに保存します。対応する端末コマンドも使えます。既存サイトは About ルートの統合が必要です（[更新ガイド](UPGRADING.md#0260-about-reading-window)）。
+About の閲覧ウィンドウは閉じる・最小化・全画面表示に対応し、状態をブラウザーに保存します。対応する端末コマンドも使えます。既存サイトは About ルートの統合が必要です（[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)）。
 
 About の **Hacker Decryptor** は、Base64/Base64URL、URLエンコード、16進数、HTMLエンティティ、Unicodeエスケープ、JWTのヘッダーとペイロードをブラウザー内でデコードします。形式の自動判定とページ配色に合わせた数字の結果アニメーションに対応。サイドバーのDecryptorから開けます。APIや追加設定は不要です。
 

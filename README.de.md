@@ -139,7 +139,7 @@ Die große Startseitenüberschrift lässt sich je Sprache über `i18n.locales.<c
 
 About bietet ein lokalisiertes Inhaltsverzeichnis und einen hervorgehobenen Kontaktbereich. Auf breiten Bildschirmen steht das Verzeichnis rechts neben dem Lesebereich, auf kleinen darin. Contact im Frontier-Menü öffnet `/<locale>/about/#contact`; beim Deaktivieren von About entfällt dieser Link, Decoder Lab bleibt unabhängig schaltbar.
 
-Das About-Lesefenster lässt sich schließen, minimieren oder im Vollbild öffnen, mit lokal gespeichertem Zustand und Terminalbefehlen; bestehende Projekte müssen die passende About-Route übernehmen ([Upgrade](UPGRADING.md#0260-about-reading-window)).
+Das About-Lesefenster lässt sich schließen, minimieren oder im Vollbild öffnen, mit lokal gespeichertem Zustand und Terminalbefehlen; bestehende Projekte müssen die passende About-Route übernehmen ([Upgrade](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)).
 
 About enthält **Hacker Decryptor**: Base64/Base64URL, URL-codierten Text, Hexadezimaltext, HTML-Entitäten, Unicode-Escapes und JWT-Header/Payload lokal im Browser decodieren, mit automatischer Formaterkennung und einer zur Seitenpalette passenden Zahlenanimation. Über Decryptor in der Seitenleiste öffnen; keine API oder zusätzliche Einrichtung nötig.
 
