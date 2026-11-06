@@ -173,6 +173,8 @@ npm run build
 
 About에는 현지화된 목차와 강조된 Contact 항목이 있습니다. 넓은 화면에서는 본문 틀 오른쪽에, 작은 화면에서는 본문 안에 목차를 표시합니다. Frontier의 Contact는 `/<locale>/about/#contact`로 바로 이동합니다. About을 끄면 이 링크가 사라지며 Decoder Lab은 별도 설정을 따릅니다.
 
+About 읽기 창은 닫기·최소화·전체 화면과 터미널 명령을 지원하며 상태를 브라우저에 저장합니다. 기존 프로젝트는 일치하는 About 라우트를 병합해야 합니다([업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)).
+
 About의 **Hacker Decryptor**는 Base64/Base64URL, URL 인코딩, 16진수, HTML 엔티티, Unicode 이스케이프 및 JWT 헤더/페이로드를 브라우저에서 디코딩합니다. 자동 형식 감지와 페이지 색상에 맞춘 숫자 결과 애니메이션을 지원합니다. 사이드바의 Decryptor에서 열 수 있으며 API나 추가 설정이 필요 없습니다.
 
 전체 **Decoder Lab**는 `/<locale>/decoder/`에서 로컬 처리 기록, EVM/HyperEVM/TRON의 ERC-20/TRC-20 호출 해석 및 EVM/TRON/Bitcoin 주소 확인을 제공합니다. About 디코더 창에서 열 수 있습니다. `src/site.config.ts`에서 `theme.enableDecoderPage: false`로 페이지와 링크를 독립적으로 끌 수 있습니다. RPC, 지갑 연결, API 키가 필요 없습니다.

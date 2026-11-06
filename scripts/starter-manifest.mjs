@@ -138,6 +138,7 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'public/images/theme-previews/preview-blog-post-related.jpg',
   'public/images/theme-previews/preview-blog-post.jpg',
   'public/images/theme-previews/preview-home.jpg',
+  // The route composes npm-owned AboutWindowControls, about/window.js and about/window.css.
   'src/pages/[lang]/about.astro',
   'src/pages/[lang]/decoder.astro',
   'src/pages/[lang]/terminal/[id].json.ts',
