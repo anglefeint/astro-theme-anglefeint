@@ -18,7 +18,7 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 更新架构、视觉参考、九语言 README、包说明、升级指南、验收指南、CHANGELOG、版本索引和 0.26.0 版本记录；本节记录处置。项目 About 路由本来已由 manifest 管理，新组件／脚本／样式属于 npm 的现有目录覆盖，打包检查新增必须入包断言，manifest 注释明确此分工。既有 About 开关、配置 schema、adapter、SEO／文章内容链路和发布政策未改变，其余候选和历史记录不重写。公开 README 仅增加一句功能与路由迁移提示，不把本地存储偏好写成自动全屏权限。
 
-本地十一项 About 浏览器场景及 lint／完整检查已通过。安装矩阵和远程模板的增强断言随正式发布验证，不将预发布测试当作实际交付证据；详见 [0.26.0](releases/0.26.0.md)。候选和处置记录保留在忽略的 `acceptance-results/release-0260-doc-*.json`。不因文档描述修改运行代码，也不把旧截图当作最新窗口交互的证据。
+本地 21 项浏览器场景、138 项单元测试及 lint／完整检查已通过。正式发布的 14 组隔离构建、npm 下载／264 文件源码核验、starter 同步和公开模板验收均通过；线上九语 144 篇文章及十一项 About 交互也通过。首轮发布检查发现 starter 不带升级指南，九语 README 链接已改为主仓库地址；npm 上传后的暂时下载 404 按恢复流程核验，没有重复上传。实际交付与限制详见 [0.26.0](releases/0.26.0.md)。候选和处置记录保留在忽略的 `acceptance-results/release-0260-doc-*.json`。不因文档描述修改运行代码，也不把旧截图当作最新窗口交互的证据。
 
 ## 2026-11-05 作者署名与小节链接
 
