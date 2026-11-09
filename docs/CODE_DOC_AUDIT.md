@@ -12,6 +12,61 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-09 二次架构审查与历史 Release 对照
+
+通过 GitHub API 读取最近 20 次实际 Release（v0.26.0 至 v0.11.3），并逐个核对本地 tag 的文件差异；原始响应／路径清单保存在忽略的 `architecture-review-releases.json`、`architecture-review-release-paths.json`。下面判断的是**相同改动放进 schema-1 新架构之后**的交付方式，不声称旧版 skeleton 已能自动升级，也没有把 20 个历史包逐个安装到新结构中。历史发布事实与源码不改。
+
+| 历史版本                                                                            | 实际改动类型                                 | 新架构交付边界                                                   |
+| ----------------------------------------------------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------- |
+| [0.26.0](https://github.com/anglefeint/astro-theme-anglefeint/releases/tag/v0.26.0) | About 窗口和页面组合                         | routes、组件、控制器一起随包升级                                 |
+| 0.25.0                                                                              | 文章作者、标题锚点                           | layout、脚本、SEO 随包升级                                       |
+| 0.24.1                                                                              | 默认每页十篇                                 | 包内默认值随包升级；用户明确页数不变                             |
+| 0.24.0                                                                              | Cards/List、归档总数和首页计数               | routes 与组件调用同步升级；demo 文章不自动复制                   |
+| 0.23.0                                                                              | About 目录、Contact 菜单、OG 编码            | routes、菜单、构建逻辑随包升级                                   |
+| 0.22.0                                                                              | AI-readable 可选站点上下文                   | integration 自动接线；作者按需填写内容                           |
+| 0.21.0                                                                              | Markdown 导出、文章布局、封面和安全 override | 包内功能自动接线；根 package override 需单独审阅，个人封面不覆盖 |
+| 0.20.1                                                                              | 默认阅读卡、插图和 Vite 更新                 | 默认卡／包资源可更新；自定义卡列表保持；宿主依赖需兼容审阅       |
+| 0.20.0                                                                              | Frontier 菜单和阅读卡                        | 菜单、页面组件、包资源一起升级                                   |
+| 0.19.0                                                                              | Decoder／特效生命周期                        | 包内控制器、样式、翻译升级                                       |
+| 0.18.2                                                                              | 首页间距、文档预览图                         | 包内 CSS 升级；用户 README／预览图不重写                         |
+| 0.18.1                                                                              | 播放器紧凑模式、首页信号                     | 包内组件、样式、脚本升级；个人音乐不覆盖                         |
+| 0.18.0                                                                              | Decoder 新页面、终端 JSON                    | integration 注册页面，routes／脚本／类型一同升级                 |
+| 0.17.0                                                                              | 终端文案和 Oracle                            | 包内消息适配与脚本升级；用户文案覆盖保留                         |
+| 0.16.0                                                                              | 本地化首页标题                               | 包内类型／解析／组件升级；已有全局标题仍有效                     |
+| 0.15.0                                                                              | 首页开关、footer 链接、示例音乐              | 可选默认值／解析随包升级；音乐文件与用户配置不覆盖               |
+| 0.14.0                                                                              | Matrix 首页、Oracle、新开关                  | routes／组件／默认值一起升级；默认关闭的功能仍需主动开启         |
+| 0.13.0                                                                              | Markdown／MDX 数学集成                       | integration 自动接线；Astro/Node 不兼容时停止                    |
+| 0.12.0                                                                              | social rel 可选字段                          | 加法型配置与渲染随包升级，无需重写列表                           |
+| [0.11.3](https://github.com/anglefeint/astro-theme-anglefeint/releases/tag/v0.11.3) | About 换行样式                               | 包内 CSS 升级，原配置文本保留                                    |
+
+代表性可执行重放在 `scripts/check-package-upgrade.mjs`：从固定 schema-1 接入文件创建独立个人博客、安装真实本地 tarball，再以本地测试 registry 执行真实 npm exec/npx 从 0.27 跳至未发布的 0.29。未来包新增 Code Lab 路由、Frontier 菜单、组件、打包后的客户端模块和兼容默认开关，并改变默认分页。检查用户明确分页／音乐覆盖、八个启用语言的新页面和关闭语言缺页；浏览器实际点击菜单、格式化 JSON、处理无效输入并切到日语。随后测试关闭新功能以及同名用户页面冲突，后者必须明确失败并保留文件。Code Lab 仅是测试包，不加入正式产品。
+
+第二次审查还修复标准路由冲突检查仅识别同名 .astro 的缺口，覆盖 Markdown/MDX、index 别名、具体启用语言目录、改名的动态语言参数和 JSON 端点；新增一组保护测试。另补充两处边界：失败后依赖恢复不代表 dist 已恢复，CLI 明确禁止部署未完成产物、要求重新 doctor；维护政策改为保留固定 schema-1 跨版本验收，取消与新架构冲突的“历史升级不是要求”泛化表述。九语 README 安装位置提示公开 starter 当前仍为 0.26，新命令尚未交付；UPGRADING 增加具体 import 替换、样例与个人文件重名、完整配置数组、依赖备份不含内容、禁止并发操作和失败输出恢复说明。没有 push／发布／远程 starter 改动。
+
+本轮最终复验：147 项单元、262 页构建／九语 About、343 文件 Astro 零诊断、lint、独立安装 14 构建矩阵与 audit（零已知漏洞）、139/139 功能浏览器检查（两 worker，3.0 分钟）通过。Code Lab 真命令重放保护 85 份夹具文件，五类场景与一次预期冲突拒绝通过；204 份原仓库内容／配置／资源哈希仍一致。文档候选／处置保存在 architecture-review-doc-*.json，88 份元数据及 26 份变更 Markdown 的本地链接通过。首轮缺必需布局属性的失败与真实依赖恢复证据单独保存，不掩盖为首轮全通过。平台覆盖仍限本次 Windows／Node 24／npm／Chromium，远程新 starter 验收须待发布后执行。
+
+## 2026-11-09 集成架构与一条命令升级（0.27.0，本地准备）
+
+用户在早期 SEO 方案之后明确授权阻断式架构升级，并要求保留内容／配置／音乐图片、维持功能视觉、完整测试且不 push。本节替代下方同日 starter-only SEO 交付方案；早期记录保留为过程事实，不再代表最终实现或 npm 发布判断。
+
+以 main `90202476c1ad7c23887dd75d5b46832acd143f38` 之上的最终工作区为输入，核对包内 integration → 标准 routes → project 配置／i18n → 原组件样式脚本 → 构建产物；另核对 package tsconfig／类型别名、manifest 中薄 starter／教程源覆盖、升级 bin → npm 元数据／兼容门禁 → 依赖备份／安装／doctor／恢复。根目录现有 site-config 字节不改，旧 helper 转发到包；根适配器／模板只留作维护诊断夹具，不分发到用户项目。包内字体使用原文件字节，视觉参数与页面组成不重设计；既有 LangSwitcher 字号／行高工作区改动保留。204 个原配置、文章、图片、音频等文件哈希一致。
+
+同步九语 README、包说明、UPGRADING、架构、视觉源码归属、工程地图、贡献指南、分支／发布／维护／AI 工作流、验收、CHANGELOG、版本索引和 0.27.0 记录。新 starter 的 27 份教程源覆盖更新升级说明，而不改 demo 中已发布的文章源。元数据校验的 README 升级命令政策同步为真实新 bin 入口。旧项目需一次新目录迁移，新 schema-1 npm 项目以后运行 npx 升级；Node/Astro／未知 schema／非 npm 锁文件／缺 lockfile 明确停止，无自动跨 schema 迁移。公共 tsconfig 随包升级，不要求作者维护 node_modules 内部路径。
+
+最终主库检查通过：146 项单元测试、lint、零 Astro errors/warnings/hints、262 页构建及九语 About 校验。独立安装完整 14 构建矩阵与 audit 通过；公共 tsconfig 迁移后再跑独立安装／类型／scaffold／audit 通过。真实 npm exec/npx 夹具从 0.27 跳至未发布的测试包 0.29，增加真实 Frontier 菜单、按钮和页面，用户文件逐字节不变；失败恢复和只读预检另有单元测试。首轮高并发浏览器 136/139 通过、三例超时；降低至两 worker 的两次完整复验均 139/139 通过，不改运行效果或断言。音乐十组功能检查通过；Workers 本地 HTTP 验证 JSON noindex／原内容、其余 HTML/RSS 不受影响、字体字节和全部 sitemap 路径／文章日期一致。不宣称外观截图审查、远程交付或未测试平台覆盖。
+
+执行 suggest:docs 的最终候选／逐文件处置保存在忽略的 architecture-final-doc-*.json；本地链接及元数据单独核验。CLI／代理入口和文档算法仍指向现有中立指南；通用产品身份和历史版本事实不重写。其余验证证据及平台边界见 [0.27.0](releases/0.27.0.md)。没有提交、push、发布 npm／GitHub Release、同步 starter 或部署。下一次真正交付必须按包行为变更流程发 npm、同步 starter 并做远程验收，不能沿用早期“不需要 npm”的结论。
+
+## 2026-11-09 Starter SEO 与升级通知（早期方案，已被集成升级替代）
+
+以 `90202476c1ad7c23887dd75d5b46832acd143f38` 之上的工作区为输入，按代码优先核对 `astro.config.mjs` → starter-owned `scripts/article-sitemap.mjs` → 渲染文章日期 → XML，以及终端 JSON 路由 → `public/_headers` → Cloudflare 本地静态响应。`scripts/starter-manifest.mjs` 纳入新增辅助脚本和 header 文件；About 校验脚本检查配置中的虚拟路径是否进入 URL 属性。已有 `LangSwitcher.astro` 字号／行高改动和 `output/` 不属于本次 SEO 交付范围，保持原状；若未来将该包内样式改动一并交付，需要另行判断 npm 发布。
+
+`suggest:docs` 的直接命中与传播候选用于责任核对，而非全部重写。更新九语 README、包 README 中过时的封面说明、UPGRADING、架构、CHANGELOG、版本索引和本记录；通知流程同步维护工作流、AI 工作流和 package runbook。升级指南逐文件说明手动合并、现有依赖、验证命令、托管头限制及尚未发布的状态。包 README 的封面修正只是文档更新，旧 npm tarball 不会被原地重写。
+
+发布通知与代码分发分别记录：本次准备 Unreleased 公告；完成 main/starter 交付和远程验收后才创建独立 starter GitHub Release，不伪造 npm 新版本、不声称 `npm update` 或 `sync-adapters` 能安装这些文件。九语 README 给出 Releases 入口和订阅边界。AGENTS／工具入口、元数据规范、视觉系统、产品介绍、历史版本记录不改：配置与视觉行为未变，既有发布事实保持历史。没有为降低 Search Console 数字而移除标签页、禁用终端或增加虚构重定向。
+
+复用本聊天前一步已执行的实现验证：140 项测试、lint、完整 `npm run check`（Astro 零错误／警告、262 页构建、九语 About 校验）通过；261 项 sitemap 中 144 篇文章日期与渲染元数据一致；Wrangler Pages 本地验证九语 JSON 的 200／原内容／noindex，以及 About、归档、RSS 无该 noindex 头。这些不是远程交付证明。本轮文档核对另行运行元数据和本地链接检查；候选与逐文件处置保存于忽略的 `acceptance-results/starter-seo-doc-*.json`。目前未提交、未 push、未同步 starter、未发布 npm／GitHub Release、未部署；源码和分发验证完成后再更新交付状态。
+
 ## 2026-11-07 About 窗口与目录
 
 以 `2d7cc4e` 之后的工作区为输入，按代码优先核对 project-owned About 路由 → 包内控制组件、window controller、背景终端桥接、九语言标签和样式 → 本地功能检查与安装／打包检查。最终行为以代码为准：大框全屏而非网页全屏；标题栏不吸顶；红色关闭后用右侧工具栏 About 入口，黄色最小化才用右下角 dock，并保留页面高度和位置；刷新不会自动全屏。早期布局与动效尝试没有作为最终功能写入文档。
@@ -467,7 +522,7 @@ AGENTS、工具入口、通用发布/元数据规则没有因本功能改变，�
 | 文档 helper 被容易误解为内容同步或正确性验证 | [建议脚本](../scripts/suggest-doc-updates.mjs)、[元数据校验器](../scripts/validate-doc-metadata.mjs) | 明确仅推荐候选/校验元数据，增加已提交代码的显式输入与人工语义核对步骤 |
 | 搜索只写成文章页说明，复制/图片说明混在标签末尾 | [共享 Header](../packages/theme/src/components/shared/CommonHeader.astro)、[BlogPost](../packages/theme/src/layouts/BlogPost.astro) | 按全站搜索、文章目录、标签、复制、图片、阅读反馈整理章节 |
 | 配置/路由/包边界缺乏可追踪入口 | [默认值](../src/site.config.defaults.ts)、[adapter 模板](../scripts/adapter-templates/src/config/theme.ts)、[manifest](../scripts/starter-manifest.mjs) | 新增代码→文档→既有测试表；说明 npm 更新不会创建 starter 路由和搜索注册 |
-| 标签目录访问、排序/编码、空状态和语言切换边界不完整 | [标签工具](../packages/theme/src/utils/tags.ts)、[目录](../src/pages/[lang]/tags/index.astro)、[分页路由](../src/pages/[lang]/tags/[tag]/[...page].astro) | 记录直接访问 URL、大小写、编码、排序、空语言、禁用路由及跳转第一页规则 |
+| 标签目录访问、排序/编码、空状态和语言切换边界不完整 | [标签工具](../packages/theme/src/utils/tags.ts)、[目录](../packages/theme/src/routes/[lang]/tags/index.astro)、[分页路由](../packages/theme/src/routes/[lang]/tags/[tag]/[...page].astro) | 记录直接访问 URL、大小写、编码、排序、空语言、禁用路由及跳转第一页规则 |
 | 总览把所有页面的语言导航与 hreflang 视为相同 | 标签路由传递 `includeAlternateLinks=false`；[BaseHead](../packages/theme/src/components/BaseHead.astro) | 明确标签页保留 canonical/语言导航但不输出 hreflang |
 | “点击放大”可能被理解为自动获取高清原图或完整图库 | [图片预览脚本](../packages/theme/src/scripts/blogpost/image-preview.js) | 记录 `currentSrc` 或 `src`、排除 hero/链接/按钮图片、初始化范围、无图库/手势/独立开关 |
 | 滚动提示容易被当作内容加载状态 | [阅读进度脚本](../packages/theme/src/scripts/blogpost/read-progress.js)、[样式](../packages/theme/src/styles/blog-post.css) | 说明依据文档滚动距离和阶段阈值计算，与加载无关；位置不依赖 TOC 开关 |
@@ -524,7 +579,7 @@ sidecar 元数据继续复用，职责和关联路径没有变化。普通博客
 
 ## 审计后的标签视觉调整
 
-用户随后授权保留光柱、雨滴和闪烁并调整标签背景。当前工作区新增 [CyberAtmosphere](../src/components/CyberAtmosphere.astro)，让博客列表与两个标签路由共用雨滴/尘埃初始化，标签使用冰蓝/淡紫配色和较慢扫光，并遵循减少动态效果设置。上表“只有博客列表挂载雨滴”的结论属于 `3ece7ed` 审计基线，已被这次代码调整替代；当前行为已同步到视觉系统、架构和工程总览。组件加入 starter 清单，尚未提交或分发。
+用户随后授权保留光柱、雨滴和闪烁并调整标签背景。当前工作区新增 [CyberAtmosphere](../packages/theme/src/components/CyberAtmosphere.astro)，让博客列表与两个标签路由共用雨滴/尘埃初始化，标签使用冰蓝/淡紫配色和较慢扫光，并遵循减少动态效果设置。上表“只有博客列表挂载雨滴”的结论属于 `3ece7ed` 审计基线，已被这次代码调整替代；当前行为已同步到视觉系统、架构和工程总览。组件加入 starter 清单，尚未提交或分发。
 
 ## 2026-09-14 本地依赖安全升级
 

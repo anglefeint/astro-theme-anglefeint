@@ -10,6 +10,78 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+<a id="0270-integration-starter-breaking-not-yet-published"></a>
+
+## 0.27.0: Integration starter (breaking)
+
+Version 0.27.0 introduces a breaking integration starter. Pre-0.27 projects must migrate once; schema-1 integration starters use the package upgrade command below. See the [release ledger](docs/releases/0.27.0.md) for actual delivery and validation status.
+
+### One-time migration from pre-0.27 projects
+
+Keep a complete backup of the old project, including its lockfile, hidden environment files and hosting settings. Create the latest public starter in a **separate directory**:
+
+```bash
+npm create astro@latest -- my-blog-new --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+cd my-blog-new
+npm install
+```
+
+Copy your articles (including article-relative images), `src/assets/`, public music/images/icons/fonts/favicon and any other personal public files into the new project. Preserve filenames, article slugs, locale directories, resource URLs and required licenses. Copy personal `.env` values and deliberately merge deployment settings without publishing secrets. Do not replace the new package.json/tsconfig/Astro configuration with old copies.
+
+Your site-config **values** remain supported. Preserve the old file as a backup, change its old local helper imports/re-exports to `@anglefeint/astro-theme/config`, and merge your identity, locale enablement/fallbacks, About content, social links, playlist and feature overrides into the new `defineThemeConfig({...})` object. Arrays replace earlier arrays, so keep your full playlist/link lists. Omitted fields use package defaults. Preserve explicit pagination and locale choices if you do not want new defaults. The main demo retains its existing configuration via maintainer compatibility entries; those entries are not part of the new consumer skeleton.
+
+For example, replace `import { defineThemeConfig } from './site.config.defaults.ts'` with `import { defineThemeConfig } from '@anglefeint/astro-theme/config'`. Redirect any type exports from `./site.config.schema.ts` and helper exports from `./site.config.runtime.ts` to the same public package entry. Keep the existing `THEME_CONFIG` object and its personal values. Compare old/new locale settings, full playlists, About text and social arrays before deleting the backup. Merge personal content into the new content directories; remove sample posts only after confirming they are samples, not personal files with matching filenames.
+
+Do not copy old standard `src/pages` routes, `src/config`, `src/i18n`, defaults/schema/runtime helpers, generated adapter types or adapter-sync scripts. The integration owns Home, Blog/articles, Tags, About, Decoder, RSS, robots and terminal JSON together. For your own pages, migrate the content and custom code deliberately, keep package layout imports and the integration's documented aliases, and use paths outside the reserved standard routes. A conflicting copied standard route causes a clear build error rather than silently replacing it.
+
+The new Astro entry is:
+
+```js
+import { defineConfig } from 'astro/config';
+import anglefeint from '@anglefeint/astro-theme/integration';
+import { THEME_CONFIG } from './src/site.config';
+
+export default defineConfig({ integrations: [anglefeint(THEME_CONFIG)] });
+```
+
+The new tsconfig extends `@anglefeint/astro-theme/tsconfig`; preserve this package-owned type/alias setup instead of copying old paths into the new project.
+
+Do not also register the former standalone MDX/search/social-image/machine-readable/sitemap integrations: the unified integration supplies them. Retain unrelated integrations deliberately.
+
+Run `npm run doctor`, inspect with `npm run preview`, and deploy **all** of dist/. Check old article URLs, canonical/hreflang, enabled languages, About/Decoder switches, custom pages and music/image URLs before replacing the old deployment. New defaults or an Astro change can affect content parsing; resolve build errors rather than deleting personal content.
+
+### Future upgrades of the integration starter
+
+For npm projects with `anglefeint.projectSchema: 1`:
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+# Read-only project preflight:
+npx @anglefeint/astro-theme@latest upgrade --check
+# Select a published version:
+npx @anglefeint/astro-theme@latest upgrade --to 0.27.0
+```
+
+`npm run upgrade` is the same default command in the new starter. The updater validates the project marker, npm lockfile family, target package name/version/schema, Node engine and installed Astro peer range. It resolves the target before installation, supports skipping package versions within schema 1, backs up package.json/package-lock.json under `.anglefeint/backups/`, installs the exact version with lifecycle scripts disabled, and runs the project's doctor. It does not rewrite configuration, source, content, music, images, custom pages or host settings; it does not push or deploy. It preserves user dependency overrides. Review new dependencies if they require installation lifecycle scripts.
+
+On failure, dependency files are restored and the tool attempts to reinstall the old dependencies. If reinstall fails, it reports the backup path and incomplete recovery; keep that backup. Astro/Node incompatibilities, unknown project schemas and old skeletons stop before dependency changes. There are currently no cross-schema migrations: future schema changes require a documented migration and a matching upgrader implementation. A package-lock.json is required for recoverable upgrades; run npm install first if it is absent. Automatic upgrades currently support **npm only**; pnpm/yarn/bun lockfiles are rejected rather than rewritten. These guarantees cover unmodified package-owned standard pages; deeply customized replacement components may need manual adaptation. Keep a backup/Git commit for application-specific customizations.
+
+Dependency recovery does not restore build output: a failed build can leave `dist/` incomplete. Do not deploy it. After recovering dependencies, rerun `npm run doctor` successfully before deployment. Run only one upgrade/install/build against a project at a time. The dependency backup is not a backup of articles or media.
+
+Doctor executes the project's configured validation/build commands. Custom scripts can have their own side effects; dependency recovery is not a general content rollback or a sandbox for those scripts. Keep a separate backup of personal content before migration or upgrading customized projects.
+
+Ordinary package-owned menus, buttons, pages, scripts, styles, translations and additive optional defaults arrive through the package update and rebuild. Explicit user overrides stay explicit: a custom list replaces a default list, and a configured page size does not change when the package default changes. New features must supply backward-compatible defaults within schema 1. Root package overrides, Astro/Node changes, environment secrets, hosting configuration, personal assets and documentation copies are separate concerns; the updater does not rewrite them. A future package page conflicting with a user page stops the build and requires choosing a new custom URL deliberately; it never deletes the user page.
+
+### SEO and static hosting
+
+The package sitemap reads rendered `updatedDate ?? pubDate`, never file/build timestamps, and does not fabricate dates for archives. Terminal JSON keeps its URL/body and sets `X-Robots-Tag: noindex`; the build merges its static rule into `dist/_headers` without changing user source `_headers`. Cloudflare Pages/compatible hosts apply this output; other hosts require equivalent headers. Astro preview does not apply hosting headers. Check a deployed terminal JSON response for 200, the original body and `X-Robots-Tag: noindex`, while article HTML remains unaffected. Keep robots open so crawlers can read the directive. This does not guarantee indexing or erase historical 404 reports.
+
+Read [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases) and [Changelog](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md) before upgrades; notifications require opt-in. Delivery and local verification are recorded separately in [0.27.0](docs/releases/0.27.0.md).
+
+## Historical migrations for pre-0.27 starters
+
+The sections below describe older copied skeletons and remain historical references. They are not additional steps for a new integration starter. Use the fresh-starter migration above to cross the 0.27 boundary.
+
 ## 0.26.0: About reading window
 
 Use the matching 0.26.0 starter, or deliberately merge its `src/pages/[lang]/about.astro` changes into your customized route before installing `@anglefeint/astro-theme@0.26.0`. The package supplies the controller, controls component, styles and localized labels; it cannot rewrite a project-owned route. No new site configuration, schema or adapter keys are required.

@@ -13,6 +13,14 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.27.0] - 2026-11-09 — Integration starter (breaking)
+
+- Move standard pages/routes, configuration defaults/types/runtime, i18n/config wiring, archive atmosphere and internal fonts into the theme package. A thin starter retains user articles, site config, music/images and custom pages; existing cinematic behavior and route URLs are preserved.
+- Add a real one-command npm upgrade entry with schema/Node/Astro checks, exact target resolution, dependency backup, doctor and recoverable dependency rollback. User source/assets/configuration are not overwritten; unsupported old skeletons or package managers stop with guidance.
+- Add article sitemap real dates and generated static terminal JSON noindex rules, plus virtual-path URL checks. Correct default-cover documentation in all nine READMEs and package guidance.
+- Pre-0.27 users must migrate once into a fresh starter, preserving personal values/resources/URLs rather than copying old standard routes/helpers. See [Upgrading](UPGRADING.md#0270-integration-starter-breaking-not-yet-published) and [0.27.0 release record](docs/releases/0.27.0.md). The earlier standalone starter-SEO proposal is superseded by this package integration.
+- Delivery status and source/starter verification are recorded in the release ledger; old copied skeletons are not upgraded by npm installation alone.
+
 ## [0.26.0] - 2026-11-07
 
 - Add About window controls and terminal commands: close to a sidebar About entry, minimize without changing document height or reading position, and fullscreen the reading panel with Escape/native exit handling. Remember local preferences without automatically restoring fullscreen; keep native Contact navigation and no-JavaScript reading usable.

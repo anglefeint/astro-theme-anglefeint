@@ -9,89 +9,33 @@ source_of_truth: true
 
 # Theme Packaging Workflow
 
-For an explicit security validation of the generated local starter, run `npm run check:installed -- --audit` (combine with `--build` for the build matrix). This optional mode audits the isolated installation against registry advisories, fails on any reported vulnerability or audit error, and reports the result. It does not audit or modify the already published remote starter.
+## Current boundary: integration starter
 
-## Goal
+Version 0.27.0 moves standard routes, config defaults/types/normalization, derived config/i18n modules, internal fonts and build wiring into the npm theme. New consumers receive a thin starter: Astro and content entrypoints, tsconfig, neutral site config, user-facing guidance and sample content/resources. They do not receive implementation copies or generated adapters. The repository's legacy root adapters/templates remain maintainer diagnostic fixtures; they are not the source of consumer runtime behavior.
 
-- Publish a reusable theme package: `@anglefeint/astro-theme`.
-- Keep current repository with dual roles:
-  - `main` for monorepo theme development
-  - `starter` branch for end-user template initialization
-- Prioritize the latest starter paired with its published theme package. Compatible package-only updates may use `npm update @anglefeint/astro-theme`; skeleton changes may require a fresh template and content/configuration migration.
+The package exports `./integration`, `./config`, `./env`, `./runtime/*` and existing layout/component/build APIs. The integration registers unchanged Home, archives/articles, Tags, About, Decoder, RSS, robots and terminal JSON, plus MDX/math/search/social/machine-readable/sitemap behavior. User content/configuration/public files/custom pages stay project-owned. Configured defaults resolve in the package so future compatible menu/button/page/default changes can ship through dependencies.
 
-## Phase 1: Baseline and Scaffolding
+`packages/theme/package.json` files/exports/bin lists must cover the actual route/runtime/integration/CLI/font implementations; `scripts/check-theme-pack-cli.mjs` validates key tarball entries. `astro-theme` is the name-matching bin enabling `npx @anglefeint/astro-theme@latest upgrade`, alongside the existing new-post/new-page bins.
 
-The phase outline below records the package extraction approach already implemented. It is not a list of outstanding feature work; use `docs/PACKAGE_RELEASE.md` for the current release sequence.
+## Starter generation
 
-1. Freeze baseline (tag + branch).
-   Review: baseline can be restored by tag checkout.
+`starter` remains a maintainer-generated distribution branch, never a branch for hand-edited runtime. `scripts/starter-manifest.mjs` lists thin managed entrypoints, neutral config/guidance source overrides, whitelisted sample posts and all referenced cover/font/favicon resources. Obsolete copied standard routes/adapters/helper scripts are removed only during maintainer distribution generation. Never use this deletion list against an existing personal blog.
 
-2. Create package scaffold (`packages/theme`).
-   Review: package contains `package.json`, `src/index.ts`, and export map.
+`starter-package.mjs` emits only Astro/theme runtime dependencies, check/TypeScript tools, projectSchema 1 and package-owned commands. npm is supported by the automatic upgrader; manual pnpm installation/check/build remains separate. Existing rendering security overrides are retained. Main stays a workspace for development and the full public demo content library. Starter sync must not replace that library or the demo's identity/configuration.
 
-3. Copy core theme implementation into package.
-   Review: copied folders include `components`, `layouts`, `i18n`, `styles`, `assets`, and script/style runtime assets.
+## Consumer upgrades
 
-## Phase 2: Starter Consumption
+Pre-0.27 projects intentionally cross a breaking boundary by creating a fresh starter separately and migrating site-config values, articles, music/images, custom pages and hosting settings. Do not pretend npm update can migrate the old copied skeleton. See [UPGRADING](../UPGRADING.md#0270-integration-starter-breaking-not-yet-published).
 
-4. Replace starter imports from local `src/*` to `@anglefeint/astro-theme/*`.
-   Review: app builds without unresolved local imports.
+For schema-1 integration projects, the updater performs compatible dependency upgrades, exact target resolution, backup, doctor and recoverable dependency rollback. It never copies template files over user files, calls maintainer starter sync, pushes or deploys. Unknown schemas and incompatible Node/Astro versions require deliberate migration; skipped package versions within the supported schema are allowed. Project marker/type/runtime helpers are internal contracts, not personal settings.
 
-5. Move starter-only files to clear boundaries.
-   Review: starter keeps only user-facing content/config/routes and no duplicated core layout/component logic.
+## Validation and delivery
 
-6. Normalize script/style asset loading strategy.
-   Review: post/about/home visual scripts still run after package consumption.
+- `npm run check` and lint cover source, metadata, package configuration wiring, unit tests, package CLI, scaffold/type checking and build/About payloads.
+- `npm run e2e` covers the complete functional browser suite. Bounded worker reruns diagnose resource timeouts without changing runtime behavior or weakening assertions. Optional appearance review still requires consent.
+- `npm run check:installed -- --build --audit` installs the actual tarball without workspace links, checks the thin skeleton and exercises the locale/prefix/disabled/music build matrix with a blocking dependency audit.
+- `npm run check:upgrade` uses an isolated unpublished future tarball and local fixture registry to run the real npm exec upgrade command. It skips a package version, introduces a menu/button/page and checks byte-for-byte preservation of config/content/music/images/host rules/custom pages. Unit tests separately cover incompatible targets, readonly preflight and failed-doctor rollback.
+- `node scripts/check-music-browser.mjs` exercises actual audio/session/lifecycle behavior in an isolated Astro fixture.
+- After authorized publication and starter push, run public-template acceptance and live demo verification. Local tarballs/fixture registries do not prove remote npm/starter delivery.
 
-## Phase 3: Release Readiness
-
-7. Add package release notes and migration notes.
-   Review: each release contains upgrade command + breaking-change section.
-
-8. Run full route and SEO regression checks.
-   Review: `/`, `/:lang/`, `/:lang/blog`, `/:lang/blog/[slug]`, `/:lang/about`, `/:lang/rss.xml`, `/sitemap-index.xml`, and `/robots.txt` all pass.
-
-9. Publish pre-release (`alpha`/`beta`) and test with fresh install.
-   Review: new consumer project can install/update package and run successfully.
-
-10. Publish stable release.
-    Review: README and UPGRADING distinguish compatible package updates from fresh-template migration. Historical in-place compatibility is not a release requirement.
-
-## Current State
-
-The current package also exports `@anglefeint/astro-theme/markdown`, which owns Sätteri/KaTeX parsing and build-time formula rendering. Existing starter-managed Astro config, schema/defaults and theme adapter wire the global default-on `theme.math.enabled` setting; BlogPost owns conditional local formula CSS. npm updates cannot add this processor to an old project's Astro config. See the 0.13.0 migration in `UPGRADING.md`.
-
-Version 0.5.0 adds the package export `@anglefeint/astro-theme/social-image`, package-owned `src/social/`, and the full Noto CJK font/license under `src/assets/theme/social/`. Existing starter-managed Astro config, defaults/schema and theme adapter register and configure the feature; no new starter-owned file is required. These changes require coordinated package/starter delivery, not a docs-only starter sync.
-
-- Theme package is published and upgradeable from npm.
-- `starter` branch is wired to registry dependency (`@anglefeint/astro-theme`) for user projects.
-- `main` remains monorepo for core development and release workflows.
-
-## Adapter Sync Contract
-
-- Adapter templates are source-of-truth: `scripts/adapter-templates/*`.
-- Generated files in `src/config/*`, `src/i18n/*`, and `src/types/theme-scripts.d.ts` must be treated as synced artifacts.
-- If template logic changes:
-  1. update template files first
-  2. run `npm run sync-adapters`
-  3. run `npm run check:adapters`
-- Do not hand-edit generated adapter outputs without back-porting changes to templates.
-
-## Reading and Discovery Ownership
-
-| Capability                | npm package owns                                                                                                             | Starter owns                                                                                                     |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Article contents          | TOC component/utility, BlogPost support, styles, labels, content schema                                                      | Article route passes `render(post).headings`; site default and theme adapter                                     |
-| Search                    | Pagefind dependency, `./search` export and type declaration, build integration, article index markers, dialog/client runtime | `astro.config.mjs` registers the integration with the same site switch used by UI; site config and adapter       |
-| Tags                      | Normalization/slug/group utilities, `./utils/tags` export, TagLinks/BlogCards, labels/schema and head opt-out prop           | Tag directory/pagination routes, blog entry and configuration; route files are in `scripts/starter-manifest.mjs` |
-| Code copy / image preview | BlogPost data attributes, initialization, scripts, styles and labels                                                         | Ordinary Markdown/MDX content consumed through BlogPost; no extra support script                                 |
-
-Music (0.7.0): the package owns `MusicDeck`, its scoped CSS, controller/core/storage and the explicit `./utils/music` export. Existing starter-managed schema/defaults and the theme adapter provide `theme.music`; no new starter-owned file is required. Audio files belong to the consumer, are not bundled, and the feature defaults to disabled. Enabled and disabled installations are checked in `scripts/check-installed-starter.mjs`.
-
-The search hook writes assets into the built site's `pagefind/` directory; these are generated output, not files copied from main into the starter branch. Package installation cannot rewrite starter route/config files. The matching-template migration boundary is documented in `UPGRADING.md`; implementation/test entry points are in `docs/ARCHITECTURE.md`.
-
-## Decoder and terminal ownership (0.18.0)
-
-Version 0.18.0 adds starter-owned `src/pages/[lang]/decoder.astro` and `src/pages/[lang]/terminal/[id].json.ts`, both listed in `scripts/starter-manifest.mjs`. The matching About route, schema/defaults and theme adapters are also starter-owned. The package owns DecoderWorkbench, generic WindowShell/TerminalBackdrop, Decoder/terminal scripts, numeric effects, styles and translations through existing directory exports and the exact `./utils/terminal-document` export. Local crypto uses package dependencies `@scure/base` and `@noble/hashes`; text codecs and numeric animation do not add a backend or remote API.
-
-This boundary requires matching package and starter delivery: updating npm alone cannot create routes or migrate project-owned schema/adapters. Delivery and actual acceptance evidence are recorded in `docs/releases/0.18.0.md`. Release policy remains in `AI_WORKFLOW.md` and `PACKAGE_RELEASE.md`.
+All audit findings and registry errors remain blocking release gates. Formal publishing/starter/tag/announcement steps follow [AI_WORKFLOW](AI_WORKFLOW.md), [MAINTAINER_WORKFLOW](MAINTAINER_WORKFLOW.md) and [PACKAGE_RELEASE](PACKAGE_RELEASE.md). Record actual 0.27.0 delivery results and pending remote steps in [its ledger](releases/0.27.0.md).

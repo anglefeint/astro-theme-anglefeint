@@ -1,0 +1,144 @@
+---
+import type { GetStaticPaths } from 'astro';
+import CyberAtmosphere from '@anglefeint/astro-theme/components/CyberAtmosphere.astro';
+import BlogCards from '@anglefeint/astro-theme/components/BlogCards.astro';
+import TagLinks from '@anglefeint/astro-theme/components/TagLinks.astro';
+import { groupTags } from '@anglefeint/astro-theme/utils/tags';
+import { getCollection } from 'astro:content';
+import CyberShell from '@anglefeint/astro-theme/layouts/shells/CyberShell.astro';
+import CyberPagination from '@anglefeint/astro-theme/components/pagination/CyberPagination.astro';
+import { SITE_TITLE } from '@anglefeint/site-config/site';
+import { THEME } from '@anglefeint/site-config/theme';
+import {
+  DEFAULT_LOCALE,
+  ENABLED_LOCALES,
+  type Locale,
+  isLocale,
+  localePath,
+} from '@anglefeint/site-i18n/config';
+import { getMessages } from '@anglefeint/site-i18n/messages';
+import { BLOG_PAGE_SIZE, postsForLocale } from '@anglefeint/site-i18n/posts';
+import { buildPaginationModel } from '@anglefeint/astro-theme/utils/pagination';
+
+export const getStaticPaths = (async () => {
+  const all = await getCollection('blog');
+  return ENABLED_LOCALES.flatMap((locale) => {
+    const localizedPosts = postsForLocale(all, locale);
+    const totalPages = Math.max(1, Math.ceil(localizedPosts.length / BLOG_PAGE_SIZE));
+
+    return Array.from({ length: totalPages }, (_, pageIndex) => {
+      const currentPage = pageIndex + 1;
+      const start = pageIndex * BLOG_PAGE_SIZE;
+      const data = localizedPosts.slice(start, start + BLOG_PAGE_SIZE);
+
+      return {
+        params: currentPage === 1 ? { lang: locale } : { lang: locale, page: String(currentPage) },
+        props: {
+          locale,
+          page: {
+            data,
+            currentPage,
+            lastPage: totalPages,
+            total: localizedPosts.length,
+          },
+        },
+      };
+    });
+  });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const locale = (Astro.props.locale ?? Astro.params.lang ?? DEFAULT_LOCALE) as Locale;
+const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
+const messages = getMessages(resolvedLocale);
+const posts = page.data;
+const paginationModel = buildPaginationModel({
+  currentPage: page.currentPage,
+  totalPages: page.lastPage,
+  windowSize: THEME.PAGINATION.WINDOW_SIZE,
+  showJumpThreshold: THEME.PAGINATION.SHOW_JUMP_THRESHOLD,
+});
+const blogRoot = localePath(resolvedLocale, '/blog/');
+const jumpToText = messages.blog.jumpTo || 'Jump to page';
+const jumpInputLabelText = messages.blog.jumpInputLabel || 'Page number';
+const allPosts = await getCollection('blog');
+const localeHrefs = Object.fromEntries(
+  ENABLED_LOCALES.map((targetLocale) => {
+    const totalPages = Math.max(
+      1,
+      Math.ceil(postsForLocale(allPosts, targetLocale).length / BLOG_PAGE_SIZE)
+    );
+    const href =
+      page.currentPage <= totalPages
+        ? page.currentPage === 1
+          ? localePath(targetLocale, '/blog/')
+          : localePath(targetLocale, `/blog/${page.currentPage}`)
+        : localePath(targetLocale, '/blog/');
+    return [targetLocale, href];
+  })
+) as Partial<Record<Locale, string>>;
+const pageTitle =
+  page.currentPage === 1
+    ? `${messages.blog.title} | ${SITE_TITLE}`
+    : `${messages.blog.pageTitle} ${page.currentPage} | ${SITE_TITLE}`;
+const pageDescription =
+  page.currentPage === 1
+    ? messages.blog.archiveDescription
+    : `${messages.blog.pageDescription} ${page.currentPage}.`;
+---
+
+<CyberShell
+  locale={resolvedLocale}
+  title={pageTitle}
+  description={pageDescription}
+  localeHrefs={localeHrefs}
+>
+  <Fragment slot="body-start">
+    <h1 class="sr-only">{pageTitle}</h1>
+    <CyberAtmosphere />
+  </Fragment>
+  {
+    THEME.TAGS.ENABLED && groupTags(postsForLocale(allPosts, resolvedLocale)).length > 0 && (
+      <TagLinks locale={resolvedLocale} active="posts" />
+    )
+  }
+  <section>
+    <h2 class="sr-only">{messages.blog.title}</h2>
+    <BlogCards
+      posts={posts}
+      locale={resolvedLocale}
+      startIndex={(page.currentPage - 1) * BLOG_PAGE_SIZE}
+      totalPosts={page.total}
+    />
+  </section>
+  {
+    page.lastPage > 1 && (
+      <CyberPagination
+        model={paginationModel}
+        locale={resolvedLocale}
+        blogRoot={blogRoot}
+        pathname={Astro.url.pathname}
+        labels={{
+          previous: messages.blog.previous,
+          next: messages.blog.next,
+          paginationAria: messages.blog.paginationAria,
+          jumpTo: jumpToText,
+          jumpInputLabel: jumpInputLabelText,
+          jumpGo: messages.blog.jumpGo || 'Go',
+        }}
+        config={{
+          jump: {
+            enabled: THEME.PAGINATION.JUMP.ENABLED,
+            enterToGo: THEME.PAGINATION.JUMP.ENTER_TO_GO,
+          },
+          style: {
+            enabled: THEME.PAGINATION.STYLE.ENABLED,
+            mode: THEME.PAGINATION.STYLE.MODE,
+            variants: THEME.PAGINATION.STYLE.VARIANTS,
+            fixedVariant: THEME.PAGINATION.STYLE.FIXED_VARIANT,
+          },
+        }}
+      />
+    )
+  }
+</CyberShell>

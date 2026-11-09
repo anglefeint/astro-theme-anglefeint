@@ -1,0 +1,4 @@
+{
+  "extends": "@anglefeint/astro-theme/tsconfig",
+  "include": [".astro/types.d.ts", "src/**/*"]
+}

@@ -50,7 +50,7 @@ const pmArgs = (args) =>
 const file = (name) => path.join(project, name);
 const read = (name) => readFile(file(name), 'utf8');
 const config = (value) =>
-  `import { defineThemeConfig } from './site.config.defaults.ts';\nexport { normalizeI18nConfig } from './site.config.runtime.ts';\nexport { DEFAULT_ABOUT_CONFIG } from './site.config.defaults.ts';\nexport const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});\n`;
+  `import { defineThemeConfig } from '@anglefeint/astro-theme/config';\nexport { normalizeI18nConfig } from '@anglefeint/astro-theme/config';\nexport { DEFAULT_ABOUT_CONFIG } from '@anglefeint/astro-theme/config';\nexport const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});\n`;
 let passed = false;
 
 async function command(args, { cwd = project, overrides = {}, reject = false, npm = false } = {}) {
@@ -371,36 +371,20 @@ try {
   await command(['exec', '--no', '--', 'anglefeint-new-page', 'direct-page', '--theme', 'matrix'], {
     npm: true,
   });
-  const adapter = 'src/config/theme.ts';
-  const originalAdapter = await read(adapter);
-  await writeFile(file(adapter), originalAdapter + '\n// intentional test drift\n');
-  await run('check:adapters', [], { reject: true });
-  await run('doctor', [], { reject: true });
-  await run('sync-adapters');
-  assert.equal(await read(adapter), originalAdapter);
+  assert.equal(pkg.anglefeint?.projectSchema, 1);
   const oldConfig = await read('src/site.config.ts');
   await command(['update', '@anglefeint/astro-theme']);
   await command(['install']);
   assert.equal(await read('src/site.config.ts'), oldConfig);
   assert.equal(await read(article), originalArticle);
-  for (const name of [
-    'check:adapters',
-    'check:scaffold',
-    'check:no-build',
-    'check:about-runtime',
-    'check',
-    'doctor',
-    'build',
-  ])
-    await run(name);
-  assert.match(await run('check:workspace-link'), /skipped/);
+  for (const name of ['check:no-build', 'check', 'doctor', 'build']) await run(name);
+  if (pm === 'npm') await run('upgrade', ['--check']);
+  else {
+    await run('upgrade', ['--check'], { reject: true });
+    scripts.add('upgrade');
+  }
   await checkArticleAlternates(project, 'en');
   results.push({ check: 'partial translation SEO and language menus', status: 'passed' });
-  results.push({
-    check: 'workspace link',
-    status: 'not-applicable',
-    reason: 'Consumer installs intentionally skip the workspace-link check.',
-  });
   await run('astro', ['--version']);
   for (const locale of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
     const about = parse(await read(`dist/${locale}/about/index.html`));

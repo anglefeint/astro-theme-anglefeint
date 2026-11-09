@@ -87,11 +87,9 @@ npm run check
 
 ## 5) Upgrade flow for users
 
-The release baseline is the latest starter plus its published package. For project-skeleton changes, recommend a fresh template in a new directory and migration of content/personal settings as described in `UPGRADING.md`. The following is only for compatible package-only updates:
+The 0.27.0 integration starter provides `npx @anglefeint/astro-theme@latest upgrade` for npm projects with supported projectSchema/Node/Astro versions. It updates dependencies, backs up dependency files and runs doctor while retaining user source/config/media. `--check` is a project preflight and `--to` selects a version. Automatic pnpm/yarn/bun conversion and cross-schema migrations are not implemented. See `UPGRADING.md` for recovery limits and the deliberate fresh-starter migration from pre-0.27 skeletons.
 
-```bash
-npm update @anglefeint/astro-theme
-```
+Do not treat npm update alone as an old-skeleton migration. Do not announce the local 0.27 preparation as published. After authorized delivery, GitHub Release notes must link the one-time migration, supported automatic-upgrade boundary and actual acceptance evidence. Starter-only maintenance outside shipped runtime continues to follow [its distinct announcement policy](MAINTAINER_WORKFLOW.md#announcing-starter-only-upgrades); no empty npm publication is required for documentation alone.
 
 ## 6) Rollback flow
 

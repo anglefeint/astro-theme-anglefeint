@@ -69,7 +69,7 @@ Class C: Cross-layer Contract Changes
   - scaffolding expectations
 - Examples:
   - Add/remove config fields
-  - Adapter contract changes
+  - Integration/project-schema contract changes
   - Data contract between starter and package
 - Required flow:
   1. Define/update contract on `main`
@@ -108,16 +108,17 @@ Installed distribution gate before publishing package/starter changes:
 npm run check:installed -- --build --audit
 ```
 
-This packs the working theme, overlays current managed files onto the local `starter` snapshot in a temporary directory, installs without workspace links, exercises npm CLI commands and adapters, and builds the English/Chinese/Portuguese/German/Russian/Traditional-Chinese default-locale and prefix-mode matrix. It requires the local `starter` ref and registry access for dependencies. It does not publish, commit, or change branches. The legacy snapshot is also checked with the read-only migration diagnostic before the overlay.
+This packs the working theme, overlays current managed files onto the local `starter` snapshot in a temporary directory, installs without workspace links, exercises package CLI/configuration aliases, and builds the English/Chinese/Portuguese/German/Russian/Traditional-Chinese default-locale and prefix-mode matrix. It requires the local `starter` ref and registry access for dependencies. It does not publish, commit, or change branches. Obsolete implementation copies are removed from this distribution fixture; this operation is never used to migrate a personal blog.
 
 `release:npm` runs this gate after the main checks. `--skip-checks` omits the main checks and installed build matrix, but retains main and isolated-starter audits and installed CLI checks. Starter sync audits after installation. All audit findings or audit errors block delivery; `scripts/audit-dependencies.mjs` no longer accepts the historical static-cache exception documented in `docs/PACKAGE_RELEASE.md`. A passing workspace build alone is not sufficient.
 
 Starter branch quality gate:
 
 ```bash
-npm run check
-node scripts/check-scaffold.mjs
+npm run doctor
 ```
+
+The integration starter ships package-owned doctor/new-page/new-post commands rather than maintainer scaffold/adapter scripts. For architecture/upgrade changes also run `npm run check:upgrade` on main: its local fixture registry exercises a skipped-version npm exec upgrade with a new menu/button/page and byte-for-byte user-file preservation. Keep user data and project-schema compatibility explicit; a normal updater never invokes maintainer starter sync.
 
 ## Release Sequence (Canonical)
 
@@ -139,7 +140,7 @@ Use this sequence unless explicitly skipped for a documented reason.
 
 Starter synchronization uses `npm update --prefer-online` within the source dependency ranges before its blocking audit. This refreshes indirect dependencies retained by older lockfiles; it does not bypass version constraints or vulnerability findings.
 
-The latest template and its corresponding npm package are the supported release baseline. Do not add historical compatibility layers at the expense of the new-template experience. When project skeletons change, existing users may create a fresh template and migrate content and configuration into it; automatic in-place upgrades across all historical starters are not guaranteed.
+The latest template/package and the frozen schema-1 integration-starter upgrade fixture are required release baselines. Preserve same-schema upgrade compatibility, including skipped versions. Pre-0.27 copied skeletons intentionally require a fresh-starter migration; a future schema break must stop automatic updates and include deliberate migration instructions. Automatic in-place upgrades across arbitrary historical/custom skeletons are not guaranteed.
 
 ## Production Demo Deployment
 
@@ -173,6 +174,12 @@ Before running `npm run release:npm`, inspect what changed under `packages/theme
   - do **not** update starter dependency only for release cadence
 
 Editing `packages/theme/README.md` alone does not require a feature release; the already-published tarball retains its old README until another package version is published. Starter-managed README changes can be delivered through starter sync without changing the package version. This is a maintainer decision, not a path-based rule enforced by the npm release script.
+
+### Announcing starter-only upgrades
+
+Starter-only changes that require existing users to act still need a public announcement. Prepare an Unreleased changelog entry and a concrete `UPGRADING.md` migration before delivery. After validated main/starter delivery and remote acceptance, publish a GitHub Release with a distinct starter tag (for example `starter-seo-YYYY-MM-DD`) at the committed main source revision. Do not label it as a new npm version or move an existing package tag. Include the delivered main/starter revisions, migration link, affected hosts, checks and the fact that `npm update` does not merge project files. Read back the announcement and refs; until then keep its status explicitly pending. This supplements Class B delivery without requiring an empty npm publication.
+
+Users can opt into repository release notifications; a push, changelog edit or unchanged npm package version alone is not an automatic upgrade notification. Do not promise that every existing user will be notified. Package-release closeout continues to use the exact npm source tag and the existing package runbook.
 
 Maintainer entry commands (run on `main`):
 
@@ -231,14 +238,13 @@ Do not patch starter runtime logic manually as a recovery path.
 
 ## End-user Upgrade Guidance (for docs)
 
-For compatible package-only updates within the declared version range, use:
+For supported schema-1 integration starters using npm:
 
 ```bash
-npm update @anglefeint/astro-theme
-npm run doctor
+npx @anglefeint/astro-theme@latest upgrade
 ```
 
-The current starter's `doctor` includes checks and a build. After success, use `npm run preview` for manual verification. If generated adapters differ from local templates, run `npm run sync-adapters` and rerun `doctor`; this does not fetch upstream templates. Older project scripts may differ. Follow `UPGRADING.md` for explicit compatible targets outside the current range or fresh-template migration when local contracts/Astro versions change. Do not recommend unconditional `@latest` for legacy projects.
+The updater checks schema/Node/Astro compatibility, backs up dependencies, installs the exact target and runs doctor (including build). Preview and deploy only after success. Unknown schema/runtime requirements stop for migration; automatic conversion from other package managers is unsupported. Pre-0.27 copied skeletons require the separate fresh-starter migration in `UPGRADING.md`; adapter-sync commands do not fetch or install upstream changes.
 
 Do not include maintainer-only sync commands in user README.
 

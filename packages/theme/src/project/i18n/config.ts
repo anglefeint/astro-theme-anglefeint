@@ -1,0 +1,25 @@
+// Package-owned project configuration.
+
+export {
+  I18N,
+  DEFAULT_LOCALE,
+  DEFAULT_LOCALE_PREFIX_MODE,
+  ENABLED_LOCALES,
+  ENABLED_LOCALE_LABELS,
+  type Locale,
+  alternatePathForLocale,
+  blogIdToSlugAnyLocale,
+  getDefaultLocaleHomePath,
+  getLocaleConfig,
+  getLocaleResolutionChain,
+  getLocaleHreflang,
+  getLocaleLabel,
+  getLocaleMeta,
+  getLocaleOgLocale,
+  isLocale,
+  localePath,
+  shouldRedirectLocalizedDefaultLocaleHome,
+  shouldRedirectRootToDefaultLocale,
+  stripLocaleFromPath,
+  withLeadingSlash,
+} from './runtime.ts';

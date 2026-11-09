@@ -55,6 +55,10 @@ When asked to make the theme cooler, strengthen these identities and their cinem
 
 Before changing signature effects, identify the intended visual gain, compare against the existing effect in motion, and explain any tradeoff that reduces its presence. Do not introduce feature/configuration complexity merely to make the theme seem more capable. Keep setup simple and defaults expressive.
 
+## Integration architecture (0.27.0)
+
+Standard routes and default configuration/i18n/build logic are package-owned under `packages/theme/src/routes`, `project` and `integration.mjs`. The starter is thin; do not add copied standard-page or adapter implementations to consumer projects. User articles, site-config values, music/images, custom pages and hosting settings must survive upgrades. The package's upgrade command supports npm schema-1 projects and refuses old copied skeletons; those require a fresh-starter migration. Existing root config/i18n adapters are maintainer diagnostic fixtures, not shipped runtime ownership. Actual delivery status and verification belong in docs/releases/0.27.0.md.
+
 ## Priority
 
 For local visual iteration, make the requested code changes directly and let the user inspect the running page. Before doing your own optional screenshot/render-and-inspect or visual-measurement step, ask whether the user wants that step; do not automatically run scripts such as `article-first-preview.mjs` after every edit. This consent requirement concerns the agent's visual review only, not ordinary server management, code edits or functional tests. Follow [local visual feedback](docs/AI_WORKFLOW.md#local-visual-feedback-and-consent). Required validation and release gates remain unchanged.
@@ -105,6 +109,7 @@ npm run check
 npm run check:no-build
 npm run check:docs
 npm run check:workspace-link
+npm run check:integration
 npm run lint
 npm run e2e:install
 npm run e2e
@@ -123,7 +128,7 @@ Lint and doc metadata checks are configured.
 ## High-Risk Areas
 
 - `packages/theme/src/components/BaseHead.astro` (canonical/hreflang/JSON-LD)
-- i18n path logic in `src/i18n/config.ts`
+- i18n path logic in `packages/theme/src/project/i18n/runtime.ts`
 - performance-heavy scripts in `packages/theme/src/scripts/blogpost-effects.js` and `packages/theme/src/scripts/about-effects.js`
 
 ## Change Checklist
@@ -134,7 +139,7 @@ Lint and doc metadata checks are configured.
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)
 - Public README-like docs may use sidecar metadata instead of visible frontmatter
-- Starter/runtime changes still pass `node scripts/check-scaffold.mjs`
+- Starter/runtime changes still pass `node scripts/check-scaffold.mjs`; integration/upgrade changes also require installed-package and one-command upgrade acceptance
 - If package behavior changed, follow `docs/AI_WORKFLOW.md` release rules before pushing
 - If adding starter-consumed runtime/config/script/template files, update `scripts/starter-manifest.mjs` in the same change
 - If `release:starter` fails, fix the issue on `main`, and make sure maintainer checks still pass in both workspace-link and installed-package starter contexts

@@ -3,15 +3,10 @@ export const STARTER_SCRIPTS = {
   dev: 'astro dev',
   build: 'astro build',
   preview: 'astro preview',
-  'check:workspace-link': 'node scripts/check-workspace-link.mjs',
-  'check:adapters':
-    'node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check',
-  'check:scaffold': 'node scripts/check-scaffold.mjs',
-  'check:about-runtime': 'npm run build && node scripts/check-about-runtime-config.mjs',
-  'check:no-build': 'npm run check:adapters && npm run check:scaffold && astro check',
-  'sync-adapters': 'node scripts/sync-adapters.mjs',
-  doctor: 'node scripts/doctor.mjs && npm run check:adapters && npm run check',
-  check: 'npm run check:no-build && npm run check:about-runtime',
+  'check:no-build': 'astro check',
+  check: 'astro-theme doctor',
+  doctor: 'astro-theme doctor',
+  upgrade: 'npx @anglefeint/astro-theme@latest upgrade',
   'new-post': 'anglefeint-new-post',
   'new-page': 'anglefeint-new-page',
   astro: 'astro',
@@ -22,8 +17,9 @@ export function buildStarterPackage(source, previous, themeRange) {
   delete result.workspaces;
   delete result['lint-staged'];
   result.engines = source.engines;
+  result.anglefeint = { projectSchema: 1 };
   result.scripts = { ...STARTER_SCRIPTS };
-  result.dependencies = { ...source.dependencies, '@anglefeint/astro-theme': themeRange };
+  result.dependencies = { astro: source.dependencies.astro, '@anglefeint/astro-theme': themeRange };
   // Distribute the rendering dependency patch, not maintainer-only ESLint overrides.
   const renderingOverride = source.overrides?.fflate;
   if (renderingOverride) result.overrides = { fflate: renderingOverride };
@@ -37,6 +33,7 @@ export function buildStarterPackage(source, previous, themeRange) {
 export function starterPackageDrift(source, actual, themeRange) {
   const expected = buildStarterPackage(source, actual, themeRange);
   return [
+    'anglefeint',
     'scripts',
     'dependencies',
     'devDependencies',

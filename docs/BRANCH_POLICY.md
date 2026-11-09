@@ -44,5 +44,5 @@ After each stable package release on `main`:
 
 - README family (`README*.md`) is branch-aware:
   - Installation commands must target `#starter`.
-- `UPGRADING.md` distinguishes compatible package updates from fresh-template migration when the project skeleton changes. Historical in-place upgrades are not guaranteed.
+- `UPGRADING.md` distinguishes schema-1 integration-starter npm upgrades from the one-time fresh-template migration for pre-0.27 copied skeletons. Unknown schema/Node/Astro boundaries require deliberate migration; the updater never invokes maintainer starter sync against user projects.
 - Doc validation script (`npm run check:docs`) is the minimum gate before merging documentation changes.

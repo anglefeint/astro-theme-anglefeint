@@ -1,0 +1,112 @@
+---
+tags:
+  - anglefeint
+  - starter
+title: 'Руководство 1: Настройка блога'
+subtitle: 'Установка, данные сайта, языки и публикация.'
+description: 'Установка, данные сайта, языки и публикация.'
+pubDate: '2026-03-07'
+updatedDate: '2026-10-18'
+heroImage: ../../../assets/blog/default-covers/cyber-02.webp
+---
+
+## Установка и локальный запуск
+
+Используйте Node.js 22.12.0 или новее. Запустите команду в родительском каталоге: она создаёт my-blog без установки зависимостей. Затем установите зависимости и запустите сайт. При смене имени измените команду создания и cd вместе.
+
+```bash
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+cd my-blog
+npm install
+npm run dev
+```
+
+Откройте адрес из терминала. Для pnpm используйте ту же команду создания, затем pnpm install и pnpm dev вместо команд npm для установки и запуска.
+
+## Данные сайта и главная страница
+
+Редактируйте объект в src/site.config.ts, сохраняя импорты и экспорты. Замените домен, имя, автора и тексты. Объедините пример с текущими настройками.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { title: 'My Blog', author: 'Your Name', url: 'https://your-domain.example' },
+  i18n: {
+    defaultLocale: 'ru',
+    routing: { defaultLocalePrefix: 'never' },
+    locales: {
+      ru: {
+        site: { hero: 'My Blog' },
+        messages: { siteDescription: 'My Blog' },
+      },
+    },
+  },
+});
+```
+
+site.url задаёт домен canonical, RSS, sitemap и изображений для ссылок. PUBLIC_SITE_URL в .env или окружении сборки имеет приоритет. После изменений перезапустите разработку или пересоберите сайт. Видимый текст главной берётся из site.hero языка, описание — из messages.siteDescription. Одного изменения site.description недостаточно.
+
+defaultLocalePrefix: 'never' показывает главную основного языка сразу на /. Стандартное 'always' перенаправляет на `/<язык>/`, иногда с кратким “Redirecting to home…”. Статьи остаются на /ru/blog/ и при 'never'.
+
+`social.links` содержит `href`, `label` и имя `icon`: `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Свой локальный SVG/PNG/WebP поместите в `public/icons/` и задайте `iconSrc: "/icons/community.svg"`: это поле имеет приоритет над `icon`, цвета сохраняются. Без обоих полей отображается текст. Правила путей и примеры — в [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ru.md). Пустой список оставляет декоративные значки без ссылок. site.tagline добавляет текст в подвал.
+
+В подвале отдельно отображаются копирайт, сведения о теме/Astro и необязательный текст `site.tagline`, а ниже — значки соцсетей. Подписи темы следуют языку страницы; пользовательский текст остаётся одинаковым для всех языков. Пустой текст не занимает места, длинный переносится на мобильных устройствах. Существующие настройки и `PUBLIC_SITE_TAGLINE` сохраняются; миграция не требуется.
+
+## Выбор языков
+
+Включены en, ja, ko, es, zh, pt-br, de, ru и zh-hant; исходный основной язык — английский. Для отключения добавьте, например:
+
+```ts
+i18n: {
+  locales: {
+    ja: { meta: { enabled: false } },
+    ko: { meta: { enabled: false } },
+  },
+},
+```
+
+Пропуск языка не отключает его: настройки объединяются со стандартными. Основной язык всегда активен. Для одноязычного блога явно отключите остальные восемь. Это не удаляет и не переводит файлы.
+
+## Замена примеров и первая статья
+
+Для каждого языка starter содержит приветствие и три руководства. Сохраните нужное и удалите лишние примеры; не удаляйте используемые изображения.
+
+```bash
+npm run new-post -- my-first-post
+# --locales en,pt-br
+```
+
+Команда создаёт шаблон для каждого активного языка, изначально девять. Она не переводит текст и не перезаписывает файлы. Измените заголовок, описание и текст в src/content/blog/ru/my-first-post.md.
+
+## Проверка и публикация
+
+```bash
+npm run doctor
+npm run preview
+```
+
+doctor выполняет проверки и сборку. preview показывает результат локально, не публикуя его. Статический сайт находится в dist/, включая поиск и изображения ссылок. На хостинге задайте npm run build и каталог dist. Следуйте [инструкции Astro](https://docs.astro.build/en/guides/deploy/), затем проверьте страницы, переключение языков, поиск и /ru/rss.xml.
+
+Cloudflare необязателен. [Инструкции README по платформам](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ru.md#deployment) также описывают текущее ограничение размещения в корне домена.
+
+## Правила настройки
+
+
+- [Руководство 1: Настройка блога](/ru/blog/starter-guide-1-configure-your-site/)
+- [Руководство 2: Статьи и организация контента](/ru/blog/starter-guide-2-languages-and-routing/)
+- [Руководство 3: Дополнительные функции](/ru/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Обновление темы
+
+Пакет управляет стандартными страницами, значениями по умолчанию, переводами и сборкой. Статьи, `src/site.config.ts`, музыка, изображения и собственные страницы остаются в проекте.
+
+В новом integration starter с npm запустите команду ниже из корня. Она проверяет совместимость, сохраняет файлы зависимостей, устанавливает точную версию и запускает doctor. При ошибке восстанавливает файлы и пытается переустановить прежние зависимости. Затем публикуйте обычным способом; автоматического развёртывания нет.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Проектам до 0.27 нужна однократная миграция в новый starter. После публикации создайте его в отдельной папке, перенесите статьи и ресурсы и объедините личные настройки с новым site config. Не копируйте старые стандартные маршруты, adapters и файлы defaults/schema/runtime. Сохраните slug, языковые пути, URL музыки/изображений и настройки хостинга.
+
+Автообновление поддерживает только npm и отклоняет lock-файлы pnpm/yarn/bun. `--check` проверяет без записи, `--to 0.27.0` выбирает версию. См. [руководство](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) и [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases). 0.27.0 подготовлена локально, ещё не опубликована.

@@ -2,6 +2,8 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
+import atkinsonRegular from '../assets/theme/fonts/atkinson-regular.woff?url';
+import atkinsonBold from '../assets/theme/fonts/atkinson-bold.woff?url';
 import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/theme/placeholders/theme-placeholder-1.jpg';
 import { buildHeadLocaleState, buildJsonLdSchemas } from '../utils/head';
@@ -87,8 +89,8 @@ const serializeJsonLd = (value: unknown) => JSON.stringify(value).replace(/</g, 
 <meta name="author" content={author} />
 
 <!-- Font preloads -->
-<link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<link rel="preload" href={atkinsonRegular} as="font" type="font/woff" crossorigin />
+<link rel="preload" href={atkinsonBold} as="font" type="font/woff" crossorigin />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

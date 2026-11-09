@@ -42,6 +42,13 @@ async function main() {
     );
     process.exit(1);
   }
+  if (
+    ['index', 'about', 'blog', 'tags', 'decoder', 'terminal', 'rss'].includes(slug.split('/')[0])
+  ) {
+    throw new Error(
+      'This path is reserved for a package-owned standard page. Choose a custom page path.'
+    );
+  }
   if (!isValidNewPageTheme(theme)) {
     console.error('Invalid theme. Use one of: base, cyber, ai, hacker, matrix.');
     process.exit(1);

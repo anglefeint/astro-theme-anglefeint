@@ -1,8 +1,8 @@
 ---
 doc_id: contributing_guide
 doc_role: contributor-guide
-doc_purpose: Practical contribution workflow for code, adapter sync, and release-safe validation.
-doc_scope: [contribution, workflow, validation, adapter-sync, branches]
+doc_purpose: Practical contribution workflow for package-owned integrations, upgrades and release-safe validation.
+doc_scope: [contribution, workflow, validation, architecture, branches]
 update_triggers: [workflow-change, command-change, adapter-change, branch-policy-change]
 source_of_truth: true
 depends_on: [AGENTS.md, docs/BRANCH_POLICY.md, docs/PACKAGING_WORKFLOW.md]
@@ -28,7 +28,7 @@ npm run lint
 npm run check
 ```
 
-In this maintainer checkout, `check` already includes unit tests, documentation and adapter checks, Astro diagnostics, and a build through `check:about-runtime`. Do not repeat `build` for the same unchanged source. For documentation-only edits, run `npm run check:docs` and verify the described behavior against code.
+In this maintainer checkout, `check` already includes unit tests, documentation and integration-wiring checks, Astro diagnostics, and a build through `check:about-runtime`. Do not repeat `build` for the same unchanged source. For documentation-only edits, run `npm run check:docs` and verify the described behavior against code.
 
 For routing, SEO, or browser-level behavior changes, also run:
 
@@ -40,24 +40,13 @@ npm run e2e
 4. Review documentation against the implementation using `docs/DOC_SYNC_WORKFLOW.md`. Run `npm run suggest:docs` (or pass changed paths explicitly for committed work), trace configuration/routes/scripts to their responsible guides, and run `npm run check:docs`. Metadata validation alone does not prove descriptions match code.
 5. Commit with clear scope and push.
 
-## Adapter Changes (Important)
+## Integration and upgrade changes
 
-Adapter templates are the source of truth.
+Standard pages, defaults/types, derived config/i18n and build features belong in `packages/theme/src/routes`, `project` and `integration.mjs`. The thin starter retains user configuration/content/assets/custom pages. Do not add copied standard-page or generated-adapter implementations to it. Existing root adapters/templates are legacy diagnostic fixtures, not the current consumer runtime source.
 
-- Edit `scripts/adapter-templates/*` first.
-- Regenerate outputs:
+Use `npm run check:integration` for package configuration wiring. Changes to the integration or upgrader also require the installed-package build/audit matrix and `npm run check:upgrade` real-command preservation check. The latter uses a local future tarball/registry, not a published release. Preserve user site-config values, articles, music/images, custom pages and host settings. Unknown project schemas or incompatible Node/Astro requirements must stop with migration guidance instead of overwriting files.
 
-```bash
-npm run sync-adapters
-```
-
-- Verify contract:
-
-```bash
-npm run check:adapters
-```
-
-Do not only edit `src/config/*` or `src/i18n/*` without syncing templates.
+The public package tsconfig and injected types own internal aliases. Consumer tsconfig extends the package, avoiding copies of physical node_modules paths. Pre-0.27 projects intentionally migrate once into a fresh starter. Do not treat a local successful test as proof of npm/starter delivery; follow the release workflow and user push/publication instructions.
 
 ## Branch Roles
 

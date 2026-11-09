@@ -211,8 +211,10 @@ function validateReadmeBranchPolicy(files, branch) {
     if (!text.includes('#starter')) {
       issues.push(`${file}: missing '#starter' template install reference`);
     }
-    if (!text.includes('npm update @anglefeint/astro-theme')) {
-      issues.push(`${file}: missing theme upgrade command 'npm update @anglefeint/astro-theme'`);
+    if (!text.includes('npx @anglefeint/astro-theme@latest upgrade')) {
+      issues.push(
+        `${file}: missing integration upgrade command 'npx @anglefeint/astro-theme@latest upgrade'`
+      );
     }
 
     const wrongNpm =

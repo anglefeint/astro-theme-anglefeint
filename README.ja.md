@@ -75,7 +75,7 @@ npm run new-post -- my-first-post --locales ja
 `src/content/blog/ja/my-first-post.md` のタイトル、説明、本文を編集します。すべての有効な言語に同じ slug の雛形を作るには `--locales` を省略します。初期設定では9ファイルを作成し、自動翻訳や既存ファイルの上書きはしません。
 
 Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
-`src/assets/blog/default-covers/` に画像がある場合、slug ハッシュで安定したデフォルトカバーを自動設定します（後で `heroImage` を手動変更可能）。
+`src/assets/blog/default-covers/` に画像がある場合、コマンドの実行ごとにカバーをランダムに1枚選び、その実行で新規作成するすべての言語の記事に設定します。既存ファイルは上書きしません。`heroImage` は後から変更できます。
 ロケールを明示指定する場合:
 
 ```bash
@@ -103,7 +103,7 @@ URL のルール:
 npm run new-page -- projects --theme base
 ```
 
-利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。  
+利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。
 `src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
 slug ルール: 小文字・数字・ハイフンのみ（例: `projects/labs` のようなネストは可）。`_` と大文字は不可です。
 
@@ -119,27 +119,19 @@ npm run new-page -- projects --theme matrix
 
 <a id="upgrade"></a>
 
-## テーマのアップグレード
+## テーマの更新
 
-`#starter` から作成したプロジェクトでは、対象リリースが既存の starter と Astro に対応し、ローカル構成の移行が不要な場合にのみ実行します:
+標準ページ、設定の既定値、翻訳とビルド機能はテーマパッケージが管理します。記事、`src/site.config.ts`、音楽、画像、独自ページはプロジェクトに残ります。
+
+npm を使う新しい integration starter では、ルートで次のコマンドを実行します。互換性を確認し、依存ファイルをバックアップして特定バージョンをインストールし、doctor を実行します。失敗時は依存ファイルを戻して以前の依存関係の再インストールを試みます。公開は通常のデプロイ手順で行ってください。
 
 ```bash
-npm update @anglefeint/astro-theme
-npm run doctor
+npx @anglefeint/astro-theme@latest upgrade
 ```
 
-`npm update` は `package.json` の範囲内で更新します。`^0.5.1` に `0.6.0` は含まれません。互換性のある範囲外の更新では、リリースノートに従って対象バージョンを明示し、無条件に `@latest` を使わないでください。`npm ls @anglefeint/astro-theme astro` で実際のバージョンを確認できます。
+0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。正式公開後に別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
 
-現在の starter では `doctor` にチェックとビルドが含まれます。成功後、`npm run preview` でサイトを確認してください。生成アダプターとローカルテンプレートの不一致が報告された場合に限り、`npm run sync-adapters` を実行し、`npm run doctor` を再実行します。上流のテンプレートは取得しません。旧プロジェクトではスクリプトが異なる場合があるため、ローカルの `package.json` と更新ガイドを確認してください。
-
-リリースノートに starter の構成変更がある場合は、新しいディレクトリに最新テンプレートを作成し、記事・画像・個人設定を移してください。新しい設定補助ファイルを古いファイルで上書きしないでください。`npm update` はパッケージのみを更新し、すべての旧 starter の直接更新は保証しません。[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
-
-カスタムコードが `src/consts` または `@anglefeint/astro-theme/consts` を参照している場合は、`src/config/site.ts` へ移行してください。
-
-Astro のメジャーアップグレードは、まず公式ガイドを参照してください:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- その後、上記の更新ガイドの検証チェックリストに従ってください。
+自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.0` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
 
 <a id="deployment"></a>
 
@@ -154,6 +146,8 @@ npm run build
 `npm run preview` でビルド結果をローカル確認できます。公開は行いません。`npm run doctor` はチェックとビルドをまとめて実行します。
 
 ドメインのルートで公開し、各ディレクトリの index.html を配信してください。サブパス公開は追加対応が必要で、Astro `base` の設定だけでは不十分です。
+
+記事 sitemap は `updatedDate`、未指定なら `pubDate` を使います。integration は端末 JSON の `X-Robots-Tag: noindex` を出力の `dist/_headers` に統合し、既存ルールとソースファイルを保持します。Cloudflare Pages 等の対応ホスト以外では同等のヘッダー設定が必要です。Astro preview はホストルールを適用しないため、公開後の応答を確認してください。
 
 <a id="reference"></a>
 
@@ -173,7 +167,7 @@ npm run build
 
 About には各言語の目次と強調された Contact 欄があります。目次は広い画面では本文枠の右側、小さい画面では本文内に表示されます。Frontier の Contact から `/<locale>/about/#contact` へ直接移動できます。About を無効にするとこのリンクは消えますが、Decoder Lab は独立した設定を維持します。
 
-About の閲覧ウィンドウは閉じる・最小化・全画面表示に対応し、状態をブラウザーに保存します。対応する端末コマンドも使えます。既存サイトは About ルートの統合が必要です（[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)）。
+About のウィンドウ操作は閲覧パネルの閉じる・最小化・全画面表示と対応する端末コマンドを提供し、ブラウザー内に状態を保存します。integration の標準ページはパッケージと共に更新されます。0.27 より前のプロジェクトは上記の初回移行が必要です。
 
 About の **Hacker Decryptor** は、Base64/Base64URL、URLエンコード、16進数、HTMLエンティティ、Unicodeエスケープ、JWTのヘッダーとペイロードをブラウザー内でデコードします。形式の自動判定とページ配色に合わせた数字の結果アニメーションに対応。サイドバーのDecryptorから開けます。APIや追加設定は不要です。
 
@@ -393,7 +387,6 @@ CLI はマージ後の設定で有効な言語を使用します。設定エラ�
 - 単一エントリ: `src/site.config.ts`
 - ホームの説明は解決済み `messages.siteDescription`（内蔵・フォールバック言語を含む）を優先し、空の場合のみ `site.description` を使います。
 - 言語設定は既定値と深くマージされます。無効化には `i18n.locales.<code>.meta.enabled = false` を指定します。既定言語は常に有効です。
-- アダプタ層（直接編集は非推奨）: `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - サイト情報は `PUBLIC_*` 環境変数でも上書き可能
 
 ## ソーシャルリンク

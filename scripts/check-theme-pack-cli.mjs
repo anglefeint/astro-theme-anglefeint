@@ -54,6 +54,17 @@ function main() {
 
     const list = run('tar', ['-tf', tarball]).stdout ?? '';
     const required = [
+      'package/tsconfig.json',
+      'package/src/integration.mjs',
+      'package/src/integration.d.mts',
+      'package/src/cli.mjs',
+      'package/src/project/defaults.ts',
+      'package/src/project/schema.ts',
+      'package/src/project/config/theme.ts',
+      'package/src/routes/[lang]/about.astro',
+      'package/src/routes/[lang]/decoder.astro',
+      'package/src/routes/[lang]/terminal/[id].json.ts',
+      'package/src/sitemap.mjs',
       'package/src/cli-new-post.mjs',
       'package/src/cli-new-page.mjs',
       'package/src/scaffold/new-post.mjs',

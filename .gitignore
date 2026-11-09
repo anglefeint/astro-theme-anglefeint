@@ -3,6 +3,7 @@ dist/
 playwright-report/
 test-results/
 acceptance-results/
+output/
 # generated types
 .astro/
 tests/e2e/.generated-smoke-config.json
@@ -27,3 +28,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Consumer upgrade dependency backups
+.anglefeint/

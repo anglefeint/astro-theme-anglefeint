@@ -33,15 +33,23 @@ test('starter generation fixes legacy commands, is idempotent and excludes maint
   assert.equal(old.scripts['new-post'], 'node scripts/new-post.mjs');
 });
 
-test('starter owns critical route/config/metrics files and all local command targets', () => {
+test('thin starter owns user entrypoints and delegates standard routes/runtime to the package', () => {
   for (const file of [
     'astro.config.mjs',
-    'src/pages/index.astro',
-    'src/pages/robots.txt.ts',
     'src/content.config.ts',
-    'src/utils/metrics.ts',
+    'src/site.config.ts',
+    'tsconfig.json',
   ]) {
     assert.ok(STARTER_MANAGED_FILES.includes(file), file);
+  }
+  for (const file of [
+    'src/pages/index.astro',
+    'src/utils/metrics.ts',
+    'src/site.config.defaults.ts',
+    'src/pages/[lang]/about.astro',
+  ]) {
+    assert.ok(!STARTER_MANAGED_FILES.includes(file), file);
+    assert.ok(STARTER_OBSOLETE_FILES.includes(file), file);
   }
   for (const command of Object.values(STARTER_SCRIPTS)) {
     for (const [, file] of command.matchAll(/node (scripts\/[\w.-]+\.mjs)/g)) {

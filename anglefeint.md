@@ -48,9 +48,9 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 - `main` 保存主题实现、站点骨架、维护工具和文档。
 - `packages/theme/src/` 是 npm 主题包：组件、布局、样式、脚本、内容 schema、工具函数和 CLI。
-- 根目录 `src/` 是 starter/demo：站点配置、路由、内容和适配器。
+- 根目录 `src/` 保存 demo 的站点配置、内容、用户资源和开发预览。新的 starter 只保留薄接入、用户配置／内容／资源和自建页面；标准路由由包内集成注册。
 - `starter` 是由 [starter manifest](scripts/starter-manifest.mjs) 和 [同步工具](tools/maintainer/sync-starter.mjs) 生成的分发分支；不是独立手改的实现源。
-- 用户修改 `src/site.config.ts`。schema/defaults/runtime 位于同级文件；`src/config/*`、`src/i18n/*` 的适配器实现来自 `scripts/adapter-templates/`。
+- 用户修改 `src/site.config.ts`，通过 `@anglefeint/astro-theme/config` 使用包内 schema/defaults/runtime。配置／i18n 派生实现属于包内 project 模块；旧根目录适配器仅用于维护诊断夹具，不分发给新用户。TypeScript 配置也扩展包提供的公共 tsconfig。
 - 当前使用 Astro 7；根 `package.json`、主题 `package.json` 和各分支锁文件分别定义依赖范围、peer 兼容范围与安装版本。更新主题包不保证同步升级用户项目的 Astro/MDX；操作步骤见 [升级指南](UPGRADING.md)。
 
 ## 2. 页面与静态生成
@@ -69,27 +69,27 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 ### 首页终端与 Oracle 共享场景（当前源码）
 
-1440px 及以上的首页右下角显示终端，文字可复制、换行和滚动；钥匙孔独立固定在下方右侧。悬停只显示钥匙，点击才运行 600ms 插入解锁，接着展开窗口并淡入走廊。文字配置为 `i18n.locales.<code>.messages.home.transmission`，严格按当前语言配置 → 英文配置 → `Knock, knock.` 读取；只配英文即可覆盖未单独配置的语言。它不是普通界面翻译的回退规则，需更新 starter 消息适配器并重新构建。
+1440px 及以上的首页右下角显示终端，文字可复制、换行和滚动；钥匙孔独立固定在下方右侧。悬停只显示钥匙，点击才运行 600ms 插入解锁，接着展开窗口并淡入走廊。文字配置为 `i18n.locales.<code>.messages.home.transmission`，严格按当前语言配置 → 英文配置 → `Knock, knock.` 读取；只配英文即可覆盖未单独配置的语言。它不是普通界面翻译的回退规则；解析逻辑属于包内 project/i18n/messages，配置变更后重新构建。
 
 首页和 About Oracle 共用 `matrix-passage/player.js`、`matrix-corridor.js` 与场景/材质/渲染器/时间线。小窗口先建走廊，点门后补充广场、Oracle、乌鸦；返回关门后保留资源但跳过这些组的绘制，再开门不重复分配。后方门廊只有四对门，尽头右转，位置观察和倒退均不增加另一套动画。到达广场后拖动环顾，右键直接退回；对准走廊可左键返回。About 用 Escape 或 × 关闭。
 
 小画布按尺寸选择 256px 纹理和简化几何；绘制上限 30fps，隐藏页面暂停。首页移开鼠标暂停，15 秒内再次激活复用，超时/窗口尺寸变化/pagehide 释放；About 关闭后释放。具体路径、检查与限制见 [架构](docs/ARCHITECTURE.md#shared-terminal-and-oracle-passage)、[视觉参考](docs/VISUAL_SYSTEMS.md#1-home-bodypage-home) 和 [本轮审查记录](docs/CODE_DOC_AUDIT.md)。该增量已随 0.17.0 交付；源码、starter、注册表和线上验证见 [发布记录](docs/releases/0.17.0.md)。
 
-| 页面         | 路由与代码入口                                                                                                | 当前行为                                                                                  |
-| ------------ | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| 首页         | [首页路由](src/pages/[lang]/index.astro)、[HomePage](packages/theme/src/layouts/HomePage.astro)               | Matrix 终端视觉，展示最新文章                                                             |
-| 博客列表     | [列表路由](src/pages/[lang]/blog/[...page].astro)、[BlogCards](packages/theme/src/components/BlogCards.astro) | Cyber Cards/List 切换、静态分页及可选跳页；博客首页显示 Tags 快捷入口，标签文章页保留导航 |
-| 文章详情     | [文章路由](src/pages/[lang]/blog/[...slug].astro)、[BlogPost](packages/theme/src/layouts/BlogPost.astro)      | AI 阅读布局，目录、标签、代码复制、正文图片预览、阅读状态、相关文章和可选评论/侧屏        |
-| 标签目录     | [目录路由](src/pages/[lang]/tags/index.astro)                                                                 | 每个启用语言的 `/:lang/tags/`，标签文章数量，680px 紧凑内容列                             |
-| 标签文章列表 | [标签分页路由](src/pages/[lang]/tags/[tag]/[...page].astro)                                                   | `/:lang/tags/<slug>/` 及后续页，复用博客卡片和分页                                        |
-| 关于         | [About 路由](src/pages/[lang]/about.astro)                                                                    | Hacker 风格；外层窗口支持关闭／最小化／大框全屏与终端命令，目录及侧栏入口按语言读取       |
-| 解码实验室   | [Decoder 路由](src/pages/[lang]/decoder.astro)                                                                | 独立多语言静态工具页，与 About 弹窗共用解码与数字动画；配置独立控制启用，不请求链上数据   |
+| 页面         | 路由与代码入口                                                                                                                | 当前行为                                                                                  |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 首页         | [首页路由](packages/theme/src/routes/[lang]/index.astro)、[HomePage](packages/theme/src/layouts/HomePage.astro)               | Matrix 终端视觉，展示最新文章                                                             |
+| 博客列表     | [列表路由](packages/theme/src/routes/[lang]/blog/[...page].astro)、[BlogCards](packages/theme/src/components/BlogCards.astro) | Cyber Cards/List 切换、静态分页及可选跳页；博客首页显示 Tags 快捷入口，标签文章页保留导航 |
+| 文章详情     | [文章路由](packages/theme/src/routes/[lang]/blog/[...slug].astro)、[BlogPost](packages/theme/src/layouts/BlogPost.astro)      | AI 阅读布局，目录、标签、代码复制、正文图片预览、阅读状态、相关文章和可选评论/侧屏        |
+| 标签目录     | [目录路由](packages/theme/src/routes/[lang]/tags/index.astro)                                                                 | 每个启用语言的 `/:lang/tags/`，标签文章数量，680px 紧凑内容列                             |
+| 标签文章列表 | [标签分页路由](packages/theme/src/routes/[lang]/tags/[tag]/[...page].astro)                                                   | `/:lang/tags/<slug>/` 及后续页，复用博客卡片和分页                                        |
+| 关于         | [About 路由](packages/theme/src/routes/[lang]/about.astro)                                                                    | Hacker 风格；外层窗口支持关闭／最小化／大框全屏与终端命令，目录及侧栏入口按语言读取       |
+| 解码实验室   | [Decoder 路由](packages/theme/src/routes/[lang]/decoder.astro)                                                                | 独立多语言静态工具页，与 About 弹窗共用解码与数字动画；配置独立控制启用，不请求链上数据   |
 
 构建采用 Astro 默认静态输出，内容来自 Markdown/MDX collections。不需要全文搜索后端或 SSR 服务。搜索、目录、标签都使用已有文章内容生成；不是手工给示例文章单独搭建的页面功能。
 
 默认语言首页由 `i18n.routing.defaultLocalePrefix` 控制：`always` 时 `/` 重定向到 `/<default-locale>/`；`never` 时反向。这个设置不移除博客、标签等路由的语言前缀。
 
-这里的首页跳转是静态 HTML meta refresh，并带 canonical 和 noindex，不是主题实现的服务端 301/302。博客列表与两个标签路由通过 [CyberAtmosphere](src/components/CyberAtmosphere.astro) 共用雨滴/尘埃初始化；标签页保留光柱和闪烁，使用更柔和的冰蓝/淡紫配色与较慢扫光。系统减少动态效果时，标签页保留静态背景，隐藏雨滴/尘埃/故障闪烁并停止背景动画。
+这里的首页跳转是静态 HTML meta refresh，并带 canonical 和 noindex，不是主题实现的服务端 301/302。博客列表与两个标签路由通过 [CyberAtmosphere](packages/theme/src/components/CyberAtmosphere.astro) 共用雨滴/尘埃初始化；标签页保留光柱和闪烁，使用更柔和的冰蓝/淡紫配色与较慢扫光。系统减少动态效果时，标签页保留静态背景，隐藏雨滴/尘埃/故障闪烁并停止背景动画。
 
 ## 3. 阅读与内容发现
 
@@ -137,15 +137,15 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 默认在构建时生成 1200×630 PNG；[生成器](packages/theme/src/social/render.mjs) 使用 Satori、Sharp 和内置完整 Noto Sans CJK SC 字体，不联网获取或裁剪字体。约 16.4 MB 的字库只用于生成图片，不作为网页字体分发。超长标题仅在图片中缩略。
 
-文章 `ogImage` 优先于自动图，支持文章相对图片、public 路径及 HTTPS URL；`theme.socialImage.enabled: false` 只关闭自动生成，手动图仍生效，其他文章回退到 hero 或默认图。正文封面独立。[构建集成](packages/theme/src/social-image.mjs) 和 theme adapter 必须与包一起迁移；发布的 0.4.0 尚不包含此功能。配置和测试对应见 [架构说明](docs/ARCHITECTURE.md#article-share-images)。
+文章 `ogImage` 优先于自动图，支持文章相对图片、public 路径及 HTTPS URL；`theme.socialImage.enabled: false` 只关闭自动生成，手动图仍生效，其他文章回退到 hero 或默认图。正文封面独立。[构建集成](packages/theme/src/social-image.mjs) 和 集成会统一接入；旧骨架需进行 0.27 一次性迁移；发布的 0.4.0 尚不包含此功能。配置和测试对应见 [架构说明](docs/ARCHITECTURE.md#article-share-images)。
 
 ### 阅读状态和回到顶部
 
-文章字词统计由 [metrics.ts](src/utils/metrics.ts) 从源正文估算：部分 Markdown/代码被移除，中日韩字符逐字计数，其他文本按空白切分。tokens 为 `round(max(words, 1) × 1.3)`，不是模型分词器结果；阅读分钟、AI 延迟和置信度的默认值也来自固定公式，不是随机值或实际 AI 调用。文章 frontmatter 可分别覆盖各字段；只覆盖 `wordCount` 不会重算 token 默认值。公式源码和 MDX 表达式未被专门排除，不能把统计描述为精确结果。具体规则见 [架构说明](docs/ARCHITECTURE.md#article-statistics)。
+文章字词统计由 [metrics.ts](packages/theme/src/utils/metrics.ts) 从源正文估算：部分 Markdown/代码被移除，中日韩字符逐字计数，其他文本按空白切分。tokens 为 `round(max(words, 1) × 1.3)`，不是模型分词器结果；阅读分钟、AI 延迟和置信度的默认值也来自固定公式，不是随机值或实际 AI 调用。文章 frontmatter 可分别覆盖各字段；只覆盖 `wordCount` 不会重算 token 默认值。公式源码和 MDX 表达式未被专门排除，不能把统计描述为精确结果。具体规则见 [架构说明](docs/ARCHITECTURE.md#article-statistics)。
 
 ### 数学公式与静态托管
 
-当前 starter 通过 `@anglefeint/astro-theme/markdown` 接入 Sätteri 和构建期 KaTeX，Markdown/MDX 正文默认全局开启数学解析；`theme.math.enabled: false` 可关闭，没有单篇开关。输出含 HTML 与 MathML，长独立公式内部滚动，公式子树不进入搜索索引。普通美元有歧义时使用 `\$`；代码保持原样。旧项目需要一次 Astro 配置/schema/defaults/adapter 迁移，npm 包不会自动改用户文件。
+当前主题集成通过包内 `markdown` 接入 Sätteri 和构建期 KaTeX，Markdown/MDX 正文默认全局开启数学解析；`theme.math.enabled: false` 可关闭，没有单篇开关。输出含 HTML 与 MathML，长独立公式内部滚动，公式子树不进入搜索索引。普通美元有歧义时使用 `\$`；代码保持原样。0.27 以前的旧骨架需完成一次新 starter 迁移；新集成统一管理处理器接入，升级工具不覆盖用户文件。
 
 `npm run build` 输出 `dist/`，将其内容放入支持目录 `index.html` 的静态服务器即可，不依赖 Cloudflare 或线上 Node.js。先设置正式域名及环境变量覆盖，再构建部署。可选评论、GA4 和远程音频仍依赖各自服务。
 
@@ -159,10 +159,10 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 | 用户输入                       | 代码处理                                                        | 范围                             |
 | ------------------------------ | --------------------------------------------------------------- | -------------------------------- |
-| `theme.search.enabled`         | defaults → theme adapter → Search 组件与 Astro 集成             | 全站 UI 和构建索引               |
+| `theme.search.enabled`         | 包内 defaults → 派生配置 → Search 组件与 Astro 集成             | 全站 UI 和构建索引               |
 | `search: false`                | collection schema → BlogPost 索引标记                           | 单篇文章                         |
-| `theme.toc.enabled` / `toc`    | defaults/schema → adapter → BlogPost → ArticleToc               | 全站默认 / 单篇覆盖              |
-| `theme.tags.enabled` / `tags`  | defaults/schema → adapter → 标签工具、路由、TagLinks            | 全站路由开关 / 单篇归类          |
+| `theme.toc.enabled` / `toc`    | 包内 defaults/schema → 派生配置 → BlogPost → ArticleToc         | 全站默认 / 单篇覆盖              |
+| `theme.tags.enabled` / `tags`  | 包内 defaults/schema → 派生配置 → 标签工具、路由、TagLinks      | 全站路由开关 / 单篇归类          |
 | 普通代码块、普通正文图片       | BlogPost prose data 属性 → initBlogpostEffects → 对应初始化脚本 | 正文；无需新开关                 |
 | `i18n.locales.<code>.messages` | 合并后的 `getMessages`                                          | 搜索、目录、标签、复制和预览文案 |
 
@@ -189,7 +189,7 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 `npm run new-page -- projects --theme base` 创建本地多语言页面。主题变体包括 base、ai、cyber、hacker、matrix；重复页面报错。CLI 实现和 config loader 位于 `packages/theme/src/cli-*.mjs`、`packages/theme/src/scaffold/`。
 
-0.3.0 的搜索注册、目录 headings 接线和标签路由属于项目骨架；只更新 npm 包不会添加这些文件。用户迁移按 [UPGRADING](UPGRADING.md) 创建新模板并迁移个人内容/设置；维护者按 [发布工作流](docs/AI_WORKFLOW.md#end-to-end-release-sequence) 从 main 同步 starter，不对用户的定制工程执行该工具。
+0.27.0 将标准路由与搜索／目录／标签／分享图／机器可读输出／sitemap 接入收进主题集成。旧项目先按 [UPGRADING](UPGRADING.md) 迁移到新的薄 starter；之后 npm 项目运行 `npx @anglefeint/astro-theme@latest upgrade`，检查版本／schema／Node／Astro，备份并更新依赖、运行 doctor，失败时尝试恢复依赖。内容、个人配置、音乐图片和自建页不被覆盖。跨 schema 自动迁移与自动部署尚未实现；0.27.0 目前仅在本地准备，未发布。维护者的 starter 同步不是用户升级命令。
 
 发布顺序是：代码/验证/版本准备提交 → 推送 main → npm 发布和下载核验 → starter 同步、验证和推送 → 远程模板验收 → 发布记录收尾 → 标签指向 npm 源码提交并创建 GitHub Release。逐步命令以 [发布 runbook](docs/PACKAGE_RELEASE.md) 为准。
 
@@ -219,4 +219,4 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 Decoder Lab composes `packages/theme/src/components/shared/NetworkBackdrop.astro`, a randomized moving SVG peer network with reduced-motion and visibility lifecycle handling. `WindowShell.astro` owns its structural stylesheet and body/actions slots. Music retains one session and delegates mounting to `scripts/music/deck.js`; Oracle uses the shared matrix-passage engine and About retains its adapter. Page effect scopes isolate optional initialization and release owned resources; Home signal-preview interaction and About title reveal are separate modules. See [Architecture](docs/ARCHITECTURE.md) and [Visual Systems](docs/VISUAL_SYSTEMS.md) for implementation contracts.
 
-0.20.0 新增独立 Frontier 导航箭头与 `components/decoder/DecoderReadings.astro`。About 保持直接链接；Decoder 关闭时隐藏箭头。阅读区默认包含原文与资料／项目官网，使用本地配图，不转载正文。`i18n.locales.<code>.messages.decoderPage.readings` 接受 `tribute` 与完整替换的 `links` 列表，1 项、30 项都完整渲染；宽屏每行最多八张。路由负责传入已解析消息，配置类型沿用 `DeepPartial<Messages>`，不新增适配器或功能开关。具体字段、空值行为与图片别名见[包配置说明](packages/theme/README.md#decoder-reading-configuration)，实际 npm 与公开 starter 交付验收见 [0.20.0 发布记录](docs/releases/0.20.0.md)。
+0.20.0 新增独立 Frontier 导航箭头与 `components/decoder/DecoderReadings.astro`。About 保持直接链接；当前 Frontier 中的 Contact 与 Decoder 分别跟随各自开关，两者都关闭时才隐藏箭头。阅读区默认包含原文与资料／项目官网，使用本地配图，不转载正文。`i18n.locales.<code>.messages.decoderPage.readings` 接受 `tribute` 与完整替换的 `links` 列表，1 项、30 项都完整渲染；宽屏每行最多八张。路由负责传入已解析消息，配置类型沿用 `DeepPartial<Messages>`，不新增适配器或功能开关。具体字段、空值行为与图片别名见[包配置说明](packages/theme/README.md#decoder-reading-configuration)，实际 npm 与公开 starter 交付验收见 [0.20.0 发布记录](docs/releases/0.20.0.md)。

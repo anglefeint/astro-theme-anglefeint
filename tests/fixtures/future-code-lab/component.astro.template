@@ -1,0 +1,13 @@
+<section aria-label="Code Lab workbench">
+  <label>JSON input<textarea data-code-input></textarea></label>
+  <button type="button" data-code-format>Format JSON</button>
+  <pre data-code-output aria-live="polite"></pre>
+</section>
+<script>
+  import { formatJson } from '../utils/code-lab';
+  const input = document.querySelector<HTMLTextAreaElement>('[data-code-input]');
+  const output = document.querySelector<HTMLElement>('[data-code-output]');
+  document.querySelector('[data-code-format]')?.addEventListener('click', () => {
+    if (input && output) output.textContent = formatJson(input.value);
+  });
+</script>

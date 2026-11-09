@@ -2,7 +2,26 @@
 
 Core package for the Anglefeint Astro theme.
 
-Version 0.9.0 requires Astro `^7.3.5`. Its matching starter uses Sharp `^0.35.5` and refreshed official integrations. Astro 5/6 are no longer supported; migrate the site dependencies together with the theme.
+## 0.27.0 integration architecture
+
+The theme package now owns standard routes, configuration defaults/types/runtime, translations, internal font assets and build integrations. The thin starter retains articles, `src/site.config.ts`, music/images, custom pages and personal hosting settings. See the [release record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.27.0.md) for delivery status and verification.
+
+```js
+import { defineConfig } from 'astro/config';
+import anglefeint from '@anglefeint/astro-theme/integration';
+import { THEME_CONFIG } from './src/site.config';
+export default defineConfig({ integrations: [anglefeint(THEME_CONFIG)] });
+```
+
+In site.config.ts, import `defineThemeConfig` and types from `@anglefeint/astro-theme/config`. The starter tsconfig extends `@anglefeint/astro-theme/tsconfig`, keeping internal type/alias mappings upgradeable. Standard routes are injected with their existing behavior; no generated config/i18n adapters or local standard-page implementations are needed. Keep custom pages outside reserved Home/Blog/Tags/About/Decoder/RSS/terminal paths. Add unrelated integrations deliberately; do not duplicate the theme's MDX/search/social/machine-readable/sitemap integrations.
+
+After delivery, npm integration starters can run `npx @anglefeint/astro-theme@latest upgrade` (or `npm run upgrade`). `--check` is a read-only project preflight; `--to <version>` selects a release. The tool checks schema/Node/Astro compatibility, backs up dependency files, installs the exact version with lifecycle scripts disabled and runs doctor. User files are never rewritten. Failure restores dependency files and attempts previous-dependency installation; incomplete recovery is reported with the backup path. Automatic upgrades require an npm package-lock.json (run npm install first) and support npm only; unsupported lockfile families, old skeletons and unknown schemas stop before writes. Deployment is separate.
+
+Pre-0.27 projects need a one-time fresh-starter migration preserving content, config values, music/images and URLs. Do not copy old standard routes or config helpers into the new skeleton. See [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). The historical version-specific starter requirements below apply to old copied skeletons, not additional files required by the new integration starter. Astro peer support remains `^7.3.5`; Node is `>=22.12.0`.
+
+Article sitemap lastmod follows rendered updatedDate/pubDate. Terminal JSON noindex rules are merged into built dist/_headers without overwriting user source rules; compatible static hosts apply them, while other hosts need equivalent headers. Verify the deployed HTTP response. Neither the SEO features nor upgrade tool promise search indexing.
+
+## Feature configuration
 
 Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.
 
@@ -14,9 +33,9 @@ Decoder Lab takes its visual inspiration from the **cypherpunk** movement, in tr
 
 ## Archive and homepage component wiring
 
-About window controls require 0.26.0 and the matching project-owned `src/pages/[lang]/about.astro`: red closes to the sidebar About entry, yellow minimizes without collapsing page height, and green makes the reading panel fullscreen. `open`, `close`, `minimize`, `maximize` and `restore` share those controls; mode and normal reading position are remembered locally, while fullscreen always requires a fresh user action. Merge the route changes or migrate to a fresh starter; installing the package alone cannot add controls to a customized route. See [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window).
+The integration-owned About page provides window controls: red closes to the sidebar About entry, yellow minimizes without collapsing page height, and green makes the reading panel fullscreen. `open`, `close`, `minimize`, `maximize` and `restore` share those controls; mode and normal reading position are remembered locally, while fullscreen always requires a fresh user action. Standard integration pages update with the package; customized replacement implementations remain the owner’s responsibility. See [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window).
 
-The current source provides Cards/List archives with browser-local view memory, linked List tags and continuous range/count metadata. Custom routes pass `BlogCards` its existing `posts` / `locale` and optional zero-based `startIndex` / full filtered `totalPosts`. Without these props, offset defaults to zero and total to the supplied list length. Custom home routes pass the complete locale-filtered count as `HomePage.totalPosts` alongside the latest-post slice. These are component props; no site-schema or adapter update is needed. The matching project-owned routes must also be merged to get accurate cross-page totals. See the 0.24.0 section of [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0240-archive-views-and-homepage-counts).
+The current source provides Cards/List archives with browser-local view memory, linked List tags and continuous range/count metadata. Custom routes pass `BlogCards` its existing `posts` / `locale` and optional zero-based `startIndex` / full filtered `totalPosts`. Without these props, offset defaults to zero and total to the supplied list length. Custom home routes pass the complete locale-filtered count as `HomePage.totalPosts` alongside the latest-post slice. These are component props; no site-schema or adapter update is needed. The integration supplies those props for standard routes; custom route authors supply their own data. See the 0.24.0 section of [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0240-archive-views-and-homepage-counts).
 
 ## Decoder reading configuration
 
@@ -132,7 +151,7 @@ Giscus comments are configured from site-side `theme.comments` (core IDs + behav
 
 The post CLI executes your trusted `src/site.config.ts` with Jiti and uses the merged, enabled locale registry. Configuration failures stop generation before writing posts. `--locales` takes precedence over `ANGLEFEINT_LOCALES`, then configured locales; explicit overrides skip config loading. Missing configuration requires an explicit override. Existing posts are never overwritten.
 
-Explicit locale overrides create content files only. They do not add/enable locales in site configuration; routes still require the target locale to be enabled. Default-cover selection is stable for a fixed sorted cover set and slug; adding or removing covers can change the assignment for future generated posts.
+Explicit locale overrides create content files only. They do not add/enable locales in site configuration; routes still require the target locale to be enabled. When images exist in `src/assets/blog/default-covers/`, each invocation randomly selects one cover for all newly created locale files. Existing files are preserved; you can change `heroImage` afterward. Selection is not determined by the slug.
 
 Examples:
 

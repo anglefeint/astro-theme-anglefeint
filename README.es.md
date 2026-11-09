@@ -75,7 +75,7 @@ npm run new-post -- my-first-post --locales es
 Edita el título, la descripción y el contenido en `src/content/blog/es/my-first-post.md`. Para crear plantillas con el mismo slug en todos los idiomas activos, omite `--locales`: inicialmente crea nueve archivos, sin traducirlos ni sobrescribir los existentes.
 
 Regla del slug: usa solo minúsculas, números y guiones (ejemplo: `my-first-post`).
-Si existen portadas por defecto en `src/assets/blog/default-covers/`, el script asigna una portada estable por hash de slug (puedes cambiar `heroImage` después).
+Si hay imágenes en `src/assets/blog/default-covers/`, cada ejecución elige una portada al azar y la usa en todos los archivos de idioma que crea. Los archivos existentes se conservan; puedes cambiar `heroImage` después.
 Override opcional de idiomas:
 
 ```bash
@@ -103,7 +103,7 @@ Cómo funciona la URL:
 npm run new-page -- projects --theme base
 ```
 
-Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
+Temas disponibles: `base`, `ai`, `cyber`, `hacker`, `matrix`.
 El comando genera `src/pages/[lang]/projects.astro` y publica todas las rutas por idioma con `getStaticPaths()`.
 Regla de slug: solo minúsculas, números y guiones; se permiten rutas anidadas (ejemplo: `projects/labs`). `_` y mayúsculas no son válidos.
 
@@ -119,27 +119,19 @@ npm run new-page -- projects --theme matrix
 
 <a id="upgrade"></a>
 
-## Actualizar tema
+## Actualizar el tema
 
-En proyectos creados desde `#starter`, ejecuta lo siguiente solo si la versión de destino es compatible con tu starter y Astro y no requiere cambios de estructura local:
+El paquete gestiona páginas estándar, valores predeterminados, traducciones y funciones de compilación. Tus artículos, `src/site.config.ts`, música, imágenes y páginas propias permanecen en el proyecto.
+
+En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz. Comprueba compatibilidad, guarda los archivos de dependencias, instala una versión exacta y ejecuta doctor. Si falla, restaura los archivos e intenta reinstalar las dependencias anteriores. Publica después con tu proceso habitual; no despliega automáticamente.
 
 ```bash
-npm update @anglefeint/astro-theme
-npm run doctor
+npx @anglefeint/astro-theme@latest upgrade
 ```
 
-`npm update` respeta el rango de `package.json`: `^0.5.1` no incluye `0.6.0`. Para una actualización compatible fuera del rango, sigue las notas de versión e instala una versión de destino explícita, no `@latest` sin comprobarla. Verifica las versiones con `npm ls @anglefeint/astro-theme astro`.
+Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Tras la publicación, créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
 
-En el starter actual, `doctor` ya incluye las comprobaciones y la compilación. Cuando termine correctamente, revisa el sitio con `npm run preview`. Solo si informa de diferencias entre los adaptadores generados y las plantillas locales, ejecuta `npm run sync-adapters` y repite `npm run doctor`; esto no descarga plantillas del repositorio original. Los proyectos antiguos pueden tener otros scripts: consulta su `package.json` y la guía de actualización.
-
-Si las notas de versión incluyen cambios del starter, crea la plantilla actual en un directorio nuevo y migra tu contenido y ajustes personales. No sobrescribas los nuevos archivos auxiliares de configuración con los antiguos. `npm update` solo actualiza el paquete; no se garantiza la actualización directa de todos los starters históricos. Consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
-
-Si tu código personalizado aún importa `src/consts` o `@anglefeint/astro-theme/consts`, mígralo a `src/config/site.ts`.
-
-Para migraciones de versiones mayores de Astro, revisa primero la guía oficial:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- después sigue la lista de verificación de la guía de actualización enlazada arriba.
+El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.0` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
 <a id="deployment"></a>
 
@@ -154,6 +146,8 @@ El sitio estático se genera en `dist/`. Publica **todo el contenido** de esa ca
 Ejecuta `npm run preview` para revisar la compilación localmente; no publica el sitio. También puedes usar `npm run doctor`, que incluye comprobaciones y compilación.
 
 Publica en la raíz del dominio y sirve el index.html de cada directorio. Las subrutas requieren adaptación adicional; configurar Astro `base` no basta.
+
+El sitemap usa `updatedDate` o `pubDate`. La integración combina `X-Robots-Tag: noindex` del JSON del terminal en `dist/_headers`, conservando reglas y archivos originales. Cloudflare Pages y hosts compatibles lo aplican; otros necesitan cabeceras equivalentes. Verifica la respuesta publicada: Astro preview no aplica reglas del alojamiento.
 
 <a id="reference"></a>
 
@@ -173,7 +167,7 @@ Configura el encabezado principal de inicio por idioma mediante `i18n.locales.<c
 
 About incluye un índice localizado y una sección Contact destacada. El índice aparece junto al panel de lectura en pantallas amplias y dentro en pantallas pequeñas. Contact en Frontier abre `/<locale>/about/#contact`; desactivar About elimina ese enlace, mientras Decoder Lab conserva su opción independiente.
 
-La ventana About permite cerrar, minimizar o leer a pantalla completa, recuerda el estado local y ofrece comandos de terminal; los proyectos existentes deben integrar la ruta About correspondiente ([actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)).
+About permite cerrar, minimizar o mostrar el panel de lectura a pantalla completa, con estado local y comandos del terminal. La página estándar de integración se actualiza con el paquete; los proyectos anteriores a 0.27 siguen la migración inicial indicada arriba.
 
 About incluye **Hacker Decryptor**: decodifica Base64/Base64URL, texto URL, hexadecimal, entidades HTML, escapes Unicode y cabecera/carga JWT en el navegador, con detección automática y una animación numérica con los colores de la página. Ábrelo desde Decryptor en la barra lateral; no requiere API ni configuración adicional.
 
@@ -393,7 +387,6 @@ El CLI usa los idiomas habilitados de la configuración combinada. Los errores d
 - Entrada única: `src/site.config.ts`
 - La descripción de inicio prioriza `messages.siteDescription` resuelto, incluidos textos integrados y de idiomas de respaldo; solo un valor vacío usa `site.description`.
 - Los idiomas se combinan con los valores predeterminados. Use `i18n.locales.<code>.meta.enabled = false` para desactivar uno; omitirlo no lo elimina. El idioma predeterminado sigue activo.
-- Capa adaptadora (no editar directamente): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - La identidad del sitio también se puede sobrescribir con variables `PUBLIC_*`
 
 ## Enlaces sociales

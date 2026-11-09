@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from 'astro';
+import ThemeFrame from '../../components/shared/ThemeFrame.astro';
+import CodeLab from '../../components/CodeLab.astro';
+import { THEME_CONFIG } from '@anglefeint/user-config';
+import { DEFAULT_LOCALE, ENABLED_LOCALES, isLocale, localePath } from '@anglefeint/site-i18n/config';
+export const getStaticPaths = (() => THEME_CONFIG.theme.enableCodeLab
+  ? ENABLED_LOCALES.map((lang) => ({ params: { lang } })) : []) satisfies GetStaticPaths;
+const locale = isLocale(Astro.params.lang) ? Astro.params.lang : DEFAULT_LOCALE;
+const localeHrefs = Object.fromEntries(ENABLED_LOCALES.map((lang) => [lang, localePath(lang, '/code-lab/')]));
+---
+<ThemeFrame locale={locale} title="Code Lab" description="Local JSON formatting upgrade fixture" localeHrefs={localeHrefs} bodyClass="ai-page" mainClass="page-main" musicInitiallyCollapsed>
+  <h1>Code Lab</h1>
+  <CodeLab />
+</ThemeFrame>

@@ -1,0 +1,34 @@
+{
+  "name": "frozen-integration-starter-v1",
+  "private": true,
+  "type": "module",
+  "anglefeint": {
+    "projectSchema": 1
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:no-build": "astro check",
+    "check": "astro-theme doctor",
+    "doctor": "astro-theme doctor",
+    "upgrade": "npx @anglefeint/astro-theme@latest upgrade",
+    "new-post": "anglefeint-new-post",
+    "new-page": "anglefeint-new-page",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.3.7",
+    "@anglefeint/astro-theme": "0.27.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "fflate": "0.7.5"
+  }
+}

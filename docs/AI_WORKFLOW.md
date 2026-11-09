@@ -73,6 +73,7 @@ Before editing code, read in this order:
 - Confirm the actual source files involved.
 - Check whether the requested behavior is package-owned (`packages/theme/src/**`) or starter/app-owned (`src/**`).
 - Prefer config-driven changes over hard-coded behavior.
+- For the 0.27 integration architecture, standard routes/config defaults/i18n/build behavior live in the package. Keep the consumer skeleton thin; do not solve package upgrades by overwriting user source/config/media. Pre-0.27 projects intentionally migrate once into a fresh starter.
 - Avoid changing SEO/i18n/high-risk files unless the task truly requires it.
 
 ### 2. Implement on `main`
@@ -106,7 +107,7 @@ Minimum validation depends on change type:
 - High-risk page/config/runtime changes:
   - `npm run check`
 
-Prefer the smallest sufficient validation set, but do not skip build checks when layout/runtime/config behavior changed.
+Prefer the smallest sufficient validation set, but do not skip build checks when layout/runtime/config behavior changed. Integration/upgrade changes additionally require the independent installed build/audit matrix, `npm run check:upgrade` real command preservation acceptance, and the full functional browser suite. Local fixtures do not substitute for post-publication registry/remote-template/live verification.
 
 ### 4. Release Decision
 
@@ -137,6 +138,7 @@ If npm release is not required but starter should still change:
 - push `main`
 - run `npm run release:starter`
 - push `starter`
+- for starter changes requiring user action, finish remote acceptance and the [starter-only upgrade announcement](MAINTAINER_WORKFLOW.md#announcing-starter-only-upgrades); prepare its migration/changelog before delivery and do not claim npm update installs project files
 
 ## Starter Synchronization Contract
 
@@ -159,7 +161,7 @@ If npm release is not required but starter should still change:
 
 Use `npm run maintainer:sync-starter:check` to detect drift without mutating branches.
 
-The release quality gate prioritizes the latest starter paired with its published package. Historical starter upgrade compatibility is not a release requirement. For skeleton changes, recommend creating a fresh template in a new directory and migrating content/configuration deliberately; never overwrite a customized project with maintainer tooling.
+The release quality gate checks the latest starter paired with its published package and preserves the frozen schema-1 integration-starter upgrade baseline. Pre-0.27 copied skeletons are outside this automatic-upgrade contract. For a deliberate project-schema break, provide a migration guide and stop incompatible automatic upgrades; never overwrite a customized project with maintainer tooling.
 
 After pushing starter, create a temporary project using the public template command and validate installation, CLI commands, checks, build, dev and preview. Remove that temporary project only after successful validation and stopping its servers. If npm succeeds but starter fails, fix and retry starter without republishing the same npm version.
 

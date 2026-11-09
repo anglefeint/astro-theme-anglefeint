@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { loadProjectModule } from '../packages/theme/src/scaffold/project-config.mjs';
+import { inspectIntegrationProject } from '../packages/theme/src/scaffold/upgrade.mjs';
 import { execFile } from 'node:child_process';
 import { cp, lstat, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
@@ -11,7 +12,6 @@ import {
   STARTER_OBSOLETE_FILES,
   starterSourcePath,
 } from './starter-manifest.mjs';
-import { inspectProject } from './doctor.mjs';
 import { checkReadmeLinks } from './check-readme-links.mjs';
 import { checkStarterGuidance } from './check-starter-guidance.mjs';
 import { articleAlternateFixtures, checkArticleAlternates } from './check-article-alternates.mjs';
@@ -49,9 +49,9 @@ const run = (cmd, args, cwd = project) =>
   });
 const npm = (args, cwd = project) => run(process.execPath, [npmCli, ...args], cwd);
 const read = (file) => readFile(path.join(project, file), 'utf8');
-const config = (overrides) => `import { defineThemeConfig } from './site.config.defaults.ts';
-export { normalizeI18nConfig } from './site.config.runtime.ts';
-export { DEFAULT_ABOUT_CONFIG } from './site.config.defaults.ts';
+const config = (overrides) => `import { defineThemeConfig } from '@anglefeint/astro-theme/config';
+export { normalizeI18nConfig } from '@anglefeint/astro-theme/config';
+export { DEFAULT_ABOUT_CONFIG } from '@anglefeint/astro-theme/config';
 export const THEME_CONFIG = defineThemeConfig(${JSON.stringify(overrides)});`;
 const setConfig = (overrides) =>
   writeFile(path.join(project, 'src/site.config.ts'), config(overrides));
@@ -61,19 +61,26 @@ try {
   const archive = path.join(temp, 'starter.tar');
   await run('git', ['archive', '--format=tar', `--output=${archive}`, 'starter'], root);
   await run('tar', ['-xf', archive, '-C', project]);
-  const oldConfig = await read('src/site.config.ts');
-  console.log(`Baseline starter migration diagnostics: ${(await inspectProject(project)).length}`);
-  assert.equal(await read('src/site.config.ts'), oldConfig, 'doctor must not modify configuration');
 
   for (const file of STARTER_MANAGED_FILES) {
     await mkdir(path.dirname(path.join(project, file)), { recursive: true });
     await cp(path.join(root, starterSourcePath(file)), path.join(project, file));
   }
   for (const file of STARTER_OBSOLETE_FILES) await rm(path.join(project, file), { force: true });
+  for (const file of [
+    'src/pages/index.astro',
+    'src/pages/[lang]/about.astro',
+    'src/site.config.defaults.ts',
+    'src/config/theme.ts',
+    'src/i18n/runtime.ts',
+    'scripts/sync-adapters.mjs',
+  ])
+    await assert.rejects(read(file), { code: 'ENOENT' }, `Thin starter must not copy ${file}`);
   assert.equal(
     await read('src/site.config.ts'),
     await readFile(path.join(root, starterSourcePath('src/site.config.ts')), 'utf8')
   );
+  const oldConfig = await read('src/site.config.ts');
   assert.doesNotMatch(await read('src/site.config.ts'), /demo\.anglefeint\.com/);
   await checkReadmeLinks(
     project,
@@ -106,7 +113,7 @@ try {
     (await lstat(path.join(project, 'node_modules/@anglefeint/astro-theme'))).isSymbolicLink(),
     false
   );
-  assert.deepEqual(await inspectProject(project), []);
+  assert.equal((await inspectIntegrationProject(project)).anglefeint.projectSchema, 1);
   await npm(['run', 'new-post', '--', '--help']);
   await npm(['run', 'new-page', '--', '--help']);
   await npm(['run', 'new-post', '--', 'installed-default']);
@@ -522,7 +529,9 @@ try {
       }
     }
   }
-  console.log('Installed starter CLI, migration, adapter and requested build checks passed.');
+  console.log(
+    'Installed integration starter CLI, protected-source and requested build checks passed.'
+  );
 } catch (error) {
   console.error(error.stdout || '');
   console.error(error.stderr || '');

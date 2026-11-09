@@ -25,6 +25,8 @@ machine_summary: Use this index to find grouped historical release notes and the
 
 This directory is the structured release-notes ledger for `@anglefeint/astro-theme`.
 
+Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard routes/config/build features and the one-command npm upgrade entry. See its actual delivery status, verification boundaries and [migration](../../UPGRADING.md#0270-integration-starter-breaking-not-yet-published). Pre-0.27 projects require a one-time fresh-starter migration.
+
 ## Contract
 
 Latest feature release entry: [0.26.0](./0.26.0.md), About reading-window controls, panel fullscreen, terminal commands and compact contents styling. See its delivery status and acceptance record.

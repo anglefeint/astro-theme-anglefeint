@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -17,6 +17,7 @@
     "node": ">=22.12.0"
   },
   "files": [
+    "tsconfig.json",
     "src/index.ts",
     "src/content-schema.ts",
     "src/config",
@@ -39,13 +40,23 @@
     "src/social-image.d.mts",
     "src/social",
     "src/markdown.mjs",
-    "src/markdown.d.mts"
+    "src/markdown.d.mts",
+    "src/integration.mjs",
+    "src/integration.d.mts",
+    "src/project",
+    "src/routes",
+    "src/sitemap.mjs",
+    "src/cli.mjs",
+    "src/scaffold/upgrade.mjs"
   ],
   "bin": {
     "anglefeint-new-post": "src/cli-new-post.mjs",
-    "anglefeint-new-page": "src/cli-new-page.mjs"
+    "anglefeint-new-page": "src/cli-new-page.mjs",
+    "anglefeint": "src/cli.mjs",
+    "astro-theme": "src/cli.mjs"
   },
   "exports": {
+    "./tsconfig": "./tsconfig.json",
     ".": "./src/index.ts",
     "./components/*": "./src/components/*",
     "./layouts/*": "./src/layouts/*",
@@ -57,6 +68,7 @@
     "./utils/merge": "./src/utils/merge.ts",
     "./utils/project-config": "./src/scaffold/project-config.mjs",
     "./utils/number": "./src/utils/number.ts",
+    "./utils/metrics": "./src/utils/metrics.ts",
     "./utils/tags": "./src/utils/tags.ts",
     "./utils/terminal-document": "./src/utils/terminal-document.ts",
     "./utils/music": "./src/utils/music.ts",
@@ -79,7 +91,15 @@
     "./markdown": {
       "types": "./src/markdown.d.mts",
       "default": "./src/markdown.mjs"
-    }
+    },
+    "./integration": {
+      "types": "./src/integration.d.mts",
+      "default": "./src/integration.mjs"
+    },
+    "./config": "./src/project/index.ts",
+    "./env": "./src/project/env.d.ts",
+    "./runtime/*": "./src/project/*",
+    "./sitemap": "./src/sitemap.mjs"
   },
   "peerDependencies": {
     "astro": "^7.3.5"
@@ -97,6 +117,14 @@
     "satteri": "^0.10.5",
     "sharp": "^0.35.5",
     "turndown": "^7.2.4",
-    "turndown-plugin-gfm": "^1.0.2"
+    "turndown-plugin-gfm": "^1.0.2",
+    "@astrojs/mdx": "^8.0.3",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "vite": "^8.3.5",
+    "semver": "^7.7.3"
+  },
+  "anglefeint": {
+    "projectSchema": 1
   }
 }
