@@ -39,3 +39,7 @@ For schema-1 integration projects, the updater performs compatible dependency up
 - After authorized publication and starter push, run public-template acceptance and live demo verification. Local tarballs/fixture registries do not prove remote npm/starter delivery.
 
 All audit findings and registry errors remain blocking release gates. Formal publishing/starter/tag/announcement steps follow [AI_WORKFLOW](AI_WORKFLOW.md), [MAINTAINER_WORKFLOW](MAINTAINER_WORKFLOW.md) and [PACKAGE_RELEASE](PACKAGE_RELEASE.md). Record actual 0.27.0 delivery results and pending remote steps in [its ledger](releases/0.27.0.md).
+
+## Distribution consistency guard
+
+Official starter sync uses buildStarterPackage as the single dependency policy; it must not copy main's runtime dependencies back after sanitizing the thin package. Git source/target reads use literal cat-file blob lookups so absent [lang] routes are null, not successful empty git-show pattern results. Public-template acceptance asserts exactly Astro and the theme as direct runtime dependencies. A final sync check must pass after delivery; factory-only fixtures cannot replace this check.

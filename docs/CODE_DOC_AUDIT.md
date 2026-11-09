@@ -12,6 +12,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-09 官方 starter 同步一致性修正
+
+最终 sync-starter:check 发现两类维护工具差异：旧 syncStarterRuntimeDeps 在薄 package 工厂之后重新添加主库的五项运行依赖；git show 对缺失的 [lang] 路径可能成功返回空内容，被误判成仍存在的旧路由。公开 starter 实际没有旧标准路由，已通过构建；根依赖则确有冗余。移除旧依赖复制阶段，改用字面 git cat-file blob 读取并新增两组回归测试；公开模板验收额外断言运行依赖只有 Astro 与主题包。工具修正不改变已发布 0.27.1 包，必须重新走官方 starter 同步并通过最终零漂移核验。先前使用旧工具通过的模拟安装不能替代最终真实分发验证。
+
 ## 2026-11-09 Linux/pnpm 远程门禁与 0.27.1 修正
 
 0.27.0 真实公开 Windows 新用户／npx 升级通过后，首轮 Linux Actions 在 pnpm 隔离依赖下发现分享图构建错误：Yoga 的 CommonJS glue 被内联到 ESM 后缺少 __dirname；独立 Windows/pnpm 复现还出现 Sharp 无法从生成 chunk 解析。修正只将包自己的纯 Node 渲染器保留在原始模块上下文，未改绘图、字体、压缩、组件或浏览器视觉。独立 pnpm 旧版本失败、安装修复 tarball 后 doctor/build 通过。该变更属于 npm 包运行／构建行为，必须使用新补丁版本 0.27.1，不能覆盖已上传的 0.27.0。

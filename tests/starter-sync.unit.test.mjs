@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { Buffer } from 'node:buffer';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
@@ -7,6 +8,7 @@ import {
   cleanupUnexpectedStarterContent,
   syncStarter,
   validateSyncBranches,
+  readFromGitOrNullBuffer,
 } from '../tools/maintainer/sync-starter.mjs';
 
 test('starter sync rejects source targets and main aliases', () => {
@@ -132,4 +134,24 @@ test('invalid sync target has no external effects, and push remains opt-in', asy
     calls.some((call) => call.startsWith('git push')),
     false
   );
+});
+
+test('literal Git blob reads distinguish missing dynamic routes from empty content', async () => {
+  const existing = await readFromGitOrNullBuffer(
+    'HEAD',
+    'packages/theme/src/routes/[lang]/about.astro'
+  );
+  assert(existing?.includes(Buffer.from('AboutWindowControls')));
+  assert.equal(
+    await readFromGitOrNullBuffer('HEAD', 'src/pages/[lang]/missing-route-do-not-create.astro'),
+    null
+  );
+});
+
+test('starter sync does not reintroduce root runtime dependencies after package sanitization', async () => {
+  const { operations } = fixture();
+  operations.syncStarterRuntimeDeps = async () => {
+    throw new Error('Legacy runtime dependency copying must not run');
+  };
+  await syncStarter({ ...options, push: false }, operations);
 });

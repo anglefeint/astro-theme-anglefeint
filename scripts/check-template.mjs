@@ -331,6 +331,11 @@ try {
   await command(['install']);
   const managerVersion = (await command(['--version'])).trim();
   const pkg = JSON.parse(await read('package.json'));
+  assert.deepEqual(
+    Object.keys(pkg.dependencies).sort(),
+    ['@anglefeint/astro-theme', 'astro'],
+    'Public starter must keep build integrations package-owned'
+  );
   await checkStarterGuidance(project);
   results.push({
     check: 'consumer AI entries, commands and local document references',

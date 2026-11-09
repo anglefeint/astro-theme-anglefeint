@@ -141,7 +141,7 @@ async function ensureCleanWorktree(allowDirty) {
 }
 
 async function readFromGit(ref, filePath) {
-  const { stdout } = await runSilent('git', ['show', `${ref}:${filePath}`]);
+  const { stdout } = await runSilent('git', ['cat-file', 'blob', `${ref}:${filePath}`]);
   return stdout;
 }
 
@@ -155,11 +155,11 @@ async function readFromGitOrNull(ref, filePath) {
 
 /** Binary-safe: returns a Buffer. Use for managed files that may be binary (e.g. images). */
 async function readFromGitBuffer(ref, filePath) {
-  const { stdout } = await runSilentBuffer('git', ['show', `${ref}:${filePath}`]);
+  const { stdout } = await runSilentBuffer('git', ['cat-file', 'blob', `${ref}:${filePath}`]);
   return stdout;
 }
 
-async function readFromGitOrNullBuffer(ref, filePath) {
+export async function readFromGitOrNullBuffer(ref, filePath) {
   try {
     return await readFromGitBuffer(ref, filePath);
   } catch {
@@ -366,36 +366,6 @@ async function syncStarterThemeDependency(repoRoot, expectedRange) {
   return false;
 }
 
-/**
- * Sync runtime dependencies from the source (main) package.json to the starter package.json.
- * The theme package dep is intentionally skipped here — it is managed by syncStarterThemeDependency.
- */
-async function syncStarterRuntimeDeps(repoRoot, sourceRef) {
-  const THEME_DEP = '@anglefeint/astro-theme';
-  const mainPkgRaw = await readFromGit(sourceRef, STARTER_PACKAGE_JSON);
-  const mainPkg = JSON.parse(mainPkgRaw);
-  const mainDeps = mainPkg.dependencies || {};
-
-  const pkgPath = path.join(repoRoot, STARTER_PACKAGE_JSON);
-  const raw = await readFile(pkgPath, 'utf8');
-  const pkg = JSON.parse(raw);
-  pkg.dependencies = pkg.dependencies || {};
-
-  let changed = false;
-  for (const [name, version] of Object.entries(mainDeps)) {
-    if (name === THEME_DEP) continue;
-    if (pkg.dependencies[name] !== version) {
-      pkg.dependencies[name] = version;
-      changed = true;
-    }
-  }
-
-  if (changed) {
-    await writeFile(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`, 'utf8');
-  }
-  return changed;
-}
-
 async function commitStarterIfNeeded(sourceRef, changedFiles) {
   const status = await gitStatusPorcelain();
   if (!status) {
@@ -437,7 +407,6 @@ export async function syncStarter(
     cleanupUnexpectedStarterContent,
     sanitizeStarterPackageJson,
     syncStarterThemeDependency,
-    syncStarterRuntimeDeps,
     commitStarterIfNeeded,
   }
 ) {
@@ -454,7 +423,6 @@ export async function syncStarter(
     cleanupUnexpectedStarterContent,
     sanitizeStarterPackageJson,
     syncStarterThemeDependency,
-    syncStarterRuntimeDeps,
     commitStarterIfNeeded,
   } = operations;
   if (!allowAnyBranch && originalBranch !== sourceRef.replace(/^origin\//, '')) {
@@ -477,7 +445,6 @@ export async function syncStarter(
     const removedUnexpectedContent = await cleanupUnexpectedStarterContent(repoRoot);
     const sanitized = await sanitizeStarterPackageJson(repoRoot, sourceRef, expectedRange);
     const dependencyUpdated = await syncStarterThemeDependency(repoRoot, expectedRange);
-    await syncStarterRuntimeDeps(repoRoot, sourceRef);
 
     // Refresh compatible transitive versions instead of retaining a vulnerable old lockfile.
     await run('npm', ['update', '--prefer-online']);
