@@ -10,8 +10,6 @@ updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
-實質修改文章後，將 `updatedDate` 設為真實更新日期。sitemap 優先使用 `updatedDate`，未填時使用 `pubDate`，不會在每次建置時製造新日期；日期不保證搜尋引擎收錄。
-
 ## 建立文章
 
 ```bash
@@ -36,7 +34,9 @@ tags: ['astro', 'notes']
 
 title、description、pubDate 必填；subtitle、updatedDate、author 選填，作者預設使用網站作者。列表依 pubDate 排序。目前沒有草稿或排程發布篩選：draft: true 與未來日期都不會隱藏文章。未完成內容請放在 src/content/blog/ 之外。
 
-heroImage: ./cover.jpg 使用文章旁的圖片。若 src/assets/blog/default-covers/ 有圖片，指令會分配固定封面，不會下載圖片。閱讀時間與其他指標都是估計值，可用 readMinutes、wordCount、tokenCount、aiLatencyMs、aiConfidence 覆寫；這些資料不代表連接了真實 AI 服務。
+實質修改文章後，將 `updatedDate` 設為真實更新日期。sitemap 優先使用 `updatedDate`，未填時使用 `pubDate`，不會在每次建置時製造新日期；日期不保證搜尋引擎收錄。
+
+heroImage: ./cover.jpg 使用文章旁的圖片。若 src/assets/blog/default-covers/ 有圖片，指令會隨機選擇封面，不會下載圖片。閱讀時間與其他指標都是估計值，可用 readMinutes、wordCount、tokenCount、aiLatencyMs、aiConfidence 覆寫；這些資料不代表連接了真實 AI 服務。
 
 ## 目錄與標籤
 

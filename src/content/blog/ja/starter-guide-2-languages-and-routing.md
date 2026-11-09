@@ -8,8 +8,6 @@ updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
-記事を実質的に更新したら `updatedDate` に実際の更新日を設定します。sitemap は `updatedDate`、未指定なら `pubDate` を使い、ビルドのたびに新しい日付を作りません。検索エンジンへの登録を保証するものではありません。
-
 ## 日々の執筆はコンテンツファイルで
 
 ガイド 1 の準備が済んでいることを前提に説明します。サイト全体の機能は `src/site.config.ts`、記事のタイトル・タグ・個別設定は Markdown 先頭の frontmatter（2 本の `---` の間）に書きます。設定する場所が異なる点に注意してください。
@@ -46,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 必須は `title`、`description`、`pubDate` です。`subtitle`、`updatedDate`、`author` は任意で、著者を省略するとサイトの著者が使われます。一覧は `pubDate` の新しい順です。現在、下書きや予約公開のフィルターはありません。`draft: true` や未来の日付では非公開にならないため、未完成の記事はコンテンツディレクトリの外に置いてください。
+
+記事を実質的に更新したら `updatedDate` に実際の更新日を設定します。sitemap は `updatedDate`、未指定なら `pubDate` を使い、ビルドのたびに新しい日付を作りません。検索エンジンへの登録を保証するものではありません。
 
 カバーは記事の隣に画像を置いて `heroImage: ./cover.jpg` と指定するか、作成コマンドが割り当てたローカルのパスを使います。`src/assets/blog/default-covers/` に画像がある場合のみ自動割り当てされ、画像のダウンロードは行いません。`heroImage` は省略できます。読了時間や文字数などは自動計算され、通常の記事で手入力する必要はありません。
 

@@ -8,8 +8,6 @@ updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
-Tras una modificación sustancial, indica la fecha real en `updatedDate`. El sitemap usa `updatedDate` o, si falta, `pubDate`; no inventa una fecha en cada build. Las fechas no garantizan la indexación.
-
 ## Escribe en los archivos de contenido
 
 Esta guía presupone que completaste la instalación y los ajustes de la guía 1. Las funciones generales se configuran en `src/site.config.ts`; el título, las etiquetas y las opciones de un artículo van en su frontmatter, entre las dos líneas `---` al principio del Markdown. Son lugares distintos.
@@ -46,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 `title`, `description` y `pubDate` son obligatorios. `subtitle`, `updatedDate` y `author` son opcionales; si omites el autor se utiliza el del sitio. Las listas se ordenan por `pubDate`, del más reciente al más antiguo. Actualmente no hay filtro de borradores ni publicación programada: ni `draft: true` ni una fecha futura ocultan el artículo. Guarda los textos sin terminar fuera del directorio de contenido.
+
+Tras una modificación sustancial, indica la fecha real en `updatedDate`. El sitemap usa `updatedDate` o, si falta, `pubDate`; no inventa una fecha en cada build. Las fechas no garantizan la indexación.
 
 Para la portada, usa `heroImage: ./cover.jpg` y coloca el archivo junto al artículo, o conserva la ruta local asignada por el comando de creación. La asignación automática solo ocurre si hay imágenes en `src/assets/blog/default-covers/`; no descarga imágenes. `heroImage` es opcional. El tiempo de lectura y otras métricas del contenido se calculan automáticamente, por lo que normalmente no necesitan valores manuales.
 

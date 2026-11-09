@@ -10,8 +10,6 @@ updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
-Nach einer inhaltlichen Änderung `updatedDate` auf das tatsächliche Aktualisierungsdatum setzen. Die Sitemap nutzt `updatedDate`, ersatzweise `pubDate`, nicht bei jedem Build ein neues Datum. Das garantiert keine Indexierung.
-
 ## Beitrag erstellen
 
 ```bash
@@ -35,6 +33,8 @@ tags: ['astro', 'notes']
 ```
 
 title, description und pubDate sind Pflicht. subtitle, updatedDate und author sind optional; standardmäßig gilt der Website-Autor. Beiträge werden nach pubDate sortiert. Es gibt keinen Entwurfs- oder Veröffentlichungszeitfilter: draft: true und zukünftige Daten verstecken nichts. Unfertige Texte außerhalb von src/content/blog/ aufbewahren.
+
+Nach einer inhaltlichen Änderung `updatedDate` auf das tatsächliche Aktualisierungsdatum setzen. Die Sitemap nutzt `updatedDate`, ersatzweise `pubDate`, nicht bei jedem Build ein neues Datum. Das garantiert keine Indexierung.
 
 heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Bei vorhandenen Dateien in src/assets/blog/default-covers/ wählt der Befehl zufällig ein Titelbild. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
 

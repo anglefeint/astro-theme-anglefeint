@@ -8,8 +8,6 @@ updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
-Set `updatedDate` to the real date of a substantive article update. The sitemap uses `updatedDate`, falling back to `pubDate`; it does not invent a new date on every build. Dates do not guarantee search-engine indexing.
-
 ## Daily writing starts with content files
 
 This guide assumes you completed setup in Guide 1. Site-wide options belong in `src/site.config.ts`; a post’s title, tags, and overrides belong in its Markdown frontmatter, between the opening pair of `---` lines. These are different places.
@@ -46,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 `title`, `description`, and `pubDate` are required. `subtitle`, `updatedDate`, and `author` are optional; the author falls back to the site author. Lists sort by `pubDate`, newest first. There is currently no draft or scheduled-publication filter: neither `draft: true` nor a future date hides a post. Keep unfinished content outside the content directory.
+
+Set `updatedDate` to the real date of a substantive article update. The sitemap uses `updatedDate`, falling back to `pubDate`; it does not invent a new date on every build. Dates do not guarantee search-engine indexing.
 
 For a cover, use `heroImage: ./cover.jpg` with the image beside the post, or keep the local cover path assigned by the creation command. Automatic assignment happens only when images exist in `src/assets/blog/default-covers/`; no image is downloaded. `heroImage` is optional. Reading time and related content metrics are calculated automatically, so ordinary posts need no manual values.
 

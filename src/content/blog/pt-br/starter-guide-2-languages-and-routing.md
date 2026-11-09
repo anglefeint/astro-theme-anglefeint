@@ -10,8 +10,6 @@ updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
-Após uma alteração substancial, informe a data real em `updatedDate`. O sitemap usa `updatedDate` ou, na ausência, `pubDate`; não cria uma data nova a cada build. Datas não garantem indexação.
-
 ## Criar um artigo
 
 ```bash
@@ -36,7 +34,9 @@ tags: ['astro', 'notes']
 
 title, description e pubDate são obrigatórios. subtitle, updatedDate e author são opcionais; o autor padrão vem do site. Artigos são ordenados por pubDate. Não há filtro de rascunho ou agendamento: draft: true e datas futuras não ocultam artigos. Guarde textos inacabados fora de src/content/blog/.
 
-heroImage: ./cover.jpg usa uma imagem ao lado do artigo. O comando escolhe uma capa estável quando há arquivos em src/assets/blog/default-covers/. Não baixa imagens. Tempo de leitura e métricas são estimativas; readMinutes, wordCount, tokenCount, aiLatencyMs e aiConfidence podem substituí-las, sem conectar um serviço de IA.
+Após uma alteração substancial, informe a data real em `updatedDate`. O sitemap usa `updatedDate` ou, na ausência, `pubDate`; não cria uma data nova a cada build. Datas não garantem indexação.
+
+heroImage: ./cover.jpg usa uma imagem ao lado do artigo. O comando escolhe uma capa aleatória quando há arquivos em src/assets/blog/default-covers/. Não baixa imagens. Tempo de leitura e métricas são estimativas; readMinutes, wordCount, tokenCount, aiLatencyMs e aiConfidence podem substituí-las, sem conectar um serviço de IA.
 
 ## Sumário e tags
 

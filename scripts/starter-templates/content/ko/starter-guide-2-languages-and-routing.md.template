@@ -8,8 +8,6 @@ updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
-글을 실질적으로 수정하면 `updatedDate`에 실제 수정 날짜를 넣으세요. sitemap은 `updatedDate`, 없으면 `pubDate`를 사용하며 빌드할 때마다 새 날짜를 만들지 않습니다. 날짜가 검색 엔진 색인을 보장하지는 않습니다.
-
 ## 일상적인 글쓰기는 콘텐츠 파일에서
 
 가이드 1의 설치와 설정을 마쳤다고 가정합니다. 사이트 전체 설정은 `src/site.config.ts`에, 글 제목과 태그 및 개별 옵션은 Markdown 상단의 frontmatter, 즉 두 `---` 사이에 작성합니다. 서로 다른 위치입니다.
@@ -46,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 `title`, `description`, `pubDate`는 필수입니다. `subtitle`, `updatedDate`, `author`는 선택이며 작성자를 생략하면 사이트 작성자를 사용합니다. 목록은 `pubDate` 최신순입니다. 현재 초안이나 예약 발행 필터는 없습니다. `draft: true`나 미래 날짜로 숨길 수 없으므로 미완성 글은 콘텐츠 디렉터리 밖에 보관하세요.
+
+글을 실질적으로 수정하면 `updatedDate`에 실제 수정 날짜를 넣으세요. sitemap은 `updatedDate`, 없으면 `pubDate`를 사용하며 빌드할 때마다 새 날짜를 만들지 않습니다. 날짜가 검색 엔진 색인을 보장하지는 않습니다.
 
 표지는 글 옆에 이미지를 놓고 `heroImage: ./cover.jpg`로 지정하거나 생성 명령이 배정한 로컬 경로를 유지합니다. 자동 배정은 `src/assets/blog/default-covers/`에 이미지가 있을 때만 작동하며 이미지를 다운로드하지 않습니다. `heroImage`는 생략할 수 있습니다. 읽기 시간과 글자 수 등의 지표는 자동 계산하므로 일반 글에서는 직접 입력할 필요가 없습니다.
 

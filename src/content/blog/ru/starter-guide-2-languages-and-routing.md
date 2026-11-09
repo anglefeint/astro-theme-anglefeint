@@ -10,8 +10,6 @@ updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
-После существенной правки задайте реальную дату в `updatedDate`. Sitemap использует `updatedDate`, иначе `pubDate`, а не новую дату при каждой сборке. Дата не гарантирует индексацию.
-
 ## Создать статью
 
 ```bash
@@ -36,7 +34,9 @@ tags: ['astro', 'notes']
 
 Обязательны title, description и pubDate. subtitle, updatedDate и author необязательны; по умолчанию используется автор сайта. Сортировка идёт по pubDate. Фильтра черновиков и отложенной публикации нет: draft: true и будущие даты ничего не скрывают. Храните незавершённые тексты вне src/content/blog/.
 
-heroImage: ./cover.jpg берёт изображение рядом со статьёй. При наличии файлов в src/assets/blog/default-covers/ команда выбирает постоянную обложку. Загрузки изображений из сети нет. Время чтения и показатели приблизительные. readMinutes, wordCount, tokenCount, aiLatencyMs и aiConfidence позволяют задать свои значения, не подключая сервис ИИ.
+После существенной правки задайте реальную дату в `updatedDate`. Sitemap использует `updatedDate`, иначе `pubDate`, а не новую дату при каждой сборке. Дата не гарантирует индексацию.
+
+heroImage: ./cover.jpg берёт изображение рядом со статьёй. При наличии файлов в src/assets/blog/default-covers/ команда случайно выбирает обложку. Загрузки изображений из сети нет. Время чтения и показатели приблизительные. readMinutes, wordCount, tokenCount, aiLatencyMs и aiConfidence позволяют задать свои значения, не подключая сервис ИИ.
 
 ## Оглавление и теги
 

@@ -8,8 +8,6 @@ updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
-实质修改文章后，将 `updatedDate` 设为真实更新日期。sitemap 优先使用 `updatedDate`，未填写时使用 `pubDate`，不会在每次构建时制造新日期；日期不保证搜索引擎收录。
-
 ## 日常写作只需要内容文件
 
 本文默认你已完成第一篇的安装与站点设置。站点级功能在 `src/site.config.ts` 配置；单篇文章的标题、标签和开关写在 Markdown 文件顶部的 frontmatter（两条 `---` 之间）。两者不是同一个地方。
@@ -46,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 必填项是 `title`、`description`、`pubDate`。可选 `subtitle`、`updatedDate`、`author`；没有写 `author` 时使用站点作者。列表按 `pubDate` 从新到旧排序。当前没有草稿或定时发布过滤：不要靠 `draft: true` 或未来日期隐藏文章，未完成内容先放在内容目录之外。
+
+实质修改文章后，将 `updatedDate` 设为真实更新日期。sitemap 优先使用 `updatedDate`，未填写时使用 `pubDate`，不会在每次构建时制造新日期；日期不保证搜索引擎收录。
 
 封面用 `heroImage: ./cover.jpg`，文件放在文章旁边；也可以保留新建命令分配的本地封面路径。命令只在 `src/assets/blog/default-covers/` 有图片时自动分配封面，不会下载图片。`heroImage` 可省略。阅读时长和字数等指标已有自动计算，普通文章不用手工填写。
 
