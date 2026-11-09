@@ -32,7 +32,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Maintainer browser tests
         if: matrix.manager == 'npm'
-        run: npm run e2e
+        run: npm run e2e -- --workers=1
       - name: Music session browser tests
         if: matrix.manager == 'npm'
         run: node scripts/check-music-browser.mjs

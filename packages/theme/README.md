@@ -2,6 +2,10 @@
 
 Core package for the Anglefeint Astro theme.
 
+## 0.27.1 pnpm build fix
+
+Use 0.27.1 or newer for integration starters: it fixes automatic social-image builds with isolated pnpm dependencies. Rendering, fonts and public URLs stay the same. No content/config migration is needed from 0.27.0; see the [patch release record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.27.1.md).
+
 ## 0.27.0 integration architecture
 
 The theme package now owns standard routes, configuration defaults/types/runtime, translations, internal font assets and build integrations. The thin starter retains articles, `src/site.config.ts`, music/images, custom pages and personal hosting settings. See the [release record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.27.0.md) for delivery status and verification.

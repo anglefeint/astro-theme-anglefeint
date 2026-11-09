@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.27.1] - 2026-11-09
+
+- Keep the build-only social-image renderer in its original Node package context. This fixes pnpm dependency-isolation failures (`__dirname`/Sharp resolution) without changing image templates, fonts, PNG settings or public routes.
+- Recommended patch for the 0.27 integration starter. No content/configuration migration is needed from schema 1; pre-0.27 projects still require the one-time fresh-starter migration.
+- See [0.27.1](docs/releases/0.27.1.md) for actual publication and Windows/Linux consumer acceptance status.
+
 ## [0.27.0] - 2026-11-09 — Integration starter (breaking)
 
 - Move standard pages/routes, configuration defaults/types/runtime, i18n/config wiring, archive atmosphere and internal fonts into the theme package. A thin starter retains user articles, site config, music/images and custom pages; existing cinematic behavior and route URLs are preserved.

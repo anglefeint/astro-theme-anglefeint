@@ -59,7 +59,7 @@ npx @anglefeint/astro-theme@latest upgrade
 # Read-only project preflight:
 npx @anglefeint/astro-theme@latest upgrade --check
 # Select a published version:
-npx @anglefeint/astro-theme@latest upgrade --to 0.27.0
+npx @anglefeint/astro-theme@latest upgrade --to 0.27.1
 ```
 
 `npm run upgrade` is the same default command in the new starter. The updater validates the project marker, npm lockfile family, target package name/version/schema, Node engine and installed Astro peer range. It resolves the target before installation, supports skipping package versions within schema 1, backs up package.json/package-lock.json under `.anglefeint/backups/`, installs the exact version with lifecycle scripts disabled, and runs the project's doctor. It does not rewrite configuration, source, content, music, images, custom pages or host settings; it does not push or deploy. It preserves user dependency overrides. Review new dependencies if they require installation lifecycle scripts.

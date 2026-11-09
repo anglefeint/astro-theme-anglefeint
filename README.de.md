@@ -105,7 +105,7 @@ npx @anglefeint/astro-theme@latest upgrade
 
 Projekte vor 0.27 benötigen einmalig einen frischen Starter. Erstelle ihn nach Veröffentlichung in einem anderen Ordner, übertrage Artikel/Ressourcen und persönliche Werte in die neue Konfiguration. Alte Standardrouten, Adapter und defaults/schema/runtime-Dateien nicht kopieren. Slugs, Sprachpfade, Musik-/Bild-URLs und Hosting-Einstellungen erhalten.
 
-Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien werden abgelehnt. `--check` prüft ohne Änderungen; `--to 0.27.0` wählt die Version. Siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) und [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien werden abgelehnt. `--check` prüft ohne Änderungen; `--to 0.27.1` wählt die Version. Siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) und [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
 <a id="deployment"></a>
 

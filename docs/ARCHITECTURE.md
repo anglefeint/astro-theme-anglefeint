@@ -60,7 +60,7 @@ The unified integration supplies MDX, the existing build-time Satteri/KaTeX Mark
 - Pagefind indexes only opted-in article content, by page language; zero-article and disabled search remain empty/off. TOC uses compiler headings, while copy/preview/progress interactions retain no-JavaScript reading and keyboard behavior.
   <a id="article-share-images"></a>
 
-- Social images use offline fonts/assets with Satori/Sharp, metadata-keyed caching and explicit ogImage precedence. PNG optimization remains lossless; body font delivery is unchanged.
+- Social images use offline fonts/assets with Satori/Sharp, metadata-keyed caching and explicit ogImage precedence. The integration externalizes its own pure-Node renderer to a package-local file URL so pnpm isolation cannot bundle Yoga glue or lose native dependency resolution. PNG optimization remains lossless; body font delivery is unchanged.
 - Machine-readable exports traverse rendered public article HTML, respect noindex/off-site canonical, preserve rendered MDX/code/math and generate root/language indexes, bundles and article Markdown. Configured global/locale aiReadableContent supplements inherit per field with explicit empty suppression. Exports preserve absolute destinations, ownership collision checks and stale-output cleanup. They do not promise AI citations, copyright compliance or Google indexing.
 
 ## Upgrade contract and distribution

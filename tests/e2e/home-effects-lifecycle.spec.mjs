@@ -130,6 +130,9 @@ test('terminal door hit area continues the shared passage without restarting Web
 });
 
 test('About Oracle walks back on right-click and keeps Escape exit', async ({ page }) => {
+  // Software WebGL on hosted runners needs room for navigation and automation;
+  // the individual forward/reverse scene deadlines below stay unchanged.
+  test.setTimeout(60_000);
   await page.goto(`/${defaultLocale}/about/`);
   await page.locator('[data-oracle]').click();
   const passage = page.locator('.oracle-passage');

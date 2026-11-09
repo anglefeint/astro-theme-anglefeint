@@ -26,6 +26,13 @@ const root = process.cwd();
 const npmCli = process.env.npm_execpath;
 assert(npmCli, 'Run via npm run check:template');
 const pm = process.argv.includes('--pnpm') ? 'pnpm' : 'npm';
+const upgradeFrom = process.argv
+  .find((arg) => arg.startsWith('--upgrade-from='))
+  ?.slice('--upgrade-from='.length);
+if (upgradeFrom) {
+  assert.equal(pm, 'npm', 'Automatic published upgrade acceptance supports npm only');
+  assert.match(upgradeFrom, /^\d+\.\d+\.\d+$/);
+}
 const parent = await realpath(tmpdir());
 const temporary = await mkdtemp(path.join(parent, 'anglefeint-template-'));
 const project = path.join(temporary, 'site');
@@ -316,6 +323,11 @@ try {
     ],
     { cwd: temporary, npm: true }
   );
+  if (upgradeFrom) {
+    const initial = JSON.parse(await read('package.json'));
+    initial.dependencies['@anglefeint/astro-theme'] = upgradeFrom;
+    await writeFile(file('package.json'), JSON.stringify(initial, null, 2));
+  }
   await command(['install']);
   const managerVersion = (await command(['--version'])).trim();
   const pkg = JSON.parse(await read('package.json'));
@@ -507,22 +519,32 @@ try {
   await writeFile(file('.env'), 'PUBLIC_SITE_URL=https://acceptance.example\n');
   if (pm === 'npm') {
     const before = await userFileHashes();
-    await command(['exec', '--yes', '--', '@anglefeint/astro-theme@latest', 'upgrade'], {
-      npm: true,
-    });
+    const upgradeOutput = await command(
+      ['exec', '--yes', '--', '@anglefeint/astro-theme@latest', 'upgrade'],
+      {
+        npm: true,
+      }
+    );
     assert.deepEqual(
       await userFileHashes(),
       before,
       'Published npx upgrade must preserve personalized source/config/media/docs'
     );
+    const target = upgradeOutput.match(/Anglefeint \S+ -> (\S+); project schema/)?.[1];
+    assert(target, 'The published CLI must report its resolved upgrade target');
     assert.equal(
       JSON.parse(await read('node_modules/@anglefeint/astro-theme/package.json')).version,
-      version
+      target
+    );
+    assert.equal(
+      JSON.parse(await read('package.json')).dependencies['@anglefeint/astro-theme'],
+      target
     );
     results.push({
       check: 'real published npx upgrade on customized remote starter',
       status: 'passed',
-      version,
+      fromVersion: version,
+      toVersion: target,
       preservedFiles: before.length,
     });
   }

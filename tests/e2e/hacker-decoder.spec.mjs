@@ -1,4 +1,4 @@
-/* global window, document, Event, navigator */
+/* global window, document, Event, navigator, MutationObserver, performance */
 import { test, expect } from '@playwright/test';
 import { Buffer } from 'node:buffer';
 import { URL } from 'node:url';
@@ -197,14 +197,37 @@ test('near-limit input shows the complete result within the bounded animation ti
   await openDecoder(page);
   const text = 'a'.repeat(12000);
   await page.locator('[name="decoder-input"]').fill(Buffer.from(text).toString('base64'));
-  const started = Date.now();
+  // Measure the actual browser animation, excluding Playwright click/poll transport.
+  await page.locator(output).evaluate((element) => {
+    const timing = { started: null, elapsed: null };
+    element.testDecoderTiming = timing;
+    document.querySelector('.hacker-decoder-submit').addEventListener(
+      'click',
+      () => {
+        timing.started = performance.now();
+      },
+      { capture: true, once: true }
+    );
+    const observer = new MutationObserver(() => {
+      const state = element.getAttribute('data-decoder-state');
+      if (state === 'done' && timing.started !== null) {
+        timing.elapsed = performance.now() - timing.started;
+        observer.disconnect();
+      }
+    });
+    observer.observe(element, { attributes: true, attributeFilter: ['data-decoder-state'] });
+  });
   await page.locator('.hacker-decoder-submit').click();
   await expect(page.locator(output)).toHaveAttribute('data-decoder-state', 'running');
   await expect(page.locator('.hacker-decoder-original')).toHaveCSS('opacity', '0');
   await expect(page.locator(output)).toHaveAttribute('data-decoder-state', 'done', {
     timeout: 5000,
   });
-  expect(Date.now() - started).toBeLessThan(3500);
+  const elapsed = await page
+    .locator(output)
+    .evaluate((element) => element.testDecoderTiming.elapsed);
+  expect(elapsed).not.toBeNull();
+  expect(elapsed).toBeLessThan(3500);
   expect(await page.locator(output).textContent()).toBe(text);
   await expect(page.locator(`${output} canvas`)).toHaveCount(0);
 });
