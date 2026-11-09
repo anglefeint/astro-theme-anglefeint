@@ -75,7 +75,7 @@ npm run new-post -- my-first-post --locales en
 Edit the title, description and body in `src/content/blog/en/my-first-post.md`. To create matching skeletons in every enabled language, omit `--locales`: initially this creates nine files, without translating them. Existing files are preserved.
 
 Slug rule: use lowercase letters, numbers, and hyphens only (example: `my-first-post`).
-If default covers exist in `src/assets/blog/default-covers/`, a stable cover is auto-assigned by slug hash (you can replace `heroImage` later).
+If images exist in `src/assets/blog/default-covers/`, each invocation randomly selects one cover and uses it for all newly created locale files. Existing files are preserved; you can replace `heroImage` later.
 Optional locale override:
 
 ```bash
@@ -119,27 +119,19 @@ npm run new-page -- projects --theme matrix
 
 <a id="upgrade"></a>
 
-## Upgrade Theme
+## Upgrade the theme
 
-For projects created from `#starter`, use the following only when the target release supports your existing starter and Astro version and requires no local structure changes:
+The integration starter keeps standard pages, configuration defaults, translations and build features in the theme package. Your articles, `src/site.config.ts`, music, images and custom pages remain in your project.
+
+For integration starters using npm, run the command below from the project root. It checks project/Node/Astro compatibility, backs up dependency files, installs an exact theme version and runs doctor. On failure it restores dependency files and attempts to reinstall the previous dependencies. Rebuild output is ready for your normal deployment; the command does not publish your site.
 
 ```bash
-npm update @anglefeint/astro-theme
-npm run doctor
+npx @anglefeint/astro-theme@latest upgrade
 ```
 
-`npm update` stays within the range in `package.json`: `^0.5.1` does not include `0.6.0`. For a compatible update outside that range, follow the release notes and install an explicit target version, not blindly `@latest`. Check the installed versions with `npm ls @anglefeint/astro-theme astro`.
+Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory after this release is delivered, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
 
-In the current starter, `doctor` already includes checks and a build. After it succeeds, use `npm run preview` to inspect the site. Only if it reports generated adapters out of sync with local templates, run `npm run sync-adapters`, then rerun `npm run doctor`; this does not download upstream templates. Older projects may have different scripts: inspect their `package.json` and follow the upgrade guide.
-
-If release notes mention starter-side contract changes, create the latest template in a new directory and migrate your content and personal settings. Do not overwrite the new configuration helpers with old files. `npm update` only updates the published package; in-place upgrades across all historical starters are not guaranteed. See the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
-
-If your custom code still imports `src/consts` or `@anglefeint/astro-theme/consts`, migrate to `src/config/site.ts`.
-
-For Astro major-version migrations, follow the official Astro guide first:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- then follow the validation checklist in the upgrade guide linked above.
+The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.0` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.
 
 <a id="deployment"></a>
 
@@ -154,6 +146,8 @@ The build produces a static website in `dist/`. Publish **all contents** of that
 To check the built website locally, run `npm run preview`; preview does not publish it. Alternatively, `npm run doctor` includes checks and a build.
 
 Serve the site at the domain root, with directory index support. Subpath hosting requires additional adaptation; setting Astro `base` alone is insufficient.
+
+Article sitemap dates use `updatedDate`, falling back to `pubDate`; keep them accurate. The theme integration adds terminal JSON `X-Robots-Tag: noindex` rules to the built `dist/_headers`, preserving existing host rules and leaving your source file unchanged. Cloudflare Pages/compatible static hosts apply these rules; other hosts need equivalent response-header settings. Verify the deployed response; Astro preview does not apply host rules.
 
 <a id="reference"></a>
 
@@ -171,7 +165,7 @@ Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls 
 
 About includes a localized section directory and a highlighted Contact section. The directory sits beside the reading panel on wide screens and inside it on smaller screens. Frontier’s Contact link opens `/<locale>/about/#contact`; disabling About removes that link while Decoder Lab keeps its own switch.
 
-About window controls close, minimize or fullscreen the reading panel, with browser-local state and matching terminal commands; existing projects need the matching About route merge ([upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)).
+About window controls close, minimize or fullscreen the reading panel, with browser-local state and matching terminal commands. The integration starter updates this standard page with the package; pre-0.27 projects follow the one-time migration above.
 
 About includes **Hacker Decryptor**: decode Base64/Base64URL, URL-encoded text, hexadecimal, HTML entities, Unicode escapes and JWT header/payload locally in your browser, with automatic format detection and a numeric result reveal matched to the page palette. Open Decryptor from the About sidebar; no API or extra setup is needed.
 
@@ -365,7 +359,7 @@ analytics: {
 
 Copy the **Measurement ID** (`G-...`) from Google Analytics → Admin → Data streams → your Web stream. This is not the property name or numeric property ID. Leave the value empty to disable tracking. One ID covers every language and themed page; compare languages by page path. Rebuild and redeploy, then visit the live site and check the GA4 Realtime report.
 
-Development mode and localhost/loopback previews do not send data. Remote previews and LAN-address previews do track when configured. The default starter loads no Google script. Do not also install the same tracking through GTM, Zaraz or a manual snippet. This option does not include a consent banner or consent management; if your site requires these, arrange them before enabling tracking. Script blockers can prevent data collection. Existing projects need the matching configuration helpers/adapter; see the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+Development mode and localhost/loopback previews do not send data. Remote previews and LAN-address previews do track when configured. The default starter loads no Google script. Do not also install the same tracking through GTM, Zaraz or a manual snippet. This option does not include a consent banner or consent management; if your site requires these, arrange them before enabling tracking. Script blockers can prevent data collection. The integration starter supplies this wiring; pre-0.27 projects follow the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ### Optional: Giscus Comments
 
@@ -397,7 +391,6 @@ The CLI uses enabled locales from the merged config. Config errors stop generati
 ## Configuration Surface
 
 - Single entry: `src/site.config.ts`
-- Adapters (do not edit directly): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - Environment override supported: `PUBLIC_*` vars for site identity
 
 ## Social links

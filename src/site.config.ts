@@ -1,8 +1,8 @@
 /**
  * Single user-facing config entry for Anglefeint.
- * Edit this file only. Other files under src/config/* and src/i18n/* are adapters.
+ * User configuration stays here; defaults, types and runtime belong to the theme package.
  */
-import { defineThemeConfig } from './site.config.defaults.ts';
+import { defineThemeConfig } from '@anglefeint/astro-theme/config';
 
 export type {
   AboutConfig,
@@ -16,9 +16,9 @@ export type {
   SocialLink,
   ThemeConfig,
   ThemeI18nConfig,
-} from './site.config.schema.ts';
-export { DEFAULT_ABOUT_CONFIG, defineThemeConfig } from './site.config.defaults.ts';
-export { normalizeI18nConfig } from './site.config.runtime.ts';
+} from '@anglefeint/astro-theme/config';
+export { DEFAULT_ABOUT_CONFIG, defineThemeConfig } from '@anglefeint/astro-theme/config';
+export { normalizeI18nConfig } from '@anglefeint/astro-theme/config';
 
 /**
  * Edit this object only.

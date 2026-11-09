@@ -4,7 +4,7 @@ title: 'Guía 3: Activa y personaliza funciones opcionales'
 subtitle: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 description: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ Esta guía corresponde al starter actual. Integra todos los fragmentos TypeScrip
 | Ampliación de imágenes del cuerpo y copia de código              | Automáticas; sin configuración |
 | About y monitor Red Queen de los artículos                       | Activos                        |
 | Música y comentarios Giscus                                      | Desactivados                   |
-| Artículos recientes en inicio / artículos por página del blog    | 3 / 9                          |
+| Artículos recientes en inicio / artículos por página del blog    | 3 / 10                          |
 
 ## 1. Activa el reproductor de música
 
@@ -212,8 +212,6 @@ export const THEME_CONFIG = defineThemeConfig({
 
 Usa `showCredits: true` para volver a mostrarlos. Al ocultarlos se eliminan ambos enlaces, pero se mantiene la línea de copyright. El campo opcional `site.tagline` añade texto propio independientemente de este interruptor. Está vacío por defecto; el valor anterior `Built with Astro.` se trata como el crédito integrado para evitar duplicados. No se añade `All rights reserved`.
 
-Estas opciones de inicio/pie son cambios locales sin publicar; npm 0.14.0 y el starter público aún no las incluyen. Requieren cambios tanto en el starter como en el paquete; consulta la [migración pendiente](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links).
-
 En `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow y `showTrace` controla el estado inferior derecho. Todos valen `true` por defecto; `false` oculta cada sección por separado.
 
 La opción `theme.footer.links` añade una fila independiente al pie: cada entrada contiene `label` y `href`, con puntos entre enlaces. Omitirla o usar un array vacío oculta la fila. Las etiquetas mantienen el texto configurado en todos los idiomas; no depende de los iconos sociales ni de `showCredits`.
@@ -260,3 +258,19 @@ $C_{saved}$
 $$
 \frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
 $$
+
+---
+
+## Actualizar el tema
+
+El paquete gestiona páginas estándar, valores predeterminados, traducciones y funciones de compilación. Tus artículos, `src/site.config.ts`, música, imágenes y páginas propias permanecen en el proyecto.
+
+En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz. Comprueba compatibilidad, guarda los archivos de dependencias, instala una versión exacta y ejecuta doctor. Si falla, restaura los archivos e intenta reinstalar las dependencias anteriores. Publica después con tu proceso habitual; no despliega automáticamente.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Tras la publicación, créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
+
+El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.0` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).

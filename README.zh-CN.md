@@ -75,7 +75,7 @@ npm run new-post -- my-first-post --locales zh
 编辑 `src/content/blog/zh/my-first-post.md` 的标题、描述和正文。需要为所有已启用语言创建同名骨架时，省略 `--locales`；初始配置会创建九份文件，不会自动翻译，已有文件不会被覆盖。
 
 Slug 规则：仅使用小写字母、数字和连字符（示例：`my-first-post`）。
-如果 `src/assets/blog/default-covers/` 中存在默认封面，脚本会按 slug 哈希自动分配一张（后续可手动替换 `heroImage`）。
+如果 `src/assets/blog/default-covers/` 中存在图片，每次运行命令会随机选择一张封面，本次新建的各语言文章共用这张封面。已有文件不会覆盖，后续可手动替换 `heroImage`。
 可选语言覆盖：
 
 ```bash
@@ -103,7 +103,7 @@ URL 规则：
 npm run new-page -- projects --theme base
 ```
 
-可选主题：`base`、`ai`、`cyber`、`hacker`、`matrix`。  
+可选主题：`base`、`ai`、`cyber`、`hacker`、`matrix`。
 命令会生成 `src/pages/[lang]/projects.astro`，并通过 `getStaticPaths()` 输出全部语言路由。
 Slug 规则：只允许小写字母、数字和连字符；支持嵌套路由（例如 `projects/labs`）。不支持下划线或大写。
 
@@ -121,25 +121,17 @@ npm run new-page -- projects --theme matrix
 
 ## 升级主题
 
-对于 `#starter` 创建的项目，仅在目标版本明确兼容现有 starter 和 Astro、且无需本地结构迁移时执行：
+集成版 starter 将标准页面、配置默认值、翻译和构建功能放在主题包中。文章、`src/site.config.ts`、音乐、图片和自建页面保留在用户项目中。
+
+使用 npm 的集成版项目在根目录运行下列命令。它检查项目、Node 和 Astro 兼容性，备份依赖文件，安装明确的主题版本并运行 doctor；失败时恢复依赖文件并尝试重新安装原依赖。完成后按原有流程部署，命令不会自动发布网站。
 
 ```bash
-npm update @anglefeint/astro-theme
-npm run doctor
+npx @anglefeint/astro-theme@latest upgrade
 ```
 
-`npm update` 只在 `package.json` 声明的范围内更新：`^0.5.1` 不包含 `0.6.0`。兼容但跨范围的更新，应按发布说明安装明确的目标版本，不要直接安装 `@latest`。用 `npm ls @anglefeint/astro-theme astro` 确认实际版本。
+0.27 之前的项目需要一次重新安装迁移：本版本正式交付后，在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
 
-当前 starter 的 `doctor` 已包含检查和构建，成功后用 `npm run preview` 人工检查站点。只有明确报告生成适配文件与本地模板不同步时，才运行 `npm run sync-adapters`，然后重跑 `npm run doctor`；它不会下载上游模板。旧工程的脚本可能不同，请查看本地 `package.json` 并遵循升级指南。
-
-如果发布说明涉及 starter 骨架变化，建议在新目录创建最新模板，再迁移文章、资源和个人设置，不要用旧文件整体覆盖新配置辅助文件。`npm update` 只更新主题包，不保证所有历史 starter 都能原地升级。详见[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
-
-如果你的自定义代码还在引用 `src/consts` 或 `@anglefeint/astro-theme/consts`，请迁移到 `src/config/site.ts`。
-
-如需进行 Astro 大版本升级，请先参考官方升级文档：
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- 然后按上方升级指南的验证清单检查。
+自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.0` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
 
 <a id="deployment"></a>
 
@@ -154,6 +146,8 @@ npm run build
 本地查看构建结果可运行 `npm run preview`，它不会发布网站。也可使用 `npm run doctor`，一次完成检查和构建。
 
 请部署到域名根目录，并支持各目录的 index.html。子路径部署需要额外适配，仅设置 Astro `base` 不足以保证正常使用。
+
+文章 sitemap 使用 `updatedDate`，未填写时使用 `pubDate`，请保持日期真实。主题集成在构建后的 `dist/_headers` 合并终端 JSON 的 `X-Robots-Tag: noindex`，保留原托管规则，不修改源文件。Cloudflare Pages 等兼容静态托管会应用这些规则，其他平台需配置等效响应头。请检查实际部署响应，Astro preview 不应用托管规则。
 
 <a id="reference"></a>
 
@@ -171,7 +165,7 @@ npm run build
 
 About 提供本地化目录和醒目的 Contact 栏目：宽屏目录位于正文框右侧，小屏回到正文内。顶部 Frontier 菜单可直达 `/<locale>/about/#contact`；关闭 About 会移除此入口，Decoder Lab 仍由独立开关控制。
 
-About 支持关闭、最小化与正文框全屏，记住本地状态并提供对应终端命令；现有项目需合并匹配的 About 路由（[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)）。
+About 窗口按钮可关闭、最小化或全屏阅读面板，保留浏览器本地状态，并支持对应终端命令。集成版标准页面随主题包更新；0.27 以前的项目按上方步骤完成一次迁移。
 
 About 页内置 **Hacker Decryptor**：在浏览器本地解码 Base64/Base64URL、URL 编码、十六进制、HTML 实体、Unicode 转义及 JWT 头部和载荷，支持自动识别和与页面配色一致的数字结果动画。从侧边栏打开 Decryptor 即可使用，无需配置接口。
 
@@ -395,7 +389,6 @@ CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 
 ## 配置入口
 
 - 单一入口：`src/site.config.ts`
-- 适配层（不建议直接编辑）：`src/config/site.ts`、`src/config/theme.ts`、`src/config/about.ts`、`src/config/social.ts`
 - 站点信息仍支持 `PUBLIC_*` 环境变量覆盖
 
 ## 社交链接

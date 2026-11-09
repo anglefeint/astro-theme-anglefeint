@@ -83,7 +83,7 @@ tags: ['astro', 'notes']
 
 title, description e pubDate são obrigatórios. subtitle, updatedDate e author são opcionais; o autor padrão vem do site. Artigos são ordenados por pubDate. Não há filtro de rascunho ou agendamento: draft: true e datas futuras não ocultam artigos. Guarde textos inacabados fora de src/content/blog/.
 
-heroImage: ./cover.jpg usa uma imagem ao lado do artigo. O comando escolhe uma capa estável quando há arquivos em src/assets/blog/default-covers/. Não baixa imagens. Tempo de leitura e métricas são estimativas; readMinutes, wordCount, tokenCount, aiLatencyMs e aiConfidence podem substituí-las, sem conectar um serviço de IA.
+heroImage: ./cover.jpg usa uma imagem ao lado do artigo. Se houver imagens em src/assets/blog/default-covers/, cada execução escolhe uma capa aleatória e a usa em todos os arquivos de idioma criados nessa execução. Os arquivos existentes são preservados; heroImage pode ser alterado depois. Não baixa imagens. Tempo de leitura e métricas são estimativas; readMinutes, wordCount, tokenCount, aiLatencyMs e aiConfidence podem substituí-las, sem conectar um serviço de IA.
 
 ## Páginas independentes
 
@@ -93,23 +93,19 @@ npm run new-page -- projects --theme cyber cria src/pages/[lang]/projects.astro.
 
 <a id="upgrade"></a>
 
-## Atualização
+## Atualizar o tema
 
-Comece com o template público. Atualizações compatíveis do pacote usam npm update @anglefeint/astro-theme, seguido de npm run doctor.
+O pacote mantém páginas padrão, valores padrão, traduções e funções de build. Artigos, `src/site.config.ts`, músicas, imagens e páginas próprias ficam no projeto.
 
-npm update respeita a faixa em package.json: ^0.5.1 não inclui 0.6.0. Consulte as notas e instale uma versão explícita quando necessário, sem escolher @latest às cegas. npm ls @anglefeint/astro-theme astro mostra as versões instaladas.
-
-O pacote não atualiza configuração, rotas, adaptadores ou integrações locais do starter. Quando a estrutura muda, crie um starter novo em outra pasta e migre seu conteúdo e configurações pessoais. Não sobrescreva os novos auxiliares com arquivos antigos.
-
-doctor já inclui verificações e compilação. Depois use npm run preview. Execute npm run sync-adapters somente se houver divergência entre os adaptadores gerados e os templates locais; isso não baixa templates novos. Projetos antigos podem ter scripts diferentes.
-
-Para mudanças de versão principal do Astro, siga primeiro a documentação oficial. Consulte o [guia de atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+No novo starter de integração com npm, execute na raiz o comando abaixo. Ele verifica compatibilidade, faz backup dos arquivos de dependências, instala uma versão exata e executa doctor. Em caso de falha, restaura os arquivos e tenta reinstalar as dependências anteriores. Publique pelo fluxo habitual; não há deploy automático.
 
 ```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-npm run preview
+npx @anglefeint/astro-theme@latest upgrade
 ```
+
+Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Após a publicação, crie-o em outra pasta, copie artigos e recursos e combine os valores pessoais no novo site config. Não copie rotas padrão antigas, adapters ou helpers defaults/schema/runtime. Preserve slugs, caminhos de idiomas, URLs de músicas/imagens e configurações de hospedagem.
+
+O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. `--check` verifica sem escrever; `--to 0.27.0` escolhe a versão. Veja o [guia](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) e [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
 <a id="deployment"></a>
 
@@ -125,6 +121,8 @@ Use `npm run preview` para conferir o resultado localmente; ele não publica o s
 
 Publique na raiz do domínio e sirva o index.html de cada diretório. Subdiretórios exigem adaptação adicional; configurar Astro `base` não é suficiente.
 
+O sitemap usa `updatedDate` ou `pubDate`. A integração combina `X-Robots-Tag: noindex` do JSON do terminal em `dist/_headers`, preservando regras e arquivos originais. Cloudflare Pages e hosts compatíveis aplicam as regras; outros precisam de cabeçalhos equivalentes. Confira a resposta publicada: Astro preview não aplica regras da hospedagem.
+
 <a id="reference"></a>
 
 ## Referência de recursos e configuração
@@ -139,7 +137,7 @@ Configure o título principal da página inicial por idioma em `i18n.locales.<co
 
 About inclui um índice localizado e uma seção Contact em destaque. O índice fica ao lado do painel de leitura em telas largas e dentro dele em telas menores. Contact no Frontier abre `/<locale>/about/#contact`; desativar About remove esse link, enquanto Decoder Lab mantém sua opção independente.
 
-A janela About pode ser fechada, minimizada ou aberta em tela cheia, com estado local e comandos de terminal; projetos existentes precisam incorporar a rota About correspondente ([atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)).
+About permite fechar, minimizar ou exibir o painel de leitura em tela cheia, com estado local e comandos do terminal. A página padrão da integração é atualizada com o pacote; projetos anteriores a 0.27 seguem a migração inicial acima.
 
 About inclui **Hacker Decryptor**: decodifique Base64/Base64URL, texto URL, hexadecimal, entidades HTML, escapes Unicode e cabeçalho/payload JWT no navegador, com detecção automática e animação numérica com as cores da página. Abra Decryptor na barra lateral; não exige API nem configuração extra.
 
@@ -249,8 +247,6 @@ npm run new-post -- my-first-post --locales pt-br
 Comece com um artigo em português do Brasil. Sem `--locales pt-br`, o comando cria modelos para todos os idiomas ativos (inicialmente nove), sem tradução automática. Os arquivos existentes são preservados. Edite título, descrição e corpo em src/content/blog/pt-br/my-first-post.md.
 
 ### Regras de configuração
-
-Mantenha um único objeto theme e um único i18n. Mescle opções; listas substituem listas anteriores. Não edite os adaptadores gerados em src/config/. Atualizar o pacote npm não atualiza arquivos locais do starter. Consulte o [guia de atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) antes de migrar.
 
 - [Guia 2: Escreva e organize conteúdo](https://demo.anglefeint.com/pt-br/blog/starter-guide-2-languages-and-routing/)
 

@@ -6,7 +6,7 @@ title: 使用指南 3：選用功能
 subtitle: 音樂、留言、關於頁、分頁與視覺設定。
 description: 音樂、留言、關於頁、分頁與視覺設定。
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-09'
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -85,8 +85,6 @@ defaultLocalePrefix: 'always' 讓 / 導向語言首頁；'never' 對預設語言
 
 footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 site.title。site.tagline 是獨立文字。舊值 Built with Astro. 會視為內建署名，避免重複顯示。
 
-這些首頁/頁尾選項仍是未發布的本機變更，npm 0.14.0 與公開 starter 尚不支援；需要同步升級 starter 與主題套件，見[待發布遷移說明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)。
-
 首頁開關：`theme.home.showInitialize` 控制 Initialize/done，`showFollow` 控制 Wake Up/Follow，`showTrace` 控制右下角狀態。於 `src/site.config.ts` 設定，預設皆為 `true`，設為 `false` 可獨立隱藏。
 
 可選的 `theme.footer.links` 在頁尾增加一行，每項填寫 `label` 與 `href`，連結以中間點分隔；省略或空陣列隱藏該行。標籤在各語言中保留設定原文，獨立於社群圖示與 `showCredits`。
@@ -131,3 +129,20 @@ $C_{saved}$
 $$
 \frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
 $$
+
+
+---
+
+## 升級主題
+
+集成版 starter 的標準頁面、設定預設值、翻譯與建置功能由主題套件維護。文章、`src/site.config.ts`、音樂、圖片與自訂頁面留在使用者專案。
+
+使用 npm 的集成版專案在根目錄執行下列指令。工具檢查專案、Node 與 Astro 相容性、備份依賴檔案、安裝確切主題版本並執行 doctor；失敗時還原依賴檔案並嘗試重裝原依賴。完成後依原流程部署，不會自動發布網站。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 以前的專案需一次重新安裝遷移：正式交付後在新目錄建立範本，複製文章與資源，將個人設定合併至新的 site config。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔。保留 slug、語言路徑、音樂與圖片 URL、網域及部署設定。
+
+自動升級目前僅支援 npm，遇到 pnpm/yarn/bun 鎖檔會停止。`--check` 僅檢查，`--to 0.27.0` 指定版本。請參閱[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)與 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。

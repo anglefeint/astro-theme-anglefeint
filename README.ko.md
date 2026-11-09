@@ -75,7 +75,7 @@ npm run new-post -- my-first-post --locales ko
 `src/content/blog/ko/my-first-post.md`의 제목, 설명, 본문을 편집하세요. 활성화된 모든 언어에 같은 slug의 틀을 만들려면 `--locales`를 생략하세요. 초기 설정에서는 파일 9개를 만들며 자동 번역하거나 기존 파일을 덮어쓰지 않습니다.
 
 Slug 규칙: 소문자 영문, 숫자, 하이픈만 사용하세요 (예: `my-first-post`).
-`src/assets/blog/default-covers/` 에 기본 커버가 있으면 slug 해시 기반으로 안정적인 기본 이미지가 자동 할당됩니다 (`heroImage` 는 나중에 직접 변경 가능).
+`src/assets/blog/default-covers/`에 이미지가 있으면 명령을 실행할 때마다 커버 한 장을 무작위로 선택하여 해당 실행에서 새로 만드는 모든 언어의 글에 사용합니다. 기존 파일은 덮어쓰지 않으며, `heroImage`는 나중에 변경할 수 있습니다.
 선택 로케일 지정:
 
 ```bash
@@ -103,7 +103,7 @@ URL 규칙:
 npm run new-page -- projects --theme base
 ```
 
-지원 테마: `base`, `ai`, `cyber`, `hacker`, `matrix`.  
+지원 테마: `base`, `ai`, `cyber`, `hacker`, `matrix`.
 명령은 `src/pages/[lang]/projects.astro` 를 만들고 `getStaticPaths()` 로 모든 로케일 라우트를 생성합니다.
 slug 규칙: 소문자, 숫자, 하이픈만 허용하며 중첩 경로(예: `projects/labs`)를 지원합니다. `_` 와 대문자는 허용되지 않습니다.
 
@@ -121,25 +121,17 @@ npm run new-page -- projects --theme matrix
 
 ## 테마 업그레이드
 
-`#starter`로 만든 프로젝트에서는 대상 릴리스가 기존 starter 및 Astro와 호환되고 로컬 구조를 변경할 필요가 없을 때만 실행하세요:
+표준 페이지, 기본 설정, 번역과 빌드 기능은 테마 패키지가 관리합니다. 글, `src/site.config.ts`, 음악, 이미지와 사용자 페이지는 프로젝트에 남습니다.
+
+npm을 사용하는 새 integration starter의 루트에서 아래 명령을 실행하세요. 호환성을 검사하고 의존성 파일을 백업한 뒤 정확한 버전을 설치하고 doctor를 실행합니다. 실패하면 의존성 파일을 복원하고 이전 의존성 재설치를 시도합니다. 배포는 기존 절차로 진행하며 자동 게시하지 않습니다.
 
 ```bash
-npm update @anglefeint/astro-theme
-npm run doctor
+npx @anglefeint/astro-theme@latest upgrade
 ```
 
-`npm update`는 `package.json`에 지정된 범위 안에서만 업데이트합니다. `^0.5.1`에는 `0.6.0`이 포함되지 않습니다. 호환되지만 범위를 벗어나는 업데이트는 릴리스 노트에 따라 대상 버전을 명시하고, 무조건 `@latest`를 설치하지 마세요. `npm ls @anglefeint/astro-theme astro`로 실제 버전을 확인하세요.
+0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 정식 배포 후 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
 
-현재 starter의 `doctor`에는 검사와 빌드가 포함됩니다. 성공한 뒤 `npm run preview`로 사이트를 확인하세요. 생성된 어댑터와 로컬 템플릿이 일치하지 않는다는 메시지가 있을 때만 `npm run sync-adapters`를 실행한 뒤 `npm run doctor`를 다시 실행하세요. 이 명령은 상위 저장소의 템플릿을 다운로드하지 않습니다. 이전 프로젝트의 스크립트는 다를 수 있으므로 로컬 `package.json`과 업그레이드 가이드를 확인하세요.
-
-릴리스 노트에 starter 구조 변경이 있으면 새 디렉터리에 최신 템플릿을 만들고 글, 이미지, 개인 설정을 옮기는 것을 권장합니다. 새 설정 보조 파일을 이전 파일로 덮어쓰지 마세요. `npm update`는 패키지만 업데이트하며 모든 이전 starter의 직접 업그레이드를 보장하지 않습니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
-
-커스텀 코드가 `src/consts` 또는 `@anglefeint/astro-theme/consts` 를 참조하고 있다면 `src/config/site.ts` 로 마이그레이션하세요.
-
-Astro 메이저 버전 마이그레이션은 먼저 공식 가이드를 확인하세요:
-
-- https://docs.astro.build/en/guides/upgrade-to/
-- 이후 위 업그레이드 가이드의 검증 체크리스트를 따르세요.
+자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.0`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
 
 <a id="deployment"></a>
 
@@ -154,6 +146,8 @@ npm run build
 `npm run preview`로 빌드 결과를 로컬에서 확인할 수 있으며 사이트를 게시하지는 않습니다. `npm run doctor`는 검사와 빌드를 함께 실행합니다.
 
 도메인 루트에 배포하고 각 폴더의 index.html을 제공하세요. 하위 경로 배포에는 추가 작업이 필요하며 Astro `base` 설정만으로는 충분하지 않습니다.
+
+문서 sitemap은 `updatedDate`, 없으면 `pubDate`를 사용합니다. integration이 터미널 JSON의 `X-Robots-Tag: noindex`를 빌드 결과 `dist/_headers`에 병합하고 기존 규칙과 원본 파일을 보존합니다. Cloudflare Pages 등 호환 호스트 외에는 같은 응답 헤더 설정이 필요합니다. Astro preview는 호스팅 규칙을 적용하지 않으므로 배포 응답을 확인하세요.
 
 <a id="reference"></a>
 
@@ -173,7 +167,7 @@ npm run build
 
 About에는 현지화된 목차와 강조된 Contact 항목이 있습니다. 넓은 화면에서는 본문 틀 오른쪽에, 작은 화면에서는 본문 안에 목차를 표시합니다. Frontier의 Contact는 `/<locale>/about/#contact`로 바로 이동합니다. About을 끄면 이 링크가 사라지며 Decoder Lab은 별도 설정을 따릅니다.
 
-About 읽기 창은 닫기·최소화·전체 화면과 터미널 명령을 지원하며 상태를 브라우저에 저장합니다. 기존 프로젝트는 일치하는 About 라우트를 병합해야 합니다([업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)).
+About 창은 닫기·최소화·전체 화면, 브라우저 내 상태 저장 및 해당 터미널 명령을 지원합니다. integration의 표준 페이지는 패키지와 함께 업데이트됩니다. 0.27 이전 프로젝트는 위의 일회성 이전 절차를 따르세요.
 
 About의 **Hacker Decryptor**는 Base64/Base64URL, URL 인코딩, 16진수, HTML 엔티티, Unicode 이스케이프 및 JWT 헤더/페이로드를 브라우저에서 디코딩합니다. 자동 형식 감지와 페이지 색상에 맞춘 숫자 결과 애니메이션을 지원합니다. 사이드바의 Decryptor에서 열 수 있으며 API나 추가 설정이 필요 없습니다.
 
@@ -393,7 +387,6 @@ CLI는 병합된 설정에서 활성화된 언어를 사용합니다. 설정 오
 - 단일 엔트리: `src/site.config.ts`
 - 홈 설명은 내장 및 대체 언어 문구를 포함한 `messages.siteDescription`을 우선 사용하고, 비어 있을 때만 `site.description`을 사용합니다.
 - 언어 설정은 기본값과 깊게 병합됩니다. 비활성화하려면 `i18n.locales.<code>.meta.enabled = false`를 사용합니다. 기본 언어는 항상 활성화됩니다.
-- 어댑터 레이어(직접 수정 비권장): `src/config/site.ts`, `src/config/theme.ts`, `src/config/about.ts`, `src/config/social.ts`
 - 사이트 정보는 `PUBLIC_*` 환경 변수로도 덮어쓸 수 있습니다
 
 ## 소셜 링크

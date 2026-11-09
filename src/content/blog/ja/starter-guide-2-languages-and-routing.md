@@ -4,7 +4,7 @@ title: '利用ガイド 2：記事を書く・コンテンツを整理する'
 subtitle: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 description: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -146,3 +146,19 @@ npm run new-page -- projects --theme cyber
 - [利用ガイド 1：ブログを立ち上げる](/ja/blog/starter-guide-1-configure-your-site/)
 - [利用ガイド 2：記事を書く・コンテンツを整理する](/ja/blog/starter-guide-2-languages-and-routing/)
 - [利用ガイド 3：必要な機能を有効化・カスタマイズする](/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## テーマの更新
+
+標準ページ、設定の既定値、翻訳とビルド機能はテーマパッケージが管理します。記事、`src/site.config.ts`、音楽、画像、独自ページはプロジェクトに残ります。
+
+npm を使う新しい integration starter では、ルートで次のコマンドを実行します。互換性を確認し、依存ファイルをバックアップして特定バージョンをインストールし、doctor を実行します。失敗時は依存ファイルを戻して以前の依存関係の再インストールを試みます。公開は通常のデプロイ手順で行ってください。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。正式公開後に別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+
+自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.0` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。

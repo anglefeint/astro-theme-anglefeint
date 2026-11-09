@@ -83,7 +83,7 @@ tags: ['astro', 'notes']
 
 title, description und pubDate sind Pflicht. subtitle, updatedDate und author sind optional; standardmäßig gilt der Website-Autor. Beiträge werden nach pubDate sortiert. Es gibt keinen Entwurfs- oder Veröffentlichungszeitfilter: draft: true und zukünftige Daten verstecken nichts. Unfertige Texte außerhalb von src/content/blog/ aufbewahren.
 
-heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Bei vorhandenen Dateien in src/assets/blog/default-covers/ wählt der Befehl ein stabiles Titelbild. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
+heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Sind Bilder in src/assets/blog/default-covers/ vorhanden, wählt jeder Aufruf zufällig ein Titelbild für alle dabei neu erstellten Sprachversionen. Vorhandene Dateien bleiben erhalten; heroImage lässt sich später ändern. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
 
 ## Eigenständige Seiten
 
@@ -93,23 +93,19 @@ npm run new-page -- projects --theme cyber erstellt src/pages/[lang]/projects.as
 
 <a id="upgrade"></a>
 
-## Aktualisierung
+## Theme aktualisieren
 
-Beginne mit dem öffentlichen Template. Für kompatible Paketaktualisierungen nutze npm update @anglefeint/astro-theme und danach npm run doctor.
+Standardseiten, Vorgaben, Übersetzungen und Build-Funktionen gehören zum Theme-Paket. Artikel, `src/site.config.ts`, Musik, Bilder und eigene Seiten bleiben im Projekt.
 
-npm update bleibt im Bereich von package.json: ^0.5.1 umfasst 0.6.0 nicht. Lies die Versionshinweise und installiere bei Bedarf eine konkrete Version statt blind @latest. npm ls @anglefeint/astro-theme astro zeigt installierte Versionen.
-
-Das Paket aktualisiert keine lokalen Einstellungen, Routen, Adapter oder Integrationen des Starters. Bei Strukturänderungen erstelle einen neuen Starter in einem anderen Ordner und übertrage Inhalte und persönliche Einstellungen. Neue Hilfsdateien nicht mit alten überschreiben.
-
-doctor enthält bereits Prüfungen und Build. Danach npm run preview verwenden. npm run sync-adapters nur bei Abweichungen zwischen generierten Adaptern und lokalen Vorlagen ausführen; es lädt keine neuen Vorlagen herunter. Alte Projekte können andere Skripte haben.
-
-Bei Astro-Hauptversionen zuerst die offizielle Migration befolgen. Weitere Hinweise stehen in der [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+Im neuen Integration-Starter mit npm führe diesen Befehl im Projektordner aus. Er prüft Kompatibilität, sichert Abhängigkeitsdateien, installiert eine genaue Version und führt doctor aus. Bei Fehlern werden Dateien zurückgesetzt und die bisherigen Abhängigkeiten nach Möglichkeit neu installiert. Anschließend wie gewohnt veröffentlichen; kein automatisches Deployment.
 
 ```bash
-npm update @anglefeint/astro-theme
-npm run doctor
-npm run preview
+npx @anglefeint/astro-theme@latest upgrade
 ```
+
+Projekte vor 0.27 benötigen einmalig einen frischen Starter. Erstelle ihn nach Veröffentlichung in einem anderen Ordner, übertrage Artikel/Ressourcen und persönliche Werte in die neue Konfiguration. Alte Standardrouten, Adapter und defaults/schema/runtime-Dateien nicht kopieren. Slugs, Sprachpfade, Musik-/Bild-URLs und Hosting-Einstellungen erhalten.
+
+Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien werden abgelehnt. `--check` prüft ohne Änderungen; `--to 0.27.0` wählt die Version. Siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) und [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
 <a id="deployment"></a>
 
@@ -125,6 +121,8 @@ Mit `npm run preview` prüfst du das Ergebnis lokal; es veröffentlicht nichts. 
 
 Veröffentliche im Stammverzeichnis der Domain und liefere die index.html jedes Verzeichnisses aus. Unterpfade benötigen zusätzliche Anpassungen; Astro `base` allein reicht nicht.
 
+Artikel-Sitemaps verwenden `updatedDate`, sonst `pubDate`. Die Integration ergänzt Terminal-JSON-Regeln mit `X-Robots-Tag: noindex` in `dist/_headers` und erhält bestehende Regeln und Quelldateien. Cloudflare Pages/kompatible Hosts wenden sie an; andere benötigen entsprechende Header-Einstellungen. Die veröffentlichte Antwort prüfen: Astro preview verarbeitet Hosting-Regeln nicht.
+
 <a id="reference"></a>
 
 ## Funktions- und Konfigurationsreferenz
@@ -139,7 +137,7 @@ Die große Startseitenüberschrift lässt sich je Sprache über `i18n.locales.<c
 
 About bietet ein lokalisiertes Inhaltsverzeichnis und einen hervorgehobenen Kontaktbereich. Auf breiten Bildschirmen steht das Verzeichnis rechts neben dem Lesebereich, auf kleinen darin. Contact im Frontier-Menü öffnet `/<locale>/about/#contact`; beim Deaktivieren von About entfällt dieser Link, Decoder Lab bleibt unabhängig schaltbar.
 
-Das About-Lesefenster lässt sich schließen, minimieren oder im Vollbild öffnen, mit lokal gespeichertem Zustand und Terminalbefehlen; bestehende Projekte müssen die passende About-Route übernehmen ([Upgrade](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#0260-about-reading-window)).
+Die About-Fenstersteuerung schließt, minimiert oder öffnet das Lesefenster im Vollbild, mit lokalem Zustand und Terminalbefehlen. Die Standardseite der Integration wird mit dem Paket aktualisiert; Projekte vor 0.27 benötigen die oben beschriebene einmalige Migration.
 
 About enthält **Hacker Decryptor**: Base64/Base64URL, URL-codierten Text, Hexadezimaltext, HTML-Entitäten, Unicode-Escapes und JWT-Header/Payload lokal im Browser decodieren, mit automatischer Formaterkennung und einer zur Seitenpalette passenden Zahlenanimation. Über Decryptor in der Seitenleiste öffnen; keine API oder zusätzliche Einrichtung nötig.
 
@@ -250,8 +248,6 @@ Beginne mit einem deutschen Artikel. Ohne `--locales de` erstellt der Befehl Ger
 
 ### Konfigurationsregeln
 
-Behalte jeweils ein theme- und i18n-Objekt. Führe Optionen zusammen; Listen ersetzen vorhandene Listen. Generierte Adapter unter src/config/ nicht direkt bearbeiten. Ein npm-Update aktualisiert lokale Starter-Dateien nicht. Lies vor einer Migration die [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
-
 - [Anleitung 2: Inhalte schreiben und ordnen](https://demo.anglefeint.com/de/blog/starter-guide-2-languages-and-routing/)
 
 ## Sprachen
@@ -314,7 +310,7 @@ analytics: {
 
 Kopiere die **Mess-ID** (`G-...`) aus Google Analytics → Verwaltung → Datenstreams → deinem Webstream. Gemeint ist weder der Property-Name noch die numerische Property-ID. Ein leerer Wert deaktiviert die Messung. Eine ID gilt für alle Sprachen und Theme-Seiten; Sprachen lassen sich anhand des Seitenpfads vergleichen. Neu bauen und bereitstellen, die veröffentlichte Website besuchen und den GA4-Echtzeitbericht prüfen.
 
-Entwicklungsmodus und Vorschauen über localhost/Loopback senden keine Daten. Konfigurierte Remote- und LAN-Vorschauen erfassen Zugriffe. Standardmäßig lädt der Starter kein Google-Skript. Vermeide eine doppelte Einrichtung über GTM, Zaraz oder manuelle Skripte. Einwilligungsbanner und Einwilligungsverwaltung sind nicht enthalten; richte diese bei Bedarf vor dem Aktivieren ein. Blocker können die Erfassung verhindern. Bestehende Projekte benötigen passende Konfigurationshilfen und Adapter; siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+Entwicklungsmodus und Vorschauen über localhost/Loopback senden keine Daten. Konfigurierte Remote- und LAN-Vorschauen erfassen Zugriffe. Standardmäßig lädt der Starter kein Google-Skript. Vermeide eine doppelte Einrichtung über GTM, Zaraz oder manuelle Skripte. Einwilligungsbanner und Einwilligungsverwaltung sind nicht enthalten; richte diese bei Bedarf vor dem Aktivieren ein. Blocker können die Erfassung verhindern. Der Integration-Starter stellt diese Anbindung bereit; ältere Projekte folgen der [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ### Giscus-Kommentare
 

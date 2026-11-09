@@ -4,7 +4,7 @@ title: '利用ガイド 1：ブログを立ち上げる'
 subtitle: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 description: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -118,7 +118,6 @@ Cloudflare は任意です。各サービスの設定と現在のルート公開
 
 ## 6. 設定の 3 つの基本
 
-編集するのは `src/site.config.ts` の設定オブジェクトです。`src/config/*` などの生成されるアダプターに例を貼り付けないでください。
 
 同じオブジェクトに `theme` と `i18n` はそれぞれ 1 つだけ置きます。機能ごとの例は既存のオブジェクトに統合し、同じキーを追加しないでください。省略した項目は既定値を使い、曲やソーシャルリンクなどの配列は全体が置き換わります。
 
@@ -129,3 +128,19 @@ Cloudflare は任意です。各サービスの設定と現在のルート公開
 - [利用ガイド 1：ブログを立ち上げる](/ja/blog/starter-guide-1-configure-your-site/)
 - [利用ガイド 2：記事を書く・コンテンツを整理する](/ja/blog/starter-guide-2-languages-and-routing/)
 - [利用ガイド 3：必要な機能を有効化・カスタマイズする](/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## テーマの更新
+
+標準ページ、設定の既定値、翻訳とビルド機能はテーマパッケージが管理します。記事、`src/site.config.ts`、音楽、画像、独自ページはプロジェクトに残ります。
+
+npm を使う新しい integration starter では、ルートで次のコマンドを実行します。互換性を確認し、依存ファイルをバックアップして特定バージョンをインストールし、doctor を実行します。失敗時は依存ファイルを戻して以前の依存関係の再インストールを試みます。公開は通常のデプロイ手順で行ってください。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。正式公開後に別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+
+自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.0` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。

@@ -6,7 +6,7 @@ title: 'Руководство 2: Статьи и организация кон�
 subtitle: 'Изображения, теги, оглавление, поиск и публикация ссылок.'
 description: 'Изображения, теги, оглавление, поиск и публикация ссылок.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-09'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
@@ -67,3 +67,19 @@ npm run new-page -- projects --theme cyber создаёт src/pages/[lang]/proje
 - [Руководство 1: Настройка блога](/ru/blog/starter-guide-1-configure-your-site/)
 - [Руководство 2: Статьи и организация контента](/ru/blog/starter-guide-2-languages-and-routing/)
 - [Руководство 3: Дополнительные функции](/ru/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Обновление темы
+
+Пакет управляет стандартными страницами, значениями по умолчанию, переводами и сборкой. Статьи, `src/site.config.ts`, музыка, изображения и собственные страницы остаются в проекте.
+
+В новом integration starter с npm запустите команду ниже из корня. Она проверяет совместимость, сохраняет файлы зависимостей, устанавливает точную версию и запускает doctor. При ошибке восстанавливает файлы и пытается переустановить прежние зависимости. Затем публикуйте обычным способом; автоматического развёртывания нет.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Проектам до 0.27 нужна однократная миграция в новый starter. После публикации создайте его в отдельной папке, перенесите статьи и ресурсы и объедините личные настройки с новым site config. Не копируйте старые стандартные маршруты, adapters и файлы defaults/schema/runtime. Сохраните slug, языковые пути, URL музыки/изображений и настройки хостинга.
+
+Автообновление поддерживает только npm и отклоняет lock-файлы pnpm/yarn/bun. `--check` проверяет без записи, `--to 0.27.0` выбирает версию. См. [руководство](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) и [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).

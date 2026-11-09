@@ -6,7 +6,7 @@ title: 'Guia 1: Configure seu blog'
 subtitle: 'Instalação, identidade, idiomas e publicação.'
 description: 'Instalação, identidade, idiomas e publicação.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-09'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -90,8 +90,23 @@ Cloudflare é opcional. Veja as [instruções por plataforma no README](https://
 
 ## Regras de configuração
 
-Mantenha um único objeto theme e um único i18n. Mescle opções; listas substituem listas anteriores. Não edite os adaptadores gerados em src/config/. Atualizar o pacote npm não atualiza arquivos locais do starter. Consulte o [guia de atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) antes de migrar.
 
 - [Guia 1: Configure seu blog](/pt-br/blog/starter-guide-1-configure-your-site/)
 - [Guia 2: Escreva e organize conteúdo](/pt-br/blog/starter-guide-2-languages-and-routing/)
 - [Guia 3: Recursos opcionais](/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Atualizar o tema
+
+O pacote mantém páginas padrão, valores padrão, traduções e funções de build. Artigos, `src/site.config.ts`, músicas, imagens e páginas próprias ficam no projeto.
+
+No novo starter de integração com npm, execute na raiz o comando abaixo. Ele verifica compatibilidade, faz backup dos arquivos de dependências, instala uma versão exata e executa doctor. Em caso de falha, restaura os arquivos e tenta reinstalar as dependências anteriores. Publique pelo fluxo habitual; não há deploy automático.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Após a publicação, crie-o em outra pasta, copie artigos e recursos e combine os valores pessoais no novo site config. Não copie rotas padrão antigas, adapters ou helpers defaults/schema/runtime. Preserve slugs, caminhos de idiomas, URLs de músicas/imagens e configurações de hospedagem.
+
+O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. `--check` verifica sem escrever; `--to 0.27.0` escolhe a versão. Veja o [guia](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) e [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).

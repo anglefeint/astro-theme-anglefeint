@@ -17,24 +17,20 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check:workspace-link": "node scripts/check-workspace-link.mjs",
-    "check:adapters": "node scripts/check-adapter-contract.mjs && node scripts/sync-adapters.mjs --check",
-    "check:scaffold": "node scripts/check-scaffold.mjs",
-    "check:about-runtime": "npm run build && node scripts/check-about-runtime-config.mjs",
-    "check:no-build": "npm run check:adapters && npm run check:scaffold && astro check",
-    "sync-adapters": "node scripts/sync-adapters.mjs",
-    "doctor": "node scripts/doctor.mjs && npm run check:adapters && npm run check",
-    "check": "npm run check:no-build && npm run check:about-runtime",
+    "check:no-build": "astro check",
+    "check": "astro-theme doctor",
+    "doctor": "astro-theme doctor",
+    "upgrade": "npx @anglefeint/astro-theme@latest upgrade",
     "new-post": "anglefeint-new-post",
     "new-page": "anglefeint-new-page",
     "astro": "astro"
   },
   "dependencies": {
-    "@anglefeint/astro-theme": "^0.26.0",
+    "astro": "^7.3.7",
+    "@anglefeint/astro-theme": "^0.27.0",
     "@astrojs/mdx": "^8.0.3",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.3.7",
     "sharp": "^0.35.5",
     "vite": "^8.3.5"
   },
@@ -44,5 +40,8 @@
   },
   "overrides": {
     "fflate": "0.7.5"
+  },
+  "anglefeint": {
+    "projectSchema": 1
   }
 }

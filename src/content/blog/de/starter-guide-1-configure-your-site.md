@@ -6,7 +6,7 @@ title: 'Anleitung 1: Deinen Blog einrichten'
 subtitle: 'Installation, Website-Daten, Sprachen und Veröffentlichung.'
 description: 'Installation, Website-Daten, Sprachen und Veröffentlichung.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-09'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -90,8 +90,23 @@ Cloudflare ist optional. Die [Plattform-Anleitungen im README](https://github.co
 
 ## Konfigurationsregeln
 
-Behalte jeweils ein theme- und i18n-Objekt. Führe Optionen zusammen; Listen ersetzen vorhandene Listen. Generierte Adapter unter src/config/ nicht direkt bearbeiten. Ein npm-Update aktualisiert lokale Starter-Dateien nicht. Lies vor einer Migration die [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 - [Anleitung 1: Deinen Blog einrichten](/de/blog/starter-guide-1-configure-your-site/)
 - [Anleitung 2: Inhalte schreiben und ordnen](/de/blog/starter-guide-2-languages-and-routing/)
 - [Anleitung 3: Optionale Funktionen](/de/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Theme aktualisieren
+
+Standardseiten, Vorgaben, Übersetzungen und Build-Funktionen gehören zum Theme-Paket. Artikel, `src/site.config.ts`, Musik, Bilder und eigene Seiten bleiben im Projekt.
+
+Im neuen Integration-Starter mit npm führe diesen Befehl im Projektordner aus. Er prüft Kompatibilität, sichert Abhängigkeitsdateien, installiert eine genaue Version und führt doctor aus. Bei Fehlern werden Dateien zurückgesetzt und die bisherigen Abhängigkeiten nach Möglichkeit neu installiert. Anschließend wie gewohnt veröffentlichen; kein automatisches Deployment.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Projekte vor 0.27 benötigen einmalig einen frischen Starter. Erstelle ihn nach Veröffentlichung in einem anderen Ordner, übertrage Artikel/Ressourcen und persönliche Werte in die neue Konfiguration. Alte Standardrouten, Adapter und defaults/schema/runtime-Dateien nicht kopieren. Slugs, Sprachpfade, Musik-/Bild-URLs und Hosting-Einstellungen erhalten.
+
+Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien werden abgelehnt. `--check` prüft ohne Änderungen; `--to 0.27.0` wählt die Version. Siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) und [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).

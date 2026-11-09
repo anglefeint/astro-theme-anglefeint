@@ -4,7 +4,7 @@ title: '使用指南 1：搭建你的博客'
 subtitle: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 description: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -118,7 +118,6 @@ Cloudflare 并非必需。Netlify、Vercel、Cloudflare Pages、GitHub Pages 和
 
 ## 6. 配置时记住这三件事
 
-只编辑 `src/site.config.ts` 的配置对象，不要把教程片段粘进 `src/config/*` 等生成的适配文件。
 
 同一个对象中只保留一个 `theme`、一个 `i18n`；不同功能的内容要合并到已有对象，不要逐段追加同名键。未写出的配置使用默认值，数组（如歌曲或社交链接）会整体替换。
 
@@ -129,3 +128,19 @@ Cloudflare 并非必需。Netlify、Vercel、Cloudflare Pages、GitHub Pages 和
 - [使用指南 1：搭建你的博客](/zh/blog/starter-guide-1-configure-your-site/)
 - [使用指南 2：写文章与管理内容](/zh/blog/starter-guide-2-languages-and-routing/)
 - [使用指南 3：按需开启与定制功能](/zh/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## 升级主题
+
+集成版 starter 将标准页面、配置默认值、翻译和构建功能放在主题包中。文章、`src/site.config.ts`、音乐、图片和自建页面保留在用户项目中。
+
+使用 npm 的集成版项目在根目录运行下列命令。它检查项目、Node 和 Astro 兼容性，备份依赖文件，安装明确的主题版本并运行 doctor；失败时恢复依赖文件并尝试重新安装原依赖。完成后按原有流程部署，命令不会自动发布网站。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 之前的项目需要一次重新安装迁移：本版本正式交付后，在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
+
+自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.0` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。

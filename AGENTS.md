@@ -35,9 +35,11 @@ The same guides exist under `src/content/blog/<locale>/`. Actual local configura
 
 Keep configuration imports/exports and merge into the existing `defineThemeConfig({...})` object. Arrays replace earlier arrays: preserve entries when adding tracks or links. Inspect `.env` and hosting overrides when site identity behaves differently from the file.
 
-Before publishing, replace the placeholders in `public/llms.txt` with the owner's site information and real locale URLs, or remove that optional file. It describes the published site for readers and crawlers; it is not this project's agent instruction file.
+Builds generate llms indexes and article Markdown automatically. Do not add a conflicting public/llms.txt placeholder.
 
-`src/config/*`, `src/i18n/*` and `src/types/theme-scripts.d.ts` are generated adapters. Prefer the public configuration; if intentional adapter customization is necessary, change the matching local `scripts/adapter-templates/*` source and regenerate. `sync-adapters` overwrites generated targets. Do not edit `node_modules`, `dist` or `.astro`; package changes belong in a deliberate upgrade or an upstream fix.
+The theme package owns standard routes, configuration defaults/types, i18n, effects and build integrations. Do not copy those implementations into this project or edit node_modules. Use src/site.config.ts, custom CSS and new custom pages for personal changes. Standard Home, Blog, Tags, About, Decoder, RSS and terminal paths are reserved; choose other paths for custom pages. Public configuration comes from @anglefeint/astro-theme/config.
+
+Upgrade this integration starter with `npm run upgrade` (npm projects). It invokes the latest package's upgrade command, checks Node/Astro compatibility and project schema, backs up dependency files, updates dependencies and runs doctor. User source/configuration/media are not rewritten. A failed validation restores dependency files and attempts to reinstall the previous dependencies. Preserve the owner's package manager: the automatic updater currently refuses pnpm/yarn/bun lockfiles. Pre-0.27 projects need the documented fresh-starter migration; do not run destructive in-place conversion.
 
 ## Content and languages
 
@@ -53,9 +55,9 @@ Before publishing, replace the placeholders in `public/llms.txt` with the owner'
 Use the package manager already chosen by the owner; README gives npm and pnpm commands. From the project root:
 
 - `npm run dev` for local editing. Search requires a built preview.
-- `npm run check:no-build` for quick adapter/scaffold/type checks.
+- `npm run check:no-build` for a quick Astro type check.
 - `npm run doctor` before delivery: it includes checks and a build. Then `npm run preview` and verify the changed pages. Do not repeat `check` and `build` after a successful `doctor` without a reason.
-- Use `npm run sync-adapters` only when intentional template changes or diagnostics call for it; review the overwritten targets first.
+- Do not recreate generated adapters: this starter uses package-owned runtime modules.
 
 For a custom page, available themes are `base`, `ai`, `cyber`, `hacker`, `matrix`; creation does not add a navigation item or translate its body. Preserve the four page atmospheres, accessibility, reduced motion and mobile usability when changing visuals.
 

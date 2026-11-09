@@ -4,7 +4,7 @@ title: '사용 가이드 3: 필요한 기능 켜기와 사용자 설정'
 subtitle: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 description: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 | 본문 이미지 미리보기, 코드 복사       | 자동 적용, 설정 불필요 |
 | About, 글의 Red Queen 모니터          | 켜짐                   |
 | 음악, Giscus 댓글                     | 꺼짐                   |
-| 홈 최신 글 / 블로그 페이지당 글       | 3 / 9                  |
+| 홈 최신 글 / 블로그 페이지당 글       | 3 / 10                  |
 
 ## 1. 음악 플레이어 켜기
 
@@ -212,8 +212,6 @@ export const THEME_CONFIG = defineThemeConfig({
 
 `showCredits: true`로 다시 표시할 수 있습니다. 숨기면 두 링크가 모두 제거되고 저작권 줄은 유지됩니다. 선택 사항인 `site.tagline`은 이 스위치와 별개로 사용자 지정 일반 텍스트를 추가합니다. 기본값은 빈 문자열이며, 이전 기본값인 `Built with Astro.`는 중복을 방지하기 위해 내장 출처로 처리합니다. `All rights reserved`는 추가하지 않습니다.
 
-이 홈/푸터 옵션은 아직 출시되지 않은 로컬 변경이며 npm 0.14.0과 공개 starter에서는 사용할 수 없습니다. starter와 패키지를 함께 업데이트해야 합니다. [예정된 마이그레이션](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)을 참고하세요.
-
 `src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다.
 
 선택 사항인 `theme.footer.links`는 푸터에 별도 행을 추가합니다. 각 항목의 `label`과 `href`를 설정하며 링크 사이에는 가운데 점이 표시됩니다. 생략하거나 빈 배열을 사용하면 숨겨집니다. 라벨은 언어가 바뀌어도 설정한 원문을 유지하며 소셜 아이콘 및 `showCredits`와 독립적입니다.
@@ -260,3 +258,19 @@ $C_{saved}$
 $$
 \frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
 $$
+
+---
+
+## 테마 업그레이드
+
+표준 페이지, 기본 설정, 번역과 빌드 기능은 테마 패키지가 관리합니다. 글, `src/site.config.ts`, 음악, 이미지와 사용자 페이지는 프로젝트에 남습니다.
+
+npm을 사용하는 새 integration starter의 루트에서 아래 명령을 실행하세요. 호환성을 검사하고 의존성 파일을 백업한 뒤 정확한 버전을 설치하고 doctor를 실행합니다. 실패하면 의존성 파일을 복원하고 이전 의존성 재설치를 시도합니다. 배포는 기존 절차로 진행하며 자동 게시하지 않습니다.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 정식 배포 후 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
+
+자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.0`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.

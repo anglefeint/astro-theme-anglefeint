@@ -6,7 +6,7 @@ title: 'Guia 3: Recursos opcionais'
 subtitle: 'Música, comentários, Sobre, paginação e opções visuais.'
 description: 'Música, comentários, Sobre, paginação e opções visuais.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-09'
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -85,8 +85,6 @@ defaultLocalePrefix: 'always' redireciona / para a página inicial localizada; '
 
 footer.showCredits: false oculta os créditos do tema e do Astro, preservando o ano gerado e site.title. site.tagline adiciona texto independente. O antigo valor Built with Astro. é tratado como crédito interno para evitar duplicação.
 
-Estas opções de início/rodapé são alterações locais ainda não publicadas; npm 0.14.0 e o starter público não as incluem. Exigem mudanças no starter e no pacote; consulte a [migração pendente](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links).
-
 Em `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow e `showTrace` controla o status inferior direito. Todos são `true` por padrão; `false` oculta cada parte separadamente.
 
 A opção `theme.footer.links` adiciona uma linha independente ao rodapé: cada item contém `label` e `href`, com pontos entre os links. Omitir a opção ou usar um array vazio oculta a linha. Os rótulos mantêm o texto configurado em todos os idiomas; a linha é independente dos ícones sociais e de `showCredits`.
@@ -131,3 +129,19 @@ $C_{saved}$
 $$
 \frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
 $$
+
+---
+
+## Atualizar o tema
+
+O pacote mantém páginas padrão, valores padrão, traduções e funções de build. Artigos, `src/site.config.ts`, músicas, imagens e páginas próprias ficam no projeto.
+
+No novo starter de integração com npm, execute na raiz o comando abaixo. Ele verifica compatibilidade, faz backup dos arquivos de dependências, instala uma versão exata e executa doctor. Em caso de falha, restaura os arquivos e tenta reinstalar as dependências anteriores. Publique pelo fluxo habitual; não há deploy automático.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Após a publicação, crie-o em outra pasta, copie artigos e recursos e combine os valores pessoais no novo site config. Não copie rotas padrão antigas, adapters ou helpers defaults/schema/runtime. Preserve slugs, caminhos de idiomas, URLs de músicas/imagens e configurações de hospedagem.
+
+O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. `--check` verifica sem escrever; `--to 0.27.0` escolhe a versão. Veja o [guia](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) e [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
