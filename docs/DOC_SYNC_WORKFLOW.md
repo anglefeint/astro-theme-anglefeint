@@ -123,6 +123,8 @@ Exclude these from strict metadata enforcement unless explicitly requested:
 - asset helper markdown (for example image folder readmes)
 - tool-owned workflow prompt markdown that is not a canonical repository doc
 
+Instructional blog articles are still user-facing documentation even when the content schema excludes them from metadata enforcement. For configuration/install/upgrade guidance, inventory every publication surface: demo articles, distribution-template overrides and README translations. Follow the starter manifest to the actual source and generated destination; changing one surface is not evidence that the others are current. Maintainer-authored tutorials on the public demo must track implemented behavior too. This does not authorize overwriting personal consumer articles during upgrades.
+
 ## Trigger
 
 Run this workflow whenever repository changes may alter documentation truth:

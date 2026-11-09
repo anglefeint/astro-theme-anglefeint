@@ -16,7 +16,7 @@ import {
 
 const source = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
 
-test('distributed tutorials use the current integration guidance without changing published demo articles', async () => {
+test('distributed tutorial overrides use the current integration guidance', async () => {
   let tutorials = 0;
   for (const destination of STARTER_CONTENT_MANAGED_FILES) {
     const source = starterSourcePath(destination);

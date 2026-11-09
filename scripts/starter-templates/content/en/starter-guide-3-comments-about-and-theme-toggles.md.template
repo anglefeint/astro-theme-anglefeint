@@ -4,7 +4,7 @@ title: 'User Guide 3: Enable and Customize Optional Features'
 subtitle: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 description: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ This guide covers the accompanying starter. Merge all TypeScript snippets into t
 | Body image previews and code copying                     | Automatic; no configuration |
 | About and the Red Queen article monitor                  | On                          |
 | Music and Giscus comments                                | Off                         |
-| Latest homepage posts / posts per blog page              | 3 / 10                       |
+| Latest homepage posts / posts per blog page              | 3 / 10                      |
 
 ## 1. Enable the music player
 
@@ -137,7 +137,7 @@ theme: {
 
 `windowSize` controls the page-number window, clamped to 5–21, not the number of posts per page. The jump input appears only when `jump.enabled` is true and total pages exceed `showJumpThreshold` (over 12 by default). `enterToGo` controls jumping with Enter.
 
-Style modes are `fixed`, `sequential`, and `random`. The example fixes variant 1. Default `random` selects a stable variant from language, path, page information, and related inputs; it does not reshuffle on every refresh. `style.enabled: false` uses the basic variant, without disabling pagination. Check the list footer once you have enough posts.
+Style modes are `fixed`, `sequential`, and `random`. The example fixes variant 1. With JavaScript enabled, default `random` picks the wrapper and button colors again on each document load; random results may repeat. Without JavaScript, the generated HTML keeps a stable wrapper variant and static button colors. `style.enabled: false` uses the basic variant without disabling pagination.
 
 ## 5. Disable enhancements you do not need
 
@@ -227,7 +227,7 @@ theme: {
 
 Automatic cards use a bundled code-rain, terminal and neon-network background, with your own site name, title and author. The small `Theme by Anglefeint` credit at the bottom right follows `theme.footer.showCredits` (default `true`); set it to `false` to hide both footer credits and this image credit. Rebuild and redeploy after changing it. Custom `ogImage` files are never modified. The artwork works offline and adds no browser JavaScript.
 
-The public demo uses its own name, domain and translated introduction. A fresh starter keeps generic defaults, and you still configure your site only in `src/site.config.ts`. If you upgrade an older starter, use the matching configuration files described in the upgrade guide; updating only the npm package does not add this option to old adapters.
+Standard pages, configuration defaults and build features come from the theme package in the 0.27+ integration starter. Keep your configuration values in `src/site.config.ts`. Theme upgrades do not rewrite your articles, music, images or custom pages; pre-0.27 copied skeletons require the one-time migration in the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ## In this series
 
@@ -251,7 +251,7 @@ Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Esca
 
 Rendering happens at build time with local KaTeX styles/fonts and accessible MathML, without a browser math engine. Long display formulas scroll horizontally. Invalid formulas stop the build with a source/error message. Keep titles and descriptions plain text; formulas are excluded from search indexing. Supported math is KaTeX syntax, not complete LaTeX documents.
 
-Older projects need the one-time starter/configuration migration described in the upgrade guide; updating only the theme package does not wire the Markdown processor.
+In the 0.27+ integration starter, the theme package wires the Markdown processor automatically, including math. Only pre-0.27 copied skeletons require the one-time migration; do not copy processor or adapter implementations into a new project.
 
 $C_{saved}$
 
@@ -271,6 +271,8 @@ For integration starters using npm, run the command below from the project root.
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory after this release is delivered, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
+Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
 
 The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.1` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.
+
+If an upgrade fails, do not deploy `dist/`: dependency rollback does not restore previous build output. Resolve the error and run `npm run doctor` successfully before deploying. pnpm users update explicitly with `pnpm add @anglefeint/astro-theme@latest` and `pnpm run doctor`; keep their lockfile and review release compatibility first.

@@ -4,7 +4,7 @@ title: 'User Guide 1: Set Up Your Blog'
 subtitle: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 description: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -66,7 +66,7 @@ The introduction beneath the homepage heading comes from the current locale’s 
 
 Social icons support `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. For your own icon, put a local SVG/PNG/WebP in `public/icons/` and set `iconSrc: "/icons/community.svg"`; it overrides `icon` and retains its original colors. Omit both icon fields for text. See the [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.md#social-links) for path rules and examples. Use `social: { links: [] }` to remove all links. An empty list still shows three non-clickable placeholder icons (Mastodon, Twitter, GitHub) in the header and footer; a non-empty list shows only the configured entries. Existing environment overrides such as `PUBLIC_SITE_TITLE` and `PUBLIC_SITE_URL` take priority over the config file; check them if a change seems ineffective.
 
-Set `PUBLIC_SITE_URL=https://your-domain.example` in the project-root `.env` file or your hosting build environment to override `site.url`. Restart development or rebuild after changing it. The resulting canonical links, RSS, sitemap, and absolute social image URLs should use that domain. This requires the matching starter-side `astro.config.mjs` and URL resolver; an npm theme update alone does not update these files.
+In the 0.27+ integration starter, the theme package handles `PUBLIC_SITE_URL` from the project-root `.env` or hosting build environment, overriding `site.url` for canonical links, RSS, sitemap and social images. Restart development or rebuild after changes. Keep the starter’s `astro.config.mjs` integration entry; no local URL resolver or copied adapters are needed. Pre-0.27 copied skeletons require the one-time migration in the upgrade guide.
 
 ## 3. Keep the languages you need
 
@@ -118,14 +118,30 @@ Cloudflare is optional. See the [deployment settings by platform](https://github
 
 ## 6. Remember three configuration rules
 
-Edit the configuration object in `src/site.config.ts`; do not paste guide snippets into generated adapters such as `src/config/*`.
-
 Keep a single `theme` and a single `i18n` key in the same object. Merge feature settings into existing objects rather than appending duplicate keys. Omitted settings retain defaults; arrays, such as tracks and social links, are replaced as a whole.
 
-Updating the npm package in an older project does not automatically update local starter files. If settings or features are missing, consult the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). Do not delete configuration helpers merely to suppress errors.
+Standard pages, configuration defaults and build features come from the theme package in the 0.27+ integration starter. Keep your configuration values in `src/site.config.ts`. Theme upgrades do not rewrite your articles, music, images or custom pages; pre-0.27 copied skeletons require the one-time migration in the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ## In this series
 
 - [User Guide 1: Set Up Your Blog](/en/blog/starter-guide-1-configure-your-site/)
 - [User Guide 2: Write and Organize Content](/en/blog/starter-guide-2-languages-and-routing/)
 - [User Guide 3: Enable and Customize Optional Features](/en/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Upgrade the theme
+
+The integration starter keeps standard pages, configuration defaults, translations and build features in the theme package. Your articles, `src/site.config.ts`, music, images and custom pages remain in your project.
+
+For integration starters using npm, run the command below from the project root. It checks project/Node/Astro compatibility, backs up dependency files, installs an exact theme version and runs doctor. On failure it restores dependency files and attempts to reinstall the previous dependencies. Rebuild output is ready for your normal deployment; the command does not publish your site.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
+
+The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.1` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.
+
+If an upgrade fails, do not deploy `dist/`: dependency rollback does not restore previous build output. Resolve the error and run `npm run doctor` successfully before deploying. pnpm users update explicitly with `pnpm add @anglefeint/astro-theme@latest` and `pnpm run doctor`; keep their lockfile and review release compatibility first.

@@ -4,9 +4,11 @@ title: 'User Guide 2: Write and Organize Content'
 subtitle: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 description: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
+
+Set `updatedDate` to the real date of a substantive article update. The sitemap uses `updatedDate`, falling back to `pubDate`; it does not invent a new date on every build. Dates do not guarantee search-engine indexing.
 
 ## Daily writing starts with content files
 
@@ -146,3 +148,21 @@ Choose one `--theme`: `base`, `ai`, `cyber`, `hacker`, or `matrix`. Page slugs s
 - [User Guide 1: Set Up Your Blog](/en/blog/starter-guide-1-configure-your-site/)
 - [User Guide 2: Write and Organize Content](/en/blog/starter-guide-2-languages-and-routing/)
 - [User Guide 3: Enable and Customize Optional Features](/en/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Upgrade the theme
+
+The integration starter keeps standard pages, configuration defaults, translations and build features in the theme package. Your articles, `src/site.config.ts`, music, images and custom pages remain in your project.
+
+For integration starters using npm, run the command below from the project root. It checks project/Node/Astro compatibility, backs up dependency files, installs an exact theme version and runs doctor. On failure it restores dependency files and attempts to reinstall the previous dependencies. Rebuild output is ready for your normal deployment; the command does not publish your site.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
+
+The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.1` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.
+
+If an upgrade fails, do not deploy `dist/`: dependency rollback does not restore previous build output. Resolve the error and run `npm run doctor` successfully before deploying. pnpm users update explicitly with `pnpm add @anglefeint/astro-theme@latest` and `pnpm run doctor`; keep their lockfile and review release compatibility first.

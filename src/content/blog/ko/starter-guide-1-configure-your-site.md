@@ -4,7 +4,7 @@ title: '사용 가이드 1: 블로그 시작하기'
 subtitle: '설치부터 사이트 정보와 언어 설정, 예제 글 교체, 빌드와 배포까지 안내합니다.'
 description: '설치부터 사이트 정보와 언어 설정, 예제 글 교체, 빌드와 배포까지 안내합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -66,7 +66,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 소셜 아이콘은 `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`을 지원합니다. 사용자 SVG/PNG/WebP는 `public/icons/`에 넣고 `iconSrc: "/icons/community.svg"`를 지정하세요. `icon`보다 우선하며 원래 색상을 유지합니다. 둘 다 생략하면 텍스트가 표시됩니다. 경로 제한과 예제는 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ko.md)를 참고하세요. `social: { links: [] }`로 링크를 비울 수 있습니다. 목록이 비어 있어도 헤더와 푸터에는 클릭할 수 없는 Mastodon, Twitter, GitHub 자리 표시자 아이콘 세 개가 표시됩니다. 목록에 항목을 넣으면 설정한 항목만 표시됩니다. `.env`의 `PUBLIC_SITE_TITLE`, `PUBLIC_SITE_URL` 같은 재정의 값이 설정 파일보다 우선하므로 변경이 반영되지 않으면 확인하세요.
 
-프로젝트 루트의 `.env` 또는 호스팅 플랫폼의 빌드 환경에서 `PUBLIC_SITE_URL=https://your-domain.example`를 설정하면 `site.url`을 재정의합니다. 변경 후 개발 서버를 다시 시작하거나 다시 빌드하고 canonical, RSS, 사이트맵, 공유 이미지의 절대 URL이 해당 도메인을 사용하는지 확인하세요. 이에 맞는 starter의 `astro.config.mjs`와 URL 해석 스크립트가 필요하며 npm 테마 패키지만 업데이트하면 이 파일들은 갱신되지 않습니다.
+0.27+ 통합 starter에서는 테마 패키지가 프로젝트 루트 `.env` 또는 빌드 환경의 `PUBLIC_SITE_URL`을 읽어 `site.url`보다 우선 적용하며 canonical, RSS, sitemap, 공유 이미지 URL에 사용합니다. 변경 후 개발 서버를 다시 시작하거나 다시 빌드하세요. starter의 `astro.config.mjs` 통합 진입점은 유지하세요. 로컬 URL 해석 스크립트나 복사한 어댑터는 필요하지 않습니다. 0.27 이전 구조는 업그레이드 안내에 따라 한 번 이전해야 합니다.
 
 ## 3. 사용할 언어만 남기기
 
@@ -118,14 +118,30 @@ Cloudflare는 필수가 아닙니다. 플랫폼별 설정과 현재 도메인 �
 
 ## 6. 설정할 때 기억할 세 가지
 
-`src/site.config.ts`의 설정 객체를 편집하세요. `src/config/*` 같은 생성된 어댑터 파일에 예제를 붙여 넣지 마세요.
-
 같은 객체 안에 `theme`와 `i18n`은 각각 하나만 둡니다. 기능별 예제는 기존 객체에 합치고 같은 키를 반복해서 추가하지 마세요. 생략한 설정은 기본값을 사용하며 곡 목록이나 소셜 링크 같은 배열은 전체가 교체됩니다.
 
-기존 프로젝트에서 npm 패키지를 업데이트해도 로컬 starter 파일은 자동 갱신되지 않습니다. 설정이나 기능이 없다면 [업그레이드 가이드](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 확인하세요. 오류를 없애기 위해 설정 보조 파일을 임의로 삭제하지 마세요.
+0.27+ 통합 starter의 표준 페이지, 설정 기본값, 빌드 기능은 테마 패키지가 제공합니다. 개인 설정은 `src/site.config.ts`에 유지됩니다. 테마 업그레이드는 글, 음악, 이미지, 사용자 페이지를 덮어쓰지 않습니다. 0.27 이전 구조는 [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)에 따라 한 번 이전하세요.
 
 ## 이 가이드 시리즈
 
 - [사용 가이드 1: 블로그 시작하기](/ko/blog/starter-guide-1-configure-your-site/)
 - [사용 가이드 2: 글 작성과 콘텐츠 관리](/ko/blog/starter-guide-2-languages-and-routing/)
 - [사용 가이드 3: 필요한 기능 켜기와 사용자 설정](/ko/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## 테마 업그레이드
+
+표준 페이지, 기본 설정, 번역과 빌드 기능은 테마 패키지가 관리합니다. 글, `src/site.config.ts`, 음악, 이미지와 사용자 페이지는 프로젝트에 남습니다.
+
+npm을 사용하는 새 integration starter의 루트에서 아래 명령을 실행하세요. 호환성을 검사하고 의존성 파일을 백업한 뒤 정확한 버전을 설치하고 doctor를 실행합니다. 실패하면 의존성 파일을 복원하고 이전 의존성 재설치를 시도합니다. 배포는 기존 절차로 진행하며 자동 게시하지 않습니다.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
+
+자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
+
+업그레이드 실패 시 `dist/`를 배포하지 마세요. 의존성 복원은 이전 빌드 결과물을 복원하지 않습니다. 오류를 해결하고 `npm run doctor`가 성공한 뒤 배포하세요. pnpm 사용자는 릴리스 호환성을 확인하고 잠금 파일을 유지한 채 `pnpm add @anglefeint/astro-theme@latest`와 `pnpm run doctor`로 수동 업데이트하세요.

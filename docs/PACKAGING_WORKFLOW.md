@@ -43,3 +43,7 @@ All audit findings and registry errors remain blocking release gates. Formal pub
 ## Distribution consistency guard
 
 Official starter sync uses buildStarterPackage as the single dependency policy; it must not copy main's runtime dependencies back after sanitizing the thin package. Git source/target reads use literal cat-file blob lookups so absent [lang] routes are null, not successful empty git-show pattern results. Public-template acceptance asserts exactly Astro and the theme as direct runtime dependencies. A final sync check must pass after delivery; factory-only fixtures cannot replace this check.
+
+## Tutorial publication surfaces
+
+The nine-locale, three-part configuration series is published both from `src/content/blog/<locale>/starter-guide-*.md` on the demo and from `scripts/starter-templates/content/<locale>/*.md.template` into generated starter destinations. Review and update both copies together, preserving existing URLs and original publication dates while setting truthful updatedDate. The explicit manifest overrides remain distribution inputs; do not assume changing the demo source changes starter content. This maintainer synchronization does not run in the consumer updater and must never overwrite a personal blog's articles. Build and inspect generated article text, metadata, sitemap dates and series links, then verify the delivered starter and live demo separately after pushing.

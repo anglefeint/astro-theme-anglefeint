@@ -4,7 +4,7 @@ title: '사용 가이드 3: 필요한 기능 켜기와 사용자 설정'
 subtitle: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 description: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 | 본문 이미지 미리보기, 코드 복사       | 자동 적용, 설정 불필요 |
 | About, 글의 Red Queen 모니터          | 켜짐                   |
 | 음악, Giscus 댓글                     | 꺼짐                   |
-| 홈 최신 글 / 블로그 페이지당 글       | 3 / 9                  |
+| 홈 최신 글 / 블로그 페이지당 글       | 3 / 10                 |
 
 ## 1. 음악 플레이어 켜기
 
@@ -137,7 +137,7 @@ theme: {
 
 `windowSize`는 페이지 번호 표시 범위로 코드에서 5–21로 제한하며 페이지당 글 수와 다릅니다. 이동 입력창은 `jump.enabled`가 참이고 총 페이지 수가 `showJumpThreshold`를 넘을 때만 표시됩니다. 기본은 12페이지 초과입니다. `enterToGo`는 Enter 이동을 제어합니다.
 
-스타일 모드는 `fixed`, `sequential`, `random`입니다. 예제는 첫 번째 변형에 고정합니다. 기본 `random`은 언어, 경로, 페이지 정보 등을 바탕으로 안정적으로 선택하므로 새로고침마다 바뀌지 않습니다. `style.enabled: false`는 기본 변형을 쓸 뿐 페이지 나누기를 끄지 않습니다. 글이 충분히 쌓이면 목록 하단에서 확인하세요.
+스타일은 `fixed`, `sequential`, `random`입니다. JavaScript가 켜져 있으면 기본 `random`은 페이지를 불러올 때마다 컨테이너와 버튼 색상을 다시 선택하며 같은 결과가 반복될 수 있습니다. JavaScript가 없으면 생성된 HTML의 고정된 컨테이너 스타일과 정적 버튼 색상을 사용합니다. `style.enabled: false`는 기본 스타일로 되돌리며 페이지 나누기는 유지합니다.
 
 ## 5. 필요 없는 부가 기능 끄기
 
@@ -212,8 +212,6 @@ export const THEME_CONFIG = defineThemeConfig({
 
 `showCredits: true`로 다시 표시할 수 있습니다. 숨기면 두 링크가 모두 제거되고 저작권 줄은 유지됩니다. 선택 사항인 `site.tagline`은 이 스위치와 별개로 사용자 지정 일반 텍스트를 추가합니다. 기본값은 빈 문자열이며, 이전 기본값인 `Built with Astro.`는 중복을 방지하기 위해 내장 출처로 처리합니다. `All rights reserved`는 추가하지 않습니다.
 
-이 홈/푸터 옵션은 아직 출시되지 않은 로컬 변경이며 npm 0.14.0과 공개 starter에서는 사용할 수 없습니다. starter와 패키지를 함께 업데이트해야 합니다. [예정된 마이그레이션](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)을 참고하세요.
-
 `src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다.
 
 선택 사항인 `theme.footer.links`는 푸터에 별도 행을 추가합니다. 각 항목의 `label`과 `href`를 설정하며 링크 사이에는 가운데 점이 표시됩니다. 생략하거나 빈 배열을 사용하면 숨겨집니다. 라벨은 언어가 바뀌어도 설정한 원문을 유지하며 소셜 아이콘 및 `showCredits`와 독립적입니다.
@@ -229,7 +227,7 @@ theme: {
 
 자동 공유 이미지는 코드 레인, 터미널, 네온 네트워크 배경을 포함하며 사이트 이름, 제목, 작성자는 사용자 콘텐츠에서 가져옵니다. 오른쪽 아래의 작은 `Theme by Anglefeint` 문구는 `theme.footer.showCredits`(기본 `true`)를 따릅니다. `false`로 설정하면 푸터와 이미지의 크레딧을 함께 숨깁니다. 변경 후 다시 빌드하고 배포하세요. 사용자 지정 `ogImage`는 수정하지 않습니다. 배경은 오프라인으로 사용되며 브라우저 JavaScript를 추가하지 않습니다.
 
-공개 데모는 별도의 사이트 이름, 도메인, 번역된 소개를 사용합니다. 새 starter는 일반 기본값을 유지하며, 사용자는 계속 `src/site.config.ts`에서 설정합니다. 이전 starter를 업그레이드할 때는 업그레이드 안내에 따라 해당 설정 파일도 이전하세요. npm 패키지만 업데이트하면 이전 어댑터에 이 옵션이 추가되지 않습니다.
+0.27+ 통합 starter의 표준 페이지, 설정 기본값, 빌드 기능은 테마 패키지가 제공합니다. 개인 설정은 `src/site.config.ts`에 유지됩니다. 테마 업그레이드는 글, 음악, 이미지, 사용자 페이지를 덮어쓰지 않습니다. 0.27 이전 구조는 [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)에 따라 한 번 이전하세요.
 
 ## 이 가이드 시리즈
 
@@ -253,10 +251,28 @@ $$
 
 빌드 시 렌더링하며 로컬 스타일·글꼴과 접근 가능한 MathML을 사용합니다. 브라우저 수식 엔진은 필요 없습니다. 긴 독립 수식은 가로로 스크롤합니다. 잘못된 수식은 출처와 원인을 표시하고 빌드를 중단합니다. 제목·요약은 일반 텍스트로 작성하며 수식은 검색 색인에서 제외됩니다. 완전한 LaTeX 문서가 아닌 KaTeX 수학 문법을 지원합니다.
 
-기존 프로젝트는 업그레이드 안내에 따라 starter와 설정을 한 번 이전해야 합니다. 패키지만 업데이트하면 처리기가 연결되지 않습니다.
+0.27+ 통합 starter에서는 테마 패키지가 수학 지원을 포함한 Markdown 처리기를 자동으로 연결합니다. 한 번의 이전이 필요한 것은 0.27 이전 구조뿐입니다. 새 프로젝트에 처리기나 어댑터 구현을 복사하지 마세요.
 
 $C_{saved}$
 
 $$
 \frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
 $$
+
+---
+
+## 테마 업그레이드
+
+표준 페이지, 기본 설정, 번역과 빌드 기능은 테마 패키지가 관리합니다. 글, `src/site.config.ts`, 음악, 이미지와 사용자 페이지는 프로젝트에 남습니다.
+
+npm을 사용하는 새 integration starter의 루트에서 아래 명령을 실행하세요. 호환성을 검사하고 의존성 파일을 백업한 뒤 정확한 버전을 설치하고 doctor를 실행합니다. 실패하면 의존성 파일을 복원하고 이전 의존성 재설치를 시도합니다. 배포는 기존 절차로 진행하며 자동 게시하지 않습니다.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
+
+자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
+
+업그레이드 실패 시 `dist/`를 배포하지 마세요. 의존성 복원은 이전 빌드 결과물을 복원하지 않습니다. 오류를 해결하고 `npm run doctor`가 성공한 뒤 배포하세요. pnpm 사용자는 릴리스 호환성을 확인하고 잠금 파일을 유지한 채 `pnpm add @anglefeint/astro-theme@latest`와 `pnpm run doctor`로 수동 업데이트하세요.

@@ -4,7 +4,7 @@ title: '利用ガイド 1：ブログを立ち上げる'
 subtitle: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 description: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -66,7 +66,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 ソーシャルアイコンは `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line` に対応します。独自の SVG/PNG/WebP は `public/icons/` に置き、`iconSrc: "/icons/community.svg"` を指定します。`icon` より優先され、元の色を保ちます。両方省略するとテキストになります。パスの制約と例は [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ja.md) を参照してください。`social: { links: [] }` でリンクを空にできます。空の場合もヘッダーとフッターに Mastodon、Twitter、GitHub のクリックできないプレースホルダーアイコンが表示されます。項目を設定すると、設定した項目だけが表示されます。`.env` の `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` などの上書き値は設定ファイルより優先されます。変更が反映されない場合はこちらも確認してください。
 
-プロジェクト直下の `.env` またはホスティング先のビルド環境で `PUBLIC_SITE_URL=https://your-domain.example` を設定すると、`site.url` を上書きできます。変更後は開発サーバーを再起動するか再ビルドし、canonical、RSS、サイトマップ、共有画像の絶対 URL がそのドメインを使うか確認してください。対応する starter の `astro.config.mjs` と URL 解決スクリプトが必要です。npm テーマパッケージの更新だけではこれらのファイルは更新されません。
+0.27 以降の統合 starter では、テーマパッケージがプロジェクト直下の `.env` またはビルド環境の `PUBLIC_SITE_URL` を読み、`site.url` より優先して canonical、RSS、sitemap、共有画像の URL に使います。変更後は開発サーバーを再起動するか再ビルドしてください。starter の `astro.config.mjs` の統合エントリーは残します。ローカルの URL 解決スクリプトやコピーしたアダプターは不要です。0.27 より前の構成はアップグレードガイドに従って一度移行します。
 
 ## 3. 使用する言語だけを残す
 
@@ -118,14 +118,30 @@ Cloudflare は任意です。各サービスの設定と現在のルート公開
 
 ## 6. 設定の 3 つの基本
 
-編集するのは `src/site.config.ts` の設定オブジェクトです。`src/config/*` などの生成されるアダプターに例を貼り付けないでください。
-
 同じオブジェクトに `theme` と `i18n` はそれぞれ 1 つだけ置きます。機能ごとの例は既存のオブジェクトに統合し、同じキーを追加しないでください。省略した項目は既定値を使い、曲やソーシャルリンクなどの配列は全体が置き換わります。
 
-古いプロジェクトで npm パッケージを更新しても、ローカルの starter ファイルは自動更新されません。設定や機能が見当たらなければ [アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) を確認し、エラーを消すために設定の補助ファイルを削除しないでください。
+0.27 以降の統合 starter では、標準ページ、設定の既定値、ビルド機能をテーマパッケージが提供します。個人設定は `src/site.config.ts` に残ります。テーマ更新は記事、音楽、画像、独自ページを書き換えません。0.27 より前の構成は[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)に従って一度移行します。
 
 ## このガイドの構成
 
 - [利用ガイド 1：ブログを立ち上げる](/ja/blog/starter-guide-1-configure-your-site/)
 - [利用ガイド 2：記事を書く・コンテンツを整理する](/ja/blog/starter-guide-2-languages-and-routing/)
 - [利用ガイド 3：必要な機能を有効化・カスタマイズする](/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## テーマの更新
+
+標準ページ、設定の既定値、翻訳とビルド機能はテーマパッケージが管理します。記事、`src/site.config.ts`、音楽、画像、独自ページはプロジェクトに残ります。
+
+npm を使う新しい integration starter では、ルートで次のコマンドを実行します。互換性を確認し、依存ファイルをバックアップして特定バージョンをインストールし、doctor を実行します。失敗時は依存ファイルを戻して以前の依存関係の再インストールを試みます。公開は通常のデプロイ手順で行ってください。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+
+自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
+
+更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。

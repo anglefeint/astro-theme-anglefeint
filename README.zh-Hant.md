@@ -103,7 +103,7 @@ npm run new-page -- projects --theme cyber 會建立 src/pages/[lang]/projects.a
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 以前的專案需一次重新安裝遷移：正式交付後在新目錄建立範本，複製文章與資源，將個人設定合併至新的 site config。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔。保留 slug、語言路徑、音樂與圖片 URL、網域及部署設定。
+0.27 以前的專案需一次重新安裝遷移：在新目錄建立範本，複製文章與資源，將個人設定合併至新的 site config。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔。保留 slug、語言路徑、音樂與圖片 URL、網域及部署設定。
 
 自動升級目前僅支援 npm，遇到 pnpm/yarn/bun 鎖檔會停止。`--check` 僅檢查，`--to 0.27.1` 指定版本。請參閱[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)與 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
 
@@ -347,7 +347,9 @@ theme: {
 
 改成 false 可停用對應功能。enableRedQueen 只控制文章監視器；文章的 toc: true 可覆寫全站設定；socialImage 不會停用手動 ogImage。各頁氛圍由版型決定，沒有全站切換四種主題的單一開關。
 
-homeLatestCount 控制最新文章數，blogPageSize 控制列表與標籤分頁。pagination.windowSize 限於 5–21。jump.enabled 啟用且總頁數超過 showJumpThreshold（預設 12）才顯示跳頁輸入框；jump.enterToGo 控制 Enter。style.mode 支援 fixed、sequential、random；random 對同一頁穩定，不會每次重新整理都變。style.enabled: false 保留基本分頁。
+homeLatestCount 控制最新文章數，blogPageSize 控制列表與標籤分頁。pagination.windowSize 限於 5–21。jump.enabled 啟用且總頁數超過 showJumpThreshold（預設 12）才顯示跳頁輸入框；jump.enterToGo 控制 Enter。
+
+樣式模式有 `fixed`、`sequential`、`random`。啟用 JavaScript 時，預設 `random` 在每次頁面載入時重新選擇分頁容器與按鈕顏色，結果可能重複。沒有 JavaScript 時，建置的 HTML 保留穩定的容器樣式與靜態按鈕顏色。`style.enabled: false` 使用基本變體，不會關閉分頁。
 
 ### 更多語言與首頁網址
 

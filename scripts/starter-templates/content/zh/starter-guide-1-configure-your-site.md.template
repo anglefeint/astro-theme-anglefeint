@@ -4,7 +4,7 @@ title: '使用指南 1：搭建你的博客'
 subtitle: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 description: '从安装启动到修改站点信息、选择语言、替换示例文章和构建部署。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -66,7 +66,7 @@ export const THEME_CONFIG = defineThemeConfig({
 
 社交链接支持 `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line` 图标。自定义图标可将本地 SVG/PNG/WebP 放入 `public/icons/`，设置 `iconSrc: "/icons/community.svg"`，优先于 `icon` 并保留原色；两项都省略则显示文字。路径限制与示例见 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-CN.md)。用 `social: { links: [] }` 清空链接。空列表仍会在顶部和页脚显示 Mastodon、Twitter、GitHub 三个不可点击的占位图标；列表非空时只显示已配置的条目。若 `.env` 中已有 `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` 等站点覆盖值，它们会优先于配置文件；修改没有生效时也检查这些变量。
 
-可在项目根目录的 `.env` 或托管平台的构建环境中设置 `PUBLIC_SITE_URL=https://your-domain.example`，覆盖 `site.url`。修改后重启开发服务或重新构建，并检查 canonical、RSS、sitemap 和分享图绝对地址是否使用该域名。这需要配套 starter 的 `astro.config.mjs` 和域名解析辅助脚本；只更新 npm 主题包不会更新这些文件。
+在 0.27+ 集成版 starter 中，主题包读取项目根目录 `.env` 或托管构建环境里的 `PUBLIC_SITE_URL`，优先于 `site.url`，统一用于 canonical、RSS、sitemap 和分享图地址。修改后重启开发服务或重新构建。保留 starter 的 `astro.config.mjs` 集成入口，无需维护本地域名解析脚本或复制适配器。0.27 之前的旧骨架需按升级指南完成一次迁移。
 
 ## 3. 只保留你会使用的语言
 
@@ -118,10 +118,9 @@ Cloudflare 并非必需。Netlify、Vercel、Cloudflare Pages、GitHub Pages 和
 
 ## 6. 配置时记住这三件事
 
-
 同一个对象中只保留一个 `theme`、一个 `i18n`；不同功能的内容要合并到已有对象，不要逐段追加同名键。未写出的配置使用默认值，数组（如歌曲或社交链接）会整体替换。
 
-旧工程升级 npm 包不会自动更新本地 starter 文件。若缺少教程中的配置或功能，先看 [升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)，不要为消除报错随意删掉配置辅助文件。
+0.27+ 集成版 starter 的标准页面、配置默认值和构建功能由主题包提供；个人配置仍在 `src/site.config.ts`。主题升级不会重写文章、音乐、图片或自建页面。0.27 之前的旧骨架需按[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)完成一次迁移。
 
 ## 这套教程
 
@@ -141,6 +140,8 @@ Cloudflare 并非必需。Netlify、Vercel、Cloudflare Pages、GitHub Pages 和
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 之前的项目需要一次重新安装迁移：本版本正式交付后，在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
+0.27 之前的项目需要一次重新安装迁移：在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
 
 自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
+
+升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。

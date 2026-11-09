@@ -6,7 +6,7 @@ title: 'Guia 1: Configure seu blog'
 subtitle: 'Instalação, identidade, idiomas e publicação.'
 description: 'Instalação, identidade, idiomas e publicação.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -44,6 +44,8 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 site.url define o domínio usado por canonical, RSS, sitemap e imagens sociais. PUBLIC_SITE_URL no ambiente de compilação ou no arquivo .env tem prioridade. Reinicie o desenvolvimento ou reconstrua após alterá-lo. O texto visível da página inicial vem de site.hero do idioma; messages.siteDescription define sua descrição. Alterar apenas site.description não substitui esses textos.
+
+No starter integrado 0.27+, o pacote do tema lê `PUBLIC_SITE_URL` do `.env` na raiz ou do ambiente de build e o prioriza sobre `site.url` para canonical, RSS, sitemap e imagens sociais. Reinicie o desenvolvimento ou reconstrua após mudanças. Mantenha a integração em `astro.config.mjs`; não é necessário manter um resolvedor local de URL nem adapters copiados. Estruturas anteriores a 0.27 precisam da migração inicial do guia de atualização.
 
 Com defaultLocalePrefix: 'never', a página inicial do idioma padrão aparece diretamente em /. O padrão 'always' redireciona / para `/<idioma>/` e pode exibir “Redirecting to home…”. Artigos continuam em /pt-br/blog/ mesmo com 'never'.
 
@@ -90,8 +92,24 @@ Cloudflare é opcional. Veja as [instruções por plataforma no README](https://
 
 ## Regras de configuração
 
-Mantenha um único objeto theme e um único i18n. Mescle opções; listas substituem listas anteriores. Não edite os adaptadores gerados em src/config/. Atualizar o pacote npm não atualiza arquivos locais do starter. Consulte o [guia de atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) antes de migrar.
-
 - [Guia 1: Configure seu blog](/pt-br/blog/starter-guide-1-configure-your-site/)
 - [Guia 2: Escreva e organize conteúdo](/pt-br/blog/starter-guide-2-languages-and-routing/)
 - [Guia 3: Recursos opcionais](/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Atualizar o tema
+
+O pacote mantém páginas padrão, valores padrão, traduções e funções de build. Artigos, `src/site.config.ts`, músicas, imagens e páginas próprias ficam no projeto.
+
+No novo starter de integração com npm, execute na raiz o comando abaixo. Ele verifica compatibilidade, faz backup dos arquivos de dependências, instala uma versão exata e executa doctor. Em caso de falha, restaura os arquivos e tenta reinstalar as dependências anteriores. Publique pelo fluxo habitual; não há deploy automático.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Crie-o em outra pasta, copie artigos e recursos e combine os valores pessoais no novo site config. Não copie rotas padrão antigas, adapters ou helpers defaults/schema/runtime. Preserve slugs, caminhos de idiomas, URLs de músicas/imagens e configurações de hospedagem.
+
+O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. `--check` verifica sem escrever; `--to 0.27.1` escolhe a versão. Veja o [guia](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) e [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+
+Se a atualização falhar, não publique `dist/`: restaurar dependências não restaura o build anterior. Resolva o erro e execute `npm run doctor` com sucesso antes do deploy. Com pnpm, confira a compatibilidade e atualize manualmente com `pnpm add @anglefeint/astro-theme@latest` e `pnpm run doctor`, mantendo seu lockfile.

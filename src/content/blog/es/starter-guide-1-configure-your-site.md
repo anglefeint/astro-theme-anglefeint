@@ -4,7 +4,7 @@ title: 'Guía 1: Configura tu blog'
 subtitle: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 description: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -66,7 +66,7 @@ La presentación bajo el título principal de inicio se configura mediante `site
 
 Los iconos sociales admiten `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Para una imagen propia, guarda un SVG/PNG/WebP local en `public/icons/` y asigna `iconSrc: "/icons/community.svg"`: tiene prioridad sobre `icon` y conserva sus colores. Omite ambos campos para mostrar texto. Consulta las reglas de rutas y ejemplos en el [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.es.md). Usa `social: { links: [] }` para quitar todos los enlaces. Una lista vacía sigue mostrando tres iconos de muestra sin enlace (Mastodon, Twitter y GitHub) en la cabecera y el pie de página; si la lista contiene elementos, solo se muestran los configurados. Las variables de entorno como `PUBLIC_SITE_TITLE` y `PUBLIC_SITE_URL` tienen prioridad sobre el archivo; compruébalas si un cambio no se refleja.
 
-Define `PUBLIC_SITE_URL=https://your-domain.example` en el archivo `.env` de la raíz del proyecto o en el entorno de compilación del alojamiento para reemplazar `site.url`. Reinicia el servidor de desarrollo o vuelve a compilar tras cambiarlo. Comprueba que los enlaces canonical, RSS, sitemap y las URL absolutas de imágenes sociales utilicen ese dominio. Se necesitan el `astro.config.mjs` y el script de resolución de URL correspondientes del starter; actualizar solo el paquete npm del tema no actualiza estos archivos.
+En el starter integrado 0.27+, el paquete del tema lee `PUBLIC_SITE_URL` del `.env` raíz o del entorno de compilación y lo prioriza sobre `site.url` para canonical, RSS, sitemap e imágenes sociales. Reinicia desarrollo o recompila tras cambiarlo. Conserva la integración en `astro.config.mjs`; no hacen falta un resolvedor local de URL ni adapters copiados. Las estructuras anteriores a 0.27 necesitan la migración inicial de la guía de actualización.
 
 ## 3. Conserva los idiomas que necesites
 
@@ -118,14 +118,30 @@ Cloudflare es opcional. Consulta la [configuración por plataforma en README](ht
 
 ## 6. Recuerda tres reglas de configuración
 
-Edita el objeto de `src/site.config.ts`; no pegues los ejemplos en adaptadores generados como `src/config/*`.
-
 Mantén una sola clave `theme` y una sola `i18n` en el mismo objeto. Integra los ajustes de cada función en los objetos existentes, sin duplicar claves. Los campos omitidos conservan los valores predeterminados; las matrices, como canciones o enlaces sociales, se sustituyen enteras.
 
-Actualizar el paquete npm de un proyecto antiguo no actualiza automáticamente sus archivos locales del starter. Si faltan funciones o ajustes de estas guías, consulta la [guía de actualización](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). No elimines archivos auxiliares de configuración solo para ocultar errores.
+En el starter integrado 0.27+, el paquete proporciona páginas estándar, valores predeterminados y funciones de build. Tus ajustes permanecen en `src/site.config.ts`. Actualizar el tema no reescribe artículos, música, imágenes ni páginas propias. Las estructuras anteriores a 0.27 requieren la migración inicial de la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ## En esta serie
 
 - [Guía 1: Configura tu blog](/es/blog/starter-guide-1-configure-your-site/)
 - [Guía 2: Escribe y organiza el contenido](/es/blog/starter-guide-2-languages-and-routing/)
 - [Guía 3: Activa y personaliza funciones opcionales](/es/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Actualizar el tema
+
+El paquete gestiona páginas estándar, valores predeterminados, traducciones y funciones de compilación. Tus artículos, `src/site.config.ts`, música, imágenes y páginas propias permanecen en el proyecto.
+
+En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz. Comprueba compatibilidad, guarda los archivos de dependencias, instala una versión exacta y ejecuta doctor. Si falla, restaura los archivos e intenta reinstalar las dependencias anteriores. Publica después con tu proceso habitual; no despliega automáticamente.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
+
+El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.1` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+
+Si falla la actualización, no publiques `dist/`: restaurar dependencias no restaura la compilación anterior. Corrige el error y ejecuta `npm run doctor` con éxito antes de desplegar. Con pnpm, revisa la compatibilidad y actualiza manualmente con `pnpm add @anglefeint/astro-theme@latest` y `pnpm run doctor`, conservando tu lockfile.

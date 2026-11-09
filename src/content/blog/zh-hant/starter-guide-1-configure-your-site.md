@@ -6,7 +6,7 @@ title: 使用指南 1：設定你的部落格
 subtitle: 安裝、網站資料、語言與部署。
 description: 安裝、網站資料、語言與部署。
 pubDate: '2026-03-07'
-updatedDate: '2026-10-18'
+updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
 
@@ -44,6 +44,8 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 site.url 影響 canonical、RSS、sitemap 與分享圖網址。建置環境或 .env 中的 PUBLIC_SITE_URL 優先於設定檔；變更後需重啟開發伺服器或重新建置。首頁可見介紹來自該語言的 site.hero，描述來自 messages.siteDescription。只修改 site.description 不會取代它們。
+
+在 0.27+ 整合版 starter 中，主題套件讀取專案根目錄 `.env` 或託管建置環境的 `PUBLIC_SITE_URL`，優先於 `site.url`，統一用於 canonical、RSS、sitemap 與分享圖網址。變更後重啟開發伺服器或重新建置。保留 starter 的 `astro.config.mjs` 整合入口，無需維護本機網址解析腳本或複製轉接器。0.27 以前的舊骨架需依升級指南完成一次遷移。
 
 defaultLocalePrefix: 'never' 讓預設語言首頁直接顯示於 /。預設的 'always' 會導向 `/<語言>/`，可能短暫顯示 “Redirecting to home…”。即使使用 'never'，文章仍位於 /zh-hant/blog/。
 
@@ -90,8 +92,24 @@ doctor 包含檢查與建置。preview 僅在本機顯示結果，不會發布�
 
 ## 設定原則
 
-同一物件只保留一個 theme 與一個 i18n，將選項合併進去。陣列會整份取代舊值。不要直接修改 src/config/ 的產生檔。更新 npm 套件不會更新本機 starter 檔案；遷移前請閱讀[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
-
 - [使用指南 1：設定你的部落格](/zh-hant/blog/starter-guide-1-configure-your-site/)
 - [使用指南 2：撰寫與整理內容](/zh-hant/blog/starter-guide-2-languages-and-routing/)
 - [使用指南 3：選用功能](/zh-hant/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## 升級主題
+
+集成版 starter 的標準頁面、設定預設值、翻譯與建置功能由主題套件維護。文章、`src/site.config.ts`、音樂、圖片與自訂頁面留在使用者專案。
+
+使用 npm 的集成版專案在根目錄執行下列指令。工具檢查專案、Node 與 Astro 相容性、備份依賴檔案、安裝確切主題版本並執行 doctor；失敗時還原依賴檔案並嘗試重裝原依賴。完成後依原流程部署，不會自動發布網站。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 以前的專案需一次重新安裝遷移：在新目錄建立範本，複製文章與資源，將個人設定合併至新的 site config。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔。保留 slug、語言路徑、音樂與圖片 URL、網域及部署設定。
+
+自動升級目前僅支援 npm，遇到 pnpm/yarn/bun 鎖檔會停止。`--check` 僅檢查，`--to 0.27.1` 指定版本。請參閱[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)與 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
+
+升級失敗時不要部署 `dist/`：相依套件回復不會還原舊建置產物。修正錯誤並成功執行 `npm run doctor` 後再部署。pnpm 使用者先確認版本相容，再以 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手動更新，保留自己的鎖定檔。

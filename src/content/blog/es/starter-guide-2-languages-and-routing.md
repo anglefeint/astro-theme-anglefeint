@@ -4,9 +4,11 @@ title: 'Guía 2: Escribe y organiza el contenido'
 subtitle: 'Crea artículos y utiliza portadas, etiquetas, índice, imágenes ampliadas, copia de código, búsqueda e imágenes para compartir.'
 description: 'Crea artículos y utiliza portadas, etiquetas, índice, imágenes ampliadas, copia de código, búsqueda e imágenes para compartir.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
+
+Tras una modificación sustancial, indica la fecha real en `updatedDate`. El sitemap usa `updatedDate` o, si falta, `pubDate`; no inventa una fecha en cada build. Las fechas no garantizan la indexación.
 
 ## Escribe en los archivos de contenido
 
@@ -146,3 +148,21 @@ Elige un solo `--theme`: `base`, `ai`, `cyber`, `hacker` o `matrix`. Se admiten 
 - [Guía 1: Configura tu blog](/es/blog/starter-guide-1-configure-your-site/)
 - [Guía 2: Escribe y organiza el contenido](/es/blog/starter-guide-2-languages-and-routing/)
 - [Guía 3: Activa y personaliza funciones opcionales](/es/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## Actualizar el tema
+
+El paquete gestiona páginas estándar, valores predeterminados, traducciones y funciones de compilación. Tus artículos, `src/site.config.ts`, música, imágenes y páginas propias permanecen en el proyecto.
+
+En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz. Comprueba compatibilidad, guarda los archivos de dependencias, instala una versión exacta y ejecuta doctor. Si falla, restaura los archivos e intenta reinstalar las dependencias anteriores. Publica después con tu proceso habitual; no despliega automáticamente.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
+
+El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.1` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+
+Si falla la actualización, no publiques `dist/`: restaurar dependencias no restaura la compilación anterior. Corrige el error y ejecuta `npm run doctor` con éxito antes de desplegar. Con pnpm, revisa la compatibilidad y actualiza manualmente con `pnpm add @anglefeint/astro-theme@latest` y `pnpm run doctor`, conservando tu lockfile.

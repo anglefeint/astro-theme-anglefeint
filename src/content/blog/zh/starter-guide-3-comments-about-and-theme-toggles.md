@@ -4,7 +4,7 @@ title: '使用指南 3：按需开启与定制功能'
 subtitle: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 description: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 | 正文图片预览、代码复制           | 自动生效，无需配置 |
 | About、Red Queen 文章监视器      | 开启               |
 | 音乐、Giscus 评论                | 关闭               |
-| 首页最新文章 / 博客每页文章      | 3 / 9              |
+| 首页最新文章 / 博客每页文章      | 3 / 10             |
 
 ## 1. 开启音乐播放器
 
@@ -137,7 +137,7 @@ theme: {
 
 `windowSize` 控制页码展示窗口，代码限制在 5–21；不等于每页文章数。跳页输入仅在 `jump.enabled` 为真且总页数大于 `showJumpThreshold` 时出现，默认超过 12 页才显示；`enterToGo` 控制回车跳页。
 
-样式模式有 `fixed`、`sequential`、`random`。示例固定第 1 种；默认 `random` 是按语言、路径和页码等生成的稳定选择，不是每次刷新都随机。`style.enabled: false` 回到基础变体，不会关闭分页。文章足够多时在列表底部验证。
+样式模式有 `fixed`、`sequential`、`random`，示例固定第 1 种。启用 JavaScript 时，默认 `random` 在每次页面加载时重新随机选择分页容器与按钮颜色，结果可能重复。没有 JavaScript 时，构建的 HTML 保留稳定的容器样式和静态按钮颜色。`style.enabled: false` 使用基础变体，不会关闭分页。
 
 ## 5. 关闭不需要的增强功能
 
@@ -212,8 +212,6 @@ export const THEME_CONFIG = defineThemeConfig({
 
 设置 `showCredits: true` 可恢复显示。关闭后两条署名链接都移除，版权行保留。可选的 `site.tagline` 独立追加自定义纯文字，不受此开关控制；默认为空，旧默认值 `Built with Astro.` 视为内置署名，避免重复。不会追加 `All rights reserved`。
 
-这些首页/页脚选项仍是未发布的本地改动，npm 0.14.0 和公开 starter 尚不支持；需要同步升级 starter 和主题包，见[待发布迁移说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)。
-
 首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
 
 可选的 `theme.footer.links` 在页脚多显示一行，每项填写 `label` 和 `href`，链接之间用中间点分隔；省略或空数组隐藏该行。标签在各语言中保持配置原文，不影响社交图标，也不受 `showCredits` 控制。
@@ -229,7 +227,7 @@ theme: {
 
 自动分享图使用随主题提供的代码雨、终端与霓虹网络背景，站点名、标题和作者仍取自你的内容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（默认 `true`）；设为 `false` 会同时隐藏页脚署名和图片署名，修改后重新构建部署。不会修改自定义的 `ogImage`。背景离线使用，不增加浏览器 JavaScript。
 
-公开 demo 使用专用站名、域名和翻译后的介绍；新安装的 starter 保持通用默认配置，用户仍只需编辑 `src/site.config.ts`。升级旧 starter 时，请按升级指南迁移配套配置文件；仅更新 npm 包不会为旧适配器补上这个开关。
+0.27+ 集成版 starter 的标准页面、配置默认值和构建功能由主题包提供；个人配置仍在 `src/site.config.ts`。主题升级不会重写文章、音乐、图片或自建页面。0.27 之前的旧骨架需按[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)完成一次迁移。
 
 ## 这套教程
 
@@ -253,10 +251,28 @@ $$
 
 公式在构建时渲染，样式和字体随站点提供，保留可访问的 MathML，不加载浏览器数学引擎。长独立公式可横向滚动。错误公式会中止构建并提示来源与原因。标题和摘要保持纯文本；搜索索引排除公式。支持 KaTeX 数学语法，不是完整 LaTeX 文档。
 
-老项目需要按升级指南完成一次 starter/配置迁移，仅更新主题包不会接入 Markdown 处理器。
+0.27+ 集成版 starter 由主题包自动接入 Markdown 处理器和数学支持。只有 0.27 之前的旧骨架需要按升级指南完成一次迁移；新项目无需复制处理器或适配器实现。
 
 $C_{saved}$
 
 $$
 \frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
 $$
+
+---
+
+## 升级主题
+
+集成版 starter 将标准页面、配置默认值、翻译和构建功能放在主题包中。文章、`src/site.config.ts`、音乐、图片和自建页面保留在用户项目中。
+
+使用 npm 的集成版项目在根目录运行下列命令。它检查项目、Node 和 Astro 兼容性，备份依赖文件，安装明确的主题版本并运行 doctor；失败时恢复依赖文件并尝试重新安装原依赖。完成后按原有流程部署，命令不会自动发布网站。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 之前的项目需要一次重新安装迁移：在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
+
+自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
+
+升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。

@@ -4,9 +4,11 @@ title: '使用指南 2：写文章与管理内容'
 subtitle: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 description: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
+
+实质修改文章后，将 `updatedDate` 设为真实更新日期。sitemap 优先使用 `updatedDate`，未填写时使用 `pubDate`，不会在每次构建时制造新日期；日期不保证搜索引擎收录。
 
 ## 日常写作只需要内容文件
 
@@ -146,3 +148,21 @@ npm run new-page -- projects --theme cyber
 - [使用指南 1：搭建你的博客](/zh/blog/starter-guide-1-configure-your-site/)
 - [使用指南 2：写文章与管理内容](/zh/blog/starter-guide-2-languages-and-routing/)
 - [使用指南 3：按需开启与定制功能](/zh/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+---
+
+## 升级主题
+
+集成版 starter 将标准页面、配置默认值、翻译和构建功能放在主题包中。文章、`src/site.config.ts`、音乐、图片和自建页面保留在用户项目中。
+
+使用 npm 的集成版项目在根目录运行下列命令。它检查项目、Node 和 Astro 兼容性，备份依赖文件，安装明确的主题版本并运行 doctor；失败时恢复依赖文件并尝试重新安装原依赖。完成后按原有流程部署，命令不会自动发布网站。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 之前的项目需要一次重新安装迁移：在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
+
+自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
+
+升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。

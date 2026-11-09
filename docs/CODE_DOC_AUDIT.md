@@ -12,6 +12,14 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-10 配置教程双发布面核对
+
+审查基线为 `d2b85217615bdf06da9f5ffe415894c2b248a852`。此前只同步 starter 教程、保留 demo 教程的处理不满足维护者指导文章的职责；“保护用户内容”适用于消费者项目升级，不能作为公开 demo 教程过时的理由。本轮同时更新主站 `src/content/blog/<locale>/starter-guide-*.md` 与 manifest 实际选用的 27 份模板，九种语言共 54 个文件保留原 URL/pubDate，真实 updatedDate 为 2026-11-10。welcome 入口指向现有教程，未发现需要改动。
+
+代码追踪与修正：`packages/theme/src/integration.mjs` → `project/site-url.mjs` / `project/config/site.ts` 已在包内统一处理域名环境变量，无需本地 URL helper；`project/defaults.ts` / `schema.ts` / `runtime.ts` 定义深合并、数组替换、语言与开关；`cli.mjs` / `scaffold/upgrade.mjs` 定义 schema-1 npm 升级和依赖回滚边界；`content-schema.ts` / `project/i18n/posts.ts` / `sitemap.mjs` 定义文章字段、发布日期排序和真实更新日期；`scaffold/new-post.mjs` 实际随机选封面，德语旧文称稳定选择已修正；`utils/pagination-style.ts` 只是静态回退，`components/pagination/CyberPagination.astro` 与 `scripts/cyber-pagination.js` 在浏览器每次加载时为 random 模式重选颜色，九语言旧说明已修正。数学处理器由 integration 自动接入，只对 pre-0.27 骨架要求一次迁移。所有教程清理“发布后”措辞，补明失败构建产物不得部署及 pnpm 手动更新路径。
+
+文档路由：直接核对配置／写作／功能三篇、九语言 README、UPGRADING 与架构说明；README 同步其发布状态和分页错误，UPGRADING 现有迁移／回滚边界与代码相符，无需改写。传播至 DOC_SYNC_WORKFLOW、PACKAGING_WORKFLOW、ARCHITECTURE：明确教程虽然不强制维护文档元数据，仍必须核对 demo 与 starter 两个发布面。历史版本账本保持历史，不重写发布事实。无主题运行时、视觉、site config、音乐、图片或其他用户文章变更，不发布空 npm 版本。本轮新执行检查通过：89 份文档元数据、lint、151 单测、344 个 Astro 文件零诊断、262 页完整构建和九语言 About 校验；独立内容检查确认 27 篇 demo 与模板相同、生成 HTML 和 sitemap 使用真实更新日期、系列链接与图片存在、其余博客文章无修改。隐私扫描 711 文本与 8 图片无发现。证据保存在忽略目录 tutorials-20261110-{doc-suggestions,lint,check}.log 与 tutorials-20261110-content.json。starter 和线上交付需继续使用正式同步与实际 HTTP 回读，不能由本地构建替代。
+
 ## 2026-11-09 最终发布验收
 
 npm 0.27.1 已发布并核验全部 307 文件、gitHead 和 SHA-512，0.27.0 保留历史事实且由补丁替代。最终 starter c2e1d046ec4155536a2acc72a108caabad754a20 通过官方同步与零漂移核验，运行依赖严格只有 Astro 和主题包。最终 Linux Actions 42643359441 的 npm / pnpm 两项均成功；主库 151 单测、完整 139 浏览器场景、独立安装 14 构建矩阵及审计通过。Windows 最终公开新装 npm/pnpm 通过，真实已发布 0.27.0→0.27.1 升级保留 133 文件，旧骨架拒绝升级保留 174 文件，未来 Code Lab 跳版本模拟保留 85 文件。原站 204 文件恢复 checkout 引起的纯换行差异后逐字节一致。

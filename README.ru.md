@@ -103,7 +103,7 @@ npm run new-page -- projects --theme cyber создаёт src/pages/[lang]/proje
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Проектам до 0.27 нужна однократная миграция в новый starter. После публикации создайте его в отдельной папке, перенесите статьи и ресурсы и объедините личные настройки с новым site config. Не копируйте старые стандартные маршруты, adapters и файлы defaults/schema/runtime. Сохраните slug, языковые пути, URL музыки/изображений и настройки хостинга.
+Проектам до 0.27 нужна однократная миграция в новый starter. Создайте его в отдельной папке, перенесите статьи и ресурсы и объедините личные настройки с новым site config. Не копируйте старые стандартные маршруты, adapters и файлы defaults/schema/runtime. Сохраните slug, языковые пути, URL музыки/изображений и настройки хостинга.
 
 Автообновление поддерживает только npm и отклоняет lock-файлы pnpm/yarn/bun. `--check` проверяет без записи, `--to 0.27.1` выбирает версию. См. [руководство](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) и [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
@@ -347,7 +347,9 @@ theme: {
 
 false отключает функцию. enableRedQueen управляет только монитором статьи. toc: true в статье имеет приоритет над глобальным значением. socialImage не отключает ручной ogImage. Атмосферы определяются макетами, общего переключателя всех страниц нет.
 
-homeLatestCount задаёт число новых статей, blogPageSize — размер списков и страниц тегов. pagination.windowSize ограничен 5–21. Переход по номеру появляется при jump.enabled и числе страниц выше showJumpThreshold, изначально 12. jump.enterToGo управляет Enter. style.mode принимает fixed, sequential и random. random стабилен для страницы. style.enabled: false сохраняет простую пагинацию.
+homeLatestCount задаёт число новых статей, blogPageSize — размер списков и страниц тегов. pagination.windowSize ограничен 5–21. Переход по номеру появляется при jump.enabled и числе страниц выше showJumpThreshold, изначально 12. jump.enterToGo управляет Enter.
+
+Режимы: `fixed`, `sequential`, `random`. При включённом JavaScript стандартный `random` заново выбирает цвета контейнера и кнопок при каждой загрузке документа; результаты могут повторяться. Без JavaScript используются стабильный вариант контейнера и статические цвета кнопок из собранного HTML. `style.enabled: false` включает базовый вид, сохраняя пагинацию.
 
 ### Другие языки и главная страница
 

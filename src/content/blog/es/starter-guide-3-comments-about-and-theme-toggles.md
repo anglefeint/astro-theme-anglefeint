@@ -4,7 +4,7 @@ title: 'Guía 3: Activa y personaliza funciones opcionales'
 subtitle: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 description: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ Esta guía corresponde al starter actual. Integra todos los fragmentos TypeScrip
 | Ampliación de imágenes del cuerpo y copia de código              | Automáticas; sin configuración |
 | About y monitor Red Queen de los artículos                       | Activos                        |
 | Música y comentarios Giscus                                      | Desactivados                   |
-| Artículos recientes en inicio / artículos por página del blog    | 3 / 9                          |
+| Artículos recientes en inicio / artículos por página del blog    | 3 / 10                         |
 
 ## 1. Activa el reproductor de música
 
@@ -137,7 +137,7 @@ theme: {
 
 `windowSize` controla la ventana de números de página, limitada por el código a 5–21; no es la cantidad de artículos. El campo para saltar aparece solo si `jump.enabled` es verdadero y el total supera `showJumpThreshold` (más de 12 páginas por defecto). `enterToGo` controla el salto con Enter.
 
-Los modos de estilo son `fixed`, `sequential` y `random`. El ejemplo fija la variante 1. El modo predeterminado `random` selecciona una variante estable a partir del idioma, la ruta y datos de página; no cambia aleatoriamente en cada recarga. `style.enabled: false` utiliza la variante básica sin desactivar la paginación. Comprueba el pie de la lista cuando haya suficientes artículos.
+Los modos son `fixed`, `sequential` y `random`. Con JavaScript, el modo predeterminado `random` vuelve a elegir los colores del contenedor y los botones al cargar cada documento; pueden repetirse. Sin JavaScript, el HTML generado conserva una variante estable del contenedor y colores estáticos en los botones. `style.enabled: false` usa la variante básica sin desactivar la paginación.
 
 ## 5. Desactiva mejoras que no necesites
 
@@ -212,8 +212,6 @@ export const THEME_CONFIG = defineThemeConfig({
 
 Usa `showCredits: true` para volver a mostrarlos. Al ocultarlos se eliminan ambos enlaces, pero se mantiene la línea de copyright. El campo opcional `site.tagline` añade texto propio independientemente de este interruptor. Está vacío por defecto; el valor anterior `Built with Astro.` se trata como el crédito integrado para evitar duplicados. No se añade `All rights reserved`.
 
-Estas opciones de inicio/pie son cambios locales sin publicar; npm 0.14.0 y el starter público aún no las incluyen. Requieren cambios tanto en el starter como en el paquete; consulta la [migración pendiente](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links).
-
 En `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow y `showTrace` controla el estado inferior derecho. Todos valen `true` por defecto; `false` oculta cada sección por separado.
 
 La opción `theme.footer.links` añade una fila independiente al pie: cada entrada contiene `label` y `href`, con puntos entre enlaces. Omitirla o usar un array vacío oculta la fila. Las etiquetas mantienen el texto configurado en todos los idiomas; no depende de los iconos sociales ni de `showCredits`.
@@ -229,7 +227,7 @@ theme: {
 
 Las tarjetas automáticas usan un fondo incluido de lluvia de código, terminales y redes de neón, con tu propio nombre de sitio, título y autor. El pequeño crédito `Theme by Anglefeint` abajo a la derecha sigue `theme.footer.showCredits` (por defecto `true`); con `false` se ocultan los créditos del pie y de la imagen. Vuelve a compilar y desplegar tras cambiarlo. Los archivos `ogImage` personalizados no se modifican. El fondo funciona sin conexión y no añade JavaScript al navegador.
 
-La demo pública utiliza su propio nombre, dominio e introducciones traducidas. Un starter nuevo conserva valores genéricos y se sigue configurando en `src/site.config.ts`. Al actualizar un starter antiguo, migra también los archivos de configuración indicados en la guía de actualización; actualizar solo el paquete npm no añade esta opción a los adaptadores antiguos.
+En el starter integrado 0.27+, el paquete proporciona páginas estándar, valores predeterminados y funciones de build. Tus ajustes permanecen en `src/site.config.ts`. Actualizar el tema no reescribe artículos, música, imágenes ni páginas propias. Las estructuras anteriores a 0.27 requieren la migración inicial de la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 ## En esta serie
 
@@ -253,10 +251,28 @@ Desactiva con `theme: { math: { enabled: false } }` en `src/site.config.ts`. Esc
 
 Se renderiza durante la compilación, con estilos y fuentes locales y MathML accesible, sin motor matemático en el navegador. Las fórmulas largas tienen desplazamiento horizontal. Los errores detienen la compilación indicando origen y causa. Mantén títulos y descripciones en texto plano; las fórmulas se excluyen de la búsqueda. Se admite la sintaxis matemática de KaTeX, no documentos LaTeX completos.
 
-Los proyectos anteriores necesitan la migración inicial del starter y la configuración explicada en la guía de actualización; actualizar solo el paquete no conecta el procesador Markdown.
+En el starter integrado 0.27+, el paquete conecta automáticamente el procesador Markdown y las fórmulas. Solo las estructuras anteriores a 0.27 necesitan la migración inicial; no copies implementaciones de procesadores ni adapters al proyecto nuevo.
 
 $C_{saved}$
 
 $$
 \frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
 $$
+
+---
+
+## Actualizar el tema
+
+El paquete gestiona páginas estándar, valores predeterminados, traducciones y funciones de compilación. Tus artículos, `src/site.config.ts`, música, imágenes y páginas propias permanecen en el proyecto.
+
+En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz. Comprueba compatibilidad, guarda los archivos de dependencias, instala una versión exacta y ejecuta doctor. Si falla, restaura los archivos e intenta reinstalar las dependencias anteriores. Publica después con tu proceso habitual; no despliega automáticamente.
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
+
+El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.1` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+
+Si falla la actualización, no publiques `dist/`: restaurar dependencias no restaura la compilación anterior. Corrige el error y ejecuta `npm run doctor` con éxito antes de desplegar. Con pnpm, revisa la compatibilidad y actualiza manualmente con `pnpm add @anglefeint/astro-theme@latest` y `pnpm run doctor`, conservando tu lockfile.

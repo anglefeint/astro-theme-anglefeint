@@ -129,7 +129,7 @@ npm run new-page -- projects --theme matrix
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 之前的项目需要一次重新安装迁移：本版本正式交付后，在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
+0.27 之前的项目需要一次重新安装迁移：在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
 
 自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
 

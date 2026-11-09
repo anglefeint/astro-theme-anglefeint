@@ -62,7 +62,7 @@ export const STARTER_CONTENT_MANAGED_FILES = STARTER_CONTENT_LOCALES.flatMap((lo
   STARTER_CONTENT_SLUGS.map((slug) => `${STARTER_CONTENT_ROOT}/${locale}/${slug}.md`)
 );
 
-// Tutorial corrections belong to the generated starter, not published demo essays.
+// Tutorial overrides feed distribution; keep maintainer-authored demo guides current too.
 Object.assign(
   STARTER_SOURCE_OVERRIDES,
   Object.fromEntries(

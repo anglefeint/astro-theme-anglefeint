@@ -129,7 +129,7 @@ npm を使う新しい integration starter では、ルートで次のコマン�
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。正式公開後に別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
 
 自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
 
