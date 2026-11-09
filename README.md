@@ -522,7 +522,7 @@ Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Esca
 
 Rendering happens at build time with local KaTeX styles/fonts and accessible MathML, without a browser math engine. Long display formulas scroll horizontally. Invalid formulas stop the build with a source/error message. Keep titles and descriptions plain text; formulas are excluded from search indexing. Supported math is KaTeX syntax, not complete LaTeX documents.
 
-Older projects need the one-time starter/configuration migration described in the upgrade guide; updating only the theme package does not wire the Markdown processor.
+In the 0.27+ integration starter, the theme package wires the Markdown processor automatically, including math. Only pre-0.27 copied skeletons require the one-time migration; do not copy processor or adapter implementations into a new project.
 
 ## Article statistics
 

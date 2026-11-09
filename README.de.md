@@ -419,7 +419,7 @@ Mit `theme: { math: { enabled: false } }` in `src/site.config.ts` deaktivieren. 
 
 Die Ausgabe entsteht beim Build mit lokalen Schriften und Stilen sowie zugänglichem MathML, ohne Formel-Engine im Browser. Lange Formeln lassen sich horizontal scrollen. Fehler stoppen den Build mit Quelle und Ursache. Titel und Beschreibungen bleiben Klartext; Formeln werden nicht indexiert. Unterstützt wird die KaTeX-Mathematiksyntax, nicht vollständige LaTeX-Dokumente.
 
-Bestehende Projekte benötigen die einmalige Starter-/Konfigurationsmigration aus der Upgrade-Anleitung; allein das Paketupdate bindet den Markdown-Prozessor nicht ein.
+Im Integration-Starter ab 0.27 verbindet das Theme-Paket den Markdown-Prozessor einschließlich Formeln automatisch. Nur Strukturen vor 0.27 benötigen die einmalige Migration; keine Prozessor- oder Adapterimplementierungen ins neue Projekt kopieren.
 
 ## Artikelstatistik
 
