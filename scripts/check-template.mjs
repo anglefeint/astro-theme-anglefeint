@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { execFile, spawn } from 'node:child_process';
 import {
   mkdtemp,
@@ -52,6 +53,23 @@ const read = (name) => readFile(file(name), 'utf8');
 const config = (value) =>
   `import { defineThemeConfig } from '@anglefeint/astro-theme/config';\nexport { normalizeI18nConfig } from '@anglefeint/astro-theme/config';\nexport { DEFAULT_ABOUT_CONFIG } from '@anglefeint/astro-theme/config';\nexport const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});\n`;
 let passed = false;
+
+async function userFileHashes() {
+  const names = [];
+  for (const folder of ['src', 'public']) {
+    for (const entry of await readdir(file(folder), { recursive: true, withFileTypes: true }))
+      if (entry.isFile()) names.push(path.join(entry.parentPath, entry.name));
+  }
+  names.push(...['.env', 'astro.config.mjs', 'tsconfig.json', 'README.md'].map(file));
+  return Promise.all(
+    names.sort().map(async (name) => [
+      path.relative(project, name),
+      createHash('sha256')
+        .update(await readFile(name))
+        .digest('hex'),
+    ])
+  );
+}
 
 async function command(args, { cwd = project, overrides = {}, reject = false, npm = false } = {}) {
   const label = `${npm ? 'npm' : pm} ${args.join(' ')}`;
@@ -487,6 +505,27 @@ try {
   await mkdir(file('public/music'), { recursive: true });
   await writeFile(file('public/music/tone.wav'), wave);
   await writeFile(file('.env'), 'PUBLIC_SITE_URL=https://acceptance.example\n');
+  if (pm === 'npm') {
+    const before = await userFileHashes();
+    await command(['exec', '--yes', '--', '@anglefeint/astro-theme@latest', 'upgrade'], {
+      npm: true,
+    });
+    assert.deepEqual(
+      await userFileHashes(),
+      before,
+      'Published npx upgrade must preserve personalized source/config/media/docs'
+    );
+    assert.equal(
+      JSON.parse(await read('node_modules/@anglefeint/astro-theme/package.json')).version,
+      version
+    );
+    results.push({
+      check: 'real published npx upgrade on customized remote starter',
+      status: 'passed',
+      version,
+      preservedFiles: before.length,
+    });
+  }
   await run('build');
   const home = await read('dist/en/index.html');
   const machineIndex = await read('dist/llms.txt');
