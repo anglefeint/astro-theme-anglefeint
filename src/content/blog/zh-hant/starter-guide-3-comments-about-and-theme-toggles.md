@@ -6,7 +6,7 @@ title: 使用指南 3：選用功能
 subtitle: 音樂、留言、關於頁、分頁與視覺設定。
 description: 音樂、留言、關於頁、分頁與視覺設定。
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -73,7 +73,9 @@ theme: {
 
 改成 false 可停用對應功能。enableRedQueen 只控制文章監視器；文章的 toc: true 可覆寫全站設定；socialImage 不會停用手動 ogImage。各頁氛圍由版型決定，沒有全站切換四種主題的單一開關。
 
-homeLatestCount 控制最新文章數，blogPageSize 控制列表與標籤分頁。pagination.windowSize 限於 5–21。jump.enabled 啟用且總頁數超過 showJumpThreshold（預設 12）才顯示跳頁輸入框；jump.enterToGo 控制 Enter。style.mode 支援 fixed、sequential、random；random 對同一頁穩定，不會每次重新整理都變。style.enabled: false 保留基本分頁。
+homeLatestCount 控制最新文章數，blogPageSize 控制列表與標籤分頁。pagination.windowSize 限於 5–21。jump.enabled 啟用且總頁數超過 showJumpThreshold（預設 12）才顯示跳頁輸入框；jump.enterToGo 控制 Enter。
+
+樣式模式有 `fixed`、`sequential`、`random`。啟用 JavaScript 時，預設 `random` 在每次頁面載入時重新選擇分頁容器與按鈕顏色，結果可能重複。沒有 JavaScript 時，建置的 HTML 保留穩定的容器樣式與靜態按鈕顏色。`style.enabled: false` 使用基本變體，不會關閉分頁。
 
 ## 更多語言與首頁網址
 
@@ -122,14 +124,13 @@ $$
 
 公式於建置時渲染，樣式與字型隨網站提供，保留可存取的 MathML，不載入瀏覽器數學引擎。長公式可橫向捲動。錯誤公式會中止建置並提示來源與原因。標題與摘要維持純文字；搜尋索引排除公式。支援 KaTeX 數學語法，並非完整 LaTeX 文件。
 
-舊專案需要依升級指南完成一次 starter／設定遷移，只更新主題套件不會接入 Markdown 處理器。
+0.27+ 整合版 starter 由主題套件自動接入 Markdown 處理器與數學支援。只有 0.27 以前的舊骨架需依升級指南完成一次遷移；新專案無需複製處理器或轉接器實作。
 
 $C_{saved}$
 
 $$
 \frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
 $$
-
 
 ---
 
@@ -143,6 +144,8 @@ $$
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 以前的專案需一次重新安裝遷移：正式交付後在新目錄建立範本，複製文章與資源，將個人設定合併至新的 site config。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔。保留 slug、語言路徑、音樂與圖片 URL、網域及部署設定。
+0.27 以前的專案需一次重新安裝遷移：在新目錄建立範本，複製文章與資源，將個人設定合併至新的 site config。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔。保留 slug、語言路徑、音樂與圖片 URL、網域及部署設定。
 
 自動升級目前僅支援 npm，遇到 pnpm/yarn/bun 鎖檔會停止。`--check` 僅檢查，`--to 0.27.1` 指定版本。請參閱[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)與 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
+
+升級失敗時不要部署 `dist/`：相依套件回復不會還原舊建置產物。修正錯誤並成功執行 `npm run doctor` 後再部署。pnpm 使用者先確認版本相容，再以 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手動更新，保留自己的鎖定檔。

@@ -4,7 +4,7 @@ title: '利用ガイド 3：必要な機能を有効化・カスタマイズす�
 subtitle: '音楽、コメント、About、ページ分割、機能スイッチ、多言語を必要に応じて設定します。'
 description: '音楽、コメント、About、ページ分割、機能スイッチ、多言語を必要に応じて設定します。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 | 本文画像プレビュー・コードコピー             | 自動、設定不要 |
 | About・記事の Red Queen モニター             | 有効           |
 | 音楽・Giscus コメント                        | 無効           |
-| トップの最新記事数 / ブログ 1 ページの記事数 | 3 / 10          |
+| トップの最新記事数 / ブログ 1 ページの記事数 | 3 / 10         |
 
 ## 1. 音楽プレーヤーを有効にする
 
@@ -137,7 +137,7 @@ theme: {
 
 `windowSize` はページ番号の表示範囲で、コードでは 5～21 に制限されます。記事数ではありません。ジャンプ入力欄は `jump.enabled` が真で、総ページ数が `showJumpThreshold` を超える場合のみ表示されます。既定では 12 ページ超です。`enterToGo` は Enter での移動を制御します。
 
-スタイルは `fixed`、`sequential`、`random` があります。例では 1 番に固定します。既定の `random` は言語・パス・ページ情報などから安定した値を選び、再読み込みのたびに変わるものではありません。`style.enabled: false` は基本の外観を使うだけで、ページ分割を無効にはしません。記事が増えたら一覧下部で確認してください。
+スタイルは `fixed`、`sequential`、`random` です。JavaScript 有効時、既定の `random` はページの読み込みごとにコンテナーと各ボタンの色を選び直します。同じ結果が続く場合もあります。JavaScript 無効時は生成 HTML の安定したコンテナー表示と静的なボタン色を使います。`style.enabled: false` は基本表示に戻し、ページ分割は無効にしません。
 
 ## 5. 不要な拡張機能を無効にする
 
@@ -227,7 +227,7 @@ theme: {
 
 自動共有画像には、コードレイン・ターミナル・ネオンネットワークの同梱背景を使い、サイト名・タイトル・著者は自分の情報を表示します。右下の小さな `Theme by Anglefeint` は `theme.footer.showCredits`（既定 `true`）に従います。`false` にするとフッターと画像のクレジットを非表示にします。変更後は再ビルド・再デプロイしてください。独自の `ogImage` は変更しません。背景はオフラインで使え、ブラウザー JavaScript は増えません。
 
-公開デモは専用のサイト名、ドメイン、翻訳済みの紹介文を使います。新しい starter は汎用の既定値を使い、ユーザーは引き続き `src/site.config.ts` だけで設定できます。古い starter の更新では、アップグレードガイドに従って対応する設定ファイルも移行してください。npm パッケージだけの更新では、古いアダプターにこの設定は追加されません。
+0.27 以降の統合 starter では、標準ページ、設定の既定値、ビルド機能をテーマパッケージが提供します。個人設定は `src/site.config.ts` に残ります。テーマ更新は記事、音楽、画像、独自ページを書き換えません。0.27 より前の構成は[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)に従って一度移行します。
 
 ## このガイドの構成
 
@@ -251,7 +251,7 @@ $$
 
 ビルド時にレンダリングし、ローカルのスタイル・フォントとアクセシブルな MathML を使用します。ブラウザー用数式エンジンは不要です。長い独立数式は横スクロールできます。不正な数式はファイルと原因を示してビルドを停止します。タイトルと概要はプレーンテキストにし、数式は検索対象から除外されます。KaTeX の数式構文に対応し、完全な LaTeX 文書には対応しません。
 
-既存サイトはアップグレードガイドに従って starter と設定を一度移行してください。パッケージ更新だけでは処理器は接続されません。
+0.27 以降の統合 starter では、テーマパッケージが数式対応を含む Markdown 処理器を自動で接続します。一度の移行が必要なのは 0.27 より前の構成だけです。新しいプロジェクトへ処理器やアダプター実装をコピーしないでください。
 
 $C_{saved}$
 
@@ -271,6 +271,8 @@ npm を使う新しい integration starter では、ルートで次のコマン�
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。正式公開後に別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
 
 自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
+
+更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。

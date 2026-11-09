@@ -129,7 +129,7 @@ npm run new-page -- projects --theme matrix
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 之前的项目需要一次重新安装迁移：本版本正式交付后，在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
+0.27 之前的项目需要一次重新安装迁移：在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
 
 自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
 
@@ -515,7 +515,7 @@ $$
 
 公式在构建时渲染，样式和字体随站点提供，保留可访问的 MathML，不加载浏览器数学引擎。长独立公式可横向滚动。错误公式会中止构建并提示来源与原因。标题和摘要保持纯文本；搜索索引排除公式。支持 KaTeX 数学语法，不是完整 LaTeX 文档。
 
-老项目需要按升级指南完成一次 starter/配置迁移，仅更新主题包不会接入 Markdown 处理器。
+0.27+ 集成版 starter 由主题包自动接入 Markdown 处理器和数学支持。只有 0.27 之前的旧骨架需要按升级指南完成一次迁移；新项目无需复制处理器或适配器实现。
 
 ## 文章统计
 

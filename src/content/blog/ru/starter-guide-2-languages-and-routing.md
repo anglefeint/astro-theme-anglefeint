@@ -6,7 +6,7 @@ title: 'Руководство 2: Статьи и организация кон�
 subtitle: 'Изображения, теги, оглавление, поиск и публикация ссылок.'
 description: 'Изображения, теги, оглавление, поиск и публикация ссылок.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
@@ -34,7 +34,9 @@ tags: ['astro', 'notes']
 
 Обязательны title, description и pubDate. subtitle, updatedDate и author необязательны; по умолчанию используется автор сайта. Сортировка идёт по pubDate. Фильтра черновиков и отложенной публикации нет: draft: true и будущие даты ничего не скрывают. Храните незавершённые тексты вне src/content/blog/.
 
-heroImage: ./cover.jpg берёт изображение рядом со статьёй. При наличии файлов в src/assets/blog/default-covers/ команда выбирает постоянную обложку. Загрузки изображений из сети нет. Время чтения и показатели приблизительные. readMinutes, wordCount, tokenCount, aiLatencyMs и aiConfidence позволяют задать свои значения, не подключая сервис ИИ.
+После существенной правки задайте реальную дату в `updatedDate`. Sitemap использует `updatedDate`, иначе `pubDate`, а не новую дату при каждой сборке. Дата не гарантирует индексацию.
+
+heroImage: ./cover.jpg берёт изображение рядом со статьёй. При наличии файлов в src/assets/blog/default-covers/ команда случайно выбирает обложку. Загрузки изображений из сети нет. Время чтения и показатели приблизительные. readMinutes, wordCount, tokenCount, aiLatencyMs и aiConfidence позволяют задать свои значения, не подключая сервис ИИ.
 
 ## Оглавление и теги
 
@@ -80,6 +82,8 @@ npm run new-page -- projects --theme cyber создаёт src/pages/[lang]/proje
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Проектам до 0.27 нужна однократная миграция в новый starter. После публикации создайте его в отдельной папке, перенесите статьи и ресурсы и объедините личные настройки с новым site config. Не копируйте старые стандартные маршруты, adapters и файлы defaults/schema/runtime. Сохраните slug, языковые пути, URL музыки/изображений и настройки хостинга.
+Проектам до 0.27 нужна однократная миграция в новый starter. Создайте его в отдельной папке, перенесите статьи и ресурсы и объедините личные настройки с новым site config. Не копируйте старые стандартные маршруты, adapters и файлы defaults/schema/runtime. Сохраните slug, языковые пути, URL музыки/изображений и настройки хостинга.
 
 Автообновление поддерживает только npm и отклоняет lock-файлы pnpm/yarn/bun. `--check` проверяет без записи, `--to 0.27.1` выбирает версию. См. [руководство](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) и [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+
+При ошибке обновления не публикуйте `dist/`: откат зависимостей не восстанавливает прежнюю сборку. Устраните ошибку и успешно выполните `npm run doctor` перед публикацией. С pnpm сначала проверьте совместимость релиза, затем обновите вручную через `pnpm add @anglefeint/astro-theme@latest` и `pnpm run doctor`, сохраняя свой lock-файл.

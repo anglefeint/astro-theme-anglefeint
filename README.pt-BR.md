@@ -103,7 +103,7 @@ No novo starter de integração com npm, execute na raiz o comando abaixo. Ele v
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Após a publicação, crie-o em outra pasta, copie artigos e recursos e combine os valores pessoais no novo site config. Não copie rotas padrão antigas, adapters ou helpers defaults/schema/runtime. Preserve slugs, caminhos de idiomas, URLs de músicas/imagens e configurações de hospedagem.
+Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Crie-o em outra pasta, copie artigos e recursos e combine os valores pessoais no novo site config. Não copie rotas padrão antigas, adapters ou helpers defaults/schema/runtime. Preserve slugs, caminhos de idiomas, URLs de músicas/imagens e configurações de hospedagem.
 
 O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. `--check` verifica sem escrever; `--to 0.27.1` escolhe a versão. Veja o [guia](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) e [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
@@ -347,7 +347,9 @@ theme: {
 
 Use false para desativar um recurso. enableRedQueen controla somente o monitor do artigo. toc: true no artigo pode prevalecer sobre a configuração global. socialImage desativa geração, mas mantém ogImage manual. Os ambientes são definidos pelos layouts, não por um seletor global.
 
-homeLatestCount controla recentes; blogPageSize controla listas e tags. pagination.windowSize varia de 5 a 21. A entrada de salto aparece quando jump.enabled é true e o total excede showJumpThreshold, inicialmente 12. jump.enterToGo controla Enter. style.mode aceita fixed, sequential ou random; random é estável por página, não muda a cada atualização. style.enabled: false mantém paginação básica.
+homeLatestCount controla recentes; blogPageSize controla listas e tags. pagination.windowSize varia de 5 a 21. A entrada de salto aparece quando jump.enabled é true e o total excede showJumpThreshold, inicialmente 12. jump.enterToGo controla Enter.
+
+Os modos são `fixed`, `sequential` e `random`. Com JavaScript, o padrão `random` escolhe novamente as cores do contêiner e dos botões a cada carregamento; os resultados podem se repetir. Sem JavaScript, o HTML gerado mantém uma variante estável do contêiner e cores estáticas nos botões. `style.enabled: false` usa a variante básica sem desativar a paginação.
 
 ### Mais idiomas e endereço inicial
 
@@ -417,7 +419,7 @@ Desative com `theme: { math: { enabled: false } }` em `src/site.config.ts`. Esca
 
 A renderização ocorre na compilação, com estilos e fontes locais e MathML acessível, sem motor matemático no navegador. Fórmulas longas têm rolagem horizontal. Erros interrompem a compilação indicando origem e causa. Mantenha títulos e descrições em texto simples; fórmulas ficam fora da busca. O suporte é à sintaxe matemática do KaTeX, não a documentos LaTeX completos.
 
-Projetos antigos precisam da migração inicial do starter e da configuração descrita no guia de atualização; atualizar apenas o pacote não conecta o processador Markdown.
+No starter integrado 0.27+, o pacote conecta automaticamente o processador Markdown e as fórmulas. Somente estruturas anteriores a 0.27 precisam da migração inicial; não copie implementações de processadores nem adapters para o projeto novo.
 
 ## Estatísticas dos artigos
 

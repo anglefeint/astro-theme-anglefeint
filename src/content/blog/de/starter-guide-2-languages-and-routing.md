@@ -6,7 +6,7 @@ title: 'Anleitung 2: Inhalte schreiben und ordnen'
 subtitle: 'Beiträge, Bilder, Tags, Inhaltsverzeichnis und Suche.'
 description: 'Beiträge, Bilder, Tags, Inhaltsverzeichnis und Suche.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
@@ -34,7 +34,9 @@ tags: ['astro', 'notes']
 
 title, description und pubDate sind Pflicht. subtitle, updatedDate und author sind optional; standardmäßig gilt der Website-Autor. Beiträge werden nach pubDate sortiert. Es gibt keinen Entwurfs- oder Veröffentlichungszeitfilter: draft: true und zukünftige Daten verstecken nichts. Unfertige Texte außerhalb von src/content/blog/ aufbewahren.
 
-heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Bei vorhandenen Dateien in src/assets/blog/default-covers/ wählt der Befehl ein stabiles Titelbild. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
+Nach einer inhaltlichen Änderung `updatedDate` auf das tatsächliche Aktualisierungsdatum setzen. Die Sitemap nutzt `updatedDate`, ersatzweise `pubDate`, nicht bei jedem Build ein neues Datum. Das garantiert keine Indexierung.
+
+heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Bei vorhandenen Dateien in src/assets/blog/default-covers/ wählt der Befehl zufällig ein Titelbild. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
 
 ## Inhaltsverzeichnis und Tags
 
@@ -80,6 +82,8 @@ Im neuen Integration-Starter mit npm führe diesen Befehl im Projektordner aus. 
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Projekte vor 0.27 benötigen einmalig einen frischen Starter. Erstelle ihn nach Veröffentlichung in einem anderen Ordner, übertrage Artikel/Ressourcen und persönliche Werte in die neue Konfiguration. Alte Standardrouten, Adapter und defaults/schema/runtime-Dateien nicht kopieren. Slugs, Sprachpfade, Musik-/Bild-URLs und Hosting-Einstellungen erhalten.
+Projekte vor 0.27 benötigen einmalig einen frischen Starter. Erstelle ihn in einem anderen Ordner, übertrage Artikel/Ressourcen und persönliche Werte in die neue Konfiguration. Alte Standardrouten, Adapter und defaults/schema/runtime-Dateien nicht kopieren. Slugs, Sprachpfade, Musik-/Bild-URLs und Hosting-Einstellungen erhalten.
 
 Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien werden abgelehnt. `--check` prüft ohne Änderungen; `--to 0.27.1` wählt die Version. Siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) und [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+
+Bei einem fehlgeschlagenen Upgrade `dist/` nicht veröffentlichen: Die Wiederherstellung der Abhängigkeiten stellt keine alten Build-Dateien wieder her. Fehler beheben und `npm run doctor` erfolgreich ausführen. Mit pnpm zuerst die Kompatibilität prüfen, dann mit `pnpm add @anglefeint/astro-theme@latest` und `pnpm run doctor` manuell aktualisieren; die eigene Lockdatei behalten.

@@ -129,7 +129,7 @@ npm을 사용하는 새 integration starter의 루트에서 아래 명령을 실
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 정식 배포 후 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
+0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
 
 자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
 
@@ -509,7 +509,7 @@ $$
 
 빌드 시 렌더링하며 로컬 스타일·글꼴과 접근 가능한 MathML을 사용합니다. 브라우저 수식 엔진은 필요 없습니다. 긴 독립 수식은 가로로 스크롤합니다. 잘못된 수식은 출처와 원인을 표시하고 빌드를 중단합니다. 제목·요약은 일반 텍스트로 작성하며 수식은 검색 색인에서 제외됩니다. 완전한 LaTeX 문서가 아닌 KaTeX 수학 문법을 지원합니다.
 
-기존 프로젝트는 업그레이드 안내에 따라 starter와 설정을 한 번 이전해야 합니다. 패키지만 업데이트하면 처리기가 연결되지 않습니다.
+0.27+ 통합 starter에서는 테마 패키지가 수학 지원을 포함한 Markdown 처리기를 자동으로 연결합니다. 한 번의 이전이 필요한 것은 0.27 이전 구조뿐입니다. 새 프로젝트에 처리기나 어댑터 구현을 복사하지 마세요.
 
 ## 글 통계
 

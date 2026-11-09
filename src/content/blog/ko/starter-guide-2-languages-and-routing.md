@@ -4,7 +4,7 @@ title: '사용 가이드 2: 글 작성과 콘텐츠 관리'
 subtitle: '글 작성, 표지와 태그, 목차, 이미지 미리보기, 코드 복사, 검색, 공유 이미지를 설명합니다.'
 description: '글 작성, 표지와 태그, 목차, 이미지 미리보기, 코드 복사, 검색, 공유 이미지를 설명합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -44,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 `title`, `description`, `pubDate`는 필수입니다. `subtitle`, `updatedDate`, `author`는 선택이며 작성자를 생략하면 사이트 작성자를 사용합니다. 목록은 `pubDate` 최신순입니다. 현재 초안이나 예약 발행 필터는 없습니다. `draft: true`나 미래 날짜로 숨길 수 없으므로 미완성 글은 콘텐츠 디렉터리 밖에 보관하세요.
+
+글을 실질적으로 수정하면 `updatedDate`에 실제 수정 날짜를 넣으세요. sitemap은 `updatedDate`, 없으면 `pubDate`를 사용하며 빌드할 때마다 새 날짜를 만들지 않습니다. 날짜가 검색 엔진 색인을 보장하지는 않습니다.
 
 표지는 글 옆에 이미지를 놓고 `heroImage: ./cover.jpg`로 지정하거나 생성 명령이 배정한 로컬 경로를 유지합니다. 자동 배정은 `src/assets/blog/default-covers/`에 이미지가 있을 때만 작동하며 이미지를 다운로드하지 않습니다. `heroImage`는 생략할 수 있습니다. 읽기 시간과 글자 수 등의 지표는 자동 계산하므로 일반 글에서는 직접 입력할 필요가 없습니다.
 
@@ -159,6 +161,8 @@ npm을 사용하는 새 integration starter의 루트에서 아래 명령을 실
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 정식 배포 후 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
+0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
 
 자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
+
+업그레이드 실패 시 `dist/`를 배포하지 마세요. 의존성 복원은 이전 빌드 결과물을 복원하지 않습니다. 오류를 해결하고 `npm run doctor`가 성공한 뒤 배포하세요. pnpm 사용자는 릴리스 호환성을 확인하고 잠금 파일을 유지한 채 `pnpm add @anglefeint/astro-theme@latest`와 `pnpm run doctor`로 수동 업데이트하세요.

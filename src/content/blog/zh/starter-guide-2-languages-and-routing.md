@@ -4,7 +4,7 @@ title: '使用指南 2：写文章与管理内容'
 subtitle: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 description: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -44,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 必填项是 `title`、`description`、`pubDate`。可选 `subtitle`、`updatedDate`、`author`；没有写 `author` 时使用站点作者。列表按 `pubDate` 从新到旧排序。当前没有草稿或定时发布过滤：不要靠 `draft: true` 或未来日期隐藏文章，未完成内容先放在内容目录之外。
+
+实质修改文章后，将 `updatedDate` 设为真实更新日期。sitemap 优先使用 `updatedDate`，未填写时使用 `pubDate`，不会在每次构建时制造新日期；日期不保证搜索引擎收录。
 
 封面用 `heroImage: ./cover.jpg`，文件放在文章旁边；也可以保留新建命令分配的本地封面路径。命令只在 `src/assets/blog/default-covers/` 有图片时自动分配封面，不会下载图片。`heroImage` 可省略。阅读时长和字数等指标已有自动计算，普通文章不用手工填写。
 
@@ -159,6 +161,8 @@ npm run new-page -- projects --theme cyber
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 之前的项目需要一次重新安装迁移：本版本正式交付后，在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
+0.27 之前的项目需要一次重新安装迁移：在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
 
 自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
+
+升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。

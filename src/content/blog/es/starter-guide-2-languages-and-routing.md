@@ -4,7 +4,7 @@ title: 'Guía 2: Escribe y organiza el contenido'
 subtitle: 'Crea artículos y utiliza portadas, etiquetas, índice, imágenes ampliadas, copia de código, búsqueda e imágenes para compartir.'
 description: 'Crea artículos y utiliza portadas, etiquetas, índice, imágenes ampliadas, copia de código, búsqueda e imágenes para compartir.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -44,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 `title`, `description` y `pubDate` son obligatorios. `subtitle`, `updatedDate` y `author` son opcionales; si omites el autor se utiliza el del sitio. Las listas se ordenan por `pubDate`, del más reciente al más antiguo. Actualmente no hay filtro de borradores ni publicación programada: ni `draft: true` ni una fecha futura ocultan el artículo. Guarda los textos sin terminar fuera del directorio de contenido.
+
+Tras una modificación sustancial, indica la fecha real en `updatedDate`. El sitemap usa `updatedDate` o, si falta, `pubDate`; no inventa una fecha en cada build. Las fechas no garantizan la indexación.
 
 Para la portada, usa `heroImage: ./cover.jpg` y coloca el archivo junto al artículo, o conserva la ruta local asignada por el comando de creación. La asignación automática solo ocurre si hay imágenes en `src/assets/blog/default-covers/`; no descarga imágenes. `heroImage` es opcional. El tiempo de lectura y otras métricas del contenido se calculan automáticamente, por lo que normalmente no necesitan valores manuales.
 
@@ -159,6 +161,8 @@ En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Tras la publicación, créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
+Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
 
 El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.1` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+
+Si falla la actualización, no publiques `dist/`: restaurar dependencias no restaura la compilación anterior. Corrige el error y ejecuta `npm run doctor` con éxito antes de desplegar. Con pnpm, revisa la compatibilidad y actualiza manualmente con `pnpm add @anglefeint/astro-theme@latest` y `pnpm run doctor`, conservando tu lockfile.

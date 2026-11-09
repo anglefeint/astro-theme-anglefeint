@@ -6,7 +6,7 @@ title: 'Anleitung 3: Optionale Funktionen'
 subtitle: 'Musik, Kommentare, Profil, Seitennavigation und Darstellung.'
 description: 'Musik, Kommentare, Profil, Seitennavigation und Darstellung.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 ---
 
@@ -73,7 +73,9 @@ theme: {
 
 false deaktiviert die jeweilige Funktion. enableRedQueen steuert nur den Artikelmonitor. toc: true im Beitrag überschreibt den globalen Standard. socialImage lässt manuelles ogImage weiterhin zu. Atmosphären werden durch Layouts festgelegt, nicht durch einen globalen Schalter.
 
-homeLatestCount steuert neue Beiträge, blogPageSize Listen und Tags. pagination.windowSize liegt zwischen 5 und 21. Der Seitensprung erscheint bei jump.enabled und mehr Seiten als showJumpThreshold, anfangs 12. jump.enterToGo steuert Enter. style.mode unterstützt fixed, sequential und random. random bleibt je Seite stabil. style.enabled: false behält die einfache Seitennavigation.
+homeLatestCount steuert neue Beiträge, blogPageSize Listen und Tags. pagination.windowSize liegt zwischen 5 und 21. Der Seitensprung erscheint bei jump.enabled und mehr Seiten als showJumpThreshold, anfangs 12. jump.enterToGo steuert Enter.
+
+Die Modi sind `fixed`, `sequential` und `random`. Mit JavaScript wählt der Standard `random` bei jedem Laden die Farben von Container und Schaltflächen neu; Ergebnisse können sich wiederholen. Ohne JavaScript bleiben die stabile Container-Variante und statische Schaltflächenfarben aus dem erzeugten HTML. `style.enabled: false` nutzt die Basisvariante, ohne die Seitennavigation abzuschalten.
 
 ## Weitere Sprachen und Startadresse
 
@@ -122,7 +124,7 @@ Mit `theme: { math: { enabled: false } }` in `src/site.config.ts` deaktivieren. 
 
 Die Ausgabe entsteht beim Build mit lokalen Schriften und Stilen sowie zugänglichem MathML, ohne Formel-Engine im Browser. Lange Formeln lassen sich horizontal scrollen. Fehler stoppen den Build mit Quelle und Ursache. Titel und Beschreibungen bleiben Klartext; Formeln werden nicht indexiert. Unterstützt wird die KaTeX-Mathematiksyntax, nicht vollständige LaTeX-Dokumente.
 
-Bestehende Projekte benötigen die einmalige Starter-/Konfigurationsmigration aus der Upgrade-Anleitung; allein das Paketupdate bindet den Markdown-Prozessor nicht ein.
+Im Integration-Starter ab 0.27 verbindet das Theme-Paket den Markdown-Prozessor einschließlich Formeln automatisch. Nur Strukturen vor 0.27 benötigen die einmalige Migration; keine Prozessor- oder Adapterimplementierungen ins neue Projekt kopieren.
 
 $C_{saved}$
 
@@ -142,6 +144,8 @@ Im neuen Integration-Starter mit npm führe diesen Befehl im Projektordner aus. 
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Projekte vor 0.27 benötigen einmalig einen frischen Starter. Erstelle ihn nach Veröffentlichung in einem anderen Ordner, übertrage Artikel/Ressourcen und persönliche Werte in die neue Konfiguration. Alte Standardrouten, Adapter und defaults/schema/runtime-Dateien nicht kopieren. Slugs, Sprachpfade, Musik-/Bild-URLs und Hosting-Einstellungen erhalten.
+Projekte vor 0.27 benötigen einmalig einen frischen Starter. Erstelle ihn in einem anderen Ordner, übertrage Artikel/Ressourcen und persönliche Werte in die neue Konfiguration. Alte Standardrouten, Adapter und defaults/schema/runtime-Dateien nicht kopieren. Slugs, Sprachpfade, Musik-/Bild-URLs und Hosting-Einstellungen erhalten.
 
 Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien werden abgelehnt. `--check` prüft ohne Änderungen; `--to 0.27.1` wählt die Version. Siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) und [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+
+Bei einem fehlgeschlagenen Upgrade `dist/` nicht veröffentlichen: Die Wiederherstellung der Abhängigkeiten stellt keine alten Build-Dateien wieder her. Fehler beheben und `npm run doctor` erfolgreich ausführen. Mit pnpm zuerst die Kompatibilität prüfen, dann mit `pnpm add @anglefeint/astro-theme@latest` und `pnpm run doctor` manuell aktualisieren; die eigene Lockdatei behalten.

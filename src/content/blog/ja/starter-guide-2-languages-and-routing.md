@@ -4,7 +4,7 @@ title: '利用ガイド 2：記事を書く・コンテンツを整理する'
 subtitle: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 description: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-09'
+updatedDate: '2026-11-10'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -44,6 +44,8 @@ tags: ['astro', 'notes']
 ```
 
 必須は `title`、`description`、`pubDate` です。`subtitle`、`updatedDate`、`author` は任意で、著者を省略するとサイトの著者が使われます。一覧は `pubDate` の新しい順です。現在、下書きや予約公開のフィルターはありません。`draft: true` や未来の日付では非公開にならないため、未完成の記事はコンテンツディレクトリの外に置いてください。
+
+記事を実質的に更新したら `updatedDate` に実際の更新日を設定します。sitemap は `updatedDate`、未指定なら `pubDate` を使い、ビルドのたびに新しい日付を作りません。検索エンジンへの登録を保証するものではありません。
 
 カバーは記事の隣に画像を置いて `heroImage: ./cover.jpg` と指定するか、作成コマンドが割り当てたローカルのパスを使います。`src/assets/blog/default-covers/` に画像がある場合のみ自動割り当てされ、画像のダウンロードは行いません。`heroImage` は省略できます。読了時間や文字数などは自動計算され、通常の記事で手入力する必要はありません。
 
@@ -159,6 +161,8 @@ npm を使う新しい integration starter では、ルートで次のコマン�
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。正式公開後に別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
 
 自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
+
+更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。

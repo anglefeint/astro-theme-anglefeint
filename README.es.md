@@ -129,7 +129,7 @@ En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Tras la publicación, créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
+Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
 
 El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.1` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
@@ -509,7 +509,7 @@ Desactiva con `theme: { math: { enabled: false } }` en `src/site.config.ts`. Esc
 
 Se renderiza durante la compilación, con estilos y fuentes locales y MathML accesible, sin motor matemático en el navegador. Las fórmulas largas tienen desplazamiento horizontal. Los errores detienen la compilación indicando origen y causa. Mantén títulos y descripciones en texto plano; las fórmulas se excluyen de la búsqueda. Se admite la sintaxis matemática de KaTeX, no documentos LaTeX completos.
 
-Los proyectos anteriores necesitan la migración inicial del starter y la configuración explicada en la guía de actualización; actualizar solo el paquete no conecta el procesador Markdown.
+En el starter integrado 0.27+, el paquete conecta automáticamente el procesador Markdown y las fórmulas. Solo las estructuras anteriores a 0.27 necesitan la migración inicial; no copies implementaciones de procesadores ni adapters al proyecto nuevo.
 
 ## Estadísticas del artículo
 

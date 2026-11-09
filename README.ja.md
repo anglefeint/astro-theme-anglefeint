@@ -129,7 +129,7 @@ npm を使う新しい integration starter では、ルートで次のコマン�
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。正式公開後に別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
 
 自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
 
@@ -509,7 +509,7 @@ $$
 
 ビルド時にレンダリングし、ローカルのスタイル・フォントとアクセシブルな MathML を使用します。ブラウザー用数式エンジンは不要です。長い独立数式は横スクロールできます。不正な数式はファイルと原因を示してビルドを停止します。タイトルと概要はプレーンテキストにし、数式は検索対象から除外されます。KaTeX の数式構文に対応し、完全な LaTeX 文書には対応しません。
 
-既存サイトはアップグレードガイドに従って starter と設定を一度移行してください。パッケージ更新だけでは処理器は接続されません。
+0.27 以降の統合 starter では、テーマパッケージが数式対応を含む Markdown 処理器を自動で接続します。一度の移行が必要なのは 0.27 より前の構成だけです。新しいプロジェクトへ処理器やアダプター実装をコピーしないでください。
 
 ## 記事の統計
 
