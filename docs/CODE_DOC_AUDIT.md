@@ -12,6 +12,12 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-09 最终发布验收
+
+npm 0.27.1 已发布并核验全部 307 文件、gitHead 和 SHA-512，0.27.0 保留历史事实且由补丁替代。最终 starter c2e1d046ec4155536a2acc72a108caabad754a20 通过官方同步与零漂移核验，运行依赖严格只有 Astro 和主题包。最终 Linux Actions 42643359441 的 npm / pnpm 两项均成功；主库 151 单测、完整 139 浏览器场景、独立安装 14 构建矩阵及审计通过。Windows 最终公开新装 npm/pnpm 通过，真实已发布 0.27.0→0.27.1 升级保留 133 文件，旧骨架拒绝升级保留 174 文件，未来 Code Lab 跳版本模拟保留 85 文件。原站 204 文件恢复 checkout 引起的纯换行差异后逐字节一致。
+
+九语言线上全文章、归档、About、全文导出、OG、sitemap 真实日期及终端 JSON noindex 均核验通过。未登录 Cloudflare，不能声称直接查看了生产分支设置或部署 SHA；记录的是真实 HTTP 内容与构建状态。详见 [0.27.1 最终交付账本](releases/0.27.1.md)。本轮只更新维护／发布证据文档，九语言 README 与 27 篇 starter 教程无需重复改变已验证行为。
+
 ## 2026-11-09 官方 starter 同步一致性修正
 
 最终 sync-starter:check 发现两类维护工具差异：旧 syncStarterRuntimeDeps 在薄 package 工厂之后重新添加主库的五项运行依赖；git show 对缺失的 [lang] 路径可能成功返回空内容，被误判成仍存在的旧路由。公开 starter 实际没有旧标准路由，已通过构建；根依赖则确有冗余。移除旧依赖复制阶段，改用字面 git cat-file blob 读取并新增两组回归测试；公开模板验收额外断言运行依赖只有 Astro 与主题包。工具修正不改变已发布 0.27.1 包，必须重新走官方 starter 同步并通过最终零漂移核验。先前使用旧工具通过的模拟安装不能替代最终真实分发验证。

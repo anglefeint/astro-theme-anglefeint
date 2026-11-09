@@ -31,7 +31,7 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 Latest feature release entry: [0.27.0](./0.27.0.md), the breaking integration starter, preserved user ownership and one-command npm upgrades. See its delivery status and acceptance record.
 
-Latest patch entry: [0.27.1](./0.27.1.md), package-local social-image dependency resolution for pnpm. See its actual delivery status and validation record.
+Recommended published patch: [0.27.1](./0.27.1.md), package-local social-image dependency resolution for pnpm. See its actual delivery status and validation record.
 
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.
