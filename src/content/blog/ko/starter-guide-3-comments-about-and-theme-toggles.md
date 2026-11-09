@@ -273,4 +273,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 정식 배포 후 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
 
-자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.0`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
+자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
