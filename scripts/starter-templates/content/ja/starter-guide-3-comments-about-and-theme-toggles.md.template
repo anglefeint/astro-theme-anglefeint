@@ -4,7 +4,7 @@ title: '利用ガイド 3：必要な機能を有効化・カスタマイズす�
 subtitle: '音楽、コメント、About、ページ分割、機能スイッチ、多言語を必要に応じて設定します。'
 description: '音楽、コメント、About、ページ分割、機能スイッチ、多言語を必要に応じて設定します。'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 | 本文画像プレビュー・コードコピー             | 自動、設定不要 |
 | About・記事の Red Queen モニター             | 有効           |
 | 音楽・Giscus コメント                        | 無効           |
-| トップの最新記事数 / ブログ 1 ページの記事数 | 3 / 9          |
+| トップの最新記事数 / ブログ 1 ページの記事数 | 3 / 10          |
 
 ## 1. 音楽プレーヤーを有効にする
 
@@ -212,8 +212,6 @@ export const THEME_CONFIG = defineThemeConfig({
 
 `showCredits: true` で再表示できます。非表示にすると両方のリンクが削除され、著作権表示は残ります。任意の `site.tagline` は、このスイッチとは独立したプレーンテキストです。既定値は空です。旧既定値の `Built with Astro.` は重複を避けるため組み込みクレジットとして扱います。`All rights reserved` は追加しません。
 
-これらのホーム/フッター設定は未公開のローカル変更で、npm 0.14.0 と公開 starter では利用できません。対応する starter とパッケージの更新が必要です。[移行予定](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)を参照してください。
-
 ホームのスイッチは `src/site.config.ts` の `theme.home` にあります。`showInitialize` は Initialize/done、`showFollow` は Wake Up/Follow、`showTrace` は右下の状態表示です。すべて既定は `true`、`false` で個別に非表示にできます。
 
 任意の `theme.footer.links` はフッターに独立した行を追加します。各項目は `label` と `href` を持ち、リンク間に中点を表示します。省略または空配列で非表示になります。ラベルは各言語でも設定した原文を保ち、ソーシャルアイコンや `showCredits` とは独立しています。
@@ -275,4 +273,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。正式公開後に別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
 
-自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.0` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。0.27.0 はローカル準備中で未公開です。
+自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.0` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。

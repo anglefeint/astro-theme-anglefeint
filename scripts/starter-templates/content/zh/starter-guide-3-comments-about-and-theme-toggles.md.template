@@ -4,7 +4,7 @@ title: '使用指南 3：按需开启与定制功能'
 subtitle: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 description: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 | 正文图片预览、代码复制           | 自动生效，无需配置 |
 | About、Red Queen 文章监视器      | 开启               |
 | 音乐、Giscus 评论                | 关闭               |
-| 首页最新文章 / 博客每页文章      | 3 / 9              |
+| 首页最新文章 / 博客每页文章      | 3 / 10              |
 
 ## 1. 开启音乐播放器
 
@@ -212,8 +212,6 @@ export const THEME_CONFIG = defineThemeConfig({
 
 设置 `showCredits: true` 可恢复显示。关闭后两条署名链接都移除，版权行保留。可选的 `site.tagline` 独立追加自定义纯文字，不受此开关控制；默认为空，旧默认值 `Built with Astro.` 视为内置署名，避免重复。不会追加 `All rights reserved`。
 
-这些首页/页脚选项仍是未发布的本地改动，npm 0.14.0 和公开 starter 尚不支持；需要同步升级 starter 和主题包，见[待发布迁移说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links)。
-
 首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
 
 可选的 `theme.footer.links` 在页脚多显示一行，每项填写 `label` 和 `href`，链接之间用中间点分隔；省略或空数组隐藏该行。标签在各语言中保持配置原文，不影响社交图标，也不受 `showCredits` 控制。
@@ -275,4 +273,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 0.27 之前的项目需要一次重新安装迁移：本版本正式交付后，在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
 
-自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.0` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。0.27.0 新架构目前仅在本地准备，尚未发布。
+自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.0` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。

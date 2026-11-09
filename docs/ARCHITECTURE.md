@@ -10,7 +10,7 @@ sync_targets: [README.md, CLAUDE.md]
 
 # Architecture Notes
 
-## Integration boundary (0.27.0, local preparation)
+## Integration boundary (0.27.0)
 
 Anglefeint is a static Astro publishing theme distributed as a thin starter plus `@anglefeint/astro-theme`. Code defines implemented behavior; this reference follows it. Version 0.27.0 is a breaking starter transition, not a completed release. See [migration](../UPGRADING.md#0270-integration-starter-breaking-not-yet-published) and [delivery record](releases/0.27.0.md).
 

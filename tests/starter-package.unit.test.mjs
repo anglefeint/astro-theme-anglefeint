@@ -7,9 +7,34 @@ import {
   starterPackageDrift,
   STARTER_SCRIPTS,
 } from '../scripts/starter-package.mjs';
-import { STARTER_MANAGED_FILES, STARTER_OBSOLETE_FILES } from '../scripts/starter-manifest.mjs';
+import {
+  STARTER_MANAGED_FILES,
+  STARTER_OBSOLETE_FILES,
+  STARTER_CONTENT_MANAGED_FILES,
+  starterSourcePath,
+} from '../scripts/starter-manifest.mjs';
 
 const source = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+
+test('distributed tutorials use the current integration guidance without changing published demo articles', async () => {
+  let tutorials = 0;
+  for (const destination of STARTER_CONTENT_MANAGED_FILES) {
+    const source = starterSourcePath(destination);
+    if (destination.endsWith('/welcome-to-anglefeint.md')) {
+      assert.equal(source, destination);
+      continue;
+    }
+    assert.match(source, /^scripts\/starter-templates\/content\//);
+    const body = await readFile(new URL('../' + source, import.meta.url), 'utf8');
+    assert.match(body, /^---\r?\n/, destination);
+    assert.doesNotMatch(body, /export const STARTER_SOURCE_OVERRIDES/);
+    assert.match(body, /npx @anglefeint\/astro-theme@latest upgrade/);
+    assert.doesNotMatch(body, /not published yet|尚未发布|未公開です/);
+    assert.doesNotMatch(body, /UPGRADING\.md#unreleased-/);
+    tutorials++;
+  }
+  assert.equal(tutorials, 27);
+});
 
 test('starter generation fixes legacy commands, is idempotent and excludes maintainer dependencies', () => {
   const old = {

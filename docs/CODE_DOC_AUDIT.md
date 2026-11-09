@@ -12,6 +12,12 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-09 正式交付前的教程分发修正
+
+正式 npm 发布门禁通过后，分发核对发现 27 份教程覆盖文件尚未接入 starterSourcePath，之前的安装矩阵因此使用了旧文章源，而不能作为新教程已分发的证据。本轮明确接入映射，保留 welcome 与主站原文章不变；修复一份繁体中文教程被维护 manifest 文本污染的问题，清理所有教程的未发布措辞及旧分页数值，记录真实教程更新时间。新增单元测试检查 27 份源映射、文章 frontmatter、真实升级命令及无维护脚本文本污染。此前关于教程覆盖已生效的描述以本轮修正和后续新矩阵／远程验收为准。
+
+这是维护端分发／教程修正，不改变已上传 0.27.0 的包文件；源 tag 仍必须对应实际 npm 上传的 76b4f1e2fdb3564599e07940be4c95380e216cc6。不得为 npm 传播延迟重复上传。完整发布与后续门禁的实际结果见 [0.27.0](releases/0.27.0.md)。
+
 ## 2026-11-09 二次架构审查与历史 Release 对照
 
 通过 GitHub API 读取最近 20 次实际 Release（v0.26.0 至 v0.11.3），并逐个核对本地 tag 的文件差异；原始响应／路径清单保存在忽略的 `architecture-review-releases.json`、`architecture-review-release-paths.json`。下面判断的是**相同改动放进 schema-1 新架构之后**的交付方式，不声称旧版 skeleton 已能自动升级，也没有把 20 个历史包逐个安装到新结构中。历史发布事实与源码不改。

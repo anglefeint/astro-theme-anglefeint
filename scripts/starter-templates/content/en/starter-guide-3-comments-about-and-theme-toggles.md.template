@@ -4,7 +4,7 @@ title: 'User Guide 3: Enable and Customize Optional Features'
 subtitle: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 description: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
 pubDate: '2026-03-07'
-updatedDate: 2026-10-18
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -18,7 +18,7 @@ This guide covers the accompanying starter. Merge all TypeScript snippets into t
 | Body image previews and code copying                     | Automatic; no configuration |
 | About and the Red Queen article monitor                  | On                          |
 | Music and Giscus comments                                | Off                         |
-| Latest homepage posts / posts per blog page              | 3 / 9                       |
+| Latest homepage posts / posts per blog page              | 3 / 10                       |
 
 ## 1. Enable the music player
 
@@ -212,8 +212,6 @@ export const THEME_CONFIG = defineThemeConfig({
 
 Set `showCredits: true` to restore them. Hiding credits removes both links; it keeps the copyright line. An optional `site.tagline` adds your own plain text independently of this switch. Its default is empty; the former default `Built with Astro.` is treated as the built-in credit to avoid duplication. No `All rights reserved` text is added.
 
-These home/footer options are unreleased local changes, unavailable in npm 0.14.0 or the public starter. They require matching starter and package changes; see [pending migration](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#unreleased-home-switches-and-footer-links).
-
 Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.
 
 Optional `theme.footer.links` adds a separate footer row: each entry has `label` and `href`, with dots between links. Empty or omitted links hide the row. Labels keep their configured text across languages; this row is independent of social icons and `showCredits`.
@@ -275,4 +273,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory after this release is delivered, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
 
-The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.0` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes. This architecture is prepared locally for 0.27.0 and is not published yet.
+The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.0` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.

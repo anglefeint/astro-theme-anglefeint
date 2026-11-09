@@ -62,6 +62,19 @@ export const STARTER_CONTENT_MANAGED_FILES = STARTER_CONTENT_LOCALES.flatMap((lo
   STARTER_CONTENT_SLUGS.map((slug) => `${STARTER_CONTENT_ROOT}/${locale}/${slug}.md`)
 );
 
+// Tutorial corrections belong to the generated starter, not published demo essays.
+Object.assign(
+  STARTER_SOURCE_OVERRIDES,
+  Object.fromEntries(
+    STARTER_CONTENT_MANAGED_FILES.filter((file) => !file.endsWith('/welcome-to-anglefeint.md')).map(
+      (file) => [
+        file,
+        file.replace('src/content/blog/', 'scripts/starter-templates/content/') + '.template',
+      ]
+    )
+  )
+);
+
 export const STARTER_OBSOLETE_FILES = [
   'src/pages/index.astro',
   'src/pages/robots.txt.ts',

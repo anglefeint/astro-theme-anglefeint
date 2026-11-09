@@ -1,241 +1,148 @@
-// Distribution destinations may use a neutral source instead of demo configuration.
-export const STARTER_SOURCE_OVERRIDES = {
-  'src/content/blog/de/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/de/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/de/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/de/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/de/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/de/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/content/blog/en/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/en/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/en/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/en/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/en/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/en/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/content/blog/es/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/es/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/es/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/es/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/es/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/es/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/content/blog/ja/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/ja/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/ja/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/ja/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/ja/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/ja/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/content/blog/ko/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/ko/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/ko/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/ko/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/ko/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/ko/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/content/blog/pt-br/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/pt-br/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/pt-br/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/pt-br/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/pt-br/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/pt-br/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/content/blog/ru/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/ru/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/ru/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/ru/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/ru/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/ru/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/content/blog/zh-hant/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/zh-hant/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/zh-hant/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/zh-hant/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/zh-hant/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/zh-hant/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/content/blog/zh/starter-guide-1-configure-your-site.md': 'scripts/starter-templates/content/zh/starter-guide-1-configure-your-site.md.template',
-  'src/content/blog/zh/starter-guide-2-languages-and-routing.md': 'scripts/starter-templates/content/zh/starter-guide-2-languages-and-routing.md.template',
-  'src/content/blog/zh/starter-guide-3-comments-about-and-theme-toggles.md': 'scripts/starter-templates/content/zh/starter-guide-3-comments-about-and-theme-toggles.md.template',
-  'src/site.config.ts': 'scripts/starter-templates/site.config.ts.template',
-  'AGENTS.md': 'scripts/starter-templates/AGENTS.md.template',
-  'CLAUDE.md': 'scripts/starter-templates/CLAUDE.md.template',
-  '.cursor/rules/00-repo.mdc': 'scripts/starter-templates/cursor-repo.mdc.template',
-  ...Object.fromEntries(
-    [
-      'README',
-      'README.zh-CN',
-      'README.ja',
-      'README.ko',
-      'README.es',
-      'README.pt-BR',
-      'README.de',
-      'README.ru',
-      'README.zh-Hant',
-    ].map((name) => [`${name}.meta.yaml`, `scripts/starter-templates/${name}.meta.yaml.template`])
-  ),
-};
+---
+tags:
+  - anglefeint
+  - starter
+title: 使用指南 3：選用功能
+subtitle: 音樂、留言、關於頁、分頁與視覺設定。
+description: 音樂、留言、關於頁、分頁與視覺設定。
+pubDate: '2026-03-07'
+updatedDate: '2026-11-09'
+heroImage: ../../../assets/blog/default-covers/matrix-02.webp
+---
 
-export const starterSourcePath = (destination) =>
-  STARTER_SOURCE_OVERRIDES[destination] ?? destination;
+## 音樂
 
-export const ADAPTER_TEMPLATE_MAP = [
-  ['scripts/adapter-templates/src/config/site.ts', 'src/config/site.ts'],
-  ['scripts/adapter-templates/src/config/theme.ts', 'src/config/theme.ts'],
-  ['scripts/adapter-templates/src/config/social.ts', 'src/config/social.ts'],
-  ['scripts/adapter-templates/src/config/about.ts', 'src/config/about.ts'],
-  ['scripts/adapter-templates/src/config/index.ts', 'src/config/index.ts'],
-  ['scripts/adapter-templates/src/i18n/config.ts', 'src/i18n/config.ts'],
-  ['scripts/adapter-templates/src/i18n/runtime.ts', 'src/i18n/runtime.ts'],
-  ['scripts/adapter-templates/src/i18n/messages.ts', 'src/i18n/messages.ts'],
-  ['scripts/adapter-templates/src/i18n/posts.ts', 'src/i18n/posts.ts'],
-  ['scripts/adapter-templates/src/types/theme-scripts.d.ts', 'src/types/theme-scripts.d.ts'],
-];
+把音檔放在 public/music/，並合併：
 
-export const ADAPTER_TARGET_FILES = ADAPTER_TEMPLATE_MAP.map(([, targetRel]) => targetRel);
+```ts
+theme: {
+  music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] },
+},
+```
 
-export const STARTER_CONTENT_ROOT = 'src/content/blog';
+每首曲目包含 title、src 與選填 artist，空清單會隱藏播放器。首次播放需點擊。分頁工作階段會記住曲目、進度與音量，但恢復播放取決於瀏覽器政策，跨頁可能有短暫中斷。最後一首結束後回到第一首。
 
-export const STARTER_CONTENT_LOCALES = [
-  'en',
-  'es',
-  'ja',
-  'ko',
-  'zh',
-  'pt-br',
-  'de',
-  'ru',
-  'zh-hant',
-];
+播放器先下載完整音檔再播放，大檔案會增加等待與記憶體使用。外部音檔需要 CORS；本機檔案沒有這項要求。enabled: false 可停用播放器。
 
-export const STARTER_CONTENT_SLUGS = [
-  'welcome-to-anglefeint',
-  'starter-guide-1-configure-your-site',
-  'starter-guide-2-languages-and-routing',
-  'starter-guide-3-comments-about-and-theme-toggles',
-];
+## Giscus 留言
 
-export const STARTER_CONTENT_MANAGED_FILES = STARTER_CONTENT_LOCALES.flatMap((locale) =>
-  STARTER_CONTENT_SLUGS.map((slug) => `${STARTER_CONTENT_ROOT}/${locale}/${slug}.md`)
-);
+準備已啟用 Discussions 的公開儲存庫、安裝應用程式，並從 [giscus.app](https://giscus.app/) 取得 ID。
 
-export const STARTER_OBSOLETE_FILES = [
-  'src/pages/index.astro',
-  'src/pages/robots.txt.ts',
-  'src/pages/[lang]/tags/index.astro',
-  'src/pages/[lang]/tags/[tag]/[...page].astro',
-  'src/utils/metrics.ts',
-  'src/pages/[lang]/about.astro',
-  'src/pages/[lang]/decoder.astro',
-  'src/pages/[lang]/terminal/[id].json.ts',
-  'src/pages/[lang]/blog/[...page].astro',
-  'src/pages/[lang]/blog/[...slug].astro',
-  'src/pages/[lang]/index.astro',
-  'src/pages/[lang]/rss.xml.ts',
-  'src/scripts/cyber-rain-dust.js',
-  'src/components/CyberAtmosphere.astro',
-  'src/site.config.defaults.ts',
-  'src/site.config.runtime.ts',
-  'src/site.config.schema.ts',
-  'src/templates/new-page-template.astro',
-  'scripts/adapter-templates/src/config/about.ts',
-  'scripts/adapter-templates/src/config/index.ts',
-  'scripts/adapter-templates/src/config/site.ts',
-  'scripts/adapter-templates/src/config/social.ts',
-  'scripts/adapter-templates/src/config/theme.ts',
-  'scripts/adapter-templates/src/i18n/config.ts',
-  'scripts/adapter-templates/src/i18n/messages.ts',
-  'scripts/adapter-templates/src/i18n/posts.ts',
-  'scripts/adapter-templates/src/i18n/runtime.ts',
-  'scripts/adapter-templates/src/types/theme-scripts.d.ts',
-  'src/config/about.ts',
-  'src/config/index.ts',
-  'src/config/site.ts',
-  'src/config/social.ts',
-  'src/config/theme.ts',
-  'src/i18n/config.ts',
-  'src/i18n/messages.ts',
-  'src/i18n/posts.ts',
-  'src/i18n/runtime.ts',
-  'src/types/theme-scripts.d.ts',
-  'scripts/article-sitemap.mjs',
-  'scripts/check-scaffold.mjs',
-  'scripts/check-workspace-link.mjs',
-  'scripts/doctor.mjs',
-  'scripts/starter-package.mjs',
-  'scripts/check-about-runtime-config.mjs',
-  'scripts/check-adapter-contract.mjs',
-  'scripts/resolve-theme-default-i18n-entry.mjs',
-  'scripts/resolve-site-url.mjs',
-  'scripts/starter-manifest.mjs',
-  'scripts/sync-adapters.mjs',
+```ts
+theme: {
+  comments: {
+    enabled: true, repo: 'yourname/your-repository',
+    repoId: 'REPLACE_WITH_REPO_ID', category: 'Announcements',
+    categoryId: 'REPLACE_WITH_CATEGORY_ID', mapping: 'pathname', lang: '',
+  },
+},
+```
 
-  'public/images/theme-previews/preview-home.png',
-  'public/images/theme-previews/preview-blog-list.png',
-  'public/images/theme-previews/preview-blog-list-pagination.png',
-  'public/images/theme-previews/preview-blog-post-open.png',
-  'public/images/theme-previews/preview-blog-post-collapsed.png',
-  'public/images/theme-previews/preview-about.png',
-  'public/images/theme-previews/preview-decoder.png',
-  'public/llms.txt',
-  'scripts/regenerate-starter.mjs',
-  'scripts/new-page.mjs',
-  'scripts/new-post.mjs',
-  'tools/maintainer/sync-starter.mjs',
-  'docs/MAINTAINER_WORKFLOW.md',
-  'src/components/pagination/CyberPagination.astro',
-  'src/utils/pagination-style.ts',
-  'src/utils/pagination.ts',
-];
+替換 ID 與分類，不必在每篇文章貼入指令碼。必要欄位空白會隱藏元件。lang: '' 跟隨文章語言：pt-br 對應 pt、zh-hant 對應 zh-TW、zh 對應 zh-CN；預設是固定英語。
 
-export const STARTER_SUPPORT_SCRIPTS = [];
+mapping: 'pathname' 依路徑對應討論串；'specific' 需要 term，'number' 需要以字串提供正整數 number。不合法的值會報錯。strict、reactionsEnabled 使用 '0' 或 '1'。無法顯示時檢查 ID、權限、連線與瀏覽器阻擋。
 
-export const STARTER_STATIC_MANAGED_FILES = [
-  'AGENTS.md',
-  'CLAUDE.md',
-  '.cursor/rules/00-repo.mdc',
-  'astro.config.mjs',
-  'tsconfig.json',
-  '.gitignore',
-  'src/content.config.ts',
-  'README.pt-BR.md',
-  'README.pt-BR.meta.yaml',
-  'README.de.md',
-  'README.de.meta.yaml',
-  'README.ru.md',
-  'README.ru.meta.yaml',
-  'README.zh-Hant.md',
-  'README.zh-Hant.meta.yaml',
-  'README.md',
-  'README.meta.yaml',
-  'README.zh-CN.md',
-  'README.zh-CN.meta.yaml',
-  'README.ja.md',
-  'README.ja.meta.yaml',
-  'README.es.md',
-  'README.es.meta.yaml',
-  'README.ko.md',
-  'README.ko.meta.yaml',
-  'public/images/theme-previews/README.md',
-  'public/images/theme-previews/anglefeint-brand.webp',
-  'public/images/theme-previews/promo-overview.jpg',
-  'public/images/theme-previews/promo-cyberpunk.jpg',
-  'public/images/theme-previews/promo-hacker.jpg',
-  'public/images/theme-previews/promo-ai.jpg',
-  'public/images/theme-previews/preview-about.jpg',
-  'public/images/theme-previews/preview-decoder.jpg',
-  'public/images/theme-previews/preview-blog-list.jpg',
-  'public/images/theme-previews/preview-blog-list-mode.jpg',
-  'public/images/theme-previews/preview-decoder-resources.jpg',
-  'public/images/theme-previews/preview-blog-list-pagination.jpg',
-  'public/images/theme-previews/preview-blog-post-related.jpg',
-  'public/images/theme-previews/preview-blog-post.jpg',
-  'public/images/theme-previews/preview-home.jpg',
-  'src/site.config.ts',
-];
+## 關於頁
 
-export const REQUIRED_STARTER_MANAGED_FILES = [
-  ...STARTER_CONTENT_MANAGED_FILES,
-  ...STARTER_SUPPORT_SCRIPTS,
-];
+About 正文段落與簽名保留設定字串中的換行：`\n` 換行，`\n\n` 留一空行，長句仍自動換行。內容仍是純文字，不解析 Markdown 或 HTML，請勿插入 `<br>`。
 
-export const STARTER_MANAGED_FILES = [
-  'src/assets/blog/default-covers/ai-01.webp',
-  'src/assets/blog/default-covers/ai-02.webp',
-  'src/assets/blog/default-covers/ai-03.webp',
-  'src/assets/blog/default-covers/architecture-01.webp',
-  'src/assets/blog/default-covers/cinematic-01.webp',
-  'src/assets/blog/default-covers/cyber-01.webp',
-  'src/assets/blog/default-covers/cyber-02.webp',
-  'src/assets/blog/default-covers/cyber-03.webp',
-  'src/assets/blog/default-covers/cyber-04.webp',
-  'src/assets/blog/default-covers/hacker-01.webp',
-  'src/assets/blog/default-covers/hacker-02.webp',
-  'src/assets/blog/default-covers/horizon-01.webp',
-  'src/assets/blog/default-covers/matrix-01.webp',
-  'src/assets/blog/default-covers/matrix-02.webp',
-  'src/assets/blog/default-covers/matrix-03.webp',
-  'src/assets/blog/default-covers/study-01.webp',
-  'public/fonts/atkinson-bold.woff',
-  'public/fonts/atkinson-regular.woff',
-  'public/fonts/ff2a407fe06752facf8828a86955e988.eot',
-  'public/fonts/ff2a407fe06752facf8828a86955e988.ttf',
-  'public/fonts/ff2a407fe06752facf8828a86955e988.woff2',
-  'public/favicon.ico',
-  'public/favicon.svg',
-  ...STARTER_CONTENT_MANAGED_FILES,
-  ...STARTER_STATIC_MANAGED_FILES,
-  ...STARTER_SUPPORT_SCRIPTS,
-];
+編輯 i18n.locales['zh-hant'].about：sections（who、what、ethos、now、contactLead、signature）、contact（email、githubUrl、githubLabel）、sidebar、labels、modals、effects。ethos 是陣列，其他語言需分別編輯。頁面工具只是視覺示範，不是真實 AI 服務。email 空白可隱藏連結；theme.enableAboutPage: false 會移除頁面與導覽入口。
 
-export const REQUIRED_ADAPTER_TARGET_FILES = ['src/site.config.ts', ...ADAPTER_TARGET_FILES];
+### Decoder Lab：致敬密碼龐克
+
+Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他們為人類自由、隱私與開放程式碼作出的貢獻。點對點網路意象與本機處理方式，呼應了讓工具與資料掌握在個人手中的理念。
+
+我們認同這樣的信念：**隱私和自由不能只靠掌權者的善意。** 個人應當有能力保護自己的通訊，自主決定向誰透露什麼，並在可能時親自驗證，而不必把信任全部交給政府、平台或其他第三方。
+
+**「Cypherpunks write code.」——密碼龐克寫程式。** [《密碼龐克宣言》](https://www.activism.net/cypherpunk/manifesto.html)中的這句話，也代表了一種行動方式：把理念變成可用的軟體，公開程式碼，讓其他人能夠檢查、使用和繼續建設。我們向這種用技術守護個人自主權的精神致敬。
+
+Decoder Lab 以本機處理、可檢視的原始碼和點對點網路意象回應這份精神。
+
+完整的 **Decoder Lab** 位於 `/<locale>/decoder/`，支援本機文字處理鏈路、EVM／HyperEVM／TRON 的 ERC-20／TRC-20 呼叫解讀及 EVM／TRON／Bitcoin 地址檢查。從 About 解碼視窗開啟；在 `src/site.config.ts` 設定 `theme.enableDecoderPage: false` 可獨立關閉頁面與入口。無需 RPC、錢包連線或 API Key。
+
+## 數量與功能開關
+
+```ts
+theme: {
+  homeLatestCount: 3, blogPageSize: 10,
+  enableAboutPage: true, effects: { enableRedQueen: true },
+  search: { enabled: true }, toc: { enabled: true }, tags: { enabled: true },
+  socialImage: { enabled: true }, footer: { showCredits: true },
+},
+```
+
+改成 false 可停用對應功能。enableRedQueen 只控制文章監視器；文章的 toc: true 可覆寫全站設定；socialImage 不會停用手動 ogImage。各頁氛圍由版型決定，沒有全站切換四種主題的單一開關。
+
+homeLatestCount 控制最新文章數，blogPageSize 控制列表與標籤分頁。pagination.windowSize 限於 5–21。jump.enabled 啟用且總頁數超過 showJumpThreshold（預設 12）才顯示跳頁輸入框；jump.enterToGo 控制 Enter。style.mode 支援 fixed、sequential、random；random 對同一頁穩定，不會每次重新整理都變。style.enabled: false 保留基本分頁。
+
+## 更多語言與首頁網址
+
+在 i18n.locales 新增代碼，提供 meta（label、hreflang、ogLocale、enabled、fallback）、site.hero、messages、about，再用 --locales 建立文章。fallback 補足缺少的設定文字，不會翻譯文章或混合列表語言；必要時會加入預設語言。label 只改選單名稱。
+
+defaultLocalePrefix: 'always' 讓 / 導向語言首頁；'never' 對預設語言反向處理。文章仍保留語言路徑。
+
+## 頁尾與驗證
+
+footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 site.title。site.tagline 是獨立文字。舊值 Built with Astro. 會視為內建署名，避免重複顯示。
+
+首頁開關：`theme.home.showInitialize` 控制 Initialize/done，`showFollow` 控制 Wake Up/Follow，`showTrace` 控制右下角狀態。於 `src/site.config.ts` 設定，預設皆為 `true`，設為 `false` 可獨立隱藏。
+
+可選的 `theme.footer.links` 在頁尾增加一行，每項填寫 `label` 與 `href`，連結以中間點分隔；省略或空陣列隱藏該行。標籤在各語言中保留設定原文，獨立於社群圖示與 `showCredits`。
+
+```ts
+theme: {
+  home: { showInitialize: true, showFollow: true, showTrace: true },
+  footer: {
+    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+  },
+},
+```
+
+自動分享圖使用主題內附的代碼雨、終端與霓虹網路背景，網站名稱、標題和作者仍使用你的內容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（預設 `true`）；設為 `false` 會同時隱藏頁尾與圖片署名，修改後請重新建置部署。自訂 `ogImage` 不會被修改。背景離線使用，不增加瀏覽器 JavaScript。
+
+所有設定合併在同一個 theme 或 i18n，陣列會整份取代。開發時檢查，執行 npm run doctor，再以 npm run preview 測試搜尋。重新建置與部署才會套用到線上。
+
+- [使用指南 1：設定你的部落格](/zh-hant/blog/starter-guide-1-configure-your-site/)
+- [使用指南 2：撰寫與整理內容](/zh-hant/blog/starter-guide-2-languages-and-routing/)
+- [使用指南 3：選用功能](/zh-hant/blog/starter-guide-3-comments-about-and-theme-toggles/)
+
+## 數學公式
+
+Markdown 和 MDX 文章預設全域支援 LaTeX 風格數學公式。行內寫 `$C_{saved}$`，獨立公式放在單獨兩行 `$$` 之間，不需要逐篇開關或自行安裝外掛。
+
+```markdown
+Inline: $C_{saved}$
+
+$$
+\frac{a}{b}
+$$
+```
+
+在 `src/site.config.ts` 設定 `theme: { math: { enabled: false } }` 可關閉。一般美元有歧義時寫成 `\$`；行內程式碼與程式碼區塊保持原樣。關閉後恢復一般 MDX 規則，包括大括號內的 JavaScript 表達式。
+
+公式於建置時渲染，樣式與字型隨網站提供，保留可存取的 MathML，不載入瀏覽器數學引擎。長公式可橫向捲動。錯誤公式會中止建置並提示來源與原因。標題與摘要維持純文字；搜尋索引排除公式。支援 KaTeX 數學語法，並非完整 LaTeX 文件。
+
+舊專案需要依升級指南完成一次 starter／設定遷移，只更新主題套件不會接入 Markdown 處理器。
+
+$C_{saved}$
+
+$$
+\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
+$$
+
+
+---
+
+## 升級主題
+
+集成版 starter 的標準頁面、設定預設值、翻譯與建置功能由主題套件維護。文章、`src/site.config.ts`、音樂、圖片與自訂頁面留在使用者專案。
+
+使用 npm 的集成版專案在根目錄執行下列指令。工具檢查專案、Node 與 Astro 相容性、備份依賴檔案、安裝確切主題版本並執行 doctor；失敗時還原依賴檔案並嘗試重裝原依賴。完成後依原流程部署，不會自動發布網站。
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+0.27 以前的專案需一次重新安裝遷移：正式交付後在新目錄建立範本，複製文章與資源，將個人設定合併至新的 site config。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔。保留 slug、語言路徑、音樂與圖片 URL、網域及部署設定。
+
+自動升級目前僅支援 npm，遇到 pnpm/yarn/bun 鎖檔會停止。`--check` 僅檢查，`--to 0.27.0` 指定版本。請參閱[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)與 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。

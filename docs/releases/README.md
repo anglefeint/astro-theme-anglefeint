@@ -29,7 +29,7 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 ## Contract
 
-Latest feature release entry: [0.26.0](./0.26.0.md), About reading-window controls, panel fullscreen, terminal commands and compact contents styling. See its delivery status and acceptance record.
+Latest feature release entry: [0.27.0](./0.27.0.md), the breaking integration starter, preserved user ownership and one-command npm upgrades. See its delivery status and acceptance record.
 
 Latest patch entry: [0.24.1](./0.24.1.md), ten-post archive defaults to complete the desktop card rows. See its delivery status and validation record.
 

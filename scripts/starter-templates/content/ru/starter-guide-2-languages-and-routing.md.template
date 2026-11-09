@@ -6,7 +6,7 @@ title: 'Руководство 2: Статьи и организация кон�
 subtitle: 'Изображения, теги, оглавление, поиск и публикация ссылок.'
 description: 'Изображения, теги, оглавление, поиск и публикация ссылок.'
 pubDate: '2026-03-07'
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-09'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
@@ -82,4 +82,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 Проектам до 0.27 нужна однократная миграция в новый starter. После публикации создайте его в отдельной папке, перенесите статьи и ресурсы и объедините личные настройки с новым site config. Не копируйте старые стандартные маршруты, adapters и файлы defaults/schema/runtime. Сохраните slug, языковые пути, URL музыки/изображений и настройки хостинга.
 
-Автообновление поддерживает только npm и отклоняет lock-файлы pnpm/yarn/bun. `--check` проверяет без записи, `--to 0.27.0` выбирает версию. См. [руководство](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) и [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases). 0.27.0 подготовлена локально, ещё не опубликована.
+Автообновление поддерживает только npm и отклоняет lock-файлы pnpm/yarn/bun. `--check` проверяет без записи, `--to 0.27.0` выбирает версию. См. [руководство](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) и [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).

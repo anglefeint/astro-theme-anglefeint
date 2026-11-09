@@ -4,7 +4,7 @@ title: 'User Guide 2: Write and Organize Content'
 subtitle: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 description: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 pubDate: '2026-03-07'
-updatedDate: '2026-09-19'
+updatedDate: '2026-11-09'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -161,4 +161,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory after this release is delivered, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
 
-The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.0` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes. This architecture is prepared locally for 0.27.0 and is not published yet.
+The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.0` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.

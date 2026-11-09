@@ -10,7 +10,7 @@ sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
 
 # Visual Systems
 
-0.27.0 ownership migration: standard route compositions, CyberAtmosphere and rain/dust initialization now ship through the theme integration. Existing visuals, parameters, client lifetimes and interaction contracts below are preserved. User custom pages/assets/configuration stay project-owned. This is local preparation, not published delivery.
+0.27.0 ownership migration: standard route compositions, CyberAtmosphere and rain/dust initialization now ship through the theme integration. Existing visuals, parameters, client lifetimes and interaction contracts below are preserved. User custom pages/assets/configuration stay project-owned. See the 0.27.0 release ledger for actual delivery verification.
 
 Article prose is visible by default. Paragraphs, headings, code blocks, quotes and lists no longer start transparent or translated; the scroll-reveal IntersectionObserver and its visibility classes are removed. Static HTML reading does not depend on this JavaScript effect. Other article interactions and cinematic backgrounds remain unchanged.
 

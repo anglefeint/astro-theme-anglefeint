@@ -19,7 +19,7 @@ depends_on:
 
 Run from the maintainer checkout, not from a user's starter. These tools do not publish, push or alter the real site's configuration. They need network access and installed maintainer dependencies. A passing run covers the recorded scenarios and versions, not every browser, hosting provider or possible user configuration.
 
-## 0.27 integration-starter acceptance (local preparation)
+## 0.27 integration-starter acceptance
 
 The new consumer has ten script entries and package-owned standard routes/config/build features; no adapter-sync commands or copied default/schema/runtime files are distributed. `check-template.mjs` now uses the public package config API and validates schema 1. Its remote create-template run remains a post-publication gate, not a way to verify unpublished source. On npm it preflights the upgrade script and runs the real published npx upgrade on a personalized remote starter, hashing source/public/.env/config/README files before and after; pnpm checks its explicit unsupported-updater rejection while ordinary check/build remains available.
 
