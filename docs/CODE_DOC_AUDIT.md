@@ -12,11 +12,13 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
-## 2026-11-10 0.27.2 正式发布准备
+## 2026-11-10 0.27.2 正式发布交付
 
 用户随后授权正式发布 0.27.2，取代此前“先不发布／push”的约束。修复代码和回归测试保持不变；准备补丁版本、CHANGELOG、npm README 与发布账本，实际交付状态统一记录在 [0.27.2](releases/0.27.2.md)。此前本地调查记录保留当时的状态。九语言 README 与 demo/starter 教程的配置接口未改变，保留仍有效的固定版本选择示例，避免把实现细节变成用户配置步骤。正式流程必须重新执行默认 npm 发布门禁；此前 10 轮单测、400 次并发、14 构建、139 浏览器与升级模拟作为明确标注的已有实现验证，不能替代发布后的远程验收。
 
-## 2026-11-10 Pagefind 写出完成竞态调查（本地未发布）
+正式门禁已按默认流程重新通过。npm 0.27.2 从 7989851ec754f1ab4a04cda2d4607fe456ec8929 上传一次；仓库处理导致自动核验超时，恢复阶段仅重试下载，匹配准备 tarball 的 SHA-512、gitHead 和全部 307 文件。starter 712d63907f1f71bb0714815b6ba2fa63af77e9ed 已同步、审计、构建并推送，最终零漂移。Windows npm/pnpm 新装分别通过 52／50 项检查，真实发布的 0.27.1→0.27.2 npx 升级保留 133 文件；Linux Actions 42665628855 两项均成功。同步后的原站 223 文件与发布包 307 文件逐字节一致；线上九语言正文搜索及 144 篇文章完整库、261 sitemap URL／144 文章日期、终端 JSON noindex、全文导出与字体检查通过。当前用户配置和教程接口未变，因此未改写九语言教程。完整 refs、证据和未直接核验 Cloudflare 后台设置的边界见发布账本。
+
+## 2026-11-10 Pagefind 写出完成竞态调查（发布前验证）
 
 基线 `c5f8a2c651930dde9cc5310a2d5edbd2f3ba507f`，使用已安装 Pagefind 1.5.2 和原生 `writeFiles` API，四个独立进程／独立目录各执行 100 次，交替非空与空文章索引。400 次中 13 次在 await 返回后立即读到 0 字节 entry JSON，随后对同一文件重读均恢复为完整的 171／115 字节 JSON。单进程 100 次未触发不能证明没有问题；并行仅放大概率，不是解决方式。原始报告保留在忽略目录 `pagefind-parallel-probe.log` 与各进程 JSON 中。没有通过重复运行掩盖失败。
 
@@ -24,7 +26,7 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 本地修正使用[官方 getFiles 内存接口](https://pagefind.app/docs/node-api/#indexgetfiles)，从返回字节解析元数据并逐文件 await Node mkdir/writeFile，所有原生文件写完后才写主题语言清单和完成构建钩子。不加 sleep／重试／空索引兜底，不改默认测试并发。Pagefind 生成的文件名、字节、索引筛选、路径和浏览器行为不改；新增临时内存成本仅在构建进程，随索引包大小增长。真实原生错误、丢失或损坏元数据仍中止构建。回归覆盖完整二进制交付边界、原生错误、缺失／空元数据，以及非空／空／禁用站点。
 
-文档路由：直接更新搜索构建架构说明、验收说明、CHANGELOG 的 Unreleased 和本审查记录。用户配置与使用方式未变，九语言 README／教程无需新增设置或迁移说明；历史 0.27.1 发布账本保持历史，不将本地补丁描述成已发布。本轮不发布、不 push，不运行 starter 分发同步。验证已完成：修正后的同负载四进程 400 次零失败；默认 12 核可用并发环境下完整 153 单测连续 10 轮全部通过，无跳过和并发限制；主库完整检查通过，344 个 Astro 文件零诊断、262 页构建和九语言 About 检查通过。独立实际 tarball 安装的 14 组构建及阻断审计通过（0 已知漏洞），139 项完整 Chromium 功能回归通过（5.1 分钟）。冻结 schema-1 项目执行真实 npm exec 升级至未发布 0.29 测试包的五场景模拟通过，85 个用户文件保持字节一致；这不是远程 npm 升级验收或正式发布。lint、文档元数据及本地链接单独核验。证据为忽略目录 pagefind-race-summary.json、pagefind-suite-1.log 至 -10.log、pagefind-fixed-check.log、pagefind-installed.log、pagefind-e2e.log、pagefind-upgrade.log 和 upgrade-1794243975534/report.json。
+文档路由：直接更新搜索构建架构说明、验收说明、CHANGELOG 的 Unreleased 和本审查记录。用户配置与使用方式未变，九语言 README／教程无需新增设置或迁移说明；历史 0.27.1 发布账本保持历史，不将本地补丁描述成已发布。调查阶段按当时要求未发布或 push，也未运行 starter 分发同步；后续授权交付见上方记录。验证已完成：修正后的同负载四进程 400 次零失败；默认 12 核可用并发环境下完整 153 单测连续 10 轮全部通过，无跳过和并发限制；主库完整检查通过，344 个 Astro 文件零诊断、262 页构建和九语言 About 检查通过。独立实际 tarball 安装的 14 组构建及阻断审计通过（0 已知漏洞），139 项完整 Chromium 功能回归通过（5.1 分钟）。冻结 schema-1 项目执行真实 npm exec 升级至未发布 0.29 测试包的五场景模拟通过，85 个用户文件保持字节一致；这不是远程 npm 升级验收或正式发布。lint、文档元数据及本地链接单独核验。证据为忽略目录 pagefind-race-summary.json、pagefind-suite-1.log 至 -10.log、pagefind-fixed-check.log、pagefind-installed.log、pagefind-e2e.log、pagefind-upgrade.log 和 upgrade-1794243975534/report.json。
 
 ## 2026-11-10 配置教程双发布面核对
 

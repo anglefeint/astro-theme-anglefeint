@@ -31,9 +31,7 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 Latest feature release entry: [0.27.0](./0.27.0.md), the breaking integration starter, preserved user ownership and one-command npm upgrades. See its delivery status and acceptance record.
 
-Patch release preparation: [0.27.2](./0.27.2.md), search build-output completion through Pagefind's public API. Consult its status before assuming publication.
-
-Recommended published patch: [0.27.1](./0.27.1.md), package-local social-image dependency resolution for pnpm. See its actual delivery status and validation record.
+Recommended published patch: [0.27.2](./0.27.2.md), complete search build-output handoff through Pagefind's public API, retaining the [0.27.1](./0.27.1.md) pnpm social-image fix. See the delivery and validation record.
 
 - `CHANGELOG.md` remains the human-facing summary layer.
 - `docs/releases/` is the release-notes ledger.
