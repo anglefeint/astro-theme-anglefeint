@@ -13,6 +13,10 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.27.2] - 2026-11-10
+
+- Fix a Pagefind build-output race: obtain complete index files through the in-memory API and await Node writes before completing search generation. Search configuration, filtering, URLs and browser behavior stay unchanged. Integration starters need no configuration migration. See [0.27.2](docs/releases/0.27.2.md) for actual delivery status and validation.
+
 ## [0.27.1] - 2026-11-09
 
 - Keep the build-only social-image renderer in its original Node package context. This fixes pnpm dependency-isolation failures (`__dirname`/Sharp resolution) without changing image templates, fonts, PNG settings or public routes.

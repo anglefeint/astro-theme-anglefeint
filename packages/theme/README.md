@@ -2,6 +2,10 @@
 
 Core package for the Anglefeint Astro theme.
 
+## 0.27.2 search build completion fix
+
+This patch fixes an intermittent search-index build failure by using Pagefind's public in-memory API and awaiting complete file writes in the theme integration. Pagefind itself is unchanged: no fork, dependency patch or private API. Search settings, index formats, URLs and browser behavior stay the same; no site-config migration is needed for integration starters. See the [release record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.27.2.md) for actual delivery status.
+
 ## 0.27.1 pnpm build fix
 
 Use 0.27.1 or newer for integration starters: it fixes automatic social-image builds with isolated pnpm dependencies. Rendering, fonts and public URLs stay the same. No content/config migration is needed from 0.27.0; see the [patch release record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.27.1.md).
@@ -19,7 +23,7 @@ export default defineConfig({ integrations: [anglefeint(THEME_CONFIG)] });
 
 In site.config.ts, import `defineThemeConfig` and types from `@anglefeint/astro-theme/config`. The starter tsconfig extends `@anglefeint/astro-theme/tsconfig`, keeping internal type/alias mappings upgradeable. Standard routes are injected with their existing behavior; no generated config/i18n adapters or local standard-page implementations are needed. Keep custom pages outside reserved Home/Blog/Tags/About/Decoder/RSS/terminal paths. Add unrelated integrations deliberately; do not duplicate the theme's MDX/search/social/machine-readable/sitemap integrations.
 
-After delivery, npm integration starters can run `npx @anglefeint/astro-theme@latest upgrade` (or `npm run upgrade`). `--check` is a read-only project preflight; `--to <version>` selects a release. The tool checks schema/Node/Astro compatibility, backs up dependency files, installs the exact version with lifecycle scripts disabled and runs doctor. User files are never rewritten. Failure restores dependency files and attempts previous-dependency installation; incomplete recovery is reported with the backup path. Automatic upgrades require an npm package-lock.json (run npm install first) and support npm only; unsupported lockfile families, old skeletons and unknown schemas stop before writes. Deployment is separate.
+npm integration starters can run `npx @anglefeint/astro-theme@latest upgrade` (or `npm run upgrade`). `--check` is a read-only project preflight; `--to <version>` selects a release. The tool checks schema/Node/Astro compatibility, backs up dependency files, installs the exact version with lifecycle scripts disabled and runs doctor. User files are never rewritten. Failure restores dependency files and attempts previous-dependency installation; incomplete recovery is reported with the backup path. Automatic upgrades require an npm package-lock.json (run npm install first) and support npm only; unsupported lockfile families, old skeletons and unknown schemas stop before writes. Deployment is separate.
 
 Pre-0.27 projects need a one-time fresh-starter migration preserving content, config values, music/images and URLs. Do not copy old standard routes or config helpers into the new skeleton. See [Upgrading](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md). The historical version-specific starter requirements below apply to old copied skeletons, not additional files required by the new integration starter. Astro peer support remains `^7.3.5`; Node is `>=22.12.0`.
 

@@ -12,6 +12,20 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-10 0.27.2 正式发布准备
+
+用户随后授权正式发布 0.27.2，取代此前“先不发布／push”的约束。修复代码和回归测试保持不变；准备补丁版本、CHANGELOG、npm README 与发布账本，实际交付状态统一记录在 [0.27.2](releases/0.27.2.md)。此前本地调查记录保留当时的状态。九语言 README 与 demo/starter 教程的配置接口未改变，保留仍有效的固定版本选择示例，避免把实现细节变成用户配置步骤。正式流程必须重新执行默认 npm 发布门禁；此前 10 轮单测、400 次并发、14 构建、139 浏览器与升级模拟作为明确标注的已有实现验证，不能替代发布后的远程验收。
+
+## 2026-11-10 Pagefind 写出完成竞态调查（本地未发布）
+
+基线 `c5f8a2c651930dde9cc5310a2d5edbd2f3ba507f`，使用已安装 Pagefind 1.5.2 和原生 `writeFiles` API，四个独立进程／独立目录各执行 100 次，交替非空与空文章索引。400 次中 13 次在 await 返回后立即读到 0 字节 entry JSON，随后对同一文件重读均恢复为完整的 171／115 字节 JSON。单进程 100 次未触发不能证明没有问题；并行仅放大概率，不是解决方式。原始报告保留在忽略目录 `pagefind-parallel-probe.log` 与各进程 JSON 中。没有通过重复运行掩盖失败。
+
+代码追踪：主题 `packages/theme/src/search.mjs` 原本 await 原生写出后立刻 readFile/JSON.parse。[官方 v1.5.2 输出模块](https://github.com/Pagefind/pagefind/blob/v1.5.2/pagefind/src/output/mod.rs) 中 common entry 与索引文件均经 Tokio File.write_all，返回前没有显式 flush；[同版本 lib.rs](https://github.com/Pagefind/pagefind/blob/v1.5.2/pagefind/src/lib.rs) 和 service/api.rs 将这一返回传给 Node Promise。[Tokio File 契约](https://docs.rs/tokio/latest/tokio/fs/struct.File.html) 明确说明 drop 时未完成的 IO 可继续，需 flush 等待完成。实测的“返回后空文件、随后完整”与此缺失的完成屏障一致，排除共享输出目录互相覆盖的解释。之前直接断言并发本身是根因并不严谨，降低并发只掩盖竞态。
+
+本地修正使用[官方 getFiles 内存接口](https://pagefind.app/docs/node-api/#indexgetfiles)，从返回字节解析元数据并逐文件 await Node mkdir/writeFile，所有原生文件写完后才写主题语言清单和完成构建钩子。不加 sleep／重试／空索引兜底，不改默认测试并发。Pagefind 生成的文件名、字节、索引筛选、路径和浏览器行为不改；新增临时内存成本仅在构建进程，随索引包大小增长。真实原生错误、丢失或损坏元数据仍中止构建。回归覆盖完整二进制交付边界、原生错误、缺失／空元数据，以及非空／空／禁用站点。
+
+文档路由：直接更新搜索构建架构说明、验收说明、CHANGELOG 的 Unreleased 和本审查记录。用户配置与使用方式未变，九语言 README／教程无需新增设置或迁移说明；历史 0.27.1 发布账本保持历史，不将本地补丁描述成已发布。本轮不发布、不 push，不运行 starter 分发同步。验证已完成：修正后的同负载四进程 400 次零失败；默认 12 核可用并发环境下完整 153 单测连续 10 轮全部通过，无跳过和并发限制；主库完整检查通过，344 个 Astro 文件零诊断、262 页构建和九语言 About 检查通过。独立实际 tarball 安装的 14 组构建及阻断审计通过（0 已知漏洞），139 项完整 Chromium 功能回归通过（5.1 分钟）。冻结 schema-1 项目执行真实 npm exec 升级至未发布 0.29 测试包的五场景模拟通过，85 个用户文件保持字节一致；这不是远程 npm 升级验收或正式发布。lint、文档元数据及本地链接单独核验。证据为忽略目录 pagefind-race-summary.json、pagefind-suite-1.log 至 -10.log、pagefind-fixed-check.log、pagefind-installed.log、pagefind-e2e.log、pagefind-upgrade.log 和 upgrade-1794243975534/report.json。
+
 ## 2026-11-10 配置教程双发布面核对
 
 审查基线为 `d2b85217615bdf06da9f5ffe415894c2b248a852`。此前只同步 starter 教程、保留 demo 教程的处理不满足维护者指导文章的职责；“保护用户内容”适用于消费者项目升级，不能作为公开 demo 教程过时的理由。本轮同时更新主站 `src/content/blog/<locale>/starter-guide-*.md` 与 manifest 实际选用的 27 份模板，九种语言共 54 个文件保留原 URL/pubDate，真实 updatedDate 为 2026-11-10。welcome 入口指向现有教程，未发现需要改动。
