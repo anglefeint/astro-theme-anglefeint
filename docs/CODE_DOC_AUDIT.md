@@ -20,6 +20,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 文档路由：直接核对配置／写作／功能三篇、九语言 README、UPGRADING 与架构说明；README 同步其发布状态和分页错误，UPGRADING 现有迁移／回滚边界与代码相符，无需改写。传播至 DOC_SYNC_WORKFLOW、PACKAGING_WORKFLOW、ARCHITECTURE：明确教程虽然不强制维护文档元数据，仍必须核对 demo 与 starter 两个发布面。历史版本账本保持历史，不重写发布事实。无主题运行时、视觉、site config、音乐、图片或其他用户文章变更，不发布空 npm 版本。本轮新执行检查通过：89 份文档元数据、lint、151 单测、344 个 Astro 文件零诊断、262 页完整构建和九语言 About 校验；独立内容检查确认 27 篇 demo 与模板相同、生成 HTML 和 sitemap 使用真实更新日期、系列链接与图片存在、其余博客文章无修改。隐私扫描 711 文本与 8 图片无发现。证据保存在忽略目录 tutorials-20261110-{doc-suggestions,lint,check}.log 与 tutorials-20261110-content.json。starter 和线上交付需继续使用正式同步与实际 HTTP 回读，不能由本地构建替代。
 
+交付回读：教程源码提交 `337d3fb3dcf84b147e0cb1f278ce1965b0943a9e` 已推送，官方 starter 提交 `06a05c7fd2dfa4c267dc10695c1d8e31c473d014` 已推送，包版本保持 0.27.1。正式同步及审计通过，最终零漂移；远程分支 27 篇教程和九语言 README 与维护源一致。demo 自动构建成功后，实际 HTTP 回读确认全部 27 篇正文与本地构建一致，页面 modified_time 和 sitemap 日期为 2026-11-10；九语言 144 篇文章、18 页归档和旧文章入口仍完整。未直接登录 Cloudflare 查看生产分支设置，不将构建状态等同于设置核验。同步前后的 223 个 src/public 文件哈希保持一致，只有一次 checkout 引起的纯换行转换被恢复。
+
+pre-push 单测曾出现 Pagefind 空 JSON 读取失败；单独测试及随后完整 151 单测／构建门禁通过，未修改运行时或跳过断言。公开模板首次下载遇到连接超时，保留失败日志并重试，不能把网络失败记为安装成功。重试公开 npm 模板验收最终通过，涵盖全部十个用户脚本、CLI 参数与无覆盖行为、真实 npx 升级、自定义语言／配置、dev 与 preview 检查；临时站点停止并清理。报告为 `template-npm-1794242660125/report.json`。传播候选中的视觉参考、主题展示／提交清单和历史发布账本不因本轮教程事实修正而改写，原因是产品功能、视觉和历史发布事实均未改变。
+
 ## 2026-11-09 最终发布验收
 
 npm 0.27.1 已发布并核验全部 307 文件、gitHead 和 SHA-512，0.27.0 保留历史事实且由补丁替代。最终 starter c2e1d046ec4155536a2acc72a108caabad754a20 通过官方同步与零漂移核验，运行依赖严格只有 Astro 和主题包。最终 Linux Actions 42643359441 的 npm / pnpm 两项均成功；主库 151 单测、完整 139 浏览器场景、独立安装 14 构建矩阵及审计通过。Windows 最终公开新装 npm/pnpm 通过，真实已发布 0.27.0→0.27.1 升级保留 133 文件，旧骨架拒绝升级保留 174 文件，未来 Code Lab 跳版本模拟保留 85 文件。原站 204 文件恢复 checkout 引起的纯换行差异后逐字节一致。
