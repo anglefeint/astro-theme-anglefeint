@@ -12,6 +12,18 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-10 公开接口边界与用户指引复核（本地文档修订）
+
+基线为发布收尾 `cb0cb1da88129212ce0174eacccbc5c4a4338a20`，并显式回看 `c5f8a2c..HEAD` 的已提交修复与文档变更后运行 suggest:docs，避免干净工作区漏掉历史变化。核对旧 `search.mjs` 的 index.writeFiles 调用、当前 getFiles／Node 写出路径和安装版本 Pagefind 1.5.2 的公开类型声明：writeFiles、getFiles 都是 index 的公开方法。更换公开接口不意味着此前用了私有接口；没有修改第三方实现、patch node_modules、monkey patch 或维护 fork。Pagefind 生成索引和浏览器搜索引擎，主题只负责筛选／配置、文件完成衔接和搜索 UI。公开接口与既有 entry 语言元数据仍是实际依赖，相关假设集中在集成层及回归测试中，不声称零耦合。
+
+直接修正文档：AGENTS 与 AI_WORKFLOW 沉淀优先公开接口、禁止依赖源码修改／私有行为补丁、控制集成层大小的维护边界；DOC_SYNC_WORKFLOW 要求核对前后接口性质；ARCHITECTURE、TEMPLATE_ACCEPTANCE、0.27.2 发布账本与 npm README 明确前后均为公开 API。原版本的代码与验收事实不变。CLAUDE 与 Cursor 入口已指向上述中立入口／工作流，消费端 AGENTS 已禁止修改 node_modules，保留薄适配层，不复制一套维护规则。
+
+用户指引复核范围：九语言 README、demo 三篇配置／写作／可选功能教程的 27 篇文章、manifest 实际选用的 27 份 starter 模板，以及 UPGRADING。沿 integration.mjs → project 配置／语言默认值及归一化 → 内容 schema／new-post／new-page／sitemap → 页面／浏览器脚本逐项核对：域名覆盖由包处理；对象深合并、数组替换；默认语言不能关闭；new-post 不覆盖且封面随机；无草稿／预约过滤；更新时间来自文章字段；doctor 包含构建；搜索在 build／preview 生效、按语言隔离且支持单文／全局关闭；分页 random 在浏览器加载时重选。检查 demo／starter 文本一致性与本地链接，未发现本轮需要改变教程操作步骤的偏移。保持教程正文和 updatedDate 不变，不把内部文件写出机制新增为用户安装步骤。
+
+发现并修正 npm README 两处范围不清的旧指导：旧数学段落笼统称更新包不会接入处理器，现明确只有 pre-0.27 旧骨架需要一次迁移，集成版自动接入；机器可读上下文段落仍要求手动把参数传入构建集成，现按 integration.mjs 的实际自动转发行为，指导集成版用户只编辑 site.config.ts，不重复注册导出集成。九语言 README、教程和 UPGRADING 的对应步骤本身已符合这一行为，无需为同步而改写。其他历史发布、视觉／展示清单和元数据规范未发生职责事实变化，跳过修改。
+
+本轮只改文档。未重跑或冒称新跑 0.27.2 的运行时／浏览器验收；本轮新执行检查通过：90 份维护文档元数据、19 份文档本地链接、九语言 27 篇 demo／27 份 starter 教程文本与链接一致性检查；原站 223 个源码／资源文件哈希保持一致。Git 差异仅含 Markdown，未改运行时和依赖实现。证据为忽略目录 pagefind-boundary-doc-inputs.log（显式提交范围）、pagefind-boundary-doc-suggestions.log 与 pagefind-boundary-doc-review.json。文档复核阶段按当时要求保留在本地；随后用户授权提交并推送此批文档，明确不发布 npm。提交和推送沿用既有检查钩子，不重新运行 npm 发布流程，也不运行会切换／提交 starter 的分发同步。已发布 npm 包内 README 不会随仓库文档推送自动改变。
+
 ## 2026-11-10 0.27.2 正式发布交付
 
 用户随后授权正式发布 0.27.2，取代此前“先不发布／push”的约束。修复代码和回归测试保持不变；准备补丁版本、CHANGELOG、npm README 与发布账本，实际交付状态统一记录在 [0.27.2](releases/0.27.2.md)。此前本地调查记录保留当时的状态。九语言 README 与 demo/starter 教程的配置接口未改变，保留仍有效的固定版本选择示例，避免把实现细节变成用户配置步骤。正式流程必须重新执行默认 npm 发布门禁；此前 10 轮单测、400 次并发、14 构建、139 浏览器与升级模拟作为明确标注的已有实现验证，不能替代发布后的远程验收。

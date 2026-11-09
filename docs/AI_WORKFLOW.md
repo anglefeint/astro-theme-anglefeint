@@ -76,6 +76,14 @@ Before editing code, read in this order:
 - For the 0.27 integration architecture, standard routes/config defaults/i18n/build behavior live in the package. Keep the consumer skeleton thin; do not solve package upgrades by overwriting user source/config/media. Pre-0.27 projects intentionally migrate once into a fresh starter.
 - Avoid changing SEO/i18n/high-risk files unless the task truly requires it.
 
+#### Dependency integration boundaries
+
+Prefer the dependency's documented public APIs. Keep configuration mapping, filesystem completion and lifecycle ownership in a small theme-owned integration layer. Do not edit dependency source (including installed files), monkey-patch private behavior, or introduce a modified fork/vendor copy as an integration workaround. Do not make user setup depend on private dependency details. When a public interface cannot satisfy a requirement, record that limitation and evaluate supported upstream releases or alternatives.
+
+Read upstream implementation for diagnosis without changing it. Distinguish a library contract, an observed version-specific defect and our own caller behavior. Verify the before/after APIs against the supported dependency version; do not describe an old public API as private merely because the replacement is public. Keep necessary assumptions about public APIs and generated artifacts local, with regression coverage, rather than claiming there is no dependency coupling.
+
+For Pagefind, both index.writeFiles and index.getFiles are public APIs. Before 0.27.2 the theme awaited writeFiles and immediately read entry metadata. The 0.27.2 integration gets complete buffers with getFiles, awaits Node writes and then publishes its own language manifest. Pagefind still generates the index and browser search engine; our code owns the file-output handoff. No dependency-source modification is involved. See [the architecture](ARCHITECTURE.md#build-integrations-and-seo) and [the release evidence](releases/0.27.2.md).
+
 ### 2. Implement on `main`
 
 - All real feature work, bugfixes, schema changes, runtime script changes, and workflow changes must be implemented on `main`.

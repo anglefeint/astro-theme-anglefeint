@@ -4,7 +4,7 @@ Core package for the Anglefeint Astro theme.
 
 ## 0.27.2 search build completion fix
 
-This patch fixes an intermittent search-index build failure by using Pagefind's public in-memory API and awaiting complete file writes in the theme integration. Pagefind itself is unchanged: no fork, dependency patch or private API. Search settings, index formats, URLs and browser behavior stay the same; no site-config migration is needed for integration starters. See the [release record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.27.2.md) for actual delivery status.
+This patch fixes an intermittent search-index build failure by using Pagefind's public in-memory API and awaiting complete file writes in the theme integration. The previous `writeFiles()` and current `getFiles()` are both public Pagefind APIs; the change is in our file-output handoff, while Pagefind continues to generate indexes and provide browser search. Pagefind itself is unchanged: no fork, dependency patch or private API. Search settings, index formats, URLs and browser behavior stay the same; no site-config migration is needed for integration starters. See the [release record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.27.2.md) for actual delivery status.
 
 ## 0.27.1 pnpm build fix
 
@@ -243,7 +243,7 @@ Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Esca
 
 Rendering happens at build time with local KaTeX styles/fonts and accessible MathML, without a browser math engine. Long display formulas scroll horizontally. Invalid formulas stop the build with a source/error message. Keep titles and descriptions plain text; formulas are excluded from search indexing. Supported math is KaTeX syntax, not complete LaTeX documents.
 
-Older projects need the one-time starter/configuration migration described in the upgrade guide; updating only the theme package does not wire the Markdown processor.
+The 0.27+ integration starter wires the Markdown processor automatically. Only pre-0.27 copied skeletons require the one-time migration described in the upgrade guide; new integration projects do not copy processor or adapter implementations.
 
 ## Static deployment and article statistics
 
@@ -253,4 +253,4 @@ The starter estimates words from source text and defaults tokens to `round(max(w
 
 ### Optional machine-readable context
 
-Pass `aiReadableContent: THEME_CONFIG.aiReadableContent` and `locales: THEME_CONFIG.i18n.locales` to the build integration. In `src/site.config.ts`, configure optional `aiReadableContent.notes` (Markdown) and `aiReadableContent.links` (`{ label, href }[]`), with field-wise overrides at `i18n.locales.<code>.aiReadableContent`. Omitted fields inherit globally; empty strings/arrays hide them. Root indexes use global context; language indexes/full-text and individual Markdown use localized context, separate from article text. See [configuration, link resolution and migration](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context). Policies express author intent, not guaranteed crawler compliance.
+The unified integration automatically forwards machine-readable context and locale settings. In integration starters, edit only `src/site.config.ts`; do not register a second export integration or manually wire these parameters in `astro.config.mjs`. Configure optional `aiReadableContent.notes` (Markdown) and `aiReadableContent.links` (`{ label, href }[]`), with field-wise overrides at `i18n.locales.<code>.aiReadableContent`. Omitted fields inherit globally; empty strings/arrays hide them. Root indexes use global context; language indexes/full-text and individual Markdown use localized context, separate from article text. See [configuration, link resolution and migration](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context). Policies express author intent, not guaranteed crawler compliance.

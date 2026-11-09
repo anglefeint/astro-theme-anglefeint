@@ -59,6 +59,12 @@ Before changing signature effects, identify the intended visual gain, compare ag
 
 Standard routes and default configuration/i18n/build logic are package-owned under `packages/theme/src/routes`, `project` and `integration.mjs`. The starter is thin; do not add copied standard-page or adapter implementations to consumer projects. User articles, site-config values, music/images, custom pages and hosting settings must survive upgrades. The package's upgrade command supports npm schema-1 projects and refuses old copied skeletons; those require a fresh-starter migration. Existing root config/i18n adapters are maintainer diagnostic fixtures, not shipped runtime ownership. Actual delivery status and verification belong in docs/releases/0.27.0.md.
 
+## Third-party dependency boundaries
+
+Use documented public interfaces and keep our integration glue small. Do not edit dependency source (including node_modules), monkey-patch internals, or introduce modified vendor copies/forks as a workaround. Inspect upstream source read-only when diagnosing defects; prefer a correction at our boundary or a compatible upstream release. Keep dependency assumptions localized and covered by integration tests. See [the canonical boundary guidance](docs/AI_WORKFLOW.md#dependency-integration-boundaries).
+
+Pagefind search used the public writeFiles API before 0.27.2 and uses the public getFiles API now. The fix changes our awaited file-output handoff; it does not replace or modify Pagefind's indexing/search implementation.
+
 ## Priority
 
 For local visual iteration, make the requested code changes directly and let the user inspect the running page. Before doing your own optional screenshot/render-and-inspect or visual-measurement step, ask whether the user wants that step; do not automatically run scripts such as `article-first-preview.mjs` after every edit. This consent requirement concerns the agent's visual review only, not ordinary server management, code edits or functional tests. Follow [local visual feedback](docs/AI_WORKFLOW.md#local-visual-feedback-and-consent). Required validation and release gates remain unchanged.
