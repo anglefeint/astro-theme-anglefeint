@@ -12,7 +12,7 @@ sync_targets: [README.md, CLAUDE.md]
 
 ## Integration boundary (0.27.0)
 
-Anglefeint is a static Astro publishing theme distributed as a thin starter plus `@anglefeint/astro-theme`. Code defines implemented behavior; this reference follows it. Version 0.27.0 is a breaking starter transition, not a completed release. See [migration](../UPGRADING.md#0270-integration-starter-breaking-not-yet-published) and [delivery record](releases/0.27.0.md).
+Anglefeint is a static Astro publishing theme distributed as a thin starter plus `@anglefeint/astro-theme`. Code defines implemented behavior; this reference follows it. Version 0.27.0 introduced the breaking starter transition. See [migration](../UPGRADING.md#0270-integration-starter-breaking-not-yet-published), its [delivery record](releases/0.27.0.md), and the optional compatible [0.28.0 feature](releases/0.28.0.md).
 
 The consumer owns articles, assets, music/images, site-config values, custom pages and deployment secrets/settings. The package owns standard pages, defaults/types, configuration/i18n resolution, styles/effects, build integrations and CLI. A normal feature update changes the package instead of asking authors to merge page implementations. The repository root is also the maintainer demo; old root config/i18n adapters remain diagnostic compatibility fixtures, not distributed application dependencies. New starters do not receive them.
 

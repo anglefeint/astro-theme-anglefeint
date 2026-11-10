@@ -12,6 +12,12 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-10 0.28.0 正式交付收尾
+
+本次可选共享评论已发布为 0.28.0，来源 f8a85fe，starter a69a42b。前面的“本地待审／未发布”段落保留为实现阶段的历史记录；实际发布、安装／升级、Linux 与线上验收事实统一见 [0.28.0 发布账本](releases/0.28.0.md)，不另复制一份状态表。
+
+收尾再次按代码与交付事实核对：npm 只接受一次上传，扫描期间只重试读取／下载；源包 308 文件匹配，个人博客真实 0.27.2→0.28.0 升级保留 142 文件，未添加自动合并／删除讨论或改写配置步骤。修正 ARCHITECTURE 残留的 0.27.0“未完成发布”表述，并把 UPGRADING 保留的旧迁移锚点移回 0.27.0 迁移章节，保持既有链接可用。README／demo／starter 教程的内容和默认行为无需再变；收尾只更新主仓库维护／发布文档，无须再次发布 npm。
+
 ## 2026-11-10 可选跨语言 Giscus 与独立评论教程（本地未发布）
 
 以 `05d2bb2a40acca9b476bc0cf2115b3d746b82d4a` 为基线，沿 schema/defaults → project/config/theme 与诊断 adapter → 标准文章路由 → BlogPost → Giscus 官方 client script 核对。shareAcrossLocales 默认 false；普通模式映射、严格匹配和语言默认值不变。显式开启时要求 specific、空 term/number 和 strict 1，文章完整的无语言 slug 动态传入；缺失 slug 或配置冲突明确失败。无 GitHub 写入、讨论合并／删除操作，未修改依赖源码。
