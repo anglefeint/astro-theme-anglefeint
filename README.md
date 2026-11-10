@@ -17,7 +17,7 @@ Automatically generates `llms.txt`, multilingual indexes, full-text bundles and 
 </p>
 
 <p align="center">
-  <a href="#installation">Install</a> · <a href="#setup">Site configuration</a> · <a href="#writing">Write posts</a> · <a href="#upgrade">Upgrade</a> · <a href="#deployment">Build and deploy</a>
+  <a href="#ai-assistant">AI assistant</a> · <a href="#installation">Install</a> · <a href="#setup">Site configuration</a> · <a href="#writing">Write posts</a> · <a href="#upgrade">Upgrade</a> · <a href="#deployment">Build and deploy</a>
 </p>
 
 <p align="center">
@@ -27,6 +27,15 @@ Automatically generates `llms.txt`, multilingual indexes, full-text bundles and 
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="ai-assistant"></a>
+
+## Use an AI assistant
+
+Use Cursor, Codex or Claude Code to configure your site, write posts and customize pages. Start with the current project’s AGENTS.md; code and actual configuration define behavior. CLAUDE.md and Cursor rules point to the same instructions.
+
+- **Blog users (starter)**: Read [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), then the [configuration](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/en/starter-guide-1-configure-your-site.md) / [writing](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/en/starter-guide-2-languages-and-routing.md) guides as needed.
+- **Theme maintainers (main)**: Read [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [AI workflow](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md). Consult [architecture](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md) for implementation structure and follow [doc-sync workflow](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md) to update documentation after code changes.
 
 <a id="installation"></a>
 
@@ -202,13 +211,9 @@ With pnpm, use `pnpm doctor` then `pnpm preview`; the build-only alternative is 
 
 The static output is `dist/`. Configure your host to run `npm run build` and serve `dist/`; follow the [Astro deployment guide](https://docs.astro.build/en/guides/deploy/). Verify your production domain, article, language menu and search after deploying.
 
-## Use an AI assistant
+## AI-readable content
 
-Open this project folder in Cursor, Codex or Claude Code. The starter includes a shared [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), a Claude Code entry and an always-applied Cursor rule. These explain how to work on your blog; no upstream release tools are needed. Start your request with “Read AGENTS.md”, especially if your assistant has not loaded the project instructions. Customize AGENTS.md with your own preferences.
-
-Try: “Read AGENTS.md. Set up my site identity and keep only English enabled; preserve my content.” Or: “Create a Chinese article with slug my-first-post; I will provide the body.” Or: “Add my licensed MP3 files with song titles and artists.” Ask the assistant to run doctor and preview the changed pages. You still choose the content, translations, domain and deployment destination.
-
-**AI-readable content.** The matching starter automatically generates `/llms.txt`, per-language indexes/full-text bundles and article Markdown companions during `npm run build`. No extra configuration is needed; publish all of `dist/` as usual. Files are available after build/preview. Existing projects: see [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+The matching starter automatically generates `/llms.txt`, per-language indexes/full-text bundles and article Markdown companions during `npm run build`. No extra configuration is needed; publish all of `dist/` as usual. Files are available after build/preview. Existing projects: see [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 Optional `aiReadableContent.notes` (Markdown) and `aiReadableContent.links` (`{ label, href }[]`) in `src/site.config.ts` add site-provided context to indexes, full-text bundles and individual Markdown articles. Override either field at `i18n.locales.<code>.aiReadableContent`; omitted fields inherit globally, while `notes: ''` / `links: []` hide them. See [configuration and upgrade details](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 

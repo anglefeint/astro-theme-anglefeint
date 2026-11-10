@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="#installation">安装</a> · <a href="#setup">站点配置</a> · <a href="#writing">写文章</a> · <a href="#upgrade">升级</a> · <a href="#deployment">构建与部署</a>
+  <a href="#ai-assistant">AI 助手</a> · <a href="#installation">安装</a> · <a href="#setup">站点配置</a> · <a href="#writing">写文章</a> · <a href="#upgrade">升级</a> · <a href="#deployment">构建与部署</a>
 </p>
 
 <p align="center">
@@ -27,6 +27,15 @@
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="ai-assistant"></a>
+
+## 使用 AI 助手
+
+建议用 Cursor、Codex 或 Claude Code 配置站点、写文章和定制页面。先读当前项目的 AGENTS.md，以代码和实际配置为准；CLAUDE.md 与 Cursor 规则引用同一套指引。
+
+- **博客用户（starter）**: 从 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) 开始，按需查[配置](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/zh/starter-guide-1-configure-your-site.md)／[写作](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/zh/starter-guide-2-languages-and-routing.md)教程。
+- **主题维护者（main）**: 从 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [AI 工作流](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md) 开始；实现结构查[架构文档](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)，改代码后按[文档同步流程](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md)更新说明。
 
 <a id="installation"></a>
 
@@ -202,13 +211,9 @@ pnpm 用户使用 `pnpm doctor`，再运行 `pnpm preview`；只构建时则使�
 
 静态输出位于 `dist/`。在托管平台设置构建命令 `npm run build`、输出目录 `dist/`，按照 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/) 发布；上线后检查实际域名、文章、语言菜单和搜索。
 
-## 使用 AI 助手
+## 支持 AI 阅读的内容
 
-在 Cursor、Codex 或 Claude Code 中打开项目文件夹。starter 附带统一的 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)、Claude Code 入口和自动应用的 Cursor 规则，说明如何管理自己的博客，无需使用上游发布工具。请求可以先写“阅读 AGENTS.md”，尤其当助手尚未加载项目指引时；你也可以按自己的偏好修改这份文件。
-
-例如：“阅读 AGENTS.md，设置我的站点信息，只保留中文，保留已有内容。”“新建 slug 为 my-first-post 的中文文章，正文由我提供。”“添加我有权使用的 MP3，填写歌名和作者。”让助手运行 doctor 并预览修改后的页面；正文、翻译、域名和部署目标仍由你决定。
-
-**支持 AI 阅读的内容。** 配套 starter 在 `npm run build` 时自动生成 `/llms.txt`、各语言索引与全文合集，以及文章 Markdown 版本，无需额外配置。照常部署整个 `dist/`；这些文件在构建后及 preview 中可用。已有项目见 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+配套 starter 在 `npm run build` 时自动生成 `/llms.txt`、各语言索引与全文合集，以及文章 Markdown 版本，无需额外配置。照常部署整个 `dist/`；这些文件在构建后及 preview 中可用。已有项目见 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 可在 `src/site.config.ts` 配置 `aiReadableContent.notes`（Markdown 说明）和 `aiReadableContent.links`（`{ label, href }[]`），自动加入索引、全文合集及单篇 Markdown。语言覆盖放在 `i18n.locales.<code>.aiReadableContent`；未配置字段回退全局，`notes: ''` / `links: []` 显式隐藏。参见[配置与升级说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 
