@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="#installation">インストール</a> · <a href="#setup">サイト設定</a> · <a href="#writing">記事を書く</a> · <a href="#upgrade">アップグレード</a> · <a href="#deployment">ビルドと公開</a>
+  <a href="#ai-assistant">AI アシスタント</a> · <a href="#installation">インストール</a> · <a href="#setup">サイト設定</a> · <a href="#writing">記事を書く</a> · <a href="#upgrade">アップグレード</a> · <a href="#deployment">ビルドと公開</a>
 </p>
 
 <p align="center">
@@ -27,6 +27,15 @@
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="ai-assistant"></a>
+
+## AI アシスタントを使う
+
+Cursor、Codex、Claude Code でサイト設定、記事作成、ページのカスタマイズを進められます。まず現在のプロジェクトの AGENTS.md を読み、コードと実際の設定を基準にしてください。CLAUDE.md と Cursor ルールも同じ指示を参照します。
+
+- **ブログ利用者（starter）**: [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) から始め、必要に応じて[設定](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/ja/starter-guide-1-configure-your-site.md)／[執筆](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/ja/starter-guide-2-languages-and-routing.md)ガイドを参照してください。
+- **テーマ開発者（main）**: [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [AI ワークフロー](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md) を読みます。実装構造は[アーキテクチャ](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)、コード変更後の説明更新は[文書同期手順](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md)に従ってください。
 
 <a id="installation"></a>
 
@@ -204,13 +213,9 @@ pnpm では `pnpm doctor`、次に `pnpm preview` を使います。ビルドの
 
 静的ファイルは `dist/` に出力されます。ホストのビルドコマンドを `npm run build`、出力先を `dist/` に設定し、[Astro デプロイガイド](https://docs.astro.build/en/guides/deploy/)に従って公開します。本番ドメイン、記事、言語メニュー、検索を確認してください。
 
-## AI アシスタントを使う
+## AI が読み取れるコンテンツ
 
-Cursor、Codex、Claude Code でプロジェクトフォルダーを開いてください。starter には共通の [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)、Claude Code の入口、常時適用する Cursor ルールが含まれます。ブログ向けの手順であり、上流の公開ツールは不要です。指示が読み込まれていない場合は「AGENTS.md を読んで」と依頼してください。自分の方針を追記できます。
-
-例：「AGENTS.md を読んで、サイト情報を設定し、日本語だけを有効にして。既存の記事は残して」「my-first-post という日本語記事を作って。本文はこちらで用意する」「使用許可のある MP3 を曲名と作者付きで追加して」。doctor と変更ページのプレビューを依頼してください。内容、翻訳、ドメイン、公開先は自分で決めます。
-
-**AI が読み取れるコンテンツ。** 対応する starter は `npm run build` 時に `/llms.txt`、言語別の索引・全文ファイル、記事の Markdown 版を自動生成します。追加設定は不要です。通常どおり `dist/` 全体を公開してください。生成ファイルはビルド後と preview で利用できます。既存プロジェクトは [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) を参照してください。
+対応する starter は `npm run build` 時に `/llms.txt`、言語別の索引・全文ファイル、記事の Markdown 版を自動生成します。追加設定は不要です。通常どおり `dist/` 全体を公開してください。生成ファイルはビルド後と preview で利用できます。既存プロジェクトは [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) を参照してください。
 
 `src/site.config.ts` の任意設定 `aiReadableContent.notes`（Markdown）と `aiReadableContent.links`（`{ label, href }[]`）は、索引・全文・各記事の Markdown にサイトの補足情報を追加します。`i18n.locales.<code>.aiReadableContent` で項目ごとに上書きでき、省略時は全体設定を継承し、`notes: ''` / `links: []` で非表示にします。[詳細](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 

@@ -13,7 +13,7 @@ Erzeugt automatisch `llms.txt`, mehrsprachige Indizes, Volltextsammlungen und Ar
 [Demo](https://demo.anglefeint.com/de/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
-  <a href="#installation">Installation</a> · <a href="#setup">Website konfigurieren</a> · <a href="#writing">Beiträge</a> · <a href="#upgrade">Aktualisieren</a> · <a href="#deployment">Bauen und veröffentlichen</a>
+  <a href="#ai-assistant">KI-Assistent</a> · <a href="#installation">Installation</a> · <a href="#setup">Website konfigurieren</a> · <a href="#writing">Beiträge</a> · <a href="#upgrade">Aktualisieren</a> · <a href="#deployment">Bauen und veröffentlichen</a>
 </p>
 
 <p align="center">
@@ -21,6 +21,15 @@ Erzeugt automatisch `llms.txt`, mehrsprachige Indizes, Volltextsammlungen und Ar
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="ai-assistant"></a>
+
+## Mit einem KI-Assistenten arbeiten
+
+Nutze Cursor, Codex oder Claude Code für Website-Einstellungen, Beiträge und eigene Seiten. Lies zuerst die AGENTS.md des aktuellen Projekts; Code und tatsächliche Konfiguration bestimmen das Verhalten. CLAUDE.md und Cursor-Regeln verweisen auf dieselben Anweisungen.
+
+- **Blog-Nutzer (starter)**: Beginne mit [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) und lies bei Bedarf die Anleitungen zu [Konfiguration](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/de/starter-guide-1-configure-your-site.md) / [Schreiben](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/de/starter-guide-2-languages-and-routing.md).
+- **Theme-Maintainer (main)**: Lies [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [KI-Workflow](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md). Nutze die [Architekturdokumentation](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md) für den Implementierungsaufbau und den [Dokumentationsabgleich](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md), um Dokumentation nach Codeänderungen zu aktualisieren.
 
 <a id="installation"></a>
 
@@ -151,13 +160,9 @@ Optionaler Matrix-Übergang: `theme.effects.enableHomePassage` ist standardmäß
 
 Ab 1440px Bildschirmbreite zeigt das Terminal unten rechts `Knock, knock.`. Der Text lässt sich auswählen, kopieren und scrollen; die separate Schlüsselloch-Schaltfläche startet die gemeinsame Flurvorschau. Setze `i18n.locales.en.messages.home.transmission` in `src/site.config.ts` für alle Sprachen und überschreibe bei Bedarf `i18n.locales.<code>.messages.home.transmission`. Reihenfolge: Konfiguration der aktuellen Sprache → englische Konfiguration → `Knock, knock.`; unabhängig vom üblichen Fallback der UI-Übersetzungen. Danach neu bauen und bereitstellen.
 
-## Mit einem KI-Assistenten arbeiten
+## KI-lesbare Inhalte
 
-Öffne den Projektordner in Cursor, Codex oder Claude Code. Der Starter enthält eine gemeinsame [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), einen Claude-Code-Einstieg und eine immer angewendete Cursor-Regel. Die Hinweise gelten für deinen Blog; Veröffentlichungstools des ursprünglichen Projekts sind nicht nötig. Beginne mit „Lies AGENTS.md“, falls die Hinweise nicht geladen wurden. Ergänze deine eigenen Wünsche.
-
-Beispiele: „Lies AGENTS.md, richte meine Website ein und aktiviere nur Deutsch; erhalte meine Inhalte.“ „Erstelle einen deutschen Artikel mit dem Slug my-first-post; den Text liefere ich.“ „Füge meine erlaubten MP3-Dateien mit Titel und Urheber hinzu.“ Bitte um doctor und eine Vorschau der geänderten Seiten. Inhalte, Übersetzungen, Domain und Veröffentlichungsziel bestimmst du.
-
-**KI-lesbare Inhalte.** Der passende Starter erzeugt bei `npm run build` automatisch `/llms.txt`, sprachbezogene Indizes und Volltextdateien sowie Markdown-Versionen der Beiträge. Zusätzliche Konfiguration ist nicht nötig; veröffentliche wie gewohnt den gesamten Inhalt von `dist/`. Die Dateien stehen nach dem Build und in preview bereit. Für bestehende Projekte siehe [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+Der passende Starter erzeugt bei `npm run build` automatisch `/llms.txt`, sprachbezogene Indizes und Volltextdateien sowie Markdown-Versionen der Beiträge. Zusätzliche Konfiguration ist nicht nötig; veröffentliche wie gewohnt den gesamten Inhalt von `dist/`. Die Dateien stehen nach dem Build und in preview bereit. Für bestehende Projekte siehe [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 Mit `aiReadableContent.notes` (Markdown) und `aiReadableContent.links` (`{ label, href }[]`) in `src/site.config.ts` lassen sich Hinweise in Indizes, Volltextsammlungen und einzelne Markdown-Artikel aufnehmen. Unter `i18n.locales.<code>.aiReadableContent` kann jedes Feld überschrieben werden: fehlende Felder erben den globalen Wert; `notes: ''` / `links: []` blenden ihn aus. [Details](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 

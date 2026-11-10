@@ -13,7 +13,7 @@ Gera automaticamente `llms.txt`, índices multilíngues, coletâneas de texto co
 [Demo](https://demo.anglefeint.com/pt-br/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
-  <a href="#installation">Instalação</a> · <a href="#setup">Configuração do site</a> · <a href="#writing">Escrever</a> · <a href="#upgrade">Atualizar</a> · <a href="#deployment">Compilar e publicar</a>
+  <a href="#ai-assistant">Assistente de IA</a> · <a href="#installation">Instalação</a> · <a href="#setup">Configuração do site</a> · <a href="#writing">Escrever</a> · <a href="#upgrade">Atualizar</a> · <a href="#deployment">Compilar e publicar</a>
 </p>
 
 <p align="center">
@@ -21,6 +21,15 @@ Gera automaticamente `llms.txt`, índices multilíngues, coletâneas de texto co
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="ai-assistant"></a>
+
+## Usar um assistente de IA
+
+Use Cursor, Codex ou Claude Code para configurar o site, escrever artigos e personalizar páginas. Comece pelo AGENTS.md do projeto atual; o código e a configuração real definem o comportamento. CLAUDE.md e as regras do Cursor apontam para as mesmas instruções.
+
+- **Usuários do blog (starter)**: Comece por [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) e consulte os guias de [configuração](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/pt-br/starter-guide-1-configure-your-site.md) / [escrita](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/pt-br/starter-guide-2-languages-and-routing.md) conforme a tarefa.
+- **Manutenção do tema (main)**: Leia [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [fluxo de IA](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md). Consulte a [arquitetura](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md) e siga o [fluxo de sincronização da documentação](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md) para atualizar a documentação após mudar o código.
 
 <a id="installation"></a>
 
@@ -151,13 +160,9 @@ Passagem Matrix opcional: `theme.effects.enableHomePassage` é `false` por padr�
 
 Em telas de 1440px ou mais, o terminal inferior direito mostra `Knock, knock.`. O texto pode ser selecionado, copiado e rolado; o botão separado com fechadura inicia o corredor compartilhado. Configure `i18n.locales.en.messages.home.transmission` em `src/site.config.ts` para todos os idiomas e sobrescreva apenas os necessários em `i18n.locales.<code>.messages.home.transmission`. Ordem: configuração do idioma atual → configuração inglesa → `Knock, knock.`; difere da cadeia normal de traduções da interface. Após alterar, gere o build e publique novamente.
 
-## Usar um assistente de IA
+## Conteúdo legível por IA
 
-Abra a pasta do projeto no Cursor, Codex ou Claude Code. O starter inclui um [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) compartilhado, uma entrada para Claude Code e uma regra do Cursor sempre aplicada. São instruções para seu blog; ferramentas de publicação do projeto original não são necessárias. Comece com “Leia AGENTS.md” se o assistente não carregou as instruções. Você pode acrescentar suas preferências.
-
-Exemplos: “Leia AGENTS.md, configure meu site e mantenha apenas pt-br; preserve meu conteúdo”. “Crie um artigo em português com slug my-first-post; eu fornecerei o texto”. “Adicione meus MP3 autorizados com título e artista”. Peça para executar doctor e revisar as páginas em preview. Você decide conteúdo, traduções, domínio e destino da publicação.
-
-**Conteúdo legível por IA.** O starter correspondente gera automaticamente `/llms.txt`, índices e arquivos de texto completo por idioma e versões Markdown dos artigos durante `npm run build`. Não é necessária configuração extra: publique todo o conteúdo de `dist/` como de costume. Os arquivos ficam disponíveis após o build e no preview. Para projetos existentes, veja [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+O starter correspondente gera automaticamente `/llms.txt`, índices e arquivos de texto completo por idioma e versões Markdown dos artigos durante `npm run build`. Não é necessária configuração extra: publique todo o conteúdo de `dist/` como de costume. Os arquivos ficam disponíveis após o build e no preview. Para projetos existentes, veja [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
 
 As opções `aiReadableContent.notes` (Markdown) e `aiReadableContent.links` (`{ label, href }[]`) em `src/site.config.ts` acrescentam contexto aos índices, coletâneas e artigos Markdown. Cada campo pode ser substituído em `i18n.locales.<code>.aiReadableContent`: campos omitidos herdam o valor global; `notes: ''` / `links: []` os ocultam. [Detalhes](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 

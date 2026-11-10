@@ -13,7 +13,7 @@
 [Demo](https://demo.anglefeint.com/zh-hant/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
 
 <p align="center">
-  <a href="#installation">安裝</a> · <a href="#setup">網站設定</a> · <a href="#writing">寫文章</a> · <a href="#upgrade">升級</a> · <a href="#deployment">建置與部署</a>
+  <a href="#ai-assistant">AI 助手</a> · <a href="#installation">安裝</a> · <a href="#setup">網站設定</a> · <a href="#writing">寫文章</a> · <a href="#upgrade">升級</a> · <a href="#deployment">建置與部署</a>
 </p>
 
 <p align="center">
@@ -21,6 +21,15 @@
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="ai-assistant"></a>
+
+## 使用 AI 助手
+
+建議用 Cursor、Codex 或 Claude Code 設定站點、撰寫文章和自訂頁面。先讀目前專案的 AGENTS.md，以程式碼和實際設定為準；CLAUDE.md 與 Cursor 規則引用同一套指引。
+
+- **部落格使用者（starter）**: 從 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) 開始，依需要查[設定](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/zh-hant/starter-guide-1-configure-your-site.md)／[寫作](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/zh-hant/starter-guide-2-languages-and-routing.md)教學。
+- **主題維護者（main）**: 從 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [AI 工作流程](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md) 開始；實作結構查[架構文件](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)，修改程式碼後依[文件同步流程](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md)更新說明。
 
 <a id="installation"></a>
 
@@ -153,13 +162,9 @@ Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他�
 
 寬螢幕（1440px 以上）右下角終端預設顯示 `Knock, knock.`。文字可選取複製及捲動，點擊獨立鑰匙孔按鈕才解鎖共享走廊。在 `src/site.config.ts` 設定 `i18n.locales.en.messages.home.transmission` 即可供全部語言使用；需要不同文字時，再設定 `i18n.locales.<code>.messages.home.transmission`。順序為目前語言設定 → 英文設定 → `Knock, knock.`，與一般介面翻譯的回退規則不同。修改後重新建置並部署。
 
-## 使用 AI 助手
+## 支援 AI 閱讀的內容
 
-在 Cursor、Codex 或 Claude Code 中開啟專案資料夾。starter 附帶統一的 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)、Claude Code 入口與自動套用的 Cursor 規則，說明如何管理自己的部落格，無需使用上游發布工具。請求可先寫「閱讀 AGENTS.md」，尤其當助手尚未載入專案指引時；也可按自己的偏好修改這份檔案。
-
-例如：「閱讀 AGENTS.md，設定站點資訊，只保留繁體中文，保留既有內容。」「新增 slug 為 my-first-post 的繁體中文文章，正文由我提供。」「加入我有權使用的 MP3，填入歌名與作者。」讓助手執行 doctor 並預覽修改後的頁面；正文、翻譯、網域與部署目標仍由你決定。
-
-**支援 AI 閱讀的內容。** 配套 starter 在 `npm run build` 時自動產生 `/llms.txt`、各語言索引與全文合集，以及文章 Markdown 版本，無需額外設定。照常部署整個 `dist/`；這些檔案在建置後及 preview 中可用。既有專案見 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+配套 starter 在 `npm run build` 時自動產生 `/llms.txt`、各語言索引與全文合集，以及文章 Markdown 版本，無需額外設定。照常部署整個 `dist/`；這些檔案在建置後及 preview 中可用。既有專案見 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
 
 可在 `src/site.config.ts` 設定 `aiReadableContent.notes`（Markdown 說明）與 `aiReadableContent.links`（`{ label, href }[]`），自動加入索引、全文合集及單篇 Markdown。語言覆寫放在 `i18n.locales.<code>.aiReadableContent`；未設定欄位沿用全域值，`notes: ''` / `links: []` 明確隱藏。參見[設定與升級說明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 

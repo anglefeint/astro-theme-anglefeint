@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="#installation">설치</a> · <a href="#setup">사이트 설정</a> · <a href="#writing">글쓰기</a> · <a href="#upgrade">업그레이드</a> · <a href="#deployment">빌드와 배포</a>
+  <a href="#ai-assistant">AI 도우미</a> · <a href="#installation">설치</a> · <a href="#setup">사이트 설정</a> · <a href="#writing">글쓰기</a> · <a href="#upgrade">업그레이드</a> · <a href="#deployment">빌드와 배포</a>
 </p>
 
 <p align="center">
@@ -27,6 +27,15 @@
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
+
+<a id="ai-assistant"></a>
+
+## AI 도우미 사용
+
+Cursor, Codex 또는 Claude Code로 사이트 설정, 글 작성, 페이지 맞춤 작업을 진행할 수 있습니다. 현재 프로젝트의 AGENTS.md부터 읽고 실제 코드와 설정을 기준으로 삼으세요. CLAUDE.md와 Cursor 규칙도 같은 지침을 참조합니다.
+
+- **블로그 사용자 (starter)**: [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)부터 읽고 필요에 따라 [설정](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/ko/starter-guide-1-configure-your-site.md) / [글쓰기](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/ko/starter-guide-2-languages-and-routing.md) 가이드를 참고하세요.
+- **테마 유지보수자 (main)**: [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [AI 작업 흐름](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md) 순서로 읽으세요. 구현 구조는 [아키텍처 문서](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)에서 확인하고, 코드 변경 후 설명은 [문서 동기화 절차](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md)에 따라 갱신하세요.
 
 <a id="installation"></a>
 
@@ -204,13 +213,9 @@ pnpm에서는 `pnpm doctor` 다음에 `pnpm preview`를 실행하세요. 빌드�
 
 정적 출력은 `dist/`에 있습니다. 호스팅의 빌드 명령은 `npm run build`, 출력 디렉터리는 `dist/`로 지정하고 [Astro 배포 가이드](https://docs.astro.build/en/guides/deploy/)를 따르세요. 배포 후 실제 도메인, 글, 언어 메뉴와 검색을 확인하세요.
 
-## AI 도우미 사용
+## AI가 읽을 수 있는 콘텐츠
 
-Cursor, Codex 또는 Claude Code에서 프로젝트 폴더를 여세요. starter에는 공통 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md), Claude Code 진입 파일과 항상 적용되는 Cursor 규칙이 포함됩니다. 개인 블로그 작업 지침이므로 상위 프로젝트의 배포 도구는 필요하지 않습니다. 지침이 로드되지 않았다면 “AGENTS.md를 읽어 주세요”로 시작하세요. 자신의 선호 사항을 추가해도 됩니다.
-
-예: “AGENTS.md를 읽고 사이트 정보를 설정해 주세요. 한국어만 켜고 기존 콘텐츠는 보존하세요.” “my-first-post라는 한국어 글을 만들어 주세요. 본문은 제가 제공합니다.” “사용 권한이 있는 MP3를 곡명과 아티스트와 함께 추가하세요.” doctor 실행과 변경 페이지 미리보기를 요청하세요. 콘텐츠, 번역, 도메인과 배포 대상은 직접 결정합니다.
-
-**AI가 읽을 수 있는 콘텐츠.** 해당 starter는 `npm run build` 시 `/llms.txt`, 언어별 색인·전체 본문 파일, 글의 Markdown 버전을 자동 생성합니다. 추가 설정 없이 평소처럼 `dist/` 전체를 배포하면 됩니다. 생성 파일은 빌드 후와 preview에서 사용할 수 있습니다. 기존 프로젝트는 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
+해당 starter는 `npm run build` 시 `/llms.txt`, 언어별 색인·전체 본문 파일, 글의 Markdown 버전을 자동 생성합니다. 추가 설정 없이 평소처럼 `dist/` 전체를 배포하면 됩니다. 생성 파일은 빌드 후와 preview에서 사용할 수 있습니다. 기존 프로젝트는 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
 
 `src/site.config.ts`의 선택 설정 `aiReadableContent.notes`(Markdown)와 `aiReadableContent.links`(`{ label, href }[]`)로 색인, 전체 본문 모음, 개별 Markdown에 사이트 설명을 추가할 수 있습니다. `i18n.locales.<code>.aiReadableContent`에서 필드별로 재정의하며, 생략하면 전역 설정을 상속하고 `notes: ''` / `links: []`이면 숨깁니다. [자세히](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 
