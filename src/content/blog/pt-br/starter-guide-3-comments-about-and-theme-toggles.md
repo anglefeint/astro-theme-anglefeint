@@ -26,21 +26,7 @@ O arquivo completo é baixado antes de tocar; arquivos grandes aumentam espera e
 
 ## Comentários Giscus
 
-Prepare um repositório público com Discussions, instale o aplicativo e obtenha os IDs em [giscus.app](https://giscus.app/).
-
-```ts
-theme: {
-  comments: {
-    enabled: true, repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID', category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID', mapping: 'pathname', lang: '',
-  },
-},
-```
-
-Substitua os IDs e a categoria. Não cole um script em cada artigo. Campos essenciais vazios ocultam o componente. lang: '' acompanha o idioma: pt-br usa pt, zh-hant usa zh-TW e zh usa zh-CN. O padrão é inglês fixo.
-
-mapping: 'pathname' associa discussões ao caminho. 'specific' exige term; 'number' exige number como texto com inteiro positivo. Valores inválidos causam erro. strict e reactionsEnabled usam '0' ou '1'. Se não aparecer, verifique IDs, permissões, conexão e bloqueios do navegador.
+[Guia de comentários](/pt-br/blog/starter-guide-4-giscus-comments/)
 
 ## Página Sobre
 

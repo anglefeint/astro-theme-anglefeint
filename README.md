@@ -363,6 +363,8 @@ Development mode and localhost/loopback previews do not send data. Remote previe
 
 ### Optional: Giscus Comments
 
+`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
+
 Comments are disabled by default. To enable:
 
 1. In `src/site.config.ts`, set `theme.comments.enabled = true`.
@@ -372,8 +374,9 @@ Comments are disabled by default. To enable:
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. Optionally customize:
+   - `theme.comments.shareAcrossLocales` (`false`)
    - `theme.comments.mapping`
-   - `theme.comments.term` (required when `mapping = "specific"`)
+   - `theme.comments.term` (required when `mapping = "specific"`) — `shareAcrossLocales: false`
    - `theme.comments.number` (required when `mapping = "number"`)
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
@@ -384,9 +387,33 @@ Comments are disabled by default. To enable:
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-Missing core IDs hides the comments block. When comments are enabled, an empty `term` for `mapping="specific"` or an invalid positive-integer `number` for `mapping="number"` throws a configuration error and can stop dev/build.
+`shareAcrossLocales: false`: Missing core IDs hides the comments block. When comments are enabled, an empty `term` for `mapping="specific"` or an invalid positive-integer `number` for `mapping="number"` throws a configuration error and can stop dev/build.
 
 The CLI uses enabled locales from the merged config. Config errors stop generation; `--locales` or `ANGLEFEINT_LOCALES` explicitly overrides that lookup.
+
+Comments and cross-language sharing are off by default. For ordinary path-based comments, use the setup above. To share one discussion across translations, keep your repository/category fields and replace the mapping options with:
+
+```ts
+theme: {
+  comments: {
+    // Keep your enabled, repo, repoId, category and categoryId values.
+    shareAcrossLocales: true,
+    mapping: 'specific',
+    term: '',
+    number: '',
+    strict: '1',
+    lang: '',
+  },
+},
+```
+
+In shared mode, mapping must be specific, term and number must be empty, and strict must be 1. The article supplies its own locale-independent slug as data-term. For example, nine translations use cypherpunk-ideals-ai-and-the-future-of-crypto; guides/setup and other/setup remain different discussions. A missing slug is an error. Translations must use identical slugs. lang: empty follows the page language; an explicit lang remains fixed. Comments are not translated. Share only discussions and reactions.
+
+When sharing is off, custom mapping/term/number/strict retain their current behavior: specific requires a nonempty term and number requires a positive integer string. When sharing is on, conflicting mapping, nonempty term/number or strict other than 1 causes a configuration error while comments are enabled. Open two translations and another article to check the discussion association. Visitors need GitHub authorization to comment. Merge these fields into your existing comments object; do not replace unrelated settings.
+
+Existing discussions are not automatically merged, moved or deleted. Enabling sharing can select a different discussion, so old comments may not appear there. Before switching, record your original mapping, term, number and strict. To restore the previous association, set shareAcrossLocales: false and restore those exact values. If you need old comments in the shared discussion, review and migrate manually on GitHub; the theme performs no migration.
+
+[Comments setup guide](https://demo.anglefeint.com/en/blog/starter-guide-4-giscus-comments/)
 
 ## Configuration Surface
 

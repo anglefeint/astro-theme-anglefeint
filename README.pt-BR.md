@@ -314,6 +314,8 @@ O modo de desenvolvimento e as prévias em localhost/loopback não enviam dados.
 
 ### Comentários Giscus
 
+`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
+
 Prepare um repositório público com Discussions, instale o aplicativo e obtenha os IDs em [giscus.app](https://giscus.app/).
 
 ```ts
@@ -328,7 +330,31 @@ theme: {
 
 Substitua os IDs e a categoria. Não cole um script em cada artigo. Campos essenciais vazios ocultam o componente. lang: '' acompanha o idioma: pt-br usa pt, zh-hant usa zh-TW e zh usa zh-CN. O padrão é inglês fixo.
 
-mapping: 'pathname' associa discussões ao caminho. 'specific' exige term; 'number' exige number como texto com inteiro positivo. Valores inválidos causam erro. strict e reactionsEnabled usam '0' ou '1'. Se não aparecer, verifique IDs, permissões, conexão e bloqueios do navegador.
+`shareAcrossLocales: false`: mapping: 'pathname' associa discussões ao caminho. 'specific' exige term; 'number' exige number como texto com inteiro positivo. Valores inválidos causam erro. strict e reactionsEnabled usam '0' ou '1'. Se não aparecer, verifique IDs, permissões, conexão e bloqueios do navegador.
+
+Comentários e compartilhamento estão desativados por padrão. Para comentários por caminho, use a configuração acima. Para compartilhar uma discussão entre traduções, mantenha os dados do repositório e da categoria e substitua as opções de associação por:
+
+```ts
+theme: {
+  comments: {
+    // Mantenha seus valores de enabled, repo, repoId, category e categoryId.
+    shareAcrossLocales: true,
+    mapping: 'specific',
+    term: '',
+    number: '',
+    strict: '1',
+    lang: '',
+  },
+},
+```
+
+O compartilhamento exige mapping specific, term e number vazios e strict como texto 1. Cada artigo fornece a data-term seu slug completo sem o idioma. As nove traduções usam cypherpunk-ideals-ai-and-the-future-of-crypto; guides/setup e other/setup continuam sendo discussões distintas. Um slug ausente causa erro. As traduções precisam do mesmo slug. lang vazio acompanha o idioma da página; um valor explícito o fixa. O texto não é traduzido: apenas discussão e reações são compartilhadas.
+
+Sem compartilhamento, mapping, term, number e strict mantêm o comportamento atual: specific exige term não vazio; number exige inteiro positivo como texto. Com comentários e compartilhamento ativos, mapping incompatível, term/number não vazios ou strict diferente de 1 geram erro claro. Confira duas traduções e outro artigo. Comentar exige autorização do GitHub. Integre os campos ao objeto comments sem substituir outras configurações.
+
+Discussões existentes não são mescladas, movidas ou apagadas automaticamente. Ativar o compartilhamento pode selecionar outra discussão, sem mostrar os comentários antigos nela. Salve mapping, term, number e strict antes da mudança. Para restaurar a associação anterior, use shareAcrossLocales: false e recupere os valores originais. Se precisar transferir comentários, avalie e faça isso manualmente no GitHub; o tema não faz migração.
+
+[Guia de comentários](https://demo.anglefeint.com/pt-br/blog/starter-guide-4-giscus-comments/)
 
 ### Página Sobre
 

@@ -26,21 +26,7 @@ theme: {
 
 ## Комментарии Giscus
 
-Подготовьте публичный репозиторий с Discussions, установите приложение и получите ID на [giscus.app](https://giscus.app/).
-
-```ts
-theme: {
-  comments: {
-    enabled: true, repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID', category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID', mapping: 'pathname', lang: '',
-  },
-},
-```
-
-Замените ID и категорию. Не вставляйте скрипт в каждую статью. Пустые обязательные поля скрывают блок. lang: '' следует языку статьи: pt-br использует pt, zh-hant — zh-TW, zh — zh-CN. По умолчанию фиксирован английский.
-
-mapping: 'pathname' связывает обсуждения с путём. 'specific' требует term, 'number' — положительное целое число строкой в number. Неверные значения вызывают ошибку. strict и reactionsEnabled используют '0' или '1'. Проверяйте ID, разрешения, сеть и блокировки браузера.
+[Настройка комментариев](/ru/blog/starter-guide-4-giscus-comments/)
 
 ## Страница автора
 

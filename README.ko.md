@@ -357,6 +357,8 @@ Google Analytics → 관리 → 데이터 스트림 → 웹 스트림에서 **�
 
 ### 선택: Giscus 댓글
 
+`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
+
 댓글은 기본적으로 비활성화되어 있습니다. 활성화하려면:
 
 1. `src/site.config.ts` 에서 `theme.comments.enabled = true` 로 설정합니다.
@@ -366,8 +368,9 @@ Google Analytics → 관리 → 데이터 스트림 → 웹 스트림에서 **�
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. 선택 항목:
+   - `theme.comments.shareAcrossLocales` (`false`)
    - `theme.comments.mapping`
-   - `theme.comments.term` (`mapping = "specific"` 일 때 필수)
+   - `theme.comments.term` (`mapping = "specific"` 일 때 필수) — `shareAcrossLocales: false`
    - `theme.comments.number` (`mapping = "number"` 일 때 필수)
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
@@ -378,9 +381,33 @@ Google Analytics → 관리 → 데이터 스트림 → 웹 스트림에서 **�
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-핵심 ID가 없으면 댓글을 표시하지 않습니다. 댓글 활성화 시 `mapping="specific"`의 `term`이 비어 있거나 `mapping="number"`의 `number`가 양의 정수 문자열이 아니면 설정 오류로 개발 서버 또는 빌드가 중단될 수 있습니다.
+`shareAcrossLocales: false`: 핵심 ID가 없으면 댓글을 표시하지 않습니다. 댓글 활성화 시 `mapping="specific"`의 `term`이 비어 있거나 `mapping="number"`의 `number`가 양의 정수 문자열이 아니면 설정 오류로 개발 서버 또는 빌드가 중단될 수 있습니다.
 
 CLI는 병합된 설정에서 활성화된 언어를 사용합니다. 설정 오류는 생성을 중단하며, 명시적인 `--locales` 또는 `ANGLEFEINT_LOCALES`는 설정을 읽지 않고 언어를 지정합니다.
+
+댓글과 언어 간 공유는 기본적으로 꺼져 있습니다. 경로별 댓글은 위 설정을 사용하세요. 번역끼리 하나의 토론을 공유하려면 저장소와 카테고리 값을 유지하고 매핑 옵션을 다음과 같이 바꾸세요:
+
+```ts
+theme: {
+  comments: {
+    // 기존 enabled, repo, repoId, category, categoryId 값을 유지하세요.
+    shareAcrossLocales: true,
+    mapping: 'specific',
+    term: '',
+    number: '',
+    strict: '1',
+    lang: '',
+  },
+},
+```
+
+공유 모드에서는 mapping이 specific, term과 number가 빈 문자열, strict가 문자열 1이어야 합니다. 글이 언어 접두사가 없는 전체 slug를 data-term으로 전달합니다. 아홉 언어에서 cypherpunk-ideals-ai-and-the-future-of-crypto를 함께 사용합니다. guides/setup과 other/setup은 서로 다른 토론입니다. slug가 없으면 오류가 발생합니다. 번역에는 같은 slug를 사용하세요. lang이 비어 있으면 페이지 언어를 따르고, 지정하면 고정됩니다. 댓글 본문은 번역하지 않고 토론과 반응을 공유합니다.
+
+공유를 끄면 사용자 지정 mapping, term, number, strict는 그대로 동작합니다. specific은 비어 있지 않은 term, number는 양의 정수 문자열이 필요합니다. 공유와 댓글이 켜진 상태에서 잘못된 mapping, 비어 있지 않은 term/number, 1이 아닌 strict는 설정 오류입니다. 번역 두 개와 다른 글에서 연결을 확인하세요. 댓글 작성에는 GitHub 인증이 필요합니다. 기존 comments 객체에 병합하고 다른 설정을 덮어쓰지 마세요.
+
+기존 토론을 자동으로 합치거나 이동하거나 삭제하지 않습니다. 공유를 켜면 다른 토론에 연결되어 이전 댓글이 보이지 않을 수 있습니다. 변경 전에 mapping, term, number, strict를 저장하세요. 복원하려면 shareAcrossLocales: false로 설정하고 원래 값을 되돌리세요. 기존 댓글의 이전이 필요하면 GitHub에서 직접 검토하고 처리하세요. 테마는 자동 이전하지 않습니다.
+
+[댓글 설정 가이드](https://demo.anglefeint.com/ko/blog/starter-guide-4-giscus-comments/)
 
 ## 설정 표면
 

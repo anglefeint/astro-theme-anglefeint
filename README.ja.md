@@ -357,6 +357,8 @@ Google Analytics → 管理 → データストリーム → ウェブストリ�
 
 ### 任意: Giscus コメント
 
+`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
+
 コメントはデフォルトで無効です。有効化するには:
 
 1. `src/site.config.ts` で `theme.comments.enabled = true` を設定。
@@ -366,8 +368,9 @@ Google Analytics → 管理 → データストリーム → ウェブストリ�
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. 任意項目:
+   - `theme.comments.shareAcrossLocales` (`false`)
    - `theme.comments.mapping`
-   - `theme.comments.term`（`mapping = "specific"` のとき必須）
+   - `theme.comments.term`（`mapping = "specific"` のとき必須） — `shareAcrossLocales: false`
    - `theme.comments.number`（`mapping = "number"` のとき必須）
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
@@ -378,9 +381,33 @@ Google Analytics → 管理 → データストリーム → ウェブストリ�
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-コア ID が不足するとコメントは表示されません。コメント有効時に `mapping="specific"` の `term` が空、または `mapping="number"` の `number` が正の整数文字列でない場合、設定エラーで開発・ビルドが停止することがあります。
+`shareAcrossLocales: false`: コア ID が不足するとコメントは表示されません。コメント有効時に `mapping="specific"` の `term` が空、または `mapping="number"` の `number` が正の整数文字列でない場合、設定エラーで開発・ビルドが停止することがあります。
 
 CLI はマージ後の設定で有効な言語を使用します。設定エラーでは生成を停止し、明示的な `--locales` または `ANGLEFEINT_LOCALES` は設定読み込みを省略します。
+
+コメントと翻訳間の共有は既定で無効です。通常のパス別コメントには上の設定を使います。翻訳間で一つのディスカッションを共有する場合、リポジトリとカテゴリの値を残し、対応付けの設定を次のようにします：
+
+```ts
+theme: {
+  comments: {
+    // enabled、repo、repoId、category、categoryId は元の値を残します。
+    shareAcrossLocales: true,
+    mapping: 'specific',
+    term: '',
+    number: '',
+    strict: '1',
+    lang: '',
+  },
+},
+```
+
+共有時は mapping が specific、term と number が空、strict が文字列の 1 である必要があります。記事が言語接頭辞を除いた完全な slug を data-term に渡します。9言語で cypherpunk-ideals-ai-and-the-future-of-crypto を共有できます。guides/setup と other/setup は別のディスカッションです。slug がない場合はエラーです。翻訳には同じ slug を使います。lang が空なら画面言語に従い、指定すれば固定されます。本文は翻訳せず、ディスカッションとリアクションを共有します。
+
+共有しない場合、自分の mapping、term、number、strict は従来通りです。specific には空でない term、number には正の整数文字列が必要です。共有とコメントが有効な状態で、mapping の不一致、空でない term/number、1 以外の strict は設定エラーになります。翻訳2件と別の記事で対応付けを確認してください。投稿には GitHub の認可が必要です。既存の comments に統合し、他の設定を上書きしないでください。
+
+既存のディスカッションを自動で統合・移動・削除しません。共有を有効にすると別のディスカッションに切り替わり、以前のコメントが表示されない場合があります。変更前に mapping、term、number、strict を保存してください。戻す場合は shareAcrossLocales: false にして各値を元に戻します。旧コメントの移行が必要なら GitHub 上で確認して手動で対応してください。テーマは移行しません。
+
+[コメント設定ガイド](https://demo.anglefeint.com/ja/blog/starter-guide-4-giscus-comments/)
 
 ## 設定ポイント
 

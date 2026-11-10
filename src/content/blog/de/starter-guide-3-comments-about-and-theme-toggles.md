@@ -26,21 +26,7 @@ Vor dem Start wird die vollständige Datei geladen. Große Dateien erhöhen Wart
 
 ## Giscus-Kommentare
 
-Richte ein öffentliches Repository mit Discussions ein, installiere die App und hole die IDs von [giscus.app](https://giscus.app/).
-
-```ts
-theme: {
-  comments: {
-    enabled: true, repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID', category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID', mapping: 'pathname', lang: '',
-  },
-},
-```
-
-Ersetze IDs und Kategorie. Kein Skript pro Beitrag nötig. Fehlende Pflichtfelder verhindern die Anzeige. lang: '' folgt der Beitragssprache: pt-br wird pt, zh-hant wird zh-TW und zh wird zh-CN. Standardmäßig ist Englisch fest eingestellt.
-
-mapping: 'pathname' ordnet Diskussionen dem Pfad zu. 'specific' braucht term, 'number' eine positive Ganzzahl als Zeichenfolge in number. Ungültige Werte erzeugen Fehler. strict und reactionsEnabled verwenden '0' oder '1'. Bei Problemen IDs, Rechte, Verbindung und Browserblockaden prüfen.
+[Anleitung für Kommentare](/de/blog/starter-guide-4-giscus-comments/)
 
 ## Profilseite
 
