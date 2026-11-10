@@ -29,7 +29,7 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 ## Contract
 
-Latest feature release entry: [0.27.0](./0.27.0.md), the breaking integration starter, preserved user ownership and one-command npm upgrades. See its delivery status and acceptance record.
+Latest feature release entry: [0.28.0](./0.28.0.md), opt-in shared Giscus discussions across article translations, with unchanged defaults and a dedicated nine-language comments tutorial. See its actual delivery status and acceptance record.
 
 Recommended published patch: [0.27.2](./0.27.2.md), complete search build-output handoff through Pagefind's public API, retaining the [0.27.1](./0.27.1.md) pnpm social-image fix. See the delivery and validation record.
 

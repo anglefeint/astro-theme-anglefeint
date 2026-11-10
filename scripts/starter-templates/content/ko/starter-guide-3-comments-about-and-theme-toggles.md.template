@@ -45,29 +45,7 @@ theme: {
 
 ## 2. Giscus 댓글 켜기
 
-[Giscus 설정 페이지](https://giscus.app/)에 따라 공개 GitHub 저장소, Discussions, Giscus 앱, 카테고리를 준비합니다. 생성된 설정에서 실제 repository/category ID를 가져옵니다.
-
-```ts
-theme: {
-  comments: {
-    enabled: true,
-    repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID',
-    category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID',
-    mapping: 'pathname',
-    lang: '',
-  },
-},
-```
-
-두 `REPLACE_WITH_...` 값과 실제 카테고리 이름을 바꾸세요. 테마 설정만 입력하면 되며 글마다 Giscus script 전체를 붙일 필요는 없습니다.
-
-댓글은 글 페이지에 표시됩니다. 핵심 repo/category 네 필드가 없으면 렌더링하지 않으며 임시 값을 넣어도 제대로 작동하지 않습니다. `lang: ''`는 글 언어를 따릅니다(`zh`는 `zh-CN`). 기본값은 고정된 `en`입니다.
-
-일반적으로 `mapping: 'pathname'`을 유지하면 글 경로에 토론을 연결합니다. `specific`은 비어 있지 않은 `term`, `number`는 양의 정수를 문자열로 지정한 `number`가 필요합니다. 두 모드에서 필수 값이 없거나 잘못되면 오류가 납니다.
-
-글 하단에서 확인하고 없으면 ID, 저장소 권한, 네트워크, 브라우저 차단을 확인하세요. `inputPosition`, `theme`, `reactionsEnabled` 등은 기본값을 유지해도 됩니다. `strict`와 `reactionsEnabled`는 문자열 `'0'` / `'1'`을 사용합니다.
+[댓글 설정 가이드](/ko/blog/starter-guide-4-giscus-comments/)
 
 ## 3. About 내용 교체하기
 

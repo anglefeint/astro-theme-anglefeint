@@ -12,6 +12,25 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 <a id="0270-integration-starter-breaking-not-yet-published"></a>
 
+## 0.28.0: Optional shared Giscus comments
+
+See the [0.28.0 delivery record](docs/releases/0.28.0.md) for publication status. No action is required for existing sites: `theme.comments.shareAcrossLocales` defaults to false, preserving all existing mappings and comment associations. The upgrade command does not rewrite site.config.ts or consumer articles.
+
+To opt in after installing a version containing this feature, retain your enabled/repository/category settings and configure:
+
+```ts
+shareAcrossLocales: true,
+mapping: 'specific',
+term: '',
+number: '',
+strict: '1',
+lang: '',
+```
+
+These fields belong inside theme.comments. Every translation must use the same complete article slug without a locale prefix; directories are retained. The theme generates the term per article. Do not put a global term in shared mode. Conflicting options fail configuration validation when comments are enabled. Explicit lang stays fixed; an empty value follows the page language. Custom uses of BlogPost must pass articleSlug when sharing is enabled.
+
+Record the original mapping, term, number and strict before opting in. Existing GitHub discussions/comments are not automatically merged, moved or deleted; switching can associate a different discussion with no old comments. Restore shareAcrossLocales: false and the exact original mapping settings to return to the old association. Any historical comment migration is a separate manual GitHub operation; this feature performs no such operation. See the dedicated [comments tutorial](https://demo.anglefeint.com/en/blog/starter-guide-4-giscus-comments/) after deployment.
+
 ## 0.27.0: Integration starter (breaking)
 
 Version 0.27.0 introduces a breaking integration starter. Pre-0.27 projects must migrate once; schema-1 integration starters use the package upgrade command below. See the [release ledger](docs/releases/0.27.0.md) for actual delivery and validation status.

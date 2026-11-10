@@ -14,9 +14,9 @@ const footerLabels = {
 };
 
 for (const [locale, labels] of Object.entries(footerLabels)) {
-  test(`${locale}: footer groups fit all four scenes`, async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    for (const width of [1440, 721, 390, 320]) {
+  for (const width of [1440, 721, 390, 320]) {
+    test(`${locale}: footer groups fit all four scenes at ${width}px`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.setViewportSize({ width, height: 900 });
       for (const suffix of ['', 'blog/', 'about/', 'blog/welcome-to-anglefeint/']) {
         await page.goto(`/${locale}/${suffix}`);
@@ -35,8 +35,8 @@ for (const [locale, labels] of Object.entries(footerLabels)) {
           expect(bounds.x + bounds.width).toBeLessThanOrEqual(width + 1);
         }
       }
-    }
-  });
+    });
+  }
 }
 
 for (const width of [1440, 390]) {

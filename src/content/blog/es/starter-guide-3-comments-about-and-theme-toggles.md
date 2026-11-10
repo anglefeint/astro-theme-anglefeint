@@ -45,29 +45,7 @@ Antes de reproducir, se descarga la pista completa y se convierte en un Blob del
 
 ## 2. Activa los comentarios Giscus
 
-En la [configuración de Giscus](https://giscus.app/), prepara un repositorio público de GitHub, activa Discussions, instala la aplicación y elige una categoría. Obtén los ID reales de repositorio/categoría de la configuración generada:
-
-```ts
-theme: {
-  comments: {
-    enabled: true,
-    repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID',
-    category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID',
-    mapping: 'pathname',
-    lang: '',
-  },
-},
-```
-
-Sustituye ambos `REPLACE_WITH_...` y utiliza el nombre real de la categoría. Rellena solo la configuración del tema; no pegues el script completo de Giscus en cada artículo.
-
-Los comentarios aparecen en los artículos. Si falta alguno de los cuatro campos principales de repo/categoría, no se renderizan. Los valores de ejemplo no son una configuración válida. `lang: ''` sigue el idioma del artículo (`zh` pasa a `zh-CN`); por defecto está fijado a `en`.
-
-Conserva `mapping: 'pathname'` para asociar discusiones a las rutas. `specific` necesita un `term` no vacío; `number` necesita un entero positivo escrito como cadena en `number`. La ausencia o invalidez de esos parámetros en tales modos provoca errores.
-
-Comprueba el final del artículo. Si no aparecen, revisa ID, permisos del repositorio, conexión y bloqueos del navegador. Opciones como `inputPosition`, `theme` y `reactionsEnabled` pueden conservar sus valores predeterminados. `strict` y `reactionsEnabled` usan cadenas `'0'` / `'1'`.
+[Guía de comentarios](/es/blog/starter-guide-4-giscus-comments/)
 
 ## 3. Sustituye el contenido de About
 

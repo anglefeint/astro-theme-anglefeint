@@ -232,21 +232,19 @@ test('near-limit input shows the complete result within the bounded animation ti
   await expect(page.locator(`${output} canvas`)).toHaveCount(0);
 });
 
-test('all built-in locales have translated decoder controls and fit narrow screens', async ({
-  page,
-}) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const [index, locale] of [
-    'en',
-    'zh',
-    'zh-hant',
-    'ja',
-    'ko',
-    'es',
-    'pt-br',
-    'de',
-    'ru',
-  ].entries()) {
+for (const [index, locale] of [
+  'en',
+  'zh',
+  'zh-hant',
+  'ja',
+  'ko',
+  'es',
+  'pt-br',
+  'de',
+  'ru',
+].entries()) {
+  test(`${locale}: translated decoder controls fit narrow screens`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setViewportSize({ width: index % 2 ? 320 : 390, height: 844 });
     await openDecoder(page, locale);
     await expect(page.locator('.hacker-modal-header .decoder-full-link')).toHaveAttribute(
@@ -282,8 +280,8 @@ test('all built-in locales have translated decoder controls and fit narrow scree
         .locator('.hacker-modal')
         .evaluate((element) => element.scrollWidth <= element.clientWidth)
     ).toBe(true);
-  }
-});
+  });
+}
 
 test('homepage title and trace stay static', async ({ page }) => {
   await page.goto('/en/');

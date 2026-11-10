@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.27.2",
+  "version": "0.28.0",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -72,6 +72,7 @@
     "./utils/tags": "./src/utils/tags.ts",
     "./utils/terminal-document": "./src/utils/terminal-document.ts",
     "./utils/music": "./src/utils/music.ts",
+    "./utils/comments": "./src/utils/comments.ts",
     "./utils/pagination": "./src/utils/pagination.ts",
     "./utils/pagination-style": "./src/utils/pagination-style.ts",
     "./utils/*": "./src/utils/*",

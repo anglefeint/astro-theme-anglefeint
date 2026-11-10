@@ -150,7 +150,7 @@ In the starter/site project, map these aliases to `src/config/*` and `src/i18n/*
 
 Package installation alone does not configure these aliases. Manual integrations must provide them explicitly; bundled fallback configuration files do not automatically resolve missing aliases.
 
-Giscus comments are configured from site-side `theme.comments` (core IDs + behavior fields like `mapping`, `inputPosition`, `theme`, and `lang`). If required core fields are not set, comments are not rendered. When `mapping="specific"` set `term`; when `mapping="number"` set `number`.
+Giscus comments are configured from site-side `theme.comments` (core IDs + behavior fields like `mapping`, `inputPosition`, `theme`, and `lang`). If required core fields are not set, comments are not rendered. With sharing disabled (the default), when `mapping="specific"` set `term`; when `mapping="number"` set `number`. Optional `shareAcrossLocales: true` requires `mapping: 'specific'`, empty `term` and `number`, and `strict: '1'`. Standard article pages supply their complete locale-independent slug as the term; custom BlogPost usages must pass `articleSlug`. Conflicting configuration or missing slugs fail explicitly. Language behavior is unchanged: empty `lang` follows the page, explicit `lang` remains fixed (default en). Existing discussions are not merged or deleted. Disable sharing and restore the original mapping fields to restore old associations.
 
 ## CLI
 

@@ -90,3 +90,13 @@ The reserved-route guard compares supported source-page URLs, including Markdown
 Configuration tutorials are maintained on two publication surfaces: demo articles in `src/content/blog/<locale>/starter-guide-*.md` and starter overrides in `scripts/starter-templates/content/<locale>/*.md.template`. Keep the nine-locale series consistent with implementation on both surfaces; see [tutorial distribution](PACKAGING_WORKFLOW.md#tutorial-publication-surfaces). They are maintainer-authored guidance, distinct from consumer-owned content that the updater preserves.
 
 Exact local results, limitations and pending remote gates belong in [0.27.0](releases/0.27.0.md), not assumptions about published state. Documentation routing follows [DOC_SYNC_WORKFLOW](DOC_SYNC_WORKFLOW.md); historical release records remain historical.
+
+## Article comments
+
+`project/schema.ts` and `project/defaults.ts` define `theme.comments.shareAcrossLocales` (default false). `utils/comments.ts` validates configuration through `project/config/theme.ts` (also reused by the maintainer adapter fixture). Disabled comments keep deferred configuration validation. Ordinary mapping, term, number, strict and language defaults are unchanged.
+
+Opt-in sharing requires mapping specific, empty term/number and strict 1. Conflicts fail while comments are enabled rather than replacing user choices. The standard article route computes `blogIdToSlugAnyLocale(post.id)` and passes `articleSlug` to `layouts/BlogPost.astro`; `articleComments` creates local Giscus parameters using that complete slug, preserving directories. Missing/invalid slugs fail explicitly. Custom article layouts using BlogPost must also pass an articleSlug when sharing is enabled. The global configuration is never mutated.
+
+`components/Giscus.astro` continues to emit the official public client script: specific mapping, the per-article term and strict matching; explicit lang wins, otherwise the existing locale mapping follows the page. Identical translation slugs share a discussion and reactions, not translated comment text. No GitHub merge/delete calls or third-party source changes are introduced. `tests/comments.test.mjs`, `tests/project-config.test.mjs` and `tests/comments-render.test.mjs` cover validation, defaults and final nine-language HTML, including nested slugs and ordinary custom mappings.
+
+The dedicated nine-language `starter-guide-4-giscus-comments` tutorial is maintained in demo content and starter overrides, registered in `scripts/starter-manifest.mjs`; Guide 3 links to it. Personal consumer posts/configuration remain outside upgrade writes.

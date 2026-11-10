@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.28.0] - 2026-11-10
+
+- Add opt-in `theme.comments.shareAcrossLocales` (default false). Matching article slugs across locales can share one strict Giscus discussion and reactions; nested slugs remain distinct and existing mappings stay unchanged unless explicitly switched. No automatic GitHub discussion migration or consumer configuration writes.
+- See [0.28.0](docs/releases/0.28.0.md) for upgrade instructions and actual delivery status.
+- Separate Giscus setup, shared-mode configuration and rollback guidance into User Guide 4 in all nine demo/starter languages; Guide 3 links to it.
+
 ## [0.27.2] - 2026-11-10
 
 - Fix a Pagefind build-output race: obtain complete index files through the in-memory API and await Node writes before completing search generation. Search configuration, filtering, URLs and browser behavior stay unchanged. Integration starters need no configuration migration. See [0.27.2](docs/releases/0.27.2.md) for actual delivery status and validation.

@@ -45,29 +45,7 @@ Playback downloads the complete track into a browser Blob before starting, so se
 
 ## 2. Enable Giscus comments
 
-Use the [Giscus setup page](https://giscus.app/): prepare a public GitHub repository, enable Discussions, install the Giscus app, and select a category. Copy the actual repository/category IDs from its generated configuration:
-
-```ts
-theme: {
-  comments: {
-    enabled: true,
-    repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID',
-    category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID',
-    mapping: 'pathname',
-    lang: '',
-  },
-},
-```
-
-Replace both `REPLACE_WITH_...` values, and use your actual category name. Fill in the theme configuration only; do not paste the full Giscus script into each post.
-
-Comments appear on article pages. Missing core repo/category fields prevent rendering; placeholders do not make a working configuration. `lang: ''` follows the article language (`zh` maps to `zh-CN`); the default is fixed to `en`.
-
-Keep `mapping: 'pathname'` to associate discussions with article paths. `specific` requires a nonempty `term`; `number` requires a positive integer as a string in `number`. Invalid or missing parameters for these modes throw errors.
-
-Check the bottom of a post. If comments are absent, check IDs, repository permissions, connectivity, and browser blocking. Optional fields such as `inputPosition`, `theme`, and `reactionsEnabled` can retain defaults. `strict` and `reactionsEnabled` take strings `'0'` / `'1'`.
+[Comments setup guide](/en/blog/starter-guide-4-giscus-comments/)
 
 ## 3. Replace About content
 

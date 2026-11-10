@@ -26,21 +26,7 @@ theme: {
 
 ## Giscus 留言
 
-準備已啟用 Discussions 的公開儲存庫、安裝應用程式，並從 [giscus.app](https://giscus.app/) 取得 ID。
-
-```ts
-theme: {
-  comments: {
-    enabled: true, repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID', category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID', mapping: 'pathname', lang: '',
-  },
-},
-```
-
-替換 ID 與分類，不必在每篇文章貼入指令碼。必要欄位空白會隱藏元件。lang: '' 跟隨文章語言：pt-br 對應 pt、zh-hant 對應 zh-TW、zh 對應 zh-CN；預設是固定英語。
-
-mapping: 'pathname' 依路徑對應討論串；'specific' 需要 term，'number' 需要以字串提供正整數 number。不合法的值會報錯。strict、reactionsEnabled 使用 '0' 或 '1'。無法顯示時檢查 ID、權限、連線與瀏覽器阻擋。
+[留言設定教學](/zh-hant/blog/starter-guide-4-giscus-comments/)
 
 ## 關於頁
 

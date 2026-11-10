@@ -295,19 +295,26 @@ test('result crossfades over the same numeric canvas and releases its layers', a
   await open(page);
   await page.locator(input).fill('SGVsbG8=');
   await page.locator('.hacker-decoder-submit').click();
-  await page.waitForFunction(() => {
+  const fadeFrame = await page.waitForFunction(() => {
     const result = document.querySelector('.hacker-decoder-original');
     const code = document.querySelector('.hacker-decoder-code');
-    return (
+    if (
       result &&
       code &&
       Number(result.style.opacity) > 0.2 &&
       Number(result.style.opacity) < 0.8 &&
       Number(code.style.opacity) > 0.2
-    );
+    ) {
+      // Snapshot transient state in one browser task; it may finish before another round-trip.
+      return {
+        text: result.textContent,
+        canvases: result.parentElement.querySelectorAll('canvas').length,
+      };
+    }
+    return false;
   });
-  await expect(page.locator(`${output} canvas`)).toHaveCount(1);
-  await expect(page.locator(`${output} .hacker-decoder-original`)).toHaveText('Hello');
+  expect(await fadeFrame.jsonValue()).toEqual({ text: 'Hello', canvases: 1 });
+  await fadeFrame.dispose();
   await expect(page.locator(output)).toHaveAttribute('data-decoder-state', 'done');
   await expect(page.locator(`${output} canvas, ${output} .hacker-decoder-original`)).toHaveCount(0);
   await expect(page.locator(output)).toHaveText('Hello');

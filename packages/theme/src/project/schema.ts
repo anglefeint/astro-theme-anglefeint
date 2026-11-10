@@ -124,6 +124,8 @@ export interface ThemeConfig {
       enableHomePassage: boolean;
     };
     comments: {
+      /** Opt in to one discussion per locale-independent article slug. */
+      shareAcrossLocales?: boolean;
       enabled: boolean;
       repo: string;
       repoId: string;

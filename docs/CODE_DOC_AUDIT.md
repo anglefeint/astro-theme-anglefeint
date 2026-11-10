@@ -12,6 +12,16 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-10 可选跨语言 Giscus 与独立评论教程（本地未发布）
+
+以 `05d2bb2a40acca9b476bc0cf2115b3d746b82d4a` 为基线，沿 schema/defaults → project/config/theme 与诊断 adapter → 标准文章路由 → BlogPost → Giscus 官方 client script 核对。shareAcrossLocales 默认 false；普通模式映射、严格匹配和语言默认值不变。显式开启时要求 specific、空 term/number 和 strict 1，文章完整的无语言 slug 动态传入；缺失 slug 或配置冲突明确失败。无 GitHub 写入、讨论合并／删除操作，未修改依赖源码。
+
+文档工作流使用当前差异运行 suggest:docs。直接更新九语 README、npm README、ARCHITECTURE、UPGRADING 与 Unreleased changelog；将 User Guide 3 的评论章节独立为九语 User Guide 4，并由 manifest 注册到 starter 分发，原位置保留链接。九语 demo／starter 的全部 36 组教程文字及生成路由链接核对一致，14 份维护文档本地链接通过。配置示例与实际校验一致；迁移说明明确旧讨论不自动迁入，关闭共享并恢复原映射可恢复旧关联。新 starter 不开启共享，也不要求升级器改用户配置。
+
+传播候选中的视觉规范、AGENTS／CLAUDE／Cursor 工作流入口、发布政策、展示清单及历史 release 文档职责事实未变，保持原文；没有把新功能写入已发布 0.27.2。代码与教程为本地待审变更，未发布、未推送，也未更新线上 demo 或远程 starter。
+
+验证：156 项测试（含四种模式、九语、两篇目录 slug 的最终 HTML）；lint、check:no-build、主站 build 与九语 About runtime 校验通过，Astro 零错误／警告。新增第五篇 onboarding 内容使标签浏览器断言从 4 调整为 5。独立打包安装／类型／CLI 与源码保护验收通过（默认模式，未运行完整 --build 矩阵）；首次受限环境依赖解析失败，联网重跑成功。浏览器检查中，两项大循环共享 30 秒预算导致超时，现按语言／视口拆分，保留全部断言、原并发及每用例超时；另一个过渡动画用例改为在浏览器内原子采样瞬时帧，再验证最终清理，避免跨调用时动画已结束。没有改动主题视觉或依赖实现。九语导航同样拆为每视口用例，并单列 320px 搜索／元数据验证。最终全量 Chromium 186/186 通过（原 6 workers、无重试、每用例 30 秒），独立减弱动效复查 3/3 通过；此前减弱动效状态观测曾偶发失败，未修改其运行实现，保留失败日志，不声称已修复该偶发问题。验收范围与测试组织说明同步到 TEMPLATE_ACCEPTANCE。
+
 ## 2026-11-10 公开接口边界与用户指引复核（本地文档修订）
 
 基线为发布收尾 `cb0cb1da88129212ce0174eacccbc5c4a4338a20`，并显式回看 `c5f8a2c..HEAD` 的已提交修复与文档变更后运行 suggest:docs，避免干净工作区漏掉历史变化。核对旧 `search.mjs` 的 index.writeFiles 调用、当前 getFiles／Node 写出路径和安装版本 Pagefind 1.5.2 的公开类型声明：writeFiles、getFiles 都是 index 的公开方法。更换公开接口不意味着此前用了私有接口；没有修改第三方实现、patch node_modules、monkey patch 或维护 fork。Pagefind 生成索引和浏览器搜索引擎，主题只负责筛选／配置、文件完成衔接和搜索 UI。公开接口与既有 entry 语言元数据仍是实际依赖，相关假设集中在集成层及回归测试中，不声称零耦合。

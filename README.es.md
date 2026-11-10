@@ -357,6 +357,8 @@ El modo de desarrollo y las vistas previas en localhost/bucle local no envían d
 
 ### Opcional: comentarios con Giscus
 
+`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
+
 Los comentarios vienen desactivados por defecto. Para activarlos:
 
 1. En `src/site.config.ts`, define `theme.comments.enabled = true`.
@@ -366,8 +368,9 @@ Los comentarios vienen desactivados por defecto. Para activarlos:
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. Campos opcionales:
+   - `theme.comments.shareAcrossLocales` (`false`)
    - `theme.comments.mapping`
-   - `theme.comments.term` (obligatorio cuando `mapping = "specific"`)
+   - `theme.comments.term` (obligatorio cuando `mapping = "specific"`) — `shareAcrossLocales: false`
    - `theme.comments.number` (obligatorio cuando `mapping = "number"`)
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
@@ -378,9 +381,33 @@ Los comentarios vienen desactivados por defecto. Para activarlos:
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-Si faltan los IDs principales, no se muestran comentarios. Con comentarios activos, un `term` vacío para `mapping="specific"` o un `number` que no sea una cadena de entero positivo para `mapping="number"` provoca un error de configuración y puede detener dev/build.
+`shareAcrossLocales: false`: Si faltan los IDs principales, no se muestran comentarios. Con comentarios activos, un `term` vacío para `mapping="specific"` o un `number` que no sea una cadena de entero positivo para `mapping="number"` provoca un error de configuración y puede detener dev/build.
 
 El CLI usa los idiomas habilitados de la configuración combinada. Los errores detienen la generación; `--locales` o `ANGLEFEINT_LOCALES` permite elegir idiomas sin cargar la configuración.
+
+Los comentarios y la opción de compartir están desactivados por defecto. Para comentarios por ruta, usa la configuración anterior. Para compartir una discusión entre traducciones, conserva los datos del repositorio y categoría y sustituye las opciones de asociación por:
+
+```ts
+theme: {
+  comments: {
+    // Conserva tus valores de enabled, repo, repoId, category y categoryId.
+    shareAcrossLocales: true,
+    mapping: 'specific',
+    term: '',
+    number: '',
+    strict: '1',
+    lang: '',
+  },
+},
+```
+
+Compartir exige mapping specific, term y number vacíos y strict como cadena 1. Cada artículo proporciona a data-term su slug completo sin idioma. Las nueve traducciones usan cypherpunk-ideals-ai-and-the-future-of-crypto; guides/setup y other/setup siguen siendo discusiones distintas. Un slug ausente provoca un error. Las traducciones deben tener el mismo slug. lang vacío sigue el idioma de la página; un valor explícito lo fija. No se traducen los mensajes: se comparten discusión y reacciones.
+
+Sin compartir, mapping, term, number y strict mantienen su comportamiento: specific necesita term no vacío; number necesita un entero positivo como cadena. Con comentarios y uso compartido activos, mapping incompatible, term/number no vacíos o strict distinto de 1 generan un error claro. Comprueba dos traducciones y otro artículo. Comentar requiere autorización de GitHub. Integra los campos en comments sin sustituir otros ajustes.
+
+No se fusionan, trasladan ni eliminan discusiones existentes automáticamente. Activar esta opción puede asociar otra discusión y los comentarios antiguos no aparecerán allí. Guarda mapping, term, number y strict antes de cambiar. Para restaurar la asociación, usa shareAcrossLocales: false y recupera los valores originales. Si necesitas trasladar comentarios, revísalos y gestiónalos manualmente en GitHub; el tema no los migra.
+
+[Guía de comentarios](https://demo.anglefeint.com/es/blog/starter-guide-4-giscus-comments/)
 
 ## Superficie de configuración
 

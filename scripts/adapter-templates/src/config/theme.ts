@@ -1,28 +1,14 @@
 // Generated file. Do not edit directly.
 // Edit scripts/adapter-templates/src/config/theme.ts and run `npm run sync-adapters`.
 
+import { validateComments } from '@anglefeint/astro-theme/utils/comments';
 import { normalizeMusic } from '@anglefeint/astro-theme/utils/music';
 import { THEME_CONFIG } from '../site.config.ts';
 
 const commentsConfig = THEME_CONFIG.theme.comments;
+validateComments(commentsConfig);
 const normalizedCommentTerm = commentsConfig.term.trim();
 const normalizedCommentNumber = commentsConfig.number.trim();
-const hasValidCommentNumber =
-  /^[1-9]\d*$/.test(normalizedCommentNumber) &&
-  Number.isSafeInteger(Number(normalizedCommentNumber));
-
-if (commentsConfig.enabled) {
-  if (commentsConfig.mapping === 'specific' && !normalizedCommentTerm) {
-    throw new Error(
-      '[theme.comments] mapping="specific" requires a non-empty theme.comments.term.'
-    );
-  }
-  if (commentsConfig.mapping === 'number' && !hasValidCommentNumber) {
-    throw new Error(
-      '[theme.comments] mapping="number" requires theme.comments.number to be a positive integer string (e.g. "1").'
-    );
-  }
-}
 
 /**
  * Theme behavior config.
@@ -74,6 +60,7 @@ export const THEME = {
   },
   /** Optional comments integration (Giscus) */
   COMMENTS: {
+    SHARE_ACROSS_LOCALES: commentsConfig.shareAcrossLocales ?? false,
     ENABLED: THEME_CONFIG.theme.comments.enabled,
     REPO: THEME_CONFIG.theme.comments.repo,
     REPO_ID: THEME_CONFIG.theme.comments.repoId,

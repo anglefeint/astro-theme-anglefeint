@@ -45,29 +45,7 @@ theme: {
 
 ## 2. 开启 Giscus 评论
 
-在 [Giscus 配置页](https://giscus.app/) 按说明准备公开 GitHub 仓库、启用 Discussions、安装 Giscus 应用，并选择讨论分类。从生成的配置中取得真实的 repository/category ID，然后填入：
-
-```ts
-theme: {
-  comments: {
-    enabled: true,
-    repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID',
-    category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID',
-    mapping: 'pathname',
-    lang: '',
-  },
-},
-```
-
-两个 `REPLACE_WITH_...` 必须替换；`category` 也必须与你实际选择的分类一致。这里只填写主题配置，不要再把 Giscus 的整段 script 粘到每篇文章里。
-
-评论显示在文章页。四个核心 repo/category 字段缺失时不渲染；填了占位值不等于配置成功。示例的 `lang: ''` 让评论语言跟随文章语言（`zh` 映射为 `zh-CN`）；默认配置是固定 `en`。
-
-保留 `mapping: 'pathname'` 即可按文章路径关联讨论。若改为 `specific`，需填写非空 `term`；若改为 `number`，需填写正整数字符串 `number`。这两种缺少有效参数会抛出错误。
-
-打开文章底部验证；若没有出现，检查 ID、仓库权限、网络和浏览器拦截。其他可选项如 `inputPosition`、`theme`、`reactionsEnabled` 保留默认即可；`strict` 和 `reactionsEnabled` 使用字符串 `'0'` / `'1'`。
+[评论配置教程](/zh/blog/starter-guide-4-giscus-comments/)
 
 ## 3. 替换 About 内容
 

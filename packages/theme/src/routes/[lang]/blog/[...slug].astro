@@ -59,6 +59,12 @@ const resolvedData = {
 };
 ---
 
-<BlogPost {...resolvedData} headings={headings} related={related} localeHrefs={localeHrefs}>
+<BlogPost
+  articleSlug={currentSlug}
+  {...resolvedData}
+  headings={headings}
+  related={related}
+  localeHrefs={localeHrefs}
+>
   <Content />
 </BlogPost>

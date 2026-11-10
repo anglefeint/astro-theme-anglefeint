@@ -361,6 +361,8 @@ analytics: {
 
 ### 可选：Giscus 评论
 
+`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
+
 评论默认关闭。启用方式：
 
 1. 在 `src/site.config.ts` 中设置 `theme.comments.enabled = true`。
@@ -370,8 +372,9 @@ analytics: {
    - `theme.comments.category`
    - `theme.comments.categoryId`
 3. 可选设置：
+   - `theme.comments.shareAcrossLocales` (`false`)
    - `theme.comments.mapping`
-   - `theme.comments.term`（当 `mapping = "specific"` 时必填）
+   - `theme.comments.term`（当 `mapping = "specific"` 时必填） — `shareAcrossLocales: false`
    - `theme.comments.number`（当 `mapping = "number"` 时必填）
    - `theme.comments.strict`
    - `theme.comments.reactionsEnabled`
@@ -382,9 +385,33 @@ analytics: {
    - `theme.comments.loading`
    - `theme.comments.crossorigin`
 
-核心 ID 缺失时不渲染评论。启用评论后，`mapping="specific"` 缺少 `term`，或 `mapping="number"` 的 `number` 不是有效正整数字符串，会抛出配置错误并可能中止开发启动或构建。
+`shareAcrossLocales: false`: 核心 ID 缺失时不渲染评论。启用评论后，`mapping="specific"` 缺少 `term`，或 `mapping="number"` 的 `number` 不是有效正整数字符串，会抛出配置错误并可能中止开发启动或构建。
 
 CLI 使用合并配置中启用的语言；配置错误会中止生成。显式 `--locales` 或 `ANGLEFEINT_LOCALES` 可覆盖语言选择，无需加载配置。
+
+评论和跨语言共享默认都关闭。普通的按路径评论使用上面的配置。若要让同篇文章的译文共用讨论，保留自己的仓库和分类字段，把映射选项改为：
+
+```ts
+theme: {
+  comments: {
+    // 保留自己的 enabled、repo、repoId、category、categoryId。
+    shareAcrossLocales: true,
+    mapping: 'specific',
+    term: '',
+    number: '',
+    strict: '1',
+    lang: '',
+  },
+},
+```
+
+共享模式要求 mapping 为 specific、term 和 number 为空、strict 为字符串 1，按示例填写。文章页会把不含语言前缀的完整 slug 作为 data-term。例如九语版本都使用 cypherpunk-ideals-ai-and-the-future-of-crypto；guides/setup 与 other/setup 仍是两个讨论。缺少有效 slug 会报错，译文必须使用相同 slug。lang 留空时界面跟随页面语言，显式填写则固定语言。评论正文不翻译，只共享讨论和表情。
+
+关闭共享时，自定义 mapping、term、number、strict 行为不变：specific 要求非空 term，number 要求正整数字符串。开启共享且启用评论时，错误的 mapping、非空 term/number 或不为 1 的 strict 会明确报配置错误。打开两个译文和另一篇文章核对讨论关联。访客发表评论需要 GitHub 授权。把示例合并到已有 comments 对象，不要覆盖其他配置。
+
+已有讨论不会自动合并、搬迁或删除。开启共享后可能关联另一个讨论，旧评论不会自动出现在共享区。切换前保存原来的 mapping、term、number、strict；要恢复旧关联，设置 shareAcrossLocales: false 并恢复这些字段的原值。确需搬迁旧评论时，由博主在 GitHub 上评估和手动处理，主题不自动迁移。
+
+[评论配置教程](https://demo.anglefeint.com/zh/blog/starter-guide-4-giscus-comments/)
 
 ## 配置入口
 

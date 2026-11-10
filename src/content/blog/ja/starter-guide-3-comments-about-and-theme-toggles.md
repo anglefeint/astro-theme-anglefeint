@@ -45,29 +45,7 @@ URL に `public` は含めません。各曲の `title` と `src` は必須、`a
 
 ## 2. Giscus コメントを有効にする
 
-[Giscus 設定ページ](https://giscus.app/) に従い、公開 GitHub リポジトリ、Discussions、Giscus アプリ、分類を準備します。生成された設定から実際の repository/category ID を取得します。
-
-```ts
-theme: {
-  comments: {
-    enabled: true,
-    repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID',
-    category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID',
-    mapping: 'pathname',
-    lang: '',
-  },
-},
-```
-
-2 つの `REPLACE_WITH_...` と、実際の分類名に置き換えてください。テーマ設定だけを入力し、記事ごとに Giscus の script 全体を貼る必要はありません。
-
-コメントは記事ページに表示されます。主要な repo/category の 4 項目が欠けると表示されず、仮の値を入れても動作しません。`lang: ''` は記事の言語に追従します（`zh` は `zh-CN`）。既定値は固定の `en` です。
-
-通常は `mapping: 'pathname'` のまま、記事のパスで議論を紐付けます。`specific` なら空でない `term`、`number` なら正の整数を文字列として `number` に指定します。この 2 モードで値が不正・不足しているとエラーになります。
-
-記事末尾で確認し、表示されなければ ID、リポジトリ権限、ネットワーク、ブラウザーのブロックを調べます。`inputPosition`、`theme`、`reactionsEnabled` などは既定値で構いません。`strict` と `reactionsEnabled` は文字列の `'0'` / `'1'` です。
+[コメント設定ガイド](/ja/blog/starter-guide-4-giscus-comments/)
 
 ## 3. About の内容を置き換える
 

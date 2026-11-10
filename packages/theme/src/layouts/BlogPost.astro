@@ -9,6 +9,7 @@ import ArticleToc from '../components/ArticleToc.astro';
 import TagLinks from '../components/TagLinks.astro';
 import type { MarkdownHeading } from 'astro';
 import Giscus from '../components/Giscus.astro';
+import { articleComments } from '../utils/comments';
 import AiShell from './shells/AiShell.astro';
 import blogPostCssUrl from '../styles/blog-post.css?url';
 import mathCssUrl from '../styles/math.css?url';
@@ -28,6 +29,7 @@ import { getMessages } from '@anglefeint/site-i18n/messages';
 
 type Props = CollectionEntry<'blog'>['data'] & {
   locale?: string;
+  articleSlug?: string;
   related?: CollectionEntry<'blog'>[];
   headings?: MarkdownHeading[];
   localeHrefs?: Partial<Record<Locale, string>>;
@@ -60,6 +62,7 @@ const {
   toc,
   search = true,
   headings = [],
+  articleSlug,
   locale = DEFAULT_LOCALE,
   related = [],
   localeHrefs,
@@ -102,7 +105,7 @@ const hasResponseMeta = aiLatencyMs !== undefined || aiConfidence !== undefined;
 const hasStats = aiModel || wordCount !== undefined || tokenCount !== undefined;
 const confidenceText = aiConfidence !== undefined ? aiConfidence.toFixed(2) : undefined;
 const enableRedQueen = THEME.EFFECTS.ENABLE_RED_QUEEN;
-const comments = THEME.COMMENTS;
+const comments = articleComments(THEME.COMMENTS, articleSlug);
 const normalizedCommentTerm = comments.TERM.trim();
 const normalizedCommentNumber = comments.NUMBER.trim();
 const hasValidCommentNumber =

@@ -140,6 +140,7 @@ const defaultThemeConfig: ThemeConfig = {
       enableHomePassage: false,
     },
     comments: {
+      shareAcrossLocales: false,
       enabled: false,
       repo: '',
       repoId: '',

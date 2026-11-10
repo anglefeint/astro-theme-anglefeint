@@ -33,6 +33,8 @@ export const THEME_CONFIG = defineThemeConfig({
   // theme: { footer: { showCredits: false } },
   // Optional music: put your audio in public/music/, then enable a playlist.
   // theme: { music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] } },
+  // Giscus comments/sharing are off by default; see User Guide 4 for complete setup.
+  // Sharing requires specific mapping, empty term/number and strict: '1'.
   // Article contents are enabled by default. Per-post `toc: true/false` overrides this.
   // theme: { toc: { enabled: false } },
   // Home click passage: theme: { effects: { enableHomePassage: false } }

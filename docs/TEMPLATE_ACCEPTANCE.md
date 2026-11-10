@@ -89,6 +89,12 @@ The 0.20.0 source adds an independent native Frontier dropdown controlled by `th
 
 Local main-checkout browser evidence covers nine locales, default links/covers, desktop six-column rows, smaller-screen wrapping, dropdown Escape/outside-pointer dismissal, independent About navigation and 1/30 configured reading lists. Empty tribute/list and text-only cards were tested with temporary configuration restored afterward. The committed `tests/e2e/decoder-page.spec.mjs` also checks the Decoder Lab title prefix and static metadata. The 1/30 configuration checks and image/visual inspections are local acceptance scripts in ignored `acceptance-results/`, not additional committed E2E coverage. The 0.20.0 release record separately documents installed/public-starter acceptance, registry download verification and live page checks; local fixtures alone do not establish those delivery results.
 
+### Giscus mapping coverage
+
+`tests/comments.test.mjs` and `tests/project-config.test.mjs` cover opt-in sharing defaults, mode-aware configuration errors, complete nested slugs, disabled comments and ordinary custom mappings. `tests/comments-render.test.mjs` builds an isolated consumer with the actual standard article route and Giscus component. It checks final script attributes for nine languages and two distinct nested slugs in shared, default pathname, custom specific and fixed-number modes, including strict matching and fixed/follow-page interface languages. These checks do not submit comments or merge discussions on GitHub.
+
+Long multi-page browser scenarios are scoped per language (decoder) and per language/viewport (footer and localized navigation, with a separate mobile search/metadata case), retaining all assertions and the existing 30-second per-test limit. This prevents a whole translation/viewport matrix from sharing one timeout budget; worker concurrency and retry policy remain unchanged. The decoder crossfade test samples transient text/canvas state atomically inside the browser, then separately waits for final cleanup; it does not assume an animation frame remains present across multiple automation round-trips.
+
 ### GA4 coverage
 
 `npm run test` includes `tests/analytics.unit.test.mjs`: Measurement ID validation, localhost/loopback exclusion, duplicate initialization prevention and preservation of queued consent commands. It executes the actual loader in a simulated browser environment; it does not contact Google.

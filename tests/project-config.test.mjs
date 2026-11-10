@@ -129,6 +129,30 @@ export const THEME_CONFIG = defineThemeConfig(${JSON.stringify(value)});`
       await set({ theme: { comments } });
       await assert.rejects(loadProjectModule(path.join(root, 'src/config/theme.ts')), /requires/);
     }
+    await set({
+      theme: {
+        comments: {
+          enabled: true,
+          shareAcrossLocales: true,
+          mapping: 'specific',
+          term: '',
+          number: '',
+          strict: '1',
+        },
+      },
+    });
+    assert.equal(
+      (await loadProjectModule(path.join(root, 'src/config/theme.ts'))).THEME.COMMENTS
+        .SHARE_ACROSS_LOCALES,
+      true
+    );
+    await set({
+      theme: { comments: { enabled: true, shareAcrossLocales: true, mapping: 'pathname' } },
+    });
+    await assert.rejects(
+      loadProjectModule(path.join(root, 'src/config/theme.ts')),
+      /shareAcrossLocales requires/
+    );
     await set({ theme: { tags: { enabled: false } } });
     assert.equal(
       (await loadProjectModule(path.join(root, 'src/config/theme.ts'))).THEME.TAGS.ENABLED,

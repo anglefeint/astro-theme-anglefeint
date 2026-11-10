@@ -9,10 +9,8 @@ const cases = [
 ];
 
 for (const [locale, language, searchLabel, term] of cases) {
-  test(`${locale}: navigation, metadata, mobile layout and actual localized search`, async ({
-    page,
-  }) => {
-    for (const width of [1280, 390, 320]) {
+  for (const width of [1280, 390, 320]) {
+    test(`${locale}: navigation and mobile layout at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       for (const route of ['', 'blog/', 'about/', 'blog/starter-guide-2-languages-and-routing/']) {
         await page.goto(`/${locale}/${route}`);
@@ -28,7 +26,10 @@ for (const [locale, language, searchLabel, term] of cases) {
         expect(menu.x).toBeGreaterThanOrEqual(0);
         expect(menu.x + menu.width).toBeLessThanOrEqual(width);
       }
-    }
+    });
+  }
+  test(`${locale}: metadata and actual localized search`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 900 });
     await page.goto(`/${locale}/blog/`);
     await page.getByRole('button', { name: searchLabel, exact: true }).click();
     await page.getByRole('searchbox').fill(term);
