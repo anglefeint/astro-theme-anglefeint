@@ -114,6 +114,15 @@ try {
     false
   );
   assert.equal((await inspectIntegrationProject(project)).anglefeint.projectSchema, 1);
+  await npm(['run', 'new-fragment']);
+  const fragmentFiles = await readdir(path.join(project, 'src/content/fragments/en'));
+  assert.equal(fragmentFiles.length, 1);
+  const fragmentBefore = await read(`src/content/fragments/en/${fragmentFiles[0]}`);
+  assert.match(fragmentBefore, /id: [a-f0-9-]+/);
+  await npm(['run', 'new-fragment', '--', '--locales', 'en,zh']);
+  assert.equal((await readdir(path.join(project, 'src/content/fragments/en'))).length, 2);
+  assert.equal((await readdir(path.join(project, 'src/content/fragments/zh'))).length, 1);
+  assert.equal(await read(`src/content/fragments/en/${fragmentFiles[0]}`), fragmentBefore);
   await npm(['run', 'new-post', '--', '--help']);
   await npm(['run', 'new-page', '--', '--help']);
   await npm(['run', 'new-post', '--', 'installed-default']);
@@ -514,10 +523,17 @@ try {
       theme: {
         socialImage: { enabled: false },
         music: { enabled: true, tracks: [{ title: 'Install test', src: '/music/test.mp3' }] },
+        fragments: { enabled: true },
       },
     });
     console.log('Building installed starter with optional music enabled...');
+    // Same installed build exercises package-owned fragments without copying routes.
     await npm(['run', 'build']);
+    const fragmentsHtml = await read('dist/en/fragments/index.html');
+    assert.match(fragmentsHtml, /data-fragment-id/);
+    assert.doesNotMatch(fragmentsHtml, /data-fragment-comments/);
+    assert.match(await read('dist/en/index.html'), /href="\/en\/fragments\/"/);
+    assert.equal(await read(`src/content/fragments/en/${fragmentFiles[0]}`), fragmentBefore);
     for (const route of ['en', 'zh', 'en/blog', 'en/about']) {
       const html = await read(`dist/${route}/index.html`);
       assert.match(html, /data-music-deck/);

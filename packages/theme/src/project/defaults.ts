@@ -116,6 +116,7 @@ const defaultThemeConfig: ThemeConfig = {
     homeLatestCount: 3,
     enableAboutPage: true,
     enableDecoderPage: true,
+    fragments: { enabled: false, pageSize: 20, comments: { enabled: false } },
     tags: { enabled: true },
     math: { enabled: true },
     toc: { enabled: true },

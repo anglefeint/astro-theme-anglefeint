@@ -8,7 +8,7 @@ for (const width of [1440, 390]) {
     await page.locator('.tag-links a[href$="/tags/"]').click();
     await expect(page.locator('h1')).toHaveText('标签');
     const tag = page.locator('.tag-item[href="/zh/tags/anglefeint/"]');
-    await expect(tag.locator('.tag-count')).toHaveText('5');
+    await expect(tag.locator('.tag-count')).toHaveText('6');
     const box = await tag.boundingBox();
     expect(box.x).toBeGreaterThanOrEqual(0);
     expect(box.x + box.width).toBeLessThanOrEqual(width);
@@ -17,7 +17,7 @@ for (const width of [1440, 390]) {
     await expect(page.locator('.tag-heading h1')).toContainText('anglefeint');
     await expect(page.locator('link[hreflang]')).toHaveCount(0);
     const cards = page.locator('.archive-post-link');
-    await expect(cards).toHaveCount(5);
+    await expect(cards).toHaveCount(6);
     for (const href of await cards.evaluateAll((items) =>
       items.map((item) => item.getAttribute('href'))
     ))
@@ -40,6 +40,6 @@ test('tag counts and labels are localized independently', async ({ page }) => {
     await expect(page.locator('h1')).toHaveText(label);
     await expect(
       page.locator(`.tag-item[href="/${locale}/tags/anglefeint/"]`).locator('.tag-count')
-    ).toHaveText('5');
+    ).toHaveText('6');
   }
 });

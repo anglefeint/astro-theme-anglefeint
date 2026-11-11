@@ -118,7 +118,7 @@ Starter branch quality gate:
 npm run doctor
 ```
 
-The integration starter ships package-owned doctor/new-page/new-post commands rather than maintainer scaffold/adapter scripts. For architecture/upgrade changes also run `npm run check:upgrade` on main: its local fixture registry exercises a skipped-version npm exec upgrade with a new menu/button/page and byte-for-byte user-file preservation. Keep user data and project-schema compatibility explicit; a normal updater never invokes maintainer starter sync.
+The integration starter ships package-owned doctor/new-page/new-post/new-fragment commands rather than maintainer scaffold/adapter scripts. For architecture/upgrade changes also run `npm run check:upgrade` on main: its local fixture registry exercises a skipped-version npm exec upgrade with a new menu/button/page and byte-for-byte user-file preservation. Use `npm run check:upgrade -- --baseline 0.28.0` to start from that exact published package instead of the current working-tree pack. This only downloads a baseline and upgrades isolated fixtures; it does not publish. Acceptance also protects user fragments, verifies the new CLI without adding scripts and renders preserved fragments after explicit opt-in. Keep user data and project-schema compatibility explicit; a normal updater never invokes maintainer starter sync.
 
 ## Release Sequence (Canonical)
 

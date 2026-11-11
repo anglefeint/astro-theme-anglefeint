@@ -1,3 +1,4 @@
+import { fragmentSettings } from '@anglefeint/astro-theme/utils/fragments';
 // Generated file. Do not edit directly.
 // Edit scripts/adapter-templates/src/config/theme.ts and run `npm run sync-adapters`.
 
@@ -14,6 +15,7 @@ const normalizedCommentNumber = commentsConfig.number.trim();
  * Theme behavior config.
  */
 export const THEME = {
+  FRAGMENTS: fragmentSettings(THEME_CONFIG.theme.fragments),
   HOME: {
     SHOW_INITIALIZE: THEME_CONFIG.theme.home?.showInitialize ?? true,
     SHOW_FOLLOW: THEME_CONFIG.theme.home?.showFollow ?? true,

@@ -33,7 +33,7 @@ test('distributed tutorial overrides use the current integration guidance', asyn
     assert.doesNotMatch(body, /UPGRADING\.md#unreleased-/);
     tutorials++;
   }
-  assert.equal(tutorials, 36);
+  assert.equal(tutorials, 45);
 });
 
 test('starter generation fixes legacy commands, is idempotent and excludes maintainer dependencies', () => {

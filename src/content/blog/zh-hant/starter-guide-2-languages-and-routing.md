@@ -6,7 +6,7 @@ title: 使用指南 2：撰寫與整理內容
 subtitle: 文章、圖片、標籤、目錄、搜尋與分享圖。
 description: 文章、圖片、標籤、目錄、搜尋與分享圖。
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-11'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
@@ -87,3 +87,5 @@ npx @anglefeint/astro-theme@latest upgrade
 自動升級目前僅支援 npm，遇到 pnpm/yarn/bun 鎖檔會停止。`--check` 僅檢查，`--to 0.27.1` 指定版本。請參閱[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)與 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
 
 升級失敗時不要部署 `dist/`：相依套件回復不會還原舊建置產物。修正錯誤並成功執行 `npm run doctor` 後再部署。pnpm 使用者先確認版本相容，再以 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手動更新，保留自己的鎖定檔。
+
+[使用者指南 5：發布碎片](../starter-guide-5-fragments/) — 以 Markdown 記錄簡短感想，可選彈窗留言。

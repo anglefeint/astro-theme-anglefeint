@@ -1,0 +1,168 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import CyberShell from '../../../layouts/shells/CyberShell.astro';
+import FragmentComments from '../../../components/FragmentComments.astro';
+import mathCssUrl from '../../../styles/math.css?url';
+import { fragmentsForLocale, fragmentTerm } from '../../../utils/fragments';
+import { THEME } from '@anglefeint/site-config/theme';
+import { SITE_TITLE } from '@anglefeint/site-config/site';
+import { ENABLED_LOCALES, localePath, getLocaleHreflang } from '@anglefeint/site-i18n/config';
+import { getMessages } from '@anglefeint/site-i18n/messages';
+
+export const getStaticPaths = (async () => {
+  if (!THEME.FRAGMENTS.enabled) return [];
+  const entries = await getCollection('fragments');
+  return ENABLED_LOCALES.flatMap((locale) => {
+    const localized = fragmentsForLocale(entries, locale);
+    const total = Math.max(1, Math.ceil(localized.length / THEME.FRAGMENTS.pageSize));
+    return Array.from({ length: total }, (_, index) => ({
+      params: { lang: locale, page: index ? String(index + 1) : undefined },
+      props: {
+        locale,
+        current: index + 1,
+        total,
+        entries: localized.slice(
+          index * THEME.FRAGMENTS.pageSize,
+          (index + 1) * THEME.FRAGMENTS.pageSize
+        ),
+      },
+    }));
+  });
+}) satisfies GetStaticPaths;
+
+const { locale, current, total, entries } = Astro.props;
+const labels = getMessages(locale).fragments;
+const cards = await Promise.all(
+  entries.map(async (entry) => ({ entry, Content: (await render(entry)).Content }))
+);
+// Locale switches always target page one: pagination counts may differ by language.
+const localeHrefs = Object.fromEntries(
+  ENABLED_LOCALES.map((code) => [code, localePath(code, '/fragments/')])
+);
+const pageHref = (page: number) => localePath(locale, `/fragments/${page === 1 ? '' : `${page}/`}`);
+---
+
+<CyberShell
+  locale={locale}
+  title={`${labels.title} | ${SITE_TITLE}`}
+  description={labels.description}
+  localeHrefs={localeHrefs}
+  includeAlternateLinks={current === 1}
+>
+  {THEME.MATH.ENABLED && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
+  <section class="fragments-feed" data-fragments>
+    <h1>{labels.title}</h1>
+    <p>{labels.description}</p>
+    {!cards.length && <p>{labels.empty}</p>}
+    {
+      cards.map(({ entry, Content }) => (
+        <article
+          class="fragment-card"
+          id={`fragment-${entry.data.id}`}
+          data-fragment-id={entry.data.id}
+        >
+          <time datetime={entry.data.pubDate.toISOString()}>
+            {entry.data.pubDate.toLocaleString(getLocaleHreflang(locale), {
+              dateStyle: 'medium',
+              timeStyle: 'short',
+              timeZone: 'UTC',
+            })}{' '}
+            UTC
+          </time>
+          {entry.data.title && <h2>{entry.data.title}</h2>}
+          <div class="fragment-body">
+            <Content />
+          </div>
+          {THEME.FRAGMENTS.comments.enabled && (
+            <button
+              type="button"
+              data-fragment-comments
+              data-fragment-term={fragmentTerm(entry.data.id)}
+              aria-haspopup="dialog"
+              aria-controls="fragment-comments-dialog"
+            >
+              {labels.comments}
+            </button>
+          )}
+        </article>
+      ))
+    }
+    {
+      total > 1 && (
+        <nav class="fragment-pagination" aria-label={labels.title}>
+          {current > 1 && (
+            <a rel="prev" href={pageHref(current - 1)}>
+              {labels.previous}
+            </a>
+          )}
+          <span>
+            {current} / {total}
+          </span>
+          {current < total && (
+            <a rel="next" href={pageHref(current + 1)}>
+              {labels.next}
+            </a>
+          )}
+        </nav>
+      )
+    }
+  </section>
+  {THEME.FRAGMENTS.comments.enabled && <FragmentComments locale={locale} labels={labels} />}
+</CyberShell>
+<style>
+  .fragments-feed {
+    max-width: 850px;
+    margin: 2rem auto;
+  }
+  h1 {
+    color: var(--cyber-cyan, #7cffff);
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  .fragment-card {
+    margin: 1.5rem 0;
+    padding: clamp(1rem, 3vw, 2rem);
+    border: 1px solid #58e5ee66;
+    background: #07131ae8;
+    border-radius: 12px;
+    box-shadow: 0 0 24px #29b6d011;
+    overflow-wrap: anywhere;
+    display: flow-root;
+  }
+  time {
+    color: #a9bcc8;
+    font-size: 0.85rem;
+  }
+  .fragment-body :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+  .fragment-body :global(pre) {
+    overflow-x: auto;
+  }
+  .fragment-body :global(a) {
+    color: #7cffff;
+  }
+  .fragment-card button {
+    float: right;
+  }
+  button,
+  .fragment-pagination a {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid #58e5ee88;
+    border-radius: 6px;
+    color: #adffff;
+    background: #0a2532;
+    cursor: pointer;
+  }
+  .fragment-pagination {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
+  :is(button, a):focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+</style>

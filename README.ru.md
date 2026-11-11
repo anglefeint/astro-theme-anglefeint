@@ -100,6 +100,22 @@ npm run new-page -- projects --theme cyber создаёт src/pages/[lang]/proje
 
 - [Руководство 2: Статьи и организация контента](https://demo.anglefeint.com/ru/blog/starter-guide-2-languages-and-routing/)
 
+## Фрагменты
+
+Фрагменты требуют тему 0.29.0 или новее. Обновите существующий блог перед использованием следующих настроек и команды.
+
+Короткие мысли в Markdown с необязательными комментариями в диалоге. Добавьте поля в существующий theme в src/site.config.ts. Фрагменты и комментарии по умолчанию выключены. Пункт меню расположен под Decoder Lab.
+
+```ts
+fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+```
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+[Руководство 5: Публикация фрагментов](https://demo.anglefeint.com/ru/blog/starter-guide-5-fragments/)
+
 <a id="upgrade"></a>
 
 ## Обновление темы

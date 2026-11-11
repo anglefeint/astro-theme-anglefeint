@@ -6,7 +6,7 @@ title: 'Guia 2: Escreva e organize conteúdo'
 subtitle: 'Artigos, imagens, tags, sumário, busca e compartilhamento.'
 description: 'Artigos, imagens, tags, sumário, busca e compartilhamento.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-11'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
@@ -87,3 +87,6 @@ Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Crie-o 
 O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. `--check` verifica sem escrever; `--to 0.27.1` escolhe a versão. Veja o [guia](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) e [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
 Se a atualização falhar, não publique `dist/`: restaurar dependências não restaura o build anterior. Resolva o erro e execute `npm run doctor` com sucesso antes do deploy. Com pnpm, confira a compatibilidade e atualize manualmente com `pnpm add @anglefeint/astro-theme@latest` e `pnpm run doctor`, mantendo seu lockfile.
+
+
+[Guia 5: Publicar fragmentos](../starter-guide-5-fragments/) — Publique pensamentos breves em Markdown, com comentários opcionais em uma janela.

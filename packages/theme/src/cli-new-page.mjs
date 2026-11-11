@@ -49,6 +49,12 @@ async function main() {
       'This path is reserved for a package-owned standard page. Choose a custom page path.'
     );
   }
+  if (slug.split('/')[0] === 'fragments') {
+    const { loadProjectModule } = await import('./scaffold/project-config.mjs');
+    const { THEME_CONFIG } = await loadProjectModule(path.resolve('src/site.config.ts'));
+    if (THEME_CONFIG.theme?.fragments?.enabled)
+      throw new Error('fragments is enabled and owns this route. Choose another custom page path.');
+  }
   if (!isValidNewPageTheme(theme)) {
     console.error('Invalid theme. Use one of: base, cyber, ai, hacker, matrix.');
     process.exit(1);

@@ -1,0 +1,89 @@
+---
+import Giscus from './Giscus.astro';
+import { THEME } from '@anglefeint/site-config/theme';
+import type { FragmentMessages } from '../i18n/fragments';
+interface Props {
+  locale: string;
+  labels: FragmentMessages;
+}
+const { locale, labels } = Astro.props;
+---
+
+<dialog
+  id="fragment-comments-dialog"
+  aria-labelledby="fragment-comments-title"
+  data-fragment-dialog
+>
+  <div class="fragment-dialog-heading">
+    <h2 id="fragment-comments-title">{labels.comments}</h2><button
+      type="button"
+      data-fragment-close
+      autofocus>{labels.close}</button
+    >
+  </div>
+  <p data-fragment-summary></p>
+  <p data-fragment-status role="status" data-loading={labels.loading} data-error={labels.error}></p>
+  <button type="button" data-fragment-retry hidden>{labels.retry}</button>
+  <div class="giscus" data-fragment-widget></div>
+  <Giscus comments={THEME.COMMENTS} resolvedLocale={locale} deferred />
+</dialog>
+<script>
+  import { initFragmentComments } from '../scripts/fragment-comments.js';
+  initFragmentComments();
+  document.addEventListener('astro:page-load', initFragmentComments);
+</script>
+<style>
+  dialog {
+    width: min(800px, calc(100vw - 2rem));
+    max-height: 90dvh;
+    padding: 1.5rem;
+    border: 1px solid #58e5ee88;
+    border-radius: 12px;
+    background: #0b1521;
+    color: #e4edf7;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  dialog::backdrop {
+    background: #000b;
+  }
+  .fragment-dialog-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  button {
+    padding: 0.5rem 0.9rem;
+    background: #183243;
+    color: #ceffff;
+    border: 1px solid #58e5ee88;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 3px;
+  }
+  [data-fragment-widget] :global(iframe.giscus-frame) {
+    display: block;
+    width: 100%;
+    min-height: 150px;
+    border: 0;
+  }
+  [data-fragment-summary] {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+  @media (max-width: 600px) {
+    dialog {
+      width: calc(100vw - 1rem);
+      max-height: 96dvh;
+      padding: 1rem;
+    }
+  }
+</style>

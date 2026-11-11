@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.29.0] - 2026-11-11
+
+- Add opt-in Fragments feeds with localized navigation, user-owned Markdown and `astro-theme new-fragment`.
+- Optional lazy Giscus comment dialogs use stable fragment IDs, independent of article discussion mappings.
+- Add nine-language demo/starter Fragments tutorials; preserve existing user files and defaults.
+
 ## [0.28.0] - 2026-11-10
 
 - Add opt-in `theme.comments.shareAcrossLocales` (default false). Matching article slugs across locales can share one strict Giscus discussion and reactions; nested slugs remain distinct and existing mappings stay unchanged unless explicitly switched. No automatic GitHub discussion migration or consumer configuration writes.

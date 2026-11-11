@@ -502,3 +502,11 @@ The matching starter adds `src/pages/[lang]/decoder.astro`. `theme.enableDecoder
 The read-only About terminal additionally requires the starter-owned `src/pages/[lang]/terminal/[id].json.ts` route alongside the matching theme package. This static route supplies localized source-text files on demand; package upgrades alone do not add a new project route. Keep the About page and new route aligned through the starter upgrade workflow.
 
 The matching Decoder Lab route now also renders static localized usage guidance and WebApplication metadata. Its enabled-only footer link is supplied by ThemeFrame; disabling `enableDecoderPage` removes both the route and its entries. About and the standalone route share the numeric reveal’s total 1.5–3 second timing (including 1.2 second crossfade), while each host supplies its own appearance. These animation parameters are internal module/CSS options, not new `site.config.ts` fields.
+
+## 0.29.0 — Optional Fragments
+
+After upgrading to 0.29.0 or newer, add `theme.fragments: { enabled: true }` to your existing `src/site.config.ts` only if wanted. Omission preserves the previous site. Create Markdown with `npx @anglefeint/astro-theme@latest new-fragment`; this defaults to your default language. New starters also offer `npm run new-fragment`, but the upgrader does not add scripts or rewrite configuration. User fragments live in `src/content/fragments/<locale>/` and are preserved with articles, config and media.
+
+Comments remain off until `theme.fragments.comments.enabled: true`; fill the existing Giscus repository/category fields first. Fragment discussions use `fragment/<stable-id>` with strict specific matching, regardless of article mapping, and page-localized UI. Reuse the same ID only for translations. Keep IDs stable after publication. Existing article comments do not move, and no GitHub discussions are merged/deleted. A custom fragments page is accepted while this feature is disabled; move it deliberately before enabling the package feed.
+
+The [tutorial source](src/content/blog/en/starter-guide-5-fragments.md) and new starter tutorial are synchronized. Existing personal tutorial copies are not overwritten by npm upgrades. Actual npm, starter and demo delivery evidence is recorded in [0.29.0](docs/releases/0.29.0.md).

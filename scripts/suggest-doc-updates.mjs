@@ -7,6 +7,7 @@ const ROOT = process.cwd();
 const EXCLUDE_PREFIXES = [
   'acceptance-results/',
   'src/content/blog/',
+  'src/content/fragments/',
   'public/images/',
   '.cursor/workflows/',
   '.cursor/skills/',

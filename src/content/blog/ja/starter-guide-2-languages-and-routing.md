@@ -4,7 +4,7 @@ title: '利用ガイド 2：記事を書く・コンテンツを整理する'
 subtitle: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 description: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -166,3 +166,5 @@ npx @anglefeint/astro-theme@latest upgrade
 自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
 
 更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。
+
+[ユーザーガイド 5：断片を公開する](../starter-guide-5-fragments/) — 短い思いを Markdown で残し、コメントをダイアログで表示します。

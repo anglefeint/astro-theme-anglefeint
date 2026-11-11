@@ -126,6 +126,22 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## Fragments
+
+Fragments requires theme 0.29.0 or newer. Upgrade existing blogs before using the configuration and command below.
+
+Publish brief thoughts as Markdown, with optional popup comments. Merge this into the existing theme object in src/site.config.ts. Fragments and its comments are off by default. The menu appears below Decoder Lab.
+
+```ts
+fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+```
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+[User Guide 5: Publish Fragments](https://demo.anglefeint.com/en/blog/starter-guide-5-fragments/)
+
 <a id="upgrade"></a>
 
 ## Upgrade the theme

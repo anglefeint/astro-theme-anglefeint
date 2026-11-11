@@ -1,8 +1,9 @@
 import { execFile as execFileCallback } from 'node:child_process';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { resolveSiteUrl } from './resolve-site-url.mjs';
+import { fragmentFixture } from '../tests/fragments-fixture.mjs';
 
 const execFile = promisify(execFileCallback);
 const repoRoot = process.cwd();
@@ -50,6 +51,19 @@ async function main() {
   const payload = JSON.parse(stdout);
   payload.siteUrl = resolveSiteUrl(payload.siteUrl, repoRoot, ['build']);
   await writeFile(outputPath, `${JSON.stringify(payload)}\n`, 'utf8');
+  // Build fixtures before launching parallel browsers, not beside WebGL/animation tests.
+  const fixture = await fragmentFixture();
+  try {
+    await fixture.build();
+    const directory = await mkdtemp(path.join(repoRoot, 'acceptance-results/fragments-browser-'));
+    await cp(path.join(fixture.root, 'dist'), directory, { recursive: true });
+    await writeFile(
+      path.join(repoRoot, 'tests/e2e/.generated-fragments-config.json'),
+      JSON.stringify({ directory })
+    );
+  } finally {
+    await fixture.close();
+  }
 }
 
 main().catch((error) => {

@@ -1,0 +1,72 @@
+---
+tags: ['anglefeint', 'starter']
+title: "使用者指南 5：發布碎片"
+description: "以 Markdown 記錄簡短感想，可選彈窗留言。"
+pubDate: '2026-11-11'
+heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+---
+
+既有部落格請先升級至主題 0.29.0 或更新版本：
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+將下列欄位合併至 `src/site.config.ts` 現有 theme。碎片與留言預設關閉；開啟後選單位於 Decoder Lab 下方。
+
+```ts
+theme: {
+  fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+},
+```
+
+開啟後造訪 `/<locale>/fragments/`。`pageSize` 接受 1–100 的整數。檔案使用 `.md`；沒有草稿或未來日期篩選，尚未準備公開的碎片請放在 `src/content/fragments/` 之外。
+
+以預設語言建立碎片：
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+使用 --locales en,zh 建立共用 ID 的多語骨架，不會自動翻譯，只能選已啟用語言。新 starter 可用 npm run new-fragment；舊使用者直接用 npx，無需補腳本。
+
+編輯 `src/content/fragments/<locale>/` 產生的 Markdown，標題可省略：
+
+之後補譯時，將原 Markdown 複製至目標語言目錄，保留 id，再翻譯內文。
+
+```md
+---
+id: 550e8400-e29b-41d4-a716-446655440000
+pubDate: 2026-11-11T08:30:00+08:00
+---
+
+碎片.
+```
+
+編輯或改名時保留 id；同一碎片的翻譯共用 id，同語言重複 id 會使建置失敗，不同碎片需不同 ID。pubDate 包含時間與時區，以 UTC 顯示並依時間倒序。
+
+開啟彈窗留言：將 `theme.fragments.comments.enabled` 設為 true，於 `theme.comments` 填入 Giscus 提供的 repo、repoId、category、categoryId。倉庫設定見指南 4；文章留言可維持關閉。 [Giscus](https://giscus.app/) · [4](../starter-guide-4-giscus-comments/)
+
+```ts
+theme: {
+  fragments: { enabled: true, comments: { enabled: true } },
+  comments: {
+    repo: 'yourname/your-repository',
+    repoId: 'R_...',
+    category: 'Your category',
+    categoryId: 'DIC_...',
+  },
+},
+```
+
+碎片固定使用 specific、嚴格比對及 `fragment/<id>`，忽略文章 mapping、term、number、shareAcrossLocales、lang。介面隨頁面語言；相同 ID 的翻譯共用留言與表情，文章討論不變。首次點擊才載入留言客戶端。關閉只隱藏彈窗，再次開啟或切換碎片時共用同一個留言實例。
+
+靜態發布：修改 Markdown 後重新建置部署，沒有線上發文後台。碎片不加入文章搜尋、RSS 或文章 Markdown 匯出。圖片可放 `public/images/`，以 `/images/...` 引用。
+
+先升級至主題 0.29.0 或更新版本，再主動開啟。保留個人內容、設定、音樂及圖片；個人教程不會被替換，請參閱最新 demo。不會合併或刪除 GitHub 討論。
+
+留言從遠端載入；Giscus 就緒前保留載入提示，失敗或超過 15 秒會顯示重試。請檢查網路或 Giscus 設定。彈窗共用文章的 Giscus 整合，無需另外安裝 Giscus npm 套件，也不改變文章既有對應。
+
+```bash
+npm run build
+```

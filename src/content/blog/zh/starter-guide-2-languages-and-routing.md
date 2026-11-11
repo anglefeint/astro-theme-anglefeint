@@ -4,7 +4,7 @@ title: '使用指南 2：写文章与管理内容'
 subtitle: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 description: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -166,3 +166,5 @@ npx @anglefeint/astro-theme@latest upgrade
 自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
 
 升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。
+
+[用户指南 5：发布碎片](../starter-guide-5-fragments/) — 用 Markdown 记录简短感想，可选弹窗评论。

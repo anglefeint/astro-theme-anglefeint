@@ -57,6 +57,7 @@ export const STARTER_CONTENT_SLUGS = [
   'starter-guide-2-languages-and-routing',
   'starter-guide-3-comments-about-and-theme-toggles',
   'starter-guide-4-giscus-comments',
+  'starter-guide-5-fragments',
 ];
 
 export const STARTER_CONTENT_MANAGED_FILES = STARTER_CONTENT_LOCALES.flatMap((locale) =>

@@ -36,6 +36,15 @@ test(
     const root = await mkdtemp(path.resolve('.comments-fixture-'));
     try {
       await cp('tests/fixtures/integration-starter-v1', root, { recursive: true });
+      // Each build owns its Astro/Vite caches even though node_modules is shared.
+      const astroConfig = path.join(root, 'astro.config.mjs');
+      await writeFile(
+        astroConfig,
+        (await readFile(astroConfig, 'utf8')).replace(
+          'defineConfig({',
+          "defineConfig({ cacheDir: './.cache/astro', vite: { cacheDir: './.cache/vite' },"
+        )
+      );
       await symlink(
         path.resolve('node_modules'),
         path.join(root, 'node_modules'),

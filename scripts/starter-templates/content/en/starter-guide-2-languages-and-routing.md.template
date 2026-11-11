@@ -4,7 +4,7 @@ title: 'User Guide 2: Write and Organize Content'
 subtitle: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 description: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -166,3 +166,6 @@ Pre-0.27 projects require a one-time fresh-starter migration: create a new templ
 The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.1` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.
 
 If an upgrade fails, do not deploy `dist/`: dependency rollback does not restore previous build output. Resolve the error and run `npm run doctor` successfully before deploying. pnpm users update explicitly with `pnpm add @anglefeint/astro-theme@latest` and `pnpm run doctor`; keep their lockfile and review release compatibility first.
+
+
+[User Guide 5: Publish Fragments](../starter-guide-5-fragments/) — Publish brief thoughts as Markdown, with optional popup comments.

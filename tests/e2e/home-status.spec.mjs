@@ -1,4 +1,4 @@
-/* global document */
+/* global document, getComputedStyle */
 import { test, expect } from '@playwright/test';
 
 test('homepage signals reveal independently and keep a compact bottom inset', async ({
@@ -14,9 +14,19 @@ test('homepage signals reveal independently and keep a compact bottom inset', as
   await expect(pirate).toHaveCSS('opacity', '0');
   await expect(trace).toHaveCSS('opacity', '0');
   await expect(cursor).toHaveCSS('animation-name', 'none');
-  const originalBounds = await row.boundingBox();
-  const main = await page.locator('main').boundingBox();
-  expect(main.y + main.height - originalBounds.y - originalBounds.height).toBeLessThan(16);
+  await page.evaluate(() => document.fonts.ready);
+  const { originalBounds, bottomPadding } = await page.locator('main').evaluate((main) => {
+    // Read both rectangles in one layout frame, after fonts settle.
+    const { x, y, width, height } = main
+      .querySelector('.home-terminal-status')
+      .getBoundingClientRect();
+    return {
+      originalBounds: { x, y, width, height },
+      // Sticky-footer flex growth varies with the latest article titles; padding does not.
+      bottomPadding: parseFloat(getComputedStyle(main).paddingBottom),
+    };
+  });
+  expect(bottomPadding).toBeLessThan(16);
   await page.screenshot({ path: testInfo.outputPath('signals-hidden.png') });
   await pirate.hover();
   await expect(pirate).toHaveCSS('opacity', '1');

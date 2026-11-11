@@ -53,7 +53,8 @@
     "new-page": "anglefeint-new-page",
     "astro": "astro",
     "theme:pack": "npm pack --workspace @anglefeint/astro-theme",
-    "check:integration": "node scripts/check-integration.mjs"
+    "check:integration": "node scripts/check-integration.mjs",
+    "new-fragment": "astro-theme new-fragment"
   },
   "lint-staged": {
     "*.{js,mjs}": [

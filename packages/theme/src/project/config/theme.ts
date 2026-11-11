@@ -1,3 +1,4 @@
+import { fragmentSettings } from '@anglefeint/astro-theme/utils/fragments';
 // Package-owned project configuration.
 
 import { validateComments } from '@anglefeint/astro-theme/utils/comments';
@@ -13,6 +14,7 @@ const normalizedCommentNumber = commentsConfig.number.trim();
  * Theme behavior config.
  */
 export const THEME = {
+  FRAGMENTS: fragmentSettings(THEME_CONFIG.theme.fragments),
   HOME: {
     SHOW_INITIALIZE: THEME_CONFIG.theme.home?.showInitialize ?? true,
     SHOW_FOLLOW: THEME_CONFIG.theme.home?.showFollow ?? true,

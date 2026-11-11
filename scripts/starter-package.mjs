@@ -7,6 +7,7 @@ export const STARTER_SCRIPTS = {
   check: 'astro-theme doctor',
   doctor: 'astro-theme doctor',
   upgrade: 'npx @anglefeint/astro-theme@latest upgrade',
+  'new-fragment': 'astro-theme new-fragment',
   'new-post': 'anglefeint-new-post',
   'new-page': 'anglefeint-new-page',
   astro: 'astro',

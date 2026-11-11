@@ -1,0 +1,72 @@
+---
+tags: ['anglefeint', 'starter']
+title: "Guia 5: Publicar fragmentos"
+description: "Publique pensamentos breves em Markdown, com comentários opcionais em uma janela."
+pubDate: '2026-11-11'
+heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+---
+
+Se já tem um blog, atualize primeiro para o tema 0.29.0 ou posterior:
+
+```bash
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+Adicione ao theme existente em `src/site.config.ts`. Fragmentos e comentários ficam desativados por padrão. O menu aparece abaixo de Decoder Lab.
+
+```ts
+theme: {
+  fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+},
+```
+
+Após ativar, acesse `/<locale>/fragments/`. `pageSize` aceita inteiros de 1 a 100. Os arquivos usam `.md`; não há filtro de rascunhos ou datas futuras. Guarde os fragmentos ainda não publicados fora de `src/content/fragments/`.
+
+Crie um fragmento no idioma padrão:
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+--locales en,zh cria arquivos com o mesmo ID, sem tradução automática. Apenas idiomas habilitados são aceitos. O novo starter oferece npm run new-fragment; usuários existentes podem usar npx sem adicionar scripts.
+
+Edite o Markdown gerado em `src/content/fragments/<locale>/`. O título é opcional:
+
+Para adicionar uma tradução depois, copie o Markdown original para a pasta do idioma, mantenha id e traduza o texto.
+
+```md
+---
+id: 550e8400-e29b-41d4-a716-446655440000
+pubDate: 2026-11-11T08:30:00+08:00
+---
+
+Fragmentos.
+```
+
+Mantenha id ao editar ou renomear. Apenas traduções do mesmo fragmento compartilham ID. IDs duplicados no mesmo idioma impedem a compilação. pubDate inclui horário e fuso; exibição em UTC e ordem do mais recente.
+
+Ative `theme.fragments.comments.enabled` e preencha repo, repoId, category e categoryId em `theme.comments` com os valores do Giscus. Consulte o Guia 4. Comentários dos artigos podem continuar desativados. [Giscus](https://giscus.app/) · [4](../starter-guide-4-giscus-comments/)
+
+```ts
+theme: {
+  fragments: { enabled: true, comments: { enabled: true } },
+  comments: {
+    repo: 'yourname/your-repository',
+    repoId: 'R_...',
+    category: 'Your category',
+    categoryId: 'DIC_...',
+  },
+},
+```
+
+Usa specific, correspondência estrita e `fragment/<id>`. Ignora mapping, term, number, shareAcrossLocales e lang dos artigos; a interface segue o idioma da página. Traduções com o mesmo ID compartilham comentários e reações. Discussões de artigos não mudam. O cliente de comentários carrega no primeiro clique. Fechar oculta a janela; ao reabrir ou trocar de fragmento, a mesma instância de comentários é reutilizada.
+
+Publicação estática: edite Markdown, compile e publique novamente. Sem formulário de postagem online. Separado da busca de artigos, RSS e exportação Markdown de artigos. Imagens em `public/images/` podem ser usadas como `/images/...`.
+
+Atualize para o tema 0.29.0 ou posterior e ative a configuração. Conteúdo, configuração, músicas e imagens pessoais são preservados. Guias pessoais não são substituídos; consulte o demo atual. Discussões do GitHub não são mescladas nem excluídas.
+
+Os comentários carregam remotamente. O aviso permanece até o Giscus estar pronto; em caso de falha ou após 15 segundos aparece Tentar novamente. Verifique a rede ou a configuração. A janela reutiliza a integração Giscus dos artigos; não é necessário instalar outro pacote npm do Giscus e as associações existentes não mudam.
+
+```bash
+npm run build
+```

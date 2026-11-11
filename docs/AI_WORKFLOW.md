@@ -117,6 +117,8 @@ Minimum validation depends on change type:
 
 Prefer the smallest sufficient validation set, but do not skip build checks when layout/runtime/config behavior changed. Integration/upgrade changes additionally require the independent installed build/audit matrix, `npm run check:upgrade` real command preservation acceptance, and the full functional browser suite. Local fixtures do not substitute for post-publication registry/remote-template/live verification.
 
+Symlinked build fixtures must set project-local Astro `cacheDir` and Vite `cacheDir`; sharing node_modules must not share writable content/build caches. `e2e:prepare` builds the fragments fixture before the parallel browser suite, so fixture compilation does not contend with WebGL/animation acceptance. Keep original functional deadlines and concurrency; fix isolation and content-dependent measurement assumptions at the test boundary.
+
 ### 4. Release Decision
 
 Publish npm when the change affects installed users through the package, for example:

@@ -90,6 +90,7 @@ const ALLOWED_AUDIENCES = new Set(['agent', 'maintainer', 'user']);
 const EXCLUDE_PREFIXES = [
   'acceptance-results/',
   'src/content/blog/',
+  'src/content/fragments/',
   'public/images/',
   '.cursor/workflows/',
   '.cursor/skills/',

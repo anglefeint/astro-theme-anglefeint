@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -100,13 +100,17 @@
     "./config": "./src/project/index.ts",
     "./env": "./src/project/env.d.ts",
     "./runtime/*": "./src/project/*",
-    "./sitemap": "./src/sitemap.mjs"
+    "./sitemap": "./src/sitemap.mjs",
+    "./utils/fragments": "./src/utils/fragments.ts"
   },
   "peerDependencies": {
     "astro": "^7.3.5"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.3",
+    "@astrojs/mdx": "^8.0.3",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
     "@noble/hashes": "^2.4.0",
     "@scure/base": "^2.4.0",
     "jiti": "^2.7.0",
@@ -116,14 +120,11 @@
     "pagefind": "^1.5.2",
     "satori": "0.33.5",
     "satteri": "^0.10.5",
+    "semver": "^7.7.3",
     "sharp": "^0.35.5",
     "turndown": "^7.2.4",
     "turndown-plugin-gfm": "^1.0.2",
-    "@astrojs/mdx": "^8.0.3",
-    "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.4",
-    "vite": "^8.3.5",
-    "semver": "^7.7.3"
+    "vite": "^8.3.5"
   },
   "anglefeint": {
     "projectSchema": 1

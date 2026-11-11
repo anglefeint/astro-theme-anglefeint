@@ -1,8 +1,10 @@
+import { FRAGMENT_LABELS, type FragmentMessages } from './fragments';
 import { TERMINAL_LABELS, type TerminalMessages } from './terminal';
 import { DECODER_PAGE_LABELS, type DecoderPageMessages } from './decoder';
 import { DEFAULT_LOCALE, type Locale } from './config';
 
 export type Messages = {
+  fragments: FragmentMessages;
   footer: { theme: string; builtWith: string };
   music: {
     mute: string;
@@ -506,6 +508,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   'pt-br': {
     decoder: DECODER_LABELS['pt-br'],
     decoderPage: DECODER_PAGE_LABELS['pt-br'],
+    fragments: FRAGMENT_LABELS['pt-br'],
     windowControls: WINDOW_LABELS['pt-br'],
     scriptFolders: SCRIPT_FOLDER_LABELS['pt-br'],
     terminal: TERMINAL_LABELS['pt-br'],
@@ -633,6 +636,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   de: {
     decoder: DECODER_LABELS['de'],
     decoderPage: DECODER_PAGE_LABELS['de'],
+    fragments: FRAGMENT_LABELS['de'],
     windowControls: WINDOW_LABELS['de'],
     scriptFolders: SCRIPT_FOLDER_LABELS['de'],
     terminal: TERMINAL_LABELS['de'],
@@ -762,6 +766,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   ru: {
     decoder: DECODER_LABELS['ru'],
     decoderPage: DECODER_PAGE_LABELS['ru'],
+    fragments: FRAGMENT_LABELS['ru'],
     windowControls: WINDOW_LABELS['ru'],
     scriptFolders: SCRIPT_FOLDER_LABELS['ru'],
     terminal: TERMINAL_LABELS['ru'],
@@ -889,6 +894,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   'zh-hant': {
     decoder: DECODER_LABELS['zh-hant'],
     decoderPage: DECODER_PAGE_LABELS['zh-hant'],
+    fragments: FRAGMENT_LABELS['zh-hant'],
     windowControls: WINDOW_LABELS['zh-hant'],
     scriptFolders: SCRIPT_FOLDER_LABELS['zh-hant'],
     terminal: TERMINAL_LABELS['zh-hant'],
@@ -1016,6 +1022,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   en: {
     decoder: DECODER_LABELS['en'],
     decoderPage: DECODER_PAGE_LABELS['en'],
+    fragments: FRAGMENT_LABELS['en'],
     windowControls: WINDOW_LABELS['en'],
     scriptFolders: SCRIPT_FOLDER_LABELS['en'],
     terminal: TERMINAL_LABELS['en'],
@@ -1140,6 +1147,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   ja: {
     decoder: DECODER_LABELS['ja'],
     decoderPage: DECODER_PAGE_LABELS['ja'],
+    fragments: FRAGMENT_LABELS['ja'],
     windowControls: WINDOW_LABELS['ja'],
     scriptFolders: SCRIPT_FOLDER_LABELS['ja'],
     terminal: TERMINAL_LABELS['ja'],
@@ -1264,6 +1272,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   ko: {
     decoder: DECODER_LABELS['ko'],
     decoderPage: DECODER_PAGE_LABELS['ko'],
+    fragments: FRAGMENT_LABELS['ko'],
     windowControls: WINDOW_LABELS['ko'],
     scriptFolders: SCRIPT_FOLDER_LABELS['ko'],
     terminal: TERMINAL_LABELS['ko'],
@@ -1388,6 +1397,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   es: {
     decoder: DECODER_LABELS['es'],
     decoderPage: DECODER_PAGE_LABELS['es'],
+    fragments: FRAGMENT_LABELS['es'],
     windowControls: WINDOW_LABELS['es'],
     scriptFolders: SCRIPT_FOLDER_LABELS['es'],
     terminal: TERMINAL_LABELS['es'],
@@ -1513,6 +1523,7 @@ export const DEFAULT_MESSAGES: Record<string, Messages> = {
   zh: {
     decoder: DECODER_LABELS['zh'],
     decoderPage: DECODER_PAGE_LABELS['zh'],
+    fragments: FRAGMENT_LABELS['zh'],
     windowControls: WINDOW_LABELS['zh'],
     scriptFolders: SCRIPT_FOLDER_LABELS['zh'],
     terminal: TERMINAL_LABELS['zh'],

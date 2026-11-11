@@ -29,6 +29,14 @@ Pre-0.27 projects need a one-time fresh-starter migration preserving content, co
 
 Article sitemap lastmod follows rendered updatedDate/pubDate. Terminal JSON noindex rules are merged into built dist/_headers without overwriting user source rules; compatible static hosts apply them, while other hosts need equivalent headers. Verify the deployed HTTP response. Neither the SEO features nor upgrade tool promise search indexing.
 
+## Fragments (0.29.0+)
+
+Optional short-form Markdown lives in `src/content/fragments/<locale>/`. Enable with `theme.fragments: { enabled: true }`; the menu appears below Decoder Lab at `/<locale>/fragments/`. The feed defaults off, uses `pageSize: 20` (1–100), and has its own `comments.enabled: false` default. A custom fragments route is reserved only when this feature is enabled.
+
+Create one default-language entry with `npx @anglefeint/astro-theme@latest new-fragment`; `--locales en,zh` creates shared-ID translation skeletons. Existing projects need no new npm script. Keep frontmatter `id` stable; `pubDate` includes time and timezone, `title` is optional. Rebuild/redeploy after changes.
+
+Article and fragment embeds share `Giscus.astro` and a single configuration/locale resolver. The popup waits for remote readiness, shows retry on errors or a 15-second timeout, and keeps its heading/close control inside the dialog. Popup comments reuse the Giscus repository/category IDs, theme, reactions and input position from `theme.comments`, independently of article enabled/mapping/term/number/strict/sharing/lang. Each fragment uses strict specific mapping and `fragment/<id>`; translations share the ID and interface language follows the page. The same official `client.js` used by articles loads on the first comment click; closing hides the popup and switching fragments reuses its client/iframe. No Giscus npm package is required. No dependency implementation is modified and no GitHub discussions are merged/deleted. Article comments remain unchanged. The [User Guide 5 source](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/src/content/blog/en/starter-guide-5-fragments.md) documents this feature.
+
 ## Feature configuration
 
 Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.

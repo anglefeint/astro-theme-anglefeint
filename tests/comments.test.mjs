@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateComments, articleComments } from '../packages/theme/src/utils/comments.ts';
+import {
+  validateComments,
+  articleComments,
+  giscusConfig,
+} from '../packages/theme/src/utils/comments.ts';
 import { loadProjectModule } from '../packages/theme/src/scaffold/project-config.mjs';
 import path from 'node:path';
 const { defineThemeConfig } = await loadProjectModule(
@@ -8,6 +12,53 @@ const { defineThemeConfig } = await loadProjectModule(
 );
 
 const defaults = defineThemeConfig({}).theme.comments;
+
+test('article and deferred embeds share configuration without changing article mapping', () => {
+  const source = {
+    REPO: 'test/comments',
+    REPO_ID: 'repo',
+    CATEGORY: 'General',
+    CATEGORY_ID: 'category',
+    MAPPING: 'number',
+    TERM: ' custom ',
+    NUMBER: ' 42 ',
+    STRICT: '0',
+    REACTIONS_ENABLED: '1',
+    EMIT_METADATA: '0',
+    INPUT_POSITION: 'bottom',
+    THEME: 'dark',
+    LANG: 'ja',
+    LOADING: 'lazy',
+    CROSSORIGIN: 'anonymous',
+  };
+  const saved = { ...source };
+  const article = giscusConfig(source, 'zh');
+  const deferred = giscusConfig(source, 'zh', true);
+  assert.equal(article.mapping, 'number');
+  assert.equal(article.number, '42');
+  assert.equal(article.term, undefined);
+  assert.equal(article.lang, 'ja');
+  assert.equal(article.strict, '0');
+  assert.equal(article.loading, 'lazy');
+  assert.equal(deferred.mapping, 'specific');
+  assert.equal(deferred.number, undefined);
+  assert.equal(deferred.term, '');
+  assert.equal(deferred.lang, 'zh-CN');
+  assert.equal(deferred.strict, '1');
+  assert.equal(deferred.loading, 'eager');
+  for (const key of [
+    'repo',
+    'repoId',
+    'category',
+    'categoryId',
+    'theme',
+    'reactionsEnabled',
+    'inputPosition',
+  ])
+    assert.equal(article[key], deferred[key]);
+  assert.deepEqual(source, saved);
+  assert.throws(() => giscusConfig({ ...source, REPO: '' }, 'en', true), /theme.comments.repo/);
+});
 
 test('shared comments are opt-in and ordinary custom mappings retain their rules', () => {
   assert.equal(defaults.shareAcrossLocales, false);

@@ -100,6 +100,22 @@ npm run new-page -- projects --theme cyber 會建立 src/pages/[lang]/projects.a
 
 - [使用指南 2：撰寫與整理內容](https://demo.anglefeint.com/zh-hant/blog/starter-guide-2-languages-and-routing/)
 
+## 碎片
+
+碎片功能需要主題 0.29.0 或更新版本。既有部落格請先升級，再使用以下設定與命令。
+
+以 Markdown 記錄簡短感想，可選彈窗留言。 將下列欄位合併至 src/site.config.ts 現有 theme。碎片與留言預設關閉；開啟後選單位於 Decoder Lab 下方。
+
+```ts
+fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+```
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+[使用者指南 5：發布碎片](https://demo.anglefeint.com/zh-hant/blog/starter-guide-5-fragments/)
+
 <a id="upgrade"></a>
 
 ## 升級主題

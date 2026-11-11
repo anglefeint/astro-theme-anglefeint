@@ -97,6 +97,7 @@ export interface ThemeConfig {
     homeLatestCount: number;
     enableAboutPage: boolean;
     enableDecoderPage: boolean;
+    fragments?: { enabled?: boolean; pageSize?: number; comments?: { enabled?: boolean } };
     tags: { enabled: boolean };
     socialImage: { enabled: boolean };
     toc: {

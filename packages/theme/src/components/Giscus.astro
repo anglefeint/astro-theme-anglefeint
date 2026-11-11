@@ -1,54 +1,37 @@
 ---
-type GiscusComments = {
-  REPO: string;
-  REPO_ID: string;
-  CATEGORY: string;
-  CATEGORY_ID: string;
-  MAPPING: string;
-  TERM: string;
-  NUMBER: string;
-  STRICT: string;
-  REACTIONS_ENABLED: string;
-  EMIT_METADATA: string;
-  INPUT_POSITION: string;
-  THEME: string;
-  LANG: string;
-  LOADING: string;
-  CROSSORIGIN: string;
+import { giscusConfig, type GiscusComments } from '../utils/comments';
+type Props = { comments: GiscusComments; resolvedLocale: string; deferred?: boolean };
+const { comments, resolvedLocale, deferred = false } = Astro.props;
+const config = giscusConfig(comments, resolvedLocale, deferred);
+const payload = JSON.stringify(config).replace(/</g, '\\u003c');
+const attributes = {
+  'data-repo': config.repo,
+  'data-repo-id': config.repoId,
+  'data-category': config.category,
+  'data-category-id': config.categoryId,
+  'data-mapping': config.mapping,
+  'data-term': config.term,
+  'data-number': config.number,
+  'data-strict': config.strict,
+  'data-reactions-enabled': config.reactionsEnabled,
+  'data-emit-metadata': config.emitMetadata,
+  'data-input-position': config.inputPosition,
+  'data-theme': config.theme,
+  'data-lang': config.lang,
+  'data-loading': config.loading,
+  crossorigin: config.crossorigin,
 };
-
-type Props = {
-  comments: GiscusComments;
-  resolvedLocale: string;
-};
-
-const { comments, resolvedLocale } = Astro.props;
-const normalizedCommentTerm = comments.TERM.trim();
-const normalizedCommentNumber = comments.NUMBER.trim();
-const GISCUS_LOCALE_MAP: Record<string, string> = {
-  zh: 'zh-CN',
-  'zh-hant': 'zh-TW',
-  'pt-br': 'pt',
-};
-const giscusLocale = comments.LANG || GISCUS_LOCALE_MAP[resolvedLocale] || resolvedLocale;
 ---
 
-<script
-  is:inline
-  src="https://giscus.app/client.js"
-  data-repo={comments.REPO}
-  data-repo-id={comments.REPO_ID}
-  data-category={comments.CATEGORY}
-  data-category-id={comments.CATEGORY_ID}
-  data-mapping={comments.MAPPING}
-  data-term={comments.MAPPING === 'specific' ? normalizedCommentTerm : undefined}
-  data-number={comments.MAPPING === 'number' ? normalizedCommentNumber : undefined}
-  data-strict={comments.STRICT}
-  data-reactions-enabled={comments.REACTIONS_ENABLED}
-  data-emit-metadata={comments.EMIT_METADATA}
-  data-input-position={comments.INPUT_POSITION}
-  data-theme={comments.THEME}
-  data-lang={giscusLocale}
-  data-loading={comments.LOADING}
-  crossorigin={comments.CROSSORIGIN}
-  async></script>
+{
+  deferred ? (
+    <>
+      <script type="application/json" data-fragment-config set:html={payload} />
+      <template data-giscus-template>
+        <script is:inline src="https://giscus.app/client.js" {...attributes} async />
+      </template>
+    </>
+  ) : (
+    <script is:inline src="https://giscus.app/client.js" {...attributes} async />
+  )
+}

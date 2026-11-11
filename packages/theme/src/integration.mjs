@@ -29,7 +29,7 @@ export const TERMINAL_HEADER_RULE = '/:locale/terminal/*\n  X-Robots-Tag: noinde
 
 // Match route URLs, not just one copied .astro filename. Markdown pages, index
 // aliases and concrete locale folders must receive the same preservation guard.
-export async function assertNoReservedRoutes(srcDir, locales = []) {
+export async function assertNoReservedRoutes(srcDir, locales = [], routes = STANDARD_ROUTES) {
   const pages = fileURLToPath(new URL('pages/', srcDir));
   let entries;
   try {
@@ -38,7 +38,7 @@ export async function assertNoReservedRoutes(srcDir, locales = []) {
     if (error.code === 'ENOENT') return;
     throw error;
   }
-  const patterns = STANDARD_ROUTES.map(([route]) => {
+  const patterns = routes.map(([route]) => {
     const segments = route.split('/').filter(Boolean);
     return new RegExp(
       '^' +
@@ -105,6 +105,9 @@ export default function anglefeint(themeConfig) {
   }
   const defaultLocale = themeConfig.i18n.defaultLocale;
   const prefixMode = themeConfig.i18n.routing.defaultLocalePrefix;
+  const routes = themeConfig.theme.fragments?.enabled
+    ? [...STANDARD_ROUTES, ['/[lang]/fragments/[...page]', '[lang]/fragments/[...page].astro']]
+    : STANDARD_ROUTES;
   let siteContext = { title: themeConfig.site.title, description: themeConfig.site.description };
   let machine;
   return [
@@ -129,7 +132,8 @@ export default function anglefeint(themeConfig) {
             config.srcDir,
             Object.entries(themeConfig.i18n.locales)
               .filter(([locale, value]) => locale === defaultLocale || value.meta.enabled !== false)
-              .map(([locale]) => locale)
+              .map(([locale]) => locale),
+            routes
           );
           updateConfig({
             compressHTML: true,
@@ -146,7 +150,7 @@ export default function anglefeint(themeConfig) {
               },
             },
           });
-          for (const [pattern, relative] of STANDARD_ROUTES) {
+          for (const [pattern, relative] of routes) {
             injectRoute({ pattern, entrypoint: source(`./routes/${relative}`), prerender: true });
           }
         },

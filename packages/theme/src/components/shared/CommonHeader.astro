@@ -53,6 +53,14 @@ const frontierItems = [
   ...(showDecoder
     ? [{ label: 'Decoder Lab', href: alternatePathForLocale(locale, '/decoder/') }]
     : []),
+  ...(THEME.FRAGMENTS.enabled
+    ? [
+        {
+          label: getMessages(locale).fragments.title,
+          href: alternatePathForLocale(locale, '/fragments/'),
+        },
+      ]
+    : []),
   ...(showAbout
     ? [
         {

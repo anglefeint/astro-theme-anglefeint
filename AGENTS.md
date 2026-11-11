@@ -57,7 +57,7 @@ Before changing signature effects, identify the intended visual gain, compare ag
 
 ## Integration architecture (0.27.0)
 
-Standard routes and default configuration/i18n/build logic are package-owned under `packages/theme/src/routes`, `project` and `integration.mjs`. The starter is thin; do not add copied standard-page or adapter implementations to consumer projects. User articles, site-config values, music/images, custom pages and hosting settings must survive upgrades. The package's upgrade command supports npm schema-1 projects and refuses old copied skeletons; those require a fresh-starter migration. Existing root config/i18n adapters are maintainer diagnostic fixtures, not shipped runtime ownership. Actual delivery status and verification belong in docs/releases/0.27.0.md.
+Standard routes and default configuration/i18n/build logic are package-owned under `packages/theme/src/routes`, `project` and `integration.mjs`. The starter is thin; do not add copied standard-page or adapter implementations to consumer projects. User articles/fragments, site-config values, music/images, custom pages and hosting settings must survive upgrades. The package's upgrade command supports npm schema-1 projects and refuses old copied skeletons; those require a fresh-starter migration. Existing root config/i18n adapters are maintainer diagnostic fixtures, not shipped runtime ownership. Actual delivery status and verification belong in docs/releases/0.27.0.md.
 
 ## Third-party dependency boundaries
 
@@ -129,7 +129,7 @@ Lint and doc metadata checks are configured.
 - About content/modals: `src/site.config.ts` -> `i18n.locales.<code>.about`
 - Social links: `src/site.config.ts` -> `social.links`
 - Site identity: `src/site.config.ts` -> `site`
-- Content: `src/content/blog/<locale>/`
+- Content: `src/content/blog/<locale>/`; optional fragments: `src/content/fragments/<locale>/` (preserve stable IDs)
 
 ## High-Risk Areas
 

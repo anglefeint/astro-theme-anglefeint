@@ -119,7 +119,7 @@ Both `suggest:docs` and `check:docs` also skip the repository-root `acceptance-r
 
 Exclude these from strict metadata enforcement unless explicitly requested:
 
-- content markdown used as data (for example blog posts under `src/content/**`)
+- content markdown used as data (`src/content/blog/` and `src/content/fragments/`)
 - asset helper markdown (for example image folder readmes)
 - tool-owned workflow prompt markdown that is not a canonical repository doc
 

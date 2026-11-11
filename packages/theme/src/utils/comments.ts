@@ -1,5 +1,61 @@
 import type { ThemeConfig } from '../project/schema';
 
+/** Shared input contract for the existing article embed and deferred dialogs. */
+export type GiscusComments = {
+  REPO: string;
+  REPO_ID: string;
+  CATEGORY: string;
+  CATEGORY_ID: string;
+  MAPPING: string;
+  TERM: string;
+  NUMBER: string;
+  STRICT: string;
+  REACTIONS_ENABLED: string;
+  EMIT_METADATA: string;
+  INPUT_POSITION: string;
+  THEME: string;
+  LANG: string;
+  LOADING: string;
+  CROSSORIGIN: string;
+};
+
+export function giscusConfig(comments: GiscusComments, locale: string, deferred = false) {
+  if (deferred) {
+    for (const [field, key] of [
+      ['repo', 'REPO'],
+      ['repoId', 'REPO_ID'],
+      ['category', 'CATEGORY'],
+      ['categoryId', 'CATEGORY_ID'],
+    ] as const) {
+      if (!comments[key].trim())
+        throw new Error(
+          `Fragments comments require theme.comments.${field}. Configure Giscus or disable theme.fragments.comments.enabled.`
+        );
+    }
+  }
+  const mapping = deferred ? 'specific' : comments.MAPPING;
+  const language =
+    ({ zh: 'zh-CN', 'zh-hant': 'zh-TW', 'pt-br': 'pt' } as Record<string, string>)[locale] ??
+    locale;
+  return {
+    repo: comments.REPO,
+    repoId: comments.REPO_ID,
+    category: comments.CATEGORY,
+    categoryId: comments.CATEGORY_ID,
+    mapping,
+    term: mapping === 'specific' ? (deferred ? '' : comments.TERM.trim()) : undefined,
+    number: mapping === 'number' ? comments.NUMBER.trim() : undefined,
+    strict: deferred ? '1' : comments.STRICT,
+    reactionsEnabled: comments.REACTIONS_ENABLED,
+    emitMetadata: deferred ? '1' : comments.EMIT_METADATA,
+    inputPosition: comments.INPUT_POSITION,
+    theme: comments.THEME,
+    lang: (!deferred && comments.LANG) || language,
+    loading: deferred ? 'eager' : comments.LOADING,
+    crossorigin: comments.CROSSORIGIN,
+  };
+}
+
 export function validateComments(config: ThemeConfig['theme']['comments']) {
   if (!config.enabled) return;
   if (config.shareAcrossLocales) {

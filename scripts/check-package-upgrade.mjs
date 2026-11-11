@@ -83,9 +83,21 @@ try {
   await cp(path.join(root, 'public/fonts'), path.join(project, 'public/fonts'), {
     recursive: true,
   });
+  const baselineIndex = process.argv.indexOf('--baseline');
+  const baselineVersion = baselineIndex >= 0 ? process.argv[baselineIndex + 1] : undefined;
+  if (baselineIndex >= 0 && !/^\d+\.\d+\.\d+$/.test(baselineVersion ?? ''))
+    throw new Error('--baseline requires an exact published x.y.z version.');
   const baseline = JSON.parse(
     await npm(
-      ['pack', '--workspace', '@anglefeint/astro-theme', '--json', '--pack-destination', temp],
+      [
+        'pack',
+        ...(baselineVersion
+          ? [`@anglefeint/astro-theme@${baselineVersion}`]
+          : ['--workspace', '@anglefeint/astro-theme']),
+        '--json',
+        '--pack-destination',
+        temp,
+      ],
       root
     )
   );
@@ -121,6 +133,11 @@ export const THEME_CONFIG = defineThemeConfig({
   await writeFile(
     path.join(project, 'src/content/blog/en/personal.md'),
     '---\ntitle: My story\ndescription: Personal text\npubDate: 2026-01-02\n---\nMy original article.\n'
+  );
+  await mkdir(path.join(project, 'src/content/fragments/en'), { recursive: true });
+  await writeFile(
+    path.join(project, 'src/content/fragments/en/personal.md'),
+    '---\nid: personal-fragment\npubDate: 2026-11-11T08:00:00Z\n---\nMy private draft fragment.\n'
   );
   const before = await hashes();
   await npm(['run', 'doctor']);
@@ -256,8 +273,19 @@ export const THEME_CONFIG = defineThemeConfig({
   assert.deepEqual(
     await hashes(),
     before,
-    'Upgrade must preserve config, articles, music, images, headers and custom pages byte-for-byte'
+    'Upgrade must preserve config, articles, fragments, music, images, headers and custom pages byte-for-byte'
   );
+  assert.match(await npm(['exec', '--', 'astro-theme', 'new-fragment', '--help']), /new-fragment/);
+  assert.equal(
+    JSON.parse(await readFile(path.join(project, 'package.json'), 'utf8')).scripts['new-fragment'],
+    undefined
+  );
+  await assert.rejects(readFile(path.join(project, 'dist/en/fragments/index.html')), {
+    code: 'ENOENT',
+  });
+  const newFragmentOutput = await npm(['exec', '--', 'astro-theme', 'new-fragment']);
+  assert.match(newFragmentOutput, /Created/);
+  assert.equal((await readdir(path.join(project, 'src/content/fragments/en'))).length, 2);
   preservation = before;
   scenarios.push(
     'skip-version upgrade preserves source, public assets, .env, host config, Astro and TypeScript entries'
@@ -378,7 +406,7 @@ export const THEME_CONFIG = defineThemeConfig({
     siteConfig,
     (await readFile(siteConfig, 'utf8')).replace(
       'blogPageSize: 2,',
-      'enableCodeLab: false, blogPageSize: 2,'
+      'enableCodeLab: false, fragments: { enabled: true }, blogPageSize: 2,'
     )
   );
   const optedOut = await hashes();
@@ -390,7 +418,14 @@ export const THEME_CONFIG = defineThemeConfig({
     await readFile(path.join(project, 'dist/en/index.html'), 'utf8'),
     /href="\/en\/code-lab\/"/
   );
+  assert.match(
+    await readFile(path.join(project, 'dist/en/fragments/index.html'), 'utf8'),
+    /My private draft fragment/
+  );
   assert.deepEqual(await hashes(), optedOut);
+  scenarios.push(
+    'old scripts need no changes: new-fragment works after upgrade; optional feed preserves and renders personal fragments'
+  );
   scenarios.push('new optional feature can be disabled without breaking old user settings');
   // A user-owned route is never silently overwritten by a newly reserved package route.
   const customLab = path.join(project, 'src/pages/[lang]/code-lab.astro');

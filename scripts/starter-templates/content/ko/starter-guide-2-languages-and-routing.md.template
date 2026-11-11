@@ -4,7 +4,7 @@ title: '사용 가이드 2: 글 작성과 콘텐츠 관리'
 subtitle: '글 작성, 표지와 태그, 목차, 이미지 미리보기, 코드 복사, 검색, 공유 이미지를 설명합니다.'
 description: '글 작성, 표지와 태그, 목차, 이미지 미리보기, 코드 복사, 검색, 공유 이미지를 설명합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -166,3 +166,6 @@ npx @anglefeint/astro-theme@latest upgrade
 자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
 
 업그레이드 실패 시 `dist/`를 배포하지 마세요. 의존성 복원은 이전 빌드 결과물을 복원하지 않습니다. 오류를 해결하고 `npm run doctor`가 성공한 뒤 배포하세요. pnpm 사용자는 릴리스 호환성을 확인하고 잠금 파일을 유지한 채 `pnpm add @anglefeint/astro-theme@latest`와 `pnpm run doctor`로 수동 업데이트하세요.
+
+
+[사용자 가이드 5: 조각 게시하기](../starter-guide-5-fragments/) — 짧은 생각을 Markdown으로 기록하고 선택적으로 팝업 댓글을 사용합니다.

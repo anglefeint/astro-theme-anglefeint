@@ -5,9 +5,14 @@ import { npmCommand } from './scaffold/upgrade.mjs';
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);
+  if (command === 'new-fragment') {
+    const { newFragment } = await import('./scaffold/new-fragment.mjs');
+    await newFragment(args);
+    return;
+  }
   if (!command || command === '--help' || command === 'help') {
     console.log(
-      'Usage: astro-theme upgrade [--to <version|tag>] [--check]\n       astro-theme doctor\nUpgrade entry: npx @anglefeint/astro-theme@latest upgrade'
+      'Usage: astro-theme upgrade [--to <version|tag>] [--check]\n       astro-theme doctor\n       astro-theme new-fragment [--locales en,zh]\nUpgrade entry: npx @anglefeint/astro-theme@latest upgrade'
     );
     return;
   }

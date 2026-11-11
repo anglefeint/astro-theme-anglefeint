@@ -12,6 +12,71 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-11 完整本地验收与间接依赖修复（未提交／未发布）
+
+用户要求重跑当前全部未提交实现的完整检查、浏览器、独立安装及升级验收；基线 HEAD 仍为 `2fbb9201d9b3d96cafd165250de847dec74d9b2c`。首次受限环境检查在临时目录链接处出现 EPERM，保留失败日志后在正常权限环境重跑，未改测试断言或第三方源码。完整检查首次正常运行通过，但独立的主仓库依赖审计发现 RSS 间接依赖 fast-xml-parser 5.11.2 的一项低危问题；依据[上游公告 GHSA-474x-hrwr-fgx4](https://github.com/advisories/GHSA-474x-hrwr-fgx4)，通过包管理器更新到现有声明范围内的 5.12.0，同时更新它要求的 is-unsafe 2.0.3、strnum 2.5.1。仅变更根 package-lock.json，未添加直接依赖、override、Giscus npm 包或厂商补丁。修复后重新执行完整检查，再继续其他验收。
+
+本轮最终状态的实际结果：
+
+- lint、完整 check 通过：161/161 测试，Astro 零错误／警告，构建 289 页面、162 篇文章搜索／Markdown 导出及九语 About runtime 校验通过。主仓库依赖审计为 0 漏洞。
+- 使用上述构建产物，先单独运行 e2e:prepare，再运行全部 Playwright 用例；194/194 通过，原 6 workers、无重试，耗时约 166 秒。没有削弱超时／断言、降低并发或用单例重跑替代全量通过。
+- check:installed -- --build --audit 通过：实际 tarball 无 workspace 链接安装，CLI／配置／用户文件保护及 14 组语言／首页前缀／关闭功能／音乐与碎片构建通过，独立项目审计为 0 漏洞，约 265 秒。
+- check:upgrade -- --baseline 0.28.0 通过：下载真实已发布基线，经本地 registry 用真实 npm exec/npx 升至隔离 0.30.0 测试夹具，6 类场景和 104 个原有文件逐字节保护通过，约 105 秒。覆盖旧项目不加 scripts 使用 new-fragment、显式启用后显示原有碎片，以及新路由冲突报错并保留原文件。0.30.0 仅为夹具，没有发布或修改仓库版本。
+- 独立音乐浏览器专项的 10 类检查通过，涵盖不支持 Range 的播放与真实进度拖动、会话恢复、手动暂停、语言导航、移动端存储拒绝及四种真实 shell 样式。
+- 恢复本地 dev 后，用未拦截的真实 Giscus 官方 client.js／iframe 只读复验：就绪状态 ready，关闭再开仍是同一实例；未登录授权、未提交评论、未合并／删除讨论。这项真实远程加载检查与完整套件中的协议模拟分别记录。
+
+按文档工作流复核新增锁文件变化；suggest:docs 对单独 package-lock.json 没有推断候选，仍人工追踪 RSS 依赖链和上游公告，不以工具漏命中为跳过依据。现有配置、教程操作和发布流程均未改变，只在此记录实际修复与最终验收，不把测试结果写进旧发布账本，也不改变此前尚未交付功能的状态。九语教程源／模板与本地链接继续通过检查。
+
+证据保留于忽略目录：full-validation-check.log（权限失败）、full-validation-check-unrestricted.log（修复前通过）、full-validation-check-final.log（修复后通过）、full-validation-lint.log、full-validation-audit-details.json（修复前报告）、full-validation-audit.log（修复后）、full-validation-{browser,installed,upgrade,music,live}.log、full-validation-stages.json、full-validation-live-giscus.json；升级的文件哈希与场景见 upgrade-1794370164215/report.json。此轮验证平台为本机 Windows／Chromium，不冒称新跑 Linux、Firefox、Safari 或托管平台验收。未提交、push、发布、同步远程 starter 或部署，临时评审开关保持不变，本地开发服务已恢复。
+
+## 2026-11-11 全部未提交改动的代码优先文档复核
+
+基线为当前 HEAD `2fbb9201d9b3d96cafd165250de847dec74d9b2c`，范围取完整 `git status`／工作区差异及未跟踪源码，而非仅本轮编辑文件。默认运行 suggest:docs，配置／路由／脚本／分发／验证等域广泛命中全部维护文档，没有额外传播项。逐项以实现核对文档；没有为了匹配说明修改运行时。未跟踪的 `.fragments-fixture-JFauK2/` 是测试骨架残留，不属于产品或 starter 分发输入，保留未动。
+
+| 核对链路                         | 实际代码与分发来源                                                                                                   | 文档处置                                                                                                                                                                |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 默认开关、分页、语言和菜单       | package schema/defaults → project/config/theme、诊断 adapter → integration 路由 → CommonHeader、fragments 路由／标签 | ARCHITECTURE、VISUAL_SYSTEMS、九语 README／Guide 5 按默认关闭、条件路由、独立菜单开关和本地评审配置区分说明                                                             |
+| Markdown、排序与讨论 ID          | content-schema、utils/fragments、九语示例 Markdown                                                                   | 九语 demo／starter Guide 5 补访问路径、pageSize 1–100、仅 .md 和无草稿／未来日期过滤；保留稳定 ID、UTC、翻译共用 ID、重复 ID 报错及文章导出隔离的正确说明               |
+| 文章／碎片评论复用及弹窗生命周期 | BlogPost → Giscus.astro／comments.ts；FragmentComments → fragment-comments.js                                        | 修正九语 Guide 5 与 npm README 的“关闭卸载”；说明首次点击加载同一官方 client.js、关闭保留实例、切换更新 term，无 Giscus npm 包。保留错误／15 秒超时／重试说明           |
+| CLI、升级、starter 所有权        | new-fragment、cli／cli-new-page、starter manifest/package、installed／upgrade 验收                                   | 核对默认语言、显式已启用语言、UUID、排他写入、旧脚本无需修改和用户文件保护；验收文档修正当前 11 项命令及可选 baseline，保留真实包／远程交付的门禁边界                   |
+| 测试与文档发现工具               | comments／fragments render、e2e fragments／home-status／tags、build-e2e-smoke-config、suggest／validate              | TEMPLATE_ACCEPTANCE 改为如实描述拦截 client.js 和 iframe 的协议模拟，不冒称执行真实 Giscus；现有缓存隔离、标签计数、首页 CSS padding 断言及内容元数据排除说明与代码一致 |
+
+九语 README 补明确“尚待发布、已有博客须先升级到含此功能版本”，UPGRADING 改为本地教程源码链接及远程交付条件，避免把尚未发布的教程当成已上线。保留本地评论临时开启供用户评审的实际配置，并在架构／视觉／验收说明中记录交付前恢复关闭；不将它误写成包默认值，也不在此次文档核对中关掉用户正在检查的功能。
+
+复核 Guide 1–4 与 Guide 2 新增导航，安装／文章写作／普通及共享评论接口未变化，现有说明继续有效。45 对九语五篇教程在归一化 LF／CRLF 后全文一致，117 个教程站内链接和封面路径通过，30 份当前维护文档本地链接通过。README／教程描述面向使用者，不新增维护发布步骤。
+
+跳过改写：CLAUDE／Cursor 已委托中立入口；AGENTS、AI_WORKFLOW、DOC_METADATA_SPEC、DOC_SYNC_WORKFLOW、MAINTAINER_WORKFLOW、PACKAGING_WORKFLOW 的现有未提交同步与实际职责一致；分支／发布流程、贡献规范、主题宣传／提交清单无需因可选功能机械扩写。CHANGELOG 仍放 Unreleased，包版本不变；docs/releases 与旧审计保留当时事实，不把本地未发布功能回填到历史交付。完整文件清单和结构校验报告见忽略目录 `acceptance-results/current-doc-review.json`。
+
+本轮新验证：11 项评论／碎片／starter 单元测试及两项真实消费端 HTML 构建测试通过；主站构建通过，生成 289 页面、162 篇文章的搜索和 Markdown 导出；91 份维护文档元数据及 git diff --check 通过。未重新运行完整浏览器、独立安装／升级、远程 Giscus、npm／远程 starter 或线上验收，不沿用旧记录冒称本次验证。没有提交、push、发布、同步远程 starter 或部署。
+
+## 2026-11-11 Giscus 依赖与旧实现残留复核
+
+核对当前工作区的根／主题 package.json、package-lock.json、node_modules、文章与碎片组件及客户端：没有 giscus、@giscus/react、@giscus/vue 或 lit 安装依赖，也没有 Giscus web-component 导入。两处评论均复用 Giscus.astro、utils/comments.ts#giscusConfig 和官方 client.js；碎片仅增加原生弹窗及讨论切换层。同一列表页首次点击加载一个客户端／iframe，关闭保留实例，切换通过 setConfig 更新 term。此前审计中官方 web component 的描述属于早期实现，不能作为当前行为依据。
+
+发现 ARCHITECTURE 的当前说明仍描述 npm web component、关闭销毁和异步 import，已按现有代码修正。现有超时、来源／当前 iframe 校验、旧讨论响应隔离、重试与焦点／滚动恢复都有实际职责，未为简化而删除。文档发现工具以 ARCHITECTURE、CODE_DOC_AUDIT 和主题 package.json 为输入；包依赖本身无需变更。用户配置、教程操作、视觉样式、发布工作流与历史 release 均未变化，传播候选不机械改写；旧审计保留阶段事实。本轮仅修正文档。新执行的 6 项评论／碎片单元测试和 91 份文档元数据检查通过；未重跑构建、浏览器或真实远程评论验证，不沿用旧验收数冒称新跑。
+
+## 2026-11-11 碎片评论空白与复用修正（本地待审）
+
+针对本地预览做实际网络／DOM 诊断：Giscus widget 和资源返回 200，无失败请求；新讨论尚无内容时的 discussion-not-found 不属于加载失败。确认两个本地缺陷：弹窗的 header 被 Cyber 全站 header 规则固定到面板外，标题／关闭控件脱离弹窗；客户端仅等本地模块 import 完成便清空提示，未等待远程 iframe 就绪，且没有远程失败或超时反馈。未声称通过修改网络环境修复外部服务。
+
+弹窗标题改为局部 div；文章与碎片现在共用原有 Giscus.astro 和 utils/comments.ts 的配置类型／解析，消除重复仓库参数、语言映射及 term/number 筛选。文章维持官方 client.js 输出和原配置语义，弹窗保留官方组件的挂载清理小层；没有另建评论服务、修改依赖源码或访问私有接口。弹窗等待 iframe load 与可信来源／当前 iframe 的公开就绪消息，15 秒未就绪或显式错误显示九语失败／重试，正常空讨论可就绪。关闭、重试、导航清理计时器和监听；忽略其他来源消息。
+
+完整 check 通过（161 测试、类型零错误／警告、构建及 About 校验）；6 项弹窗专项和原并发完整 Chromium 192 项通过。覆盖慢／静默远程、load 不等于 ready、超时重试、错误／空讨论、关闭初始化中任务、移动端关闭控件边界；原有文章九语及自定义映射的最终 HTML 属性测试继续通过。真实 Giscus 复测状态 ready、iframe 可见，未提交评论或合并／删除讨论。
+
+按工作区差异运行文档工作流，更新架构、视觉、验收参考、npm README 和九语 demo／starter User Guide 5；五篇教程的 45 对源文件保持一致。README 的基本启用步骤、CLI／升级协议未变，历史 release 与旧审计段落保持历史。check:docs、lint 和 git diff --check 通过；原始证据在 acceptance-results/fragments-loading-*。本地 demo 的评论继续临时开启供用户 review，包／starter 默认仍关闭；交付前需恢复临时开关。未提交、发布或 push。
+
+## 2026-11-11 Fragments／碎片（本地待审）
+
+基线 `2fbb9201d9b3d96cafd165250de847dec74d9b2c`，沿 package schema/defaults → 派生配置／诊断 adapter → 内容 loader／条件路由 → 菜单／九语消息 → Markdown 列表 → 原生 dialog／官方 Giscus web component → 主 CLI／starter manifest 核对。命名统一为 fragments／new-fragment／theme.fragments；包与 starter 的列表和评论均默认关闭，demo 仅开启列表。未开启时不读取碎片内容，也不占用用户自定义 fragments 路由。文章评论配置与原有讨论关联不变；不自动合并或删除 GitHub 讨论，不修改第三方实现。
+
+九语 README、新增独立 User Guide 5、Guide 2 入口及 demo／starter 教程源同步。完整五篇教程的 45 对文件逐份一致；指南明确旧用户先升级、默认只创建默认语言文件、补译复制原文件并保留 ID、配置 Giscus 的四个核心字段、静态重建部署，以及升级器不改个人配置／教程。当前架构、视觉参考、维护／打包／验收说明、npm README、AGENTS、UPGRADING、Unreleased changelog 与文档发现规则同步；源码到文档映射见 ARCHITECTURE 的 Fragments 章节。
+
+验证：lint、完整 check（160 项测试、类型零错误／警告、构建及九语 About 校验）、原并发完整 Chromium（188 项）通过。构建保留 162 篇文章的搜索与 Markdown 导出，碎片列表独立；公式沿用全局开关和现有样式。独立 tarball starter 的 14 组构建、CLI、保护与审计通过（0 漏洞）。真实下载 0.28.0，经本地 fixture registry 用 npm exec/npx 升至未发布的 0.30.0 模拟包，104 个原有文件逐字节保留；旧项目未添加 scripts 即可使用 new-fragment，主动开启后显示原有碎片。这个版本号仅为测试夹具，不是本次发布。
+
+测试修正包括：共享 node_modules 的临时项目改用各自 Astro/Vite 缓存；浏览器夹具在启动并行浏览器前构建；标签计数随新增教程更新；首页断言区分实际 CSS 内边距与 sticky-footer 的剩余空间，保留交互前后位置不变检查。未为通过测试修改首页样式、第三方依赖源码或限制并发。
+
+文档工作流以当前工作区运行 suggest:docs，广泛命中的历史 release／旧审计段落保持历史，不写入尚未发布的功能；CLAUDE／Cursor 继续指向中立入口，无须重复规则；分支政策、主题提交清单与已有 npm 发布机制未变。check:docs 通过。原始日志与教程校验记录位于本地 acceptance-results/fragments-*，升级证据见 acceptance-results/upgrade-1794341661653/report.json。所有结果均为本地验收；尚未提交、发布、push、同步远程 starter 或部署线上 demo。
+
 ## 2026-11-10 0.28.0 正式交付收尾
 
 本次可选共享评论已发布为 0.28.0，来源 f8a85fe，starter a69a42b。前面的“本地待审／未发布”段落保留为实现阶段的历史记录；实际发布、安装／升级、Linux 与线上验收事实统一见 [0.28.0 发布账本](releases/0.28.0.md)，不另复制一份状态表。

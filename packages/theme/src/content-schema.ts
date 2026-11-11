@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { THEME_CONFIG } from '@anglefeint/user-config';
 
 const ABSOLUTE_URL_SCHEME_REGEX = /^[a-z][a-z\d+.-]*:/i;
 
@@ -70,4 +71,23 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+const fragmentFiles = glob({ base: './src/content/fragments', pattern: '**/*.md' });
+const fragments = defineCollection({
+  loader: {
+    name: 'anglefeint-fragments',
+    async load(context) {
+      if (!THEME_CONFIG.theme.fragments?.enabled) {
+        context.store.clear();
+        return;
+      }
+      await fragmentFiles.load(context);
+    },
+  },
+  schema: z.object({
+    id: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,127}$/),
+    pubDate: z.coerce.date(),
+    title: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, fragments };

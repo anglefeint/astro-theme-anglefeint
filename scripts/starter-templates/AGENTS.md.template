@@ -62,3 +62,8 @@ Use the package manager already chosen by the owner; README gives npm and pnpm c
 For a custom page, available themes are `base`, `ai`, `cyber`, `hacker`, `matrix`; creation does not add a navigation item or translate its body. Preserve the four page atmospheres, accessibility, reduced motion and mobile usability when changing visuals.
 
 Report what changed, what was verified and any remaining limitations. Local preview does not publish the site. Follow the owner's deployment instructions; this blog does not need the upstream theme's npm publishing or starter synchronization workflow.
+
+
+## Fragments
+
+Read `src/content/blog/en/starter-guide-5-fragments.md` (or its localized version). This optional feature and its popup comments default off. User Markdown belongs in `src/content/fragments/<locale>/`; preserve stable frontmatter IDs and all user files. Use `npx @anglefeint/astro-theme@latest new-fragment` for one default-language skeleton, or `--locales en,zh` for shared-ID translations. New starters also offer `npm run new-fragment`. Enable through existing `theme.fragments`; do not copy standard routes into this project. Comment mapping is independent of article comments. Rebuild/redeploy after changes.

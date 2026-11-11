@@ -380,3 +380,5 @@ machine_summary: Canonical agent workflow. Read before code changes, releases, o
 - `docs/DOC_SYNC_WORKFLOW.md` defines the update algorithm that consumes this metadata.
 
 If these documents drift, this file is the canonical metadata reference.
+
+Content Markdown in `src/content/fragments/`, like `src/content/blog/`, is application data and excluded from documentation metadata enforcement. Instructional blog guides still require semantic review across demo and starter sources.

@@ -33,6 +33,14 @@ export { normalizeI18nConfig } from './site.config.runtime.ts';
 // Locale overrides: i18n.locales.<code>.aiReadableContent; empty values hide each field.
 export const THEME_CONFIG = defineThemeConfig({
   theme: {
+    fragments: { enabled: true, comments: { enabled: false } },
+    comments: {
+      enabled: false,
+      repo: 'anglefeint/astro-theme-anglefeint',
+      repoId: 'R_kgDORRyzkg',
+      category: 'Comments',
+      categoryId: 'DIC_kwDORRyzks4C3pRw',
+    },
     home: { showInitialize: true, showFollow: true, showTrace: true },
     footer: {
       links: [

@@ -100,6 +100,22 @@ npm run new-page -- projects --theme cyber cria src/pages/[lang]/projects.astro.
 
 - [Guia 2: Escreva e organize conteúdo](https://demo.anglefeint.com/pt-br/blog/starter-guide-2-languages-and-routing/)
 
+## Fragmentos
+
+Fragmentos requer o tema 0.29.0 ou posterior. Atualize blogs existentes antes de usar a configuração e o comando abaixo.
+
+Publique pensamentos breves em Markdown, com comentários opcionais em uma janela. Adicione ao theme existente em src/site.config.ts. Fragmentos e comentários ficam desativados por padrão. O menu aparece abaixo de Decoder Lab.
+
+```ts
+fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+```
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+[Guia 5: Publicar fragmentos](https://demo.anglefeint.com/pt-br/blog/starter-guide-5-fragments/)
+
 <a id="upgrade"></a>
 
 ## Atualizar o tema

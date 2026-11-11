@@ -28,6 +28,7 @@ test('starter content whitelist expands to the expected localized guide files', 
     'starter-guide-2-languages-and-routing',
     'starter-guide-3-comments-about-and-theme-toggles',
     'starter-guide-4-giscus-comments',
+    'starter-guide-5-fragments',
   ]);
 
   assert.equal(
