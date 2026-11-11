@@ -126,6 +126,22 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## 断片
+
+断片にはテーマ 0.29.0 以降が必要です。既存のブログは更新してから以下の設定とコマンドを使用してください。
+
+短い思いを Markdown で残し、コメントをダイアログで表示します。 src/site.config.ts の既存 theme に追加します。断片とコメントは初期状態で無効です。メニューは Decoder Lab の下に表示されます。
+
+```ts
+fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+```
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+[ユーザーガイド 5：断片を公開する](https://demo.anglefeint.com/ja/blog/starter-guide-5-fragments/)
+
 <a id="upgrade"></a>
 
 ## テーマの更新

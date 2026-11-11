@@ -126,6 +126,22 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## 조각
+
+조각 기능은 테마 0.29.0 이상이 필요합니다. 기존 블로그는 먼저 업그레이드한 뒤 아래 설정과 명령을 사용하세요.
+
+짧은 생각을 Markdown으로 기록하고 선택적으로 팝업 댓글을 사용합니다. src/site.config.ts의 기존 theme에 합칩니다. 조각과 댓글은 기본적으로 꺼져 있습니다. 메뉴는 Decoder Lab 아래에 표시됩니다.
+
+```ts
+fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+```
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+[사용자 가이드 5: 조각 게시하기](https://demo.anglefeint.com/ko/blog/starter-guide-5-fragments/)
+
 <a id="upgrade"></a>
 
 ## 테마 업그레이드

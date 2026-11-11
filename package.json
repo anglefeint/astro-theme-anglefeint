@@ -21,13 +21,14 @@
     "check": "astro-theme doctor",
     "doctor": "astro-theme doctor",
     "upgrade": "npx @anglefeint/astro-theme@latest upgrade",
+    "new-fragment": "astro-theme new-fragment",
     "new-post": "anglefeint-new-post",
     "new-page": "anglefeint-new-page",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^7.3.7",
-    "@anglefeint/astro-theme": "^0.28.0"
+    "@anglefeint/astro-theme": "^0.29.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

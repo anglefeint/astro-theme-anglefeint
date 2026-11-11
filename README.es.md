@@ -126,6 +126,22 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## Fragmentos
+
+Fragmentos requiere el tema 0.29.0 o posterior. Actualiza los blogs existentes antes de usar la configuración y el comando siguientes.
+
+Publica ideas breves en Markdown con comentarios opcionales en un diálogo. Añade estos campos al theme existente de src/site.config.ts. Fragmentos y comentarios están desactivados por defecto. El menú aparece debajo de Decoder Lab.
+
+```ts
+fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+```
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+[Guía 5: Publicar fragmentos](https://demo.anglefeint.com/es/blog/starter-guide-5-fragments/)
+
 <a id="upgrade"></a>
 
 ## Actualizar el tema

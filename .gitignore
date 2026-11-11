@@ -7,6 +7,7 @@ output/
 # generated types
 .astro/
 tests/e2e/.generated-smoke-config.json
+tests/e2e/.generated-fragments-config.json
 
 # dependencies
 node_modules/

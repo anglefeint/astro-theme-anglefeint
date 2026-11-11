@@ -126,6 +126,22 @@ npm run new-page -- projects --theme hacker
 npm run new-page -- projects --theme matrix
 ```
 
+## 碎片
+
+碎片功能需要主题 0.29.0 或更新版本。已有博客请先升级，再使用以下配置和命令。
+
+用 Markdown 记录简短感想，可选弹窗评论。 将下面字段合并到 src/site.config.ts 现有 theme 中。碎片和碎片评论默认关闭；开启后菜单位于 Decoder Lab 下方。
+
+```ts
+fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+```
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment
+```
+
+[用户指南 5：发布碎片](https://demo.anglefeint.com/zh/blog/starter-guide-5-fragments/)
+
 <a id="upgrade"></a>
 
 ## 升级主题
