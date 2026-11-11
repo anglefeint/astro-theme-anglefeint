@@ -437,6 +437,16 @@ footer.showCredits: false скрывает ссылки на тему и Astro, 
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+### Превью ссылок
+
+![Изображение Anglefeint для ссылок по умолчанию](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+Это встроенное изображение 1200×630 используется для страниц без собственного изображения, включая Fragments. Заменить изображение сайта по умолчанию можно через `site.ogImage`.
+
+Для каждой статьи при `npm run build` автоматически создаётся отдельный PNG 1200×630 с заголовком, автором и названием сайта. Генерация выполняется во время сборки; при открытии ссылки используется статическое изображение, без API изображений и дополнительного JavaScript в браузере. После изменения этих данных пересоберите и опубликуйте сайт.
+
+Поле `ogImage` во frontmatter статьи имеет приоритет над автоматической генерацией. При `theme.socialImage.enabled: false` поле `heroImage` статьи имеет приоритет над изображением сайта по умолчанию; встроенное изображение служит последним резервным вариантом.
+
 ### Скриншоты страниц
 
 ![Home](public/images/theme-previews/preview-home.jpg)

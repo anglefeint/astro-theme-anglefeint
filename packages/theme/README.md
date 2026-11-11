@@ -45,6 +45,16 @@ From 0.31.0, `new-fragment` follows `new-post`, creating skeletons for all enabl
 
 Article and fragment embeds share `Giscus.astro` and a single configuration/locale resolver. The popup waits for remote readiness, shows retry on errors or a 15-second timeout, and keeps its heading/close control inside the dialog. Popup comments reuse the Giscus repository/category IDs, theme, reactions and input position from `theme.comments`, independently of article enabled/mapping/term/number/strict/sharing/lang. Each fragment uses strict specific mapping and `fragment/<id>`; translations share the ID and interface language follows the page. The same official `client.js` used by articles loads on the first comment click; closing hides the popup and switching fragments reuses its client/iframe. No Giscus npm package is required. No dependency implementation is modified and no GitHub discussions are merged/deleted. Article comments remain unchanged. The [User Guide 5 source](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/src/content/blog/en/starter-guide-5-fragments.md) documents this feature.
 
+## Sharing previews
+
+![Default Anglefeint sharing image](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+The built-in 1200×630 image is the default link preview for pages without their own image, including Fragments. Replace it with `site.ogImage`.
+
+Articles generate their own 1200×630 PNG during `npm run build`, using the article title, author and site name. This is automatic generation at build time; opening a shared link uses the static image, with no image API or extra browser JavaScript. Rebuild and redeploy after changing these fields.
+
+An article’s frontmatter `ogImage` takes priority over automatic generation. When `theme.socialImage.enabled` is `false`, its `heroImage` takes priority over the site default; the bundled image is the final fallback.
+
 ## Feature configuration
 
 Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.

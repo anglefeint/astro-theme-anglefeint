@@ -297,6 +297,16 @@ Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `d
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+### Sharing previews
+
+![Default Anglefeint sharing image](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+The built-in 1200×630 image is the default link preview for pages without their own image, including Fragments. Replace it with `site.ogImage`.
+
+Articles generate their own 1200×630 PNG during `npm run build`, using the article title, author and site name. This is automatic generation at build time; opening a shared link uses the static image, with no image API or extra browser JavaScript. Rebuild and redeploy after changing these fields.
+
+An article’s frontmatter `ogImage` takes priority over automatic generation. When `theme.socialImage.enabled` is `false`, its `heroImage` takes priority over the site default; the bundled image is the final fallback.
+
 ### Page screenshots
 
 | Home                                                           | Blog Cards                                                                |

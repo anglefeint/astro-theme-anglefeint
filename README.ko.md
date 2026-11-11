@@ -297,6 +297,16 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+### 공유 미리보기
+
+![Anglefeint 기본 공유 이미지](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+내장된 1200×630 이미지는 Fragments를 포함해 전용 공유 이미지가 없는 페이지의 기본 미리보기입니다. `site.ogImage`로 사이트 기본 이미지를 바꿀 수 있습니다.
+
+각 글은 `npm run build` 시 제목, 작성자, 사이트 이름을 사용해 개별 1200×630 PNG를 자동 생성합니다. 빌드할 때 생성되며, 공유 링크를 열 때는 정적 이미지를 사용합니다. 이미지 API나 추가 브라우저 JavaScript는 필요하지 않습니다. 이 정보를 바꾸면 다시 빌드하고 배포하세요.
+
+글 frontmatter의 `ogImage`가 자동 생성 이미지보다 우선합니다. `theme.socialImage.enabled`를 `false`로 설정하면 글의 `heroImage`가 사이트 기본 이미지보다 우선하며, 내장 이미지는 마지막 대체 이미지입니다.
+
 ### 페이지 스크린샷
 
 | 홈                                                             | 블로그 목록                                                               |

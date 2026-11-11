@@ -297,6 +297,16 @@ export const THEME_CONFIG = defineThemeConfig({
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+### 分享预览
+
+![Anglefeint 默认分享图](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+这张内置的 1200×630 图片用于没有专属分享图的页面，包括 Fragments。可通过 `site.ogImage` 替换站点默认图。
+
+文章会在 `npm run build` 时，根据文章标题、作者和站点名自动生成独立的 1200×630 PNG。这是构建时生成；打开分享链接时使用静态图片，不调用图片 API，也不增加浏览器 JavaScript。修改这些信息后，重新构建并部署即可更新。
+
+文章 frontmatter 的 `ogImage` 优先于自动生成图。将 `theme.socialImage.enabled` 设为 `false` 后，文章的 `heroImage` 优先于站点默认图；内置图片是最后的回退。
+
 ### 页面截图
 
 | 首页                                                           | 博客列表                                                                  |

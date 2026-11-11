@@ -437,6 +437,16 @@ Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteri
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+### Prévias de compartilhamento
+
+![Imagem padrão de compartilhamento do Anglefeint](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+Esta imagem incluída de 1200×630 é a prévia padrão das páginas sem imagem própria, incluindo Fragments. Substitua a imagem padrão do site com `site.ogImage`.
+
+Cada artigo gera seu próprio PNG de 1200×630 durante `npm run build`, usando o título, o autor e o nome do site. A geração ocorre na compilação; ao abrir o link, a imagem estática é usada, sem API de imagens nem JavaScript adicional no navegador. Compile e publique novamente ao alterar esses dados.
+
+O `ogImage` no frontmatter do artigo tem prioridade sobre a geração automática. Com `theme.socialImage.enabled` definido como `false`, o `heroImage` do artigo tem prioridade sobre a imagem padrão do site; a imagem incluída é o último recurso.
+
 ### Capturas das páginas
 
 ![Home](public/images/theme-previews/preview-home.jpg)

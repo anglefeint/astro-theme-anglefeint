@@ -297,6 +297,16 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+### 共有プレビュー
+
+![Anglefeint の既定の共有画像](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+この内蔵の 1200×630 画像は、Fragments など、専用の共有画像がないページの既定プレビューです。`site.ogImage` で置き換えられます。
+
+記事ごとに、`npm run build` 時にタイトル、著者、サイト名から 1200×630 の PNG を自動生成します。生成はビルド時に行われ、共有リンクを開く際は静的画像を使います。画像 API や追加のブラウザー JavaScript は不要です。これらの情報を変更したら、再ビルドしてデプロイしてください。
+
+記事の frontmatter の `ogImage` は自動生成画像より優先されます。`theme.socialImage.enabled` を `false` にすると、記事の `heroImage` がサイトの既定画像より優先され、内蔵画像は最後のフォールバックになります。
+
 ### ページのスクリーンショット
 
 | ホーム                                                         | ブログ一覧                                                                |

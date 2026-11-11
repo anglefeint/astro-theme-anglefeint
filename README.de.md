@@ -437,6 +437,16 @@ Alle Optionen im selben theme beziehungsweise i18n zusammenführen. Listen erset
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+### Vorschaubilder beim Teilen
+
+![Standard-Vorschaubild von Anglefeint](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+Dieses mitgelieferte Bild mit 1200×630 Pixeln ist die Standardvorschau für Seiten ohne eigenes Bild, einschließlich Fragments. Mit `site.ogImage` kannst du das Standardbild der Website ersetzen.
+
+Für jeden Artikel entsteht bei `npm run build` automatisch ein eigenes PNG mit 1200×630 Pixeln aus Titel, Autor und Website-Namen. Die Erzeugung erfolgt beim Build; beim Öffnen eines geteilten Links wird das statische Bild verwendet. Eine Bild-API oder zusätzliches Browser-JavaScript ist nicht erforderlich. Nach Änderungen an diesen Angaben neu bauen und veröffentlichen.
+
+Das `ogImage` im Frontmatter des Artikels hat Vorrang vor der automatischen Erzeugung. Bei `theme.socialImage.enabled: false` hat das `heroImage` des Artikels Vorrang vor dem Website-Standardbild; das mitgelieferte Bild dient als letzter Fallback.
+
 ### Seiten-Screenshots
 
 ![Home](public/images/theme-previews/preview-home.jpg)

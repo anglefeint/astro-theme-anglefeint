@@ -437,6 +437,16 @@ footer.showCredits: false 隱藏主題與 Astro 連結，保留建置年份及 s
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+### 分享預覽
+
+![Anglefeint 預設分享圖](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+這張內建的 1200×630 圖片用於沒有專屬分享圖的頁面，包括 Fragments。可透過 `site.ogImage` 替換網站預設圖。
+
+文章會在 `npm run build` 時，依照文章標題、作者和網站名稱自動產生獨立的 1200×630 PNG。這是建置時產生；開啟分享連結時使用靜態圖片，不呼叫圖片 API，也不增加瀏覽器 JavaScript。修改這些資訊後，重新建置並部署即可更新。
+
+文章 frontmatter 的 `ogImage` 優先於自動產生圖。將 `theme.socialImage.enabled` 設為 `false` 後，文章的 `heroImage` 優先於網站預設圖；內建圖片是最後的回退。
+
 ### 頁面截圖
 
 ![Home](public/images/theme-previews/preview-home.jpg)
