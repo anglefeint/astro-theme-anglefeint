@@ -12,11 +12,15 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
-## 2026-11-12 0.33.0 默认分享图与短 ID（发布准备）
+## 2026-11-12 0.33.0 默认分享图与短 ID（正式交付）
 
 以 4a0b9f03820b4964ebf5a67146f643c5e42b347b 为基线，按用户授权接入批准的 OG 图并执行测试／文档／安全发布。代码链为 site.ogImage 类型／默认值 → BaseHead → 既有 social resolve／publicDir handoff → OG／Twitter／JSON-LD；保留文章指定／生成／hero 优先级。包内新 JPG 与 CLI helper 通过现有 files/exports 交付，不新增 starter 受管实现。Nano ID 5 只在 CLI 生成 8 位字母数字 ID，js-yaml 读取各语言现存 frontmatter，查重重试；按随后用户要求仅接受 8 位字母数字 ID，不保留长 ID 兼容；引号保护纯数字 ID。demo 的 13 组碎片／九语言共 117 条全部重置为共享的短 ID，保留正文、时间和示例覆盖；旧链接／评论不桥接，不操作用户个人博客。
 
 按 suggest:docs 职责同步九语 README、九对 demo／starter Guide 1 与 Guide 5、npm README、ARCHITECTURE、VISUAL_SYSTEMS、TEMPLATE_ACCEPTANCE、UPGRADING、CHANGELOG 与发布索引／0.33.0 账本。AGENTS、维护流程与元数据规范没有规则变化，历史发布事实不改写。新增参数不是新的独立图片服务；文章 OG 优先级、基路径／本地缺失文件失败与碎片评论复用沿用既有边界。实际门禁和 registry／starter／线上 refs 统一在 0.33.0 账本随执行补录，不提前声称已发布。
+
+本轮正式执行已完成 npm 0.33.0 的一次上传与只读 registry 恢复核验、starter 70a5ef7 的同步／推送、178 项单元／集成测试、238 项完整浏览器回归、14 组独立安装构建和零漏洞审计，以及 npm 57／pnpm 55／真实 0.32.0→0.33.0 升级 57 项远程验收（各 11 个脚本，真实升级保护 152 个个人文件）。线上九语 162 篇文章／18 个列表页、117 条新 ID 碎片、OG 图原始字节及 Guide 1／5 的正文与代码全部匹配 main，真实 Giscus 跨条目复用且未提交评论。默认自动等待 121.8 秒后的原始失败、只读恢复、各 refs／摘要与 Cloudflare 后台权限限制保存在 [0.33.0 账本](releases/0.33.0.md)，不把失败改写为通过。
+
+发现可选配置示例被 Prettier 当作 TS 标签语句补分号后，修正了 46 份文档为完整对象调用，并实际解析验证；修正源 8792ec6 已在 starter／在线教程交付。不可变的 npm 0.33.0 README 保留原片段，按文档策略不因文案单独再次发布；发布说明提供正确示例，后续实际版本带入 npm README 修正。没有改动已发布运行时代码或移动 npm 源码标签。收尾只更新维护账本／升级指引，不改变 starter 受管内容；标签与公告按既有流程完成，最后再次核对构建／线上／远程 refs。
 
 ## 2026-11-12 Maintenance delivery (no npm release)
 
