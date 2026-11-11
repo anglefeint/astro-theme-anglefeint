@@ -10,6 +10,12 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.33.0: Default sharing artwork and short Fragment IDs
+
+For npm schema-1 integration starters run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.33.0` after it is available), then preview and redeploy. See the [release record](docs/releases/0.33.0.md) for actual delivery status. Fragment ID format changes intentionally: only eight ASCII letters/digits are accepted. Remove and repost old UUID/long-ID fragments before upgrading; no compatibility or migration tool is provided. Missing page images use the bundled Anglefeint artwork; optionally merge `site.ogImage` into the existing site object using a public-root path or HTTPS URL. Article-specific/generated images retain priority; disabled-generation heroes also retain priority. Local overrides must exist under public and rebuilds revise their URLs; platforms may retain preview caches.
+
+New `new-fragment` invocations generate eight-character, case-sensitive alphanumeric Nano IDs shared by all selected languages and the original timestamp. The demo fragments have been republished with new IDs across all nine languages. Old anchors/comment associations are not retained. Keep newly published short IDs stable. Deliberately deleting/reposting a personal fragment with a new ID creates a new comment association and invalidates its old link; GitHub discussions are not deleted or migrated. The updater preserves personal Markdown, assets and configuration; maintainer sync is never a consumer migration command.
+
 ## 0.32.0: Stable Fragment sharing and shared pagination
 
 For npm schema-1 integration starters, run `npx @anglefeint/astro-theme@latest upgrade` (or add `--to 0.32.0` for this exact version), then preview and redeploy. See the [release record](docs/releases/0.32.0.md) for actual delivery status. No configuration or content migration is required; the new route, static JSON index and sharing client are package-owned.

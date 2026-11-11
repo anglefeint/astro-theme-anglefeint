@@ -486,3 +486,15 @@ $$
 ## 文章統計
 
 字詞數是來源正文的概略統計：中日韓字元逐字計算，其他文字主要依空白分割。tokens 預設為 `round(max(words, 1) × 1.3)`，並非模型分詞器結果或實際 AI 用量。達到 1,000 後以一位小數和 k 顯示。frontmatter 的 `wordCount`、`tokenCount`、`readMinutes` 分別覆蓋各自值；只改 wordCount 不會重算 tokens。公式與 MDX 原始碼也可能影響估算。
+
+## 預設分享圖與 Fragment 短 ID（0.33.0+）
+
+在 src/site.config.ts 既有 site 設定中合併 site.ogImage，可填 public 根路徑（如 /images/share.jpg，對應 public/images/share.jpg）或 HTTPS 圖片網址。留空使用內建的 1200×630 Anglefeint 分享圖。Fragments 及所有 #fragment-ID 分享連結共用此圖。文章專屬圖、自動產生的文章圖維持優先；停用自動產生時，文章封面也優先於網站預設圖。更換後重新建置並部署，分享平台仍可能快取預覽。
+
+```ts
+site: {
+  ogImage: '/images/share.jpg';
+}
+```
+
+new-fragment 使用區分大小寫的字母與數字產生 8 位 Nano ID，檢查各語言既有 Markdown ID，衝突時重試。同一次命令的所有語言共用 ID 與發佈時間。Fragment 僅接受恰好 8 位英數字 ID，不相容舊 UUID 或長 ID；舊內容請刪除後重新發佈，不提供遷移或舊連結相容。新內容發佈後請保留 ID，修改會改變留言關聯。

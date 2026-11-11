@@ -25,9 +25,9 @@ export async function fragmentFixture() {
   );
   for (const locale of fragmentLocales) {
     for (const [id, date] of [
-      ['first', '2026-11-10'],
-      ['second', '2026-11-11'],
-      ['third', '2026-11-12'],
+      ['First001', '2026-11-10'],
+      ['Second02', '2026-11-11'],
+      ['Third003', '2026-11-12'],
     ]) {
       const file = path.join(root, 'src/content/fragments', locale, `${id}.md`);
       await mkdir(path.dirname(file), { recursive: true });
@@ -37,8 +37,9 @@ export async function fragmentFixture() {
       );
     }
   }
-  async function build({ enabled = true, comments = true, extra = {} } = {}) {
+  async function build({ enabled = true, comments = true, extra = {}, site = {} } = {}) {
     const config = {
+      site,
       theme: {
         fragments: { enabled, pageSize: 2, comments: { enabled: comments } },
         search: { enabled: false },

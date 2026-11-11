@@ -1,8 +1,8 @@
-import { randomUUID } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { loadProjectLocales } from './project-config.mjs';
 import { resolveLocales } from './shared.mjs';
+import { chooseFragmentId, collectFragmentIds } from './fragment-id.mjs';
 
 export async function newFragment(args, root = process.cwd()) {
   if (args.length === 1 && ['--help', '-h'].includes(args[0])) {
@@ -20,13 +20,15 @@ export async function newFragment(args, root = process.cwd()) {
     envLocales,
     defaultLocales: cliLocales || envLocales ? [] : await loadProjectLocales(root),
   });
-  const id = randomUUID();
+  const id = chooseFragmentId(await collectFragmentIds(root));
   const now = new Date().toISOString();
   const files = [];
   for (const locale of locales) {
     const file = path.join(root, 'src/content/fragments', locale, `${now.slice(0, 10)}-${id}.md`);
     await mkdir(path.dirname(file), { recursive: true });
-    await writeFile(file, `---\nid: ${id}\npubDate: ${now}\n---\n\n…\n`, { flag: 'wx' });
+    await writeFile(file, `---\nid: '${id}'\npubDate: ${now}\n---\n\n…\n`, {
+      flag: 'wx',
+    });
     files.push(file);
     console.log(`Created ${file}`);
   }

@@ -84,7 +84,9 @@ const fragments = defineCollection({
     },
   },
   schema: z.object({
-    id: z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,127}$/),
+    id: z
+      .string()
+      .regex(/^[A-Za-z0-9]{8}$/, 'Fragment id must contain exactly 8 ASCII letters or digits.'),
     pubDate: z.coerce.date(),
     title: z.string().optional(),
   }),

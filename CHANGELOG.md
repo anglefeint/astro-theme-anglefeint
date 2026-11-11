@@ -15,6 +15,14 @@ All notable changes to this project are documented in this file.
 
 ## Unreleased
 
+## [0.33.0] - 2026-11-12
+
+See the [delivery record](docs/releases/0.33.0.md) for actual publication and acceptance status.
+
+- Replace the generic default OG placeholder with approved 1200×630 Anglefeint artwork. Add optional `site.ogImage` for public-root paths or HTTPS URLs; preserve article image precedence and share the default across Fragment hash links. Local overrides are byte-versioned; missing files fail the build.
+- Generate eight-character alphanumeric Nano IDs in `new-fragment`, check Markdown frontmatter across languages, retry collisions and quote YAML IDs. Require exactly eight alphanumeric ID characters; reset demo identities across nine languages. Shared language ID/time remains; no legacy-ID compatibility, migration tool or new frontend dependency.
+- Synchronize nine-language README and demo/starter Guides 1 and 5, npm README and upgrade/reference documentation.
+
 ## Maintenance - 2026-11-12 (no npm release)
 
 Repository maintenance delivery; npm remains 0.32.0. See the [maintenance delivery record](docs/CODE_DOC_AUDIT.md#2026-11-12-maintenance-delivery-no-npm-release) for actual source/starter delivery and acceptance status. Existing users need no migration; package-source formatting will ship with a future package version.

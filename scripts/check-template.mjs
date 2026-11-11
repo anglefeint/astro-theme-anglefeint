@@ -541,7 +541,7 @@ try {
   await writeFile(file('public/music/tone.wav'), wave);
   await writeFile(file('.env'), 'PUBLIC_SITE_URL=https://acceptance.example\n');
   const originalFragment =
-    '---\nid: remote-personal-fragment\npubDate: 2026-11-11T08:00:00Z\n---\nRemote fragment preservation sentinel.\n';
+    '---\nid: User0001\npubDate: 2026-11-11T08:00:00Z\n---\nRemote fragment preservation sentinel.\n';
   await mkdir(file('src/content/fragments/en'), { recursive: true });
   await writeFile(file('src/content/fragments/en/personal.md'), originalFragment);
   if (pm === 'npm') {
@@ -579,6 +579,10 @@ try {
   await run('new-fragment');
   const [defaultFragment] = (await readdir(file('src/content/fragments/en'))).filter(
     (name) => name !== 'personal.md'
+  );
+  assert.match(
+    await read(`src/content/fragments/en/${defaultFragment}`),
+    /^id: '[A-Za-z0-9]{8}'$/m
   );
   assert.equal(
     await read(`src/content/fragments/en/${defaultFragment}`),
@@ -654,22 +658,26 @@ try {
   const fragmentIndexHref = fragmentFeed
     .querySelector('[data-fragment-index]')
     .getAttribute('data-fragment-index');
+  assert.match(
+    fragmentFeed.querySelector('meta[property="og:image"]').getAttribute('content'),
+    /anglefeint-og.*\.jpg$/
+  );
   assert.match(fragmentIndexHref, /^\/en\/fragments\/index\/[a-f0-9]{16}\.json$/);
   const fragmentIndex = JSON.parse(await read(`dist${fragmentIndexHref}`));
   assert.equal(fragmentIndex.version, 1);
   assert.equal(fragmentIndex.totalPages, 2);
-  assert.equal(fragmentIndex.pages['remote-personal-fragment'], 2);
+  assert.equal(fragmentIndex.pages['User0001'], 2);
   await server('preview', ['/en/', '/zh/', '/en/fragments/2/'], async (base) => {
     await browserCheck(base, true);
     const browser = await chromium.launch();
     try {
       const page = await browser.newPage();
-      await page.goto(`${base}/en/fragments/#fragment-remote-personal-fragment`);
-      await expect(page).toHaveURL(`${base}/en/fragments/2/#fragment-remote-personal-fragment`);
-      await expect(page.locator('[data-fragment-id="remote-personal-fragment"]')).toBeFocused();
+      await page.goto(`${base}/en/fragments/#fragment-User0001`);
+      await expect(page).toHaveURL(`${base}/en/fragments/2/#fragment-User0001`);
+      await expect(page.locator('[data-fragment-id="User0001"]')).toBeFocused();
       await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
         'href',
-        '/en/fragments/#fragment-remote-personal-fragment'
+        '/en/fragments/#fragment-User0001'
       );
       const pagination = page.locator('[data-pagination-component="cyber"]');
       await expect(pagination.locator('[aria-current="page"]')).toHaveText('2');

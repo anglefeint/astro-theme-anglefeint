@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { writeFile, rename, rm } from 'node:fs/promises';
+import { writeFile, readFile, mkdir, rename, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { parse } from 'node-html-parser';
 import { fragmentFixture, fragmentLocales } from './fragments-fixture.mjs';
@@ -26,25 +26,36 @@ test(
       assert.equal(doc.querySelector('[data-fragment-dialog]'), null);
       assert.equal(doc.querySelectorAll('[data-fragment-id]').length, 2);
       await rename(
-        path.join(fixture.root, 'src/content/fragments/en/third.md'),
+        path.join(fixture.root, 'src/content/fragments/en/Third003.md'),
         path.join(fixture.root, 'src/content/fragments/en/renamed.md')
       );
       await fixture.build();
       for (const locale of fragmentLocales) {
         doc = parse(await fixture.read(`${locale}/fragments/index.html`));
+        const og = doc.querySelector('meta[property="og:image"]').getAttribute('content');
+        assert.match(og, /anglefeint-og/);
+        assert.equal(
+          doc.querySelector('meta[property="og:image:width"]').getAttribute('content'),
+          '1200'
+        );
+        assert.equal(
+          doc.querySelector('meta[property="og:image:height"]').getAttribute('content'),
+          '630'
+        );
+        assert.equal(doc.querySelector('meta[name="twitter:image"]').getAttribute('content'), og);
         assert.deepEqual(
           doc
             .querySelectorAll('[data-fragment-id]')
             .map((node) => node.getAttribute('data-fragment-id')),
-          ['third', 'second']
+          ['Third003', 'Second02']
         );
         assert.deepEqual(
           doc
             .querySelectorAll('[data-fragment-comments]')
             .map((node) => node.getAttribute('data-fragment-term')),
-          ['fragment/third', 'fragment/second']
+          ['fragment/Third003', 'fragment/Second02']
         );
-        assert.match(doc.querySelector('.fragment-body').textContent, /third body/);
+        assert.match(doc.querySelector('.fragment-body').textContent, /Third003 body/);
         assert.equal(doc.querySelectorAll('[data-fragment-dialog]').length, 1);
         assert.ok(
           doc.querySelector('[data-giscus-template] script[src="https://giscus.app/client.js"]')
@@ -92,11 +103,11 @@ test(
         assert.deepEqual(JSON.parse(await fixture.read(indexHref.slice(1))), {
           version: 1,
           totalPages: 2,
-          pages: { third: 1, second: 1, first: 2 },
+          pages: { Third003: 1, Second02: 1, First001: 2 },
         });
         assert.equal(
           secondPage.querySelector('[data-fragment-link]').getAttribute('href'),
-          `/${locale}/fragments/#fragment-first`
+          `/${locale}/fragments/#fragment-First001`
         );
         assert.equal(
           secondPage.querySelector('[data-fragment-copy]').getAttribute('aria-label'),
@@ -108,7 +119,7 @@ test(
         );
         assert.equal(
           secondPage.querySelector('[data-fragment-id]').getAttribute('data-fragment-id'),
-          'first'
+          'First001'
         );
         assert.equal(secondPage.querySelector('link[hreflang]'), null);
       }
@@ -117,37 +128,58 @@ test(
         .getAttribute('data-fragment-index');
       assert(!(await fixture.read('sitemap-0.xml')).includes('/fragments/index/'));
       await fixture.build({
+        site: { ogImage: 'https://images.example/default.jpg' },
         extra: { fragments: { enabled: true, pageSize: 1, comments: { enabled: false } } },
       });
       let repaged = parse(await fixture.read('en/fragments/3/index.html'));
       assert.equal(
+        repaged.querySelector('meta[property="og:image"]').getAttribute('content'),
+        'https://images.example/default.jpg'
+      );
+      assert.equal(
+        parse(await fixture.read('en/fragments/index.html'))
+          .querySelector('meta[property="og:image"]')
+          .getAttribute('content'),
+        'https://images.example/default.jpg'
+      );
+      assert.equal(
         repaged.querySelector('[data-fragment-link]').getAttribute('href'),
-        '/en/fragments/#fragment-first'
+        '/en/fragments/#fragment-First001'
       );
       const smallerIndex = repaged
         .querySelector('[data-fragment-index]')
         .getAttribute('data-fragment-index');
       assert.notEqual(smallerIndex, previousIndex);
       assert.deepEqual(JSON.parse(await fixture.read(smallerIndex.slice(1))).pages, {
-        third: 1,
-        second: 2,
-        first: 3,
+        Third003: 1,
+        Second02: 2,
+        First001: 3,
       });
+      await mkdir(path.join(fixture.root, 'public'), { recursive: true });
+      await writeFile(
+        path.join(fixture.root, 'public/site-share.jpg'),
+        await readFile('packages/theme/src/assets/theme/social/anglefeint-og.jpg')
+      );
       await fixture.build({
+        site: { ogImage: '/site-share.jpg' },
         extra: { fragments: { enabled: true, pageSize: 20, comments: { enabled: false } } },
       });
       repaged = parse(await fixture.read('en/fragments/index.html'));
+      assert.match(
+        repaged.querySelector('meta[property="og:image"]').getAttribute('content'),
+        /\/site-share\.jpg\?v=[a-f0-9]{12}$/
+      );
       assert.equal(repaged.querySelector('[data-pagination-component="cyber"]'), null);
       assert.equal(
         repaged
-          .querySelector('[data-fragment-id="first"] [data-fragment-link]')
+          .querySelector('[data-fragment-id="First001"] [data-fragment-link]')
           .getAttribute('href'),
-        '/en/fragments/#fragment-first'
+        '/en/fragments/#fragment-First001'
       );
       await assert.rejects(fixture.read('en/fragments/2/index.html'), { code: 'ENOENT' });
       await writeFile(
         path.join(fixture.root, 'src/content/fragments/en/duplicate.md'),
-        '---\nid: third\npubDate: 2026-01-01\n---\nDuplicate'
+        '---\nid: Third003\npubDate: 2026-01-01\n---\nDuplicate'
       );
       await assert.rejects(fixture.build(), /duplicate fragment id/);
       await rm(path.join(fixture.root, 'src/content/fragments'), { recursive: true, force: true });
@@ -160,6 +192,10 @@ test(
       await assert.rejects(
         fixture.build({ extra: { comments: { enabled: false } } }),
         /Fragments comments require theme.comments.repo/
+      );
+      await assert.rejects(
+        fixture.build({ site: { ogImage: '/missing-site-share.jpg' }, comments: false }),
+        /Image not found/
       );
     } finally {
       await fixture.close();

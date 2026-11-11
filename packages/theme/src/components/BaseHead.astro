@@ -5,7 +5,10 @@ import '../styles/global.css';
 import atkinsonRegular from '../assets/theme/fonts/atkinson-regular.woff?url';
 import atkinsonBold from '../assets/theme/fonts/atkinson-bold.woff?url';
 import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/theme/placeholders/theme-placeholder-1.jpg';
+import FallbackImage from '../assets/theme/social/anglefeint-og.jpg';
+import { THEME_CONFIG } from '@anglefeint/user-config';
+import { publicDir } from 'virtual:anglefeint-social';
+import { resolveSocialImage } from '../social/resolve.mjs';
 import { buildHeadLocaleState, buildJsonLdSchemas } from '../utils/head';
 import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '@anglefeint/site-config/site';
 import { localePath, type Locale } from '@anglefeint/site-i18n/config';
@@ -34,7 +37,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteURL);
 const {
   title,
   description,
-  image = FallbackImage,
+  image: pageImage,
   imageAlt = title,
   pageType = 'website',
   publishedTime,
@@ -48,6 +51,17 @@ const {
   seoLocaleHrefs,
 } = Astro.props;
 
+// Page/article images retain priority; only missing images use the site/theme fallback.
+const image =
+  pageImage ??
+  (await resolveSocialImage({
+    override: THEME_CONFIG.site.ogImage?.trim(),
+    enabled: false,
+    fallback: FallbackImage,
+    data: { title },
+    publicDir,
+    base: import.meta.env.BASE_URL,
+  }));
 const imageURL = new URL(image.src, siteURL).toString();
 const robotsContent = noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 const isArticle = pageType === 'article';

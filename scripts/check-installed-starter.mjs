@@ -118,7 +118,7 @@ try {
   const fragmentFiles = await readdir(path.join(project, 'src/content/fragments/en'));
   assert.equal(fragmentFiles.length, 1);
   const fragmentBefore = await read(`src/content/fragments/en/${fragmentFiles[0]}`);
-  assert.match(fragmentBefore, /id: [a-f0-9-]+/);
+  assert.match(fragmentBefore, /^id: '[A-Za-z0-9]{8}'$/m);
   for (const locale of ['en', 'es', 'ja', 'ko', 'zh', 'pt-br', 'de', 'ru', 'zh-hant']) {
     assert.equal((await readdir(path.join(project, 'src/content/fragments', locale))).length, 1);
     assert.equal(await read(`src/content/fragments/${locale}/${fragmentFiles[0]}`), fragmentBefore);
@@ -248,7 +248,11 @@ try {
                 : [],
           },
           analytics: { googleAnalyticsId: mode === 'always' ? 'G-TEST123456' : '' },
-          site: { description: 'SITE_DESCRIPTION_SENTINEL', tagline: 'CUSTOM_FOOTER_SENTINEL' },
+          site: {
+            description: 'SITE_DESCRIPTION_SENTINEL',
+            tagline: 'CUSTOM_FOOTER_SENTINEL',
+            ogImage: '/share-test.png',
+          },
           i18n: {
             defaultLocale: locale,
             routing: { defaultLocalePrefix: mode },
@@ -318,6 +322,12 @@ try {
           assert.equal(aboutDoc.querySelector('main [data-about-restore]'), null);
         }
         for (const lang of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-hant']) {
+          const listHead = parse(await read(`dist/${lang}/blog/index.html`));
+          assert.equal(
+            new URL(listHead.querySelector('meta[property="og:image"]').getAttribute('content'))
+              .pathname,
+            '/share-test.png'
+          );
           const html = await read(`dist/${lang}/blog/installed-default/index.html`);
           const articleDoc = parse(html);
           const byline = articleDoc.querySelector('.ai-article-author');

@@ -45,7 +45,7 @@ Für eine spätere Übersetzung die ursprüngliche Markdown-Datei in den Zielspr
 
 ```md
 ---
-id: 550e8400-e29b-41d4-a716-446655440000
+id: 'q8Lm3XzP'
 pubDate: 2026-11-11T08:30:00+08:00
 ---
 
@@ -89,3 +89,15 @@ Freigabefunktion ab 0.32.0: Das Datum verlinkt zum Fragment in der Liste; danebe
 Die aktuelle Browseradresse kann eine Seitennummer enthalten; zum Teilen den Datumslink oder die Kopierfunktion verwenden. Noch vorhandene alte Seiten können veraltete Anker korrigieren; entfernte Seitennummern zeigen weiterhin die normale 404-Seite. Diese Funktion fängt 404-Seiten nicht ab.
 
 Fehlende Fragmente und Netzwerkfehler zeigen Hinweise statt wiederholter Sprünge. Bei gesperrter Zwischenablage erscheint ein auswählbarer Link zum manuellen Kopieren. Diese Funktion benötigt Theme 0.32.0 oder neuer; vor dem automatischen Auffinden aktualisieren.
+
+## Standard-Vorschaubild und kurze Fragment-IDs (0.33.0+)
+
+Ergänze site.ogImage im bestehenden site-Objekt in src/site.config.ts. Unterstützt werden Pfade ab public (/images/share.jpg entspricht public/images/share.jpg) und HTTPS-URLs. Ein leerer Wert verwendet das mitgelieferte Anglefeint-Bild mit 1200×630 Pixeln. Fragments und alle #fragment-ID-Links verwenden dieses Standardbild. Eigene und automatisch erzeugte Artikelbilder behalten Vorrang; bei deaktivierter Erzeugung hat auch das Artikel-Titelbild Vorrang vor dem Website-Standard. Danach neu bauen und bereitstellen; Plattformen können Vorschauen zwischenspeichern.
+
+```ts
+site: {
+  ogImage: '/images/share.jpg';
+}
+```
+
+new-fragment erzeugt eine achtstellige Nano ID aus Groß-/Kleinbuchstaben und Ziffern, prüft vorhandene Markdown-IDs aller Sprachen und wiederholt bei Kollisionen. Alle Sprachen eines Aufrufs teilen ID und Zeit. Erlaubt sind genau acht alphanumerische Zeichen. Alte UUIDs und lange IDs werden nicht unterstützt: alte Einträge löschen und neu veröffentlichen. Es gibt keine Migration oder Kompatibilität alter Links. Neue veröffentlichte IDs beibehalten; Änderungen erzeugen eine andere Kommentarzuordnung.

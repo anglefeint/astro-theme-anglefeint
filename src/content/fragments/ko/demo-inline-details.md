@@ -1,5 +1,5 @@
 ---
-id: demo-inline-details
+id: 'H94UEcO1'
 pubDate: 2026-11-11T09:07:00Z
 ---
 

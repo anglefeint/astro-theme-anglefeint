@@ -101,6 +101,7 @@ export const DEFAULT_ABOUT_CONFIG: AboutConfig = {
 const defaultThemeConfig: ThemeConfig = {
   analytics: { googleAnalyticsId: '' },
   site: {
+    ogImage: '',
     title: 'My Blog',
     description:
       'Cinematic web interfaces, AI-era engineering notes, and system architecture essays.',

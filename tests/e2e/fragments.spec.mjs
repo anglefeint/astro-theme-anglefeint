@@ -81,7 +81,7 @@ for (const width of [1280, 390]) {
     await expect(pagination.locator('[aria-current="page"]')).toHaveText('2');
     await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
       'href',
-      '/zh/fragments/#fragment-first'
+      '/zh/fragments/#fragment-First001'
     );
     const input = pagination.locator('.pagination-jump-input');
     await input.fill('0');
@@ -115,14 +115,14 @@ test('fragment dates and copy links stay on the current page without fetching an
   });
   await page.goto(`${origin}/zh/fragments/2/`);
   const date = page.locator('[data-fragment-link]');
-  await expect(date).toHaveAttribute('href', '/zh/fragments/#fragment-first');
+  await expect(date).toHaveAttribute('href', '/zh/fragments/#fragment-First001');
   await date.click();
-  await expect(page).toHaveURL(`${origin}/zh/fragments/2/#fragment-first`);
-  await expect(page.locator('[data-fragment-id="first"]')).toBeFocused();
+  await expect(page).toHaveURL(`${origin}/zh/fragments/2/#fragment-First001`);
+  await expect(page.locator('[data-fragment-id="First001"]')).toBeFocused();
   await page.locator('[data-fragment-copy]').click();
   await expect
     .poll(() => page.evaluate(() => window.fragmentCopied))
-    .toBe(`${origin}/zh/fragments/#fragment-first`);
+    .toBe(`${origin}/zh/fragments/#fragment-First001`);
   await expect(page.locator('[data-fragment-copy]')).toHaveAttribute('data-copied', '');
   expect(indexes).toHaveLength(0);
 });
@@ -134,15 +134,15 @@ test('a stable root link locates a fragment across pages, then handles another h
   page.on('request', (request) => {
     if (request.url().includes('/fragments/index/')) indexes.push(request.url());
   });
-  await page.goto(`${origin}/en/fragments/#fragment-first`);
-  await expect(page).toHaveURL(`${origin}/en/fragments/2/#fragment-first`);
-  await expect(page.locator('[data-fragment-id="first"]')).toBeFocused();
+  await page.goto(`${origin}/en/fragments/#fragment-First001`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/2/#fragment-First001`);
+  await expect(page.locator('[data-fragment-id="First001"]')).toBeFocused();
   expect(indexes).toHaveLength(1);
   await page.evaluate(() => {
-    window.location.hash = 'fragment-third';
+    window.location.hash = 'fragment-Third003';
   });
-  await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-third`);
-  await expect(page.locator('[data-fragment-id="third"]')).toBeFocused();
+  await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-Third003`);
+  await expect(page.locator('[data-fragment-id="Third003"]')).toBeFocused();
   expect(indexes).toHaveLength(2);
 });
 
@@ -153,16 +153,16 @@ test('an on-page hash needs no index and a missing ID reports a localized messag
   page.on('request', (request) => {
     if (request.url().includes('/fragments/index/')) indexes.push(request.url());
   });
-  await page.goto(`${origin}/zh/fragments/#fragment-third`);
-  await expect(page.locator('[data-fragment-id="third"]')).toBeFocused();
+  await page.goto(`${origin}/zh/fragments/#fragment-Third003`);
+  await expect(page.locator('[data-fragment-id="Third003"]')).toBeFocused();
   expect(indexes).toHaveLength(0);
   await page.evaluate(() => {
-    window.location.hash = 'fragment-deleted';
+    window.location.hash = 'fragment-Deleted0';
   });
   await expect(page.locator('[data-fragment-link-status]')).toHaveText(
     '找不到这条碎片，它可能已被移除。'
   );
-  await expect(page).toHaveURL(`${origin}/zh/fragments/#fragment-deleted`);
+  await expect(page).toHaveURL(`${origin}/zh/fragments/#fragment-Deleted0`);
   expect(indexes).toHaveLength(1);
 });
 
@@ -181,7 +181,7 @@ test('clipboard rejection exposes a selectable canonical link', async ({ page })
   await page.locator('[data-fragment-copy]').click();
   const input = page.locator('[data-fragment-copy-feedback] input');
   await expect(input).toBeFocused();
-  await expect(input).toHaveValue(`${origin}/en/fragments/#fragment-first`);
+  await expect(input).toHaveValue(`${origin}/en/fragments/#fragment-First001`);
   expect(await input.evaluate((node) => node.selectionEnd - node.selectionStart)).toBe(
     (await input.inputValue()).length
   );
@@ -196,15 +196,17 @@ for (const mode of ['network', 'invalid', 'same-page']) {
         status: mode === 'network' ? 503 : 200,
         contentType: 'application/json',
         body: JSON.stringify(
-          mode === 'invalid' ? { version: 99 } : { version: 1, totalPages: 2, pages: { first: 1 } }
+          mode === 'invalid'
+            ? { version: 99 }
+            : { version: 1, totalPages: 2, pages: { First001: 1 } }
         ),
       });
     });
-    await page.goto(`${origin}/en/fragments/#fragment-first`);
+    await page.goto(`${origin}/en/fragments/#fragment-First001`);
     await expect(page.locator('[data-fragment-link-status]')).toHaveText(
       'Unable to locate this fragment. Refresh the page and try again.'
     );
-    await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-first`);
+    await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-First001`);
     expect(calls).toBe(1);
   });
 }
@@ -223,18 +225,18 @@ test('a late index response cannot navigate an obsolete hash', async ({ page }) 
     await held;
     await route.fulfill({
       contentType: 'application/json',
-      body: JSON.stringify({ version: 1, totalPages: 2, pages: { first: 2 } }),
+      body: JSON.stringify({ version: 1, totalPages: 2, pages: { First001: 2 } }),
     });
   });
-  await page.goto(`${origin}/en/fragments/#fragment-first`);
+  await page.goto(`${origin}/en/fragments/#fragment-First001`);
   await requested;
   await page.evaluate(() => {
-    window.location.hash = 'fragment-third';
+    window.location.hash = 'fragment-Third003';
   });
-  await expect(page.locator('[data-fragment-id="third"]')).toBeFocused();
+  await expect(page.locator('[data-fragment-id="Third003"]')).toBeFocused();
   release();
   await page.waitForLoadState('networkidle');
-  await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-third`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-Third003`);
 });
 
 test('a stale destination cannot bounce between pages, even without storage', async ({ page }) => {
@@ -252,17 +254,21 @@ test('a stale destination cannot bounce between pages, even without storage', as
     indexes++;
     await route.fulfill({
       contentType: 'application/json',
-      body: JSON.stringify({ version: 1, totalPages: 2, pages: { first: indexes === 1 ? 2 : 1 } }),
+      body: JSON.stringify({
+        version: 1,
+        totalPages: 2,
+        pages: { First001: indexes === 1 ? 2 : 1 },
+      }),
     });
   });
   await page.route('**/en/fragments/2/?*', async (route) => {
     const html = (
       await readFile(path.join(directory, 'en/fragments/2/index.html'), 'utf8')
-    ).replace('data-fragment-id="first"', 'data-fragment-id="stale"');
+    ).replace('data-fragment-id="First001"', 'data-fragment-id="Stale001"');
     await route.fulfill({ contentType: 'text/html', body: html });
   });
-  await page.goto(`${origin}/en/fragments/#fragment-first`);
-  await expect(page).toHaveURL(`${origin}/en/fragments/2/#fragment-first`);
+  await page.goto(`${origin}/en/fragments/#fragment-First001`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/2/#fragment-First001`);
   await expect(page.locator('[data-fragment-link-status]')).toHaveText(
     'Unable to locate this fragment. Refresh the page and try again.'
   );
@@ -278,10 +284,10 @@ test('without JavaScript dates remain native links and copy controls stay hidden
     await page.goto(`${origin}/en/fragments/2/`);
     await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
       'href',
-      '/en/fragments/#fragment-first'
+      '/en/fragments/#fragment-First001'
     );
     await expect(page.locator('[data-fragment-copy]')).toBeHidden();
-    await expect(page.locator('[data-fragment-id="first"]')).toContainText('first');
+    await expect(page.locator('[data-fragment-id="First001"]')).toContainText('First001');
     await page.locator('.pagination .pg-nav').click();
     await expect(page).toHaveURL(`${origin}/en/fragments/`);
   } finally {
@@ -307,7 +313,7 @@ for (const width of [1280, 390]) {
       el.dataset.retained = 'yes';
     });
     const script = dialog.locator('script[src="https://giscus.app/client.js"]');
-    await expect(script).toHaveAttribute('data-term', 'fragment/third');
+    await expect(script).toHaveAttribute('data-term', 'fragment/Third003');
     await expect(script).toHaveAttribute('data-mapping', 'specific');
     await expect(script).toHaveAttribute('data-strict', '1');
     await expect(script).toHaveAttribute('data-lang', 'zh-CN');
@@ -327,7 +333,7 @@ for (const width of [1280, 390]) {
     await expect(dialog).toHaveAttribute('data-comment-state', 'ready');
     await expect(page.frameLocator('iframe.giscus-frame').locator('body')).toHaveAttribute(
       'data-term',
-      'fragment/second'
+      'fragment/Second02'
     );
     await expect(frame).toHaveAttribute('data-retained', 'yes');
     expect(counts).toEqual({ clients: 1, frames: 1 });
@@ -337,7 +343,7 @@ for (const width of [1280, 390]) {
     await expect(dialog).toHaveAttribute('data-comment-state', 'ready');
     await expect(page.frameLocator('iframe.giscus-frame').locator('body')).toHaveAttribute(
       'data-term',
-      'fragment/second'
+      'fragment/Second02'
     );
     await expect(frame).toHaveAttribute('data-retained', 'yes');
     await dialog.locator('[data-fragment-close]').click();
@@ -376,7 +382,7 @@ for (const width of [1280, 390]) {
       .frameLocator('iframe.giscus-frame')
       .locator('body')
       .evaluate(() =>
-        parent.postMessage({ giscus: { discussion: { title: 'fragment/third' } } }, '*')
+        parent.postMessage({ giscus: { discussion: { title: 'fragment/Third003' } } }, '*')
       );
     await expect(dialog).toHaveAttribute('data-comment-state', 'ready');
     expect(await body.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(500);
@@ -410,7 +416,7 @@ test('silent remote load times out; retry reuses the same iframe and client', as
       new MessageEvent('message', {
         origin: 'https://giscus.app',
         source: window,
-        data: { giscus: { discussion: { title: 'fragment/third' } } },
+        data: { giscus: { discussion: { title: 'fragment/Third003' } } },
       })
     )
   );
@@ -475,7 +481,7 @@ test('closing while loading keeps the instance and caches a late ready response'
     .frameLocator('iframe.giscus-frame')
     .locator('body')
     .evaluate(() =>
-      parent.postMessage({ giscus: { discussion: { title: 'fragment/third' } } }, '*')
+      parent.postMessage({ giscus: { discussion: { title: 'fragment/Third003' } } }, '*')
     );
   await button.click();
   await expect(dialog).toHaveAttribute('data-comment-state', 'ready');
@@ -495,16 +501,16 @@ test('a late old response cannot reveal the old discussion under a new summary',
   await page.keyboard.press('Escape');
   await buttons.nth(1).click();
   await remote.evaluate(() =>
-    parent.postMessage({ giscus: { discussion: { title: 'fragment/third' } } }, '*')
+    parent.postMessage({ giscus: { discussion: { title: 'fragment/Third003' } } }, '*')
   );
-  await expect(remote).toHaveAttribute('data-term', 'fragment/second');
+  await expect(remote).toHaveAttribute('data-term', 'fragment/Second02');
   await remote.evaluate(() =>
-    parent.postMessage({ giscus: { discussion: { title: 'fragment/third' } } }, '*')
+    parent.postMessage({ giscus: { discussion: { title: 'fragment/Third003' } } }, '*')
   );
   await expect(dialog).toHaveAttribute('data-comment-state', 'loading');
-  await expect(dialog.locator('[data-fragment-summary]')).toContainText('second body');
+  await expect(dialog.locator('[data-fragment-summary]')).toContainText('Second02 body');
   await remote.evaluate(() =>
-    parent.postMessage({ giscus: { discussion: { title: 'fragment/second' } } }, '*')
+    parent.postMessage({ giscus: { discussion: { title: 'fragment/Second02' } } }, '*')
   );
   await expect(dialog).toHaveAttribute('data-comment-state', 'ready');
   expect(counts).toEqual({ clients: 1, frames: 1 });

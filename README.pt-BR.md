@@ -486,3 +486,15 @@ No starter integrado 0.27+, o pacote conecta automaticamente o processador Markd
 ## Estatísticas dos artigos
 
 A contagem é aproximada: caracteres CJK individualmente e o restante principalmente por espaços. Tokens são estimados por `round(max(words, 1) × 1.3)`, não por um tokenizador nem pelo uso real de IA. A partir de 1.000, usa-se uma casa decimal e k. `wordCount`, `tokenCount` e `readMinutes` no frontmatter substituem valores separadamente; mudar apenas wordCount não recalcula tokens. O código-fonte de fórmulas e MDX pode afetar as estimativas.
+
+## Imagem padrão e IDs curtos de Fragment (0.33.0+)
+
+Adicione site.ogImage ao objeto site existente em src/site.config.ts. Use um caminho a partir de public (/images/share.jpg corresponde a public/images/share.jpg) ou uma URL HTTPS. Em branco, utiliza a imagem Anglefeint incluída de 1200×630. Fragments e todos os links #fragment-ID compartilham essa imagem. As imagens específicas e geradas dos artigos mantêm prioridade; com a geração desativada, a capa do artigo também precede a imagem do site. Reconstrua e publique após alterar; plataformas podem manter a prévia em cache.
+
+```ts
+site: {
+  ogImage: '/images/share.jpg';
+}
+```
+
+new-fragment gera um Nano ID de oito letras e dígitos, diferencia maiúsculas e minúsculas, verifica IDs Markdown de todos os idiomas e repete em caso de colisão. Cada execução compartilha ID e data entre idiomas. São aceitos apenas IDs alfanuméricos com exatamente oito caracteres. UUIDs e IDs longos antigos não são suportados: exclua e publique novamente, sem migração ou compatibilidade com links antigos. Preserve o novo ID publicado; alterá-lo cria outra associação de comentários.

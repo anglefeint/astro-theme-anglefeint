@@ -37,6 +37,15 @@ test('custom images take priority, disabled mode keeps the hero, missing files f
     const fallback = { src: '/hero.webp', width: 600, height: 400 };
     const options = { data, publicDir, fallback, enabled: false };
     assert.equal(await resolveSocialImage(options), fallback);
+    for (const override of [
+      'relative.png',
+      '//example.com/share.png',
+      'http://example.com/share.png',
+    ])
+      await assert.rejects(
+        resolveSocialImage({ ...options, override }),
+        /public-root path or HTTPS/
+      );
     const custom = { src: '/custom.png', width: 1200, height: 630 };
     assert.equal(await resolveSocialImage({ ...options, override: custom }), custom);
     assert.deepEqual(

@@ -82,6 +82,8 @@ export interface ThemeConfig {
   aiReadableContent?: MachineReadableSupplement;
   analytics: { googleAnalyticsId: string };
   site: {
+    /** Default sharing image: public-root path or HTTPS URL; blank uses the theme artwork. */
+    ogImage?: string;
     title: string;
     description: string;
     url: string;

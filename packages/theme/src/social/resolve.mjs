@@ -14,6 +14,8 @@ export async function resolveSocialImage({
   if (override && typeof override !== 'string') return override;
   if (override) {
     if (override.startsWith('https://')) return { src: override };
+    if (!override.startsWith('/') || override.startsWith('//'))
+      throw new Error('[ogImage] Use a public-root path or HTTPS URL.');
     let relative;
     try {
       relative = decodeURIComponent(override.split(/[?#]/)[0]).slice(1);

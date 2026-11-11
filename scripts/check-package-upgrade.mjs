@@ -140,7 +140,7 @@ export const THEME_CONFIG = defineThemeConfig({
   await mkdir(path.join(project, 'src/content/fragments/en'), { recursive: true });
   await writeFile(
     path.join(project, 'src/content/fragments/en/personal.md'),
-    '---\nid: personal-fragment\npubDate: 2026-11-11T08:00:00Z\n---\nMy private draft fragment.\n'
+    '---\nid: User0001\npubDate: 2026-11-11T08:00:00Z\n---\nMy private draft fragment.\n'
   );
   const before = await hashes();
   await npm(['run', 'doctor']);
@@ -296,6 +296,7 @@ export const THEME_CONFIG = defineThemeConfig({
     path.join(project, 'src/content/fragments/en', generatedFragment),
     'utf8'
   );
+  assert.match(generatedContent, /^id: '[A-Za-z0-9]{8}'$/m);
   for (const locale of await loadProjectLocales(project)) {
     assert.equal(
       await readFile(
