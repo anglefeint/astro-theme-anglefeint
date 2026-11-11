@@ -450,11 +450,6 @@ try {
   });
   await server('dev', routes);
   await server('preview', routes, (base) => browserCheck(base));
-  assert.deepEqual(
-    Object.keys(pkg.scripts).filter((name) => !scripts.has(name)),
-    [],
-    'every consumer script must be exercised'
-  );
 
   await writeFile(
     file('src/site.config.ts'),
@@ -500,6 +495,7 @@ try {
         socialImage: { enabled: false },
         effects: { enableRedQueen: false },
         music: { enabled: true, tracks: [{ title: 'Acceptance tone', src: '/music/tone.wav' }] },
+        fragments: { enabled: true, comments: { enabled: false } },
       },
     })
   );
@@ -522,6 +518,10 @@ try {
   await mkdir(file('public/music'), { recursive: true });
   await writeFile(file('public/music/tone.wav'), wave);
   await writeFile(file('.env'), 'PUBLIC_SITE_URL=https://acceptance.example\n');
+  const originalFragment =
+    '---\nid: remote-personal-fragment\npubDate: 2026-11-11T08:00:00Z\n---\nRemote fragment preservation sentinel.\n';
+  await mkdir(file('src/content/fragments/en'), { recursive: true });
+  await writeFile(file('src/content/fragments/en/personal.md'), originalFragment);
   if (pm === 'npm') {
     const before = await userFileHashes();
     const upgradeOutput = await command(
@@ -553,6 +553,16 @@ try {
       preservedFiles: before.length,
     });
   }
+  await run('new-fragment', ['--help']);
+  await run('new-fragment');
+  await run('new-fragment', ['--locales', 'en,zh']);
+  assert.equal(await read('src/content/fragments/en/personal.md'), originalFragment);
+  assert.equal((await readdir(file('src/content/fragments/en'))).length, 3);
+  assert.equal((await readdir(file('src/content/fragments/zh'))).length, 1);
+  results.push({
+    check: 'published fragment CLI and existing Markdown preservation',
+    status: 'passed',
+  });
   await run('build');
   const home = await read('dist/en/index.html');
   const machineIndex = await read('dist/llms.txt');
@@ -604,6 +614,16 @@ try {
   assert((await read('dist/sitemap-index.xml')).includes('https://acceptance.example/'));
   assert((await read('dist/en/rss.xml')).includes('https://acceptance.example/'));
   await server('preview', ['/en/', '/zh/'], (base) => browserCheck(base, true));
+  const fragmentFeed = parse(await read('dist/en/fragments/index.html'));
+  assert.equal(fragmentFeed.querySelectorAll('[data-fragment-id]').length, 3);
+  assert.equal(fragmentFeed.querySelectorAll('[data-fragment-comments]').length, 0);
+  assert.match(fragmentFeed.textContent, /Remote fragment preservation sentinel/);
+  results.push({ check: 'published opt-in fragments feed with comments off', status: 'passed' });
+  assert.deepEqual(
+    Object.keys(pkg.scripts).filter((name) => !scripts.has(name)),
+    [],
+    'every consumer script must be exercised'
+  );
   passed = true;
 } catch (error) {
   results.push({ status: 'failed', error: error.stack });
