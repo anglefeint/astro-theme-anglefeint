@@ -95,9 +95,9 @@ npm run build
 src/site.config.ts의 기존 site 설정에 site.ogImage를 추가하세요. public 루트 경로(/images/share.jpg는 public/images/share.jpg) 또는 HTTPS URL을 지원합니다. 비워 두면 내장 1200×630 Anglefeint 이미지를 사용합니다. Fragments와 모든 #fragment-ID 공유 링크는 같은 기본 이미지를 사용합니다. 글 전용 이미지와 자동 생성 이미지가 우선하며, 자동 생성을 꺼도 글 표지 이미지가 사이트 기본 이미지보다 우선합니다. 변경 후 다시 빌드하고 배포하세요. 공유 서비스의 미리보기 캐시는 남을 수 있습니다.
 
 ```ts
-site: {
-  ogImage: '/images/share.jpg';
-}
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
 ```
 
 new-fragment는 대소문자를 구분하는 영숫자 8자리 Nano ID를 만들고 모든 언어의 기존 Markdown ID와 중복되면 다시 시도합니다. 한 번에 생성한 모든 언어는 ID와 게시 시간을 공유합니다. Fragment ID는 정확히 영숫자 8자리만 허용합니다. 기존 UUID와 긴 ID는 지원하지 않으므로 이전 항목을 삭제하고 다시 게시하세요. 마이그레이션이나 이전 링크 호환 기능은 없습니다. 게시 후 ID를 유지하세요. 변경하면 댓글 연결도 바뀝니다.

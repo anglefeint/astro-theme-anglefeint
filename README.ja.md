@@ -583,9 +583,9 @@ $$
 src/site.config.ts の既存の site 設定に site.ogImage を追加できます。public ルートのパス（/images/share.jpg は public/images/share.jpg）または HTTPS URL を指定します。空欄なら内蔵の 1200×630 Anglefeint 画像を使います。Fragments とすべての #fragment-ID 共有リンクは同じ画像を使います。記事固有の画像と自動生成画像が優先され、自動生成を無効にした場合も記事のカバー画像がサイト既定画像より優先されます。変更後は再ビルドしてデプロイしてください。共有サービスにはキャッシュが残る場合があります。
 
 ```ts
-site: {
-  ogImage: '/images/share.jpg';
-}
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
 ```
 
 new-fragment は大文字・小文字を区別する英数字 8 文字の Nano ID を生成し、各言語の既存 Markdown ID と重複すると再試行します。同じ実行の全言語は ID と公開日時を共有します。Fragment ID は英数字 8 文字のみです。以前の UUID や長い ID は非対応のため、古い項目は削除して再投稿してください。移行や旧リンク互換機能はありません。公開後の ID は維持してください。変更するとコメントの関連付けも変わります。

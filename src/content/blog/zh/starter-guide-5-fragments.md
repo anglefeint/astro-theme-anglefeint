@@ -95,9 +95,9 @@ npm run build
 在 src/site.config.ts 现有 site 设置中合并 site.ogImage，可填写 public 根路径（如 /images/share.jpg，对应 public/images/share.jpg）或 HTTPS 图片地址。留空使用内置的 1200×630 Anglefeint 分享图。Fragments 及其所有 #fragment-ID 分享链接共用该默认图。文章专属图、自动生成的文章图保持优先；关闭自动生成时，文章封面也优先于站点默认图。更换图片后重新构建并部署，分享平台仍可能缓存预览。
 
 ```ts
-site: {
-  ogImage: '/images/share.jpg';
-}
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
 ```
 
 new-fragment 使用区分大小写的字母和数字生成 8 位 Nano ID，读取各语言已有 Markdown ID 查重，冲突时重试。同一次命令的所有语言共享 ID 和发布时间。Fragment 仅接受恰好 8 位字母数字 ID，不兼容旧 UUID 或长 ID；旧内容请删除后重新发布，不提供迁移或旧链接兼容。新内容发布后请保留 ID，修改会改变评论关联。

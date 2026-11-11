@@ -119,7 +119,7 @@ npx @anglefeint/astro-theme@latest upgrade
 Добавьте site.ogImage в существующий объект site файла src/site.config.ts. Поддерживается путь от public (/images/share.jpg соответствует public/images/share.jpg) или HTTPS URL. Пустое значение включает встроенное изображение Anglefeint 1200×630. Fragments и все ссылки #fragment-ID используют это изображение. Собственные и автоматически созданные изображения статей сохраняют приоритет; при отключённой генерации обложка статьи также важнее изображения сайта. После изменения пересоберите и разверните сайт; сервисы могут кэшировать предпросмотр.
 
 ```ts
-site: {
-  ogImage: '/images/share.jpg';
-}
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
 ```
