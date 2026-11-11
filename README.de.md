@@ -486,3 +486,15 @@ Im Integration-Starter ab 0.27 verbindet das Theme-Paket den Markdown-Prozessor 
 ## Artikelstatistik
 
 Die Wortzahl ist eine Schätzung aus dem Quelltext: CJK-Zeichen einzeln, sonst hauptsächlich durch Leerraum getrennte Teile. Tokens werden als `round(max(words, 1) × 1.3)` geschätzt, nicht durch einen Modell-Tokenizer oder tatsächlichen KI-Verbrauch. Ab 1.000 erscheint eine Dezimalstelle mit k. Frontmatter-Felder `wordCount`, `tokenCount` und `readMinutes` überschreiben Werte unabhängig; wordCount allein berechnet Tokens nicht neu. Formel- und MDX-Quelltext können die Schätzung beeinflussen.
+
+## Standard-Vorschaubild und kurze Fragment-IDs (0.33.0+)
+
+Ergänze site.ogImage im bestehenden site-Objekt in src/site.config.ts. Unterstützt werden Pfade ab public (/images/share.jpg entspricht public/images/share.jpg) und HTTPS-URLs. Ein leerer Wert verwendet das mitgelieferte Anglefeint-Bild mit 1200×630 Pixeln. Fragments und alle #fragment-ID-Links verwenden dieses Standardbild. Eigene und automatisch erzeugte Artikelbilder behalten Vorrang; bei deaktivierter Erzeugung hat auch das Artikel-Titelbild Vorrang vor dem Website-Standard. Danach neu bauen und bereitstellen; Plattformen können Vorschauen zwischenspeichern.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```
+
+new-fragment erzeugt eine achtstellige Nano ID aus Groß-/Kleinbuchstaben und Ziffern, prüft vorhandene Markdown-IDs aller Sprachen und wiederholt bei Kollisionen. Alle Sprachen eines Aufrufs teilen ID und Zeit. Erlaubt sind genau acht alphanumerische Zeichen. Alte UUIDs und lange IDs werden nicht unterstützt: alte Einträge löschen und neu veröffentlichen. Es gibt keine Migration oder Kompatibilität alter Links. Neue veröffentlichte IDs beibehalten; Änderungen erzeugen eine andere Kommentarzuordnung.

@@ -145,3 +145,13 @@ npx @anglefeint/astro-theme@latest upgrade
 自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
 
 更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。
+
+## 既定の共有画像と Fragment の短い ID（0.33.0+）
+
+src/site.config.ts の既存の site 設定に site.ogImage を追加できます。public ルートのパス（/images/share.jpg は public/images/share.jpg）または HTTPS URL を指定します。空欄なら内蔵の 1200×630 Anglefeint 画像を使います。Fragments とすべての #fragment-ID 共有リンクは同じ画像を使います。記事固有の画像と自動生成画像が優先され、自動生成を無効にした場合も記事のカバー画像がサイト既定画像より優先されます。変更後は再ビルドしてデプロイしてください。共有サービスにはキャッシュが残る場合があります。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```

@@ -45,7 +45,7 @@ npx @anglefeint/astro-theme@latest new-fragment --locales zh-hant
 
 ```md
 ---
-id: 550e8400-e29b-41d4-a716-446655440000
+id: 'q8Lm3XzP'
 pubDate: 2026-11-11T08:30:00+08:00
 ---
 
@@ -89,3 +89,15 @@ npm run build
 實際瀏覽網址可能帶頁碼；分享請使用日期連結或複製按鈕，不要手動複製帶頁碼的網址列。仍存在的舊分頁可修正過時錨點，已消失的舊頁碼仍進入網站原有 404，本功能不接管 404 頁面。
 
 碎片不存在或網路失敗時會顯示提示，不會反覆跳頁。剪貼簿受限時會顯示可選取並手動複製的連結。此功能需要主題 0.32.0 或更新版本，使用自動定位前請先升級。
+
+## 預設分享圖與 Fragment 短 ID（0.33.0+）
+
+在 src/site.config.ts 既有 site 設定中合併 site.ogImage，可填 public 根路徑（如 /images/share.jpg，對應 public/images/share.jpg）或 HTTPS 圖片網址。留空使用內建的 1200×630 Anglefeint 分享圖。Fragments 及所有 #fragment-ID 分享連結共用此圖。文章專屬圖、自動產生的文章圖維持優先；停用自動產生時，文章封面也優先於網站預設圖。更換後重新建置並部署，分享平台仍可能快取預覽。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```
+
+new-fragment 使用區分大小寫的字母與數字產生 8 位 Nano ID，檢查各語言既有 Markdown ID，衝突時重試。同一次命令的所有語言共用 ID 與發佈時間。Fragment 僅接受恰好 8 位英數字 ID，不相容舊 UUID 或長 ID；舊內容請刪除後重新發佈，不提供遷移或舊連結相容。新內容發佈後請保留 ID，修改會改變留言關聯。

@@ -590,3 +590,15 @@ In the 0.27+ integration starter, the theme package wires the Markdown processor
 ## Article statistics
 
 The displayed words are a heuristic count of source text (CJK characters individually, other text mainly by whitespace). Tokens default to `round(max(words, 1) × 1.3)`, not a model tokenizer or actual AI usage. Counts at 1,000 or more use one decimal and `k`. Frontmatter `wordCount`, `tokenCount` and `readMinutes` override their values independently; changing only wordCount does not recalculate tokens. Formula/MDX source can affect the estimates.
+
+## Default sharing image and short Fragment IDs (0.33.0+)
+
+Set site.ogImage in src/site.config.ts to a public-root image path (for example /images/share.jpg, stored at public/images/share.jpg) or an HTTPS URL. Merge the property into your existing site settings. Leave it blank to use the bundled 1200×630 Anglefeint artwork. Fragments and all of its #fragment-ID sharing links use this default. Article-specific and automatically generated article images retain priority; with automatic generation disabled, an article hero also takes priority over the site default. Rebuild and deploy after changing images; sharing platforms may cache previews.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```
+
+new-fragment generates an eight-character Nano ID from case-sensitive letters and digits, checks existing Markdown IDs across languages and retries collisions. All languages from one invocation share the ID and timestamp. Fragment IDs must be exactly eight alphanumeric characters. Old UUID/long-ID entries are not supported: delete and repost them rather than expecting migration or old-link compatibility. Keep the new ID stable after publishing; changing it creates a new comment association.

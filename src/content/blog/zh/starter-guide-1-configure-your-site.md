@@ -145,3 +145,13 @@ npx @anglefeint/astro-theme@latest upgrade
 自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
 
 升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。
+
+## 默认分享图与 Fragment 短 ID（0.33.0+）
+
+在 src/site.config.ts 现有 site 设置中合并 site.ogImage，可填写 public 根路径（如 /images/share.jpg，对应 public/images/share.jpg）或 HTTPS 图片地址。留空使用内置的 1200×630 Anglefeint 分享图。Fragments 及其所有 #fragment-ID 分享链接共用该默认图。文章专属图、自动生成的文章图保持优先；关闭自动生成时，文章封面也优先于站点默认图。更换图片后重新构建并部署，分享平台仍可能缓存预览。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```

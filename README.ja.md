@@ -577,3 +577,15 @@ $$
 ## 記事の統計
 
 語数はソース本文の概算です。中日韓の文字は一文字ずつ、それ以外は主に空白で区切って数えます。tokens は `round(max(words, 1) × 1.3)` による推定で、モデルの分かち書き結果や実際の AI 使用量ではありません。1,000 以上は小数一桁と k で表示します。frontmatter の `wordCount`、`tokenCount`、`readMinutes` は個別に上書きでき、wordCount の変更だけでは tokens は再計算されません。数式や MDX のソースも推定に影響します。
+
+## 既定の共有画像と Fragment の短い ID（0.33.0+）
+
+src/site.config.ts の既存の site 設定に site.ogImage を追加できます。public ルートのパス（/images/share.jpg は public/images/share.jpg）または HTTPS URL を指定します。空欄なら内蔵の 1200×630 Anglefeint 画像を使います。Fragments とすべての #fragment-ID 共有リンクは同じ画像を使います。記事固有の画像と自動生成画像が優先され、自動生成を無効にした場合も記事のカバー画像がサイト既定画像より優先されます。変更後は再ビルドしてデプロイしてください。共有サービスにはキャッシュが残る場合があります。
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```
+
+new-fragment は大文字・小文字を区別する英数字 8 文字の Nano ID を生成し、各言語の既存 Markdown ID と重複すると再試行します。同じ実行の全言語は ID と公開日時を共有します。Fragment ID は英数字 8 文字のみです。以前の UUID や長い ID は非対応のため、古い項目は削除して再投稿してください。移行や旧リンク互換機能はありません。公開後の ID は維持してください。変更するとコメントの関連付けも変わります。

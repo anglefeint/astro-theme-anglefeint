@@ -113,3 +113,13 @@ Projekte vor 0.27 benötigen einmalig einen frischen Starter. Erstelle ihn in ei
 Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien werden abgelehnt. `--check` prüft ohne Änderungen; `--to 0.27.1` wählt die Version. Siehe [Upgrade-Anleitung](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) und [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
 Bei einem fehlgeschlagenen Upgrade `dist/` nicht veröffentlichen: Die Wiederherstellung der Abhängigkeiten stellt keine alten Build-Dateien wieder her. Fehler beheben und `npm run doctor` erfolgreich ausführen. Mit pnpm zuerst die Kompatibilität prüfen, dann mit `pnpm add @anglefeint/astro-theme@latest` und `pnpm run doctor` manuell aktualisieren; die eigene Lockdatei behalten.
+
+## Standard-Vorschaubild und kurze Fragment-IDs (0.33.0+)
+
+Ergänze site.ogImage im bestehenden site-Objekt in src/site.config.ts. Unterstützt werden Pfade ab public (/images/share.jpg entspricht public/images/share.jpg) und HTTPS-URLs. Ein leerer Wert verwendet das mitgelieferte Anglefeint-Bild mit 1200×630 Pixeln. Fragments und alle #fragment-ID-Links verwenden dieses Standardbild. Eigene und automatisch erzeugte Artikelbilder behalten Vorrang; bei deaktivierter Erzeugung hat auch das Artikel-Titelbild Vorrang vor dem Website-Standard. Danach neu bauen und bereitstellen; Plattformen können Vorschauen zwischenspeichern.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```

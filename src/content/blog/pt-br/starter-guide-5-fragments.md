@@ -45,7 +45,7 @@ Para adicionar uma tradução depois, copie o Markdown original para a pasta do 
 
 ```md
 ---
-id: 550e8400-e29b-41d4-a716-446655440000
+id: 'q8Lm3XzP'
 pubDate: 2026-11-11T08:30:00+08:00
 ---
 
@@ -89,3 +89,15 @@ Compartilhamento a partir da versão 0.32.0: a data aponta para o fragmento na l
 O endereço de navegação pode incluir um número de página; compartilhe pelo link da data ou pelo controle de cópia. Páginas antigas ainda existentes corrigem âncoras desatualizadas; um número de página removido continua mostrando o 404 normal do site. O recurso não intercepta páginas 404.
 
 Fragmentos ausentes ou falhas de rede mostram uma mensagem, sem saltos repetidos. Se a área de transferência estiver bloqueada, um link selecionável permite copiar manualmente. O recurso exige o tema 0.32.0 ou posterior; atualize antes de usar a localização automática.
+
+## Imagem padrão e IDs curtos de Fragment (0.33.0+)
+
+Adicione site.ogImage ao objeto site existente em src/site.config.ts. Use um caminho a partir de public (/images/share.jpg corresponde a public/images/share.jpg) ou uma URL HTTPS. Em branco, utiliza a imagem Anglefeint incluída de 1200×630. Fragments e todos os links #fragment-ID compartilham essa imagem. As imagens específicas e geradas dos artigos mantêm prioridade; com a geração desativada, a capa do artigo também precede a imagem do site. Reconstrua e publique após alterar; plataformas podem manter a prévia em cache.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```
+
+new-fragment gera um Nano ID de oito letras e dígitos, diferencia maiúsculas e minúsculas, verifica IDs Markdown de todos os idiomas e repete em caso de colisão. Cada execução compartilha ID e data entre idiomas. São aceitos apenas IDs alfanuméricos com exatamente oito caracteres. UUIDs e IDs longos antigos não são suportados: exclua e publique novamente, sem migração ou compatibilidade com links antigos. Preserve o novo ID publicado; alterá-lo cria outra associação de comentários.

@@ -145,3 +145,13 @@ npx @anglefeint/astro-theme@latest upgrade
 자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
 
 업그레이드 실패 시 `dist/`를 배포하지 마세요. 의존성 복원은 이전 빌드 결과물을 복원하지 않습니다. 오류를 해결하고 `npm run doctor`가 성공한 뒤 배포하세요. pnpm 사용자는 릴리스 호환성을 확인하고 잠금 파일을 유지한 채 `pnpm add @anglefeint/astro-theme@latest`와 `pnpm run doctor`로 수동 업데이트하세요.
+
+## 기본 공유 이미지와 Fragment 짧은 ID (0.33.0+)
+
+src/site.config.ts의 기존 site 설정에 site.ogImage를 추가하세요. public 루트 경로(/images/share.jpg는 public/images/share.jpg) 또는 HTTPS URL을 지원합니다. 비워 두면 내장 1200×630 Anglefeint 이미지를 사용합니다. Fragments와 모든 #fragment-ID 공유 링크는 같은 기본 이미지를 사용합니다. 글 전용 이미지와 자동 생성 이미지가 우선하며, 자동 생성을 꺼도 글 표지 이미지가 사이트 기본 이미지보다 우선합니다. 변경 후 다시 빌드하고 배포하세요. 공유 서비스의 미리보기 캐시는 남을 수 있습니다.
+
+```ts
+export const THEME_CONFIG = defineThemeConfig({
+  site: { ogImage: '/images/share.jpg' },
+});
+```
