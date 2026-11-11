@@ -138,8 +138,17 @@ Publish brief thoughts as Markdown, with optional popup comments. Merge this int
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+All-enabled-language defaults require theme 0.31.0 or newer. Upgrade first; on 0.29–0.30, pass `--locales` explicitly.
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+Like `new-post`, the default creates skeletons for all enabled project languages, sharing one ID and timestamp; it does not translate content. Locale priority is `--locales` → `ANGLEFEINT_LOCALES` → enabled project languages. Explicit lists are trimmed, lowercased and deduplicated; they skip config loading and create only the requested locale directories, without enabling languages in site configuration.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales en
 ```
 
 [User Guide 5: Publish Fragments](https://demo.anglefeint.com/en/blog/starter-guide-5-fragments/)

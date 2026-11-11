@@ -22,13 +22,22 @@ theme: {
 
 有効化後は `/<locale>/fragments/` にアクセスします。`pageSize` は 1〜100 の整数です。ファイルは `.md` を使用します。下書きや未来の日付による公開除外はないため、未公開の断片は `src/content/fragments/` の外に保存してください。
 
-既定の言語で断片を作成：
+有効なすべての言語で、同じ断片のひな形を作成：
+
+有効な全言語を既定で作成するにはテーマ 0.31.0 以降が必要です。先にアップグレードしてください。0.29–0.30 では `--locales` で明示的に指定します。
 
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
 ```
 
---locales en,zh で同じ ID の翻訳用ファイルを作成できます。自動翻訳はしません。有効な言語のみ指定できます。新 starter は npm run new-fragment も使用可能です。既存ユーザーは npx を使えばスクリプト追加不要です。
+`new-post` と同様に、既定ではプロジェクトで有効な全言語に、同じ ID とタイムスタンプのひな形を作成します。自動翻訳はしません。優先順位は `--locales` → `ANGLEFEINT_LOCALES` → 有効な言語です。明示した一覧は空白除去・小文字化・重複除去され、設定の読み込みを省略して指定言語のディレクトリだけを作成します。言語の有効化設定は変更しません。
+
+新 starter は `npm run new-fragment` も提供します。既存プロジェクトはスクリプトを追加せず npx を使えます。
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales ja
+```
 
 `src/content/fragments/<locale>/` の Markdown を編集します。タイトルは任意です：
 

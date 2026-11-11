@@ -29,7 +29,10 @@ test('distributed tutorial overrides use the current integration guidance', asyn
     assert.match(body, /^---\r?\n/, destination);
     assert.doesNotMatch(body, /export const STARTER_SOURCE_OVERRIDES/);
     assert.match(body, /npx @anglefeint\/astro-theme@latest upgrade/);
-    assert.doesNotMatch(body, /not published yet|尚未发布|未公開です/);
+    // The integration's upgrade introduction is already published. Later
+    // sections may accurately distinguish a new CLI change awaiting release.
+    const upgradeIntroduction = body.split('```')[0];
+    assert.doesNotMatch(upgradeIntroduction, /not published yet|尚未发布|未公開です/);
     assert.doesNotMatch(body, /UPGRADING\.md#unreleased-/);
     tutorials++;
   }

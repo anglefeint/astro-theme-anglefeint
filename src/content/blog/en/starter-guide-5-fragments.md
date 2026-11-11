@@ -22,13 +22,22 @@ theme: {
 
 Open `/<locale>/fragments/` after enabling the feed. `pageSize` accepts integers from 1 to 100. Files use `.md`; there is no draft or future-date publication filter, so keep unpublished fragments outside `src/content/fragments/`.
 
-Create one fragment in the default language:
+Create skeletons of one fragment in every enabled language:
+
+All-enabled-language defaults require theme 0.31.0 or newer. Upgrade first; on 0.29–0.30, pass `--locales` explicitly.
 
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
 ```
 
-Use --locales en,zh to create matching skeletons with one shared ID. The CLI does not translate content. Only enabled languages are accepted. New starters also offer npm run new-fragment; existing users can use the npx command without adding scripts.
+Like `new-post`, the default creates skeletons for all enabled project languages, sharing one ID and timestamp; it does not translate content. Locale priority is `--locales` → `ANGLEFEINT_LOCALES` → enabled project languages. Explicit lists are trimmed, lowercased and deduplicated; they skip config loading and create only the requested locale directories, without enabling languages in site configuration.
+
+New starters also offer `npm run new-fragment`; existing users can use npx without adding scripts.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales en
+```
 
 Edit the generated file in `src/content/fragments/<locale>/`. A title is optional:
 

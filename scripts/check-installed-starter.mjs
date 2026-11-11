@@ -119,9 +119,13 @@ try {
   assert.equal(fragmentFiles.length, 1);
   const fragmentBefore = await read(`src/content/fragments/en/${fragmentFiles[0]}`);
   assert.match(fragmentBefore, /id: [a-f0-9-]+/);
+  for (const locale of ['en', 'es', 'ja', 'ko', 'zh', 'pt-br', 'de', 'ru', 'zh-hant']) {
+    assert.equal((await readdir(path.join(project, 'src/content/fragments', locale))).length, 1);
+    assert.equal(await read(`src/content/fragments/${locale}/${fragmentFiles[0]}`), fragmentBefore);
+  }
   await npm(['run', 'new-fragment', '--', '--locales', 'en,zh']);
   assert.equal((await readdir(path.join(project, 'src/content/fragments/en'))).length, 2);
-  assert.equal((await readdir(path.join(project, 'src/content/fragments/zh'))).length, 1);
+  assert.equal((await readdir(path.join(project, 'src/content/fragments/zh'))).length, 2);
   assert.equal(await read(`src/content/fragments/en/${fragmentFiles[0]}`), fragmentBefore);
   await npm(['run', 'new-post', '--', '--help']);
   await npm(['run', 'new-page', '--', '--help']);

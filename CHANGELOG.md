@@ -15,6 +15,12 @@ All notable changes to this project are documented in this file.
 
 ## Unreleased
 
+## [0.31.0] - 2026-11-11
+
+See the [delivery record](docs/releases/0.31.0.md) for publication and acceptance status.
+
+- Align `new-fragment` with `new-post`: default to all enabled project languages, sharing one ID and timestamp per invocation. Reuse locale parsing/normalization and `--locales` → `ANGLEFEINT_LOCALES` → project-language precedence; explicit lists bypass config loading. Sync nine-language README and demo/starter tutorials.
+
 ## [0.30.0] - 2026-11-11
 
 See the [0.30.0 delivery record](docs/releases/0.30.0.md) for publication and acceptance status.

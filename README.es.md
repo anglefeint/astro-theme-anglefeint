@@ -138,8 +138,17 @@ Publica ideas breves en Markdown con comentarios opcionales en un diálogo. Aña
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+La generación predeterminada para todos los idiomas habilitados requiere el tema 0.31.0 o posterior. Actualiza primero; en 0.29–0.30, indica `--locales` explícitamente.
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+Como `new-post`, por defecto crea esqueletos para todos los idiomas habilitados del proyecto con un mismo ID y fecha y hora; no traduce el contenido. Prioridad: `--locales` → `ANGLEFEINT_LOCALES` → idiomas habilitados. Las listas explícitas eliminan espacios y duplicados y se convierten a minúsculas; omiten la lectura de configuración y crean solo los directorios solicitados, sin habilitar idiomas en la configuración.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales es
 ```
 
 [Guía 5: Publicar fragmentos](https://demo.anglefeint.com/es/blog/starter-guide-5-fragments/)

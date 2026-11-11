@@ -22,13 +22,22 @@ theme: {
 
 활성화한 뒤 `/<locale>/fragments/`로 이동하세요. `pageSize`는 1–100의 정수입니다. 파일은 `.md`를 사용하며 초안이나 미래 날짜를 필터링하지 않습니다. 아직 공개하지 않을 조각은 `src/content/fragments/` 밖에 보관하세요.
 
-기본 언어로 조각 만들기:
+활성화된 모든 언어에 같은 조각의 골격 만들기:
+
+모든 활성 언어를 기본으로 생성하려면 테마 0.31.0 이상이 필요합니다. 먼저 업그레이드하세요. 0.29–0.30에서는 `--locales`로 명시해야 합니다.
 
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
 ```
 
---locales en,zh로 같은 ID의 번역용 파일을 만들 수 있습니다. 자동 번역은 하지 않으며 활성화된 언어만 허용합니다. 새 starter는 npm run new-fragment도 제공합니다. 기존 사용자는 스크립트 추가 없이 npx를 사용합니다.
+`new-post`와 동일하게 기본적으로 프로젝트의 모든 활성 언어에 같은 ID와 타임스탬프를 공유하는 골격을 만듭니다. 자동 번역은 하지 않습니다. 우선순위는 `--locales` → `ANGLEFEINT_LOCALES` → 활성 언어입니다. 명시한 목록은 공백 제거, 소문자 변환, 중복 제거를 거치며 설정을 읽지 않고 지정 언어 디렉터리만 만듭니다. 언어 활성화 설정은 바꾸지 않습니다.
+
+새 starter는 `npm run new-fragment`도 제공합니다. 기존 프로젝트는 스크립트 추가 없이 npx를 사용할 수 있습니다.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales ko
+```
 
 `src/content/fragments/<locale>/`의 Markdown을 편집합니다. 제목은 선택 사항입니다:
 

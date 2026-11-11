@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 import {
   fragmentSettings,
@@ -43,26 +44,67 @@ test('fragments defaults preserve old projects; bounds and stable discussion IDs
   for (const id of ['', '../a', 'with space', 'a/b']) assert.throws(() => fragmentTerm(id));
 });
 
-test('fragment CLI defaults to one locale, shares IDs only on request and preserves user files', async () => {
+test('fragment CLI defaults to all enabled locales with shared identity and preserves user files', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'fragments-cli-'));
+  const previousLocales = process.env.ANGLEFEINT_LOCALES;
+  delete process.env.ANGLEFEINT_LOCALES;
   try {
     await mkdir(path.join(root, 'src'));
     await writeFile(
       path.join(root, 'src/site.config.ts'),
       `export const THEME_CONFIG = {i18n: {defaultLocale: 'zh', locales: {en:{},zh:{},ja:{meta:{enabled:false}}}}};`
     );
-    const [first] = await newFragment([], root);
-    assert.ok(first.includes(path.join('fragments', 'zh')));
+    const defaults = await newFragment([], root);
+    assert.deepEqual(
+      defaults.map((file) => path.basename(path.dirname(file))),
+      ['en', 'zh']
+    );
+    const [first] = defaults;
     const original = await readFile(first, 'utf8');
+    assert.equal(await readFile(defaults[1], 'utf8'), original);
     assert.match(original, /pubDate: \d{4}-\d\d-\d\dT/);
     const files = await newFragment(['--locales', 'en,zh'], root);
     assert.equal(files.length, 2);
     assert.equal(await readFile(files[0], 'utf8'), await readFile(files[1], 'utf8'));
     assert.equal(await readFile(first, 'utf8'), original);
-    await assert.rejects(newFragment(['--locales', '../zh'], root), /enabled locale/);
-    await assert.rejects(newFragment(['--locales', 'ja'], root), /enabled locale/);
+    const only = await newFragment(['--locales', 'zh'], root);
+    assert.equal(only.length, 1);
+    assert.equal(path.basename(path.dirname(only[0])), 'zh');
+    assert.notEqual(await readFile(only[0], 'utf8'), original);
+    await assert.rejects(newFragment(['--locales', '../zh'], root), /Invalid locale/);
+    await assert.rejects(newFragment(['--locales', ', ,'], root), /Locales list is empty/);
     await assert.rejects(newFragment(['--unknown'], root), /Usage/);
   } finally {
+    if (previousLocales === undefined) delete process.env.ANGLEFEINT_LOCALES;
+    else process.env.ANGLEFEINT_LOCALES = previousLocales;
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('fragment overrides match new-post precedence, normalize and bypass broken config', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'fragments-overrides-'));
+  const previousLocales = process.env.ANGLEFEINT_LOCALES;
+  try {
+    await mkdir(path.join(root, 'src'));
+    await writeFile(path.join(root, 'src/site.config.ts'), 'throw new Error("broken config");');
+    process.env.ANGLEFEINT_LOCALES = 'fr';
+    const fromEnv = await newFragment([], root);
+    assert.deepEqual(
+      fromEnv.map((file) => path.basename(path.dirname(file))),
+      ['fr']
+    );
+    const explicit = await newFragment(['--locales', ' ZH , en,zh, '], root);
+    assert.deepEqual(
+      explicit.map((file) => path.basename(path.dirname(file))),
+      ['zh', 'en']
+    );
+    assert.equal(await readFile(explicit[0], 'utf8'), await readFile(explicit[1], 'utf8'));
+    delete process.env.ANGLEFEINT_LOCALES;
+    await assert.rejects(newFragment([], root), /Cannot load locales/);
+    await assert.rejects(newFragment(['--locales', '../fr'], root), /Invalid locale/);
+  } finally {
+    if (previousLocales === undefined) delete process.env.ANGLEFEINT_LOCALES;
+    else process.env.ANGLEFEINT_LOCALES = previousLocales;
     await rm(root, { recursive: true, force: true });
   }
 });

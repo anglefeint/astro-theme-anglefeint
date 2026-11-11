@@ -9,7 +9,10 @@ import process from 'node:process';
 import { promisify } from 'node:util';
 import { STARTER_MANAGED_FILES, starterSourcePath } from './starter-manifest.mjs';
 import { chromium } from '@playwright/test';
-import { loadProjectModule } from '../packages/theme/src/scaffold/project-config.mjs';
+import {
+  loadProjectModule,
+  loadProjectLocales,
+} from '../packages/theme/src/scaffold/project-config.mjs';
 
 const exec = promisify(execFile);
 const root = process.cwd();
@@ -286,6 +289,23 @@ export const THEME_CONFIG = defineThemeConfig({
   const newFragmentOutput = await npm(['exec', '--', 'astro-theme', 'new-fragment']);
   assert.match(newFragmentOutput, /Created/);
   assert.equal((await readdir(path.join(project, 'src/content/fragments/en'))).length, 2);
+  const [generatedFragment] = (
+    await readdir(path.join(project, 'src/content/fragments/en'))
+  ).filter((name) => name !== 'personal.md');
+  const generatedContent = await readFile(
+    path.join(project, 'src/content/fragments/en', generatedFragment),
+    'utf8'
+  );
+  for (const locale of await loadProjectLocales(project)) {
+    assert.equal(
+      await readFile(
+        path.join(project, 'src/content/fragments', locale, generatedFragment),
+        'utf8'
+      ),
+      generatedContent
+    );
+  }
+  await assert.rejects(readdir(path.join(project, 'src/content/fragments/zh')), { code: 'ENOENT' });
   preservation = before;
   scenarios.push(
     'skip-version upgrade preserves source, public assets, .env, host config, Astro and TypeScript entries'

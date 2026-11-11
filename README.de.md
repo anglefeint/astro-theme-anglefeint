@@ -112,8 +112,17 @@ Kurze Gedanken als Markdown mit optionalen Kommentaren im Dialog. In das vorhand
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+Die standardmäßige Erstellung für alle aktivierten Sprachen erfordert Theme 0.31.0 oder neuer. Zuerst aktualisieren; bei 0.29–0.30 die Sprachen mit `--locales` explizit angeben.
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+Wie `new-post` erstellt der Befehl standardmäßig Vorlagen für alle aktivierten Projektsprachen mit derselben ID und demselben Zeitstempel; Inhalte werden nicht automatisch übersetzt. Priorität: `--locales` → `ANGLEFEINT_LOCALES` → aktivierte Sprachen. Explizite Listen werden bereinigt, kleingeschrieben und dedupliziert; sie überspringen das Laden der Konfiguration und erstellen nur die gewünschten Sprachverzeichnisse, ohne Sprachen in der Konfiguration zu aktivieren.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales de
 ```
 
 [Anleitung 5: Fragmente veröffentlichen](https://demo.anglefeint.com/de/blog/starter-guide-5-fragments/)

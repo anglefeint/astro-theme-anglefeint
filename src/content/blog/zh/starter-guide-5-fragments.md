@@ -22,13 +22,22 @@ theme: {
 
 开启后访问 `/<locale>/fragments/`。`pageSize` 可设为 1–100 的整数。文件使用 `.md`；没有草稿或未来日期过滤，未准备公开的碎片请放在 `src/content/fragments/` 之外。
 
-在默认语言下创建一条碎片：
+为全部已启用语言生成同一条碎片的骨架：
+
+默认生成全部启用语言的骨架需要主题 0.31.0 或更新版本。请先升级；0.29–0.30 仍需用 `--locales` 显式指定。
 
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
 ```
 
-使用 --locales en,zh 可创建共用一个 ID 的多语言骨架，不会自动翻译；只能选择已启用的语言。新 starter 也支持 npm run new-fragment；老用户直接用 npx 命令，无需补 package.json 脚本。
+与 `new-post` 一致，默认读取项目全部启用语言，生成共享同一个 ID 和时间戳的骨架，不自动翻译。语言优先级为 `--locales` → `ANGLEFEINT_LOCALES` → 项目启用语言。显式列表会去除空白、转为小写并去重，跳过配置读取，只创建指定语言目录，不自动修改配置中的语言开关。
+
+新 starter 也提供 `npm run new-fragment`；已有项目可直接用 npx，无需添加脚本。
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales zh
+```
 
 编辑 `src/content/fragments/<locale>/` 中生成的 Markdown，标题可省略：
 

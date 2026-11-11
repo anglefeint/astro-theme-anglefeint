@@ -10,6 +10,14 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.31.0: Unified fragment language generation
+
+Run `npx @anglefeint/astro-theme@latest upgrade` in an npm schema-1 project (or add `--to 0.31.0` for this exact version). See the [release record](docs/releases/0.31.0.md) for actual delivery status.
+
+`new-fragment` now matches `new-post`: without an override, it creates a skeleton in every enabled project language, sharing one UUID and ISO timestamp. It does not translate. To retain single-language generation, specify the desired language explicitly, for example `npm run new-fragment -- --locales zh` or `npx @anglefeint/astro-theme@latest new-fragment --locales zh` on projects without that script.
+
+Both commands use `--locales` → `ANGLEFEINT_LOCALES` → configured enabled languages. Explicit lists trim whitespace, normalize lowercase and remove duplicates; they bypass configuration loading and may create valid locale directories without enabling those languages in site configuration. With no override, fix configuration errors before generation. Existing Markdown, stable IDs, comment associations, site settings and media are preserved; no content migration is required. Personal tutorial copies are not overwritten by upgrades. Versions 0.29–0.30 retain their original single-default-language fragment behavior. Pre-0.27 projects still require the migration below.
+
 ## 0.30.0: Reusable effects and Fragments presentation
 
 For npm schema-1 integration starters, run `npx @anglefeint/astro-theme@latest upgrade` (or add `--to 0.30.0` for this exact release), then preview and deploy. No configuration or content migration is required. The package update supplies the compact Fragments layout, comment loading/scroll fixes and extracted effects; see the [release record](docs/releases/0.30.0.md) for actual delivery status.

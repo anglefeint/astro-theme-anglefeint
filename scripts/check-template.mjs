@@ -556,10 +556,17 @@ try {
   }
   await run('new-fragment', ['--help']);
   await run('new-fragment');
+  const [defaultFragment] = (await readdir(file('src/content/fragments/en'))).filter(
+    (name) => name !== 'personal.md'
+  );
+  assert.equal(
+    await read(`src/content/fragments/en/${defaultFragment}`),
+    await read(`src/content/fragments/zh/${defaultFragment}`)
+  );
   await run('new-fragment', ['--locales', 'en,zh']);
   assert.equal(await read('src/content/fragments/en/personal.md'), originalFragment);
   assert.equal((await readdir(file('src/content/fragments/en'))).length, 3);
-  assert.equal((await readdir(file('src/content/fragments/zh'))).length, 1);
+  assert.equal((await readdir(file('src/content/fragments/zh'))).length, 2);
   results.push({
     check: 'published fragment CLI and existing Markdown preservation',
     status: 'passed',
@@ -618,6 +625,9 @@ try {
   const fragmentFeed = parse(await read('dist/en/fragments/index.html'));
   assert.equal(fragmentFeed.querySelectorAll('[data-fragment-id]').length, 3);
   assert.equal(fragmentFeed.querySelectorAll('[data-fragment-comments]').length, 0);
+  const zhFragmentFeed = parse(await read('dist/zh/fragments/index.html'));
+  assert.equal(zhFragmentFeed.querySelectorAll('[data-fragment-id]').length, 2);
+  assert.equal(zhFragmentFeed.querySelectorAll('[data-fragment-comments]').length, 0);
   assert.match(fragmentFeed.textContent, /Remote fragment preservation sentinel/);
   results.push({ check: 'published opt-in fragments feed with comments off', status: 'passed' });
   assert.deepEqual(

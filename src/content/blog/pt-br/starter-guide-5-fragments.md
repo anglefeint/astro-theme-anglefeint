@@ -22,13 +22,22 @@ theme: {
 
 Após ativar, acesse `/<locale>/fragments/`. `pageSize` aceita inteiros de 1 a 100. Os arquivos usam `.md`; não há filtro de rascunhos ou datas futuras. Guarde os fragmentos ainda não publicados fora de `src/content/fragments/`.
 
-Crie um fragmento no idioma padrão:
+Crie esqueletos do mesmo fragmento em todos os idiomas habilitados:
+
+A geração padrão para todos os idiomas habilitados exige o tema 0.31.0 ou mais recente. Atualize primeiro; nas versões 0.29–0.30, informe `--locales` explicitamente.
 
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
 ```
 
---locales en,zh cria arquivos com o mesmo ID, sem tradução automática. Apenas idiomas habilitados são aceitos. O novo starter oferece npm run new-fragment; usuários existentes podem usar npx sem adicionar scripts.
+Como `new-post`, por padrão cria esqueletos para todos os idiomas habilitados no projeto, com o mesmo ID e data e hora; não traduz o conteúdo. Prioridade: `--locales` → `ANGLEFEINT_LOCALES` → idiomas habilitados. Listas explícitas removem espaços e duplicatas e são convertidas para minúsculas; ignoram a leitura da configuração e criam apenas os diretórios solicitados, sem habilitar idiomas na configuração.
+
+Novos starters também oferecem `npm run new-fragment`; projetos existentes podem usar npx sem adicionar scripts.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales pt-br
+```
 
 Edite o Markdown gerado em `src/content/fragments/<locale>/`. O título é opcional:
 

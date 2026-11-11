@@ -12,6 +12,18 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-11 0.31.0 发布前文档复核
+
+用户授权在完成文档工作流后正式提交、发布 npm、同步 starter 并线上验收。基线仍为 `cad02c83ecb83b566d489825c053320dea3dc5b6`，完整复核当前未提交 CLI、共享解析器、语言选择／配置加载／文件写入及安装／升级／公开模板验收，沿九语 README → 九对 demo／starter User Guide 5 → npm README／ARCHITECTURE／TEMPLATE_ACCEPTANCE／UPGRADING／CHANGELOG 与发布索引核对。将待发布说明改为“需要 0.31.0，0.29–0.30 显式指定语言”的准确边界，旧 release 与本地未发布阶段的审计保留历史。代码仍为事实来源，不为匹配文档改变运行逻辑。README 传播的投稿／列表文档和视觉／路由规范无事实变化，保持原文；没有新增分发路径，manifest 所有权不变。实际发布、远程安装／升级及线上证据统一记入 [0.31.0 账本](releases/0.31.0.md)。
+
+## 2026-11-11 new-fragment 与 new-post 统一（本地未发布）
+
+以 `cad02c83ecb83b566d489825c053320dea3dc5b6` 为基线，按当前工作区执行 suggest:docs，沿主 CLI → new-fragment／new-post → 共享 resolveLocales → 项目配置语言归一化 → 排他写入生成文件 → 单元／打包安装／升级验收核对。默认改为全部启用语言，同次生成共用 UUID 和 ISO 时间；优先级、空白／大小写／去重／语法校验及显式覆盖跳过配置与 new-post 一致。new-post 原导出路径保留，现有行为不变。碎片不自动翻译，不改站点语言开关、原有内容或讨论映射。
+
+本轮实际验证：lint、94 份维护文档元数据、31 份文档链接及 45 对教程／117 个教程路由链接通过；完整 check 164 项测试、Astro 零错误／警告、289 页构建和九语 About 运行时校验通过。独立 tarball 安装验证九语言骨架逐字一致、显式选择及原文件保护；真实 0.30.0 基线到隔离未来版本夹具的六场景升级保留 104 个用户文件，并验证默认跳过禁用中文。未运行发布用的完整 14 构建矩阵或远程模板／线上验收。首次完整检查发现旧教程测试笼统禁止全文出现“尚未发布”，现限定为已发布集成的升级引言，允许后续小节准确标注新 CLI 待发布；保留其他教程断言，重跑全部检查通过。原始失败和最终日志分别保留为 `fragment-cli-check-first-doc-assertion.log`、`fragment-cli-check.log`、`fragment-cli-installed.log`、`fragment-cli-upgrade.log`。README 传播候选 ASTRO_THEME_LISTING／THEME_SUBMISSION_CHECKLIST 的产品描述与投稿流程未变，无须改写。
+
+同步九语言 README、九对 demo／starter User Guide 5、npm README、ARCHITECTURE、TEMPLATE_ACCEPTANCE 与 Unreleased changelog，明确新 CLI 默认行为尚未发布，已发布 0.29–0.30 仍默认单一语言。教程继续说明显式语言、共享 ID／时间与后补翻译。直接命中但职责未变的视觉／路由／配置／发布流程文档及 CLAUDE／Cursor 入口不重复改写，历史 release 和旧审计保留历史事实。语言目录仍由用户持有，未新增 starter 文件或分发所有权，因此无需新增 manifest 条目。不提交、发布、推送或同步远程 starter；本轮实际验证结果见本地 `acceptance-results/fragment-cli-*`，不复用先前发布结果冒充本轮验收。
+
 ## 2026-11-11 0.30.0 正式交付收尾
 
 完成文档工作流后按正式流程发布一次 npm 0.30.0，读回 registry 并验证准备包完整性，再同步／推送 starter。九语 README、教程、升级说明、架构／视觉／组件参考与实现一致；45 对教程及文档链接核对通过。源码、包和个人文件保护、Windows／Linux 完整验收、真实公开升级及线上文章库／评论／搜索结果统一见 [发布账本](releases/0.30.0.md)。后续维护提交只修正真实动效的验收观测和记录交付事实，包文件未变，无须重复 npm 发布或再次更新 starter 依赖。历史失败、网络传播恢复与直接核验不了的托管设置均在账本保留，不将其改写为从未失败。
