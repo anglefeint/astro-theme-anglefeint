@@ -18,6 +18,14 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 本次不引入消费者受管文件、不要求现有用户迁移，因此不制造空 npm 版本或 starter 升级公告。九语 README／demo／starter 教程没有行为变化，沿用此前逐项核对结论；此次仅将维护交付说明和状态补入 CHANGELOG／本记录。远程 main／starter 在操作前分别与本地 `75c4879998c652e4c50c0f3b7ebc7abadc703ff5`／`1ecfcd51cde5ec25721cdc5d0b96b180973c674e` 一致。按正式入口提交、预检、推送 main、同步／审计／验证 starter，再核对远程模板和线上完整文章库；实际 refs、检查结果与托管访问限制在完成后补录，准备记录不作为已交付凭证。既有门禁和测试覆盖不变，不复用历史通过结果来跳过检查。
 
+源码已提交并推送为 `310ee325936137c48475289e62b62b8dfb46ee3f`，提交／推送钩子未绕过，完整检查 176 项测试、289 页构建、九语 About 断言通过，main 依赖审计为零漏洞。starter 预检无受管内容漂移；仍按用户授权运行正式 `release:starter`，完成安装、阻断审计、一次 doctor/check（18.22 秒，内含 11.05 秒的 118 页构建和九语 About 断言），没有紧邻的第二次 build。全部索引／环境／产物记录仅观察，不用作跳过门禁的凭证。
+
+starter 的实际新提交为 `2f7e16a8db698a46b1589c6390818fab32d1a3eb`，仅刷新 `package-lock.json`，package.json／配置／用户教程无内容变化，主题范围与实装版本仍为 `^0.32.0`／0.32.0。按既有同步策略执行的 npm update 将 Astro 7.4.10 → 7.4.11、MDX 8.1.4 → 8.1.5 及相关 Astro 子依赖更新到原范围内补丁，审计零漏洞、真实安装与 doctor 已通过。同步后已恢复 main 的 workspace link；推送 starter 时原有完整 main 检查再次通过，未复用之前的通过结果。npm registry 只读核对仍为 0.32.0、gitHead `e452e8fac382be65d264bb83150d670db86403db`、SHA1 `1d016766e784fd3a7b54a4808fa0bdca5cbd57ab`，没有运行 npm 发布或新增版本／标签。
+
+main 对应 Cloudflare 构建 `b798e0ff-0c7a-4932-83ca-8bb68b5e282d` 成功；starter 新提交没有 GitHub check-run。两次分支推送后已对照 main 检查线上九语言 162 篇文章、18 个列表页、全部文章标题／HTTP 响应、旧文章／Markdown／索引／OG／About，以及 117 条碎片、静态分享索引／菜单激活状态和九语教程。真实移动端 Giscus 加载成功，跨两条碎片复用一个 iframe，没有提交评论。Cloudflare CLI 未认证，无法读取后台分支／预览部署配置或活动生产版本元数据；构建成功加内容验收不冒充这项后台权限证明，最终文档推送后仍需再读回构建与线上状态。
+
+远程 npm 模板本轮新验收为 57 项／11 个脚本、43 条命令全部有计时且通过；pnpm 独立新验收为 55 项／11 个脚本、42 条命令全部有计时且通过，保留公开升级命令／不支持的包管理器预期拒绝、浏览器功能与个人文件保护断言。原始证据集中于忽略的 `acceptance-results/maintenance-1112-*`，npm／pnpm 报告分别为 `acceptance-results/template-npm-1794420207257/report.json`／`acceptance-results/template-pnpm-1794420382520/report.json`。全仓格式和 lint 通过；收尾只补维护文档，不改变包或 starter 受管文件，无需再次同步 starter。没有新增可执行改动，未重跑只在包／集成行为发布时要求的 14 组独立安装或全站浏览器矩阵，后续实际版本发布仍遵守原门禁。
+
 ## 2026-11-12 LF 统一与独立格式整理（本地未提交）
 
 沿用 `75c4879998c652e4c50c0f3b7ebc7abadc703ff5` 基线，在此前未提交维护流程改动之上执行用户授权的 LF 统一。先将全部 1057 个仓库文件的原始／规范化摘要、19 个未提交文件的原始副本存入忽略目录 `acceptance-results/lf-normalization-before/`。仅处理 Git 跟踪／未忽略的仓库文件，不进入 node_modules、生成目录或诊断报告。613 个含 CRLF 的 UTF-8 文本转换为 LF，二进制／非 UTF-8 文件保持原始字节；只有已诊断的 16 个文件额外调用现有 Prettier 配置整理缩进、折行、引号和尾逗号。转换完成后确认原有 19 个未提交文件全部字节一致，再有意补充文档；其余原有改动继续保留。
