@@ -151,7 +151,7 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales ja
 ```
 
-0.32.0 以降の共有機能：日付のリンクで一覧内の断片を定位でき、その横でリンクをコピーできます。共有には `/ja/fragments/#fragment-ID` を使用します。ID は Markdown frontmatter の id です。現在のページに対象がない場合のみ、言語別の小さな静的索引を読み込み、現在のページへ移動します。追加、日付や pageSize の変更後は再ビルドし、ID は変えないでください。ページをまたぐ定位とコピーには JavaScript が必要です。
+0.32.0 以降の共有機能：日付のリンクで一覧内の断片を定位でき、その横でリンクをコピーできます。共有には `/ja/fragments/#ID` を使用します。ID は Markdown frontmatter の id です。現在のページに対象がない場合のみ、言語別の小さな静的索引を読み込み、現在のページへ移動します。追加、日付や pageSize の変更後は再ビルドし、ID は変えないでください。ページをまたぐ定位とコピーには JavaScript が必要です。
 
 0.32.0 以降のページ送り改善：断片は Blog とページ番号、ネオン表示、設定したしきい値で表示されるページ移動欄を共有します。`theme.pagination` は両方の一覧に適用され、断片の1ページあたりの件数は引き続き `theme.fragments.pageSize` で個別に設定します。
 
@@ -580,7 +580,7 @@ $$
 
 ## 既定の共有画像と Fragment の短い ID（0.33.0+）
 
-src/site.config.ts の既存の site 設定に site.ogImage を追加できます。public ルートのパス（/images/share.jpg は public/images/share.jpg）または HTTPS URL を指定します。空欄なら内蔵の 1200×630 Anglefeint 画像を使います。Fragments とすべての #fragment-ID 共有リンクは同じ画像を使います。記事固有の画像と自動生成画像が優先され、自動生成を無効にした場合も記事のカバー画像がサイト既定画像より優先されます。変更後は再ビルドしてデプロイしてください。共有サービスにはキャッシュが残る場合があります。
+src/site.config.ts の既存の site 設定に site.ogImage を追加できます。public ルートのパス（/images/share.jpg は public/images/share.jpg）または HTTPS URL を指定します。空欄なら内蔵の 1200×630 Anglefeint 画像を使います。Fragments とすべての #ID 共有リンクは同じ画像を使います。記事固有の画像と自動生成画像が優先され、自動生成を無効にした場合も記事のカバー画像がサイト既定画像より優先されます。変更後は再ビルドしてデプロイしてください。共有サービスにはキャッシュが残る場合があります。
 
 ```ts
 export const THEME_CONFIG = defineThemeConfig({

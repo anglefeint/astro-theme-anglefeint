@@ -151,7 +151,7 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales ko
 ```
 
-0.32.0 이상 공유 기능: 날짜 링크로 목록의 해당 조각을 찾고 옆에서 링크를 복사할 수 있습니다. 공유 주소는 `/ko/fragments/#fragment-ID`이며 ID는 Markdown frontmatter의 id입니다. 현재 페이지에 없을 때만 언어별 소형 정적 인덱스를 읽어 해당 페이지로 이동합니다. 내용 추가, 날짜 또는 pageSize 변경 후 다시 빌드하고 ID는 유지하세요. 페이지 간 위치 찾기와 복사에는 JavaScript가 필요합니다.
+0.32.0 이상 공유 기능: 날짜 링크로 목록의 해당 조각을 찾고 옆에서 링크를 복사할 수 있습니다. 공유 주소는 `/ko/fragments/#ID`이며 ID는 Markdown frontmatter의 id입니다. 현재 페이지에 없을 때만 언어별 소형 정적 인덱스를 읽어 해당 페이지로 이동합니다. 내용 추가, 날짜 또는 pageSize 변경 후 다시 빌드하고 ID는 유지하세요. 페이지 간 위치 찾기와 복사에는 JavaScript가 필요합니다.
 
 0.32.0 이상 페이지 탐색 개선: 조각은 Blog와 페이지 번호, 네온 스타일, 설정한 기준에 따라 표시되는 페이지 이동 입력란을 공유합니다. `theme.pagination`은 두 목록에 공통으로 적용되며, 조각의 페이지당 개수는 계속 `theme.fragments.pageSize`로 별도 설정합니다.
 
@@ -580,7 +580,7 @@ $$
 
 ## 기본 공유 이미지와 Fragment 짧은 ID (0.33.0+)
 
-src/site.config.ts의 기존 site 설정에 site.ogImage를 추가하세요. public 루트 경로(/images/share.jpg는 public/images/share.jpg) 또는 HTTPS URL을 지원합니다. 비워 두면 내장 1200×630 Anglefeint 이미지를 사용합니다. Fragments와 모든 #fragment-ID 공유 링크는 같은 기본 이미지를 사용합니다. 글 전용 이미지와 자동 생성 이미지가 우선하며, 자동 생성을 꺼도 글 표지 이미지가 사이트 기본 이미지보다 우선합니다. 변경 후 다시 빌드하고 배포하세요. 공유 서비스의 미리보기 캐시는 남을 수 있습니다.
+src/site.config.ts의 기존 site 설정에 site.ogImage를 추가하세요. public 루트 경로(/images/share.jpg는 public/images/share.jpg) 또는 HTTPS URL을 지원합니다. 비워 두면 내장 1200×630 Anglefeint 이미지를 사용합니다. Fragments와 모든 #ID 공유 링크는 같은 기본 이미지를 사용합니다. 글 전용 이미지와 자동 생성 이미지가 우선하며, 자동 생성을 꺼도 글 표지 이미지가 사이트 기본 이미지보다 우선합니다. 변경 후 다시 빌드하고 배포하세요. 공유 서비스의 미리보기 캐시는 남을 수 있습니다.
 
 ```ts
 export const THEME_CONFIG = defineThemeConfig({

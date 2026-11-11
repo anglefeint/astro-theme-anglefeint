@@ -151,7 +151,7 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales zh
 ```
 
-0.32.0 起的分享功能：日期链接定位列表中的本条碎片，旁边提供复制链接。对外分享使用 `/zh/fragments/#fragment-ID`，其中 ID 是 Markdown frontmatter 的 id。当前页没有该条时，按需读取本语言的轻量静态索引，自动跳到对应分页。新增内容、修改日期或 pageSize 后重新构建即可，保留原 ID。跨页定位和复制需要启用 JavaScript。
+0.32.0 起的分享功能：日期链接定位列表中的本条碎片，旁边提供复制链接。对外分享使用 `/zh/fragments/#ID`，其中 ID 是 Markdown frontmatter 的 id。当前页没有该条时，按需读取本语言的轻量静态索引，自动跳到对应分页。新增内容、修改日期或 pageSize 后重新构建即可，保留原 ID。跨页定位和复制需要启用 JavaScript。
 
 0.32.0 起的分页改进：碎片与 Blog 共用页码、霓虹样式和按阈值显示的跳页入口。`theme.pagination` 统一控制两处分页；`theme.fragments.pageSize` 仍独立设置每页碎片数量。
 
@@ -586,7 +586,7 @@ $$
 
 ## 默认分享图与 Fragment 短 ID（0.33.0+）
 
-在 src/site.config.ts 现有 site 设置中合并 site.ogImage，可填写 public 根路径（如 /images/share.jpg，对应 public/images/share.jpg）或 HTTPS 图片地址。留空使用内置的 1200×630 Anglefeint 分享图。Fragments 及其所有 #fragment-ID 分享链接共用该默认图。文章专属图、自动生成的文章图保持优先；关闭自动生成时，文章封面也优先于站点默认图。更换图片后重新构建并部署，分享平台仍可能缓存预览。
+在 src/site.config.ts 现有 site 设置中合并 site.ogImage，可填写 public 根路径（如 /images/share.jpg，对应 public/images/share.jpg）或 HTTPS 图片地址。留空使用内置的 1200×630 Anglefeint 分享图。Fragments 及其所有 #ID 分享链接共用该默认图。文章专属图、自动生成的文章图保持优先；关闭自动生成时，文章封面也优先于站点默认图。更换图片后重新构建并部署，分享平台仍可能缓存预览。
 
 ```ts
 export const THEME_CONFIG = defineThemeConfig({

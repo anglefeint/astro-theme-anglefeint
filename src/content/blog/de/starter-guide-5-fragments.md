@@ -84,7 +84,7 @@ Seitennavigation ab 0.32.0: Fragmente verwenden dieselben Seitenzahlen, Neonstil
 
 ## Stabile Freigabelinks (ab 0.32.0)
 
-Freigabefunktion ab 0.32.0: Das Datum verlinkt zum Fragment in der Liste; daneben lässt sich der Link kopieren. Zum Teilen `/de/fragments/#fragment-ID` mit der id aus dem Markdown-Frontmatter verwenden. Nur wenn das Fragment auf der aktuellen Seite fehlt, lädt ein kleiner sprachbezogener statischer Index seine Seitenposition. Nach neuen Inhalten oder Änderungen an Datum oder pageSize neu bauen und IDs beibehalten. Seitenübergreifendes Auffinden und Kopieren benötigen JavaScript.
+Freigabefunktion ab 0.32.0: Das Datum verlinkt zum Fragment in der Liste; daneben lässt sich der Link kopieren. Zum Teilen `/de/fragments/#ID` mit der id aus dem Markdown-Frontmatter verwenden. Nur wenn das Fragment auf der aktuellen Seite fehlt, lädt ein kleiner sprachbezogener statischer Index seine Seitenposition. Nach neuen Inhalten oder Änderungen an Datum oder pageSize neu bauen und IDs beibehalten. Seitenübergreifendes Auffinden und Kopieren benötigen JavaScript.
 
 Die aktuelle Browseradresse kann eine Seitennummer enthalten; zum Teilen den Datumslink oder die Kopierfunktion verwenden. Noch vorhandene alte Seiten können veraltete Anker korrigieren; entfernte Seitennummern zeigen weiterhin die normale 404-Seite. Diese Funktion fängt 404-Seiten nicht ab.
 
@@ -92,7 +92,7 @@ Fehlende Fragmente und Netzwerkfehler zeigen Hinweise statt wiederholter Sprüng
 
 ## Standard-Vorschaubild und kurze Fragment-IDs (0.33.0+)
 
-Ergänze site.ogImage im bestehenden site-Objekt in src/site.config.ts. Unterstützt werden Pfade ab public (/images/share.jpg entspricht public/images/share.jpg) und HTTPS-URLs. Ein leerer Wert verwendet das mitgelieferte Anglefeint-Bild mit 1200×630 Pixeln. Fragments und alle #fragment-ID-Links verwenden dieses Standardbild. Eigene und automatisch erzeugte Artikelbilder behalten Vorrang; bei deaktivierter Erzeugung hat auch das Artikel-Titelbild Vorrang vor dem Website-Standard. Danach neu bauen und bereitstellen; Plattformen können Vorschauen zwischenspeichern.
+Ergänze site.ogImage im bestehenden site-Objekt in src/site.config.ts. Unterstützt werden Pfade ab public (/images/share.jpg entspricht public/images/share.jpg) und HTTPS-URLs. Ein leerer Wert verwendet das mitgelieferte Anglefeint-Bild mit 1200×630 Pixeln. Fragments und alle #ID-Links verwenden dieses Standardbild. Eigene und automatisch erzeugte Artikelbilder behalten Vorrang; bei deaktivierter Erzeugung hat auch das Artikel-Titelbild Vorrang vor dem Website-Standard. Danach neu bauen und bereitstellen; Plattformen können Vorschauen zwischenspeichern.
 
 ```ts
 export const THEME_CONFIG = defineThemeConfig({
