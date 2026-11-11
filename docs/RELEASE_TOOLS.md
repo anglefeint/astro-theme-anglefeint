@@ -58,6 +58,8 @@ Use the standalone commands returned by `list`; they deliberately do not depend 
 | Full browsers       | `npm run e2e`                                         | Main build, fixture preparation and full functional suite.                                                              |
 | Registry recovery   | `npm run release:verify -- --version <exact-version>` | Read-only exact-version/tag/download recovery; supply recorded source/hash identities as documented in PACKAGE_RELEASE. |
 
+Starter delivery also has the existing `npm run release:starter:push` variant, which includes the starter push before restoring main. Choose either that variant or normal sync followed by a separate push; do not execute both. It retains the same install/audit/doctor contract and does not authorize omitting final main/environment or production verification. This release exercised normal sync and a separate push, including its existing main pre-push hook.
+
 Git commit/push/tag, GitHub Release and hosting/live acceptance remain explicit agent operations with the evidence required by the runbooks. Listing a capability is not proof it ran or passed. Keep checkout mutations serial; fresh consumers may overlap only in independent projects and ports.
 
 ## Composition rules

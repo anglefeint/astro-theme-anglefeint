@@ -103,17 +103,13 @@ During interactive layout/style tuning, make the requested code changes directly
 
 Serialize all release/push operations that share the checkout; wait for each command to finish before starting another. Follow [serial execution and reporting](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting) for stage durations, ignored logs and lock recovery. Reporting does not replace or reduce any validation gate.
 
-Minimum validation depends on change type:
+Select validation capabilities according to the change; these are coverage requirements, not cumulative command lists:
 
-- Docs only:
-  - `npm run check:docs`
-- Package/runtime/config/script changes:
-  - `npm run test`
-  - `npm run lint`
-  - `npm run check:no-build`
-  - `npm run build`
-- High-risk page/config/runtime changes:
-  - `npm run check`
+- Docs only: document metadata validation (`npm run check:docs`).
+- Package/runtime/config/script changes: `source-check` from the [tool catalog](RELEASE_TOOLS.md), plus lint and applicable format checks. Source check already includes unit tests, no-build checks, build and About runtime assertions; do not prepend separate executions of those contained checks.
+- High-risk page/config/runtime changes: the same full source coverage plus the applicable functional regression scenarios below.
+
+When npm delivery is planned, compose source/installed requirements in that invocation rather than running those tools separately first. This does not reuse earlier invocations or bypass pre-push hooks.
 
 Prefer the smallest sufficient validation set, but do not skip build checks when layout/runtime/config behavior changed. Integration/upgrade changes additionally require the independent installed build/audit matrix, `npm run check:upgrade` real command preservation acceptance, and the full functional browser suite. Local fixtures do not substitute for post-publication registry/remote-template/live verification.
 

@@ -107,30 +107,15 @@ Demo identity and translated introductions belong in main's `src/site.config.ts`
 
 For repeatable public-starter command/configuration acceptance, local headless browser checks and the manual Linux Actions workflow, see [Template acceptance](TEMPLATE_ACCEPTANCE.md). These maintainer tools remain outside the generated starter.
 
-Main branch quality gate:
+Main branch quality gate: select `source-check` from the [tool catalog](RELEASE_TOOLS.md) after installing/restoring dependencies when needed. It includes workspace-link and scaffold checks; do not append those standalone commands to the same complete check. They remain available for targeted diagnosis.
 
-```bash
-npm install
-npm run check
-npm run check:workspace-link
-node scripts/check-scaffold.mjs
-```
-
-Installed distribution gate before publishing package/starter changes:
-
-```bash
-npm run check:installed -- --build --audit
-```
+Installed distribution gate before publishing package/starter changes: select `installed-check`. Normal `npm-delivery` already includes it; do not precede that invocation with another standalone installed matrix.
 
 This packs the working theme, overlays current managed files onto the local `starter` snapshot in a temporary directory, installs without workspace links, exercises package CLI/configuration aliases, and builds the English/Chinese/Portuguese/German/Russian/Traditional-Chinese default-locale and prefix-mode matrix. It requires the local `starter` ref and registry access for dependencies. It does not publish, commit, or change branches. Obsolete implementation copies are removed from this distribution fixture; this operation is never used to migrate a personal blog.
 
 `release:npm` runs this gate after the main checks. `--skip-checks` omits the main checks and installed build matrix, but retains main and isolated-starter audits and installed CLI checks. Starter sync audits after installation. All audit findings or audit errors block delivery; `scripts/audit-dependencies.mjs` no longer accepts the historical static-cache exception documented in `docs/PACKAGE_RELEASE.md`. A passing workspace build alone is not sufficient.
 
-Starter branch quality gate:
-
-```bash
-npm run doctor
-```
+Starter branch quality gate: package doctor, already run once by the starter-delivery capability after install/audit. Do not append another doctor/check alias or adjacent build merely to satisfy this paragraph. Independent public-command acceptance retains all eleven script entries.
 
 The integration starter ships package-owned doctor/new-page/new-post/new-fragment commands rather than maintainer scaffold/adapter scripts. For architecture/upgrade changes also run `npm run check:upgrade` on main: its local fixture registry exercises a skipped-version npm exec upgrade with a new menu/button/page and byte-for-byte user-file preservation. Use `npm run check:upgrade -- --baseline 0.28.0` to start from that exact published package instead of the current working-tree pack. This only downloads a baseline and upgrades isolated fixtures; it does not publish. Acceptance also protects user fragments, verifies the new CLI without adding scripts and renders preserved fragments after explicit opt-in. Keep user data and project-schema compatibility explicit; a normal updater never invokes maintainer starter sync.
 
@@ -216,12 +201,7 @@ npm run release:starter:push
 
 `maintainer:sync-starter:check` returns exit status 1 when drift is found, but still closes its maintainer session and releases the shared lock. Expected drift must not leave an interrupted-session lock for the next operation.
 
-Main release checks also rely on:
-
-```bash
-npm run check:workspace-link
-node scripts/check-scaffold.mjs
-```
+Workspace-link and scaffold assertions remain required and are included in the source capability. Their standalone commands are diagnostic tools, not additional release steps after a complete source check. Discover executable capabilities through the tool catalog rather than expanding nested scripts into another command checklist here.
 
 ## Starter Sync Policy
 

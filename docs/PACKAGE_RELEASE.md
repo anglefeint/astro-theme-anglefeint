@@ -83,9 +83,10 @@ npm run release:npm -- --tag alpha
 
 ```bash
 npm install @anglefeint/astro-theme@alpha
-npm run build
-npm run check
+npm run doctor
 ```
+
+Doctor includes build/runtime assertions for schema-1 integration starters. This smoke check is separate from release acceptance of all eleven public scripts.
 
 ## 5) Upgrade flow for users
 
@@ -97,23 +98,12 @@ Do not treat npm update alone as an old-skeleton migration. Do not announce the 
 
 ```bash
 npm install @anglefeint/astro-theme@<previous-version>
-npm run build
-npm run check
+npm run doctor
 ```
 
 ## 7) Stable release
 
-After alpha verification:
-
-```bash
-npm version patch --workspace @anglefeint/astro-theme --no-git-tag-version
-git add packages/theme/package.json package-lock.json
-git commit -m "chore(release): bump @anglefeint/astro-theme to <version>"
-git push origin main
-npm run release:npm
-npm run release:starter
-git push origin starter
-```
+After alpha verification, prepare the stable version and release notes, then select capabilities from [Release tools](RELEASE_TOOLS.md) under the [maintainer dependency/completion constraints](MAINTAINER_WORKFLOW.md#dependency-and-completion-constraints). Select complete npm delivery once; after download verification, select starter delivery and consumer acceptance, then finish the exact-source tag, GitHub Release and production verification. Do not reconstruct nested source/installed checks as additional commands before their containing delivery tool.
 
 ## 8) Release Notes Contract
 
