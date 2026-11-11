@@ -138,8 +138,17 @@ npm run new-page -- projects --theme matrix
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+모든 활성 언어를 기본으로 생성하려면 테마 0.31.0 이상이 필요합니다. 먼저 업그레이드하세요. 0.29–0.30에서는 `--locales`로 명시해야 합니다.
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+`new-post`와 동일하게 기본적으로 프로젝트의 모든 활성 언어에 같은 ID와 타임스탬프를 공유하는 골격을 만듭니다. 자동 번역은 하지 않습니다. 우선순위는 `--locales` → `ANGLEFEINT_LOCALES` → 활성 언어입니다. 명시한 목록은 공백 제거, 소문자 변환, 중복 제거를 거치며 설정을 읽지 않고 지정 언어 디렉터리만 만듭니다. 언어 활성화 설정은 바꾸지 않습니다.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales ko
 ```
 
 [사용자 가이드 5: 조각 게시하기](https://demo.anglefeint.com/ko/blog/starter-guide-5-fragments/)

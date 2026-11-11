@@ -112,8 +112,17 @@ Publique pensamentos breves em Markdown, com comentários opcionais em uma janel
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+A geração padrão para todos os idiomas habilitados exige o tema 0.31.0 ou mais recente. Atualize primeiro; nas versões 0.29–0.30, informe `--locales` explicitamente.
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+Como `new-post`, por padrão cria esqueletos para todos os idiomas habilitados no projeto, com o mesmo ID e data e hora; não traduz o conteúdo. Prioridade: `--locales` → `ANGLEFEINT_LOCALES` → idiomas habilitados. Listas explícitas removem espaços e duplicatas e são convertidas para minúsculas; ignoram a leitura da configuração e criam apenas os diretórios solicitados, sem habilitar idiomas na configuração.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales pt-br
 ```
 
 [Guia 5: Publicar fragmentos](https://demo.anglefeint.com/pt-br/blog/starter-guide-5-fragments/)

@@ -112,8 +112,17 @@ npm run new-page -- projects --theme cyber 會建立 src/pages/[lang]/projects.a
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+預設為全部啟用語言建立骨架需要主題 0.31.0 或更新版本。請先升級；0.29–0.30 仍需以 `--locales` 明確指定。
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+與 `new-post` 一致，預設讀取專案全部啟用語言，建立共用同一 ID 和時間戳記的骨架，不會自動翻譯。語言優先順序為 `--locales` → `ANGLEFEINT_LOCALES` → 專案啟用語言。明確指定的清單會去除空白、轉為小寫並去重，略過設定讀取，只建立指定語言目錄，不會自動修改設定中的語言開關。
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales zh-hant
 ```
 
 [使用者指南 5：發布碎片](https://demo.anglefeint.com/zh-hant/blog/starter-guide-5-fragments/)

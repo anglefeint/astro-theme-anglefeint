@@ -138,8 +138,17 @@ npm run new-page -- projects --theme matrix
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+默认生成全部启用语言的骨架需要主题 0.31.0 或更新版本。请先升级；0.29–0.30 仍需用 `--locales` 显式指定。
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+与 `new-post` 一致，默认读取项目全部启用语言，生成共享同一个 ID 和时间戳的骨架，不自动翻译。语言优先级为 `--locales` → `ANGLEFEINT_LOCALES` → 项目启用语言。显式列表会去除空白、转为小写并去重，跳过配置读取，只创建指定语言目录，不自动修改配置中的语言开关。
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales zh
 ```
 
 [用户指南 5：发布碎片](https://demo.anglefeint.com/zh/blog/starter-guide-5-fragments/)

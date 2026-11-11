@@ -112,8 +112,17 @@ npm run new-page -- projects --theme cyber создаёт src/pages/[lang]/proje
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+Создание заготовок для всех включённых языков по умолчанию требует темы 0.31.0 или новее. Сначала обновитесь; в 0.29–0.30 укажите `--locales` явно.
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+Как и `new-post`, по умолчанию команда создаёт заготовки для всех включённых языков проекта с общими ID и отметкой времени; автоматического перевода нет. Приоритет: `--locales` → `ANGLEFEINT_LOCALES` → включённые языки. В явных списках удаляются пробелы и повторы, коды приводятся к нижнему регистру; конфигурация не загружается, создаются только указанные языковые папки, без включения языков в настройках.
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales ru
 ```
 
 [Руководство 5: Публикация фрагментов](https://demo.anglefeint.com/ru/blog/starter-guide-5-fragments/)

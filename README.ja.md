@@ -138,8 +138,17 @@ npm run new-page -- projects --theme matrix
 fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
 ```
 
+有効な全言語を既定で作成するにはテーマ 0.31.0 以降が必要です。先にアップグレードしてください。0.29–0.30 では `--locales` で明示的に指定します。
+
 ```bash
 npx @anglefeint/astro-theme@latest new-fragment
+```
+
+`new-post` と同様に、既定ではプロジェクトで有効な全言語に、同じ ID とタイムスタンプのひな形を作成します。自動翻訳はしません。優先順位は `--locales` → `ANGLEFEINT_LOCALES` → 有効な言語です。明示した一覧は空白除去・小文字化・重複除去され、設定の読み込みを省略して指定言語のディレクトリだけを作成します。言語の有効化設定は変更しません。
+
+```bash
+npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
+npx @anglefeint/astro-theme@latest new-fragment --locales ja
 ```
 
 [ユーザーガイド 5：断片を公開する](https://demo.anglefeint.com/ja/blog/starter-guide-5-fragments/)
