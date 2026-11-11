@@ -12,11 +12,13 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
-## 2026-11-12 Direct Fragment anchors and release tools (preparation)
+## 2026-11-12 Direct Fragment anchors and release tools (package/starter delivered)
 
 按用户本轮授权，先整理发布工具与工作流的职责边界，并用短链接改动进行真实交付。Fragment 卡片原生 ID、日期链接、复制／手动回退和跨页定位统一为 `#ID`；版本化 JSON 和 `fragment/ID` 评论身份保持不变，不引入旧前缀别名。同步九语 README、npm README、九语 demo／starter Guide 1 和 Guide 5、架构与升级指引；历史发布账本保留原事实。
 
 维护工具拆分为能力目录、依赖规划器和实际 npm operations；原 release:npm 为兼容入口，新 release:tools 支持 list／plan／run。工作流只描述选用能力、必需门禁、交付依赖和完成凭证；同次计划去重，不读历史指纹跳检。维护脚本不进入 npm 包或 starter，消费者十一脚本覆盖／推送钩子／各环境审计及矩阵均保留。元数据与相关文档经 suggest:docs 路由核对；实际发布与验收结果统一在 [0.33.1 账本](releases/0.33.1.md) 补录，准备状态不视为已交付。
+
+正式运行已完成一次 npm 0.33.1 上传、源码／SHA1／完整性下载恢复核验与 starter 48d50d3 同步／推送；184 项完整主工程测试、238 项浏览器回归、14 组独立安装构建、三处零漏洞审计和 npm 57／pnpm 55／真实 0.33.0→0.33.1 升级 57 项远程验收通过，各运行十一公开脚本，升级保护 152 个个人文件。首次推送的 Windows 临时缓存 EPERM 与 registry 默认等待超时均保留原始失败记录，分别以相同源码完整重跑和只读核验恢复，未绕过门禁、修改依赖或重复上传。同次计划的 source-check／installed-check 各执行一次，跨入口完整检查和消费者命令重叠仍保留，不把工具化宣称为已实现历史结果复用。最终文档推送后的公告／线上证据记录在 GitHub Release 与忽略的最终凭证，避免为记录自身部署再触发一次部署。
 
 ## 2026-11-12 0.33.0 默认分享图与短 ID（正式交付）
 
