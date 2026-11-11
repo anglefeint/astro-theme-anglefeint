@@ -151,6 +151,10 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales en
 ```
 
+Sharing in 0.32.0+: dates link to a fragment within the feed, with a copy-link control beside them. Share `/en/fragments/#fragment-ID`, using the Markdown frontmatter ID. If the fragment is not on the current page, a small language-specific static index locates its current page automatically. Rebuild after adding content, changing dates or pageSize; keep IDs unchanged. Cross-page locating and copying require JavaScript.
+
+Pagination in 0.32.0+: Fragments shares Blog’s page-number controls, neon styles and optional page jump. `theme.pagination` controls both lists; `theme.fragments.pageSize` still sets the Fragment page size independently.
+
 [User Guide 5: Publish Fragments](https://demo.anglefeint.com/en/blog/starter-guide-5-fragments/)
 
 <a id="upgrade"></a>

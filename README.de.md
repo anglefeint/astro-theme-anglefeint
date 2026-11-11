@@ -125,6 +125,10 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales de
 ```
 
+Freigabefunktion ab 0.32.0: Das Datum verlinkt zum Fragment in der Liste; daneben lässt sich der Link kopieren. Zum Teilen `/de/fragments/#fragment-ID` mit der id aus dem Markdown-Frontmatter verwenden. Nur wenn das Fragment auf der aktuellen Seite fehlt, lädt ein kleiner sprachbezogener statischer Index seine Seitenposition. Nach neuen Inhalten oder Änderungen an Datum oder pageSize neu bauen und IDs beibehalten. Seitenübergreifendes Auffinden und Kopieren benötigen JavaScript.
+
+Seitennavigation ab 0.32.0: Fragmente verwenden dieselben Seitenzahlen, Neonstile und das ab dem konfigurierten Schwellenwert angezeigte Sprungfeld wie der Blog. `theme.pagination` steuert beide Listen; `theme.fragments.pageSize` legt weiterhin unabhängig die Anzahl der Fragmente pro Seite fest.
+
 [Anleitung 5: Fragmente veröffentlichen](https://demo.anglefeint.com/de/blog/starter-guide-5-fragments/)
 
 <a id="upgrade"></a>

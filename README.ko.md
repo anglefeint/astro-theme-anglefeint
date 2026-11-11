@@ -151,6 +151,10 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales ko
 ```
 
+0.32.0 이상 공유 기능: 날짜 링크로 목록의 해당 조각을 찾고 옆에서 링크를 복사할 수 있습니다. 공유 주소는 `/ko/fragments/#fragment-ID`이며 ID는 Markdown frontmatter의 id입니다. 현재 페이지에 없을 때만 언어별 소형 정적 인덱스를 읽어 해당 페이지로 이동합니다. 내용 추가, 날짜 또는 pageSize 변경 후 다시 빌드하고 ID는 유지하세요. 페이지 간 위치 찾기와 복사에는 JavaScript가 필요합니다.
+
+0.32.0 이상 페이지 탐색 개선: 조각은 Blog와 페이지 번호, 네온 스타일, 설정한 기준에 따라 표시되는 페이지 이동 입력란을 공유합니다. `theme.pagination`은 두 목록에 공통으로 적용되며, 조각의 페이지당 개수는 계속 `theme.fragments.pageSize`로 별도 설정합니다.
+
 [사용자 가이드 5: 조각 게시하기](https://demo.anglefeint.com/ko/blog/starter-guide-5-fragments/)
 
 <a id="upgrade"></a>

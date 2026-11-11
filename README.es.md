@@ -151,6 +151,10 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales es
 ```
 
+Función de compartir desde 0.32.0: la fecha enlaza al fragmento dentro de la lista y tiene un control para copiar el enlace al lado. Comparte `/es/fragments/#fragment-ID`, con el id del frontmatter Markdown. Solo si el fragmento no está en la página actual se carga un pequeño índice estático por idioma para ir a su página. Reconstruye tras añadir contenido o cambiar fechas o pageSize, conservando los ID. La localización entre páginas y la copia requieren JavaScript.
+
+Mejora de paginación desde 0.32.0: los fragmentos comparten con Blog los números de página, los estilos de neón y el salto de página que aparece según el umbral configurado. `theme.pagination` controla ambas listas; `theme.fragments.pageSize` sigue definiendo por separado los fragmentos por página.
+
 [Guía 5: Publicar fragmentos](https://demo.anglefeint.com/es/blog/starter-guide-5-fragments/)
 
 <a id="upgrade"></a>
