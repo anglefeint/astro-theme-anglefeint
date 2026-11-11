@@ -1,0 +1,27 @@
+---
+import './ai-background.css';
+interface Props {
+  sizing?: 'container' | 'viewport';
+}
+const { sizing = 'container' } = Astro.props;
+---
+
+<div class="ai-bg" data-ai-background data-sizing={sizing} aria-hidden="true">
+  <div class="ai-glow ai-glow-shift"></div>
+  <div class="ai-haze" aria-hidden="true"></div>
+  <div class="ai-vignette" aria-hidden="true"></div>
+  <div class="ai-stripe"></div>
+  <div class="ai-noise" aria-hidden="true"></div>
+  <div class="ai-hex-grid" aria-hidden="true"></div>
+  <div class="ai-thought-particles" aria-hidden="true">
+    {
+      [...Array(12)].map((_, i) => (
+        <span
+          class="ai-particle"
+          style={`--x: ${20 + ((i * 7) % 60)}%; --y: ${10 + ((i * 11) % 70)}%; --d: ${3 + (i % 4)}s`}
+        />
+      ))
+    }
+  </div>
+  <canvas class="ai-network-canvas" aria-hidden="true"></canvas>
+</div>

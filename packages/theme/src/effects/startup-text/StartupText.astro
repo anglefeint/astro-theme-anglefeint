@@ -1,0 +1,33 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { buildStartupModel, type StartupTextOptions } from './model.js';
+import './startup-text.css';
+interface Props extends Omit<HTMLAttributes<'div'>, 'style'> {
+  config?: StartupTextOptions;
+}
+const { config, ...attributes } = Astro.props;
+const model = buildStartupModel(config);
+---
+
+<div
+  {...attributes}
+  data-startup-text
+  data-has-message={String(model.hasMessage)}
+  style={model.style}
+>
+  {
+    model.groups.map((group) => (
+      <div class="startup-text-line" data-startup-group={group.kind}>
+        {group.segments.map((segment) => (
+          <span
+            class="startup-text-segment"
+            data-leading-space={segment.initial > 0 ? '' : undefined}
+            style={segment.style}
+          >
+            <span>{segment.text}</span>
+          </span>
+        ))}
+      </div>
+    ))
+  }
+</div>

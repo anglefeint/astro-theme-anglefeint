@@ -12,8 +12,9 @@ test('reduced motion hides the monitor without images, requests or timers', asyn
     '.rq-tv-stage': { getAttribute: () => '/animated.webp' },
     '.rq-tv-toggle': {},
   };
+  shell.querySelector = (selector) => elements[selector];
   const source = await readFile(
-    new URL('../packages/theme/src/scripts/blogpost/red-queen-tv.js', import.meta.url),
+    new URL('../packages/theme/src/effects/red-queen/red-queen.js', import.meta.url),
     'utf8'
   );
   const context = vm.createContext({
@@ -29,7 +30,7 @@ test('reduced motion hides the monitor without images, requests or timers', asyn
   });
   vm.runInContext(
     source.replace(/^import .*;\r?\n/, '').replace('export function', 'function') +
-      '\ninitRedQueenTv(true);',
+      '\nmountRedQueen(document.querySelector(".rq-tv"), { reducedMotion: true });',
     context
   );
   assert.equal(shell.hidden, true);

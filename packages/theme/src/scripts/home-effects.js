@@ -1,3 +1,4 @@
+import { mountHiddenSignals } from '../effects/hidden-signal/hidden-signal.js';
 import { initSignalPreview } from './home-signal-preview.js';
 import { createEffectScope, mountOptionalEffect } from './effects/lifecycle.js';
 import { initHomeMatrix } from './home-matrix.js';
@@ -8,35 +9,6 @@ import '../styles/home-passage.css';
 
 const instances = new WeakMap();
 
-// Reveal each signal independently, including the trace's non-text cursor.
-function initHiddenStatus(signal) {
-  const items = document.querySelectorAll('.home-pirate-signal, .home-trace-text');
-  if (!items.length) return;
-  const syncSelection = () => {
-    const selection = document.getSelection();
-    for (const item of items) {
-      let selected = false;
-      if (selection && !selection.isCollapsed) {
-        for (let index = 0; index < selection.rangeCount; index++) {
-          if (selection.getRangeAt(index).intersectsNode(item)) {
-            selected = true;
-            break;
-          }
-        }
-      }
-      item.toggleAttribute('data-selected', selected);
-    }
-  };
-  document.addEventListener('selectionchange', syncSelection, { signal });
-  window.addEventListener('pageshow', syncSelection, { signal });
-  signal.addEventListener(
-    'abort',
-    () => items.forEach((item) => item.removeAttribute('data-selected')),
-    { once: true }
-  );
-  syncSelection();
-}
-
 // Page lifecycle belongs here; renderers own only their local resources.
 export function initHomeEffects() {
   const canvas = document.getElementById('matrix-bg');
@@ -44,7 +16,9 @@ export function initHomeEffects() {
   if (instances.has(canvas)) return instances.get(canvas);
   const listeners = new AbortController();
   const options = { signal: listeners.signal };
-  initHiddenStatus(listeners.signal);
+  mountHiddenSignals(document.querySelectorAll('[data-hidden-signal]'), {
+    signal: listeners.signal,
+  });
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const scope = createEffectScope('home');
   const mount = (label, init) => {

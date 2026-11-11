@@ -1,0 +1,152 @@
+---
+import SignalLoading from '@anglefeint/astro-theme/effects/signal-loading/SignalLoading.astro';
+import CyberSpotlight from '@anglefeint/astro-theme/effects/cyber-spotlight/CyberSpotlight.astro';
+import WhiteRabbit from '@anglefeint/astro-theme/effects/white-rabbit/WhiteRabbit.astro';
+import CyberRain from '@anglefeint/astro-theme/effects/cyber-rain/CyberRain.astro';
+import CyberDust from '@anglefeint/astro-theme/effects/cyber-dust/CyberDust.astro';
+import AiBackground from '@anglefeint/astro-theme/effects/ai-background/AiBackground.astro';
+import NetworkBackdrop from '@anglefeint/astro-theme/effects/network-backdrop/NetworkBackdrop.astro';
+import RedQueen from '@anglefeint/astro-theme/effects/red-queen/RedQueen.astro';
+import KeyButton from '@anglefeint/astro-theme/effects/key-button/KeyButton.astro';
+const staticImage =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><rect width="8" height="8" fill="red"/></svg>'
+  );
+---
+
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><title>Standalone effects fixture</title></head>
+  <body>
+    <KeyButton id="key-first" label="Unlock first" />
+    <KeyButton id="key-second" label="Unlock second" />
+    <span id="cursor-first"></span><span id="cursor-second"></span>
+    <section id="startup-first">Original first</section>
+    <section id="startup-second">Original second</section>
+    <span id="hidden-first"></span>
+    <span id="hidden-second">Second secret<span id="hidden-cursor"></span></span>
+    <section id="environment-first" class="effect-host"><span>Keep this content</span></section>
+    <section id="environment-second" class="effect-host"></section>
+    <canvas id="first" aria-hidden="true"></canvas>
+    <canvas id="second" aria-hidden="true"></canvas>
+    <section id="loading-first"><SignalLoading active /></section>
+    <section id="loading-second"><SignalLoading /></section>
+    <section id="light-first" class="light-host"><CyberSpotlight /></section>
+    <section id="light-second" class="light-host"><CyberSpotlight /></section>
+    <section id="rain-first" class="rain-host"><CyberRain /></section>
+    <section id="rain-second" class="rain-host"><CyberRain /></section>
+    <section id="dust-first" class="effect-host"><CyberDust /></section>
+    <section id="dust-second" class="effect-host"><CyberDust /></section>
+    <section id="ai-first" class="effect-host"><AiBackground /></section>
+    <section id="ai-second" class="effect-host"><AiBackground /></section>
+    <section id="network-first" class="effect-host"><NetworkBackdrop /></section>
+    <section id="network-second" class="effect-host"><NetworkBackdrop /></section>
+    <section id="queen-first">
+      <RedQueen source={staticImage} badge="Fixture one" replayLabel="Play first" />
+    </section>
+    <section id="queen-second">
+      <RedQueen source={staticImage} badge="Fixture two" replayLabel="Play second" />
+    </section>
+    <button id="rabbit-first"><WhiteRabbit />First rabbit</button>
+    <button id="rabbit-second"><WhiteRabbit />Second rabbit</button>
+    <script>
+      import { mountMatrixRain } from '@anglefeint/astro-theme/effects/matrix-rain/matrix-rain.js';
+      import { mountWhiteRabbit } from '@anglefeint/astro-theme/effects/white-rabbit/white-rabbit.js';
+      import { mountCyberRain } from '@anglefeint/astro-theme/effects/cyber-rain/cyber-rain.js';
+      import { mountCyberDust } from '@anglefeint/astro-theme/effects/cyber-dust/cyber-dust.js';
+      import { mountAiNetwork } from '@anglefeint/astro-theme/effects/ai-background/ai-network.js';
+      import { mountRedQueen } from '@anglefeint/astro-theme/effects/red-queen/red-queen.js';
+      import { mountKeyButton } from '@anglefeint/astro-theme/effects/key-button/key-button.js';
+      import { mountCursor } from '@anglefeint/astro-theme/effects/blink-cursor/cursor.js';
+      import { mountStartupText } from '@anglefeint/astro-theme/effects/startup-text/startup-text.js';
+      import { mountHiddenSignal } from '@anglefeint/astro-theme/effects/hidden-signal/hidden-signal.js';
+      import { mountCyberEnvironment } from '@anglefeint/astro-theme/effects/cyber-environment/environment.js';
+      const unlocks = [0, 0];
+      const keys = ['key-first', 'key-second'].map((id, index) =>
+        mountKeyButton(document.getElementById(id), {
+          onUnlock: () => {
+            unlocks[index]++;
+          },
+        })
+      );
+      const cursors = ['cursor-first', 'cursor-second'].map((id) =>
+        mountCursor(document.getElementById(id))
+      );
+      mountCursor(document.getElementById('hidden-cursor'), { active: false });
+      const startup = [
+        mountStartupText(document.getElementById('startup-first')),
+        mountStartupText(document.getElementById('startup-second'), {
+          startup: [],
+          message: [{ text: '你好 <script> & ready', duration: 50, cursorFor: 100 }],
+        }),
+      ];
+      const hidden = [
+        mountHiddenSignal(document.getElementById('hidden-first'), { text: 'Configured secret' }),
+        mountHiddenSignal(document.getElementById('hidden-second')),
+      ];
+      const environments = ['environment-first', 'environment-second'].map((id) =>
+        mountCyberEnvironment(document.getElementById(id))
+      );
+      const first = mountMatrixRain(document.querySelector('#first'));
+      const second = mountMatrixRain(document.querySelector('#second'));
+      first?.start();
+      second?.start();
+      // A test-only handle; production pages own their controllers locally.
+      const rabbits = ['rabbit-first', 'rabbit-second'].map((id) => {
+        const trigger = document.getElementById(id);
+        return mountWhiteRabbit(trigger, trigger?.querySelector('[data-white-rabbit]') ?? null);
+      });
+      Object.assign(window, {
+        effectFixture: {
+          first,
+          second,
+          mountMatrixRain,
+          rabbits,
+          mountWhiteRabbit,
+          rain: ['rain-first', 'rain-second'].map((id) =>
+            mountCyberRain(document.querySelector(`#${id} [data-cyber-rain]`))
+          ),
+          mountCyberRain,
+          keys,
+          unlocks,
+          cursors,
+          startup,
+          hidden,
+          environments,
+          dust: ['dust-first', 'dust-second'].map((id) =>
+            mountCyberDust(document.querySelector(`#${id} [data-cyber-dust]`))
+          ),
+          ai: ['ai-first', 'ai-second'].map((id) =>
+            mountAiNetwork(document.querySelector(`#${id} canvas`))
+          ),
+          queen: ['queen-first', 'queen-second'].map((id) =>
+            mountRedQueen(document.querySelector(`#${id} [data-red-queen]`))
+          ),
+        },
+      });
+    </script>
+  </body>
+</html>
+<style>
+  canvas {
+    display: block;
+    width: 320px;
+    height: 180px;
+  }
+  section {
+    width: 320px;
+  }
+  .light-host,
+  .rain-host,
+  .effect-host {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+  }
+  #light-second,
+  #rain-second {
+    width: 200px;
+    height: 120px;
+  }
+</style>

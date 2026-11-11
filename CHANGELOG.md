@@ -13,6 +13,24 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## Unreleased
+
+## [0.30.0] - 2026-11-11
+
+See the [0.30.0 delivery record](docs/releases/0.30.0.md) for publication and acceptance status.
+
+- Expand all nine maintainer demo languages with twelve translated Fragments each, preserving shared IDs/dates, and clarify Astro 7 in README installation guidance.
+- Give Fragments a static, lightly separated cool-gray/teal title with an adjacent localized subtitle and compact card typography/spacing; keep Markdown lists single-column within the Cyber shell.
+- Add a compact Cyberpunk signal loading state to fragment comments, with static reduced-motion fallback and retained iframe loading outside normal flow.
+- Prevent hidden comment iframe resizing from creating loading scrollbars; keep the fragment dialog heading and close button outside the scrolling comment body.
+- Extract reusable Matrix rain and signal loading into the existing theme package's `effects/` directory, retaining homepage lifecycle/frame sharing and fragment comment behavior without new dependencies.
+- Extract the pure-CSS Cyber spotlight and white rabbit SVG/particle effects into `effects/`, preserving scene timing, homepage placement, four rabbit modes and lifecycle cleanup; support explicit containers and triggers without new dependencies.
+- Extract Cyber rain into `effects/cyber-rain/` with independent container/viewport sizing and cleanup, retaining 48 CSS-animated drops, original random parameters, scene colors and mobile thinning without a new animation loop or dependency.
+- Extract Cyber dust, article AI background, Decoder's distinct SVG network backdrop and Red Queen monitor (including play/loading controls) into reusable `effects/` components, preserving page adapters, media and startup policy; complete monitor cleanup by restoring its collapsed button and removing the play listener.
+- Extract standalone key buttons, blink cursors, configurable startup text, hidden signals and Cyber environment layers with explicit DOM bindings and Astro views, preserving homepage defaults, scene timing and lifecycle behavior; leave mirror/corridor implementations unchanged.
+- Enable article and fragment comments in the public demo configuration using its existing Anglefeint Giscus settings; package/starter defaults stay off.
+- Give the FRONTIER Contact shortcut the normal resting link color so it remains distinct from the active Fragments or Decoder entry; retain hover/focus emphasis.
+
 ## [0.29.0] - 2026-11-11
 
 - Add opt-in Fragments feeds with localized navigation, user-owned Markdown and `astro-theme new-fragment`.

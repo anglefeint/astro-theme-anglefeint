@@ -52,8 +52,12 @@ const { items } = Astro.props;
 </script>
 <style>
   .frontier-dropdown .frontier-dropdown-links .frontier-contact {
-    color: var(--chrome-active, var(--accent));
+    color: var(--chrome-link, rgb(var(--text)));
     font-weight: 600;
+  }
+  .frontier-dropdown .frontier-dropdown-links .frontier-contact:hover,
+  .frontier-dropdown .frontier-dropdown-links .frontier-contact:focus-visible {
+    color: var(--chrome-active, var(--accent));
   }
   .frontier-contact span {
     float: right;

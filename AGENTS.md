@@ -99,6 +99,8 @@ Implemented behavior is defined by code. Documentation records it; when they dis
   - layouts, routing, SEO, content pipeline
 - `docs/VISUAL_SYSTEMS.md`
   - page visual contracts, effects, script ownership
+- `docs/REUSABLE_EFFECTS.md`
+  - reusable visual APIs, component source map and page-adapter/lifecycle boundaries under `packages/theme/src/effects/`
 - `docs/MAINTAINER_WORKFLOW.md`
   - maintainer release policy details
 - `docs/DOC_SYNC_WORKFLOW.md`

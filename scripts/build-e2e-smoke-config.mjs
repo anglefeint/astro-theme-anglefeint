@@ -54,6 +54,10 @@ async function main() {
   // Build fixtures before launching parallel browsers, not beside WebGL/animation tests.
   const fixture = await fragmentFixture();
   try {
+    await cp(
+      'tests/fixtures/reusable-effects.astro',
+      path.join(fixture.root, 'src/pages/effects-test.astro')
+    );
     await fixture.build();
     await mkdir(path.join(repoRoot, 'acceptance-results'), { recursive: true });
     const directory = await mkdtemp(path.join(repoRoot, 'acceptance-results/fragments-browser-'));

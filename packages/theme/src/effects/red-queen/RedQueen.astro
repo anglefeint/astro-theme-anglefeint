@@ -1,0 +1,19 @@
+---
+import './red-queen.css';
+interface Props {
+  source: string;
+  secondarySource?: string;
+  badge: string;
+  replayLabel: string;
+  placement?: 'inline' | 'article';
+}
+const { source, secondarySource, badge, replayLabel, placement = 'inline' } = Astro.props;
+---
+
+<aside class="rq-tv rq-tv-collapsed" data-red-queen data-placement={placement}>
+  <div class="rq-tv-stage" data-rq-src={source} data-rq-src2={secondarySource}></div>
+  <div class="rq-tv-badge">{badge}<span class="rq-tv-dot"></span></div>
+  <button type="button" class="rq-tv-toggle" aria-label={replayLabel} aria-expanded="false"
+    >▶</button
+  >
+</aside>

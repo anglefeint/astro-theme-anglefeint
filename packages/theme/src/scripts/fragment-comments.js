@@ -7,6 +7,7 @@ export function initFragmentComments() {
   const options = { signal: controller.signal };
   const host = dialog.querySelector('[data-fragment-widget]');
   const status = dialog.querySelector('[data-fragment-status]');
+  const loading = dialog.querySelector('[data-signal-loading]');
   const retry = dialog.querySelector('[data-fragment-retry]');
   const template = dialog.querySelector('[data-giscus-template]');
   const config = JSON.parse(dialog.querySelector('[data-fragment-config]').textContent);
@@ -24,6 +25,7 @@ export function initFragmentComments() {
     if (!dialog.open) return;
     window.clearTimeout(timer);
     dialog.dataset.commentState = value;
+    loading.hidden = value !== 'loading';
     host.hidden = value === 'failed';
     host.style.visibility = value === 'ready' ? 'visible' : 'hidden';
     host.inert = value !== 'ready';
@@ -210,6 +212,7 @@ export function initFragmentComments() {
   );
   function hide() {
     window.clearTimeout(timer);
+    loading.hidden = true;
     host.style.visibility = 'hidden';
     host.inert = true;
     status.textContent = '';

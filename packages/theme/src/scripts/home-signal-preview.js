@@ -1,3 +1,4 @@
+import { mountKeyButton } from '../effects/key-button/key-button.js';
 // Interaction only: scene timing and rendering belong to the shared passage player.
 export function initSignalPreview(signal) {
   const panel = document.querySelector('.home-signal-monitor');
@@ -24,6 +25,7 @@ export function initSignalPreview(signal) {
   };
   const clear = (dispose = true) => {
     activated = false;
+    key?.reset();
     delete panel.dataset.unlocking;
     delete panel.dataset.unlocked;
     revision++;
@@ -137,24 +139,21 @@ export function initSignalPreview(signal) {
     },
     options
   );
-  const activate = () => {
-    if (paused || activated) return;
-    activated = true;
-    clearTimeout(collapseTimer);
-    clearTimeout(idleTimer);
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      show();
-      return;
-    }
-    panel.dataset.unlocking = '';
-    timer = window.setTimeout(() => {
-      timer = 0;
-      panel.dataset.unlocked = '';
+  const key = mountKeyButton(entrance, {
+    signal,
+    onStart() {
+      if (paused || activated) return false;
+      activated = true;
+      clearTimeout(collapseTimer);
+      clearTimeout(idleTimer);
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) panel.dataset.unlocking = '';
+    },
+    onUnlock() {
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) panel.dataset.unlocked = '';
       delete panel.dataset.unlocking;
       if (!signal.aborted && interested()) show();
-    }, 600);
-  };
-  entrance?.addEventListener('click', activate, options);
+    },
+  });
   panel.addEventListener('focusout', leave, options);
   panel.addEventListener(
     'passage-door-opened',

@@ -1,0 +1,24 @@
+@import '../blink-cursor/cursor.css';
+[data-hidden-signal] {
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+[data-hidden-signal][data-selected] {
+  opacity: 1;
+}
+[data-hidden-signal][data-selected] [data-effect-cursor] {
+  animation: effect-cursor-blink var(--cursor-period, 1s) step-end infinite;
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-hidden-signal]:hover {
+    opacity: 1;
+  }
+  [data-hidden-signal]:hover [data-effect-cursor] {
+    animation: effect-cursor-blink var(--cursor-period, 1s) step-end infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-hidden-signal] {
+    transition: none;
+  }
+}

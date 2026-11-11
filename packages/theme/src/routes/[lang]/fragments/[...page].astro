@@ -41,6 +41,20 @@ const localeHrefs = Object.fromEntries(
   ENABLED_LOCALES.map((code) => [code, localePath(code, '/fragments/')])
 );
 const pageHref = (page: number) => localePath(locale, `/fragments/${page === 1 ? '' : `${page}/`}`);
+// Preserve the localized word while arranging it as a few quiet, separate pieces.
+const titleGlyphs = Array.from(
+  new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(labels.title),
+  (part) => part.segment
+);
+const titlePartCount = Math.min(3, titleGlyphs.length);
+const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
+  titleGlyphs
+    .slice(
+      Math.round((index * titleGlyphs.length) / titlePartCount),
+      Math.round(((index + 1) * titleGlyphs.length) / titlePartCount)
+    )
+    .join('')
+);
 ---
 
 <CyberShell
@@ -52,8 +66,12 @@ const pageHref = (page: number) => localePath(locale, `/fragments/${page === 1 ?
 >
   {THEME.MATH.ENABLED && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
   <section class="fragments-feed" data-fragments>
-    <h1>{labels.title}</h1>
-    <p>{labels.description}</p>
+    <div class="fragments-heading">
+      <h1 aria-label={labels.title}>
+        {titleParts.map((part) => <span class="fragment-title-part">{part}</span>)}
+      </h1>
+      <p class="fragments-description">{labels.description}</p>
+    </div>
     {!cards.length && <p>{labels.empty}</p>}
     {
       cards.map(({ entry, Content }) => (
@@ -113,15 +131,74 @@ const pageHref = (page: number) => localePath(locale, `/fragments/${page === 1 ?
 <style>
   .fragments-feed {
     max-width: 850px;
-    margin: 2rem auto;
+    margin: 0.65rem auto 1rem;
+  }
+  .fragments-heading {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    margin-bottom: 0.8rem;
   }
   h1 {
-    color: var(--cyber-cyan, #7cffff);
-    font-size: clamp(2rem, 5vw, 3rem);
+    position: relative;
+    margin: 0;
+    color: #d3e0e3;
+    font:
+      700 clamp(1.65rem, 4vw, 2.4rem) / 1.15 ui-monospace,
+      monospace;
+    letter-spacing: 0.025em;
+  }
+  .fragment-title-part {
+    position: relative;
+    display: inline-block;
+  }
+  .fragment-title-part + .fragment-title-part {
+    margin-left: 0.08em;
+  }
+  .fragment-title-part:nth-child(2) {
+    color: #b5ced4;
+    transform: translateY(-1px) rotate(-1deg);
+  }
+  .fragment-title-part:nth-child(3) {
+    color: #93b7c0;
+    transform: translateY(1px);
+  }
+  .fragment-title-part::after {
+    content: '';
+    position: absolute;
+    left: 0.08em;
+    right: 0.04em;
+    bottom: -0.12em;
+    height: 1px;
+    background: linear-gradient(90deg, currentColor, transparent);
+    opacity: 0.3;
+    transform: rotate(-3deg);
+  }
+  .fragments-description {
+    flex: 1 1 13rem;
+    position: relative;
+    margin: 0;
+    padding-left: 0.75rem;
+    border-left: 1px solid #73969f55;
+    color: #9fb2bb;
+    font:
+      0.8rem / 1.45 ui-monospace,
+      monospace;
+    letter-spacing: 0.025em;
+  }
+  .fragments-description::before {
+    content: '';
+    position: absolute;
+    top: 0.2em;
+    left: -2px;
+    width: 3px;
+    height: 0.4em;
+    background: #91b8bd;
   }
   .fragment-card {
-    margin: 1.5rem 0;
-    padding: clamp(1rem, 3vw, 2rem);
+    margin: 0.65rem 0;
+    padding: clamp(0.8rem, 1.8vw, 1rem);
     border: 1px solid #58e5ee66;
     background: #07131ae8;
     border-radius: 12px;
@@ -131,20 +208,73 @@ const pageHref = (page: number) => localePath(locale, `/fragments/${page === 1 ?
   }
   time {
     color: #a9bcc8;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+  }
+  h2 {
+    margin: 0.45rem 0;
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+  .fragment-body {
+    margin: 0.45rem 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .fragment-body :global(p) {
+    margin: 0.4rem 0;
+    line-height: inherit;
+  }
+  .fragment-body > :global(:first-child) {
+    margin-top: 0;
+  }
+  .fragment-body > :global(:last-child) {
+    margin-bottom: 0;
+  }
+  .fragment-body :global(ul),
+  .fragment-body :global(ol) {
+    display: block;
+    margin: 0.4rem 0;
+    padding-left: 1.3rem;
+    list-style: revert;
+  }
+  .fragment-body :global(li) {
+    width: auto;
+    margin: 0.12rem 0;
+    text-align: start;
+    line-height: inherit;
+  }
+  .fragment-body :global(blockquote) {
+    margin: 0.5rem 0;
+    padding-left: 0.8rem;
+    border-left: 2px solid #74d8df66;
+  }
+  .fragment-body :global(h3) {
+    margin: 0.55rem 0 0.35rem;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .fragment-body :global(p code) {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   .fragment-body :global(img) {
     max-width: 100%;
     height: auto;
   }
   .fragment-body :global(pre) {
+    margin: 0.5rem 0;
     overflow-x: auto;
   }
   .fragment-body :global(a) {
     color: #7cffff;
+    text-decoration: underline;
   }
   .fragment-card button {
     float: right;
+    margin: 0.25rem 0 0 0.5rem;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
   }
   button,
   .fragment-pagination a {

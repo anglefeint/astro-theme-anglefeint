@@ -62,7 +62,7 @@ test('terminal retains one paused preview, reuses it and releases idle GPU resou
   await panel.locator('.home-signal-enter').click();
   await expect(panel).toHaveAttribute('data-unlocked', '');
   await expect(panel).toHaveAttribute('data-expanded', '');
-  await expect(panel.locator('.home-signal-insert-key')).toHaveCSS('opacity', '0');
+  await expect(panel.locator('.key-button-insert')).toHaveCSS('opacity', '0');
   await expect(panel).toHaveAttribute('data-preview', '');
   const textures = await page.evaluate(() => window.signalStats.textures);
   expect(textures).toBeGreaterThan(0);

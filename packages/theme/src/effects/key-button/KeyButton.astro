@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import './key-button.css';
+interface Props extends Omit<HTMLAttributes<'button'>, 'type'> {
+  label: string;
+}
+const { label, class: className, ...attributes } = Astro.props;
+---
+
+<button
+  {...attributes}
+  class:list={['key-button', className]}
+  type="button"
+  data-key-button
+  aria-label={label}
+>
+  <svg class="key-button-icon" viewBox="0 0 32 28" fill="none" aria-hidden="true" focusable="false">
+    <g class="key-button-lock">
+      <path
+        d="M17.5 12.5A4.5 4.5 0 1 1 22.5 12.5L24 23H16Z"
+        fill="#010603"
+        stroke="#99b8a4"
+        stroke-width="1.2"></path>
+    </g>
+    <g class="key-button-insert">
+      <ellipse cx="1.5" cy="10" rx="3" ry="3.8"></ellipse>
+      <path d="M4.5 9.4H21V10.6H4.5Z" fill="currentColor" stroke="none"></path>
+      <path d="M16 10.6V15H18V13.3H19.3V15H21V10.6Z" fill="currentColor" stroke="none"></path>
+      <path d="M5.5 8.8V11.2M7 8.8V11.2" opacity="0.6"></path>
+    </g>
+  </svg>
+</button>

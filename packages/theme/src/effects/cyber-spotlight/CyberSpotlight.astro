@@ -1,0 +1,92 @@
+---
+interface Props {
+  sizing?: 'container' | 'viewport';
+}
+const { sizing = 'container' } = Astro.props;
+---
+
+<div class="cyber-spotlight" data-cyber-spotlight data-sizing={sizing} aria-hidden="true">
+  <div class="cyber-spotlight-surface">
+    <div class="cyber-spotlight-tr"></div>
+    <div class="cyber-spotlight-tl"></div>
+  </div>
+</div>
+<style>
+  .cyber-spotlight {
+    position: absolute;
+    inset: 0;
+    container-type: size;
+    pointer-events: none;
+    z-index: var(--spotlight-layer, 0);
+  }
+  .cyber-spotlight[data-sizing='viewport'] {
+    position: fixed;
+  }
+  .cyber-spotlight-surface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(hypot(100cqw, 100cqh) * 1.3 / 1.41421356);
+    height: calc(hypot(100cqw, 100cqh) * 1.3 / 1.41421356);
+    contain: layout paint;
+  }
+  .cyber-spotlight-tl {
+    position: absolute;
+    inset: 0;
+    transform-origin: 0 0;
+    background: conic-gradient(
+      from 180deg at 0 0,
+      transparent 0deg 302deg,
+      rgba(120, 192, 255, 0.18) 304deg,
+      rgba(96, 182, 255, 0.32) 307deg,
+      rgba(206, 234, 255, 0.92) 310deg,
+      rgba(96, 182, 255, 0.32) 313deg,
+      rgba(120, 192, 255, 0.18) 316deg,
+      transparent 319deg 360deg
+    );
+    animation: cyber-spotlight-sweep-tl var(--spotlight-left-duration, 12s) ease-in-out infinite;
+  }
+  .cyber-spotlight-tr {
+    position: absolute;
+    inset: 0;
+    transform-origin: 100% 0;
+    background: conic-gradient(
+      from 180deg at 100% 0,
+      transparent 0deg 33deg,
+      rgba(120, 192, 255, 0.18) 35deg,
+      rgba(96, 182, 255, 0.32) 38deg,
+      rgba(206, 234, 255, 0.92) 41deg,
+      rgba(96, 182, 255, 0.32) 44deg,
+      rgba(120, 192, 255, 0.18) 47deg,
+      transparent 50deg 360deg
+    );
+    animation: cyber-spotlight-sweep-tr var(--spotlight-right-duration, 24s) ease-in-out infinite;
+    animation-delay: -1.5s;
+  }
+  @keyframes cyber-spotlight-sweep-tl {
+    0% {
+      transform: rotate(50deg);
+    }
+    50% {
+      transform: rotate(-50deg);
+    }
+    100% {
+      transform: rotate(50deg);
+    }
+  }
+  @keyframes cyber-spotlight-sweep-tr {
+    0%,
+    100% {
+      transform: rotate(-60deg);
+    }
+    50% {
+      transform: rotate(60deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cyber-spotlight-tl,
+    .cyber-spotlight-tr {
+      animation: none;
+    }
+  }
+</style>

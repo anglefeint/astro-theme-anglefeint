@@ -39,6 +39,9 @@ export const ADAPTER_TARGET_FILES = ADAPTER_TEMPLATE_MAP.map(([, targetRel]) => 
 
 export const STARTER_CONTENT_ROOT = 'src/content/blog';
 
+// Reusable visuals under packages/theme/src/effects are package-owned (package.json
+// files/exports), not copied into STARTER_MANAGED_FILES or personal projects.
+
 export const STARTER_CONTENT_LOCALES = [
   'en',
   'es',

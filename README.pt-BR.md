@@ -35,6 +35,8 @@ Use Cursor, Codex ou Claude Code para configurar o site, escrever artigos e pers
 
 ## Instalação
 
+Este template é baseado no **Astro 7**.
+
 Use Node.js 22.12.0 ou superior. Execute os comandos na pasta onde deseja criar seu blog e abra o endereço informado pelo servidor de desenvolvimento.
 
 ```bash

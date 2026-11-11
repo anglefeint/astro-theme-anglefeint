@@ -1,6 +1,10 @@
 # @anglefeint/astro-theme
 
-Core package for the Anglefeint Astro theme.
+Core package for the Anglefeint theme, built for **Astro 7**.
+
+## 0.30.0 effects and Fragments presentation
+
+Standard pages now compose fourteen reusable visual groups from the package's `effects/` directory. Custom Astro pages can optionally import these components and explicit DOM bindings through `@anglefeint/astro-theme/effects/*`; see the [API reference](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/REUSABLE_EFFECTS.md). No UI library or new configuration is required. Fragments gains compact cards/title styling and a signal loading state with a fixed dialog heading/close control; long comments scroll within the body. Existing fragment IDs and Giscus mappings are preserved. Personal-blog feed/comment defaults remain off, and demo examples/settings are not copied by upgrades. See the [release record](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.30.0.md) for actual publication status.
 
 ## 0.27.2 search build completion fix
 

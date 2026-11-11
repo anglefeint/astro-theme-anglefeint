@@ -1,0 +1,151 @@
+[data-cyber-layer='base'] {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    #05070b 0%,
+    #090c14 20%,
+    #111a2d 52%,
+    #090c14 80%,
+    #05070b 100%
+  );
+}
+[data-cyber-layer='fog'] {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 82% 52% at 50% 18%, rgba(110, 186, 255, 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse 62% 42% at 82% 78%, rgba(255, 132, 88, 0.06) 0%, transparent 40%),
+    radial-gradient(ellipse 52% 37% at 20% 62%, rgba(226, 150, 214, 0.06) 0%, transparent 45%);
+  animation: cyber-fog-drift 20s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes cyber-fog-drift {
+  0% {
+    opacity: 0.7;
+    transform: translate(-2%, -1%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(2%, 1%);
+  }
+}
+.cyber-flicker {
+  position: absolute;
+  inset: 0;
+  contain: layout paint;
+  background:
+    radial-gradient(ellipse 25% 30% at 85% 20%, rgba(255, 146, 96, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 20% 24% at 20% 68%, rgba(96, 182, 255, 0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 28% 35% at 70% 85%, rgba(224, 146, 212, 0.2) 0%, transparent 55%);
+  animation: cyber-neon-flicker-glow 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes cyber-neon-flicker-glow {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.95;
+  }
+}
+.cyber-haze {
+  position: absolute;
+  inset: 0;
+  contain: layout paint;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 50%, rgba(52, 84, 128, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 30% 30%, rgba(224, 144, 208, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 35% 25% at 70% 70%, rgba(255, 134, 92, 0.04) 0%, transparent 50%);
+  animation: cyber-haze-drift 20s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes cyber-haze-drift {
+  0% {
+    opacity: 0.5;
+    transform: translate(3%, 2%) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-3%, -2%) scale(0.95);
+  }
+}
+.cyber-vignette {
+  position: absolute;
+  inset: 0;
+  contain: layout paint;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+.cyber-load-glitch {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(226, 146, 210, 0.1) 0%,
+    transparent 45%,
+    transparent 55%,
+    rgba(104, 182, 255, 0.12) 100%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: cyber-load-glitch 12s ease-out 0.5s infinite;
+}
+@keyframes cyber-load-glitch {
+  /* 每 8 秒一周期：前 6.5s 静默，后 1.5s 执行 glitch */
+  0%,
+  81%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  83% {
+    opacity: 1;
+    transform: translateX(-3px);
+  }
+  86% {
+    opacity: 0.9;
+    transform: translateX(3px);
+  }
+  90% {
+    opacity: 0.5;
+    transform: translateX(-2px);
+  }
+}
+
+[data-cyber-layer] {
+  pointer-events: none;
+}
+[data-cyber-layer][data-sizing='viewport'] {
+  position: fixed;
+}
+[data-cyber-layer][data-environment-paused] {
+  animation-play-state: paused;
+}
+@media (max-width: 720px) {
+  [data-cyber-layer='flicker'] {
+    animation-duration: 8s;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-cyber-layer] {
+    animation: none !important;
+  }
+  [data-cyber-layer='glitch'] {
+    display: none;
+  }
+}

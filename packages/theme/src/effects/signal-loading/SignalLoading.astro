@@ -1,0 +1,105 @@
+---
+interface Props {
+  active?: boolean;
+}
+const { active = false } = Astro.props;
+---
+
+<div class="signal-loading" data-signal-loading hidden={!active} aria-hidden="true">
+  <div class="signal-loading-bars">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="signal-loading-track"></div>
+</div>
+<style>
+  .signal-loading {
+    width: 100%;
+  }
+  .signal-loading:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .signal-loading-bars {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    color: #7aebf3;
+  }
+  .signal-loading-bars span {
+    --signal-level: 0.35;
+    width: 3px;
+    height: 28px;
+    border-radius: 2px;
+    background: currentColor;
+    box-shadow: 0 0 9px currentColor;
+    transform: scaleY(var(--signal-level));
+  }
+  .signal-loading-bars span:nth-child(2) {
+    --signal-level: 0.65;
+    animation-delay: -0.45s;
+  }
+  .signal-loading-bars span:nth-child(3) {
+    --signal-level: 1;
+    animation-delay: -0.8s;
+  }
+  .signal-loading-bars span:nth-child(4) {
+    --signal-level: 0.55;
+    animation-delay: -0.25s;
+  }
+  .signal-loading-bars span:nth-child(5) {
+    --signal-level: 0.3;
+    animation-delay: -0.65s;
+  }
+  .signal-loading-bars span:nth-child(even) {
+    color: #df92cb;
+  }
+  .signal-loading:not([hidden]) .signal-loading-bars span {
+    animation-name: signal-loading-pulse;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  .signal-loading-track {
+    width: min(180px, 55%);
+    height: 1px;
+    overflow: hidden;
+    background: #7aebf31a;
+  }
+  .signal-loading-track::after {
+    content: '';
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #7aebf3, #df92cb, transparent);
+  }
+  .signal-loading:not([hidden]) .signal-loading-track::after {
+    animation: signal-loading-scan 2.2s linear infinite;
+  }
+  @keyframes signal-loading-pulse {
+    0%,
+    100% {
+      transform: scaleY(0.25);
+      opacity: 0.55;
+    }
+    50% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+  @keyframes signal-loading-scan {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .signal-loading:not([hidden]) .signal-loading-bars span,
+    .signal-loading:not([hidden]) .signal-loading-track::after {
+      animation: none;
+    }
+  }
+</style>

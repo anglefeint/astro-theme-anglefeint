@@ -10,6 +10,12 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.30.0: Reusable effects and Fragments presentation
+
+For npm schema-1 integration starters, run `npx @anglefeint/astro-theme@latest upgrade` (or add `--to 0.30.0` for this exact release), then preview and deploy. No configuration or content migration is required. The package update supplies the compact Fragments layout, comment loading/scroll fixes and extracted effects; see the [release record](docs/releases/0.30.0.md) for actual delivery status.
+
+Existing Fragments IDs and Giscus discussion mappings are preserved. The public demo enables comments and adds twelve translated examples per language; these demo settings/examples are not copied into personal blogs. Package and starter feed/comment defaults remain off. The new `effects/*` imports are optional for custom pages; standard pages already compose them. Astro 7 was already the supported dependency: this release does not upgrade Astro or enable JSON logging/background services. Pre-0.27 projects still need the migration below.
+
 ## 0.28.0: Optional shared Giscus comments
 
 See the [0.28.0 delivery record](docs/releases/0.28.0.md) for publication status. No action is required for existing sites: `theme.comments.shareAcrossLocales` defaults to false, preserving all existing mappings and comment associations. The upgrade command does not rewrite site.config.ts or consumer articles.

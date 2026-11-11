@@ -128,6 +128,48 @@ for (const width of [1280, 390]) {
   });
 }
 
+for (const width of [1280, 390]) {
+  test(`loading does not scroll; long comments scroll below the fixed heading (${width})`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 540 });
+    await stub(page, () => providerHTML(null));
+    await page.goto(`${origin}/en/fragments/`);
+    await page.locator('[data-fragment-comments]').first().click();
+    const dialog = page.locator('[data-fragment-dialog]');
+    const body = dialog.locator('[data-fragment-scroll]');
+    const frame = dialog.locator('iframe.giscus-frame');
+    await expect(frame).not.toHaveClass(/--loading/);
+    // The official client can resize its still-hidden iframe before metadata is ready.
+    await frame.evaluate((el) => {
+      el.style.height = '1600px';
+    });
+    await expect(dialog).toHaveAttribute('data-comment-state', 'loading');
+    for (const region of [dialog, body]) {
+      expect(await region.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeLessThanOrEqual(
+        1
+      );
+    }
+    await page
+      .frameLocator('iframe.giscus-frame')
+      .locator('body')
+      .evaluate(() =>
+        parent.postMessage({ giscus: { discussion: { title: 'fragment/third' } } }, '*')
+      );
+    await expect(dialog).toHaveAttribute('data-comment-state', 'ready');
+    expect(await body.evaluate((el) => el.scrollHeight - el.clientHeight)).toBeGreaterThan(500);
+    const close = dialog.locator('[data-fragment-close]');
+    const before = await close.boundingBox();
+    await body.evaluate((el) => {
+      el.scrollTop = el.scrollHeight;
+    });
+    expect(await body.evaluate((el) => el.scrollTop)).toBeGreaterThan(0);
+    expect((await close.boundingBox()).y).toBe(before.y);
+    await close.click();
+    await expect(dialog).not.toBeVisible();
+  });
+}
+
 test('silent remote load times out; retry reuses the same iframe and client', async ({ page }) => {
   await page.clock.install();
   const counts = await stub(page, (n) => providerHTML(n === 1 ? null : 'ready'));
@@ -158,6 +200,24 @@ test('silent remote load times out; retry reuses the same iframe and client', as
   await expect(dialog).toHaveAttribute('data-comment-state', 'ready');
   await expect(frame).toHaveAttribute('data-retained', 'yes');
   expect(counts).toEqual({ clients: 1, frames: 2 });
+});
+
+test('reduced motion keeps the connection signal static while waiting for comments', async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await stub(page, () => providerHTML(null));
+  await page.goto(`${origin}/en/fragments/`);
+  await page.locator('[data-fragment-comments]').first().click();
+  const dialog = page.locator('[data-fragment-dialog]');
+  await expect(dialog).toHaveAttribute('data-comment-state', 'loading');
+  await expect(dialog.locator('.fragment-connection')).toHaveAttribute('aria-hidden', 'true');
+  await expect(dialog.locator('.signal-loading-bars span')).toHaveCount(5);
+  for (const bar of await dialog.locator('.signal-loading-bars span').all())
+    await expect(bar).toHaveCSS('animation-name', 'none');
+  await expect(dialog.locator('[data-fragment-status]')).toContainText('Loading');
+  await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
 });
 
 for (const error of ['Bad credentials', 'Discussion not found']) {

@@ -11,6 +11,8 @@ import type { MarkdownHeading } from 'astro';
 import Giscus from '../components/Giscus.astro';
 import { articleComments } from '../utils/comments';
 import AiShell from './shells/AiShell.astro';
+import AiBackground from '../effects/ai-background/AiBackground.astro';
+import RedQueen from '../effects/red-queen/RedQueen.astro';
 import blogPostCssUrl from '../styles/blog-post.css?url';
 import mathCssUrl from '../styles/math.css?url';
 import { SITE_AUTHOR, SITE_TITLE } from '@anglefeint/site-config/site';
@@ -143,46 +145,16 @@ const hasCommentsConfig = Boolean(
   <link slot="head" rel="stylesheet" href={blogPostCssUrl} />
   {(THEME.MATH?.ENABLED ?? false) && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
   <Fragment slot="body-start">
-    <div class="ai-bg" aria-hidden="true">
-      <div class="ai-glow ai-glow-shift"></div>
-      <div class="ai-haze" aria-hidden="true"></div>
-      <div class="ai-vignette" aria-hidden="true"></div>
-      <div class="ai-stripe"></div>
-      <div class="ai-noise" aria-hidden="true"></div>
-      <div class="ai-hex-grid" aria-hidden="true"></div>
-      <div class="ai-thought-particles" aria-hidden="true">
-        {
-          [...Array(12)].map((_, i) => (
-            <span
-              class="ai-particle"
-              style={`--x: ${20 + ((i * 7) % 60)}%; --y: ${10 + ((i * 11) % 70)}%; --d: ${3 + (i % 4)}s`}
-            />
-          ))
-        }
-      </div>
-      <canvas class="ai-network-canvas" aria-hidden="true"></canvas>
-    </div>
+    <AiBackground sizing="viewport" />
     {
       enableRedQueen && (
-        <aside class="rq-tv rq-tv-collapsed">
-          <div
-            class="rq-tv-stage"
-            data-rq-src={themeRedqueen1.src}
-            data-rq-src2={themeRedqueen2.src}
-          />
-          <div class="rq-tv-badge">
-            {messages.blog.rqBadge}
-            <span class="rq-tv-dot" />
-          </div>
-          <button
-            type="button"
-            class="rq-tv-toggle"
-            aria-label={messages.blog.rqReplayAria}
-            aria-expanded="false"
-          >
-            ▶
-          </button>
-        </aside>
+        <RedQueen
+          source={themeRedqueen1.src}
+          secondarySource={themeRedqueen2.src}
+          badge={messages.blog.rqBadge}
+          replayLabel={messages.blog.rqReplayAria}
+          placement="article"
+        />
       )
     }
     <div class="ai-read-progress" aria-hidden="true"></div>

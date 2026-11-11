@@ -1,5 +1,6 @@
 ---
 import Giscus from './Giscus.astro';
+import SignalLoading from '../effects/signal-loading/SignalLoading.astro';
 import { THEME } from '@anglefeint/site-config/theme';
 import type { FragmentMessages } from '../i18n/fragments';
 interface Props {
@@ -21,11 +22,17 @@ const { locale, labels } = Astro.props;
       autofocus>{labels.close}</button
     >
   </div>
-  <p data-fragment-summary></p>
-  <p data-fragment-status role="status" data-loading={labels.loading} data-error={labels.error}></p>
-  <button type="button" data-fragment-retry hidden>{labels.retry}</button>
-  <div class="giscus" data-fragment-widget></div>
-  <Giscus comments={THEME.COMMENTS} resolvedLocale={locale} deferred />
+  <div class="fragment-dialog-body" data-fragment-scroll>
+    <p data-fragment-summary></p>
+    <div class="fragment-connection" aria-hidden="true">
+      <SignalLoading />
+    </div>
+    <p data-fragment-status role="status" data-loading={labels.loading} data-error={labels.error}>
+    </p>
+    <button type="button" data-fragment-retry hidden>{labels.retry}</button>
+    <div class="giscus" data-fragment-widget></div>
+    <Giscus comments={THEME.COMMENTS} resolvedLocale={locale} deferred />
+  </div>
 </dialog>
 <script>
   import { initFragmentComments } from '../scripts/fragment-comments.js';
@@ -34,15 +41,24 @@ const { locale, labels } = Astro.props;
 </script>
 <style>
   dialog {
+    --fragment-dialog-padding: 1.5rem;
     width: min(800px, calc(100vw - 2rem));
     max-height: 90dvh;
-    padding: 1.5rem;
+    padding: 0;
     border: 1px solid #58e5ee88;
     border-radius: 12px;
-    background: #0b1521;
+    background: radial-gradient(ellipse at top left, #163b452e, transparent 65%), #0b1521;
     color: #e4edf7;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow: hidden;
+  }
+  dialog[open] {
+    display: flex;
+    flex-direction: column;
+  }
+  dialog[data-comment-state='loading'],
+  dialog[data-comment-state='failed'] {
+    width: min(560px, calc(100vw - 2rem));
   }
   dialog::backdrop {
     background: #000b;
@@ -52,10 +68,24 @@ const { locale, labels } = Astro.props;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    flex-shrink: 0;
+    margin: 0 var(--fragment-dialog-padding);
+    padding: var(--fragment-dialog-padding) 0 0.9rem;
+    border-bottom: 1px solid #58e5ee26;
+  }
+  .fragment-dialog-body {
+    position: relative;
+    min-height: 0;
+    padding: 0 var(--fragment-dialog-padding) var(--fragment-dialog-padding);
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #43717d #0b1521;
   }
   h2 {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1.05rem;
   }
   button {
     padding: 0.5rem 0.9rem;
@@ -75,15 +105,66 @@ const { locale, labels } = Astro.props;
     min-height: 150px;
     border: 0;
   }
+  /* Keep the retained iframe loading at a real width without reserving its height. */
+  [data-fragment-widget] {
+    position: absolute;
+    top: 0;
+    left: var(--fragment-dialog-padding);
+    right: var(--fragment-dialog-padding);
+    height: 0;
+    overflow: hidden;
+  }
+  dialog[data-comment-state='ready'] [data-fragment-widget] {
+    position: static;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
   [data-fragment-summary] {
+    margin: 1rem 0 0;
+    color: #9eb2c4;
+    font-size: 0.875rem;
+    line-height: 1.5;
     overflow-wrap: anywhere;
-    white-space: pre-wrap;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .fragment-connection {
+    display: none;
+  }
+  dialog[data-comment-state='loading'] .fragment-connection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.75rem 0 0.65rem;
+  }
+  [data-fragment-status] {
+    margin: 0.7rem 0 1rem;
+    color: #a7dce5;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+  [data-fragment-status]:empty {
+    display: none;
+  }
+  dialog[data-comment-state='failed'] [data-fragment-status] {
+    color: #efadc9;
+  }
+  [data-fragment-retry]:not([hidden]) {
+    display: block;
+    margin: 0 auto 0.25rem;
   }
   @media (max-width: 600px) {
-    dialog {
+    dialog,
+    dialog[data-comment-state='loading'],
+    dialog[data-comment-state='failed'] {
+      --fragment-dialog-padding: 1rem;
       width: calc(100vw - 1rem);
       max-height: 96dvh;
-      padding: 1rem;
     }
   }
 </style>

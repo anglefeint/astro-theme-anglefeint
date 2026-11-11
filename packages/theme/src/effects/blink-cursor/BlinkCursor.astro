@@ -1,0 +1,19 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import './cursor.css';
+interface Props extends Omit<HTMLAttributes<'span'>, 'style'> {
+  style?: string;
+  active?: boolean;
+  shape?: 'block' | 'underline';
+  period?: number;
+}
+const { active = true, shape = 'block', period = 1000, style = '', ...attributes } = Astro.props;
+---
+
+<span
+  {...attributes}
+  data-effect-cursor
+  data-cursor-shape={shape}
+  data-cursor-active={String(active)}
+  style={`--cursor-period:${Math.max(1, period)}ms;${style}`}
+  aria-hidden="true"></span>

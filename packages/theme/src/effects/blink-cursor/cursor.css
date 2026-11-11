@@ -1,0 +1,53 @@
+[data-effect-cursor] {
+  display: inline-block;
+  width: var(--cursor-width, 1ch);
+  height: var(--cursor-height, 1em);
+  margin-left: var(--cursor-gap, 0);
+  vertical-align: var(--cursor-align, -0.15em);
+  background: currentColor;
+  pointer-events: none;
+  animation: effect-cursor-blink var(--cursor-period, 1s) step-end infinite;
+}
+[data-effect-cursor][data-cursor-shape='underline'] {
+  height: var(--cursor-height, 0.16em);
+  vertical-align: var(--cursor-align, -0.12em);
+  animation-name: effect-cursor-underline;
+}
+[data-effect-cursor][data-cursor-active='false'] {
+  animation: none;
+}
+@keyframes effect-cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes effect-cursor-underline {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes effect-cursor-terminal {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-effect-cursor] {
+    animation: none !important;
+  }
+}

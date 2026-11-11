@@ -12,6 +12,14 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-11 特效组件与 Fragments 发布前文档核对
+
+以 `b1564bc24835ab39da4aa31b54c918e24249617e` 为基线，核对当前全部未提交变更，执行 suggest:docs，并沿页面配置、包默认值、标准路由、组件／脚本／样式、导出与打包清单、starter manifest、生成结果和测试逐项追踪。负责的架构／视觉／验收参考及新增 REUSABLE_EFFECTS 记录十四组组件的 DOM 绑定、文字配置、生命周期、场景适配与验证路径；镜面和走廊保留原实现。
+
+直接命中文档包括 AGENTS、九语 README、npm README、ARCHITECTURE、VISUAL_SYSTEMS、TEMPLATE_ACCEPTANCE、REUSABLE_EFFECTS、CHANGELOG、UPGRADING 和发布账本。发现器宽泛匹配的历史 release、旧审计段落保留当时事实；CLAUDE／Cursor 继续指向中立入口，工作流和元数据规范没有改变，不重复改写。传播候选为空。九语 demo／starter 的五篇用户教程共 45 对继续核对；没有新用户配置或 CLI，原启用／升级教程仍适用，新增升级说明明确 demo 数据不覆盖个人内容。
+
+demo 当前主动开启文章／碎片评论，取代先前临时开启后恢复关闭的要求；包／starter 默认保持关闭。九语言各十二条示例是展示内容，保留跨语言 ID，不进入 starter 管理清单。Astro 7 原已使用，本轮只澄清 README；JSON 日志与后台服务只是讨论内容，没有实现，不能作为新增功能宣传。正式门禁、来源版本与交付状态统一记录在 [0.30.0 发布账本](releases/0.30.0.md)，不提前宣称已发布。
+
 ## 2026-11-11 0.29.0 正式交付
 
 用户随后授权正式发布，取代前期“先不提交／发布”的约束。恢复 demo 碎片评论为关闭，保留列表开启；包／starter 的默认列表与评论继续关闭。代码、教程及分发准备提交后，按正式门禁发布一次 npm 并核实下载，同步并推送 starter。具体 refs、检查结果、原始失败及恢复边界统一记录在 [0.29.0 发布账本](releases/0.29.0.md)，旧本地审计保持当时事实。

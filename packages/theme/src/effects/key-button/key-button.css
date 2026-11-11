@@ -1,0 +1,81 @@
+.key-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  color: var(--key-color, #a0efb5);
+  cursor: pointer;
+  text-shadow: 0 0 6px rgba(96, 255, 128, 0.35);
+}
+.key-button:is(:hover, :focus-visible) {
+  color: #d5ffe0;
+}
+.key-button:focus-visible {
+  outline: 1px solid rgba(140, 243, 167, 0.5);
+  outline-offset: 2px;
+}
+.key-button-icon {
+  display: block;
+  overflow: visible;
+  width: 28px;
+  height: 26px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 3px rgba(140, 243, 167, 0.3));
+}
+.key-button-insert {
+  opacity: 0;
+  transform: translate(-5px, 3px) rotate(-12deg);
+  transform-origin: 20px 10px;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+  color: #e4ffed;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  filter: drop-shadow(0 0 2px rgba(176, 255, 202, 0.7));
+}
+.key-button:is(:hover, :focus-visible) .key-button-insert {
+  opacity: 1;
+  transform: translate(-2px, 0);
+}
+.key-button:is(:hover, :focus-visible) .key-button-lock {
+  opacity: 1;
+}
+[data-key-button][data-key-state='unlocking'] .key-button-insert {
+  animation: effect-key-insert var(--key-duration, 600ms) ease-in-out both;
+}
+[data-key-button][data-key-state='unlocked'] .key-button-insert {
+  opacity: 0;
+  transform: translate(0, 0) rotate(65deg) scaleX(0.3);
+  transition: opacity 600ms ease;
+}
+@keyframes effect-key-insert {
+  0% {
+    opacity: 1;
+    transform: translate(-2px, 0);
+  }
+  55% {
+    opacity: 1;
+    transform: translate(0, 0) scaleX(0.4);
+  }
+  85% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(65deg) scaleX(0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(65deg) scaleX(0.3);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .key-button-insert {
+    transition: none;
+    animation: none;
+  }
+}

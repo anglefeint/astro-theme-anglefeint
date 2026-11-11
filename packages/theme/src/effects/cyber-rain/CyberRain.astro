@@ -1,0 +1,88 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+interface Props extends HTMLAttributes<'div'> {
+  sizing?: 'container' | 'viewport';
+}
+const { sizing = 'container', class: className, ...attributes } = Astro.props;
+---
+
+<div
+  {...attributes}
+  class:list={['cyber-rain', className]}
+  data-cyber-rain
+  data-sizing={sizing}
+  aria-hidden="true"
+>
+</div>
+<style is:global>
+  [data-cyber-rain] {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--cyber-rain-layer, 0);
+    overflow: hidden;
+    contain: layout paint;
+  }
+  [data-cyber-rain][data-sizing='container'] {
+    container-type: size;
+  }
+  [data-cyber-rain][data-sizing='viewport'] {
+    position: fixed;
+    --cyber-rain-distance: 100vh;
+  }
+  /* Blade Runner: 雨滴 - 白色中脏脏的感觉，非琥珀也非冷青 */
+  [data-cyber-rain] .cyber-rain-drop {
+    position: absolute;
+    top: -20px;
+    width: 6px;
+    height: 38px;
+    clip-path: polygon(1.5px 0, 4.5px 0, 6px 100%, 0 100%);
+    will-change: transform;
+    background: var(
+      --cyber-rain-background,
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(210, 208, 198, 0.38) 40%,
+        rgba(195, 190, 182, 0.52) 70%,
+        transparent 100%
+      )
+    );
+    animation: cyber-rain-fall linear infinite;
+  }
+  @keyframes cyber-rain-fall {
+    to {
+      transform: translateY(var(--cyber-rain-distance, 100cqh));
+    }
+  }
+  [data-cyber-rain] .cyber-rain-drop--thin {
+    width: 4px;
+    height: 28px;
+    clip-path: polygon(0.5px 0, 3.5px 0, 4px 100%, 0 100%);
+  }
+  [data-cyber-rain] .cyber-rain-drop--fog {
+    opacity: 0.15;
+    filter: blur(0.5px);
+  }
+  [data-cyber-rain] .cyber-rain-drop--skew {
+    animation-name: cyber-rain-fall-skew;
+  }
+  @keyframes cyber-rain-fall-skew {
+    to {
+      transform: skewX(-3deg) translateY(var(--cyber-rain-distance, 100cqh));
+    }
+  }
+  [data-cyber-rain][data-rain-paused] .cyber-rain-drop {
+    animation-play-state: paused;
+  }
+  @media (max-width: 720px) {
+    [data-cyber-rain] .cyber-rain-drop:nth-child(2n) {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-cyber-rain] {
+      display: none;
+    }
+  }
+</style>

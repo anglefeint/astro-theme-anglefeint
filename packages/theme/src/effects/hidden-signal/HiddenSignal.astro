@@ -1,0 +1,10 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import './hidden-signal.css';
+interface Props extends HTMLAttributes<'span'> {
+  text?: string;
+}
+const { text, ...attributes } = Astro.props;
+---
+
+<span {...attributes} data-hidden-signal>{text === undefined ? <slot /> : text}</span>

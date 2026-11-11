@@ -3,6 +3,8 @@ import type { Locale } from '@anglefeint/site-i18n/config';
 import ThemeFrame from '../../components/shared/ThemeFrame.astro';
 import themeCyberCssUrl from '../../styles/theme-cyber.css?url';
 import blogListCssUrl from '../../styles/blog-list.css?url';
+import CyberSpotlight from '../../effects/cyber-spotlight/CyberSpotlight.astro';
+import CyberEnvironment from '../../effects/cyber-environment/CyberEnvironment.astro';
 
 interface Props {
   locale?: Locale;
@@ -33,14 +35,8 @@ const {
   <link slot="head" rel="stylesheet" href={themeCyberCssUrl} />
   <link slot="head" rel="stylesheet" href={blogListCssUrl} />
   <Fragment slot="body-start">
-    <div class="cyber-load-glitch" aria-hidden="true"></div>
-    <div class="cyber-spotlight" aria-hidden="true">
-      <div class="cyber-spotlight-tr"></div>
-      <div class="cyber-spotlight-tl"></div>
-    </div>
-    <div class="cyber-flicker" aria-hidden="true"></div>
-    <div class="cyber-haze" aria-hidden="true"></div>
-    <div class="cyber-vignette" aria-hidden="true"></div>
+    <CyberEnvironment sizing="viewport" />
+    <CyberSpotlight sizing="viewport" />
     <slot name="body-start" />
   </Fragment>
   <slot name="head" slot="head" />

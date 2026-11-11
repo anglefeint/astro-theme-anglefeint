@@ -36,7 +36,7 @@ test('homepage signals reveal independently and keep a compact bottom inset', as
   await trace.hover();
   await expect(pirate).toHaveCSS('opacity', '0');
   await expect(trace).toHaveCSS('opacity', '1');
-  await expect(cursor).toHaveCSS('animation-name', 'home-trace-blink');
+  await expect(cursor).toHaveCSS('animation-name', 'effect-cursor-blink');
   await page.screenshot({ path: testInfo.outputPath('trace-only.png') });
   await page.mouse.move(5, 90);
   await expect(trace).toHaveCSS('opacity', '0');

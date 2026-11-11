@@ -35,6 +35,8 @@ Nutze Cursor, Codex oder Claude Code für Website-Einstellungen, Beiträge und e
 
 ## Installation
 
+Diese Vorlage basiert auf **Astro 7**.
+
 Verwende Node.js ab 22.12.0. Führe diese Befehle im gewünschten übergeordneten Ordner aus und öffne die vom Entwicklungsserver angezeigte Adresse.
 
 ```bash

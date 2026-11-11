@@ -54,12 +54,12 @@
   color: #d2ffe0;
   text-shadow: 0 0 8px #60ff8060;
 }
-.home-signal-lock {
+.key-button-lock {
   transition:
     color 180ms ease 120ms,
     filter 180ms ease 120ms;
 }
-.home-signal-monitor[data-near] .home-signal-lock {
+.home-signal-monitor[data-near] .key-button-lock {
   color: #d2ffe0;
   filter: drop-shadow(0 0 4px #60ff80);
 }
@@ -111,68 +111,6 @@
     monospace;
   cursor: pointer;
   text-shadow: 0 0 6px rgba(96, 255, 128, 0.35);
-}
-.home-signal-key {
-  display: block;
-  overflow: visible;
-  width: 28px;
-  height: 26px;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: drop-shadow(0 0 3px rgba(140, 243, 167, 0.3));
-}
-.home-signal-insert-key {
-  opacity: 0;
-  transform: translate(-5px, 3px) rotate(-12deg);
-  transform-origin: 20px 10px;
-  transition:
-    opacity 180ms ease,
-    transform 180ms ease;
-  color: #e4ffed;
-  stroke: currentColor;
-  stroke-width: 1.2;
-  filter: drop-shadow(0 0 2px rgba(176, 255, 202, 0.7));
-}
-.home-signal-enter:is(:hover, :focus-visible) .home-signal-insert-key {
-  opacity: 1;
-  transform: translate(-2px, 0);
-}
-.home-signal-enter:is(:hover, :focus-visible) .home-signal-lock {
-  opacity: 1;
-}
-.home-signal-monitor[data-unlocking] .home-signal-insert-key {
-  animation: home-key-insert 600ms ease-in-out both;
-}
-.home-signal-monitor[data-unlocked] .home-signal-insert-key {
-  opacity: 0;
-  transform: translate(0, 0) rotate(65deg) scaleX(0.3);
-  transition: opacity 600ms ease;
-}
-@keyframes home-key-insert {
-  0% {
-    opacity: 1;
-    transform: translate(-2px, 0);
-  }
-  55% {
-    opacity: 1;
-    transform: translate(0, 0) scaleX(0.4);
-  }
-  85% {
-    opacity: 1;
-    transform: translate(0, 0) rotate(65deg) scaleX(0.4);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0) rotate(65deg) scaleX(0.3);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-signal-insert-key {
-    transition: none;
-    animation: none;
-  }
 }
 .home-signal-enter:is(:hover, :focus-visible) {
   color: #d5ffe0;
@@ -525,160 +463,10 @@ body.page-home .home-wordmark {
 }
 
 .home-terminal-intro {
-  display: grid;
   margin-bottom: 0.65rem;
   font-size: clamp(0.68rem, 1.7vw, 1.02rem);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: var(--matrix-green-soft);
-  letter-spacing: 0.2em;
-}
-.home-terminal-line {
-  grid-area: 1 / 1;
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 1.45em;
-}
-.home-terminal-startup {
-  animation: home-terminal-fade 1s ease 7.6s forwards;
-}
-.home-terminal-message {
-  visibility: hidden;
-  animation: home-terminal-show 0s 8.6s forwards;
-}
-.home-terminal-line > span {
-  position: relative;
-  display: inline-block;
-  text-shadow: 0 0 10px rgba(96, 255, 128, 0.3);
-}
-.home-terminal-system {
-  --cursor-blinks: 7;
-  --terminal-chars: 13;
-  --terminal-duration: 1.5s;
-  --terminal-delay: 0.25s;
-  --cursor-delay: 0s;
-  --cursor-duration: 4.25s;
-}
-.home-terminal-done {
-  --cursor-blinks: 4;
-  --terminal-chars: 6;
-  --terminal-duration: 0.85s;
-  --terminal-delay: 5.25s;
-  --cursor-delay: 5.25s;
-  --cursor-duration: 2.35s;
-}
-.home-terminal-wake {
-  --cursor-blinks: 4;
-  --terminal-chars: 10;
-  --terminal-duration: 0.8s;
-  --terminal-delay: 8.6s;
-  --cursor-delay: 8.6s;
-  --cursor-duration: 2.65s;
-}
-.home-terminal-follow {
-  --cursor-blinks: 6;
-  --terminal-chars: 27;
-  --terminal-duration: 1.35s;
-  --terminal-delay: 13.25s;
-  --cursor-delay: 13.25s;
-  --cursor-duration: 3.55s;
-}
-.home-terminal-line > span > span {
-  display: inline-block;
-  vertical-align: bottom;
-  overflow: hidden;
-  white-space: pre;
-  width: calc(var(--terminal-chars) * (1ch + 0.2em));
-  animation: home-terminal-type var(--terminal-duration) steps(var(--terminal-chars), end)
-    var(--terminal-delay) backwards;
-}
-.home-terminal-line > span::after {
-  content: '';
-  position: absolute;
-  right: -0.6em;
-  top: 0.12em;
-  width: 0.45em;
-  height: 0.9em;
-  background: var(--matrix-green);
-  pointer-events: none;
-  visibility: hidden;
-  animation:
-    home-terminal-cursor 0.7s step-end var(--cursor-blinks) var(--cursor-delay) forwards,
-    home-terminal-cursor-window var(--cursor-duration) step-end var(--cursor-delay) forwards;
-}
-.home-terminal-line > .home-terminal-done > span {
-  animation:
-    home-terminal-done-type 0.85s steps(5, end) 5.25s backwards,
-    home-terminal-hold 5.25s step-end backwards;
-}
-@keyframes home-terminal-done-type {
-  from {
-    width: calc(1ch + 0.2em);
-  }
-  to {
-    width: calc(6ch + 1.2em);
-  }
-}
-@keyframes home-terminal-hold {
-  from {
-    width: 0;
-  }
-  to {
-    width: 0;
-  }
-}
-@keyframes home-terminal-type {
-  from {
-    width: 0;
-  }
-  to {
-    width: calc(var(--terminal-chars) * (1ch + 0.2em));
-  }
-}
-@keyframes home-terminal-fade {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-@keyframes home-terminal-show {
-  to {
-    visibility: visible;
-  }
-}
-@keyframes home-terminal-cursor-window {
-  0% {
-    visibility: visible;
-  }
-  100% {
-    visibility: hidden;
-  }
-}
-@keyframes home-terminal-cursor {
-  0%,
-  45% {
-    opacity: 1;
-  }
-  46%,
-  100% {
-    opacity: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-terminal-startup {
-    display: none;
-    animation: none;
-  }
-  .home-terminal-message {
-    visibility: visible;
-    animation: none;
-  }
-  .home-terminal-line > span > span,
-  .home-terminal-line > .home-terminal-done > span {
-    animation: none;
-  }
-  .home-terminal-line > span::after {
-    display: none;
-  }
+  --startup-color: var(--matrix-green-soft);
+  --startup-cursor-color: var(--matrix-green);
 }
 body.page-home p,
 body.page-home li {
@@ -744,16 +532,6 @@ body.page-home .home-hero-copy {
   margin: 1.2rem 0 0.65rem;
 }
 
-.home-section-title::after {
-  content: '';
-  display: inline-block;
-  width: 1ch;
-  height: 0.16em;
-  margin-left: 0.4ch;
-  background: currentColor;
-  vertical-align: -0.12em;
-  animation: home-latest-cursor 1.4s step-end infinite;
-}
 .home-latest-heading {
   display: flex;
   align-items: baseline;
@@ -770,17 +548,6 @@ body.page-home .home-hero-copy {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.06em;
 }
-@keyframes home-latest-cursor {
-  0%,
-  55% {
-    opacity: 1;
-  }
-  56%,
-  100% {
-    opacity: 0;
-  }
-}
-
 .home-latest {
   border-top: 1px solid rgba(96, 255, 128, 0.2);
   padding-top: 0.9rem;
@@ -871,47 +638,18 @@ body.page-home .home-post-title:is(:hover, :focus-visible) {
   pointer-events: none;
   user-select: none;
 }
-.home-white-rabbit svg {
+.home-white-rabbit [data-white-rabbit] {
   position: absolute;
   left: var(--rabbit-gap);
   bottom: -0.2rem;
-  display: block;
-  width: var(--rabbit-width);
-  height: var(--rabbit-height);
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0;
 }
 :is(.home-post-record, .home-archive-command):focus-within .home-white-rabbit {
-  opacity: 1;
-}
-:is(.home-post-record, .home-archive-command):focus-within .home-white-rabbit svg {
   opacity: 1;
 }
 @media (hover: hover) and (pointer: fine) {
   :is(.home-post-record, .home-archive-command):hover .home-white-rabbit {
     opacity: 1;
   }
-  :is(.home-post-record, .home-archive-command):hover .home-white-rabbit svg {
-    opacity: 1;
-  }
-}
-.home-rabbit-particles {
-  position: absolute;
-  left: var(--rabbit-gap);
-  bottom: -0.2rem;
-  width: var(--rabbit-width);
-  height: var(--rabbit-height);
-  opacity: 0;
-  pointer-events: none;
-}
-[data-decode][data-decoding='true'] .home-rabbit-particles {
-  opacity: 1;
-}
-[data-decode][data-decoding='true'] .home-white-rabbit svg {
-  opacity: 0;
 }
 @media (max-width: 720px) {
   .home-white-rabbit {
@@ -922,15 +660,9 @@ body.page-home .home-post-title:is(:hover, :focus-visible) {
 }
 @media (prefers-reduced-motion: reduce) {
   .home-signal-message,
-  .home-signal-lock,
+  .key-button-lock,
   .home-signal-enter::after {
     transition: none;
-  }
-  .home-rabbit-particles {
-    display: none;
-  }
-  :is(.home-post-record, .home-archive-command):is(:hover, :focus-within) .home-white-rabbit svg {
-    opacity: 1;
   }
 }
 body.page-home .home-archive-command {
@@ -958,7 +690,7 @@ body.page-home .home-archive-command {
   top: 50%;
 }
 
-.home-archive-command .home-white-rabbit :is(svg, canvas) {
+.home-archive-command .home-white-rabbit [data-white-rabbit] {
   left: 0;
   top: calc(var(--rabbit-height) / -2);
   bottom: auto;
@@ -1025,18 +757,6 @@ body.page-home .home-archive-command:is(:hover, :focus-visible) {
     monospace;
   letter-spacing: normal;
 }
-.home-terminal-status > span {
-  opacity: 0;
-  transition: opacity 180ms ease-out;
-}
-.home-terminal-status > span[data-selected] {
-  opacity: 1;
-}
-@media (hover: hover) and (pointer: fine) {
-  .home-terminal-status > span:hover {
-    opacity: 1;
-  }
-}
 .home-pirate-signal {
   white-space: nowrap;
   font-family: 'Matrix Code NFI', 'Courier New', monospace;
@@ -1073,43 +793,6 @@ body.page-home .home-archive-command:is(:hover, :focus-visible) {
     0 0 5px rgba(175, 255, 206, 0.5),
     0 0 12px rgba(96, 255, 150, 0.25);
 }
-.home-trace-cursor {
-  display: inline-block;
-  width: 1ch;
-  height: 1em;
-  margin-left: 1ch;
-  vertical-align: -0.15em;
-  background: currentColor;
-  animation: none;
-}
-.home-trace-text[data-selected] .home-trace-cursor {
-  animation: home-trace-blink 1s step-end infinite;
-}
-@media (hover: hover) and (pointer: fine) {
-  .home-trace-text:hover .home-trace-cursor {
-    animation: home-trace-blink 1s step-end infinite;
-  }
-}
-@keyframes home-trace-blink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-terminal-status > span {
-    transition: none;
-  }
-  .home-trace-text[data-selected] .home-trace-cursor,
-  .home-trace-text:hover .home-trace-cursor {
-    animation: none;
-  }
-}
-
 .home-post-meta {
   font-size: 0.82rem;
   color: rgba(178, 246, 192, 0.8);
@@ -1138,18 +821,4 @@ body.page-home header {
   z-index: 100;
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
-}
-
-/* Start the message immediately when the startup sequence is disabled. */
-.home-terminal-skip-startup .home-terminal-message {
-  visibility: visible;
-  animation: none;
-}
-.home-terminal-skip-startup .home-terminal-wake {
-  --terminal-delay: 0s;
-  --cursor-delay: 0s;
-}
-.home-terminal-skip-startup .home-terminal-follow {
-  --terminal-delay: 4.65s;
-  --cursor-delay: 4.65s;
 }

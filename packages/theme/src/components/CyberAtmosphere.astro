@@ -1,12 +1,14 @@
 ---
+import CyberRain from '../effects/cyber-rain/CyberRain.astro';
+import CyberDust from '../effects/cyber-dust/CyberDust.astro';
 interface Props {
   variant?: 'blog' | 'tags';
 }
 const { variant = 'blog' } = Astro.props;
 ---
 
-<div class="cyber-rain" data-cyber-rain data-atmosphere={variant} aria-hidden="true"></div>
-<div class="cyber-dust" data-cyber-dust aria-hidden="true"></div>
+<CyberRain sizing="viewport" data-atmosphere={variant} />
+<CyberDust sizing="viewport" />
 
 <script>
   import { initCyberRainAndDust } from '../scripts/cyber-rain-dust.js';
@@ -19,18 +21,12 @@ const { variant = 'blog' } = Astro.props;
     .cyber-spotlight {
       opacity: 0.42;
       filter: hue-rotate(18deg) saturate(0.7);
-    }
-    .cyber-spotlight-tl {
-      animation-duration: 18s;
-    }
-    .cyber-spotlight-tr {
-      animation-duration: 30s;
+      --spotlight-left-duration: 18s;
+      --spotlight-right-duration: 30s;
     }
     .cyber-rain {
       opacity: 0.7;
-    }
-    .cyber-rain-drop {
-      background: linear-gradient(
+      --cyber-rain-background: linear-gradient(
         to bottom,
         transparent,
         rgba(177, 204, 231, 0.4) 40%,
@@ -40,10 +36,8 @@ const { variant = 'blog' } = Astro.props;
     }
     .cyber-dust {
       opacity: 0.45;
-    }
-    .cyber-dust-particle {
-      background: rgba(195, 197, 234, 0.6);
-      box-shadow: 0 0 8px rgba(158, 186, 225, 0.24);
+      --cyber-dust-color: rgba(195, 197, 234, 0.6);
+      --cyber-dust-shadow: 0 0 8px rgba(158, 186, 225, 0.24);
     }
     .cyber-flicker {
       background:
@@ -65,9 +59,7 @@ const { variant = 'blog' } = Astro.props;
 
   @media (prefers-reduced-motion: reduce) {
     body:has([data-atmosphere='tags']) {
-      &::after,
-      .cyber-spotlight-tl,
-      .cyber-spotlight-tr,
+      .cyber-fog,
       .cyber-flicker,
       .cyber-haze {
         animation: none;

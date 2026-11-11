@@ -1,0 +1,106 @@
+@import '../blink-cursor/cursor.css';
+[data-startup-text] {
+  display: grid;
+  font-family: var(--startup-font, ui-monospace, monospace);
+  color: var(--startup-color, #a0efb5);
+  letter-spacing: var(--startup-tracking, 0.2em);
+}
+[data-startup-text] .startup-text-line {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 1.45em;
+}
+[data-startup-text] [data-startup-group='startup'] {
+  animation: startup-text-fade var(--startup-fade-duration) ease var(--startup-fade-delay) forwards;
+}
+[data-startup-text] [data-startup-group='message'] {
+  visibility: hidden;
+  animation: startup-text-show 0s var(--startup-message-delay) forwards;
+}
+[data-startup-text] .startup-text-segment {
+  position: relative;
+  display: inline-block;
+  text-shadow: var(--startup-shadow, 0 0 10px rgba(96, 255, 128, 0.3));
+}
+[data-startup-text] .startup-text-segment > span {
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: pre;
+  width: calc(var(--terminal-units) * 1ch + var(--terminal-chars) * var(--startup-tracking, 0.2em));
+  animation: startup-text-type var(--terminal-duration) steps(var(--terminal-steps), end)
+    var(--terminal-delay) backwards;
+}
+[data-startup-text] .startup-text-segment[data-leading-space] > span {
+  animation:
+    startup-text-type var(--terminal-duration) steps(var(--terminal-steps), end)
+      var(--terminal-delay) backwards,
+    startup-text-hold var(--terminal-delay) step-end backwards;
+}
+[data-startup-text] .startup-text-segment::after {
+  content: '';
+  position: absolute;
+  right: -0.6em;
+  top: 0.12em;
+  width: 0.45em;
+  height: 0.9em;
+  background: var(--startup-cursor-color, currentColor);
+  pointer-events: none;
+  visibility: hidden;
+  animation:
+    effect-cursor-terminal 0.7s step-end var(--cursor-blinks) var(--cursor-delay) forwards,
+    startup-text-cursor-window var(--cursor-duration) step-end var(--cursor-delay) forwards;
+}
+@keyframes startup-text-type {
+  from {
+    width: calc(var(--terminal-initial) * (1ch + var(--startup-tracking, 0.2em)));
+  }
+  to {
+    width: calc(
+      var(--terminal-units) * 1ch + var(--terminal-chars) * var(--startup-tracking, 0.2em)
+    );
+  }
+}
+@keyframes startup-text-hold {
+  from {
+    width: 0;
+  }
+  to {
+    width: 0;
+  }
+}
+@keyframes startup-text-fade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes startup-text-show {
+  to {
+    visibility: visible;
+  }
+}
+@keyframes startup-text-cursor-window {
+  0% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-startup-text][data-has-message='true'] [data-startup-group='startup'] {
+    display: none;
+  }
+  [data-startup-text] [data-startup-group] {
+    visibility: visible;
+    animation: none;
+  }
+  [data-startup-text] .startup-text-segment > span {
+    animation: none;
+  }
+  [data-startup-text] .startup-text-segment::after {
+    display: none;
+  }
+}

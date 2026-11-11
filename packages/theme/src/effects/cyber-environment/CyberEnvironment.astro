@@ -1,0 +1,14 @@
+---
+import { environmentLayers } from './layers.js';
+import './environment.css';
+interface Props {
+  sizing?: 'container' | 'viewport';
+}
+const { sizing = 'container' } = Astro.props;
+---
+
+{
+  environmentLayers.map(([layer, className]) => (
+    <div class={className} data-cyber-layer={layer} data-sizing={sizing} aria-hidden="true" />
+  ))
+}
