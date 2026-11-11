@@ -15,7 +15,7 @@ All notable changes to this project are documented in this file.
 
 ## Unreleased
 
-## [0.32.0] - 2026-11-11
+## [0.32.0] - 2026-11-12
 
 See the [delivery record](docs/releases/0.32.0.md) for actual publication and acceptance status.
 
