@@ -32,8 +32,8 @@ export function initFragmentLinks() {
     button.hidden = false;
   });
   function hashId(hash) {
-    if (!hash.startsWith('#fragment-')) return;
-    const id = hash.slice('#fragment-'.length);
+    if (!hash.startsWith('#')) return;
+    const id = hash.slice(1);
     return FRAGMENT_ID.test(id) ? id : undefined;
   }
   const cardFor = (id) => root.querySelector(`[data-fragment-id="${id}"]`);
@@ -123,7 +123,7 @@ export function initFragmentLinks() {
       const target = new URL(page === 1 ? './' : `${page}/`, feed);
       target.search = window.location.search;
       target.searchParams.set(JUMP_PARAM, id);
-      target.hash = `fragment-${id}`;
+      target.hash = id;
       window.location.replace(target.href);
     } catch {
       if (!scope.disposed && token === sequence) message(labels.indexError);

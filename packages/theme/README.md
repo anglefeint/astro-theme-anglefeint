@@ -37,7 +37,7 @@ Article sitemap lastmod follows rendered updatedDate/pubDate. Terminal JSON noin
 
 Pagination in 0.32.0+: Fragments reuses Blog's page-number controls, neon styles and threshold-based jump input through `theme.pagination`. `theme.fragments.pageSize` remains independent. Requires theme 0.32.0 or later.
 
-Sharing in 0.32.0+: dates link to the fragment within its feed, with a compact copy control. Share `/<locale>/fragments/#fragment-ID`, using the existing frontmatter id. Off-page targets load a small static language index only when needed and navigate to their current page. Rebuild after changing content, dates or pageSize, keeping IDs stable. Cross-page locating/copying requires JavaScript; denied clipboard access exposes a selectable URL. Missing entries/load errors show feedback and stale destinations cannot bounce between pages. Use the date link/copy control rather than the numbered browser address; removed page numbers retain the host's normal 404. This sharing behavior requires theme 0.32.0 or later.
+Sharing in 0.32.0+: dates link to the fragment within its feed, with a compact copy control. Share `/<locale>/fragments/#ID`, using the existing frontmatter id. Off-page targets load a small static language index only when needed and navigate to their current page. Rebuild after changing content, dates or pageSize, keeping IDs stable. Cross-page locating/copying requires JavaScript; denied clipboard access exposes a selectable URL. Missing entries/load errors show feedback and stale destinations cannot bounce between pages. Use the date link/copy control rather than the numbered browser address; removed page numbers retain the host's normal 404. This sharing behavior requires theme 0.32.0 or later.
 
 Optional short-form Markdown lives in `src/content/fragments/<locale>/`. Enable with `theme.fragments: { enabled: true }`; the menu appears below Decoder Lab at `/<locale>/fragments/`. The feed defaults off, uses `pageSize: 20` (1–100), and has its own `comments.enabled: false` default. A custom fragments route is reserved only when this feature is enabled.
 
@@ -273,7 +273,7 @@ The unified integration automatically forwards machine-readable context and loca
 
 ## Default sharing image and short Fragment IDs (0.33.0+)
 
-Set site.ogImage in src/site.config.ts to a public-root image path (for example /images/share.jpg, stored at public/images/share.jpg) or an HTTPS URL. Merge the property into your existing site settings. Leave it blank to use the bundled 1200×630 Anglefeint artwork. Fragments and all of its #fragment-ID sharing links use this default. Article-specific and automatically generated article images retain priority; with automatic generation disabled, an article hero also takes priority over the site default. Rebuild and deploy after changing images; sharing platforms may cache previews.
+Set site.ogImage in src/site.config.ts to a public-root image path (for example /images/share.jpg, stored at public/images/share.jpg) or an HTTPS URL. Merge the property into your existing site settings. Leave it blank to use the bundled 1200×630 Anglefeint artwork. Fragments and all of its #ID sharing links use this default. Article-specific and automatically generated article images retain priority; with automatic generation disabled, an article hero also takes priority over the site default. Rebuild and deploy after changing images; sharing platforms may cache previews.
 
 ```ts
 export const THEME_CONFIG = defineThemeConfig({

@@ -672,12 +672,12 @@ try {
     const browser = await chromium.launch();
     try {
       const page = await browser.newPage();
-      await page.goto(`${base}/en/fragments/#fragment-User0001`);
-      await expect(page).toHaveURL(`${base}/en/fragments/2/#fragment-User0001`);
+      await page.goto(`${base}/en/fragments/#User0001`);
+      await expect(page).toHaveURL(`${base}/en/fragments/2/#User0001`);
       await expect(page.locator('[data-fragment-id="User0001"]')).toBeFocused();
       await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
         'href',
-        '/en/fragments/#fragment-User0001'
+        '/en/fragments/#User0001'
       );
       const pagination = page.locator('[data-pagination-component="cyber"]');
       await expect(pagination.locator('[aria-current="page"]')).toHaveText('2');

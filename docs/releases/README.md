@@ -29,6 +29,8 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 ## Contract
 
+Current release preparation: [0.33.1](./0.33.1.md), direct Fragment anchors and composable maintainer release tools; consult its ledger before claiming delivery.
+
 Latest package release: [0.33.0](./0.33.0.md), default sharing artwork, configurable fallback OG images and short Fragment IDs; see its ledger for delivery status.
 
 Previous package release: [0.32.0](./0.32.0.md), stable Fragment sharing, static page indexes, shared Cyber pagination and visual refinements. See its ledger for actual delivery status. Previous release: [0.31.0](./0.31.0.md), matching fragment/post language-generation defaults; [0.30.0](./0.30.0.md) delivered reusable cinematic effects and Fragments presentation/loading improvements. Earlier feature release: [0.29.0](./0.29.0.md), optional Markdown Fragments and popup comments reusing the article Giscus integration. The earlier [0.28.0](./0.28.0.md) introduced opt-in shared Giscus discussions across article translations.

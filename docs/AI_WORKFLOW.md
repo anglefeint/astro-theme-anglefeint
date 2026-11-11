@@ -121,6 +121,8 @@ Symlinked build fixtures must set project-local Astro `cacheDir` and Vite `cache
 
 ### 4. Release Decision
 
+Report release progress using the [six release phases](MAINTAINER_WORKFLOW.md#six-release-phases): prepare, validate, publish npm, deliver starter, accept consumers and close delivery. Choose capabilities from [Release tools](RELEASE_TOOLS.md); code owns executable prerequisites and single-plan deduplication. Cross-invocation validation-result reuse remains disabled.
+
 Publish npm when the change affects installed users through the package, for example:
 
 - `packages/theme/src/**`
@@ -129,18 +131,13 @@ Publish npm when the change affects installed users through the package, for exa
 - package CLI behavior
 - package-consumed runtime behavior
 
-If npm release is required:
+If npm release is required, compose an explicit plan from the [tool catalog](RELEASE_TOOLS.md). Preserve these constraints:
 
-1. ensure `main` is clean
-2. bump the package version
-3. update `CHANGELOG.md` and create or update the matching release note entry under `docs/releases/`
-4. commit the release-prep changes on `main`
-5. run `npm run maintainer:sync-starter:check`
-6. push `main` after validation and checking push-triggered automation
-7. publish with one `npm run release:npm` invocation; do not prepend a full dry-run for routine releases. Keep all default checks, and wait for its dist-tag and exact-version tarball verification
-8. then sync and validate starter with `npm run release:starter`
-9. push `starter`
-10. test the remote template, record actual results, then tag the npm source commit and publish the GitHub Release following `docs/PACKAGE_RELEASE.md`
+- Prepare the version, changelog and release ledger; keep main clean and commit/push the validated source after starter drift and hosting-trigger preflight.
+- Select `npm-delivery` for complete npm delivery. Preview with `npm run release:tools -- plan npm-delivery`, then execute with `npm run release:tools -- run npm-delivery`. The planner includes all required npm gates once in that invocation; it never consumes earlier check results. Existing `release:npm` remains a compatible entry.
+- Do not routinely prepend a full dry-run. Upload once, and recover accepted uploads through read-only registry verification.
+- Only after exact download/tag verification, deliver and push starter, run required remote consumer/upgrade scenarios, then complete the exact-source tag, GitHub Release and final production acceptance.
+- Record actual results and limitations. npm upload alone is not completion. See the catalog for tool effects and runbooks for delivery/evidence policy; do not duplicate their internal commands here.
 
 If npm release is not required but starter should still change:
 

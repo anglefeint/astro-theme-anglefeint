@@ -12,6 +12,12 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-12 Direct Fragment anchors and release tools (preparation)
+
+按用户本轮授权，先整理发布工具与工作流的职责边界，并用短链接改动进行真实交付。Fragment 卡片原生 ID、日期链接、复制／手动回退和跨页定位统一为 `#ID`；版本化 JSON 和 `fragment/ID` 评论身份保持不变，不引入旧前缀别名。同步九语 README、npm README、九语 demo／starter Guide 1 和 Guide 5、架构与升级指引；历史发布账本保留原事实。
+
+维护工具拆分为能力目录、依赖规划器和实际 npm operations；原 release:npm 为兼容入口，新 release:tools 支持 list／plan／run。工作流只描述选用能力、必需门禁、交付依赖和完成凭证；同次计划去重，不读历史指纹跳检。维护脚本不进入 npm 包或 starter，消费者十一脚本覆盖／推送钩子／各环境审计及矩阵均保留。元数据与相关文档经 suggest:docs 路由核对；实际发布与验收结果统一在 [0.33.1 账本](releases/0.33.1.md) 补录，准备状态不视为已交付。
+
 ## 2026-11-12 0.33.0 默认分享图与短 ID（正式交付）
 
 以 4a0b9f03820b4964ebf5a67146f643c5e42b347b 为基线，按用户授权接入批准的 OG 图并执行测试／文档／安全发布。代码链为 site.ogImage 类型／默认值 → BaseHead → 既有 social resolve／publicDir handoff → OG／Twitter／JSON-LD；保留文章指定／生成／hero 优先级。包内新 JPG 与 CLI helper 通过现有 files/exports 交付，不新增 starter 受管实现。Nano ID 5 只在 CLI 生成 8 位字母数字 ID，js-yaml 读取各语言现存 frontmatter，查重重试；按随后用户要求仅接受 8 位字母数字 ID，不保留长 ID 兼容；引号保护纯数字 ID。demo 的 13 组碎片／九语言共 117 条全部重置为共享的短 ID，保留正文、时间和示例覆盖；旧链接／评论不桥接，不操作用户个人博客。

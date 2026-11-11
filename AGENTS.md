@@ -103,6 +103,8 @@ Implemented behavior is defined by code. Documentation records it; when they dis
   - reusable visual APIs, component source map and page-adapter/lifecycle boundaries under `packages/theme/src/effects/`
 - `docs/MAINTAINER_WORKFLOW.md`
   - maintainer release policy details
+- `docs/RELEASE_TOOLS.md`
+  - discover release capabilities, executable dependencies and tool composition boundaries
 - `docs/DOC_SYNC_WORKFLOW.md`
   - metadata-driven documentation update algorithm
 

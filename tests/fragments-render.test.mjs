@@ -107,7 +107,7 @@ test(
         });
         assert.equal(
           secondPage.querySelector('[data-fragment-link]').getAttribute('href'),
-          `/${locale}/fragments/#fragment-First001`
+          `/${locale}/fragments/#First001`
         );
         assert.equal(
           secondPage.querySelector('[data-fragment-copy]').getAttribute('aria-label'),
@@ -121,6 +121,7 @@ test(
           secondPage.querySelector('[data-fragment-id]').getAttribute('data-fragment-id'),
           'First001'
         );
+        assert.equal(secondPage.querySelector('[data-fragment-id]').getAttribute('id'), 'First001');
         assert.equal(secondPage.querySelector('link[hreflang]'), null);
       }
       const previousIndex = parse(await fixture.read('en/fragments/index.html'))
@@ -144,7 +145,7 @@ test(
       );
       assert.equal(
         repaged.querySelector('[data-fragment-link]').getAttribute('href'),
-        '/en/fragments/#fragment-First001'
+        '/en/fragments/#First001'
       );
       const smallerIndex = repaged
         .querySelector('[data-fragment-index]')
@@ -174,7 +175,7 @@ test(
         repaged
           .querySelector('[data-fragment-id="First001"] [data-fragment-link]')
           .getAttribute('href'),
-        '/en/fragments/#fragment-First001'
+        '/en/fragments/#First001'
       );
       await assert.rejects(fixture.read('en/fragments/2/index.html'), { code: 'ENOENT' });
       await writeFile(

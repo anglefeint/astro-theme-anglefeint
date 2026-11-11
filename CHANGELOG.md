@@ -11,6 +11,13 @@ depends_on:
 
 # Changelog
 
+## [0.33.1] - 2026-11-12
+
+See the [delivery record](docs/releases/0.33.1.md) for actual publication and acceptance status.
+
+- Simplify Fragment sharing links to `/<locale>/fragments/#ID`, using the existing eight-character ID directly for card anchors, date links, copying and cross-page navigation. JSON page indexes and comment identities are unchanged. Synchronize nine-language README and demo/starter guides.
+- Separate maintainer npm release operations from agent workflow policy: add a discoverable tool catalog, read-only dependency plans and composable execution with single-invocation deduplication. Keep all default gates, blocking audits, existing release flags and standalone recovery; no cross-invocation result cache.
+
 All notable changes to this project are documented in this file.
 
 ## Unreleased

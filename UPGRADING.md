@@ -10,6 +10,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.33.1: Direct Fragment anchors
+
+See the [release record](docs/releases/0.33.1.md) for actual availability. After publication, npm schema-1 users can run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.33.1`), preview and redeploy. Share links now use `/<locale>/fragments/#ID` directly. Existing Markdown IDs, comment discussions and JSON page indexes are preserved; no content edit is required. Previously copied `#fragment-ID` links are not aliases: copy updated links after deployment. Personal tutorials are not overwritten by upgrading; current README and demo/starter guides document the new format. Maintainer release tools are repository-only and add no consumer commands or dependencies.
+
 ## 0.33.0: Default sharing artwork and short Fragment IDs
 
 For npm schema-1 integration starters run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.33.0` for this exact version), then preview and redeploy. See the [release record](docs/releases/0.33.0.md) for actual delivery status. Fragment ID format changes intentionally: only eight ASCII letters/digits are accepted. Remove and repost old UUID/long-ID fragments before upgrading; no compatibility or migration tool is provided. Missing page images use the bundled Anglefeint artwork; optionally merge `site.ogImage` into the existing site object using a public-root path or HTTPS URL. Article-specific/generated images retain priority; disabled-generation heroes also retain priority. Local overrides must exist under public and rebuilds revise their URLs; platforms may retain preview caches.

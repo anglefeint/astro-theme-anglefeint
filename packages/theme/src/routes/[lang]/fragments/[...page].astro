@@ -105,16 +105,12 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
       cards.map(({ entry, Content }) => (
         <article
           class="fragment-card"
-          id={`fragment-${entry.data.id}`}
+          id={entry.data.id}
           data-fragment-id={entry.data.id}
           tabindex="-1"
         >
           <div class="fragment-meta">
-            <a
-              class="fragment-date"
-              data-fragment-link
-              href={`${feedHref}#fragment-${entry.data.id}`}
-            >
+            <a class="fragment-date" data-fragment-link href={`${feedHref}#${entry.data.id}`}>
               <time datetime={entry.data.pubDate.toISOString()}>
                 {entry.data.pubDate.toLocaleString(getLocaleHreflang(locale), {
                   dateStyle: 'medium',

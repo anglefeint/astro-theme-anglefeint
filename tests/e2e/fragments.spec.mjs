@@ -81,7 +81,7 @@ for (const width of [1280, 390]) {
     await expect(pagination.locator('[aria-current="page"]')).toHaveText('2');
     await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
       'href',
-      '/zh/fragments/#fragment-First001'
+      '/zh/fragments/#First001'
     );
     const input = pagination.locator('.pagination-jump-input');
     await input.fill('0');
@@ -115,14 +115,14 @@ test('fragment dates and copy links stay on the current page without fetching an
   });
   await page.goto(`${origin}/zh/fragments/2/`);
   const date = page.locator('[data-fragment-link]');
-  await expect(date).toHaveAttribute('href', '/zh/fragments/#fragment-First001');
+  await expect(date).toHaveAttribute('href', '/zh/fragments/#First001');
   await date.click();
-  await expect(page).toHaveURL(`${origin}/zh/fragments/2/#fragment-First001`);
+  await expect(page).toHaveURL(`${origin}/zh/fragments/2/#First001`);
   await expect(page.locator('[data-fragment-id="First001"]')).toBeFocused();
   await page.locator('[data-fragment-copy]').click();
   await expect
     .poll(() => page.evaluate(() => window.fragmentCopied))
-    .toBe(`${origin}/zh/fragments/#fragment-First001`);
+    .toBe(`${origin}/zh/fragments/#First001`);
   await expect(page.locator('[data-fragment-copy]')).toHaveAttribute('data-copied', '');
   expect(indexes).toHaveLength(0);
 });
@@ -134,14 +134,14 @@ test('a stable root link locates a fragment across pages, then handles another h
   page.on('request', (request) => {
     if (request.url().includes('/fragments/index/')) indexes.push(request.url());
   });
-  await page.goto(`${origin}/en/fragments/#fragment-First001`);
-  await expect(page).toHaveURL(`${origin}/en/fragments/2/#fragment-First001`);
+  await page.goto(`${origin}/en/fragments/#First001`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/2/#First001`);
   await expect(page.locator('[data-fragment-id="First001"]')).toBeFocused();
   expect(indexes).toHaveLength(1);
   await page.evaluate(() => {
-    window.location.hash = 'fragment-Third003';
+    window.location.hash = 'Third003';
   });
-  await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-Third003`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/#Third003`);
   await expect(page.locator('[data-fragment-id="Third003"]')).toBeFocused();
   expect(indexes).toHaveLength(2);
 });
@@ -153,16 +153,16 @@ test('an on-page hash needs no index and a missing ID reports a localized messag
   page.on('request', (request) => {
     if (request.url().includes('/fragments/index/')) indexes.push(request.url());
   });
-  await page.goto(`${origin}/zh/fragments/#fragment-Third003`);
+  await page.goto(`${origin}/zh/fragments/#Third003`);
   await expect(page.locator('[data-fragment-id="Third003"]')).toBeFocused();
   expect(indexes).toHaveLength(0);
   await page.evaluate(() => {
-    window.location.hash = 'fragment-Deleted0';
+    window.location.hash = 'Deleted0';
   });
   await expect(page.locator('[data-fragment-link-status]')).toHaveText(
     '找不到这条碎片，它可能已被移除。'
   );
-  await expect(page).toHaveURL(`${origin}/zh/fragments/#fragment-Deleted0`);
+  await expect(page).toHaveURL(`${origin}/zh/fragments/#Deleted0`);
   expect(indexes).toHaveLength(1);
 });
 
@@ -181,7 +181,7 @@ test('clipboard rejection exposes a selectable canonical link', async ({ page })
   await page.locator('[data-fragment-copy]').click();
   const input = page.locator('[data-fragment-copy-feedback] input');
   await expect(input).toBeFocused();
-  await expect(input).toHaveValue(`${origin}/en/fragments/#fragment-First001`);
+  await expect(input).toHaveValue(`${origin}/en/fragments/#First001`);
   expect(await input.evaluate((node) => node.selectionEnd - node.selectionStart)).toBe(
     (await input.inputValue()).length
   );
@@ -202,11 +202,11 @@ for (const mode of ['network', 'invalid', 'same-page']) {
         ),
       });
     });
-    await page.goto(`${origin}/en/fragments/#fragment-First001`);
+    await page.goto(`${origin}/en/fragments/#First001`);
     await expect(page.locator('[data-fragment-link-status]')).toHaveText(
       'Unable to locate this fragment. Refresh the page and try again.'
     );
-    await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-First001`);
+    await expect(page).toHaveURL(`${origin}/en/fragments/#First001`);
     expect(calls).toBe(1);
   });
 }
@@ -228,15 +228,15 @@ test('a late index response cannot navigate an obsolete hash', async ({ page }) 
       body: JSON.stringify({ version: 1, totalPages: 2, pages: { First001: 2 } }),
     });
   });
-  await page.goto(`${origin}/en/fragments/#fragment-First001`);
+  await page.goto(`${origin}/en/fragments/#First001`);
   await requested;
   await page.evaluate(() => {
-    window.location.hash = 'fragment-Third003';
+    window.location.hash = 'Third003';
   });
   await expect(page.locator('[data-fragment-id="Third003"]')).toBeFocused();
   release();
   await page.waitForLoadState('networkidle');
-  await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-Third003`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/#Third003`);
 });
 
 test('a stale destination cannot bounce between pages, even without storage', async ({ page }) => {
@@ -267,8 +267,8 @@ test('a stale destination cannot bounce between pages, even without storage', as
     ).replace('data-fragment-id="First001"', 'data-fragment-id="Stale001"');
     await route.fulfill({ contentType: 'text/html', body: html });
   });
-  await page.goto(`${origin}/en/fragments/#fragment-First001`);
-  await expect(page).toHaveURL(`${origin}/en/fragments/2/#fragment-First001`);
+  await page.goto(`${origin}/en/fragments/#First001`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/2/#First001`);
   await expect(page.locator('[data-fragment-link-status]')).toHaveText(
     'Unable to locate this fragment. Refresh the page and try again.'
   );
@@ -284,7 +284,7 @@ test('without JavaScript dates remain native links and copy controls stay hidden
     await page.goto(`${origin}/en/fragments/2/`);
     await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
       'href',
-      '/en/fragments/#fragment-First001'
+      '/en/fragments/#First001'
     );
     await expect(page.locator('[data-fragment-copy]')).toBeHidden();
     await expect(page.locator('[data-fragment-id="First001"]')).toContainText('First001');

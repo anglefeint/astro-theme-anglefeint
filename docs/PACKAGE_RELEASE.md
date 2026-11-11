@@ -39,6 +39,8 @@ git push origin main
 
 ## 2) Pre-release checks
 
+Use [Release tools](RELEASE_TOOLS.md) to discover and compose capabilities. Preview `npm run release:tools -- plan npm-delivery` and execute `npm run release:tools -- run npm-delivery` for normal stable npm delivery. Explicitly composing source/installed checks with this target runs each prerequisite once in that invocation; separate invocations rerun checks. The compatibility `release:npm` entry calls the same operations and preserves existing flags.
+
 On 2026-10-22, the blocking audit stopped 0.20.1 before upload because Vite 8.3.2 was newly flagged. Main/starter now use `^8.3.5` and a refreshed lock; no audit exemption or forced dependency downgrade was introduced. See [0.20.1](releases/0.20.1.md) for the actual execution and patched-version references.
 
 The npm release entry uses the shared maintainer session for serial execution, stage timing and log summaries; see [reporting and recovery](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting). Command order, audit gates, installed build matrix, existing skip flags, fresh cache and publish/download verification remain unchanged. All npm publish output stays on the terminal to preserve authentication behavior. Do not run release, starter sync or push checks concurrently.
@@ -47,7 +49,7 @@ The maintainer root declares Wrangler `^4.151.1`; the current lock resolves Wran
 
 Dependency audits are blocking: main, isolated starter and delivered starter use `scripts/audit-dependencies.mjs`. All reported vulnerabilities and registry errors block delivery, including with `--skip-checks`. The former static-cache exception was retired on 2026-10-04 after updating main to `http-cache-semantics@4.3.0`; the delivered starter already resolved that version.
 
-`scripts/release-npm.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or completed CI. Those are maintainer workflow requirements: inspect them before running it. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
+The npm tool implementation in `scripts/npm-release-tools.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or completed CI. Those are maintainer workflow requirements: inspect them before running it. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
 
 After committing the release-prep state, run the formal release entry once. It checks that the local package version is newer than the npm registry version before packing or publishing. Do not prepend a full dry-run to every routine release: that repeats the same main checks and installed build matrix.
 

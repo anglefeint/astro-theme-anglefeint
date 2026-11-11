@@ -136,21 +136,31 @@ The integration starter ships package-owned doctor/new-page/new-post/new-fragmen
 
 ## Release Sequence (Canonical)
 
-Use this sequence unless explicitly skipped for a documented reason.
+### Six release phases
 
-1. Finish implementation on `main`.
-2. If Class A/C affects shipped package behavior:
-   - bump package version
-   - update `CHANGELOG.md`
-   - add or update `docs/releases/<version>.md`
-   - commit the release-prep changes on `main`
-3. Run `npm run maintainer:sync-starter:check` on `main` to confirm the expected starter drift before mutating branches.
-4. Push the validated release-prep commit on `main` after checking push-triggered automation.
-5. If Class A/C affects shipped package behavior, run `npm run release:npm` once with all default checks and wait for its dist-tag and exact-version tarball verification. A full `--dry-run` is optional for diagnostics, not a mandatory preceding pass; do not routinely repeat the same main checks and installed matrix. On verification timeout, confirm availability before syncing starter; never republish the accepted version.
-6. Run `npm run release:starter` on `main` to sync files, update starter theme dependency, validate `starter`, and restore `main` dependencies.
-7. Push `starter`.
-8. Create a temporary project from the remote `#starter` template. Verify install, CLI commands, checks, build, dev and preview; stop servers and remove the temporary project after success.
-9. Record delivery evidence, tag the exact npm source commit, create the GitHub Release and read it back. Only then is the release complete.
+Use these six phases to communicate progress and organize tools. Individual checks remain internal steps, not forty separate maintainer actions. Select capabilities from [Release tools](RELEASE_TOOLS.md). The planner deduplicates dependencies within one invocation; it does not reuse prior-run results or remove gates.
+
+| Phase               | Work and required evidence                                                                                                                                                                                                           |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1. Prepare          | Classify package/starter/demo changes; synchronize responsible docs and examples; prepare version/changelog/release notes.                                                                                                           |
+| 2. Validate         | Run applicable source checks, build/runtime assertions, functional browsers, independent installed audit/build matrix and real upgrade preservation acceptance. Keep workspace, installed-package and upgrade results distinct.      |
+| 3. Publish npm      | Preflight starter drift and hosting triggers, commit/push source, audit dependencies, check registry/authentication, pack/publish once and verify the exact downloaded version/tag. Continue failed registry verification read-only. |
+| 4. Deliver starter  | Generate manifest-owned files, update/install dependencies, audit, run doctor once, commit, restore main/dependencies and push starter.                                                                                              |
+| 5. Accept consumers | Test fresh remote npm/pnpm projects and the required published upgrade scenario, including public commands, dev/preview, browser behavior and user-file preservation.                                                                |
+| 6. Close delivery   | Record results, tag the exact npm source, create/read back the GitHub Release, wait for final deployment, verify production content and record refs/remaining limitations.                                                           |
+
+The dependency and completion constraints below remain authoritative. Current hooks and separately invoked entries still execute checks independently; phase completion is not permission to bypass them. Template `check` and `doctor` both invoke package doctor, while separate public-script execution remains an explicit acceptance contract. Candidate deduplication must preserve that contract and prove which source, dependency environment and artifact each result covers before changing execution. Audits of different installations, changed-configuration builds and post-publication checks are not interchangeable.
+
+### Dependency and completion constraints
+
+The agent chooses tools using the catalog and change classification. Do not turn this document into a second implementation of script internals.
+
+- Required preparation/local acceptance precede publication. Commit/push the exact validated package source after drift and hosting-trigger preflight.
+- npm upload requires source checks, main audit, independent installed audit/build matrix, version/auth checks and packaging. Executable prerequisites belong to the tool planner. Normal selection is `npm-delivery`; preview its plan before running. `release:npm` uses the same operations and retains diagnostic options.
+- Verified registry tag/exact download precedes starter delivery. A verification timeout after upload resumes through read-only recovery, never a repeated upload.
+- Delivered starter precedes remote-template acceptance. Required npm, pnpm and published-upgrade contexts remain distinct; complete their CLI/dev/preview/browser/user-file assertions.
+- Record evidence, tag the exact npm source, create/read back the GitHub Release and verify final production content. Report unverified hosting settings or active revision explicitly.
+- Keep checkout mutations serial. Independent temporary consumers may overlap with separate ports. Deduplication is scoped to one tool invocation; pre-push hooks and separate commands retain their gates.
 
 Starter synchronization uses `npm update --prefer-online` within the source dependency ranges before its blocking audit. This refreshes indirect dependencies retained by older lockfiles; it does not bypass version constraints or vulnerability findings.
 

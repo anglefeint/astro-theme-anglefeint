@@ -452,7 +452,7 @@ export const THEME_CONFIG = defineThemeConfig({
   const fragmentId = fragmentsHtml.match(/data-fragment-id="([^"]+)"/)?.[1];
   assert.equal(fragmentIndex.version, 1);
   assert.equal(fragmentIndex.pages[fragmentId], 1);
-  assert.ok(fragmentsHtml.includes(`href="/en/fragments/#fragment-${fragmentId}"`));
+  assert.ok(fragmentsHtml.includes(`href="/en/fragments/#${fragmentId}"`));
   assert.deepEqual(await hashes(), optedOut);
   scenarios.push(
     'old scripts need no changes: new-fragment works after upgrade; optional feed preserves and renders personal fragments'
