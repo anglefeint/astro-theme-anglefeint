@@ -41,6 +41,8 @@ Usa Cursor, Codex o Claude Code para configurar el sitio, escribir artículos y 
 
 ## Instalación
 
+Esta plantilla está basada en **Astro 7**.
+
 Usa Node.js 22.12.0 o posterior. Ejecuta estos comandos desde la carpeta donde quieras crear tu blog y abre la dirección que muestre el servidor de desarrollo.
 
 ```bash
