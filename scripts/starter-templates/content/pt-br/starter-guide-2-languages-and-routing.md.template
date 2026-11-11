@@ -88,5 +88,4 @@ O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. 
 
 Se a atualização falhar, não publique `dist/`: restaurar dependências não restaura o build anterior. Resolva o erro e execute `npm run doctor` com sucesso antes do deploy. Com pnpm, confira a compatibilidade e atualize manualmente com `pnpm add @anglefeint/astro-theme@latest` e `pnpm run doctor`, mantendo seu lockfile.
 
-
 [Guia 5: Publicar fragmentos](../starter-guide-5-fragments/) — Publique pensamentos breves em Markdown, com comentários opcionais em uma janela.

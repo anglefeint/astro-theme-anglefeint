@@ -167,5 +167,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 업그레이드 실패 시 `dist/`를 배포하지 마세요. 의존성 복원은 이전 빌드 결과물을 복원하지 않습니다. 오류를 해결하고 `npm run doctor`가 성공한 뒤 배포하세요. pnpm 사용자는 릴리스 호환성을 확인하고 잠금 파일을 유지한 채 `pnpm add @anglefeint/astro-theme@latest`와 `pnpm run doctor`로 수동 업데이트하세요.
 
-
 [사용자 가이드 5: 조각 게시하기](../starter-guide-5-fragments/) — 짧은 생각을 Markdown으로 기록하고 선택적으로 팝업 댓글을 사용합니다.

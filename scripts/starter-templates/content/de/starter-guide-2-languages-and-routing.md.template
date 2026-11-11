@@ -88,5 +88,4 @@ Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien we
 
 Bei einem fehlgeschlagenen Upgrade `dist/` nicht veröffentlichen: Die Wiederherstellung der Abhängigkeiten stellt keine alten Build-Dateien wieder her. Fehler beheben und `npm run doctor` erfolgreich ausführen. Mit pnpm zuerst die Kompatibilität prüfen, dann mit `pnpm add @anglefeint/astro-theme@latest` und `pnpm run doctor` manuell aktualisieren; die eigene Lockdatei behalten.
 
-
 [Anleitung 5: Fragmente veröffentlichen](../starter-guide-5-fragments/) — Kurze Gedanken als Markdown mit optionalen Kommentaren im Dialog.

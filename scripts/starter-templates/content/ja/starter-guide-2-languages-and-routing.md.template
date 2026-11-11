@@ -167,5 +167,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。
 
-
 [ユーザーガイド 5：断片を公開する](../starter-guide-5-fragments/) — 短い思いを Markdown で残し、コメントをダイアログで表示します。

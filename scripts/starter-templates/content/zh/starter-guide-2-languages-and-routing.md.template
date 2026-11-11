@@ -167,5 +167,4 @@ npx @anglefeint/astro-theme@latest upgrade
 
 升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。
 
-
 [用户指南 5：发布碎片](../starter-guide-5-fragments/) — 用 Markdown 记录简短感想，可选弹窗评论。

@@ -167,5 +167,4 @@ The automatic updater currently supports npm only and refuses pnpm/yarn/bun lock
 
 If an upgrade fails, do not deploy `dist/`: dependency rollback does not restore previous build output. Resolve the error and run `npm run doctor` successfully before deploying. pnpm users update explicitly with `pnpm add @anglefeint/astro-theme@latest` and `pnpm run doctor`; keep their lockfile and review release compatibility first.
 
-
 [User Guide 5: Publish Fragments](../starter-guide-5-fragments/) — Publish brief thoughts as Markdown, with optional popup comments.
