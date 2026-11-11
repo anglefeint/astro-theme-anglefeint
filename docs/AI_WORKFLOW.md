@@ -168,6 +168,7 @@ If npm release is not required but starter should still change:
 - `npm run release:npm` cleans up the generated `anglefeint-astro-theme-<version>.tgz` tarball after publish or dry-run completion.
 - `npm run release:npm` verifies that the local package version is newer than the npm registry version before packing or publishing.
 - After a real publish, it retries dist-tag/download verification, never publication. If verification fails, confirm registry availability before syncing starter; do not republish the accepted version.
+  Use `npm run release:verify -- --version <exact-version>` for standalone read-only recovery, supplying recorded `--source`, `--integrity` and/or `--shasum` when available. It verifies the selected tag and exact download without publication, installation, branch changes or starter sync; all other release gates remain required. See [the recovery contract](PACKAGE_RELEASE.md#registry-availability-and-recovery).
 
 Use `npm run maintainer:sync-starter:check` to detect drift without mutating branches.
 

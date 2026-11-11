@@ -3,14 +3,14 @@ import type { Locale } from '@anglefeint/site-i18n/config';
 import CyberShell from './shells/CyberShell.astro';
 
 interface Props {
-	locale?: Locale;
-	title: string;
-	description: string;
+  locale?: Locale;
+  title: string;
+  description: string;
 }
 
 const { locale, title, description } = Astro.props as Props;
 ---
 
 <CyberShell locale={locale} title={title} description={description}>
-	<slot />
+  <slot />
 </CyberShell>

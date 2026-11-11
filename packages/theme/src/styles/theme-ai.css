@@ -1,8 +1,8 @@
 /* AI style entrypoint: imported in stable order to avoid visual regressions. */
-@import "./ai/base.css";
-@import "./ai/background.css";
-@import "./ai/hero.css";
-@import "./ai/prose.css";
-@import "./ai/controls.css";
-@import "./ai/related.css";
-@import "./ai/responsive.css";
+@import './ai/base.css';
+@import './ai/background.css';
+@import './ai/hero.css';
+@import './ai/prose.css';
+@import './ai/controls.css';
+@import './ai/related.css';
+@import './ai/responsive.css';

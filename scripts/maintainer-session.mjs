@@ -3,6 +3,8 @@ import { closeSync, openSync, writeSync } from 'node:fs';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
+import { performance } from 'node:perf_hooks';
+import { captureMaintainerEvidence } from './maintainer-evidence.mjs';
 
 // Maintainer-only reporting; never distributed to starter or the theme package.
 export async function createMaintainerSession(name, { root = process.cwd() } = {}) {
@@ -56,15 +58,23 @@ export async function createMaintainerSession(name, { root = process.cwd() } = {
   const stages = [];
   console.log(`[maintainer] ${name}; logs: ${directory}`);
 
-  async function stage(label, operation) {
+  async function stage(
+    label,
+    operation,
+    { cwd = root, env = process.env, artifacts = false } = {}
+  ) {
     const record = { label, status: 'running' };
     stages.push(record);
     const start = Date.now();
+    let evidenceMs = 0;
     console.log(`[stage ${stages.length}] START ${label}`);
     const heartbeat = setInterval(() => {
       console.log(`[stage] RUNNING ${label} (${((Date.now() - start) / 1000).toFixed(1)}s)`);
     }, 30_000);
     try {
+      const beforeStarted = performance.now();
+      record.evidence = { before: await captureMaintainerEvidence(cwd, { env }) };
+      evidenceMs += performance.now() - beforeStarted;
       const value = await operation(record);
       record.status = 'passed';
       return value;
@@ -72,6 +82,11 @@ export async function createMaintainerSession(name, { root = process.cwd() } = {
       record.status = 'failed';
       throw error;
     } finally {
+      record.evidence ??= {};
+      const afterStarted = performance.now();
+      record.evidence.after = await captureMaintainerEvidence(cwd, { env, artifacts });
+      evidenceMs += performance.now() - afterStarted;
+      record.evidenceSeconds = Number((evidenceMs / 1000).toFixed(3));
       clearInterval(heartbeat);
       record.seconds = Number(((Date.now() - start) / 1000).toFixed(2));
       console.log(
@@ -81,56 +96,76 @@ export async function createMaintainerSession(name, { root = process.cwd() } = {
   }
 
   async function run(command, args, { cwd = root, env = process.env, interactive = false } = {}) {
-    return stage([command, ...args].join(' '), async (record) => {
-      record.log = path.join(directory, `${stages.length}.log`);
-      const fd = openSync(record.log, 'w');
-      const [executable, argv] =
-        command === 'npm' && process.platform === 'win32'
-          ? ['cmd.exe', ['/d', '/s', '/c', 'npm', ...args]]
-          : [command, args];
-      try {
-        await new Promise((resolve, reject) => {
-          // Preserve npm's terminal/authentication behavior; never record interactive input.
-          const child = spawn(executable, argv, {
-            cwd,
-            env,
-            stdio: interactive ? 'inherit' : ['inherit', 'pipe', 'pipe'],
-          });
-          if (interactive)
-            writeSync(
-              fd,
-              'Interactive output remains on the terminal; only exit status is recorded here.\n'
+    return stage(
+      [command, ...args].join(' '),
+      async (record) => {
+        record.cwd = cwd;
+        record.command = { executable: command, args };
+        record.log = path.join(directory, `${stages.length}.log`);
+        const fd = openSync(record.log, 'w');
+        const [executable, argv] =
+          command === 'npm' && process.platform === 'win32'
+            ? ['cmd.exe', ['/d', '/s', '/c', 'npm', ...args]]
+            : [command, args];
+        try {
+          const commandStarted = performance.now();
+          try {
+            await new Promise((resolve, reject) => {
+              // Preserve npm's terminal/authentication behavior; never record interactive input.
+              const child = spawn(executable, argv, {
+                cwd,
+                env,
+                stdio: interactive ? 'inherit' : ['inherit', 'pipe', 'pipe'],
+              });
+              if (interactive)
+                writeSync(
+                  fd,
+                  'Interactive output remains on the terminal; only exit status is recorded here.\n'
+                );
+              child.stdout?.on('data', (chunk) => {
+                writeSync(fd, chunk);
+              });
+              child.stderr?.on('data', (chunk) => {
+                writeSync(fd, chunk);
+              });
+              child.on('error', reject);
+              child.on('close', (code, signal) => {
+                record.exitCode = code;
+                record.signal = signal;
+                if (code === 0) resolve();
+                else
+                  reject(
+                    Object.assign(
+                      new Error(`${command} failed (${signal || code}); log: ${record.log}`),
+                      { exitCode: code ?? 1 }
+                    )
+                  );
+              });
+            });
+          } finally {
+            record.commandSeconds = Number(
+              ((performance.now() - commandStarted) / 1000).toFixed(3)
             );
-          child.stdout?.on('data', (chunk) => {
-            writeSync(fd, chunk);
-          });
-          child.stderr?.on('data', (chunk) => {
-            writeSync(fd, chunk);
-          });
-          child.on('error', reject);
-          child.on('close', (code, signal) => {
-            record.exitCode = code;
-            record.signal = signal;
-            if (code === 0) resolve();
-            else
-              reject(
-                Object.assign(
-                  new Error(`${command} failed (${signal || code}); log: ${record.log}`),
-                  { exitCode: code ?? 1 }
-                )
-              );
-          });
-        });
-      } catch (error) {
-        if (!interactive) {
-          const tail = (await readFile(record.log, 'utf8')).split(/\r?\n/).slice(-20);
-          console.error(tail.map((line) => line.slice(0, 400)).join('\n'));
+          }
+        } catch (error) {
+          if (!interactive) {
+            const tail = (await readFile(record.log, 'utf8')).split(/\r?\n/).slice(-20);
+            console.error(tail.map((line) => line.slice(0, 400)).join('\n'));
+          }
+          throw error;
+        } finally {
+          closeSync(fd);
         }
-        throw error;
-      } finally {
-        closeSync(fd);
+      },
+      {
+        cwd,
+        env,
+        artifacts:
+          command === 'npm' &&
+          args[0] === 'run' &&
+          ['check', 'doctor', 'build', 'e2e'].includes(args[1]),
       }
-    });
+    );
   }
 
   return {

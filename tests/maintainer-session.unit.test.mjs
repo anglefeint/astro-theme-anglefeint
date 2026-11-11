@@ -1,7 +1,7 @@
 import test from 'node:test';
 import process from 'node:process';
 import assert from 'node:assert/strict';
-import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -43,9 +43,29 @@ test('maintainer command retains stdout/stderr and blocks after the original exi
     assert.equal(summary.stages[0].exitCode, 7);
     assert.equal(summary.stages[0].status, 'failed');
     assert.ok(summary.stages[0].seconds >= 0);
+    assert.ok(summary.stages[0].commandSeconds >= 0);
+    assert.ok(summary.stages[0].evidenceSeconds >= 0);
+    assert.equal(summary.stages[0].evidence.before.observationalOnly, true);
+    assert.equal(summary.stages[0].evidence.after.observationalOnly, true);
     const log = await readFile(summary.stages[0].log, 'utf8');
     assert.match(log, /stdout marker/);
     assert.match(log, /stderr marker/);
+  }));
+
+test('identical command inputs still execute twice; evidence is not a reusable pass', () =>
+  fixture(async (root) => {
+    await writeFile(path.join(root, 'count'), '');
+    const session = await createMaintainerSession('no reuse fixture', { root });
+    try {
+      for (let index = 0; index < 2; index++)
+        await session.run(process.execPath, [
+          '-e',
+          'require("node:fs").appendFileSync("count", "x")',
+        ]);
+    } finally {
+      await session.close();
+    }
+    assert.equal(await readFile(path.join(root, 'count'), 'utf8'), 'xx');
   }));
 
 test('maintainer sessions queue until the preceding session releases the shared lock', () =>

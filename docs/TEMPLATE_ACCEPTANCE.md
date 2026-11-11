@@ -17,6 +17,10 @@ depends_on:
 
 # Template acceptance
 
+Command evidence from `scripts/check-template.mjs` includes ISO `startedAt` and elapsed `seconds` for each consumer command, including expected rejections and failed executions. Dev/preview duration includes readiness, route/browser checks and process teardown; their failure status and timing are retained too. All eleven consumer scripts still execute; timing does not cache or skip any command. npm and pnpm acceptance continue to use separate isolated projects. Maintainer-session input fingerprints are observational context, not acceptance receipts.
+
+`tests/starter-doctor.unit.test.mjs` invokes the real package doctor with a stub npm subprocess to prove Astro check/build execution and build-failure blocking. `tests/starter-sync.unit.test.mjs` verifies the sync ordering and that failed check/audit prevents commit/push. This supports removing only the adjacent duplicate build in maintainer starter sync; it does not replace installed builds or public-template runtime acceptance. `tests/maintainer-session.unit.test.mjs`, `tests/maintainer-evidence.unit.test.mjs` and `tests/verify-release.unit.test.mjs` cover reporting/failure behavior, non-reuse and read-only registry recovery.
+
 Run from the maintainer checkout, not from a user's starter. These tools do not publish, push or alter the real site's configuration. They need network access and installed maintainer dependencies. A passing run covers the recorded scenarios and versions, not every browser, hosting provider or possible user configuration.
 
 ## 0.27 integration-starter acceptance

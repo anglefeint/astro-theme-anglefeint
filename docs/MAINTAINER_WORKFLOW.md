@@ -21,6 +21,12 @@ This document defines the release and synchronization rules for maintainers.
 
 ## Source of Truth
 
+### Repository text format
+
+Text files use UTF-8/LF across platforms: `.gitattributes` controls Git text checkout, `.editorconfig` controls supporting editors, and `.prettierrc.json` explicitly requires LF. Git automatically detects text/binary files; do not normalize binary assets or dependency/generated directories. Existing dirty checkouts need a controlled text-only conversion after backing up local changes, not a reset, forced checkout or global Git configuration change. Run `npm run format:check` after temporary fixture processes finish; repository-wide formatting checks must not scan their transient output.
+
+These root maintenance settings are not added to starter-managed files in this change; consumer installation/configuration and upgrade ownership remain unchanged. Package source formatting is mechanical, with no runtime/API change. Future publication still follows the package release rules; this local cleanup does not publish or claim a new version.
+
 - `main` is the only source-of-truth branch for theme logic and architecture.
 - `starter` is a generated/distribution branch for template users.
 - Do not manually patch managed starter files unless explicitly required by this workflow.
@@ -84,6 +90,14 @@ Class C: Cross-layer Contract Changes
 Run main push, npm release, starter sync/push, documentation closeout push and tag push sequentially; await each result before starting the next. Never parallelize operations that share the checkout, dependencies or build directory. The pre-push hook, npm release entry and starter sync entry share `scripts/maintainer-session.mjs`'s checkout-local lock. The hook serializes its checks, not Git's subsequent network transfer; operators must still await the whole push. Direct `npm run check` and other standalone commands do not acquire this lock.
 
 Each protected entry prints stage start/end, elapsed seconds, a running notice every 30 seconds for asynchronous work, and local log paths. Non-interactive child stdout/stderr is saved in full under ignored `acceptance-results/maintainer-*/`; failures show a bounded tail and remain blocking. `summary.json` records completed stage statuses, durations and command exit codes. npm publish retains inherited terminal input/output for authentication; its stage records duration/status, not interactive output or input. Synchronous registry/audit calls report start/end but cannot emit a heartbeat while blocking Node.
+
+`scripts/maintainer-evidence.mjs` adds before/after observational fingerprints to each stage: Git HEAD/tree and working/index/untracked hashes, selected package/lockfiles (including installed lock metadata), root dotenv hashes, Node/tool versions and selected environment-value hashes. Only environment names and hashes are recorded, never dotenv contents or environment values; npm authentication variables such as `NPM_TOKEN` are excluded. Build-producing `session.run` npm commands also record the resulting `dist` tree hash. Symlinks are hashed without following their targets. `commandSeconds` measures child execution, `evidenceSeconds` measures fingerprint collection, and stage `seconds` includes both. Missing/unavailable evidence is explicit and does not replace the command's outcome.
+
+These records have `observationalOnly: true`: they are diagnostic context, not reusable validation receipts. Selected inputs are not a complete snapshot of ignored files, dependency bytes or external services. No command reads an earlier summary to skip checks; identical inputs still execute all gates. Keep existing validation and audit requirements unchanged.
+
+Starter sync runs the generated `npm run check` once after installation/audit. That script invokes package-owned `astro-theme doctor`, which runs Astro check, `npm run build` and the enabled About runtime assertions; a second immediately adjacent standalone build is unnecessary. A failed doctor/build still blocks commit/push and preserves the starter checkout for inspection. Independent consumer acceptance continues to execute the separate public `build` script as part of all eleven scripts.
+
+After an accepted npm upload whose registry verification timed out, use the standalone read-only `npm run release:verify -- --version <exact-version>` entry; see [registry recovery](PACKAGE_RELEASE.md#registry-availability-and-recovery). It shares reporting/serialization but never reruns publication or starter synchronization.
 
 The lock is released on normal success/failure. After a forcibly interrupted process, inspect `acceptance-results/.maintainer-lock/owner.json` and confirm that its process and children have stopped before removing a stale lock; never delete an active session's lock. This reporting change does not remove checks, alter existing skip flags, change dependency caches or reduce build matrices. Logs can contain sensitive tool output: keep them ignored and review/redact before sharing. These tools remain maintainer-only and need no npm release.
 

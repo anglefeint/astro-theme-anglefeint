@@ -14,6 +14,7 @@ import {
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { performance } from 'node:perf_hooks';
 import { parse } from 'node-html-parser';
 import { chromium, expect } from '@playwright/test';
 import { checkReadmeLinks } from './check-readme-links.mjs';
@@ -81,6 +82,8 @@ async function userFileHashes() {
 async function command(args, { cwd = project, overrides = {}, reject = false, npm = false } = {}) {
   const label = `${npm ? 'npm' : pm} ${args.join(' ')}`;
   console.log(label);
+  const startedAt = new Date().toISOString();
+  const commandStarted = performance.now();
   let output;
   try {
     output = await exec(process.execPath, [npmCli, ...(npm ? args : pmArgs(args))], {
@@ -92,6 +95,7 @@ async function command(args, { cwd = project, overrides = {}, reject = false, np
   } catch (error) {
     output = error;
   }
+  const seconds = Number(((performance.now() - commandStarted) / 1000).toFixed(3));
   const exitCode = output instanceof Error ? output.code : 0;
   const ok = reject ? Number.isInteger(exitCode) && exitCode > 0 : exitCode === 0;
   const log = `${output.stdout ?? ''}\n${output.stderr ?? ''}`;
@@ -102,6 +106,8 @@ async function command(args, { cwd = project, overrides = {}, reject = false, np
     exitCode,
     status: ok ? (reject ? 'expected-rejection' : 'passed') : 'failed',
     logFile,
+    startedAt,
+    seconds,
   });
   assert(ok, `${label}\n${log}\nEvidence: ${evidence}`);
   if (args[0] === 'run' && !reject) scripts.add(args[1]);
@@ -131,6 +137,9 @@ async function stop(child) {
   }
 }
 async function server(mode, routes, inspect) {
+  const startedAt = new Date().toISOString();
+  const serverStarted = performance.now();
+  const record = { command: `${pm} run ${mode}`, status: 'failed', routes, startedAt };
   const args = pmArgs([
     'run',
     mode,
@@ -151,6 +160,7 @@ async function server(mode, routes, inspect) {
   child.stdout.on('data', (chunk) => (log += chunk));
   child.stderr.on('data', (chunk) => (log += chunk));
   let base;
+  let failure;
   try {
     let ready = false;
     for (let i = 0; i < 120; i++) {
@@ -174,11 +184,22 @@ async function server(mode, routes, inspect) {
     for (const route of routes) assert.equal((await fetch(base + route)).status, 200, mode + route);
     if (inspect) await inspect(base);
     scripts.add(mode);
-    results.push({ command: `${pm} run ${mode}`, status: 'passed', routes });
+    record.status = 'passed';
+  } catch (error) {
+    failure = error;
   } finally {
-    await stop(child);
-    await writeFile(path.join(evidence, `${mode}-${results.length}.log`), log);
+    try {
+      await stop(child);
+    } catch (error) {
+      record.status = 'failed';
+      failure ??= error;
+    } finally {
+      record.seconds = Number(((performance.now() - serverStarted) / 1000).toFixed(3));
+      results.push(record);
+      await writeFile(path.join(evidence, `${mode}-${results.length}.log`), log);
+    }
   }
+  if (failure) throw failure;
 }
 
 async function browserCheck(base, customized = false) {

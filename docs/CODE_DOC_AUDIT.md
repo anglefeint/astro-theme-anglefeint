@@ -12,6 +12,34 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-12 Maintenance delivery (no npm release)
+
+用户授权将此前本地维护流程与 LF 清理改动正式提交并同步 starter，取代此前不提交／发布的限制。完整核对 39 个工作区文件：包外维护工具／测试／文档／换行配置，以及 16 个纯格式文件（其中 14 个在 npm 包内）。根据 MAINTAINER_WORKFLOW 的行为判定门禁，运行时、导出、依赖、schema 和包内 CLI 行为均未改变；不升版本、不执行 npm publish，npm 保持 0.32.0，已有 npm tarball 保持原字节。此次包内源码格式会随未来实际版本发布交付，不声称 npm 已含本次整理。
+
+本次不引入消费者受管文件、不要求现有用户迁移，因此不制造空 npm 版本或 starter 升级公告。九语 README／demo／starter 教程没有行为变化，沿用此前逐项核对结论；此次仅将维护交付说明和状态补入 CHANGELOG／本记录。远程 main／starter 在操作前分别与本地 `75c4879998c652e4c50c0f3b7ebc7abadc703ff5`／`1ecfcd51cde5ec25721cdc5d0b96b180973c674e` 一致。按正式入口提交、预检、推送 main、同步／审计／验证 starter，再核对远程模板和线上完整文章库；实际 refs、检查结果与托管访问限制在完成后补录，准备记录不作为已交付凭证。既有门禁和测试覆盖不变，不复用历史通过结果来跳过检查。
+
+## 2026-11-12 LF 统一与独立格式整理（本地未提交）
+
+沿用 `75c4879998c652e4c50c0f3b7ebc7abadc703ff5` 基线，在此前未提交维护流程改动之上执行用户授权的 LF 统一。先将全部 1057 个仓库文件的原始／规范化摘要、19 个未提交文件的原始副本存入忽略目录 `acceptance-results/lf-normalization-before/`。仅处理 Git 跟踪／未忽略的仓库文件，不进入 node_modules、生成目录或诊断报告。613 个含 CRLF 的 UTF-8 文本转换为 LF，二进制／非 UTF-8 文件保持原始字节；只有已诊断的 16 个文件额外调用现有 Prettier 配置整理缩进、折行、引号和尾逗号。转换完成后确认原有 19 个未提交文件全部字节一致，再有意补充文档；其余原有改动继续保留。
+
+新增 `.gitattributes` 的 `text=auto eol=lf`、`.editorconfig` 的 UTF-8／LF 保存规则，Prettier 显式指定 LF，统一 Git／编辑器／检查器约定，不更改全局 Git 设置、不重置／强制检出、不暂存。纯换行转换不产生新的 Git 内容差异。直接同步 CONTRIBUTING、MAINTAINER_WORKFLOW、CHANGELOG 与传播的 AGENTS 入口／本记录。九语言 README、npm README、demo／starter 教程、架构／视觉／元数据规范和历史发布记录核对后无行为性说明需要更新；没有新增消费者受管文件，starter manifest／安装升级协议不变。本轮不升版本、不提交或发布；未来发布仍遵守原门禁。
+
+本轮完整 `npm run check` 通过：176/176 测试、Astro 零错误／警告、289 页构建和九语言 About 断言通过；lint 及全仓格式检查通过，原有 537 个告警已消除。16 个格式文件中，8 个普通源码通过 Prettier `--debug-check`；8 个 Astro 的该检查直接比较位置／frontmatter 原文而报差异，另用公开 Astro 编译器 AST 去除位置／纯缩进节点、TypeScript AST 及内嵌样式空白比较全部通过，不把通用 debug-check 的原始失败当作通过。相关原始结果分别保留在 `acceptance-results/lf-format-debug-check.json`、`lf-astro-structure-check.json` 和 `lf-check.log`。
+
+最终逐文件核对 1057 个原文件：108 个二进制／非 UTF-8 文件字节一致，预期范围外的文本内容无变化、仓库文本不再含 CRLF。原有 19 个未提交文件中 15 个最终仍字节一致，4 个仅有意追加文档；全部 19 个原始行的顺序和内容均完整保留。LF 转换后 Git 旧 stat 大小曾导致纯换行文件状态误报；先逐一验证 595 个相同文件的 blob ID，再仅刷新这些条目，核对所有索引 blob／模式前后完全相同，暂存区仍为空。没有重置、强制检出或改动全局配置。证据为 `acceptance-results/lf-normalization-pass.json`、`lf-final-preservation.json`。本条记录本地结果，不表示发布／starter 同步；不重跑不相关的完整浏览器／安装升级矩阵，未来正式发布门禁保持原要求。
+
+## 2026-11-12 维护流程四项低风险调整（本地未提交）
+
+以 `75c4879998c652e4c50c0f3b7ebc7abadc703ff5` 为基线，核对完整未提交差异与新增文件。代码链：`tools/maintainer/sync-starter.mjs` → 生成的 check 脚本 → `packages/theme/src/cli.mjs` doctor 已含 Astro check／build／启用时的 About 断言，因此只删除紧接 check 的重复 build；安装、审计、失败阻断、提交／推送顺序不变。`scripts/maintainer-session.mjs` → `scripts/maintainer-evidence.mjs` 只记录阶段前后输入／环境／构建产物指纹及采集耗时，不读取历史结果、不跳检查；该指纹不覆盖完整依赖字节和外部服务，不能当复用凭证。`scripts/check-template.mjs` 补每条命令及服务启动／检查／停止的时间，保留全部 11 个消费端脚本。`scripts/verify-release.mjs` → `scripts/verify-published-package.mjs` 新增显式版本的只读 view／pack 恢复入口与可选源／摘要核验，正常发布入口及其默认门禁不变。
+
+按 `suggest:docs` 元数据候选同步直接职责文档 MAINTAINER_WORKFLOW、PACKAGE_RELEASE、TEMPLATE_ACCEPTANCE、CHANGELOG，以及传播的 AI_WORKFLOW／AGENTS 入口和本审计。九语言 README、npm README、九语言 demo／starter 教程、ARCHITECTURE／VISUAL_SYSTEMS、starter manifest 与工具适配入口均已核对：没有消费端配置、安装／升级、路由、视觉、分发所有权变化，故不机械改写；不向用户项目加入维护命令。历史 release／发布索引保留实际已发布事实。本轮无 npm 文件变更，不升版本、不提交或发布。新增测试覆盖重复执行不复用、隐私／指纹变化、构建失败阻断及只读恢复身份／重试边界；实际执行结果如下。
+
+本轮实际验收：初次完整检查受沙箱符号链接权限限制，随后在允许既有夹具链接的环境重跑 `npm run check` 通过（175 项测试、Astro 零错误／警告、289 页构建、九语 About 断言）；补充 Git／批量产物哈希测试后最终完整测试集 176/176 通过。npm 公开模板验收 57 项／11 个脚本通过，43 条命令均有开始时间与耗时。只读恢复入口实际核对已发布 0.32.0 的 tag、gitHead 和 SHA1 成功，未再次发布；成功清理下载目录且释放锁。当前 1257 个产物的摘要在顺序／8 并发采集下相同，本机单次采集约从 5.2 秒降到 0.7 秒，此数值仅为观察，不是性能保证。证据见忽略目录 `acceptance-results/workflow-*`、`acceptance-results/template-npm-1794416745401/` 与 `acceptance-results/maintainer-1794416725666-20604-QTgkIF/`。
+
+文档元数据、lint、全部本轮修改文件的格式和差异空白检查通过。全仓格式扫描先混入执行中的测试产物；待进程结束并清理初次权限失败遗留的临时夹具后重跑，仍报告 537 个本轮未改文件的既有格式告警，抽查为 CRLF 换行，未批量改写。没有运行会提交／切换真实分支的 starter 同步；同步行为由注入测试、真实 doctor 子进程测试和公开消费端验收核对。页面／运行时／升级协议未变化，未重跑全站浏览器与 14 组安装矩阵，正式发布时这些门禁仍按原规定执行。
+
+随后 pnpm 公开模板验收 55 项／11 个脚本通过，证据为 `acceptance-results/template-pnpm-1794416934360/`；逐命令计时字段也完整通过核对。npm／pnpm 均保留独立 build 及原有浏览器功能／个人文件保护／碎片分享索引断言，没有因新增计时而缩减覆盖。最终 HEAD 保持原基线，未暂存、提交、发布或同步真实 starter 分支。
+
 ## 2026-11-12 0.32.0 正式交付收尾
 
 按用户授权完成完整文档复核、0.32.0 源码提交／推送、一次正式 npm 上传、只读 registry 处理延迟恢复、starter 同步／推送、公开 npm／pnpm 与真实已发布升级、线上文章库／碎片／索引／评论／SEO／搜索／九语教程验收。166 项单元／集成测试、238 项完整浏览器回归、14 组独立安装构建及零漏洞审计均通过；两个升级层分别保护 104／152 个原有文件，1052 个 main 文件字节保护通过。具体 refs、校验和、原始失败及恢复边界统一见 [0.32.0 发布账本](releases/0.32.0.md)。收尾只更新维护文档与交付事实，不改变 npm 文件或 starter 受管内容；标签固定到实际 npm 源码，最终公告记录 main 收尾 ref。此前本地未发布审计保持当时事实，Cloudflare 后台设置访问限制如实保留。

@@ -50,11 +50,7 @@
 }
 .ai-related-placeholder {
   aspect-ratio: 16/9;
-  background: linear-gradient(
-    135deg,
-    rgba(22, 8, 16, 0.9),
-    rgba(14, 24, 42, 0.8)
-  );
+  background: linear-gradient(135deg, rgba(22, 8, 16, 0.9), rgba(14, 24, 42, 0.8));
   border-bottom: 1px solid rgba(126, 192, 224, 0.22);
   display: flex;
   align-items: center;

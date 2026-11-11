@@ -19,6 +19,10 @@ npm run check
 
 ## Daily Workflow
 
+Repository text uses UTF-8 and LF on every platform. `.gitattributes` fixes text checkout to LF, `.editorconfig` guides editor saves, and `.prettierrc.json` explicitly sets `endOfLine: "lf"`. Binary files retain their bytes. Keep these repository rules instead of changing contributors' global Git settings. `npm run format:check` checks formatting without rewriting files; avoid running it concurrently with tests that generate temporary project directories.
+
+When normalizing an existing Windows checkout, preserve all uncommitted work first and convert only line endings in the intended text files. Adding attributes alone does not rewrite existing working-tree files. Review any remaining formatting changes separately from functional edits; never use a forced checkout or reset to normalize a dirty tree.
+
 1. For external contributions, create a branch from `main` in your fork and submit a pull request targeting `main`. Maintainer and repository-agent implementation follows `docs/AI_WORKFLOW.md` on `main`; `starter` is generated output, never a development target.
 2. Make focused changes based on the actual implementation.
 3. For code changes, run:

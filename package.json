@@ -49,6 +49,7 @@
     "e2e:prepare": "node scripts/build-e2e-smoke-config.mjs",
     "e2e": "npm run build && npm run e2e:prepare && playwright test",
     "release:npm": "node scripts/release-npm.mjs",
+    "release:verify": "node scripts/verify-release.mjs",
     "new-post": "anglefeint-new-post",
     "new-page": "anglefeint-new-page",
     "astro": "astro",

@@ -123,7 +123,15 @@ After a real publish succeeds, `release:npm` verifies the selected dist-tag (def
 
 The verification helper checks the dist-tag version, downloaded package name/version and presence of integrity metadata. It does not compare the download's hash with the preparation tarball or prove correspondence with a Git SHA. Preserve the clean source revision and compare package hashes separately when recording source/package identity.
 
-If verification times out, publication may already be accepted. Do not republish that version or start starter sync. Check `npm view @anglefeint/astro-theme@latest version` (or the selected tag), then run `npm pack @anglefeint/astro-theme@<version> --ignore-scripts --prefer-online` in a temporary directory. Only resume starter delivery once both match the intended version and the download succeeds. Remove the temporary tarball afterward.
+If verification times out, publication may already be accepted. Do not republish that version or start starter sync. Use the maintainer-only recovery entry with the exact accepted version, independently of the current checkout version:
+
+```bash
+npm run release:verify -- --version 0.32.0 --tag latest --source e452e8fac382be65d264bb83150d670db86403db --shasum 1d016766e784fd3a7b54a4808fa0bdca5cbd57ab
+```
+
+Replace these example values with the accepted release's recorded version, source ref and package checksum. `--source`, `--shasum` and `--integrity <sri>` are optional expected identities; provide the recorded values when recovering a specific upload. Without them, the entry establishes consistency between the selected registry tag, exact-version metadata and downloaded package, not correspondence to a particular local source. It uses the same bounded retry policy, downloads with `--ignore-scripts` into a dedicated temporary directory under ignored `acceptance-results/`, checks downloaded integrity/SHA1 against registry metadata, and removes that download afterward. Its session summary remains available for review.
+
+The recovery entry only allows npm `view` and `pack`; it cannot publish, install, switch branches or sync starter. It neither replaces pre-publication tests/audits nor marks the whole release complete. Only resume starter delivery after verification succeeds, then finish remote-template, tag/GitHub Release and production gates. Manual `npm view`/`npm pack` diagnosis remains possible if the recovery entry itself is unavailable.
 
 ### GitHub closeout
 

@@ -3,14 +3,14 @@ import type { Locale } from '@anglefeint/site-i18n/config';
 import MatrixShell from './shells/MatrixShell.astro';
 
 interface Props {
-	locale?: Locale;
-	title: string;
-	description: string;
+  locale?: Locale;
+  title: string;
+  description: string;
 }
 
 const { locale, title, description } = Astro.props as Props;
 ---
 
 <MatrixShell locale={locale} title={title} description={description}>
-	<slot />
+  <slot />
 </MatrixShell>

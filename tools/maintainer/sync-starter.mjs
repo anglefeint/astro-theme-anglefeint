@@ -450,7 +450,8 @@ export async function syncStarter(
     await run('npm', ['update', '--prefer-online']);
     await auditDependencies(repoRoot);
     await run('npm', ['run', 'check']);
-    await run('npm', ['run', 'build']);
+    // Generated check runs package doctor: Astro check, build, then runtime assertions.
+    // No source/config/dependency mutation occurs before committing its output.
 
     const changed = [...changedManaged, ...removedObsolete, ...removedUnexpectedContent];
     if (sanitized) changed.push('package.json');

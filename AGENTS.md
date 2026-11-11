@@ -121,9 +121,12 @@ npm run check:integration
 npm run lint
 npm run e2e:install
 npm run e2e
+npm run release:verify -- --help
 ```
 
 Lint and doc metadata checks are configured.
+
+Repository text uses UTF-8/LF, enforced by `.gitattributes`, `.editorconfig` and Prettier. Preserve local changes before normalizing an existing checkout; never use reset/forced checkout or modify global Git settings for this purpose. Run repository-wide `npm run format:check` after temporary fixture tests finish. See [contribution guidance](CONTRIBUTING.md#daily-workflow).
 
 ## Safe Edit Areas
 

@@ -3,14 +3,20 @@ import type { Locale } from '@anglefeint/site-i18n/config';
 import ThemeFrame from '../../components/shared/ThemeFrame.astro';
 
 interface Props {
-	locale?: Locale;
-	title: string;
-	description: string;
+  locale?: Locale;
+  title: string;
+  description: string;
 }
 
 const { locale, title, description } = Astro.props as Props;
 ---
 
-<ThemeFrame locale={locale} title={title} description={description} bodyClass="page-default" mainClass="page-main">
-	<slot />
+<ThemeFrame
+  locale={locale}
+  title={title}
+  description={description}
+  bodyClass="page-default"
+  mainClass="page-main"
+>
+  <slot />
 </ThemeFrame>

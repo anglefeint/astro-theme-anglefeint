@@ -12,6 +12,7 @@ export async function verifyPublishedPackage({
   delayMs = 10000,
   sleep = setTimeout,
   log = console.log,
+  expected,
 }) {
   assert.ok(Number.isInteger(attempts) && attempts > 0);
   let cause;
@@ -20,6 +21,20 @@ export async function verifyPublishedPackage({
       const options = ['--json', '--prefer-online', '--fetch-retries=0', '--fetch-timeout=15000'];
       const visible = JSON.parse(await capture(['view', `${name}@${tag}`, 'version', ...options]));
       assert.equal(visible, version, `Registry tag ${tag} has not reached ${version}`);
+      let metadata;
+      if (expected) {
+        metadata = JSON.parse(await capture(['view', `${name}@${version}`, ...options]));
+        assert.equal(metadata.name, name);
+        assert.equal(metadata.version, version);
+        assert.ok(metadata.dist?.integrity, 'Registry package must have integrity metadata');
+        assert.ok(metadata.dist?.shasum, 'Registry package must have a shasum');
+        if (expected.source)
+          assert.equal(metadata.gitHead, expected.source, 'Published source mismatch');
+        if (expected.integrity)
+          assert.equal(metadata.dist.integrity, expected.integrity, 'Published integrity mismatch');
+        if (expected.shasum)
+          assert.equal(metadata.dist.shasum, expected.shasum, 'Published shasum mismatch');
+      }
       const packed = JSON.parse(
         await capture([
           'pack',
@@ -34,6 +49,10 @@ export async function verifyPublishedPackage({
       assert.equal(packed[0].name, name);
       assert.equal(packed[0].version, version);
       assert.ok(packed[0].integrity, 'Downloaded package must have integrity metadata');
+      if (metadata) {
+        assert.equal(packed[0].integrity, metadata.dist.integrity, 'Downloaded integrity mismatch');
+        assert.equal(packed[0].shasum, metadata.dist.shasum, 'Downloaded shasum mismatch');
+      }
       log(`[release] Registry ${tag} and tarball verified: ${name}@${version}`);
       return packed[0];
     } catch (error) {

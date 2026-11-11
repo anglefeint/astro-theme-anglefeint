@@ -15,6 +15,14 @@ All notable changes to this project are documented in this file.
 
 ## Unreleased
 
+## Maintenance - 2026-11-12 (no npm release)
+
+Repository maintenance delivery; npm remains 0.32.0. See the [maintenance delivery record](docs/CODE_DOC_AUDIT.md#2026-11-12-maintenance-delivery-no-npm-release) for actual source/starter delivery and acceptance status. Existing users need no migration; package-source formatting will ship with a future package version.
+
+- Standardize repository text checkout, editor saves and Prettier on LF. Normalize existing text line endings and mechanically format sixteen previously noncompliant files; preserve binary assets and existing uncommitted work. No runtime/API or consumer upgrade change.
+
+- Maintainer-only: remove the duplicate build immediately after starter doctor/check; retain its build/runtime assertions and all release gates. Add observational input/environment/artifact fingerprints and separate evidence/command timings, plus per-command public-template acceptance durations. Add `release:verify` for read-only recovery of accepted npm uploads; it never republishes or syncs starter. No validation-result reuse, consumer script changes or npm version bump.
+
 ## [0.32.0] - 2026-11-12
 
 See the [delivery record](docs/releases/0.32.0.md) for actual publication and acceptance status.
