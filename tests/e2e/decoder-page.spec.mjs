@@ -66,15 +66,34 @@ test('SVG network signals move along existing edges and stop for reduced motion 
   await expect.poll(() => edge.getAttribute('x1')).not.toBe(before);
   await expect(network.locator('pattern')).toHaveCount(0);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(network).toHaveAttribute('data-paused', 'true');
-  const stopped = await node.getAttribute('cx');
-  await page.waitForTimeout(150);
-  await expect(node).toHaveAttribute('cx', stopped);
   await expect(signal).toHaveCSS('display', 'none');
+  // Emulated media changes can stop the frame guard before a MediaQueryList
+  // change notification updates its diagnostic flag. Verify rendered motion
+  // directly, including edges/signals, rather than treating that flag as proof.
+  const geometry = () =>
+    network.evaluate((svg) =>
+      Array.from(svg.querySelectorAll('circle, line'), (element) =>
+        ['cx', 'cy', 'x1', 'y1', 'x2', 'y2', 'opacity'].map((name) => element.getAttribute(name))
+      )
+    );
+  // Let any already-requested frame observe the new preference.
+  await page.evaluate(
+    () =>
+      new Promise((resolve) =>
+        window.requestAnimationFrame(() => window.requestAnimationFrame(resolve))
+      )
+  );
+  const stopped = await geometry();
+  await page.waitForTimeout(150);
+  expect(await geometry()).toEqual(stopped);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await expect(network).toHaveAttribute('data-paused', 'false');
+  await expect.poll(geometry).not.toEqual(stopped);
   await page.evaluate(() => window.dispatchEvent(new window.PageTransitionEvent('pagehide')));
   await expect(network).toHaveAttribute('data-paused', 'true');
+  const hiddenGeometry = await geometry();
+  await page.waitForTimeout(150);
+  expect(await geometry()).toEqual(hiddenGeometry);
   await page.evaluate(() =>
     window.dispatchEvent(new window.PageTransitionEvent('pageshow', { persisted: true }))
   );

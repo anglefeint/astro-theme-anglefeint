@@ -29,7 +29,7 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 ## Contract
 
-Current release preparation: [0.30.0](./0.30.0.md), reusable cinematic effects and Fragments presentation/loading improvements. See the ledger for actual publication status. Previous feature release: [0.29.0](./0.29.0.md), optional Markdown Fragments and popup comments reusing the article Giscus integration. The earlier [0.28.0](./0.28.0.md) introduced opt-in shared Giscus discussions across article translations.
+Latest package release: [0.30.0](./0.30.0.md), reusable cinematic effects and Fragments presentation/loading improvements. See the ledger for actual delivery and acceptance status. Previous feature release: [0.29.0](./0.29.0.md), optional Markdown Fragments and popup comments reusing the article Giscus integration. The earlier [0.28.0](./0.28.0.md) introduced opt-in shared Giscus discussions across article translations.
 
 Earlier integration patch: [0.27.2](./0.27.2.md), complete search build-output handoff through Pagefind's public API, retaining the [0.27.1](./0.27.1.md) pnpm social-image fix. See the delivery and validation record.
 

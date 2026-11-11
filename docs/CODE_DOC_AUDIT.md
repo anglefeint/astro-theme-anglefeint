@@ -14,6 +14,8 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 ## 2026-11-11 特效组件与 Fragments 发布前文档核对
 
+正式交付阶段的证据记录在 [0.30.0 发布账本](releases/0.30.0.md)。Linux 验收发现的动态减弱动效状态标记观测，经本地诊断证实画面仍会停止／恢复；维护用例改为直接检查所有节点、边和信号坐标冻结、实际恢复和 pagehide 清理，未修改 npm 动效或依赖实现。内部标记通知差异的根因未确定，不声称修复；完整跨平台复验结论以账本实际记录为准。
+
 以 `b1564bc24835ab39da4aa31b54c918e24249617e` 为基线，核对当前全部未提交变更，执行 suggest:docs，并沿页面配置、包默认值、标准路由、组件／脚本／样式、导出与打包清单、starter manifest、生成结果和测试逐项追踪。负责的架构／视觉／验收参考及新增 REUSABLE_EFFECTS 记录十四组组件的 DOM 绑定、文字配置、生命周期、场景适配与验证路径；镜面和走廊保留原实现。
 
 直接命中文档包括 AGENTS、九语 README、npm README、ARCHITECTURE、VISUAL_SYSTEMS、TEMPLATE_ACCEPTANCE、REUSABLE_EFFECTS、CHANGELOG、UPGRADING 和发布账本。发现器宽泛匹配的历史 release、旧审计段落保留当时事实；CLAUDE／Cursor 继续指向中立入口，工作流和元数据规范没有改变，不重复改写。传播候选为空。九语 demo／starter 的五篇用户教程共 45 对继续核对；没有新用户配置或 CLI，原启用／升级教程仍适用，新增升级说明明确 demo 数据不覆盖个人内容。
