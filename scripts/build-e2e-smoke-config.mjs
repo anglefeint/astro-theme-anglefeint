@@ -55,6 +55,7 @@ async function main() {
   const fixture = await fragmentFixture();
   try {
     await fixture.build();
+    await mkdir(path.join(repoRoot, 'acceptance-results'), { recursive: true });
     const directory = await mkdtemp(path.join(repoRoot, 'acceptance-results/fragments-browser-'));
     await cp(path.join(fixture.root, 'dist'), directory, { recursive: true });
     await writeFile(

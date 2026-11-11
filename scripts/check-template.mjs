@@ -131,7 +131,6 @@ async function stop(child) {
   }
 }
 async function server(mode, routes, inspect) {
-  const port = pm === 'npm' ? 4381 : 4382;
   const args = pmArgs([
     'run',
     mode,
@@ -139,7 +138,7 @@ async function server(mode, routes, inspect) {
     '--host',
     '127.0.0.1',
     '--port',
-    String(port),
+    '0',
   ]);
   const child = spawn(process.execPath, [npmCli, ...args], {
     cwd: project,
@@ -151,13 +150,15 @@ async function server(mode, routes, inspect) {
   let log = '';
   child.stdout.on('data', (chunk) => (log += chunk));
   child.stderr.on('data', (chunk) => (log += chunk));
-  const base = `http://127.0.0.1:${port}`;
+  let base;
   try {
     let ready = false;
     for (let i = 0; i < 120; i++) {
       assert.equal(child.exitCode, null, log);
-      // Require this process to announce its own port: do not test an unrelated server.
-      if (log.includes(base)) {
+      // Use the port announced by this process, including OS-assigned ports.
+      // Separate acceptance projects must never probe each other's servers.
+      base = log.match(/http:\/\/127\.0\.0\.1:\d+/)?.[0];
+      if (base) {
         try {
           if ((await fetch(`${base}/en/`, { signal: AbortSignal.timeout(1500) })).ok) {
             ready = true;

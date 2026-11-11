@@ -214,4 +214,8 @@ Installed-package acceptance exercises `new-fragment` and the enabled feed witho
 
 Public-template acceptance also exercises the delivered `new-fragment` script after the published package upgrade, creates default-language and shared-ID translation skeletons, and verifies an existing personal fragment remains unchanged. Its customized build explicitly enables the feed and checks three entries with comments off. The unchanged requirement that every consumer script execute is checked after these commands; older pinned baselines are upgraded before invoking the newly added CLI.
 
+`e2e:prepare` creates the ignored `acceptance-results/` parent before saving its prebuilt fragment fixture. Fresh CI checkouts do not contain this local evidence directory; browser preparation must work without previous maintainer runs.
+
+Each public-template dev/preview process requests port 0 and probes only the URL announced by that child process. Independent projects must not share fixed npm/pnpm ports or accidentally validate another fixture's server.
+
 Fragment comment readiness tests send provider metadata/error messages through the stub iframe; iframe insertion/load alone does not count as successful comments. Cases cover heading/close bounds, a silent provider, spoofed messages, 15-second timeout and retry, fatal provider errors, normal missing-discussion state, closing while initialization is pending, late old-discussion responses and failed client download recovery. Real remote client loading, authentication and comment submission require separate verification and must not be inferred from those stubs. Existing article HTML tests continue to verify final attributes across nine languages and custom mappings after sharing Giscus.astro/config resolution.
