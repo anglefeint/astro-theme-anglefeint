@@ -106,7 +106,11 @@ export default function anglefeint(themeConfig) {
   const defaultLocale = themeConfig.i18n.defaultLocale;
   const prefixMode = themeConfig.i18n.routing.defaultLocalePrefix;
   const routes = themeConfig.theme.fragments?.enabled
-    ? [...STANDARD_ROUTES, ['/[lang]/fragments/[...page]', '[lang]/fragments/[...page].astro']]
+    ? [
+        ...STANDARD_ROUTES,
+        ['/[lang]/fragments/[...page]', '[lang]/fragments/[...page].astro'],
+        ['/[lang]/fragments/index/[revision].json', '[lang]/fragments/index/[revision].json.ts'],
+      ]
     : STANDARD_ROUTES;
   let siteContext = { title: themeConfig.site.title, description: themeConfig.site.description };
   let machine;
@@ -183,6 +187,7 @@ export default function anglefeint(themeConfig) {
     sitemap({
       filter(page) {
         const pathname = new URL(page).pathname;
+        if (/\/fragments\/index\/[a-f0-9]{16}\.json$/.test(pathname)) return false;
         return prefixMode === 'always'
           ? pathname !== '/'
           : pathname !== `/${defaultLocale}/` && pathname !== `/${defaultLocale}`;

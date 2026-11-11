@@ -535,6 +535,13 @@ try {
     await npm(['run', 'build']);
     const fragmentsHtml = await read('dist/en/fragments/index.html');
     assert.match(fragmentsHtml, /data-fragment-id/);
+    const fragmentIndexHref = fragmentsHtml.match(/data-fragment-index="([^"]+)"/)?.[1];
+    assert.match(fragmentIndexHref ?? '', /^\/en\/fragments\/index\/[a-f0-9]{16}\.json$/);
+    const fragmentIndex = JSON.parse(await read(`dist${fragmentIndexHref}`));
+    const fragmentId = fragmentsHtml.match(/data-fragment-id="([^"]+)"/)?.[1];
+    assert.equal(fragmentIndex.version, 1);
+    assert.equal(fragmentIndex.pages[fragmentId], 1);
+    assert.ok(fragmentsHtml.includes(`href="/en/fragments/#fragment-${fragmentId}"`));
     assert.doesNotMatch(fragmentsHtml, /data-fragment-comments/);
     assert.match(await read('dist/en/index.html'), /href="\/en\/fragments\/"/);
     assert.equal(await read(`src/content/fragments/en/${fragmentFiles[0]}`), fragmentBefore);

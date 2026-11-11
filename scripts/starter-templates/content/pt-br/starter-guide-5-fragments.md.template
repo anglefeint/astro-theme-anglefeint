@@ -79,3 +79,13 @@ Os comentários carregam remotamente. O aviso permanece até o Giscus estar pron
 ```bash
 npm run build
 ```
+
+Paginação a partir da versão 0.32.0: os fragmentos compartilham com o Blog os números de página, os estilos de neon e o salto de página exibido conforme o limite configurado. `theme.pagination` controla as duas listas; `theme.fragments.pageSize` continua definindo separadamente os fragmentos por página.
+
+## Links estáveis para compartilhar (0.32.0+)
+
+Compartilhamento a partir da versão 0.32.0: a data aponta para o fragmento na lista, com um controle de cópia ao lado. Compartilhe `/pt-br/fragments/#fragment-ID`, usando o id do frontmatter Markdown. Somente quando o fragmento não está na página atual é carregado um pequeno índice estático por idioma para localizar sua página. Reconstrua após adicionar conteúdo ou alterar datas ou pageSize, mantendo os IDs. A localização entre páginas e a cópia exigem JavaScript.
+
+O endereço de navegação pode incluir um número de página; compartilhe pelo link da data ou pelo controle de cópia. Páginas antigas ainda existentes corrigem âncoras desatualizadas; um número de página removido continua mostrando o 404 normal do site. O recurso não intercepta páginas 404.
+
+Fragmentos ausentes ou falhas de rede mostram uma mensagem, sem saltos repetidos. Se a área de transferência estiver bloqueada, um link selecionável permite copiar manualmente. O recurso exige o tema 0.32.0 ou posterior; atualize antes de usar a localização automática.

@@ -442,6 +442,16 @@ export const THEME_CONFIG = defineThemeConfig({
     await readFile(path.join(project, 'dist/en/fragments/index.html'), 'utf8'),
     /My private draft fragment/
   );
+  const fragmentsHtml = await readFile(path.join(project, 'dist/en/fragments/index.html'), 'utf8');
+  const fragmentIndexHref = fragmentsHtml.match(/data-fragment-index="([^"]+)"/)?.[1];
+  assert.match(fragmentIndexHref ?? '', /^\/en\/fragments\/index\/[a-f0-9]{16}\.json$/);
+  const fragmentIndex = JSON.parse(
+    await readFile(path.join(project, `dist${fragmentIndexHref}`), 'utf8')
+  );
+  const fragmentId = fragmentsHtml.match(/data-fragment-id="([^"]+)"/)?.[1];
+  assert.equal(fragmentIndex.version, 1);
+  assert.equal(fragmentIndex.pages[fragmentId], 1);
+  assert.ok(fragmentsHtml.includes(`href="/en/fragments/#fragment-${fragmentId}"`));
   assert.deepEqual(await hashes(), optedOut);
   scenarios.push(
     'old scripts need no changes: new-fragment works after upgrade; optional feed preserves and renders personal fragments'

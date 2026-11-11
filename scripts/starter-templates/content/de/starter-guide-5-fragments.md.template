@@ -79,3 +79,13 @@ Kommentare werden extern geladen. Die Ladeanzeige bleibt bis zur Giscus-Bereitsc
 ```bash
 npm run build
 ```
+
+Seitennavigation ab 0.32.0: Fragmente verwenden dieselben Seitenzahlen, Neonstile und das ab dem konfigurierten Schwellenwert angezeigte Sprungfeld wie der Blog. `theme.pagination` steuert beide Listen; `theme.fragments.pageSize` legt weiterhin unabhängig die Anzahl der Fragmente pro Seite fest.
+
+## Stabile Freigabelinks (ab 0.32.0)
+
+Freigabefunktion ab 0.32.0: Das Datum verlinkt zum Fragment in der Liste; daneben lässt sich der Link kopieren. Zum Teilen `/de/fragments/#fragment-ID` mit der id aus dem Markdown-Frontmatter verwenden. Nur wenn das Fragment auf der aktuellen Seite fehlt, lädt ein kleiner sprachbezogener statischer Index seine Seitenposition. Nach neuen Inhalten oder Änderungen an Datum oder pageSize neu bauen und IDs beibehalten. Seitenübergreifendes Auffinden und Kopieren benötigen JavaScript.
+
+Die aktuelle Browseradresse kann eine Seitennummer enthalten; zum Teilen den Datumslink oder die Kopierfunktion verwenden. Noch vorhandene alte Seiten können veraltete Anker korrigieren; entfernte Seitennummern zeigen weiterhin die normale 404-Seite. Diese Funktion fängt 404-Seiten nicht ab.
+
+Fehlende Fragmente und Netzwerkfehler zeigen Hinweise statt wiederholter Sprünge. Bei gesperrter Zwischenablage erscheint ein auswählbarer Link zum manuellen Kopieren. Diese Funktion benötigt Theme 0.32.0 oder neuer; vor dem automatischen Auffinden aktualisieren.

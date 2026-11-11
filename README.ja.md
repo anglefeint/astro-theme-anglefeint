@@ -151,6 +151,10 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales ja
 ```
 
+0.32.0 以降の共有機能：日付のリンクで一覧内の断片を定位でき、その横でリンクをコピーできます。共有には `/ja/fragments/#fragment-ID` を使用します。ID は Markdown frontmatter の id です。現在のページに対象がない場合のみ、言語別の小さな静的索引を読み込み、現在のページへ移動します。追加、日付や pageSize の変更後は再ビルドし、ID は変えないでください。ページをまたぐ定位とコピーには JavaScript が必要です。
+
+0.32.0 以降のページ送り改善：断片は Blog とページ番号、ネオン表示、設定したしきい値で表示されるページ移動欄を共有します。`theme.pagination` は両方の一覧に適用され、断片の1ページあたりの件数は引き続き `theme.fragments.pageSize` で個別に設定します。
+
 [ユーザーガイド 5：断片を公開する](https://demo.anglefeint.com/ja/blog/starter-guide-5-fragments/)
 
 <a id="upgrade"></a>

@@ -131,8 +131,9 @@ body.cyber-page .blog-cards > li > .blog-entry {
 .archive-arrow {
   display: none;
 }
-/* Card frames echo the archive panel's opposing cyan/magenta cuts. */
-body.cyber-page .blog-browser[data-view='cards'] .blog-entry {
+/* Blog cards and Fragments share opposing cyan/magenta cut-corner frames. */
+body.cyber-page .blog-browser[data-view='cards'] .blog-entry,
+body.cyber-page .fragment-card {
   --card-corner-width: 44px;
   --card-cut: 10px;
   /* Keep shadow spill on straight edges, but trim the two uncut box-shadow corners. */
@@ -154,7 +155,9 @@ body.cyber-page .blog-browser[data-view='cards'] li:first-child .blog-entry {
   --card-cut: 14px;
 }
 body.cyber-page .blog-browser[data-view='cards'] .blog-entry::before,
-body.cyber-page .blog-browser[data-view='cards'] .blog-entry::after {
+body.cyber-page .fragment-card::before,
+body.cyber-page .blog-browser[data-view='cards'] .blog-entry::after,
+body.cyber-page .fragment-card::after {
   content: '';
   position: absolute;
   width: var(--card-corner-width);
@@ -162,7 +165,8 @@ body.cyber-page .blog-browser[data-view='cards'] .blog-entry::after {
   pointer-events: none;
   z-index: 3;
 }
-body.cyber-page .blog-browser[data-view='cards'] .blog-entry::before {
+body.cyber-page .blog-browser[data-view='cards'] .blog-entry::before,
+body.cyber-page .fragment-card::before {
   top: -1px;
   left: -1px;
   color: #7feaff;
@@ -179,7 +183,8 @@ body.cyber-page .blog-browser[data-view='cards'] .blog-entry::before {
     linear-gradient(currentColor, currentColor) bottom left / 1px calc(100% - var(--card-cut))
       no-repeat;
 }
-body.cyber-page .blog-browser[data-view='cards'] .blog-entry::after {
+body.cyber-page .blog-browser[data-view='cards'] .blog-entry::after,
+body.cyber-page .fragment-card::after {
   bottom: -1px;
   right: -1px;
   color: #ec8bce;
@@ -196,13 +201,16 @@ body.cyber-page .blog-browser[data-view='cards'] .blog-entry::after {
     linear-gradient(currentColor, currentColor) top right / 1px calc(100% - var(--card-cut))
       no-repeat;
 }
-body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-within) {
+body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-within),
+body.cyber-page .fragment-card:is(:hover, :focus-within) {
   border-color: transparent;
   box-shadow: 0 0 16px rgba(104, 201, 255, 0.12);
   animation: cyber-neon-flicker 0.45s ease-in-out infinite;
 }
 body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-within)::before,
-body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-within)::after {
+body.cyber-page .fragment-card:is(:hover, :focus-within)::before,
+body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-within)::after,
+body.cyber-page .fragment-card:is(:hover, :focus-within)::after {
   filter: drop-shadow(0 0 4px currentColor);
 }
 body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-within) .title {
@@ -211,7 +219,8 @@ body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-w
   animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-within) {
+  body.cyber-page .blog-browser[data-view='cards'] .blog-entry:is(:hover, :focus-within),
+  body.cyber-page .fragment-card:is(:hover, :focus-within) {
     animation: none;
   }
 }

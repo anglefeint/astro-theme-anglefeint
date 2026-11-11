@@ -58,7 +58,8 @@ async function main() {
       'tests/fixtures/reusable-effects.astro',
       path.join(fixture.root, 'src/pages/effects-test.astro')
     );
-    await fixture.build();
+    // Exercise the shared jump control with the small two-page fixture.
+    await fixture.build({ extra: { pagination: { showJumpThreshold: 1 } } });
     await mkdir(path.join(repoRoot, 'acceptance-results'), { recursive: true });
     const directory = await mkdtemp(path.join(repoRoot, 'acceptance-results/fragments-browser-'));
     await cp(path.join(fixture.root, 'dist'), directory, { recursive: true });

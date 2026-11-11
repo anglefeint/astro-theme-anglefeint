@@ -70,12 +70,81 @@ test(
           links.indexOf(`/${locale}/fragments/`) === links.indexOf(`/${locale}/decoder/`) + 1
         );
         const secondPage = parse(await fixture.read(`${locale}/fragments/2/index.html`));
+        const pagination = secondPage.querySelector('[data-pagination-component="cyber"]');
+        assert.ok(pagination, `${locale} uses the shared Cyber pagination`);
+        assert.equal(
+          pagination.querySelector('[aria-current="page"]').getAttribute('href'),
+          `/${locale}/fragments/2/`
+        );
+        assert.equal(
+          pagination.querySelector('.pg-nav').getAttribute('href'),
+          `/${locale}/fragments/`
+        );
+        assert.equal(secondPage.querySelector('.fragment-pagination'), null);
+        const indexHref = doc
+          .querySelector('[data-fragment-index]')
+          .getAttribute('data-fragment-index');
+        assert.match(indexHref, new RegExp(`^/${locale}/fragments/index/[a-f0-9]{16}\\.json$`));
+        assert.equal(
+          secondPage.querySelector('[data-fragment-index]').getAttribute('data-fragment-index'),
+          indexHref
+        );
+        assert.deepEqual(JSON.parse(await fixture.read(indexHref.slice(1))), {
+          version: 1,
+          totalPages: 2,
+          pages: { third: 1, second: 1, first: 2 },
+        });
+        assert.equal(
+          secondPage.querySelector('[data-fragment-link]').getAttribute('href'),
+          `/${locale}/fragments/#fragment-first`
+        );
+        assert.equal(
+          secondPage.querySelector('[data-fragment-copy]').getAttribute('aria-label'),
+          JSON.parse(
+            secondPage
+              .querySelector('[data-fragment-link-labels]')
+              .getAttribute('data-fragment-link-labels')
+          ).copy
+        );
         assert.equal(
           secondPage.querySelector('[data-fragment-id]').getAttribute('data-fragment-id'),
           'first'
         );
         assert.equal(secondPage.querySelector('link[hreflang]'), null);
       }
+      const previousIndex = parse(await fixture.read('en/fragments/index.html'))
+        .querySelector('[data-fragment-index]')
+        .getAttribute('data-fragment-index');
+      assert(!(await fixture.read('sitemap-0.xml')).includes('/fragments/index/'));
+      await fixture.build({
+        extra: { fragments: { enabled: true, pageSize: 1, comments: { enabled: false } } },
+      });
+      let repaged = parse(await fixture.read('en/fragments/3/index.html'));
+      assert.equal(
+        repaged.querySelector('[data-fragment-link]').getAttribute('href'),
+        '/en/fragments/#fragment-first'
+      );
+      const smallerIndex = repaged
+        .querySelector('[data-fragment-index]')
+        .getAttribute('data-fragment-index');
+      assert.notEqual(smallerIndex, previousIndex);
+      assert.deepEqual(JSON.parse(await fixture.read(smallerIndex.slice(1))).pages, {
+        third: 1,
+        second: 2,
+        first: 3,
+      });
+      await fixture.build({
+        extra: { fragments: { enabled: true, pageSize: 20, comments: { enabled: false } } },
+      });
+      repaged = parse(await fixture.read('en/fragments/index.html'));
+      assert.equal(repaged.querySelector('[data-pagination-component="cyber"]'), null);
+      assert.equal(
+        repaged
+          .querySelector('[data-fragment-id="first"] [data-fragment-link]')
+          .getAttribute('href'),
+        '/en/fragments/#fragment-first'
+      );
+      await assert.rejects(fixture.read('en/fragments/2/index.html'), { code: 'ENOENT' });
       await writeFile(
         path.join(fixture.root, 'src/content/fragments/en/duplicate.md'),
         '---\nid: third\npubDate: 2026-01-01\n---\nDuplicate'

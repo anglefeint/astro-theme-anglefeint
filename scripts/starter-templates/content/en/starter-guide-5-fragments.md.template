@@ -79,3 +79,13 @@ Comments load remotely. The loading message stays until Giscus is ready; a failu
 ```bash
 npm run build
 ```
+
+Pagination in 0.32.0+: Fragments shares Blog’s page-number controls, neon styles and optional page jump. `theme.pagination` controls both lists; `theme.fragments.pageSize` still sets the Fragment page size independently.
+
+## Stable sharing links (0.32.0+)
+
+Sharing in 0.32.0+: dates link to a fragment within the feed, with a copy-link control beside them. Share `/en/fragments/#fragment-ID`, using the Markdown frontmatter ID. If the fragment is not on the current page, a small language-specific static index locates its current page automatically. Rebuild after adding content, changing dates or pageSize; keep IDs unchanged. Cross-page locating and copying require JavaScript.
+
+The browser may end up on a numbered page; use the date link or copy control for sharing rather than copying that numbered address. Existing numbered pages can correct an outdated hash, but a removed page number still returns the hosting site’s normal 404. This feature does not intercept 404 pages.
+
+Missing fragments and network errors show feedback instead of repeatedly jumping. If clipboard access is denied, a selectable link is shown for manual copying. This feature requires theme 0.32.0 or later; upgrade before relying on automatic locating.

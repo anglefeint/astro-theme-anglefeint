@@ -339,30 +339,35 @@ test('result crossfades over the same numeric canvas and releases its layers', a
   await expect(page.locator(output)).toHaveText('Hello');
 });
 
-test('SEO explanations, application schema and localized links are static HTML', async ({
-  browser,
-}) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
-  const page = await context.newPage();
-  for (const locale of ['en', 'zh', 'zh-hant', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru']) {
-    await open(page, locale);
-    await expect(page).toHaveTitle(/^Decoder Lab \| Base64.*JWT/);
-    await expect(page.locator('.decoder-guide h2')).toHaveCount(3);
-    await expect(page.locator('.decoder-guide')).toContainText('SGVsbG8%3D');
-    await expect(page.locator(`footer a[href="/${locale}/decoder/"]`)).toHaveCount(1);
-    const schemas = await page.locator('script[type="application/ld+json"]').allTextContents();
-    const app = schemas
-      .flatMap((text) => {
-        const value = JSON.parse(text);
-        return Array.isArray(value) ? value : value['@graph'] || [value];
-      })
-      .find((value) => value['@type'] === 'WebApplication');
-    expect(app?.url).toMatch(new RegExp(`/${locale}/decoder/$`));
-    expect(app?.isAccessibleForFree).toBe(true);
-    expect(app?.aggregateRating).toBeUndefined();
-  }
-  await context.close();
-});
+// Keep each locale's static contract independent rather than sharing one total
+// deadline across nine navigations and context cleanup under parallel load.
+for (const locale of ['en', 'zh', 'zh-hant', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru']) {
+  test(`SEO explanations, application schema and localized links are static HTML (${locale})`, async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    try {
+      const page = await context.newPage();
+      await open(page, locale);
+      await expect(page).toHaveTitle(/^Decoder Lab \| Base64.*JWT/);
+      await expect(page.locator('.decoder-guide h2')).toHaveCount(3);
+      await expect(page.locator('.decoder-guide')).toContainText('SGVsbG8%3D');
+      await expect(page.locator(`footer a[href="/${locale}/decoder/"]`)).toHaveCount(1);
+      const schemas = await page.locator('script[type="application/ld+json"]').allTextContents();
+      const app = schemas
+        .flatMap((text) => {
+          const value = JSON.parse(text);
+          return Array.isArray(value) ? value : value['@graph'] || [value];
+        })
+        .find((value) => value['@type'] === 'WebApplication');
+      expect(app?.url).toMatch(new RegExp(`/${locale}/decoder/$`));
+      expect(app?.isAccessibleForFree).toBe(true);
+      expect(app?.aggregateRating).toBeUndefined();
+    } finally {
+      await context.close();
+    }
+  });
+}
 
 test('shared numeric reveal receives the host palette in the lab and About modal', async ({
   page,

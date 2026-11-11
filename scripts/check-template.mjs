@@ -496,7 +496,7 @@ try {
         socialImage: { enabled: false },
         effects: { enableRedQueen: false },
         music: { enabled: true, tracks: [{ title: 'Acceptance tone', src: '/music/tone.wav' }] },
-        fragments: { enabled: true, comments: { enabled: false } },
+        fragments: { enabled: true, pageSize: 2, comments: { enabled: false } },
       },
     })
   );
@@ -621,15 +621,48 @@ try {
   assert.match(await read('dist/en/blog/2/index.html'), /Acceptance site/);
   assert((await read('dist/sitemap-index.xml')).includes('https://acceptance.example/'));
   assert((await read('dist/en/rss.xml')).includes('https://acceptance.example/'));
-  await server('preview', ['/en/', '/zh/'], (base) => browserCheck(base, true));
   const fragmentFeed = parse(await read('dist/en/fragments/index.html'));
-  assert.equal(fragmentFeed.querySelectorAll('[data-fragment-id]').length, 3);
+  assert.equal(fragmentFeed.querySelectorAll('[data-fragment-id]').length, 2);
   assert.equal(fragmentFeed.querySelectorAll('[data-fragment-comments]').length, 0);
   const zhFragmentFeed = parse(await read('dist/zh/fragments/index.html'));
   assert.equal(zhFragmentFeed.querySelectorAll('[data-fragment-id]').length, 2);
   assert.equal(zhFragmentFeed.querySelectorAll('[data-fragment-comments]').length, 0);
-  assert.match(fragmentFeed.textContent, /Remote fragment preservation sentinel/);
-  results.push({ check: 'published opt-in fragments feed with comments off', status: 'passed' });
+  const secondFragmentPage = parse(await read('dist/en/fragments/2/index.html'));
+  assert.equal(secondFragmentPage.querySelectorAll('[data-fragment-id]').length, 1);
+  assert.match(secondFragmentPage.textContent, /Remote fragment preservation sentinel/);
+  const fragmentIndexHref = fragmentFeed
+    .querySelector('[data-fragment-index]')
+    .getAttribute('data-fragment-index');
+  assert.match(fragmentIndexHref, /^\/en\/fragments\/index\/[a-f0-9]{16}\.json$/);
+  const fragmentIndex = JSON.parse(await read(`dist${fragmentIndexHref}`));
+  assert.equal(fragmentIndex.version, 1);
+  assert.equal(fragmentIndex.totalPages, 2);
+  assert.equal(fragmentIndex.pages['remote-personal-fragment'], 2);
+  await server('preview', ['/en/', '/zh/', '/en/fragments/2/'], async (base) => {
+    await browserCheck(base, true);
+    const browser = await chromium.launch();
+    try {
+      const page = await browser.newPage();
+      await page.goto(`${base}/en/fragments/#fragment-remote-personal-fragment`);
+      await expect(page).toHaveURL(`${base}/en/fragments/2/#fragment-remote-personal-fragment`);
+      await expect(page.locator('[data-fragment-id="remote-personal-fragment"]')).toBeFocused();
+      await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
+        'href',
+        '/en/fragments/#fragment-remote-personal-fragment'
+      );
+      const pagination = page.locator('[data-pagination-component="cyber"]');
+      await expect(pagination.locator('[aria-current="page"]')).toHaveText('2');
+      await pagination.getByRole('link', { name: '1', exact: true }).click();
+      await expect(page).toHaveURL(`${base}/en/fragments/`);
+    } finally {
+      await browser.close();
+    }
+  });
+  results.push({
+    check:
+      'published opt-in fragments, versioned index, stable root link and shared pagination with comments off',
+    status: 'passed',
+  });
   assert.deepEqual(
     Object.keys(pkg.scripts).filter((name) => !scripts.has(name)),
     [],

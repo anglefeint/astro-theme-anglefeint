@@ -125,6 +125,10 @@ npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
 npx @anglefeint/astro-theme@latest new-fragment --locales zh-hant
 ```
 
+0.32.0 起的分享功能：日期連結定位列表中的這則碎片，旁邊提供複製連結。對外分享使用 `/zh-hant/fragments/#fragment-ID`，其中 ID 是 Markdown frontmatter 的 id。目前頁面沒有該則時，才讀取本語言的輕量靜態索引，自動跳至對應分頁。新增內容、修改日期或 pageSize 後重新建置即可，保留原 ID。跨頁定位和複製需要啟用 JavaScript。
+
+0.32.0 起的分頁改進：碎片與 Blog 共用頁碼、霓虹樣式及依門檻顯示的跳頁入口。`theme.pagination` 統一控制兩處分頁；`theme.fragments.pageSize` 仍獨立設定每頁碎片數量。
+
 [使用者指南 5：發布碎片](https://demo.anglefeint.com/zh-hant/blog/starter-guide-5-fragments/)
 
 <a id="upgrade"></a>

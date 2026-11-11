@@ -5,6 +5,12 @@ for (const locale of ['en', 'zh', 'ja', 'ko', 'es', 'pt-br', 'de', 'ru', 'zh-han
   test(`${locale}: reading panels fit around the desktop breakpoint and keep wide-screen width`, async ({
     page,
   }) => {
+    // This measures our reading panels, not the remote comment provider. Each
+    // viewport navigates again; live widgets otherwise add network waits to all
+    // ten article loads. Provider behavior is covered by the comment tests.
+    await page.route('https://giscus.app/**', (route) =>
+      route.fulfill({ contentType: 'application/javascript', body: '' })
+    );
     await page.emulateMedia({ reducedMotion: 'reduce' });
     for (const width of [320, 390, 720, 721, 740, 768, 800, 820, 900, 1440]) {
       await page.setViewportSize({ width, height: 900 });

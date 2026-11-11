@@ -79,3 +79,13 @@ Los comentarios se cargan remotamente. La indicación de carga permanece hasta q
 ```bash
 npm run build
 ```
+
+Mejora de paginación desde 0.32.0: los fragmentos comparten con Blog los números de página, los estilos de neón y el salto de página que aparece según el umbral configurado. `theme.pagination` controla ambas listas; `theme.fragments.pageSize` sigue definiendo por separado los fragmentos por página.
+
+## Enlaces estables para compartir (0.32.0+)
+
+Función de compartir desde 0.32.0: la fecha enlaza al fragmento dentro de la lista y tiene un control para copiar el enlace al lado. Comparte `/es/fragments/#fragment-ID`, con el id del frontmatter Markdown. Solo si el fragmento no está en la página actual se carga un pequeño índice estático por idioma para ir a su página. Reconstruye tras añadir contenido o cambiar fechas o pageSize, conservando los ID. La localización entre páginas y la copia requieren JavaScript.
+
+La dirección de navegación puede incluir un número de página; comparte mediante la fecha o el control de copia. Las páginas antiguas que aún existen corrigen anclas desactualizadas; un número de página eliminado sigue mostrando el 404 normal del sitio. Esta función no intercepta páginas 404.
+
+Si falta el fragmento o falla la red, se muestra un aviso sin saltos repetidos. Si el portapapeles está bloqueado, aparece un enlace seleccionable para copiar manualmente. Esta función requiere el tema 0.32.0 o posterior; actualiza antes de usar la localización automática.

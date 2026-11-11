@@ -1,4 +1,4 @@
-/* global document, Event, window, MessageEvent, parent */
+/* global document, Event, window, navigator, MessageEvent, parent */
 import { test, expect } from '@playwright/test';
 import { URL } from 'node:url';
 import { createServer } from 'node:http';
@@ -65,6 +65,228 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => {
   if (server) await new Promise((resolve) => server.close(resolve));
+});
+
+for (const width of [1280, 390]) {
+  test(`shared pagination follows fragment routes and clamps jump input (${width})`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`${origin}/zh/fragments/`);
+    const pagination = page.locator('[data-pagination-component="cyber"]');
+    await expect(pagination).toHaveAttribute('data-pagination-ready', '');
+    await expect(pagination.locator('[aria-current="page"]')).toHaveText('1');
+    await pagination.getByRole('link', { name: '2', exact: true }).click();
+    await expect(page).toHaveURL(`${origin}/zh/fragments/2/`);
+    await expect(pagination.locator('[aria-current="page"]')).toHaveText('2');
+    await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
+      'href',
+      '/zh/fragments/#fragment-first'
+    );
+    const input = pagination.locator('.pagination-jump-input');
+    await input.fill('0');
+    await input.press('Enter');
+    await expect(page).toHaveURL(`${origin}/zh/fragments/`);
+    await input.fill('999');
+    await pagination.locator('.pagination-jump-btn').click();
+    await expect(page).toHaveURL(`${origin}/zh/fragments/2/`);
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+    ).toBeLessThanOrEqual(1);
+  });
+}
+
+test('fragment dates and copy links stay on the current page without fetching an index', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: async (value) => {
+          window.fragmentCopied = value;
+        },
+      },
+    });
+  });
+  const indexes = [];
+  page.on('request', (request) => {
+    if (request.url().includes('/fragments/index/')) indexes.push(request.url());
+  });
+  await page.goto(`${origin}/zh/fragments/2/`);
+  const date = page.locator('[data-fragment-link]');
+  await expect(date).toHaveAttribute('href', '/zh/fragments/#fragment-first');
+  await date.click();
+  await expect(page).toHaveURL(`${origin}/zh/fragments/2/#fragment-first`);
+  await expect(page.locator('[data-fragment-id="first"]')).toBeFocused();
+  await page.locator('[data-fragment-copy]').click();
+  await expect
+    .poll(() => page.evaluate(() => window.fragmentCopied))
+    .toBe(`${origin}/zh/fragments/#fragment-first`);
+  await expect(page.locator('[data-fragment-copy]')).toHaveAttribute('data-copied', '');
+  expect(indexes).toHaveLength(0);
+});
+
+test('a stable root link locates a fragment across pages, then handles another hash', async ({
+  page,
+}) => {
+  const indexes = [];
+  page.on('request', (request) => {
+    if (request.url().includes('/fragments/index/')) indexes.push(request.url());
+  });
+  await page.goto(`${origin}/en/fragments/#fragment-first`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/2/#fragment-first`);
+  await expect(page.locator('[data-fragment-id="first"]')).toBeFocused();
+  expect(indexes).toHaveLength(1);
+  await page.evaluate(() => {
+    window.location.hash = 'fragment-third';
+  });
+  await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-third`);
+  await expect(page.locator('[data-fragment-id="third"]')).toBeFocused();
+  expect(indexes).toHaveLength(2);
+});
+
+test('an on-page hash needs no index and a missing ID reports a localized message', async ({
+  page,
+}) => {
+  const indexes = [];
+  page.on('request', (request) => {
+    if (request.url().includes('/fragments/index/')) indexes.push(request.url());
+  });
+  await page.goto(`${origin}/zh/fragments/#fragment-third`);
+  await expect(page.locator('[data-fragment-id="third"]')).toBeFocused();
+  expect(indexes).toHaveLength(0);
+  await page.evaluate(() => {
+    window.location.hash = 'fragment-deleted';
+  });
+  await expect(page.locator('[data-fragment-link-status]')).toHaveText(
+    '找不到这条碎片，它可能已被移除。'
+  );
+  await expect(page).toHaveURL(`${origin}/zh/fragments/#fragment-deleted`);
+  expect(indexes).toHaveLength(1);
+});
+
+test('clipboard rejection exposes a selectable canonical link', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: async () => {
+          throw new Error('denied');
+        },
+      },
+    });
+  });
+  await page.goto(`${origin}/en/fragments/2/`);
+  await page.locator('[data-fragment-copy]').click();
+  const input = page.locator('[data-fragment-copy-feedback] input');
+  await expect(input).toBeFocused();
+  await expect(input).toHaveValue(`${origin}/en/fragments/#fragment-first`);
+  expect(await input.evaluate((node) => node.selectionEnd - node.selectionStart)).toBe(
+    (await input.inputValue()).length
+  );
+});
+
+for (const mode of ['network', 'invalid', 'same-page']) {
+  test(`fragment index ${mode} failure stays put instead of looping`, async ({ page }) => {
+    let calls = 0;
+    await page.route('**/fragments/index/*.json', async (route) => {
+      calls++;
+      await route.fulfill({
+        status: mode === 'network' ? 503 : 200,
+        contentType: 'application/json',
+        body: JSON.stringify(
+          mode === 'invalid' ? { version: 99 } : { version: 1, totalPages: 2, pages: { first: 1 } }
+        ),
+      });
+    });
+    await page.goto(`${origin}/en/fragments/#fragment-first`);
+    await expect(page.locator('[data-fragment-link-status]')).toHaveText(
+      'Unable to locate this fragment. Refresh the page and try again.'
+    );
+    await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-first`);
+    expect(calls).toBe(1);
+  });
+}
+
+test('a late index response cannot navigate an obsolete hash', async ({ page }) => {
+  let release;
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  let started;
+  const requested = new Promise((resolve) => {
+    started = resolve;
+  });
+  await page.route('**/fragments/index/*.json', async (route) => {
+    started();
+    await held;
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({ version: 1, totalPages: 2, pages: { first: 2 } }),
+    });
+  });
+  await page.goto(`${origin}/en/fragments/#fragment-first`);
+  await requested;
+  await page.evaluate(() => {
+    window.location.hash = 'fragment-third';
+  });
+  await expect(page.locator('[data-fragment-id="third"]')).toBeFocused();
+  release();
+  await page.waitForLoadState('networkidle');
+  await expect(page).toHaveURL(`${origin}/en/fragments/#fragment-third`);
+});
+
+test('a stale destination cannot bounce between pages, even without storage', async ({ page }) => {
+  await page.addInitScript(() => {
+    for (const name of ['localStorage', 'sessionStorage'])
+      Object.defineProperty(window, name, {
+        configurable: true,
+        get() {
+          throw new Error('Storage blocked');
+        },
+      });
+  });
+  let indexes = 0;
+  await page.route('**/fragments/index/*.json', async (route) => {
+    indexes++;
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({ version: 1, totalPages: 2, pages: { first: indexes === 1 ? 2 : 1 } }),
+    });
+  });
+  await page.route('**/en/fragments/2/?*', async (route) => {
+    const html = (
+      await readFile(path.join(directory, 'en/fragments/2/index.html'), 'utf8')
+    ).replace('data-fragment-id="first"', 'data-fragment-id="stale"');
+    await route.fulfill({ contentType: 'text/html', body: html });
+  });
+  await page.goto(`${origin}/en/fragments/#fragment-first`);
+  await expect(page).toHaveURL(`${origin}/en/fragments/2/#fragment-first`);
+  await expect(page.locator('[data-fragment-link-status]')).toHaveText(
+    'Unable to locate this fragment. Refresh the page and try again.'
+  );
+  expect(indexes).toBe(1);
+});
+
+test('without JavaScript dates remain native links and copy controls stay hidden', async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  try {
+    const page = await context.newPage();
+    await page.goto(`${origin}/en/fragments/2/`);
+    await expect(page.locator('[data-fragment-link]')).toHaveAttribute(
+      'href',
+      '/en/fragments/#fragment-first'
+    );
+    await expect(page.locator('[data-fragment-copy]')).toBeHidden();
+    await expect(page.locator('[data-fragment-id="first"]')).toContainText('first');
+    await page.locator('.pagination .pg-nav').click();
+    await expect(page).toHaveURL(`${origin}/en/fragments/`);
+  } finally {
+    await context.close();
+  }
 });
 
 for (const width of [1280, 390]) {

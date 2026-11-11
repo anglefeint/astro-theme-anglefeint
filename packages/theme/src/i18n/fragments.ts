@@ -9,6 +9,11 @@ export type FragmentMessages = {
   loading: string;
   error: string;
   retry: string;
+  copyLink: string;
+  linkCopied: string;
+  copyLinkFailed: string;
+  notFound: string;
+  indexError: string;
 };
 export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
   en: {
@@ -22,6 +27,11 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     loading: 'Loading comments…',
     error: 'Unable to load comments. Check your network or comment settings, then retry.',
     retry: 'Retry',
+    copyLink: 'Copy fragment link',
+    linkCopied: 'Link copied',
+    copyLinkFailed: 'Unable to copy automatically. Copy the link below.',
+    notFound: 'Fragment not found. It may have been removed.',
+    indexError: 'Unable to locate this fragment. Refresh the page and try again.',
   },
   zh: {
     title: '碎片',
@@ -34,6 +44,11 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     loading: '正在加载评论…',
     error: '评论未能加载，请检查网络或评论配置后重试。',
     retry: '重试',
+    copyLink: '复制碎片链接',
+    linkCopied: '链接已复制',
+    copyLinkFailed: '未能自动复制，请复制下方链接。',
+    notFound: '找不到这条碎片，它可能已被移除。',
+    indexError: '暂时无法定位这条碎片，请刷新页面后重试。',
   },
   'zh-hant': {
     title: '碎片',
@@ -46,6 +61,11 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     loading: '正在載入留言…',
     error: '留言未能載入，請檢查網路或留言設定後重試。',
     retry: '重試',
+    copyLink: '複製碎片連結',
+    linkCopied: '連結已複製',
+    copyLinkFailed: '無法自動複製，請複製下方連結。',
+    notFound: '找不到這則碎片，它可能已被移除。',
+    indexError: '暫時無法定位這則碎片，請重新整理頁面後再試。',
   },
   ja: {
     title: '断片',
@@ -58,6 +78,11 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     loading: 'コメントを読み込み中…',
     error: 'コメントを読み込めません。ネットワークやコメント設定を確認して再試行してください。',
     retry: '再試行',
+    copyLink: '断片のリンクをコピー',
+    linkCopied: 'リンクをコピーしました',
+    copyLinkFailed: '自動コピーできません。下のリンクをコピーしてください。',
+    notFound: '断片が見つかりません。削除された可能性があります。',
+    indexError: '断片の位置を確認できません。ページを再読み込みしてお試しください。',
   },
   ko: {
     title: '조각',
@@ -70,6 +95,11 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     loading: '댓글 로딩 중…',
     error: '댓글을 불러오지 못했습니다. 네트워크나 댓글 설정을 확인하고 다시 시도하세요.',
     retry: '다시 시도',
+    copyLink: '조각 링크 복사',
+    linkCopied: '링크 복사됨',
+    copyLinkFailed: '자동으로 복사하지 못했습니다. 아래 링크를 복사하세요.',
+    notFound: '조각을 찾을 수 없습니다. 삭제되었을 수 있습니다.',
+    indexError: '조각의 위치를 확인할 수 없습니다. 페이지를 새로고침한 후 다시 시도하세요.',
   },
   es: {
     title: 'Fragmentos',
@@ -82,6 +112,11 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     loading: 'Cargando comentarios…',
     error: 'No se pudieron cargar los comentarios. Revisa la red o la configuración y reintenta.',
     retry: 'Reintentar',
+    copyLink: 'Copiar enlace del fragmento',
+    linkCopied: 'Enlace copiado',
+    copyLinkFailed: 'No se pudo copiar automáticamente. Copia el enlace de abajo.',
+    notFound: 'No se encontró el fragmento. Puede que se haya eliminado.',
+    indexError: 'No se pudo localizar el fragmento. Actualiza la página e inténtalo de nuevo.',
   },
   'pt-br': {
     title: 'Fragmentos',
@@ -95,6 +130,11 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     error:
       'Não foi possível carregar os comentários. Verifique a rede ou a configuração e tente novamente.',
     retry: 'Tentar novamente',
+    copyLink: 'Copiar link do fragmento',
+    linkCopied: 'Link copiado',
+    copyLinkFailed: 'Não foi possível copiar automaticamente. Copie o link abaixo.',
+    notFound: 'Fragmento não encontrado. Ele pode ter sido removido.',
+    indexError: 'Não foi possível localizar o fragmento. Atualize a página e tente novamente.',
   },
   de: {
     title: 'Fragmente',
@@ -108,6 +148,11 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     error:
       'Kommentare konnten nicht geladen werden. Netzwerk oder Einstellungen prüfen und erneut versuchen.',
     retry: 'Erneut versuchen',
+    copyLink: 'Fragment-Link kopieren',
+    linkCopied: 'Link kopiert',
+    copyLinkFailed: 'Automatisches Kopieren fehlgeschlagen. Den Link unten kopieren.',
+    notFound: 'Fragment nicht gefunden. Es wurde möglicherweise entfernt.',
+    indexError: 'Das Fragment konnte nicht gefunden werden. Seite neu laden und erneut versuchen.',
   },
   ru: {
     title: 'Фрагменты',
@@ -120,5 +165,10 @@ export const FRAGMENT_LABELS: Record<string, FragmentMessages> = {
     loading: 'Загрузка комментариев…',
     error: 'Не удалось загрузить комментарии. Проверьте сеть или настройки и повторите попытку.',
     retry: 'Повторить',
+    copyLink: 'Скопировать ссылку на фрагмент',
+    linkCopied: 'Ссылка скопирована',
+    copyLinkFailed: 'Не удалось скопировать автоматически. Скопируйте ссылку ниже.',
+    notFound: 'Фрагмент не найден. Возможно, он удалён.',
+    indexError: 'Не удалось определить страницу фрагмента. Обновите страницу и повторите попытку.',
   },
 };

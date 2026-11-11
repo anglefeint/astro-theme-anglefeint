@@ -15,6 +15,14 @@ All notable changes to this project are documented in this file.
 
 ## Unreleased
 
+## [0.32.0] - 2026-11-11
+
+See the [delivery record](docs/releases/0.32.0.md) for actual publication and acceptance status.
+
+- Give Fragment cards the existing Blog card cut-corner neon frame and comment buttons a nearly transparent cut-corner outline with cyan hover feedback; replace date-link hover underlines with cyan highlighting and preserve keyboard focus feedback.
+- Reuse Blog's Cyber pagination in Fragments: shared numbered links, neon styles, ellipses and optional page jump, controlled by existing `theme.pagination` settings. Fragment page size, stable sharing links, JSON indexes and comment IDs remain unchanged.
+- Add stable Fragment sharing at `/<locale>/fragments/#fragment-ID`: clickable dates, compact copy controls and manual-copy fallback. Off-page targets use a lazily fetched, language-specific, content-versioned static ID/page index, with missing-entry/error feedback, stale-response isolation and one-hop navigation protection. No detail pages or comment identity changes. Nine-language README and demo/starter guides synchronized.
+
 ## [0.31.0] - 2026-11-11
 
 See the [delivery record](docs/releases/0.31.0.md) for publication and acceptance status.

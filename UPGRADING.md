@@ -10,6 +10,14 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.32.0: Stable Fragment sharing and shared pagination
+
+For npm schema-1 integration starters, run `npx @anglefeint/astro-theme@latest upgrade` (or add `--to 0.32.0` for this exact version), then preview and redeploy. See the [release record](docs/releases/0.32.0.md) for actual delivery status. No configuration or content migration is required; the new route, static JSON index and sharing client are package-owned.
+
+Share date links or the adjacent copy control: `/<locale>/fragments/#fragment-ID`. Keep the frontmatter ID when editing, renaming, temporarily removing or restoring a fragment. Rebuild/redeploy after changing content, dates or page size; cross-page locating then follows the new ID→page map. Missing entries show feedback, and clipboard denial exposes a selectable URL. Automatic locating and copying require JavaScript. Existing numbered pages can correct stale hashes; removed numbered pages still use the host's normal 404. No individual Fragment detail pages or 404 interception are added, and existing comment associations stay intact.
+
+Fragments now follows existing `theme.pagination` styling, page-window and optional-jump settings, matching Blog and tag archives. `theme.fragments.pageSize` stays independent (default 20); feed/comment defaults remain off for personal blogs. Demo comments remain enabled, and the temporary five-item local review configuration is not distributed. Upgrades preserve personal source/configuration/media and do not replace tutorial copies; current nine-language instructions are available on the demo. Pre-0.27 copied skeletons still require the migration below.
+
 ## 0.31.0: Unified fragment language generation
 
 Run `npx @anglefeint/astro-theme@latest upgrade` in an npm schema-1 project (or add `--to 0.31.0` for this exact version). See the [release record](docs/releases/0.31.0.md) for actual delivery status.

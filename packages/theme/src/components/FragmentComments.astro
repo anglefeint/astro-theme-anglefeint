@@ -5,7 +5,7 @@ import { THEME } from '@anglefeint/site-config/theme';
 import type { FragmentMessages } from '../i18n/fragments';
 interface Props {
   locale: string;
-  labels: FragmentMessages;
+  labels: Pick<FragmentMessages, 'comments' | 'close' | 'loading' | 'error' | 'retry'>;
 }
 const { locale, labels } = Astro.props;
 ---
