@@ -1,0 +1,126 @@
+{
+  "created": "2026-11-13",
+  "derivedFrom": "../anglefeint-matrix-hover-v1",
+  "sourceCommit": "e3e5f6522a15391fa301b3d956b9b4694f4e6af9",
+  "transform": "reverse frame order, no redraw",
+  "sourceOrder": [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+  "frameSize": 256,
+  "gif": {
+    "loop": 1,
+    "delay": [500, 80, 80, 80, 80, 80, 70, 70, 70, 70, 50, 50, 50, 50, 50, 50],
+    "durationMs": 1480
+  },
+  "website": "Reverse the existing preloaded strip from its current playback position, then restore idle GIF.",
+  "files": [
+    {
+      "file": "return-to-typing-256.gif",
+      "bytes": 663027,
+      "sha256": "05736006eb10c17d68066a8d858d5329be4a0ee7076c69cab52c491fdc7994ec"
+    },
+    {
+      "file": "return-to-typing-strip-128.png",
+      "bytes": 545941,
+      "sha256": "b5f450a82514e218d5c0dcb1fd03b16245967891a6a082cc2acaab20a3ea9298"
+    },
+    {
+      "file": "spritesheet.png",
+      "bytes": 1890945,
+      "sha256": "aeb43c5eff97e076129418026bd5551fcd894d820c7108f51a33b22156de5d8f"
+    },
+    {
+      "file": "start-smile-static-512.png",
+      "bytes": 148803,
+      "sha256": "aefad969022aa0988d9ce94a5b18f1c3e92116e02112f975d55f186253e79adb"
+    },
+    {
+      "file": "end-typing-static-512.png",
+      "bytes": 150126,
+      "sha256": "d995650383c0d06469f8f1424054f1aa5e96f0dd72d96d344ca256d9e9bbf5b2"
+    },
+    {
+      "file": "transformation.txt",
+      "bytes": 313,
+      "sha256": "5a2f5c7bd911609e827f1d815fbde83b50f111f051a5719a90aabbd668072798"
+    },
+    {
+      "file": "frames/01.png",
+      "bytes": 120175,
+      "sha256": "d68ba6edd7e15d62b86b1729ea53b9d2531006f69eab0315addde100e6367a99"
+    },
+    {
+      "file": "frames/02.png",
+      "bytes": 120906,
+      "sha256": "eb878a654f483127908584b88008927b02b28764649f43dcf89f8edb90b2411f"
+    },
+    {
+      "file": "frames/03.png",
+      "bytes": 120617,
+      "sha256": "c0e1eae78883038147da86d1235cb74eeeee4adad79fa7537d1b11d14419ef9b"
+    },
+    {
+      "file": "frames/04.png",
+      "bytes": 120326,
+      "sha256": "a89245472ade008713f8afce8f322bb20387cf5215a1244e397b27c7e7538ed0"
+    },
+    {
+      "file": "frames/05.png",
+      "bytes": 121420,
+      "sha256": "9fbbba26de04114468c9bad50aa74e228066fdbc1d5b788b6455d1510a3d5a8e"
+    },
+    {
+      "file": "frames/06.png",
+      "bytes": 122138,
+      "sha256": "752807629d7b17753829fdf54e8645fd118575074060c6e7a0f413ba71c56853"
+    },
+    {
+      "file": "frames/07.png",
+      "bytes": 122825,
+      "sha256": "fa6e47e18fea998d1410a81f5f6819b29acce3508a58516446d1df600c846b43"
+    },
+    {
+      "file": "frames/08.png",
+      "bytes": 121517,
+      "sha256": "dec63019f3bc7e46badfff6cebd65071ff5ab33157ccc4f78ae7a0402051ba45"
+    },
+    {
+      "file": "frames/09.png",
+      "bytes": 121910,
+      "sha256": "f90c32acf380e281242cf5ac390b887ad92221b831c4996ba9a5c4f2bfbaaddb"
+    },
+    {
+      "file": "frames/10.png",
+      "bytes": 121993,
+      "sha256": "00e17ddfbe56610bacb188314ebd57c6a180e47b22a522e62a3a9f906f7557c0"
+    },
+    {
+      "file": "frames/11.png",
+      "bytes": 122223,
+      "sha256": "6580a8d5a4ff86a599b5d67a6899773b5e164bc37c6ae29acb14ff981520b738"
+    },
+    {
+      "file": "frames/12.png",
+      "bytes": 121446,
+      "sha256": "f1aecd9d3879e5f5031942a12569ab53bc1d77ce37c1891f293d852649f033dc"
+    },
+    {
+      "file": "frames/13.png",
+      "bytes": 121716,
+      "sha256": "fd3cd009ff6a7c045aa8a411773d766b8d05399256306deb2363fe79c5131dcf"
+    },
+    {
+      "file": "frames/14.png",
+      "bytes": 122198,
+      "sha256": "35f5785ba2138b7ab6124ecc554e0290e68a345aefcc6e40a9627f58f5c60fe1"
+    },
+    {
+      "file": "frames/15.png",
+      "bytes": 122080,
+      "sha256": "59630f810469d81586aaf50b3b7db436320c04368f5f792ef85ebe46e9a35a6c"
+    },
+    {
+      "file": "frames/16.png",
+      "bytes": 121329,
+      "sha256": "75b6e0f16df545fd737dbd19b5e95f702ab2511d42998ab25d68af6570730e2c"
+    }
+  ]
+}

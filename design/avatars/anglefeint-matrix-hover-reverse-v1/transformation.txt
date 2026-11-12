@@ -1,0 +1,3 @@
+Exact source-frame reversal of ../anglefeint-matrix-hover-v1: frames 16 through 1.
+No AI redraw or pixel editing. Original forward assets are unchanged.
+GIF frame durations are reversed with the frames. The website reuses the preloaded forward strip with reversible playback, so it needs no second image request.
