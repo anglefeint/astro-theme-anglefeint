@@ -590,7 +590,7 @@ En el starter integrado 0.27+, el paquete conecta automáticamente el procesador
 
 ## Estadísticas del artículo
 
-El recuento es aproximado: caracteres CJK individualmente y el resto principalmente por espacios. Los tokens se estiman como `round(max(words, 1) × 1.3)`; no son el resultado de un tokenizador ni consumo real de IA. Desde 1.000 se usa un decimal y k. `wordCount`, `tokenCount` y `readMinutes` en frontmatter sobrescriben cada valor por separado; cambiar solo wordCount no recalcula tokens. El código fuente de fórmulas y MDX puede afectar las estimaciones.
+El recuento es aproximado: caracteres CJK individualmente y el resto principalmente por espacios. Los tokens se estiman como `round(max(words, 1) × 1.3)`; no son el resultado de un tokenizador ni consumo real de IA. Desde 1.000 se usa un decimal y k. `wordCount` y `tokenCount` en frontmatter sobrescriben cada valor por separado; cambiar solo wordCount no recalcula tokens. El código fuente de fórmulas y MDX puede afectar las estimaciones.
 
 ## Imagen predeterminada y IDs cortos de Fragment (0.33.0+)
 
@@ -603,3 +603,9 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment genera un Nano ID de ocho letras y dígitos, distingue mayúsculas y minúsculas, comprueba los IDs Markdown de todos los idiomas y reintenta las colisiones. Una ejecución comparte ID y fecha entre idiomas. Solo se aceptan IDs alfanuméricos de exactamente ocho caracteres. Los UUID e IDs largos antiguos no están admitidos: elimina y vuelve a publicar las entradas; no hay migración ni compatibilidad de enlaces antiguos. Conserva el nuevo ID publicado; cambiarlo crea otra asociación de comentarios.
+
+## Vista previa de Fragments en inicio (0.35.0+)
+
+En el código actual, activar `theme.fragments.enabled` añade un avatar de píxeles bajo la cabecera de inicio si hay fragmentos en el idioma actual. Al abrirlo se muestran los tres más recientes. Cada tarjeta abre el original; el contador y la flecha inferiores abren la lista completa. El contador indica vistas previas / total del idioma. Imágenes y código tienen altura limitada y se recorta el exceso. No aparece si está desactivado o vacío. No requiere nueva configuración; necesita el tema 0.35.0 o posterior.
+
+OUTPUT conserva palabras, tokens y el nombre opcional del modelo. Ya no muestra tiempo de lectura, latency ni confidence, aunque estén en el frontmatter; los campos antiguos siguen siendo válidos. El texto y su panel aparecen directamente y permanecen quietos. Se conservan la red de fondo y la banda luminosa del título.

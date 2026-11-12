@@ -4,7 +4,7 @@ title: 'Anleitung 5: Fragmente veröffentlichen'
 description: 'Kurze Gedanken als Markdown mit optionalen Kommentaren im Dialog.'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-13'
 ---
 
 ## KI-lesbare Inhalte
@@ -110,3 +110,7 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment erzeugt eine achtstellige Nano ID aus Groß-/Kleinbuchstaben und Ziffern, prüft vorhandene Markdown-IDs aller Sprachen und wiederholt bei Kollisionen. Alle Sprachen eines Aufrufs teilen ID und Zeit. Erlaubt sind genau acht alphanumerische Zeichen. Alte UUIDs und lange IDs werden nicht unterstützt: alte Einträge löschen und neu veröffentlichen. Es gibt keine Migration oder Kompatibilität alter Links. Neue veröffentlichte IDs beibehalten; Änderungen erzeugen eine andere Kommentarzuordnung.
+
+## Fragment-Vorschau auf der Startseite (0.35.0+)
+
+Im aktuellen Quellcode erscheint unter dem Startseiten-Header ein Pixel-Avatar, wenn `theme.fragments.enabled` aktiviert ist und die aktuelle Sprache Fragmente enthält. Beim Öffnen werden die neuesten drei angezeigt. Jede Karte führt zum Original; Anzahl und Pfeil unten führen zur vollständigen Liste. Die Anzahl bedeutet Vorschauen / Gesamtzahl dieser Sprache. Bilder und Code haben eine begrenzte Höhe; Überlauf wird abgeschnitten. Bei deaktiviertem oder leerem Feed entfällt der Einstieg. Keine neue Konfiguration nötig; Theme 0.35.0 oder neuer erforderlich.

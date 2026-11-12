@@ -596,7 +596,7 @@ $$
 
 ## 文章统计
 
-页面字词数是源正文的粗略统计：中日韩字符逐字计数，其他文本主要按空白切分。tokens 默认按 `round(max(words, 1) × 1.3)` 估算，不是模型分词器结果或真实 AI 用量。达到 1,000 后显示一位小数和 k。frontmatter 的 `wordCount`、`tokenCount`、`readMinutes` 分别覆盖各自值；只改 wordCount 不会重算 tokens。公式和 MDX 源码也可能影响估算。
+页面字词数是源正文的粗略统计：中日韩字符逐字计数，其他文本主要按空白切分。tokens 默认按 `round(max(words, 1) × 1.3)` 估算，不是模型分词器结果或真实 AI 用量。达到 1,000 后显示一位小数和 k。frontmatter 的 `wordCount`、`tokenCount` 分别覆盖各自值；只改 wordCount 不会重算 tokens。公式和 MDX 源码也可能影响估算。
 
 ## 默认分享图与 Fragment 短 ID（0.33.0+）
 
@@ -609,3 +609,9 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment 使用区分大小写的字母和数字生成 8 位 Nano ID，读取各语言已有 Markdown ID 查重，冲突时重试。同一次命令的所有语言共享 ID 和发布时间。Fragment 仅接受恰好 8 位字母数字 ID，不兼容旧 UUID 或长 ID；旧内容请删除后重新发布，不提供迁移或旧链接兼容。新内容发布后请保留 ID，修改会改变评论关联。
+
+## 首页 Fragment 预览（0.35.0+）
+
+当前源码中，开启 `theme.fragments.enabled` 且当前语言存在碎片时，首页 header 下方会出现像素头像入口。点开预览最近三条；整张卡片进入原碎片，底部数量与箭头进入完整列表。数量表示当前语言的预览条数 / 总条数。图片和代码采用限高预览，超出部分裁切；关闭功能或没有内容时不显示入口。无需新增配置。需要主题 0.35.0 或更新版本。
+
+文章 OUTPUT 保留字数、tokens 与可选模型名称；不再显示阅读时长、latency 和 confidence，即使 frontmatter 填写了这些值。旧字段仍可保留。正文与外层面板直接出现并保持静止，背景网络与标题光带保留。这些展示调整同样等待下一次主题发布。

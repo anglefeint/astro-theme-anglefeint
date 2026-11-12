@@ -94,7 +94,7 @@ tags: ['astro', 'notes']
 
 title, description e pubDate são obrigatórios. subtitle, updatedDate e author são opcionais; o autor padrão vem do site. Artigos são ordenados por pubDate. Não há filtro de rascunho ou agendamento: draft: true e datas futuras não ocultam artigos. Guarde textos inacabados fora de src/content/blog/.
 
-heroImage: ./cover.jpg usa uma imagem ao lado do artigo. Se houver imagens em src/assets/blog/default-covers/, cada execução escolhe uma capa aleatória e a usa em todos os arquivos de idioma criados nessa execução. Os arquivos existentes são preservados; heroImage pode ser alterado depois. Não baixa imagens. Tempo de leitura e métricas são estimativas; readMinutes, wordCount, tokenCount, aiLatencyMs e aiConfidence podem substituí-las, sem conectar um serviço de IA.
+heroImage: ./cover.jpg usa uma imagem ao lado do artigo. Se houver imagens em src/assets/blog/default-covers/, cada execução escolhe uma capa aleatória e a usa em todos os arquivos de idioma criados nessa execução. Os arquivos existentes são preservados; heroImage pode ser alterado depois. Não baixa imagens. Palavras e tokens são estimativas; wordCount e tokenCount substituem cada contagem separadamente. Os artigos não exibem tempo de leitura, latência ou confiança. Campos antigos podem permanecer; nenhum serviço de IA é conectado.
 
 ## Páginas independentes
 
@@ -499,7 +499,7 @@ No starter integrado 0.27+, o pacote conecta automaticamente o processador Markd
 
 ## Estatísticas dos artigos
 
-A contagem é aproximada: caracteres CJK individualmente e o restante principalmente por espaços. Tokens são estimados por `round(max(words, 1) × 1.3)`, não por um tokenizador nem pelo uso real de IA. A partir de 1.000, usa-se uma casa decimal e k. `wordCount`, `tokenCount` e `readMinutes` no frontmatter substituem valores separadamente; mudar apenas wordCount não recalcula tokens. O código-fonte de fórmulas e MDX pode afetar as estimativas.
+A contagem é aproximada: caracteres CJK individualmente e o restante principalmente por espaços. Tokens são estimados por `round(max(words, 1) × 1.3)`, não por um tokenizador nem pelo uso real de IA. A partir de 1.000, usa-se uma casa decimal e k. `wordCount` e `tokenCount` no frontmatter substituem valores separadamente; mudar apenas wordCount não recalcula tokens. O código-fonte de fórmulas e MDX pode afetar as estimativas.
 
 ## Imagem padrão e IDs curtos de Fragment (0.33.0+)
 
@@ -512,3 +512,9 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment gera um Nano ID de oito letras e dígitos, diferencia maiúsculas e minúsculas, verifica IDs Markdown de todos os idiomas e repete em caso de colisão. Cada execução compartilha ID e data entre idiomas. São aceitos apenas IDs alfanuméricos com exatamente oito caracteres. UUIDs e IDs longos antigos não são suportados: exclua e publique novamente, sem migração ou compatibilidade com links antigos. Preserve o novo ID publicado; alterá-lo cria outra associação de comentários.
+
+## Prévia de Fragments na página inicial (0.35.0+)
+
+No código atual, ativar `theme.fragments.enabled` adiciona um avatar em pixels abaixo do cabeçalho da página inicial quando há fragmentos no idioma atual. Ao abrir, aparecem os três mais recentes. Cada cartão abre o original; a contagem e a seta inferiores abrem a lista completa. A contagem significa prévias / total no idioma. Imagens e código têm altura limitada, com o excesso recortado. O botão não aparece quando desativado ou sem conteúdo. Não exige nova configuração; requer o tema 0.35.0 ou posterior.
+
+OUTPUT mantém palavras, tokens e o nome opcional do modelo. Tempo de leitura, latency e confidence deixam de ser exibidos, mesmo presentes no frontmatter; os campos antigos continuam aceitos. Texto e painel aparecem imediatamente e permanecem imóveis. A rede de fundo e a faixa luminosa do título permanecem.

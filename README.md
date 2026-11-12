@@ -603,7 +603,7 @@ In the 0.27+ integration starter, the theme package wires the Markdown processor
 
 ## Article statistics
 
-The displayed words are a heuristic count of source text (CJK characters individually, other text mainly by whitespace). Tokens default to `round(max(words, 1) × 1.3)`, not a model tokenizer or actual AI usage. Counts at 1,000 or more use one decimal and `k`. Frontmatter `wordCount`, `tokenCount` and `readMinutes` override their values independently; changing only wordCount does not recalculate tokens. Formula/MDX source can affect the estimates.
+The displayed words are a heuristic count of source text (CJK characters individually, other text mainly by whitespace). Tokens default to `round(max(words, 1) × 1.3)`, not a model tokenizer or actual AI usage. Counts at 1,000 or more use one decimal and `k`. Frontmatter `wordCount` and `tokenCount` override their values independently; changing only wordCount does not recalculate tokens. Formula/MDX source can affect the estimates.
 
 ## Default sharing image and short Fragment IDs (0.33.0+)
 
@@ -616,3 +616,9 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment generates an eight-character Nano ID from case-sensitive letters and digits, checks existing Markdown IDs across languages and retries collisions. All languages from one invocation share the ID and timestamp. Fragment IDs must be exactly eight alphanumeric characters. Old UUID/long-ID entries are not supported: delete and repost them rather than expecting migration or old-link compatibility. Keep the new ID stable after publishing; changing it creates a new comment association.
+
+## Homepage Fragment previews (0.35.0+)
+
+In the current source, enabling `theme.fragments.enabled` also adds a pixel-avatar entrance below the homepage header when the current language has fragments. Open it to preview the latest three; each card opens its original fragment, and the bottom count/arrow opens the full feed. The count means previews / total fragments in this language. Images and code have bounded previews; overflow is clipped. Empty or disabled feeds omit the entrance. No new configuration is needed. Requires theme 0.35.0 or later.
+
+Article OUTPUT keeps words, tokens and the optional model label. Reading time, latency and confidence are no longer displayed, even when supplied in frontmatter; old fields remain accepted. The article text and its panel appear immediately and remain stationary; the background network and title light band remain.

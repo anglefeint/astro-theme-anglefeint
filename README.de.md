@@ -94,7 +94,7 @@ tags: ['astro', 'notes']
 
 title, description und pubDate sind Pflicht. subtitle, updatedDate und author sind optional; standardmäßig gilt der Website-Autor. Beiträge werden nach pubDate sortiert. Es gibt keinen Entwurfs- oder Veröffentlichungszeitfilter: draft: true und zukünftige Daten verstecken nichts. Unfertige Texte außerhalb von src/content/blog/ aufbewahren.
 
-heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Sind Bilder in src/assets/blog/default-covers/ vorhanden, wählt jeder Aufruf zufällig ein Titelbild für alle dabei neu erstellten Sprachversionen. Vorhandene Dateien bleiben erhalten; heroImage lässt sich später ändern. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
+heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Sind Bilder in src/assets/blog/default-covers/ vorhanden, wählt jeder Aufruf zufällig ein Titelbild für alle dabei neu erstellten Sprachversionen. Vorhandene Dateien bleiben erhalten; heroImage lässt sich später ändern. Bilder werden nicht heruntergeladen. Wörter und Tokens werden geschätzt; wordCount und tokenCount überschreiben sie einzeln. Artikel zeigen keine Lesezeit, Latenz oder Konfidenz. Alte Felder dürfen erhalten bleiben; es wird kein KI-Dienst verbunden.
 
 ## Eigenständige Seiten
 
@@ -499,7 +499,7 @@ Im Integration-Starter ab 0.27 verbindet das Theme-Paket den Markdown-Prozessor 
 
 ## Artikelstatistik
 
-Die Wortzahl ist eine Schätzung aus dem Quelltext: CJK-Zeichen einzeln, sonst hauptsächlich durch Leerraum getrennte Teile. Tokens werden als `round(max(words, 1) × 1.3)` geschätzt, nicht durch einen Modell-Tokenizer oder tatsächlichen KI-Verbrauch. Ab 1.000 erscheint eine Dezimalstelle mit k. Frontmatter-Felder `wordCount`, `tokenCount` und `readMinutes` überschreiben Werte unabhängig; wordCount allein berechnet Tokens nicht neu. Formel- und MDX-Quelltext können die Schätzung beeinflussen.
+Die Wortzahl ist eine Schätzung aus dem Quelltext: CJK-Zeichen einzeln, sonst hauptsächlich durch Leerraum getrennte Teile. Tokens werden als `round(max(words, 1) × 1.3)` geschätzt, nicht durch einen Modell-Tokenizer oder tatsächlichen KI-Verbrauch. Ab 1.000 erscheint eine Dezimalstelle mit k. Frontmatter-Felder `wordCount` und `tokenCount` überschreiben Werte unabhängig; wordCount allein berechnet Tokens nicht neu. Formel- und MDX-Quelltext können die Schätzung beeinflussen.
 
 ## Standard-Vorschaubild und kurze Fragment-IDs (0.33.0+)
 
@@ -512,3 +512,9 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment erzeugt eine achtstellige Nano ID aus Groß-/Kleinbuchstaben und Ziffern, prüft vorhandene Markdown-IDs aller Sprachen und wiederholt bei Kollisionen. Alle Sprachen eines Aufrufs teilen ID und Zeit. Erlaubt sind genau acht alphanumerische Zeichen. Alte UUIDs und lange IDs werden nicht unterstützt: alte Einträge löschen und neu veröffentlichen. Es gibt keine Migration oder Kompatibilität alter Links. Neue veröffentlichte IDs beibehalten; Änderungen erzeugen eine andere Kommentarzuordnung.
+
+## Fragment-Vorschau auf der Startseite (0.35.0+)
+
+Im aktuellen Quellcode erscheint unter dem Startseiten-Header ein Pixel-Avatar, wenn `theme.fragments.enabled` aktiviert ist und die aktuelle Sprache Fragmente enthält. Beim Öffnen werden die neuesten drei angezeigt. Jede Karte führt zum Original; Anzahl und Pfeil unten führen zur vollständigen Liste. Die Anzahl bedeutet Vorschauen / Gesamtzahl dieser Sprache. Bilder und Code haben eine begrenzte Höhe; Überlauf wird abgeschnitten. Bei deaktiviertem oder leerem Feed entfällt der Einstieg. Keine neue Konfiguration nötig; Theme 0.35.0 oder neuer erforderlich.
+
+OUTPUT behält Wortzahl, tokens und den optionalen Modellnamen. Lesezeit, latency und confidence werden auch bei gesetztem Frontmatter nicht mehr angezeigt; alte Felder bleiben zulässig. Text und Panel erscheinen sofort und bleiben unbewegt. Hintergrundnetz und Lichtband unter dem Titel bleiben erhalten.

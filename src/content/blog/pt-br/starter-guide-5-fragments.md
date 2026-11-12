@@ -4,7 +4,7 @@ title: 'Guia 5: Publicar fragmentos'
 description: 'Publique pensamentos breves em Markdown, com comentários opcionais em uma janela.'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-13'
 ---
 
 ## Conteúdo legível por IA
@@ -110,3 +110,7 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment gera um Nano ID de oito letras e dígitos, diferencia maiúsculas e minúsculas, verifica IDs Markdown de todos os idiomas e repete em caso de colisão. Cada execução compartilha ID e data entre idiomas. São aceitos apenas IDs alfanuméricos com exatamente oito caracteres. UUIDs e IDs longos antigos não são suportados: exclua e publique novamente, sem migração ou compatibilidade com links antigos. Preserve o novo ID publicado; alterá-lo cria outra associação de comentários.
+
+## Prévia de Fragments na página inicial (0.35.0+)
+
+No código atual, ativar `theme.fragments.enabled` adiciona um avatar em pixels abaixo do cabeçalho da página inicial quando há fragmentos no idioma atual. Ao abrir, aparecem os três mais recentes. Cada cartão abre o original; a contagem e a seta inferiores abrem a lista completa. A contagem significa prévias / total no idioma. Imagens e código têm altura limitada, com o excesso recortado. O botão não aparece quando desativado ou sem conteúdo. Não exige nova configuração; requer o tema 0.35.0 ou posterior.
