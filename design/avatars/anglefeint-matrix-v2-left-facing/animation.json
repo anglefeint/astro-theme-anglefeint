@@ -1,0 +1,736 @@
+{
+  "character": "AngleFeintAvatar1.1",
+  "created": "2026-11-13",
+  "generation": "Exact horizontal mirror: GIF palette/index preservation; Sharp for PNGs and pixel verification; no AI redraw",
+  "palette": ["#000800", "#000000", "#60ff80", "#8cf3a7", "#b9fbd1"],
+  "grid": {
+    "columns": 5,
+    "rows": 5,
+    "width": 1254,
+    "height": 1254
+  },
+  "frameSize": 256,
+  "loop": 0,
+  "durationMs": 8660,
+  "cells": [
+    {
+      "file": "frames/01.png",
+      "row": 1,
+      "column": 1,
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/02.png",
+      "row": 1,
+      "column": 2,
+      "crop": {
+        "left": 251,
+        "top": 0,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/03.png",
+      "row": 1,
+      "column": 3,
+      "crop": {
+        "left": 502,
+        "top": 0,
+        "width": 250,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/04.png",
+      "row": 1,
+      "column": 4,
+      "crop": {
+        "left": 752,
+        "top": 0,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/05.png",
+      "row": 1,
+      "column": 5,
+      "crop": {
+        "left": 1003,
+        "top": 0,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/06.png",
+      "row": 2,
+      "column": 1,
+      "crop": {
+        "left": 0,
+        "top": 251,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/07.png",
+      "row": 2,
+      "column": 2,
+      "crop": {
+        "left": 251,
+        "top": 251,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/08.png",
+      "row": 2,
+      "column": 3,
+      "crop": {
+        "left": 502,
+        "top": 251,
+        "width": 250,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/09.png",
+      "row": 2,
+      "column": 4,
+      "crop": {
+        "left": 752,
+        "top": 251,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/10.png",
+      "row": 2,
+      "column": 5,
+      "crop": {
+        "left": 1003,
+        "top": 251,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/11.png",
+      "row": 3,
+      "column": 1,
+      "crop": {
+        "left": 0,
+        "top": 502,
+        "width": 251,
+        "height": 250
+      }
+    },
+    {
+      "file": "frames/12.png",
+      "row": 3,
+      "column": 2,
+      "crop": {
+        "left": 251,
+        "top": 502,
+        "width": 251,
+        "height": 250
+      }
+    },
+    {
+      "file": "frames/13.png",
+      "row": 3,
+      "column": 3,
+      "crop": {
+        "left": 502,
+        "top": 502,
+        "width": 250,
+        "height": 250
+      }
+    },
+    {
+      "file": "frames/14.png",
+      "row": 3,
+      "column": 4,
+      "crop": {
+        "left": 752,
+        "top": 502,
+        "width": 251,
+        "height": 250
+      }
+    },
+    {
+      "file": "frames/15.png",
+      "row": 3,
+      "column": 5,
+      "crop": {
+        "left": 1003,
+        "top": 502,
+        "width": 251,
+        "height": 250
+      }
+    },
+    {
+      "file": "frames/16.png",
+      "row": 4,
+      "column": 1,
+      "crop": {
+        "left": 0,
+        "top": 752,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/17.png",
+      "row": 4,
+      "column": 2,
+      "crop": {
+        "left": 251,
+        "top": 752,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/18.png",
+      "row": 4,
+      "column": 3,
+      "crop": {
+        "left": 502,
+        "top": 752,
+        "width": 250,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/19.png",
+      "row": 4,
+      "column": 4,
+      "crop": {
+        "left": 752,
+        "top": 752,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/20.png",
+      "row": 4,
+      "column": 5,
+      "crop": {
+        "left": 1003,
+        "top": 752,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/21.png",
+      "row": 5,
+      "column": 1,
+      "crop": {
+        "left": 0,
+        "top": 1003,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/22.png",
+      "row": 5,
+      "column": 2,
+      "crop": {
+        "left": 251,
+        "top": 1003,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/23.png",
+      "row": 5,
+      "column": 3,
+      "crop": {
+        "left": 502,
+        "top": 1003,
+        "width": 250,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/24.png",
+      "row": 5,
+      "column": 4,
+      "crop": {
+        "left": 752,
+        "top": 1003,
+        "width": 251,
+        "height": 251
+      }
+    },
+    {
+      "file": "frames/25.png",
+      "row": 5,
+      "column": 5,
+      "crop": {
+        "left": 1003,
+        "top": 1003,
+        "width": 251,
+        "height": 251
+      }
+    }
+  ],
+  "sequence": [
+    {
+      "frame": 1,
+      "durationMs": 120
+    },
+    {
+      "frame": 2,
+      "durationMs": 120
+    },
+    {
+      "frame": 3,
+      "durationMs": 120
+    },
+    {
+      "frame": 4,
+      "durationMs": 120
+    },
+    {
+      "frame": 5,
+      "durationMs": 120
+    },
+    {
+      "frame": 1,
+      "durationMs": 120
+    },
+    {
+      "frame": 2,
+      "durationMs": 120
+    },
+    {
+      "frame": 3,
+      "durationMs": 120
+    },
+    {
+      "frame": 4,
+      "durationMs": 120
+    },
+    {
+      "frame": 5,
+      "durationMs": 120
+    },
+    {
+      "frame": 1,
+      "durationMs": 120
+    },
+    {
+      "frame": 2,
+      "durationMs": 120
+    },
+    {
+      "frame": 3,
+      "durationMs": 120
+    },
+    {
+      "frame": 4,
+      "durationMs": 120
+    },
+    {
+      "frame": 5,
+      "durationMs": 120
+    },
+    {
+      "frame": 1,
+      "durationMs": 120
+    },
+    {
+      "frame": 2,
+      "durationMs": 120
+    },
+    {
+      "frame": 3,
+      "durationMs": 120
+    },
+    {
+      "frame": 4,
+      "durationMs": 120
+    },
+    {
+      "frame": 5,
+      "durationMs": 120
+    },
+    {
+      "frame": 6,
+      "durationMs": 160
+    },
+    {
+      "frame": 7,
+      "durationMs": 180
+    },
+    {
+      "frame": 8,
+      "durationMs": 240
+    },
+    {
+      "frame": 9,
+      "durationMs": 200
+    },
+    {
+      "frame": 10,
+      "durationMs": 160
+    },
+    {
+      "frame": 11,
+      "durationMs": 120
+    },
+    {
+      "frame": 12,
+      "durationMs": 120
+    },
+    {
+      "frame": 13,
+      "durationMs": 120
+    },
+    {
+      "frame": 14,
+      "durationMs": 120
+    },
+    {
+      "frame": 15,
+      "durationMs": 120
+    },
+    {
+      "frame": 11,
+      "durationMs": 120
+    },
+    {
+      "frame": 12,
+      "durationMs": 120
+    },
+    {
+      "frame": 13,
+      "durationMs": 120
+    },
+    {
+      "frame": 14,
+      "durationMs": 120
+    },
+    {
+      "frame": 15,
+      "durationMs": 120
+    },
+    {
+      "frame": 11,
+      "durationMs": 120
+    },
+    {
+      "frame": 12,
+      "durationMs": 120
+    },
+    {
+      "frame": 13,
+      "durationMs": 120
+    },
+    {
+      "frame": 14,
+      "durationMs": 120
+    },
+    {
+      "frame": 15,
+      "durationMs": 120
+    },
+    {
+      "frame": 11,
+      "durationMs": 120
+    },
+    {
+      "frame": 12,
+      "durationMs": 120
+    },
+    {
+      "frame": 13,
+      "durationMs": 120
+    },
+    {
+      "frame": 14,
+      "durationMs": 120
+    },
+    {
+      "frame": 15,
+      "durationMs": 120
+    },
+    {
+      "frame": 16,
+      "durationMs": 160
+    },
+    {
+      "frame": 17,
+      "durationMs": 220
+    },
+    {
+      "frame": 18,
+      "durationMs": 360
+    },
+    {
+      "frame": 19,
+      "durationMs": 220
+    },
+    {
+      "frame": 20,
+      "durationMs": 160
+    },
+    {
+      "frame": 21,
+      "durationMs": 120
+    },
+    {
+      "frame": 22,
+      "durationMs": 120
+    },
+    {
+      "frame": 23,
+      "durationMs": 120
+    },
+    {
+      "frame": 24,
+      "durationMs": 120
+    },
+    {
+      "frame": 25,
+      "durationMs": 120
+    },
+    {
+      "frame": 21,
+      "durationMs": 120
+    },
+    {
+      "frame": 22,
+      "durationMs": 120
+    },
+    {
+      "frame": 23,
+      "durationMs": 120
+    },
+    {
+      "frame": 24,
+      "durationMs": 120
+    },
+    {
+      "frame": 25,
+      "durationMs": 120
+    },
+    {
+      "frame": 21,
+      "durationMs": 120
+    },
+    {
+      "frame": 22,
+      "durationMs": 120
+    },
+    {
+      "frame": 23,
+      "durationMs": 120
+    },
+    {
+      "frame": 24,
+      "durationMs": 120
+    },
+    {
+      "frame": 25,
+      "durationMs": 120
+    }
+  ],
+  "files": [
+    {
+      "file": "reference-original.png",
+      "bytes": 904970,
+      "sha256": "69198922d2e6475fbc8acd9845cc055d1a858ec21b5d5da824f622e37b59f4ed"
+    },
+    {
+      "file": "spritesheet.png",
+      "bytes": 3050959,
+      "sha256": "3756cf0e1a8ab4b98902756c12e19ecdeab3984924ebf5b9724cf8163f62ec0f"
+    },
+    {
+      "file": "animation-256.gif",
+      "bytes": 4879229,
+      "sha256": "fb16243266277afc3ac8bca678f7b62a9ab722f207fbbf5a2e0a84f14cdee0cb"
+    },
+    {
+      "file": "avatar-static-512.png",
+      "bytes": 154779,
+      "sha256": "eef2d1f7f9a96b386e7bf74e06677c2e50c17ab0486c28e53e15c02f9b44b809"
+    },
+    {
+      "file": "prompt.txt",
+      "bytes": 2673,
+      "sha256": "c9f356c8b39bcbc582931b4acbbb7765158f57850f614cfe59f9f45a8bfd5411"
+    },
+    {
+      "file": "logo-128.gif",
+      "bytes": 1256649,
+      "sha256": "dd2d9e00fff06659819518b66f5ebce4bb6f15589a54592fe87b60097bc26100"
+    },
+    {
+      "file": "logo-static-128.png",
+      "bytes": 36084,
+      "sha256": "daf6bd6937203ace9311dde817e589cd5b65135ef1a2e46a18ed3343838d6311"
+    },
+    {
+      "file": "frames/01.png",
+      "bytes": 115520,
+      "sha256": "d2cf0b9bb99ae75841f08d5c6e51e9f37d265ff89d5b6e9f9f9ff40a61bcf75b"
+    },
+    {
+      "file": "frames/02.png",
+      "bytes": 115340,
+      "sha256": "b73052376623febf9646c7c1e513e1b3fe46ce5b95c0058bcfadbad36b0a26e6"
+    },
+    {
+      "file": "frames/03.png",
+      "bytes": 116932,
+      "sha256": "525af5315c469b56ce7a00273db1bee79132f9024f4320caa4a9f9866dd88fc2"
+    },
+    {
+      "file": "frames/04.png",
+      "bytes": 115610,
+      "sha256": "dbde742283146eaab14383a0ba7b2ac3b3aec082c34fb106c288d106ed2cc846"
+    },
+    {
+      "file": "frames/05.png",
+      "bytes": 114858,
+      "sha256": "2d2c0df32a31e71da96358af23489c1feb61f784fa1e1e02dca62a51b6f8a14a"
+    },
+    {
+      "file": "frames/06.png",
+      "bytes": 115532,
+      "sha256": "e56999c31294d0747e0459c4c6942c024caa9ea6c12890d6b0b949cf34dd80b6"
+    },
+    {
+      "file": "frames/07.png",
+      "bytes": 114678,
+      "sha256": "de9fb8f031a9281a344f1c44b44b1ff9cb8290bd857bcc4525398534d4a460b3"
+    },
+    {
+      "file": "frames/08.png",
+      "bytes": 114006,
+      "sha256": "2a79b5008c12a18f58a0d4c8b9c607dd3e46404a4dac11783a0b783394f080f3"
+    },
+    {
+      "file": "frames/09.png",
+      "bytes": 112998,
+      "sha256": "eb6ae2d95fb1735bf005cfecbc11fa54a9102b18c4b85d942fc4b91fed868116"
+    },
+    {
+      "file": "frames/10.png",
+      "bytes": 115173,
+      "sha256": "7bd9b4e61e817b88dbedefc36e2e3f9e838d1e747ce1a3704b8d9ffd71acf9f4"
+    },
+    {
+      "file": "frames/11.png",
+      "bytes": 115619,
+      "sha256": "36fe94081acda978387c2010bae8af53de5eba33c34817b99e41cad4cb2db3f6"
+    },
+    {
+      "file": "frames/12.png",
+      "bytes": 116163,
+      "sha256": "d0d2aba1c80ee2a3190d3377174965b9e4e6037005330b88faccbd79c816876b"
+    },
+    {
+      "file": "frames/13.png",
+      "bytes": 115898,
+      "sha256": "885db685ca3ace80fb791c4c8781d3ecaec8396c63d6f7d398c326506752dfdd"
+    },
+    {
+      "file": "frames/14.png",
+      "bytes": 115210,
+      "sha256": "e49fb2d4f7fcea6f12416f9505137c7e4abeed6291ebee3211cb197eb54a0faa"
+    },
+    {
+      "file": "frames/15.png",
+      "bytes": 115154,
+      "sha256": "7b4cb389c50051dbc916340d2bece526ccadcc837249287c7201ffc3bb351422"
+    },
+    {
+      "file": "frames/16.png",
+      "bytes": 116129,
+      "sha256": "97314a4bd612cc6f175985b3f020b1d9b72e29c32140de6d503cbc88f99913c5"
+    },
+    {
+      "file": "frames/17.png",
+      "bytes": 118706,
+      "sha256": "0ac229ead0e3ee2e8c773a380757eb7787a9fe4a077b8747b0c881e5f5ab770c"
+    },
+    {
+      "file": "frames/18.png",
+      "bytes": 119871,
+      "sha256": "b90862a10393a488722f128adc862a107b2fcb18cb79624b7b4722dc7eaf41b4"
+    },
+    {
+      "file": "frames/19.png",
+      "bytes": 116836,
+      "sha256": "771f1eff727192d9c20d5af702c154350db39629fcfc05a2573575284e996aa2"
+    },
+    {
+      "file": "frames/20.png",
+      "bytes": 115151,
+      "sha256": "f1b9b94b6e13628bc638daa73bbbf2fe8a2e6ff3f56e941e4db23d43641e25f5"
+    },
+    {
+      "file": "frames/21.png",
+      "bytes": 115329,
+      "sha256": "1cc28ba112ffff5baa7376fd8c5bfbe36b8510301f435ca258cbe54b0267e98d"
+    },
+    {
+      "file": "frames/22.png",
+      "bytes": 115124,
+      "sha256": "2fe24783a238f62fb79bb67420db218d315be06fc6bf44301fbe9c6e4fc96572"
+    },
+    {
+      "file": "frames/23.png",
+      "bytes": 115001,
+      "sha256": "408d971564fae28040bf416e42f5487239b39f024848cfb131241ecef28bdd67"
+    },
+    {
+      "file": "frames/24.png",
+      "bytes": 115194,
+      "sha256": "a878fa0446284a76dbb7ad7b04c5a591390540ac01990b671ec7db5745401f2e"
+    },
+    {
+      "file": "frames/25.png",
+      "bytes": 114541,
+      "sha256": "70a07362e03007e68da83e0fb4eec3f46a3e003217a30585a909b6bfd3d2bb3c"
+    },
+    {
+      "file": "reference-mirrored.png",
+      "bytes": 1418076,
+      "sha256": "dbb159c5959b0eb644c132464a1455fa8f77808e0855708434a6119f22e9446c"
+    },
+    {
+      "file": "transformation.txt",
+      "bytes": 331,
+      "sha256": "3b74b004812565496313d220fc50d20d549b4a7a594c4814b53d930324981ecc"
+    },
+    {
+      "file": "mirror-gif.mjs",
+      "bytes": 4650,
+      "sha256": "7c3e25957fa195fc545a435ad24fde799e380b0c4ab02a909578c9e8ee0c540d"
+    }
+  ],
+  "derivedFrom": "../anglefeint-matrix-v2",
+  "sourceCommit": "64e344b310cdaa9884199e29ed760d4ed8644f10",
+  "facing": "left",
+  "characterPosition": "right",
+  "transform": "horizontal mirror per frame; sprite-sheet cell order preserved"
+}

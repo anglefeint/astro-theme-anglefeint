@@ -1,0 +1,4 @@
+Left-facing variant of ../anglefeint-matrix-v2.
+Horizontal mirror only; no AI redraw, palette change, frame reordering or timing change.
+Every sprite-sheet cell is mirrored independently in place.
+reference-original.png and prompt.txt retain the original generation provenance; reference-mirrored.png is a mirrored reference copy.
