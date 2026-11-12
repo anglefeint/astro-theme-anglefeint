@@ -130,6 +130,8 @@ npm run new-page -- projects --theme matrix
 
 ## Fragmentos
 
+Desde 0.33.2, Fragments comparte el botón de volver arriba de los artículos: aparece al desplazarse y respeta la preferencia de movimiento reducido. No requiere configuración.
+
 Fragmentos requiere el tema 0.29.0 o posterior. Actualiza los blogs existentes antes de usar la configuración y el comando siguientes.
 
 Publica ideas breves en Markdown con comentarios opcionales en un diálogo. Añade estos campos al theme existente de src/site.config.ts. Fragmentos y comentarios están desactivados por defecto. El menú aparece debajo de Decoder Lab.
@@ -296,6 +298,16 @@ Se activan nueve idiomas: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
+
+### Vistas previas al compartir
+
+![Imagen predeterminada de Anglefeint para compartir](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+Esta imagen incluida de 1200×630 es la vista previa predeterminada de las páginas sin imagen propia, incluida Fragments. Puedes sustituirla con `site.ogImage`.
+
+Cada artículo genera su propio PNG de 1200×630 durante `npm run build`, usando el título, el autor y el nombre del sitio. Se genera al compilar; al abrir el enlace se usa la imagen estática, sin API de imágenes ni JavaScript adicional en el navegador. Vuelve a compilar y desplegar al cambiar estos datos.
+
+El `ogImage` del frontmatter del artículo tiene prioridad sobre la generación automática. Si `theme.socialImage.enabled` es `false`, su `heroImage` tiene prioridad sobre la imagen predeterminada del sitio; la imagen incluida es el último recurso.
 
 ### Capturas de las páginas
 

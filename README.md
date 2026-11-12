@@ -130,6 +130,8 @@ npm run new-page -- projects --theme matrix
 
 ## Fragments
 
+From 0.33.2, Fragments shares the article back-to-top button: it appears after scrolling and respects reduced-motion preferences. No configuration is needed.
+
 Fragments requires theme 0.29.0 or newer. Upgrade existing blogs before using the configuration and command below.
 
 Publish brief thoughts as Markdown, with optional popup comments. Merge this into the existing theme object in src/site.config.ts. Fragments and its comments are off by default. The menu appears below Decoder Lab.
@@ -296,6 +298,16 @@ Nine languages are enabled by default: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `d
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
+
+### Sharing previews
+
+![Default Anglefeint sharing image](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+The built-in 1200×630 image is the default link preview for pages without their own image, including Fragments. Replace it with `site.ogImage`.
+
+Articles generate their own 1200×630 PNG during `npm run build`, using the article title, author and site name. This is automatic generation at build time; opening a shared link uses the static image, with no image API or extra browser JavaScript. Rebuild and redeploy after changing these fields.
+
+An article’s frontmatter `ogImage` takes priority over automatic generation. When `theme.socialImage.enabled` is `false`, its `heroImage` takes priority over the site default; the bundled image is the final fallback.
 
 ### Page screenshots
 

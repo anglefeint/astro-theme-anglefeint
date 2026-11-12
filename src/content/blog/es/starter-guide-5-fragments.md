@@ -4,7 +4,10 @@ title: 'Guía 5: Publicar fragmentos'
 description: 'Publica ideas breves en Markdown con comentarios opcionales en un diálogo.'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+updatedDate: '2026-11-12'
 ---
+
+Desde 0.33.2, Fragments comparte el botón de volver arriba de los artículos: aparece al desplazarse y respeta la preferencia de movimiento reducido. No requiere configuración.
 
 Si ya tienes un blog, actualiza primero al tema 0.29.0 o posterior:
 

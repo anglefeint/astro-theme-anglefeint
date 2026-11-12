@@ -104,6 +104,8 @@ npm run new-page -- projects --theme cyber cria src/pages/[lang]/projects.astro.
 
 ## Fragmentos
 
+A partir de 0.33.2, Fragments compartilha o botão de voltar ao topo dos artigos: aparece após a rolagem e respeita a preferência por movimento reduzido. Não exige configuração.
+
 Fragmentos requer o tema 0.29.0 ou posterior. Atualize blogs existentes antes de usar a configuração e o comando abaixo.
 
 Publique pensamentos breves em Markdown, com comentários opcionais em uma janela. Adicione ao theme existente em src/site.config.ts. Fragmentos e comentários ficam desativados por padrão. O menu aparece abaixo de Decoder Lab.
@@ -436,6 +438,16 @@ Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteri
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
+
+### Prévias de compartilhamento
+
+![Imagem padrão de compartilhamento do Anglefeint](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+Esta imagem incluída de 1200×630 é a prévia padrão das páginas sem imagem própria, incluindo Fragments. Substitua a imagem padrão do site com `site.ogImage`.
+
+Cada artigo gera seu próprio PNG de 1200×630 durante `npm run build`, usando o título, o autor e o nome do site. A geração ocorre na compilação; ao abrir o link, a imagem estática é usada, sem API de imagens nem JavaScript adicional no navegador. Compile e publique novamente ao alterar esses dados.
+
+O `ogImage` no frontmatter do artigo tem prioridade sobre a geração automática. Com `theme.socialImage.enabled` definido como `false`, o `heroImage` do artigo tem prioridade sobre a imagem padrão do site; a imagem incluída é o último recurso.
 
 ### Capturas das páginas
 

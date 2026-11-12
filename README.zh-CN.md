@@ -130,6 +130,8 @@ npm run new-page -- projects --theme matrix
 
 ## 碎片
 
+从 0.33.2 起，Fragments 复用文章页的返回顶部按钮：滚动后显示，并遵循减少动态效果偏好，无需额外配置。
+
 碎片功能需要主题 0.29.0 或更新版本。已有博客请先升级，再使用以下配置和命令。
 
 用 Markdown 记录简短感想，可选弹窗评论。 将下面字段合并到 src/site.config.ts 现有 theme 中。碎片和碎片评论默认关闭；开启后菜单位于 Decoder Lab 下方。
@@ -296,6 +298,16 @@ export const THEME_CONFIG = defineThemeConfig({
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
+
+### 分享预览
+
+![Anglefeint 默认分享图](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+这张内置的 1200×630 图片用于没有专属分享图的页面，包括 Fragments。可通过 `site.ogImage` 替换站点默认图。
+
+文章会在 `npm run build` 时，根据文章标题、作者和站点名自动生成独立的 1200×630 PNG。这是构建时生成；打开分享链接时使用静态图片，不调用图片 API，也不增加浏览器 JavaScript。修改这些信息后，重新构建并部署即可更新。
+
+文章 frontmatter 的 `ogImage` 优先于自动生成图。将 `theme.socialImage.enabled` 设为 `false` 后，文章的 `heroImage` 优先于站点默认图；内置图片是最后的回退。
 
 ### 页面截图
 

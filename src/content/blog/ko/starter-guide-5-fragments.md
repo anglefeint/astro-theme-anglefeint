@@ -4,7 +4,10 @@ title: '사용자 가이드 5: 조각 게시하기'
 description: '짧은 생각을 Markdown으로 기록하고 선택적으로 팝업 댓글을 사용합니다.'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+updatedDate: '2026-11-12'
 ---
+
+0.33.2부터 Fragments는 글 페이지와 같은 맨 위로 버튼을 사용합니다. 스크롤 후 표시되며 동작 줄이기 설정을 따릅니다. 추가 설정은 필요하지 않습니다.
 
 기존 블로그는 테마를 0.29.0 이상으로 먼저 업그레이드하세요:
 

@@ -104,6 +104,8 @@ npm run new-page -- projects --theme cyber erstellt src/pages/[lang]/projects.as
 
 ## Fragmente
 
+Ab 0.33.2 verwendet Fragments denselben Nach-oben-Button wie Artikel: Er erscheint nach dem Scrollen und berücksichtigt die Einstellung für reduzierte Bewegung. Keine Konfiguration erforderlich.
+
 Fragmente benötigen Theme 0.29.0 oder neuer. Bestehende Blogs vor Verwendung der folgenden Konfiguration und des Befehls aktualisieren.
 
 Kurze Gedanken als Markdown mit optionalen Kommentaren im Dialog. In das vorhandene theme in src/site.config.ts einfügen. Fragmente und Kommentare sind standardmäßig deaktiviert. Der Menüpunkt steht unter Decoder Lab.
@@ -436,6 +438,16 @@ Alle Optionen im selben theme beziehungsweise i18n zusammenführen. Listen erset
 ![Anglefeint — Hacker About and Decoder Lab](public/images/theme-previews/promo-hacker.jpg)
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
+
+### Vorschaubilder beim Teilen
+
+![Standard-Vorschaubild von Anglefeint](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+
+Dieses mitgelieferte Bild mit 1200×630 Pixeln ist die Standardvorschau für Seiten ohne eigenes Bild, einschließlich Fragments. Mit `site.ogImage` kannst du das Standardbild der Website ersetzen.
+
+Für jeden Artikel entsteht bei `npm run build` automatisch ein eigenes PNG mit 1200×630 Pixeln aus Titel, Autor und Website-Namen. Die Erzeugung erfolgt beim Build; beim Öffnen eines geteilten Links wird das statische Bild verwendet. Eine Bild-API oder zusätzliches Browser-JavaScript ist nicht erforderlich. Nach Änderungen an diesen Angaben neu bauen und veröffentlichen.
+
+Das `ogImage` im Frontmatter des Artikels hat Vorrang vor der automatischen Erzeugung. Bei `theme.socialImage.enabled: false` hat das `heroImage` des Artikels Vorrang vor dem Website-Standardbild; das mitgelieferte Bild dient als letzter Fallback.
 
 ### Seiten-Screenshots
 
