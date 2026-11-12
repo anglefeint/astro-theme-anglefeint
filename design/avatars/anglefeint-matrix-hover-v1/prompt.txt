@@ -1,0 +1,11 @@
+Use case: stylized-concept / identity-preserve.
+Input reference is the exact approved pixel-art scene and character. Create a NEW short hover-reaction animation of this SAME scene. Preserve the hooded character with featureless pitch-black face, mint green block eyes, black/deep-green hoodie, green-striped headphones, keyboard, computer at the right, chair and Matrix code rain. No human skin, no nose, NO MOUTH AT ALL in any frame, no teeth, no extra facial features. Pixel-art edges and homepage Matrix palette must match: #000800 black-green, #60ff80 green, #8cf3a7 and #b9fbd1 mint. No purple, pink or bright blue. Keep the reference character's recognizable hood and headphones.
+
+Deliver an exact 4-column x 4-row sprite sheet, 16 equally sized square cells, no gutters, no visible grid, no labels or text. Read frames left to right then top to bottom. Each cell is a complete avatar scene. Exact same locked camera, framing, head scale, desk, monitor and keyboard position in every frame. Keep the head center at the same screen coordinate, with at most tiny movement as posture straightens. Both hands remain visible near the keyboard.
+
+Animation is ONE reaction, not a repeating typing cycle:
+Frames 1-2: match reference pose, hands pause on keyboard as typing stops.
+Frames 3-6: character straightens back slightly and turns hood/head from monitor toward the viewer. Hands rest still. Movement should feel quick and attentive.
+Frames 7-10: character faces the viewer directly, eye bars soften into friendly smiling eyes.
+Frames 11-16: hold a warm playful eye-only smile, made from two simple small upward-curving/chevron-shaped mint pixel eyes; black face below eyes remains COMPLETELY EMPTY. Very slight friendly head tilt, but no bouncing, no major positional jump. The final six frames should be nearly identical so the ending holds still.
+No waving, no headphone adjustment, no code-catching action in this reaction; only stop, straighten, turn and smile WITH EYES. No speech balloons, logos, watermark or readable lettering. Preserve the exact original pixel-art style, fixed scene composition and dark Matrix mood. Precise grid alignment for slicing into GIF frames.

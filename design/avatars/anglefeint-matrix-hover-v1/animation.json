@@ -1,0 +1,283 @@
+{
+  "character": "AngleFeintAvatar1.1",
+  "created": "2026-11-13",
+  "action": "stop typing, straighten, turn toward viewer, smile with eyes only; no mouth",
+  "grid": {
+    "columns": 4,
+    "rows": 4,
+    "width": 1254,
+    "height": 1254
+  },
+  "cells": [
+    {
+      "frame": 1,
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 314,
+        "height": 314
+      }
+    },
+    {
+      "frame": 2,
+      "crop": {
+        "left": 314,
+        "top": 0,
+        "width": 313,
+        "height": 314
+      }
+    },
+    {
+      "frame": 3,
+      "crop": {
+        "left": 627,
+        "top": 0,
+        "width": 314,
+        "height": 314
+      }
+    },
+    {
+      "frame": 4,
+      "crop": {
+        "left": 941,
+        "top": 0,
+        "width": 313,
+        "height": 314
+      }
+    },
+    {
+      "frame": 5,
+      "crop": {
+        "left": 0,
+        "top": 314,
+        "width": 314,
+        "height": 313
+      }
+    },
+    {
+      "frame": 6,
+      "crop": {
+        "left": 314,
+        "top": 314,
+        "width": 313,
+        "height": 313
+      }
+    },
+    {
+      "frame": 7,
+      "crop": {
+        "left": 627,
+        "top": 314,
+        "width": 314,
+        "height": 313
+      }
+    },
+    {
+      "frame": 8,
+      "crop": {
+        "left": 941,
+        "top": 314,
+        "width": 313,
+        "height": 313
+      }
+    },
+    {
+      "frame": 9,
+      "crop": {
+        "left": 0,
+        "top": 627,
+        "width": 314,
+        "height": 314
+      }
+    },
+    {
+      "frame": 10,
+      "crop": {
+        "left": 314,
+        "top": 627,
+        "width": 313,
+        "height": 314
+      }
+    },
+    {
+      "frame": 11,
+      "crop": {
+        "left": 627,
+        "top": 627,
+        "width": 314,
+        "height": 314
+      }
+    },
+    {
+      "frame": 12,
+      "crop": {
+        "left": 941,
+        "top": 627,
+        "width": 313,
+        "height": 314
+      }
+    },
+    {
+      "frame": 13,
+      "crop": {
+        "left": 0,
+        "top": 941,
+        "width": 314,
+        "height": 313
+      }
+    },
+    {
+      "frame": 14,
+      "crop": {
+        "left": 314,
+        "top": 941,
+        "width": 313,
+        "height": 313
+      }
+    },
+    {
+      "frame": 15,
+      "crop": {
+        "left": 627,
+        "top": 941,
+        "width": 314,
+        "height": 313
+      }
+    },
+    {
+      "frame": 16,
+      "crop": {
+        "left": 941,
+        "top": 941,
+        "width": 313,
+        "height": 313
+      }
+    }
+  ],
+  "frameSize": 256,
+  "gif": {
+    "loop": 1,
+    "delay": [50, 50, 50, 50, 50, 50, 70, 70, 70, 70, 80, 80, 80, 80, 80, 500],
+    "durationMs": 1480
+  },
+  "website": {
+    "stripWidth": 128,
+    "stripHeight": 2048,
+    "frames": 16,
+    "playbackMs": 900,
+    "endState": "hold last frame until pointer leaves",
+    "preload": "eager image fetch plus decode before enabling hover"
+  },
+  "files": [
+    {
+      "file": "spritesheet.png",
+      "bytes": 1798835,
+      "sha256": "05b6d53a8ade6ad80f93ffd7fa88abdff82d850d3b492688d3e602a1dbbf54e0"
+    },
+    {
+      "file": "reference-typing.png",
+      "bytes": 115601,
+      "sha256": "7bc4d85bcea62efa70e8e4421801d384be67ce971b9916805558a2717b587099"
+    },
+    {
+      "file": "hover-turn-smile-256.gif",
+      "bytes": 662920,
+      "sha256": "3abdf915c4c12e0d7f4b174fbb4acf760868c2256913570077a5f797bf00de73"
+    },
+    {
+      "file": "hover-turn-smile-strip-128.png",
+      "bytes": 545987,
+      "sha256": "f550d8407a1de33bad97a4c207c7223ff27b618f5ff6ba030271b5962e502043"
+    },
+    {
+      "file": "smile-static-512.png",
+      "bytes": 148803,
+      "sha256": "aefad969022aa0988d9ce94a5b18f1c3e92116e02112f975d55f186253e79adb"
+    },
+    {
+      "file": "frames/01.png",
+      "bytes": 121329,
+      "sha256": "75b6e0f16df545fd737dbd19b5e95f702ab2511d42998ab25d68af6570730e2c"
+    },
+    {
+      "file": "frames/02.png",
+      "bytes": 122080,
+      "sha256": "59630f810469d81586aaf50b3b7db436320c04368f5f792ef85ebe46e9a35a6c"
+    },
+    {
+      "file": "frames/03.png",
+      "bytes": 122198,
+      "sha256": "35f5785ba2138b7ab6124ecc554e0290e68a345aefcc6e40a9627f58f5c60fe1"
+    },
+    {
+      "file": "frames/04.png",
+      "bytes": 121716,
+      "sha256": "fd3cd009ff6a7c045aa8a411773d766b8d05399256306deb2363fe79c5131dcf"
+    },
+    {
+      "file": "frames/05.png",
+      "bytes": 121446,
+      "sha256": "f1aecd9d3879e5f5031942a12569ab53bc1d77ce37c1891f293d852649f033dc"
+    },
+    {
+      "file": "frames/06.png",
+      "bytes": 122223,
+      "sha256": "6580a8d5a4ff86a599b5d67a6899773b5e164bc37c6ae29acb14ff981520b738"
+    },
+    {
+      "file": "frames/07.png",
+      "bytes": 121993,
+      "sha256": "00e17ddfbe56610bacb188314ebd57c6a180e47b22a522e62a3a9f906f7557c0"
+    },
+    {
+      "file": "frames/08.png",
+      "bytes": 121910,
+      "sha256": "f90c32acf380e281242cf5ac390b887ad92221b831c4996ba9a5c4f2bfbaaddb"
+    },
+    {
+      "file": "frames/09.png",
+      "bytes": 121517,
+      "sha256": "dec63019f3bc7e46badfff6cebd65071ff5ab33157ccc4f78ae7a0402051ba45"
+    },
+    {
+      "file": "frames/10.png",
+      "bytes": 122825,
+      "sha256": "fa6e47e18fea998d1410a81f5f6819b29acce3508a58516446d1df600c846b43"
+    },
+    {
+      "file": "frames/11.png",
+      "bytes": 122138,
+      "sha256": "752807629d7b17753829fdf54e8645fd118575074060c6e7a0f413ba71c56853"
+    },
+    {
+      "file": "frames/12.png",
+      "bytes": 121420,
+      "sha256": "9fbbba26de04114468c9bad50aa74e228066fdbc1d5b788b6455d1510a3d5a8e"
+    },
+    {
+      "file": "frames/13.png",
+      "bytes": 120326,
+      "sha256": "a89245472ade008713f8afce8f322bb20387cf5215a1244e397b27c7e7538ed0"
+    },
+    {
+      "file": "frames/14.png",
+      "bytes": 120617,
+      "sha256": "c0e1eae78883038147da86d1235cb74eeeee4adad79fa7537d1b11d14419ef9b"
+    },
+    {
+      "file": "frames/15.png",
+      "bytes": 120906,
+      "sha256": "eb878a654f483127908584b88008927b02b28764649f43dcf89f8edb90b2411f"
+    },
+    {
+      "file": "frames/16.png",
+      "bytes": 120175,
+      "sha256": "d68ba6edd7e15d62b86b1729ea53b9d2531006f69eab0315addde100e6367a99"
+    },
+    {
+      "file": "prompt.txt",
+      "bytes": 2184,
+      "sha256": "b7be598d2e6f80e5502cbe044404f68203661f47074500065d2d862346087dec"
+    }
+  ]
+}
