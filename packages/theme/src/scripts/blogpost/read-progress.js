@@ -1,5 +1,5 @@
 import { createEffectScope } from '../effects/lifecycle.js';
-function mount(prefersReducedMotion, scope) {
+function mount(scope) {
   var progress = document.querySelector('.ai-read-progress');
   var toast = document.querySelector('.ai-stage-toast');
   var articlePanel = document.querySelector('.ai-article > .prose');
@@ -52,8 +52,6 @@ function mount(prefersReducedMotion, scope) {
       var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       var p = scrollHeight > 0 ? Math.min(1, scrollTop / scrollHeight) : 1;
       progress.style.setProperty('--read-progress', String(p));
-      var btn = document.querySelector('.ai-back-to-top');
-      if (btn) btn.classList.toggle('visible', scrollTop > 400);
       if (!hasScrolled && scrollTop > 6) hasScrolled = true;
       if (!hasScrolled) return;
       if (!stageSeen.p10 && p >= 0.1) {
@@ -77,19 +75,12 @@ function mount(prefersReducedMotion, scope) {
     onScroll();
     scope.listen(window, 'scroll', onScroll, { passive: true });
   }
-
-  var backTop = document.querySelector('.ai-back-to-top');
-  if (backTop) {
-    scope.listen(backTop, 'click', function () {
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-    });
-  }
 }
 
-export function initReadProgressAndBackToTop(prefersReducedMotion) {
+export function initReadProgress() {
   const scope = createEffectScope('read-progress');
   try {
-    mount(prefersReducedMotion, scope);
+    mount(scope);
   } catch (error) {
     scope.dispose();
     throw error;

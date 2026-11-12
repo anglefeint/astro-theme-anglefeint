@@ -104,6 +104,8 @@ npm run new-page -- projects --theme cyber cria src/pages/[lang]/projects.astro.
 
 ## Fragmentos
 
+A partir de 0.33.2, Fragments compartilha o botão de voltar ao topo dos artigos: aparece após a rolagem e respeita a preferência por movimento reduzido. Não exige configuração.
+
 Fragmentos requer o tema 0.29.0 ou posterior. Atualize blogs existentes antes de usar a configuração e o comando abaixo.
 
 Publique pensamentos breves em Markdown, com comentários opcionais em uma janela. Adicione ao theme existente em src/site.config.ts. Fragmentos e comentários ficam desativados por padrão. O menu aparece abaixo de Decoder Lab.

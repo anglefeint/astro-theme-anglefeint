@@ -35,6 +35,8 @@ Article sitemap lastmod follows rendered updatedDate/pubDate. Terminal JSON noin
 
 ## Fragments (0.29.0+)
 
+From 0.33.2, Fragments shares the article back-to-top button: it appears after scrolling and respects reduced-motion preferences. No configuration is needed.
+
 Pagination in 0.32.0+: Fragments reuses Blog's page-number controls, neon styles and threshold-based jump input through `theme.pagination`. `theme.fragments.pageSize` remains independent. Requires theme 0.32.0 or later.
 
 Sharing in 0.32.0+: dates link to the fragment within its feed, with a compact copy control. Share `/<locale>/fragments/#ID`, using the existing frontmatter id. Off-page targets load a small static language index only when needed and navigate to their current page. Rebuild after changing content, dates or pageSize, keeping IDs stable. Cross-page locating/copying requires JavaScript; denied clipboard access exposes a selectable URL. Missing entries/load errors show feedback and stale destinations cannot bounce between pages. Use the date link/copy control rather than the numbered browser address; removed page numbers retain the host's normal 404. This sharing behavior requires theme 0.32.0 or later.

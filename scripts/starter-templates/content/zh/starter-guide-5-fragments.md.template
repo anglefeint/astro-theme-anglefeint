@@ -4,7 +4,10 @@ title: '用户指南 5：发布碎片'
 description: '用 Markdown 记录简短感想，可选弹窗评论。'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+updatedDate: '2026-11-12'
 ---
+
+从 0.33.2 起，Fragments 复用文章页的返回顶部按钮：滚动后显示，并遵循减少动态效果偏好，无需额外配置。
 
 已有博客请先升级至主题 0.29.0 或更新版本：
 

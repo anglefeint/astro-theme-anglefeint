@@ -18,6 +18,7 @@ audience:
   - agent
   - maintainer
 depends_on:
+  - docs/VALIDATION_POLICY.md
   - AGENTS.md
   - docs/DOC_METADATA_SPEC.md
   - docs/MAINTAINER_WORKFLOW.md
@@ -48,7 +49,7 @@ Use it together with:
 - `starter` is a generated/distribution branch for template consumers.
 - Do not manually patch runtime logic in `starter`.
 - Any change that should reach `starter` must land in `main` first, then be propagated through the maintainer sync flow.
-- The production demo must deploy from `main`, not `starter`. Check Cloudflare branch/deploy settings before push-triggered delivery and recheck the full live article library after the final push, following [Production Demo Deployment](MAINTAINER_WORKFLOW.md#production-demo-deployment). Neither a successful build check nor remote starter acceptance proves the demo is serving the intended main content.
+- The production demo uses main content; starter is a distribution skeleton. Hosting checks and demo regression are user-owned, separate from package delivery; see [Validation policy](VALIDATION_POLICY.md).
 
 ## Required Read Order
 
@@ -93,31 +94,29 @@ For Pagefind, both index.writeFiles and index.getFiles are public APIs. Before 0
 
 #### Local visual feedback and consent
 
-During interactive layout/style tuning, make the requested code changes directly, let the dev server refresh and let the user inspect the page and give feedback. Do not automatically insert your own screenshot-and-inspection step between the edit and the user's review.
+Follow [Validation policy](VALIDATION_POLICY.md#explicit-stop-rules). Do not execute browser regression (full or targeted), screenshots/visual measurements, Cloudflare login/settings/build polling, demo article/tutorial inventories or real Giscus acceptance by default. The user performs demo regression. If the agent believes an exception is necessary, explain the exact command/operation, reason, scope and expected duration, then wait for explicit approval. Generic testing or release authorization does not approve those activities. Never self-authorize with --confirmed.
 
-- Before doing your own optional local visual review (opening/rendering the page to judge its appearance, taking screenshots or measuring layout for that purpose), ask whether the user wants that step. Wait for the answer; the user can perform the visual review instead. Approval for one such run does not authorize repeating it after every tweak.
-- In particular, do not automatically run temporary scripts such as `acceptance-results/article-first-preview.mjs` or wait through animations to capture and inspect images after each edit. If the user explicitly asks for a screenshot or agent visual inspection, that already authorizes the requested step; do not ask twice.
-- This is a narrow rule about who checks the local appearance. It does not add confirmation requirements for code edits, starting/reusing a local server, lint, type checks, builds or functional tests. Use the existing task authorization and validation requirements for those actions. Do not report all validation as omitted merely because no screenshot was taken.
-- A functional browser test is not automatically a visual-inspection step. Keep required functional/regression checks and documented release gates intact; do not add optional screenshot review to a routine edit or release without asking.
-- User observation and feedback may supply the before/after appearance comparison for signature effects. Routine visual tuning does not require agent-generated screenshots as evidence.
+Make requested local edits and manage the server as needed for user feedback. Relevant non-browser technical checks remain selectable; do not ask routine permission for those. Respect specific consent already given for an identified check in the current task; do not treat previous releases as blanket approval.
 
 Serialize all release/push operations that share the checkout; wait for each command to finish before starting another. Follow [serial execution and reporting](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting) for stage durations, ignored logs and lock recovery. Reporting does not replace or reduce any validation gate.
 
-Select validation capabilities according to the change; these are coverage requirements, not cumulative command lists:
+Select independent checks from [Release tools](RELEASE_TOOLS.md) according to actual changes. State the purpose of each selected check and report its result.
 
-- Docs only: document metadata validation (`npm run check:docs`).
-- Package/runtime/config/script changes: `source-check` from the [tool catalog](RELEASE_TOOLS.md), plus lint and applicable format checks. Source check already includes unit tests, no-build checks, build and About runtime assertions; do not prepend separate executions of those contained checks.
-- High-risk page/config/runtime changes: the same full source coverage plus the applicable functional regression scenarios below.
+- Documentation: metadata, changed formatting and relevant links/examples.
+- Maintainer scripts: focused unit files, lint and relevant technical mode smoke tests.
+- Runtime/config: relevant tests/static assertions, types and one build as needed.
+- Package: packed contents/CLI and independent install/build at the appropriate level; choose one installation level.
+- Upgrader/project contracts: relevant compatibility and preservation evidence. check:upgrade currently contains a browser stage; get consent before that mixed tool or use focused non-browser units.
 
-When npm delivery is planned, compose source/installed requirements in that invocation rather than running those tools separately first. This does not reuse earlier invocations or bypass pre-push hooks.
+Do not default to source-check, check/doctor aggregates, all unit tests, the fourteen-case matrix, full browser suites or remote template browser pipelines. Exceptional full aggregates and browser/demo operations require the confirmation procedure in the validation policy. Global changes do not automatically authorize browsers.
 
-Prefer the smallest sufficient validation set, but do not skip build checks when layout/runtime/config behavior changed. Integration/upgrade changes additionally require the independent installed build/audit matrix, `npm run check:upgrade` real command preservation acceptance, and the full functional browser suite. Local fixtures do not substitute for post-publication registry/remote-template/live verification.
+No pre-push full hook or historical-result cache remains. Avoid duplicate invocation by choosing independent tools once. For existing output assertions, establish that the output comes from the intended inputs; do not claim old fingerprints prove freshness.
 
 Symlinked build fixtures must set project-local Astro `cacheDir` and Vite `cacheDir`; sharing node_modules must not share writable content/build caches. `e2e:prepare` builds the fragments fixture before the parallel browser suite, so fixture compilation does not contend with WebGL/animation acceptance. Keep original functional deadlines and concurrency; fix isolation and content-dependent measurement assumptions at the test boundary.
 
 ### 4. Release Decision
 
-Report release progress using the [six release phases](MAINTAINER_WORKFLOW.md#six-release-phases): prepare, validate, publish npm, deliver starter, accept consumers and close delivery. Choose capabilities from [Release tools](RELEASE_TOOLS.md); code owns executable prerequisites and single-plan deduplication. Cross-invocation validation-result reuse remains disabled.
+Report the selected technical plan and delivery results using [Release tools](RELEASE_TOOLS.md) and the [maintainer capability constraints](MAINTAINER_WORKFLOW.md#capability-selection-and-completion). The agent chooses independent checks; only npm mechanics are implicit. No historical result cache is enabled.
 
 Publish npm when the change affects installed users through the package, for example:
 
@@ -129,10 +128,10 @@ Publish npm when the change affects installed users through the package, for exa
 
 If npm release is required, compose an explicit plan from the [tool catalog](RELEASE_TOOLS.md). Preserve these constraints:
 
-- Prepare the version, changelog and release ledger; keep main clean and commit/push the validated source after starter drift and hosting-trigger preflight.
-- Select `npm-delivery` for complete npm delivery. Preview with `npm run release:tools -- plan npm-delivery`, then execute with `npm run release:tools -- run npm-delivery`. The planner includes all required npm gates once in that invocation; it never consumes earlier check results. Existing `release:npm` remains a compatible entry.
+- Prepare the version, changelog and release ledger; keep main clean and commit/push the technically validated source after applicable starter drift preflight.
+- Select `npm-delivery` for complete npm delivery. Preview with `npm run release:tools -- plan npm-delivery`, then execute with `npm run release:tools -- run npm-delivery`. The planner includes npm mechanics only. Explicitly select the relevant technical tools; all selected checks run before upload. It never consumes earlier check results. Existing `release:npm` remains a compatible entry.
 - Do not routinely prepend a full dry-run. Upload once, and recover accepted uploads through read-only registry verification.
-- Only after exact download/tag verification, deliver and push starter, run required remote consumer/upgrade scenarios, then complete the exact-source tag, GitHub Release and final production acceptance.
+- Only after exact download/tag verification, deliver and push starter, complete the selected technical acceptance and exact-source tag/GitHub Release. Demo regression is user-owned and does not block package completion.
 - Record actual results and limitations. npm upload alone is not completion. See the catalog for tool effects and runbooks for delivery/evidence policy; do not duplicate their internal commands here.
 
 If npm release is not required but starter should still change:
@@ -141,7 +140,7 @@ If npm release is not required but starter should still change:
 - push `main`
 - run `npm run release:starter`
 - push `starter`
-- for starter changes requiring user action, finish remote acceptance and the [starter-only upgrade announcement](MAINTAINER_WORKFLOW.md#announcing-starter-only-upgrades); prepare its migration/changelog before delivery and do not claim npm update installs project files
+- for starter changes requiring user action, finish selected technical acceptance and the [starter-only upgrade announcement](MAINTAINER_WORKFLOW.md#announcing-starter-only-upgrades); prepare its migration/changelog before delivery and do not claim npm update installs project files
 
 ## Starter Synchronization Contract
 
@@ -165,9 +164,9 @@ If npm release is not required but starter should still change:
 
 Use `npm run maintainer:sync-starter:check` to detect drift without mutating branches.
 
-The release quality gate checks the latest starter paired with its published package and preserves the frozen schema-1 integration-starter upgrade baseline. Pre-0.27 copied skeletons are outside this automatic-upgrade contract. For a deliberate project-schema break, provide a migration guide and stop incompatible automatic upgrades; never overwrite a customized project with maintainer tooling.
+Select technical evidence for the latest starter/package and supported schema-1 upgrade contract when affected; browser-containing full fixtures require prior consent. Pre-0.27 copied skeletons are outside this automatic-upgrade contract. For a deliberate project-schema break, provide a migration guide and stop incompatible automatic upgrades; never overwrite a customized project with maintainer tooling.
 
-After pushing starter, create a temporary project using the public template command and validate installation, CLI commands, checks, build, dev and preview. Remove that temporary project only after successful validation and stopping its servers. If npm succeeds but starter fails, fix and retry starter without republishing the same npm version.
+After starter delivery, choose additional independent technical installation checks when needed. Existing check:template variants contain browsers and are not mandatory release steps; ask before invoking them. Remove owned temporary projects after checks and server shutdown. Retry failed starter delivery without republishing an accepted npm version.
 
 ## Documentation Workflow Contract
 
@@ -209,26 +208,10 @@ Consumer projects receive separate user-oriented `AGENTS.md`, `CLAUDE.md` and `.
 - Do not leave release tarballs or generated artifacts tracked in `starter`.
 - Do not bypass manifest-driven starter staging with full-worktree git adds.
 
-## End-to-End Release Sequence
+## Release completion
 
-A package release is complete only after npm download verification, starter delivery and remote-template acceptance, and creation/read-back of the GitHub Release. Do not stop at npm publish or a pushed tag. Dependency audit policy must pass for main, the isolated installed starter and the delivered starter. All reported vulnerabilities and registry errors block delivery. The former static-cache exception was retired after the 2026-10-04 dependency refresh; see `docs/PACKAGE_RELEASE.md` for the historical review. `release:npm` always audits main and the isolated starter, including with `--skip-checks`; starter sync audits after installation before committing.
+A package release completes after selected technical checks, npm exact-download verification, applicable starter delivery and source/tag/GitHub Release identity read-back. Report checks actually performed and any user-owned demo status. Do not run browser/Cloudflare/live acceptance or wait for user demo confirmation as a package completion gate.
 
-For package-affecting changes:
+Main audit is intrinsic to npm mechanics; isolated audits run when that installation tool is selected, and starter sync audits its installed tree. All findings and registry errors remain blocking for the relevant operation. No historical audit exemption is restored.
 
-1. implement on `main`
-2. run validation
-3. bump package version and update `CHANGELOG.md` plus the matching `docs/releases/` entry
-4. commit the release-prep changes on `main`
-5. `npm run maintainer:sync-starter:check`
-6. push `main`
-7. `npm run release:npm` and wait for dist-tag/download verification
-8. `npm run release:starter`
-9. push `starter`
-10. validate the remote template in a temporary user project, then clean it up
-11. record actual results and limitations; tag the published package source commit and create/read back the GitHub Release as described in `docs/PACKAGE_RELEASE.md`
-
-For docs-only changes:
-
-1. update docs per frontmatter/workflow contract
-2. `npm run check:docs`
-3. run broader validation only if the updated docs describe changed behavior/commands that were also modified
+Prepare responsible docs/version/notes, select an explicit technical plan, then perform authorized publication/distribution actions under the tool and maintainer contracts. Do not expand them into a second cumulative command checklist. Docs-only work does not require npm publication or a runtime build. Browser-containing consumer/upgrade pipelines remain optional with prior user consent.

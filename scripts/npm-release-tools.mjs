@@ -8,7 +8,12 @@ import path from 'node:path';
 import { verifyPublishedPackage } from './verify-published-package.mjs';
 import { auditDependencies } from './audit-dependencies.mjs';
 import { createMaintainerSession } from './maintainer-session.mjs';
-import { planNpmTools, executeNpmToolPlan } from './release-tool-plan.mjs';
+import {
+  npmReleaseTools,
+  planNpmTools,
+  executeNpmToolPlan,
+  validateToolSelection,
+} from './release-tool-plan.mjs';
 
 const repoRoot = process.cwd();
 const packageName = '@anglefeint/astro-theme';
@@ -132,6 +137,15 @@ export function createNpmOperations(
   { pkg, npmEnv, cacheDir, session, run, capture = runCapture, audit = auditDependencies }
 ) {
   return {
+    ...Object.fromEntries(
+      Object.entries(npmReleaseTools)
+        .filter(([, tool]) => tool.script)
+        .map(([name, tool]) => [name, () => run('npm', ['run', tool.script], { env: npmEnv })])
+    ),
+    'unit-tests': () =>
+      run(process.execPath, ['--experimental-strip-types', '--test', ...opts.testFiles], {
+        env: npmEnv,
+      }),
     'registry-check': () =>
       opts.skipRegistryCheck
         ? undefined
@@ -139,14 +153,13 @@ export function createNpmOperations(
             verifyRegistryVersion(pkg, npmEnv, capture)
           ),
     'audit-main': () => session.stage('Audit main dependencies', () => audit(repoRoot, npmEnv)),
-    'source-check': () =>
-      opts.skipChecks ? undefined : run('npm', ['run', 'check'], { env: npmEnv }),
+    'source-check': () => run('npm', ['run', 'check'], { env: npmEnv }),
     'installed-check': () =>
-      run(
-        'npm',
-        ['run', 'check:installed', '--', '--audit', ...(!opts.skipChecks ? ['--build'] : [])],
-        { env: npmEnv }
-      ),
+      run('npm', ['run', 'check:installed', '--', '--audit'], { env: npmEnv }),
+    'installed-build': () =>
+      run('npm', ['run', 'check:installed', '--', '--audit', '--smoke-build'], { env: npmEnv }),
+    'installed-matrix': () =>
+      run('npm', ['run', 'check:installed', '--', '--audit', '--build'], { env: npmEnv }),
     pack: () => (opts.skipPack ? undefined : run('npm', ['run', 'theme:pack'], { env: npmEnv })),
     'npm-auth': () => (opts.dryRun ? undefined : run('npm', ['whoami'], { env: npmEnv })),
     'npm-upload': () =>
@@ -178,7 +191,10 @@ export function createNpmOperations(
 
 export async function runNpmTools(targets, opts = {}) {
   const plan = planNpmTools(targets);
-  const session = await createMaintainerSession('npm tools: ' + targets.join(', '));
+  validateToolSelection(plan, opts);
+  for (const file of opts.testFiles ?? [])
+    if (!existsSync(path.join(repoRoot, file))) throw new Error('Test file not found: ' + file);
+  const session = await createMaintainerSession('maintainer tools: ' + targets.join(', '));
   try {
     return await release(opts, plan, session);
   } finally {
@@ -203,7 +219,7 @@ async function release(opts, plan, session) {
     });
     if (plan.includes('npm-delivery') && !opts.dryRun)
       console.log(
-        '[release] npm verified. Continue starter, consumer acceptance and GitHub/live closeout; npm delivery alone is not the whole release.'
+        '[release] npm verified. Record selected technical checks and source/starter/tag/announcement identities. Demo acceptance belongs to the user; do not launch browser or hosting checks.'
       );
     return plan;
   } finally {

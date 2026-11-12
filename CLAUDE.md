@@ -21,6 +21,7 @@ Claude Code should treat this file as a thin adapter, not as the canonical workf
 5. Task-relevant source docs:
    - `docs/ARCHITECTURE.md`
    - `docs/VISUAL_SYSTEMS.md`
+   - `docs/VALIDATION_POLICY.md`
    - `docs/MAINTAINER_WORKFLOW.md`
    - `docs/DOC_SYNC_WORKFLOW.md`
 

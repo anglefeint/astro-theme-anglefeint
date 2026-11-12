@@ -130,6 +130,8 @@ npm run new-page -- projects --theme matrix
 
 ## 碎片
 
+从 0.33.2 起，Fragments 复用文章页的返回顶部按钮：滚动后显示，并遵循减少动态效果偏好，无需额外配置。
+
 碎片功能需要主题 0.29.0 或更新版本。已有博客请先升级，再使用以下配置和命令。
 
 用 Markdown 记录简短感想，可选弹窗评论。 将下面字段合并到 src/site.config.ts 现有 theme 中。碎片和碎片评论默认关闭；开启后菜单位于 Decoder Lab 下方。

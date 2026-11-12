@@ -34,6 +34,7 @@ Then read:
 4. Task-relevant docs:
    - `docs/ARCHITECTURE.md`
    - `docs/VISUAL_SYSTEMS.md`
+   - `docs/VALIDATION_POLICY.md`
    - `docs/MAINTAINER_WORKFLOW.md`
    - `docs/DOC_SYNC_WORKFLOW.md`
 

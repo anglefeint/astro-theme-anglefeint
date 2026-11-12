@@ -18,6 +18,8 @@ depends_on:
 - Latest version: check npm registry before release (`npm view @anglefeint/astro-theme version`)
 - Optional prerelease tag example: `alpha`; query npm dist-tags to inspect actual registry state
 
+See [Validation policy](VALIDATION_POLICY.md) for independent technical selection and explicit user consent. Package publication does not require Cloudflare or demo acceptance.
+
 ## 1) Prepare release state
 
 Before publishing, bump the workspace package version first. `npm run release:npm` does not auto-increment the package version.
@@ -39,29 +41,29 @@ git push origin main
 
 ## 2) Pre-release checks
 
-Use [Release tools](RELEASE_TOOLS.md) to discover and compose capabilities. Preview `npm run release:tools -- plan npm-delivery` and execute `npm run release:tools -- run npm-delivery` for normal stable npm delivery. Explicitly composing source/installed checks with this target runs each prerequisite once in that invocation; separate invocations rerun checks. The compatibility `release:npm` entry calls the same operations and preserves existing flags.
+Use [Release tools](RELEASE_TOOLS.md) to choose independent checks for the actual change. Preview their combination with npm-delivery, then execute the selected technical tools and publication mechanics. The planner does not pull in full source checks or an installed matrix automatically.
 
 On 2026-10-22, the blocking audit stopped 0.20.1 before upload because Vite 8.3.2 was newly flagged. Main/starter now use `^8.3.5` and a refreshed lock; no audit exemption or forced dependency downgrade was introduced. See [0.20.1](releases/0.20.1.md) for the actual execution and patched-version references.
 
-The npm release entry uses the shared maintainer session for serial execution, stage timing and log summaries; see [reporting and recovery](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting). Command order, audit gates, installed build matrix, existing skip flags, fresh cache and publish/download verification remain unchanged. All npm publish output stays on the terminal to preserve authentication behavior. Do not run release, starter sync or push checks concurrently.
+The npm release entry uses the shared maintainer session for serial execution, stage timing and log summaries; see [reporting and recovery](MAINTAINER_WORKFLOW.md#serial-execution-and-reporting). The runner retains serial execution, blocking audit, fresh npm cache and publish/download verification; full source checks and installation levels are explicitly selected. All npm publish output stays on the terminal to preserve authentication behavior. Do not run release, starter sync or push checks concurrently.
 
 The maintainer root declares Wrangler `^4.151.1`; the current lock resolves Wrangler `4.156.2`, Miniflare `5.20261102.0-beta` and patched `sharp@0.35.5`. The earlier scoped override was removed on 2026-10-18 after Cloudflare's clean install rejected missing Sharp 0.35.4 optional entries, despite local npm 11.11.0 accepting the previous lockfile. Fresh `npm ci`, the real Miniflare Images binding and dependency audit passed after this update. The previous override protected against [GHSA-wq5f-xc86-pv6w](https://github.com/advisories/GHSA-wq5f-xc86-pv6w); do not restore vulnerable Sharp to satisfy an old lockfile or use `npm audit fix --force` to downgrade Wrangler. This is maintainer tooling only; starter does not include Wrangler.
 
-Dependency audits are blocking: main, isolated starter and delivered starter use `scripts/audit-dependencies.mjs`. All reported vulnerabilities and registry errors block delivery, including with `--skip-checks`. The former static-cache exception was retired on 2026-10-04 after updating main to `http-cache-semantics@4.3.0`; the delivered starter already resolved that version.
+Dependency audits are blocking for each environment actually validated: main at npm delivery, isolated starter when selected, and delivered starter during sync. All findings/registry errors block that operation. The historical audit exception remains retired. Independent install/build evidence is selected for actual package changes rather than implicitly repeating a full matrix.
 
-The npm tool implementation in `scripts/npm-release-tools.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or completed CI. Those are maintainer workflow requirements: inspect them before running it. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
+The npm tool implementation in `scripts/npm-release-tools.mjs` does not verify the Git branch, worktree cleanliness, pushed source SHA or selected technical evidence. Inspect these workflow requirements before running it; CI/hosting/browser checks are not default requirements. It publishes from the current `packages/theme` directory, not from a Git tag or the separately generated root tarball.
 
-After committing the release-prep state, run the formal release entry once. It checks that the local package version is newer than the npm registry version before packing or publishing. Do not prepend a full dry-run to every routine release: that repeats the same main checks and installed build matrix.
+Prepare implementation, responsible docs and release notes before freezing the source. Execute selected technical checks once and npm mechanics once. Routine full dry-runs, full source aggregates and the installed matrix are not prerequisites; see the consent policy for exceptional broad checks.
 
-Include implementation, tests, changelog and release notes in the release-prep commit, not just the two version files in the example. Validate and push `main` before publishing; check any push-triggered automation first.
+Include implementation, tests, changelog and release notes in the release-prep commit, not just the two version files in the example. Validate and push `main` before publishing; account for known push side effects without performing provider login/settings/deployment polling as routine work.
 
-For the public demo, use the [production demo deployment checks](MAINTAINER_WORKFLOW.md#production-demo-deployment): only `main` may deploy to production. After the final branch push, verify the live blog inventory, older articles and pagination as well as the changed pages. Starter template acceptance and a successful Cloudflare build check are not substitutes for this check.
+Demo regression belongs to the user. Do not inspect Cloudflare accounts, wait for builds, enumerate public articles/tutorials or exercise real Giscus by default. Any proposed agent exception needs reasons, exact scope and expected cost, followed by explicit confirmation. A technically verified package can complete independently of demo acceptance.
 
 ```bash
 npm run release:npm
 ```
 
-This one invocation runs main checks, dependency audits, the independent installed-starter build matrix, `theme:pack`, authentication, publication and post-publication verification. The `--dry-run` option remains available for diagnosing packaging or release configuration, but is not a routine prerequisite. It runs the same preflight gates and simulates publication, omitting authentication and post-publication verification. `--skip-checks` skips main checks and the installed build matrix, but retains main audit and isolated-starter installation/CLI checks/audit. `--skip-pack` skips the separate `theme:pack` step (npm publish still packs the package), and `--skip-registry-check` bypasses the initial newer-than-latest check. Skips must be justified in the release record.
+This invocation runs npm registry/version, main audit, pack, authentication, upload and post-publication verification only. The agent selects relevant technical tools separately or in the same composed plan. --dry-run simulates publication and omits authentication/download verification; it is diagnostic, not a routine prerequisite. --skip-checks is deprecated and does not select or skip independent validation. --skip-pack and --skip-registry-check retain their diagnostic behavior and require explanation.
 
 ### Temporary static-cache advisory review (2026-10-03)
 
@@ -103,11 +105,11 @@ npm run doctor
 
 ## 7) Stable release
 
-After alpha verification, prepare the stable version and release notes, then select capabilities from [Release tools](RELEASE_TOOLS.md) under the [maintainer dependency/completion constraints](MAINTAINER_WORKFLOW.md#dependency-and-completion-constraints). Select complete npm delivery once; after download verification, select starter delivery and consumer acceptance, then finish the exact-source tag, GitHub Release and production verification. Do not reconstruct nested source/installed checks as additional commands before their containing delivery tool.
+After alpha verification, prepare the stable version and release notes, then select capabilities from [Release tools](RELEASE_TOOLS.md) under the [maintainer dependency/completion constraints](MAINTAINER_WORKFLOW.md#capability-selection-and-completion). Select necessary technical evidence and npm mechanics once; after download verification, deliver starter and finish the exact-source tag/GitHub Release. Additional consumer browser acceptance is opt-in with consent. Do not reconstruct nested source/installed checks as additional commands before their containing delivery tool.
 
 ## 8) Release Notes Contract
 
-**Mandatory completion:** after remote starter acceptance, create and read back the GitHub Release as described below. A pushed npm package or Git tag alone is not a completed release.
+**Mandatory package completion:** after selected technical acceptance and starter delivery, create and read back the GitHub Release as described below. A pushed npm package or Git tag alone is not a completed release.
 
 ### Registry availability and recovery
 
@@ -123,11 +125,11 @@ npm run release:verify -- --version 0.32.0 --tag latest --source e452e8fac382be6
 
 Replace these example values with the accepted release's recorded version, source ref and package checksum. `--source`, `--shasum` and `--integrity <sri>` are optional expected identities; provide the recorded values when recovering a specific upload. Without them, the entry establishes consistency between the selected registry tag, exact-version metadata and downloaded package, not correspondence to a particular local source. It uses the same bounded retry policy, downloads with `--ignore-scripts` into a dedicated temporary directory under ignored `acceptance-results/`, checks downloaded integrity/SHA1 against registry metadata, and removes that download afterward. Its session summary remains available for review.
 
-The recovery entry only allows npm `view` and `pack`; it cannot publish, install, switch branches or sync starter. It neither replaces pre-publication tests/audits nor marks the whole release complete. Only resume starter delivery after verification succeeds, then finish remote-template, tag/GitHub Release and production gates. Manual `npm view`/`npm pack` diagnosis remains possible if the recovery entry itself is unavailable.
+The recovery entry only allows npm `view` and `pack`; it cannot publish, install, switch branches or sync starter. It neither replaces pre-publication tests/audits nor marks the whole release complete. Only resume starter delivery after verification succeeds, then finish selected technical acceptance and tag/GitHub Release. Demo acceptance is separate and user-owned. Manual `npm view`/`npm pack` diagnosis remains possible if the recovery entry itself is unavailable.
 
 ### GitHub closeout
 
-After pushing starter and verifying the remote template:
+After pushing starter and completing selected technical acceptance:
 
 1. Record the published package source commit, delivered starter commit, actual tests and limitations in the version note. Commit/push documentation-only closeout changes on main; sync starter if managed public docs changed. This does not require another npm release.
 2. Create `v<version>` at the exact source commit used to publish npm, not a later documentation-only commit. Check existing local/remote tags first; never move an existing release tag silently.
@@ -157,5 +159,5 @@ Minimum entry content for a new release note:
 - Starter i18n is injected via alias `@anglefeint/site-i18n/*` in `astro.config.mjs` and `tsconfig.json`.
 - Keep release notes explicit about breaking changes and required manual migrations.
 - After a successful publish, sync starter so the dependency range and lockfile move together.
-- Verify the published version from the registry, then test the pushed remote starter with the public create-template command in a temporary directory. Stop its servers and delete it after successful command/runtime checks.
+- Verify the published version and delivered starter refs. Select further independent technical installation checks when necessary; browser-containing remote-template checks require prior user consent. Clean owned temporary projects after checks.
 - If npm succeeds but starter fails, keep the previous remote starter and fix/retry starter without republishing that version.

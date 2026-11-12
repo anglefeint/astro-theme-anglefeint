@@ -24,7 +24,7 @@ This repository uses two long-lived branches with different responsibilities.
 ## `starter` Branch
 
 - Purpose: user-facing template branch.
-- Contains only the onboarding article whitelist from `scripts/starter-manifest.mjs`. It must not replace the production demo deployment. See the [demo deployment checks](MAINTAINER_WORKFLOW.md#production-demo-deployment) for Cloudflare branch isolation and post-push validation.
+- Contains only the onboarding article whitelist from `scripts/starter-manifest.mjs`. It must not replace the production demo deployment. Demo regression belongs to the user. Hosting inspection is opt-in under [Validation policy](VALIDATION_POLICY.md), not an npm gate.
 - Must not contain the monorepo workspace folder (`packages/`).
 - Must depend on registry package version:
   - `@anglefeint/astro-theme` (for example: `^0.1.0`).
@@ -38,7 +38,7 @@ After each stable package release on `main`:
 1. Implement and validate changes on `main`.
 2. Commit and push validated source on `main`, then publish the theme package when shipped package behavior changes.
 3. Run `npm run release:starter` on `main` to generate the managed starter files, npm scripts and dependencies, then validate the installed result.
-4. Push validated `starter` and verify a fresh remote-template installation following `docs/MAINTAINER_WORKFLOW.md`. Do not maintain starter runtime logic manually.
+4. Push validated `starter` and complete selected technical installation evidence following `docs/MAINTAINER_WORKFLOW.md`. Do not maintain starter runtime logic manually.
 
 ## Documentation Rule
 

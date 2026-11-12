@@ -31,12 +31,14 @@ For schema-1 integration projects, the updater performs compatible dependency up
 
 ## Validation and delivery
 
+Execution follows [Validation policy](VALIDATION_POLICY.md): choose independent technical checks; demo regression is user-owned. Do not run the browser tools below or Cloudflare/demo checks without explaining the operation/reason/scope/cost and obtaining explicit user consent. These are available capabilities, not a cumulative release checklist.
+
 - `npm run check` and lint cover source, metadata, package configuration wiring, unit tests, package CLI, scaffold/type checking and build/About payloads.
 - `npm run e2e` covers the complete functional browser suite. Bounded worker reruns diagnose resource timeouts without changing runtime behavior or weakening assertions. Optional appearance review still requires consent.
 - `npm run check:installed -- --build --audit` installs the actual tarball without workspace links, checks the thin skeleton and exercises the locale/prefix/disabled/music/fragments build matrix with a blocking dependency audit.
 - `npm run check:upgrade` uses an isolated unpublished future tarball and local fixture registry to run the real npm exec upgrade command. It skips a package version, introduces a menu/button/page and checks byte-for-byte preservation of config/content/music/images/host rules/custom pages. Unit tests separately cover incompatible targets, readonly preflight and failed-doctor rollback.
 - `node scripts/check-music-browser.mjs` exercises actual audio/session/lifecycle behavior in an isolated Astro fixture.
-- After authorized publication and starter push, run public-template acceptance and live demo verification. Local tarballs/fixture registries do not prove remote npm/starter delivery.
+- After authorized publication and starter push, complete selected technical evidence and public refs/announcement checks. Public-template acceptance contains browsers and needs consent; live demo verification belongs to the user. Local tarballs/fixture registries do not prove remote npm/starter delivery.
 
 All audit findings and registry errors remain blocking release gates. Formal publishing/starter/tag/announcement steps follow [AI_WORKFLOW](AI_WORKFLOW.md), [MAINTAINER_WORKFLOW](MAINTAINER_WORKFLOW.md) and [PACKAGE_RELEASE](PACKAGE_RELEASE.md). Record actual 0.27.0 delivery results and pending remote steps in [its ledger](releases/0.27.0.md).
 
@@ -46,4 +48,4 @@ Official starter sync uses buildStarterPackage as the single dependency policy; 
 
 ## Tutorial publication surfaces
 
-The nine-locale, five-part configuration series is published both from `src/content/blog/<locale>/starter-guide-*.md` on the demo and from `scripts/starter-templates/content/<locale>/*.md.template` into generated starter destinations. Review and update both copies together, preserving existing URLs and original publication dates while setting truthful updatedDate. The explicit manifest overrides remain distribution inputs; do not assume changing the demo source changes starter content. This maintainer synchronization does not run in the consumer updater and must never overwrite a personal blog's articles. Build and inspect generated article text, metadata, sitemap dates and series links, then verify the delivered starter and live demo separately after pushing.
+The nine-locale, five-part configuration series is published both from `src/content/blog/<locale>/starter-guide-*.md` on the demo and from `scripts/starter-templates/content/<locale>/*.md.template` into generated starter destinations. Review and update both copies together, preserving existing URLs and original publication dates while setting truthful updatedDate. The explicit manifest overrides remain distribution inputs; do not assume changing the demo source changes starter content. This maintainer synchronization does not run in the consumer updater and must never overwrite a personal blog's articles. Build and inspect generated article text, metadata, sitemap dates and series links, then validate affected delivered starter files. Demo verification belongs to the user; proposed agent live/browser checks require prior consent.

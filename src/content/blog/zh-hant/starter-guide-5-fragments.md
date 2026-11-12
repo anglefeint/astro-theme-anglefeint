@@ -4,7 +4,10 @@ title: '使用者指南 5：發布碎片'
 description: '以 Markdown 記錄簡短感想，可選彈窗留言。'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+updatedDate: '2026-11-12'
 ---
+
+從 0.33.2 起，Fragments 共用文章頁的返回頂部按鈕：捲動後顯示，並遵循減少動態效果偏好，無需額外設定。
 
 既有部落格請先升級至主題 0.29.0 或更新版本：
 

@@ -15,6 +15,7 @@ update_triggers:
   - command-change
 source_of_truth: true
 depends_on:
+  - docs/VALIDATION_POLICY.md
   - README.md
   - docs/AI_WORKFLOW.md
   - docs/DOC_METADATA_SPEC.md
@@ -67,7 +68,9 @@ Pagefind search used the public writeFiles API before 0.27.2 and uses the public
 
 ## Priority
 
-For local visual iteration, make the requested code changes directly and let the user inspect the running page. Before doing your own optional screenshot/render-and-inspect or visual-measurement step, ask whether the user wants that step; do not automatically run scripts such as `article-first-preview.mjs` after every edit. This consent requirement concerns the agent's visual review only, not ordinary server management, code edits or functional tests. Follow [local visual feedback](docs/AI_WORKFLOW.md#local-visual-feedback-and-consent). Required validation and release gates remain unchanged.
+**默认不执行浏览器回归（含局部）、截图／视觉测量、Cloudflare 账号／部署检查、demo 全文遍历／教程比对、真实 Giscus 在线验收。demo 回归由用户负责。需要例外时，先说明具体操作、原因、范围和预计耗时，等待用户明确确认。常规“测试／安全发布”不构成这些检查的授权。维护检查使用独立工具按改动选择；全量 check／单元套件／14 项矩阵也不默认执行。详见 [Validation policy](docs/VALIDATION_POLICY.md)。**
+
+For local visual iteration, make the requested code changes directly and let the user inspect the running page. Before doing your own optional screenshot/render-and-inspect or visual-measurement step, ask whether the user wants that step; do not automatically run scripts such as `article-first-preview.mjs` after every edit. Browser and visual consent follow docs/VALIDATION_POLICY.md; ordinary server management, code edits and selected non-browser technical checks remain within task authorization. Follow [local visual feedback](docs/AI_WORKFLOW.md#local-visual-feedback-and-consent). Technical validation is selected under the current validation policy; older full-suite/live gates are not default requirements.
 
 Implemented behavior is defined by code. Documentation records it; when they disagree, inspect the implementation and correct the documentation without changing runtime merely to match prose. Use `docs/DOC_SYNC_WORKFLOW.md` to trace code, configuration and tests to their responsible documents, including already committed changes.
 
@@ -79,6 +82,7 @@ Implemented behavior is defined by code. Documentation records it; when they dis
 
 1. `README.md` (theme user-facing setup)
 2. `docs/AI_WORKFLOW.md` (canonical AI safety/release/doc-sync workflow)
+   - Read `docs/VALIDATION_POLICY.md` before selecting checks; it defines default exclusions and consent.
 3. `docs/DOC_METADATA_SPEC.md` (canonical markdown metadata contract)
 4. `docs/ARCHITECTURE.md` (system overview)
 5. `docs/VISUAL_SYSTEMS.md` (route-specific style behavior)
@@ -103,6 +107,8 @@ Implemented behavior is defined by code. Documentation records it; when they dis
   - reusable visual APIs, component source map and page-adapter/lifecycle boundaries under `packages/theme/src/effects/`
 - `docs/MAINTAINER_WORKFLOW.md`
   - maintainer release policy details
+- `docs/VALIDATION_POLICY.md`
+  - independent technical selection, default exclusions and required user consent
 - `docs/RELEASE_TOOLS.md`
   - discover release capabilities, executable dependencies and tool composition boundaries
 - `docs/DOC_SYNC_WORKFLOW.md`
@@ -146,13 +152,13 @@ Repository text uses UTF-8/LF, enforced by `.gitattributes`, `.editorconfig` and
 
 ## Change Checklist
 
-- Build succeeds (`npm run build`)
+- Select related technical checks; build once when runtime/config changes warrant it
 - Route behavior remains correct (`/`, `/<default-locale>/`, localized pages)
 - About page toggle still works (`ABOUT_PAGE_ENABLED`)
 - No accidental hard-coding of author/site metadata
 - README stays user-facing (avoid moving internal implementation details back into README)
 - Public README-like docs may use sidecar metadata instead of visible frontmatter
-- Starter/runtime changes still pass `node scripts/check-scaffold.mjs`; integration/upgrade changes also require installed-package and one-command upgrade acceptance
+- Select scaffold/integration/installed-package/preservation checks when their contracts change. Browser-containing upgrade fixtures require explicit consent; do not silently invoke them as technical checks.
 - If package behavior changed, follow `docs/AI_WORKFLOW.md` release rules before pushing
 - If adding starter-consumed runtime/config/script/template files, update `scripts/starter-manifest.mjs` in the same change
 - If `release:starter` fails, fix the issue on `main`, and make sure maintainer checks still pass in both workspace-link and installed-package starter contexts

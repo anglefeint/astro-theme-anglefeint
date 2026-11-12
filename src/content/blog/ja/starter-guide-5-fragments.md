@@ -4,7 +4,10 @@ title: 'ユーザーガイド 5：断片を公開する'
 description: '短い思いを Markdown で残し、コメントをダイアログで表示します。'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+updatedDate: '2026-11-12'
 ---
+
+0.33.2 以降、Fragments は記事ページと同じトップへ戻るボタンを使います。スクロール後に表示され、動きを減らす設定に対応します。追加設定は不要です。
 
 既存のブログは、先にテーマを 0.29.0 以降へ更新してください：
 

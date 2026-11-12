@@ -4,7 +4,7 @@ import { initSectionLinks } from './blogpost/section-links.js';
 import { initImagePreview } from './blogpost/image-preview.js';
 import { initNetworkCanvas } from './blogpost/network-canvas.js';
 import { initPostInteractions } from './blogpost/interactions.js';
-import { initReadProgressAndBackToTop } from './blogpost/read-progress.js';
+import { initReadProgress } from './blogpost/read-progress.js';
 import { initRedQueenTv } from './blogpost/red-queen-tv.js';
 
 import { createEffectScope, mountOptionalEffect } from './effects/lifecycle.js';
@@ -18,7 +18,7 @@ export function initBlogpostEffects() {
   mount('code copy', initCodeCopy);
   mount('section links', initSectionLinks);
   mount('image preview', initImagePreview);
-  mount('reading progress', initReadProgressAndBackToTop);
+  mount('reading progress', initReadProgress);
   mount('hero', initHeroCanvas);
   mount('interactions', initPostInteractions);
   const startNetwork = () => mount('network', initNetworkCanvas);

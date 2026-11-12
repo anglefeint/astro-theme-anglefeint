@@ -4,7 +4,10 @@ title: 'Anleitung 5: Fragmente veröffentlichen'
 description: 'Kurze Gedanken als Markdown mit optionalen Kommentaren im Dialog.'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+updatedDate: '2026-11-12'
 ---
+
+Ab 0.33.2 verwendet Fragments denselben Nach-oben-Button wie Artikel: Er erscheint nach dem Scrollen und berücksichtigt die Einstellung für reduzierte Bewegung. Keine Konfiguration erforderlich.
 
 Bei einem bestehenden Blog zuerst auf Theme 0.29.0 oder neuer aktualisieren:
 

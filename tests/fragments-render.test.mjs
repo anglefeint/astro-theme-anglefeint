@@ -32,6 +32,10 @@ test(
       await fixture.build();
       for (const locale of fragmentLocales) {
         doc = parse(await fixture.read(`${locale}/fragments/index.html`));
+        const backTop = doc.querySelector('[data-back-to-top]');
+        assert(backTop, `${locale} uses shared back-to-top`);
+        assert.equal(backTop.getAttribute('data-back-to-top-layout'), 'feed');
+        assert(backTop.getAttribute('aria-label'));
         const og = doc.querySelector('meta[property="og:image"]').getAttribute('content');
         assert.match(og, /anglefeint-og/);
         assert.equal(

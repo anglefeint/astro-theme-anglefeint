@@ -10,6 +10,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.33.2: Shared back-to-top control
+
+See the [release record](docs/releases/0.33.2.md) for availability. npm schema-1 users can run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.33.2`), preview and redeploy. Fragments automatically gains the article back-to-top control; no configuration, content or ID migration is needed. Personal tutorial copies remain user-owned. Maintainer validation changes do not alter consumer doctor or upgrade checks.
+
 ## 0.33.1: Direct Fragment anchors
 
 See the [release record](docs/releases/0.33.1.md) for actual availability. After publication, npm schema-1 users can run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.33.1`), preview and redeploy. Share links now use `/<locale>/fragments/#ID` directly. Existing Markdown IDs, comment discussions and JSON page indexes are preserved; no content edit is required. Previously copied `#fragment-ID` links are not aliases: copy updated links after deployment. Personal tutorials are not overwritten by upgrading; current README and demo/starter guides document the new format. Maintainer release tools are repository-only and add no consumer commands or dependencies.

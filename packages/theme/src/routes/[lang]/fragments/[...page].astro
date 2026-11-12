@@ -3,6 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
 import CyberShell from '../../../layouts/shells/CyberShell.astro';
 import FragmentComments from '../../../components/FragmentComments.astro';
+import BackToTop from '../../../components/shared/BackToTop.astro';
 import CyberPagination from '../../../components/pagination/CyberPagination.astro';
 import mathCssUrl from '../../../styles/math.css?url';
 import { fragmentTerm } from '../../../utils/fragments';
@@ -209,6 +210,7 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
     }
   </section>
   {THEME.FRAGMENTS.comments.enabled && <FragmentComments locale={locale} labels={labels} />}
+  <BackToTop slot="body-end" label={messages.blog.backToTop} layout="feed" />
 </CyberShell>
 <script>
   import { initFragmentLinks } from '../../../scripts/fragment-links.js';

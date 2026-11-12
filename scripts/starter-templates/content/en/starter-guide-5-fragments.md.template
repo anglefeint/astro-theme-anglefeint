@@ -4,7 +4,10 @@ title: 'User Guide 5: Publish Fragments'
 description: 'Publish brief thoughts as Markdown, with optional popup comments.'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
+updatedDate: '2026-11-12'
 ---
+
+From 0.33.2, Fragments shares the article back-to-top button: it appears after scrolling and respects reduced-motion preferences. No configuration is needed.
 
 For an existing blog, upgrade to theme 0.29.0 or newer first:
 

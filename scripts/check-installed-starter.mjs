@@ -35,6 +35,13 @@ const socialIconNames = [
 
 const exec = promisify(execFile);
 const root = process.cwd();
+const options = new Set(process.argv.slice(2));
+for (const option of options)
+  if (!['--audit', '--build', '--smoke-build'].includes(option))
+    throw new Error('Unknown installed validation option: ' + option);
+const fullMatrix = options.has('--build');
+const smokeBuild = options.has('--smoke-build');
+if (fullMatrix && smokeBuild) throw new Error('Choose --build or --smoke-build, not both.');
 const npmCli = process.env.npm_execpath;
 if (!npmCli) throw new Error('Run via npm run check:installed.');
 const temp = await mkdtemp(path.join(os.tmpdir(), 'anglefeint-installed-'));
@@ -186,7 +193,7 @@ try {
     '---\ntitle: Search exclusion test\ndescription: Excluded article\npubDate: 2026-01-01\nsearch: false\n---\nThis must not be indexed.\n'
   );
 
-  if (process.argv.includes('--build')) {
+  if (fullMatrix || smokeBuild) {
     await writeFile(
       path.join(project, 'src/content/blog/en/guest-author.md'),
       '---\ntitle: Guest author fixture\ndescription: Guest byline\npubDate: 2026-01-01\nauthor: Guest Writer\n---\n## Guest section\n\nGuest text.\n'
@@ -222,9 +229,9 @@ try {
     await sharp(path.join(project, customCover))
       .png()
       .toFile(path.join(project, 'public/share-test.png'));
-    for (const locale of ['en', 'zh', 'pt-br', 'de', 'ru', 'zh-hant']) {
+    for (const locale of smokeBuild ? ['en'] : ['en', 'zh', 'pt-br', 'de', 'ru', 'zh-hant']) {
       const creditedImages = new Map();
-      for (const mode of ['always', 'never']) {
+      for (const mode of smokeBuild ? ['always'] : ['always', 'never']) {
         await setConfig({
           social: {
             links:
@@ -290,6 +297,10 @@ try {
         await rm(path.join(project, 'dist'), { recursive: true, force: true });
         await npm(['run', 'build']);
         const guest = parse(await read('dist/en/blog/guest-author/index.html'));
+        const backTop = guest.querySelector('[data-back-to-top]');
+        assert(backTop, 'installed articles include the shared back-to-top control');
+        assert.equal(backTop.getAttribute('data-back-to-top-layout'), 'article');
+        assert.equal(backTop.getAttribute('tabindex'), '-1');
         const guestSchema = guest
           .querySelectorAll('script[type="application/ld+json"]')
           .flatMap((node) => JSON.parse(node.textContent))
@@ -497,72 +508,74 @@ try {
           await assert.rejects(read(`dist/${locale}/about/index.html`), { code: 'ENOENT' });
       }
     }
-    await setConfig({
-      theme: {
-        search: { enabled: false },
-        math: { enabled: false },
-        tags: { enabled: false },
-        socialImage: { enabled: false },
-      },
-    });
-    // Exercise the same real content with parsing and stylesheet delivery disabled.
-    // Without math parsing, MDX braces are JavaScript again; use ordinary MDX text.
-    await writeFile(
-      path.join(project, 'src/content/blog/en/math-mdx.mdx'),
-      '---\ntitle: Math disabled\ndescription: Plain text\npubDate: 2026-01-01\n---\n$E = mc^2$\n'
-    );
-    console.log('Building installed starter with search, tags and math disabled...');
-    await npm(['run', 'build']);
-    for (const extension of ['md', 'mdx']) {
-      const mathHtml = await read(`dist/en/blog/math-${extension}/index.html`);
-      assert.doesNotMatch(mathHtml, /anglefeint-math|<mfrac>|href="[^"]*math[^"/]*\.css"/);
-    }
-    assert.doesNotMatch(await read('dist/en/blog/installed-default/index.html'), /\/_social\//);
-    await assert.rejects(readdir(path.join(project, 'dist/_social')), { code: 'ENOENT' });
-    assert.match(
-      await read('dist/en/blog/share-public/index.html'),
-      /property="og:image" content="[^"]+\/share-test.jpg\?v=/
-    );
-    await assert.rejects(read('dist/en/tags/index.html'), { code: 'ENOENT' });
-    await assert.rejects(read('dist/en/tags/anglefeint/index.html'), { code: 'ENOENT' });
-    assert.doesNotMatch(await read('dist/en/blog/index.html'), /class="tag-links/);
-    assert.doesNotMatch(await read('dist/en/blog/tag-special/index.html'), /rel="tag"/);
-    await assert.rejects(read('dist/pagefind/anglefeint.json'), { code: 'ENOENT' });
-    assert.doesNotMatch(await read('dist/en/blog/index.html'), /data-search-open/);
-    assert.doesNotMatch(
-      await read('dist/en/blog/installed-default/index.html'),
-      /data-anglefeint-search/
-    );
-    await setConfig({
-      theme: {
-        socialImage: { enabled: false },
-        music: { enabled: true, tracks: [{ title: 'Install test', src: '/music/test.mp3' }] },
-        fragments: { enabled: true },
-      },
-    });
-    console.log('Building installed starter with optional music enabled...');
-    // Same installed build exercises package-owned fragments without copying routes.
-    await npm(['run', 'build']);
-    const fragmentsHtml = await read('dist/en/fragments/index.html');
-    assert.match(fragmentsHtml, /data-fragment-id/);
-    const fragmentIndexHref = fragmentsHtml.match(/data-fragment-index="([^"]+)"/)?.[1];
-    assert.match(fragmentIndexHref ?? '', /^\/en\/fragments\/index\/[a-f0-9]{16}\.json$/);
-    const fragmentIndex = JSON.parse(await read(`dist${fragmentIndexHref}`));
-    const fragmentId = fragmentsHtml.match(/data-fragment-id="([^"]+)"/)?.[1];
-    assert.equal(fragmentIndex.version, 1);
-    assert.equal(fragmentIndex.pages[fragmentId], 1);
-    assert.ok(fragmentsHtml.includes(`href="/en/fragments/#${fragmentId}"`));
-    assert.doesNotMatch(fragmentsHtml, /data-fragment-comments/);
-    assert.match(await read('dist/en/index.html'), /href="\/en\/fragments\/"/);
-    assert.equal(await read(`src/content/fragments/en/${fragmentFiles[0]}`), fragmentBefore);
-    for (const route of ['en', 'zh', 'en/blog', 'en/about']) {
-      const html = await read(`dist/${route}/index.html`);
-      assert.match(html, /data-music-deck/);
-      assert.match(html, /Install test/);
-      for (const attribute of ['data-core', 'data-storage']) {
-        const asset = html.match(new RegExp(`${attribute}="([^"]+)"`))?.[1];
-        assert.ok(asset, `Missing ${attribute}`);
-        assert.ok((await read(`dist${asset}`)).length > 0);
+    if (fullMatrix) {
+      await setConfig({
+        theme: {
+          search: { enabled: false },
+          math: { enabled: false },
+          tags: { enabled: false },
+          socialImage: { enabled: false },
+        },
+      });
+      // Exercise the same real content with parsing and stylesheet delivery disabled.
+      // Without math parsing, MDX braces are JavaScript again; use ordinary MDX text.
+      await writeFile(
+        path.join(project, 'src/content/blog/en/math-mdx.mdx'),
+        '---\ntitle: Math disabled\ndescription: Plain text\npubDate: 2026-01-01\n---\n$E = mc^2$\n'
+      );
+      console.log('Building installed starter with search, tags and math disabled...');
+      await npm(['run', 'build']);
+      for (const extension of ['md', 'mdx']) {
+        const mathHtml = await read(`dist/en/blog/math-${extension}/index.html`);
+        assert.doesNotMatch(mathHtml, /anglefeint-math|<mfrac>|href="[^"]*math[^"/]*\.css"/);
+      }
+      assert.doesNotMatch(await read('dist/en/blog/installed-default/index.html'), /\/_social\//);
+      await assert.rejects(readdir(path.join(project, 'dist/_social')), { code: 'ENOENT' });
+      assert.match(
+        await read('dist/en/blog/share-public/index.html'),
+        /property="og:image" content="[^"]+\/share-test.jpg\?v=/
+      );
+      await assert.rejects(read('dist/en/tags/index.html'), { code: 'ENOENT' });
+      await assert.rejects(read('dist/en/tags/anglefeint/index.html'), { code: 'ENOENT' });
+      assert.doesNotMatch(await read('dist/en/blog/index.html'), /class="tag-links/);
+      assert.doesNotMatch(await read('dist/en/blog/tag-special/index.html'), /rel="tag"/);
+      await assert.rejects(read('dist/pagefind/anglefeint.json'), { code: 'ENOENT' });
+      assert.doesNotMatch(await read('dist/en/blog/index.html'), /data-search-open/);
+      assert.doesNotMatch(
+        await read('dist/en/blog/installed-default/index.html'),
+        /data-anglefeint-search/
+      );
+      await setConfig({
+        theme: {
+          socialImage: { enabled: false },
+          music: { enabled: true, tracks: [{ title: 'Install test', src: '/music/test.mp3' }] },
+          fragments: { enabled: true },
+        },
+      });
+      console.log('Building installed starter with optional music enabled...');
+      // Same installed build exercises package-owned fragments without copying routes.
+      await npm(['run', 'build']);
+      const fragmentsHtml = await read('dist/en/fragments/index.html');
+      assert.match(fragmentsHtml, /data-fragment-id/);
+      const fragmentIndexHref = fragmentsHtml.match(/data-fragment-index="([^"]+)"/)?.[1];
+      assert.match(fragmentIndexHref ?? '', /^\/en\/fragments\/index\/[a-f0-9]{16}\.json$/);
+      const fragmentIndex = JSON.parse(await read(`dist${fragmentIndexHref}`));
+      const fragmentId = fragmentsHtml.match(/data-fragment-id="([^"]+)"/)?.[1];
+      assert.equal(fragmentIndex.version, 1);
+      assert.equal(fragmentIndex.pages[fragmentId], 1);
+      assert.ok(fragmentsHtml.includes(`href="/en/fragments/#${fragmentId}"`));
+      assert.doesNotMatch(fragmentsHtml, /data-fragment-comments/);
+      assert.match(await read('dist/en/index.html'), /href="\/en\/fragments\/"/);
+      assert.equal(await read(`src/content/fragments/en/${fragmentFiles[0]}`), fragmentBefore);
+      for (const route of ['en', 'zh', 'en/blog', 'en/about']) {
+        const html = await read(`dist/${route}/index.html`);
+        assert.match(html, /data-music-deck/);
+        assert.match(html, /Install test/);
+        for (const attribute of ['data-core', 'data-storage']) {
+          const asset = html.match(new RegExp(`${attribute}="([^"]+)"`))?.[1];
+          assert.ok(asset, `Missing ${attribute}`);
+          assert.ok((await read(`dist${asset}`)).length > 0);
+        }
       }
     }
   }

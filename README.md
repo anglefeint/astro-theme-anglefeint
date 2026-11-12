@@ -130,6 +130,8 @@ npm run new-page -- projects --theme matrix
 
 ## Fragments
 
+From 0.33.2, Fragments shares the article back-to-top button: it appears after scrolling and respects reduced-motion preferences. No configuration is needed.
+
 Fragments requires theme 0.29.0 or newer. Upgrade existing blogs before using the configuration and command below.
 
 Publish brief thoughts as Markdown, with optional popup comments. Merge this into the existing theme object in src/site.config.ts. Fragments and its comments are off by default. The menu appears below Decoder Lab.

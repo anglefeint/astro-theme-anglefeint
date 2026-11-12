@@ -18,7 +18,9 @@ function parseArgs(argv) {
       continue;
     }
     if (arg === '--skip-checks') {
-      opts.skipChecks = true;
+      console.warn(
+        '--skip-checks is deprecated: validation is selected separately; no full suite or matrix runs implicitly.'
+      );
       continue;
     }
     if (arg === '--skip-pack') {
@@ -58,6 +60,8 @@ Examples:
   npm run release:npm
   npm run release:npm -- --tag alpha
   npm run release:npm -- --tag alpha --dry-run
+
+Publication mechanics only. Select change-related technical validation with release:tools.
 `);
 }
 

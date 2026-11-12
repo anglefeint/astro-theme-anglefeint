@@ -185,6 +185,8 @@ Review `git log` as well when an addition and later removal cancel out in the ne
 
 ## Reusable Commands
 
+These are capabilities, not a cumulative checklist. Select independent technical checks under [Validation policy](VALIDATION_POLICY.md). Browser/demo/Cloudflare activities require the specified user confirmation; documentation edits alone do not call for builds.
+
 ```bash
 rg --files -g '*.md'
 ```
@@ -198,7 +200,7 @@ npm run check:docs
 ```
 
 ```bash
-npm run check
+npm run release:tools -- list
 ```
 
 ```bash

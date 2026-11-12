@@ -56,7 +56,9 @@
     "theme:pack": "npm pack --workspace @anglefeint/astro-theme",
     "check:integration": "node scripts/check-integration.mjs",
     "new-fragment": "astro-theme new-fragment",
-    "release:tools": "node scripts/release-tools.mjs"
+    "release:tools": "node scripts/release-tools.mjs",
+    "check:types": "astro check",
+    "check:about-output": "node scripts/check-about-runtime-config.mjs"
   },
   "lint-staged": {
     "*.{js,mjs}": [

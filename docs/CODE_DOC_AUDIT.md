@@ -12,6 +12,18 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-12 Shared back-to-top and 0.33.2 preparation
+
+Articles and Fragments now compose one BackToTop component/controller/stylesheet. Article reading progress stays separate; feed placement, localized labels, reduced motion and hidden keyboard state are covered by focused units and static rendering. Synchronize nine-language README, npm README and nine demo/starter Guide 5 pairs, plus architecture, visual and upgrade/release references. IDs, JSON sharing indexes, comments, configuration and starter ownership remain unchanged. The pending maintainer-tool changes below ship together; actual source/npm/starter identities and timings belong in the [0.33.2 delivery record](releases/0.33.2.md) and linked GitHub Release.
+
+## 2026-11-12 Agent-selected technical validation (initial local preparation)
+
+按本轮用户授权，移除 .husky/pre-push 与其全量检查脚本；提交时的暂存 lint/格式和文档元数据检查保留。维护工具将文档、lint、格式、类型、指定单元文件、workspace／字体／集成／scaffold／包内 CLI、构建和现有 About 输出断言分开，agent 按实际改动选择，不再由 npm-delivery 隐式调用全量 check 或 14 项矩阵。发布机械步骤保留版本／审计／打包／身份／一次上传与下载核验；所有显式选择的检查先于上传执行，避免参数顺序造成先上传后测试。安装工具提供无构建、一次默认构建、完整矩阵三档，同一计划拒绝重复选择。
+
+新增 VALIDATION_POLICY.md，并同步中立入口、AI／维护／npm／工具／贡献／打包／分支／文档工作流及可选验收说明。默认不执行浏览器（含局部）、截图／测量、Cloudflare 账号与部署轮询、demo 全文／教程比对或真实 Giscus 验收；用户负责 demo 回归。agent 若建议例外，必须先解释操作、原因、范围和预计耗时，等待明确确认。全量技术组合与矩阵也需确认；--confirmed 仅记录已获得的授权，不能自行授权。混有浏览器的远程模板及升级脚本已标明需要确认，包完成状态不依赖 demo 状态。旧发布账本保留历史事实，不再作为现行执行门禁。
+
+本次只改维护工具／文档，不更改包运行时、消费者 doctor／upgrade、starter 受管文件或托管配置，不引入历史结果缓存。23 项相关工具、恢复、消费者 doctor 和 starter 同步测试，以及 lint、元数据检查已通过；新增独立安装加一次默认配置构建实际通过（97.93 秒、零漏洞），日志在忽略的 acceptance-results/agent-validation-installed-smoke.log。没有运行浏览器、Cloudflare／demo 验收或完整矩阵；没有提交、推送或发布。
+
 ## 2026-11-12 Direct Fragment anchors and release tools (package/starter delivered)
 
 按用户本轮授权，先整理发布工具与工作流的职责边界，并用短链接改动进行真实交付。Fragment 卡片原生 ID、日期链接、复制／手动回退和跨页定位统一为 `#ID`；版本化 JSON 和 `fragment/ID` 评论身份保持不变，不引入旧前缀别名。同步九语 README、npm README、九语 demo／starter Guide 1 和 Guide 5、架构与升级指引；历史发布账本保留原事实。

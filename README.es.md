@@ -130,6 +130,8 @@ npm run new-page -- projects --theme matrix
 
 ## Fragmentos
 
+Desde 0.33.2, Fragments comparte el botón de volver arriba de los artículos: aparece al desplazarse y respeta la preferencia de movimiento reducido. No requiere configuración.
+
 Fragmentos requiere el tema 0.29.0 o posterior. Actualiza los blogs existentes antes de usar la configuración y el comando siguientes.
 
 Publica ideas breves en Markdown con comentarios opcionales en un diálogo. Añade estos campos al theme existente de src/site.config.ts. Fragmentos y comentarios están desactivados por defecto. El menú aparece debajo de Decoder Lab.

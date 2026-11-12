@@ -11,6 +11,13 @@ depends_on:
 
 # Changelog
 
+## [0.33.2] - 2026-11-12
+
+See the [delivery record](docs/releases/0.33.2.md) for publication status and measured validation.
+
+- Reuse the article back-to-top button in Fragments through one shared component, stylesheet and lifecycle-managed controller. Preserve article positioning, localize existing labels, respect reduced motion and avoid article-effect imports or animation loops. Sync nine-language README and demo/starter Guide 5.
+- Split maintainer validation into independent tools chosen by the agent. Remove unconditional full pre-push checks and default browser, Cloudflare and demo acceptance; retain staged checks, blocking npm mechanics and starter doctor. Exceptional full checks and optional browser/hosting/demo investigations require explicit user approval. No historical-result cache or consumer doctor/upgrade change.
+
 ## [0.33.1] - 2026-11-12
 
 See the [delivery record](docs/releases/0.33.1.md) for actual publication and acceptance status.

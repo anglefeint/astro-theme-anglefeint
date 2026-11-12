@@ -104,6 +104,8 @@ npm run new-page -- projects --theme cyber erstellt src/pages/[lang]/projects.as
 
 ## Fragmente
 
+Ab 0.33.2 verwendet Fragments denselben Nach-oben-Button wie Artikel: Er erscheint nach dem Scrollen und berücksichtigt die Einstellung für reduzierte Bewegung. Keine Konfiguration erforderlich.
+
 Fragmente benötigen Theme 0.29.0 oder neuer. Bestehende Blogs vor Verwendung der folgenden Konfiguration und des Befehls aktualisieren.
 
 Kurze Gedanken als Markdown mit optionalen Kommentaren im Dialog. In das vorhandene theme in src/site.config.ts einfügen. Fragmente und Kommentare sind standardmäßig deaktiviert. Der Menüpunkt steht unter Decoder Lab.
