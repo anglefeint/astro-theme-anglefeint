@@ -12,6 +12,10 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-13 0.35.0 authorized delivery
+
+用户在上述文档核对完成后，授权必要技术检查并发布 npm/starter。源码 `3a63a6c588d2e335f57fc23ada927d4668ab0d12` 完成 32 项针对性测试、workspace、类型、lint、291 页构建与元数据/格式/局部静态输出核对；独立打包安装/审计/CLI/默认构建通过。npm 0.35.0 仅上传一次，初次及两次只读核验因 registry `TAG_PENDING` 超时，第三次只读恢复匹配 latest、源码、SHA1 与下载完整性。随后交付 starter `b93d5b6e53084f8ea774141b73abb520ea4d7dd2`，依赖范围/锁分别为 `^0.35.0`/`0.35.0`，安装审计、doctor/build、推送与 main 环境恢复通过；三处阻断审计均零已知漏洞。没有浏览器、线上 demo/Cloudflare/Giscus 或完整矩阵验收。实际 refs、耗时与公告入口集中在 [0.35.0 发布账本](releases/0.35.0.md)，本次只补维护记录，不再次发布 npm 或同步未改变的 starter 受管内容。
+
 ## 2026-11-13 Homepage Fragments, avatar archives and article presentation (local)
 
 ### Review boundary and routing

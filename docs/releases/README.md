@@ -29,7 +29,7 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 ## Contract
 
-Release preparation: [0.35.0](./0.35.0.md), homepage Matrix Fragment previews, reversible avatar reactions and static article presentation. Delivery remains pending until its recorded npm/starter/tag/Release verification.
+Latest package release: [0.35.0](./0.35.0.md), homepage Matrix Fragment previews, reversible avatar reactions and static article presentation. npm and starter delivered; its ledger and linked GitHub Release record actual source identities, registry recovery and technical evidence. Demo regression remains user-owned.
 
 Previous package release: [0.34.0](./0.34.0.md), About and Fragments machine-readable coverage and language metadata. See its ledger and linked GitHub Release for actual delivery status and timings.
 
