@@ -10,6 +10,12 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.35.0: homepage Fragment previews and article presentation
+
+See the [0.35.0 delivery record](docs/releases/0.35.0.md) for actual publication status. Once available, supported npm schema-1 projects can run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.35.0`), build and redeploy. Archiving avatar artwork alone does not deliver the runtime. No new configuration or content migration is needed. Enabled, nonempty localized Fragment collections gain a homepage avatar entrance with the latest three previews. Image/code previews are clipped; links still open the complete original fragments. The full feed keeps natural card heights with larger gaps. Disabled/empty collections omit the entrance.
+
+Article OUTPUT retains word/token counts and the optional model label, but no longer displays reading time, latency or confidence, including explicit values. Existing frontmatter fields remain valid. Article/title/body opacity entrances and panel breathing/scaling are removed; background network and title light effects remain. Package-owned components, scripts, styles and runtime artwork ship through existing package file patterns. Source artwork archives and the new bilingual demo samples stay outside the starter manifest; personal content and tutorial copies remain user-owned.
+
 ## 0.34.0: About and Fragments machine-readable content
 
 See the [delivery record](docs/releases/0.34.0.md) for publication status. After release, supported npm schema-1 projects can run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.34.0`), build, preview and redeploy. No new configuration or content migration is required. Existing article Markdown URLs and Fragment IDs/sharing/comment mappings remain unchanged. Enabled public About and Fragments join root/language llms indexes and full-text bundles; their companions are `/<locale>/about/index.md` and `/<locale>/fragments/index.md`. All public feed pages share the aggregate, with stable original `#ID` links. About includes visible biography/contact and its reachable AI text popup, excluding tools/runtime configuration/comments. Rebuilding cleans owned exports after content deletion, feature/language disabling or noindex changes; custom conflicting files stop the build. Personal tutorial copies remain user-owned. Current demo/starter Guides 1, 3 and 5 describe the new behavior. No server or AI service is required and no indexing/citation outcome is guaranteed.

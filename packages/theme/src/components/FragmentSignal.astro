@@ -1,0 +1,97 @@
+---
+import '../styles/fragment-signal.css';
+import type { FragmentPreview } from '../utils/fragment-preview';
+
+interface Props {
+  entries: { href: string; date: Date; title?: string; preview: FragmentPreview }[];
+  totalCount: number;
+  avatar: { src: string; stillSrc: string; reactionSrc?: string };
+  archiveHref: string;
+  labels: { title: string; close: string; all: string };
+}
+
+const { entries, totalCount, avatar, archiveHref, labels } = Astro.props;
+---
+
+<details class="fragment-signal" data-fragment-signal>
+  <summary class="fragment-signal-trigger" aria-label={labels.title}>
+    <picture class="fragment-signal-avatar-idle">
+      <source media="(prefers-reduced-motion: reduce)" srcset={avatar.stillSrc} />
+      <img src={avatar.src} width="64" height="64" alt="" decoding="async" />
+    </picture>
+    {
+      avatar.reactionSrc && (
+        <img
+          class="fragment-signal-avatar-reaction"
+          data-avatar-reaction
+          src={avatar.reactionSrc}
+          width="128"
+          height="2048"
+          loading="eager"
+          decoding="async"
+          alt=""
+        />
+      )
+    }
+  </summary>
+  <div class="fragment-signal-window">
+    <button
+      class="fragment-signal-close"
+      type="button"
+      data-fragment-signal-close
+      aria-label={labels.close}>×</button
+    >
+    <div class="fragment-signal-scroll">
+      <ol class="fragment-signal-entries">
+        {
+          entries.map((entry, index) => (
+            <li>
+              <a class="fragment-signal-entry" href={entry.href}>
+                <div class="fragment-signal-entry-meta">
+                  <span class="fragment-signal-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <time datetime={entry.date.toISOString()}>
+                    {entry.date.toISOString().slice(0, 10).replaceAll('-', '.')}
+                  </time>
+                </div>
+                {entry.title && <strong>{entry.title}</strong>}
+                {entry.preview.text && <p>{entry.preview.text}</p>}
+                {entry.preview.image && (
+                  <img
+                    class="fragment-signal-thumbnail"
+                    src={entry.preview.image.src}
+                    alt={entry.preview.image.alt}
+                    width={entry.preview.image.width}
+                    height={entry.preview.image.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                {entry.preview.code && (
+                  <pre class="fragment-signal-code">
+                    <code>{entry.preview.code}</code>
+                  </pre>
+                )}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+      <a
+        class="fragment-signal-archive"
+        href={archiveHref}
+        aria-label={`${labels.all} ${labels.title}`}
+      >
+        {`${entries.length} / ${totalCount} →`}
+      </a>
+    </div>
+  </div>
+</details>
+
+<script>
+  import { initFragmentSignal } from '../scripts/fragment-signal.js';
+  for (const root of document.querySelectorAll<HTMLElement>('[data-fragment-signal]')) {
+    initFragmentSignal(root, document.querySelector('body > header'));
+  }
+</script>

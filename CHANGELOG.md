@@ -11,6 +11,14 @@ depends_on:
 
 # Changelog
 
+## [0.35.0] - 2026-11-13
+
+See the [delivery record](docs/releases/0.35.0.md) for actual npm, starter and GitHub Release status.
+
+- Add a homepage Matrix avatar entrance for enabled, nonempty localized Fragments: up to three bounded text/image/code previews, whole-card navigation, one preview-count/archive link and an independent close control. Preload the eye-smile reaction strip and reverse its current pose on hover/focus exit; retain static reduced-motion artwork and earlier asset variants. The panel stays below the header and overlays the entrance without sharing music-player state.
+- Keep article OUTPUT word/token/model information while removing displayed reading time, latency and confidence. Preserve legacy content fields, remove article/title/body opacity entrances and panel breathing/scaling, and retain the background network and title light band.
+- Increase spacing between full-feed Fragment cards. Add 24 bilingual demo case pairs with local image/code/layout edge cases; keep these samples and source artwork archives outside consumer starter content. Synchronize public guides and document the package/starter boundaries.
+
 ## [0.34.0] - 2026-11-12
 
 See the [delivery record](docs/releases/0.34.0.md) and its linked GitHub Release for actual delivery status and measured timings.
@@ -34,6 +42,8 @@ See the [delivery record](docs/releases/0.33.1.md) for actual publication and ac
 All notable changes to this project are documented in this file.
 
 ## Unreleased
+
+These runtime changes have not been published in 0.34.0.
 
 - Maintainer-only: unify normal/recovery npm verification across tag, exact-version metadata and downloaded integrity/SHA1, automatically checking the publishing HEAD during normal delivery. Log each failure's stage/code/redacted reason/action; retry only named transient errors and stop immediately on identity/authentication/malformed/unknown failures. Keep the existing 12 attempts, 10-second interval and 15-second fetch timeout. That earlier maintainer-only delivery changed no theme package, consumer command or starter file; npm stayed at 0.33.2 at that time.
 

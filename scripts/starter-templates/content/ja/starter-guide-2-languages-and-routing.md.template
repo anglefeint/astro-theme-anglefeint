@@ -47,9 +47,9 @@ tags: ['astro', 'notes']
 
 記事を実質的に更新したら `updatedDate` に実際の更新日を設定します。sitemap は `updatedDate`、未指定なら `pubDate` を使い、ビルドのたびに新しい日付を作りません。検索エンジンへの登録を保証するものではありません。
 
-カバーは記事の隣に画像を置いて `heroImage: ./cover.jpg` と指定するか、作成コマンドが割り当てたローカルのパスを使います。`src/assets/blog/default-covers/` に画像がある場合のみ自動割り当てされ、画像のダウンロードは行いません。`heroImage` は省略できます。読了時間や文字数などは自動計算され、通常の記事で手入力する必要はありません。
+カバーは記事の隣に画像を置いて `heroImage: ./cover.jpg` と指定するか、作成コマンドが割り当てたローカルのパスを使います。`src/assets/blog/default-covers/` に画像がある場合のみ自動割り当てされ、画像のダウンロードは行いません。`heroImage` は省略できます。語数や tokens は自動計算され、通常の記事で手入力する必要はありません。
 
-これらは推定値であり、AI サービスから取得した測定値ではありません。frontmatter の `readMinutes`、`wordCount`、`tokenCount`、`aiLatencyMs`、`aiConfidence` は自動計算より優先され、省略すると推定値が使われます。一部のデモ記事には表示例として固定値が入っています。
+語数と tokens は概算であり、AI サービスの測定値ではありません。frontmatter の `wordCount` と `tokenCount` で個別に上書きできます。記事ページには読了時間、レイテンシ、信頼度を表示しません。古い記事の関連フィールドはそのまま残せます。
 
 ## 3. 見出しから目次を作る
 

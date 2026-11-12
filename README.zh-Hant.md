@@ -94,7 +94,7 @@ tags: ['astro', 'notes']
 
 title、description、pubDate 必填；subtitle、updatedDate、author 選填，作者預設使用網站作者。列表依 pubDate 排序。目前沒有草稿或排程發布篩選：draft: true 與未來日期都不會隱藏文章。未完成內容請放在 src/content/blog/ 之外。
 
-heroImage: ./cover.jpg 使用文章旁的圖片。若 src/assets/blog/default-covers/ 有圖片，每次執行指令會隨機選擇一張封面，本次新建的各語言文章共用這張封面。既有檔案不會覆寫，之後可修改 heroImage；指令不會下載圖片。閱讀時間與其他指標都是估計值，可用 readMinutes、wordCount、tokenCount、aiLatencyMs、aiConfidence 覆寫；這些資料不代表連接了真實 AI 服務。
+heroImage: ./cover.jpg 使用文章旁的圖片。若 src/assets/blog/default-covers/ 有圖片，每次執行指令會隨機選擇一張封面，本次新建的各語言文章共用這張封面。既有檔案不會覆寫，之後可修改 heroImage；指令不會下載圖片。字詞數與 tokens 都是估計值，可用 wordCount、tokenCount 分別覆寫。文章頁不再顯示閱讀時間、延遲或信心程度；舊文章的相關欄位可以保留，這些資料不代表連接了真實 AI 服務。
 
 ## 獨立頁面
 
@@ -499,7 +499,7 @@ $$
 
 ## 文章統計
 
-字詞數是來源正文的概略統計：中日韓字元逐字計算，其他文字主要依空白分割。tokens 預設為 `round(max(words, 1) × 1.3)`，並非模型分詞器結果或實際 AI 用量。達到 1,000 後以一位小數和 k 顯示。frontmatter 的 `wordCount`、`tokenCount`、`readMinutes` 分別覆蓋各自值；只改 wordCount 不會重算 tokens。公式與 MDX 原始碼也可能影響估算。
+字詞數是來源正文的概略統計：中日韓字元逐字計算，其他文字主要依空白分割。tokens 預設為 `round(max(words, 1) × 1.3)`，並非模型分詞器結果或實際 AI 用量。達到 1,000 後以一位小數和 k 顯示。frontmatter 的 `wordCount`、`tokenCount` 分別覆蓋各自值；只改 wordCount 不會重算 tokens。公式與 MDX 原始碼也可能影響估算。
 
 ## 預設分享圖與 Fragment 短 ID（0.33.0+）
 
@@ -512,3 +512,9 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment 使用區分大小寫的字母與數字產生 8 位 Nano ID，檢查各語言既有 Markdown ID，衝突時重試。同一次命令的所有語言共用 ID 與發佈時間。Fragment 僅接受恰好 8 位英數字 ID，不相容舊 UUID 或長 ID；舊內容請刪除後重新發佈，不提供遷移或舊連結相容。新內容發佈後請保留 ID，修改會改變留言關聯。
+
+## 首頁 Fragment 預覽（0.35.0+）
+
+目前原始碼中，啟用 `theme.fragments.enabled` 且目前語言有碎片時，首頁 header 下方會顯示像素頭像入口。展開後預覽最近三則；整張卡片連到原碎片，底部數量與箭頭連到完整列表。數量代表目前語言的預覽則數 / 總則數。圖片與程式碼採限高預覽，超出部分裁切；停用或沒有內容時不顯示入口。不需新增設定。需要主題 0.35.0 或更新版本。
+
+文章 OUTPUT 保留字數、tokens 與可選模型名稱；不再顯示閱讀時間、latency 和 confidence，即使 frontmatter 有填寫。舊欄位仍可保留。正文與面板直接出現並保持靜止，背景網路與標題光帶保留。這些顯示調整同樣等待下一次主題發佈。

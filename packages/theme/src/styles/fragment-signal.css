@@ -1,0 +1,358 @@
+.fragment-signal {
+  --fragment-signal-top: 76px;
+  position: fixed;
+  top: var(--fragment-signal-top);
+  right: max(1rem, env(safe-area-inset-right));
+  z-index: 85;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  color: #c4f5d1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  pointer-events: auto;
+}
+.fragment-signal[open] {
+  width: min(400px, calc(100vw - 2rem));
+}
+.fragment-signal-trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 66px;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 44px;
+  margin-left: auto;
+  padding: 0;
+  border: 1px solid #6fffa47a;
+  border-radius: 12px;
+  background:
+    linear-gradient(120deg, #4bff9126, transparent 60%), linear-gradient(180deg, #071c10, #010b05);
+  box-shadow:
+    0 0 20px #60ff8035,
+    inset 0 0 18px #60ff8010,
+    inset 0 -2px #7dffa144;
+  color: #bcffd0;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  list-style: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.fragment-signal-trigger::-webkit-details-marker {
+  display: none;
+}
+.fragment-signal-avatar-idle {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.fragment-signal-avatar-idle img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+.fragment-signal .fragment-signal-avatar-reaction {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 64px;
+  height: 1024px;
+  max-height: none;
+  object-fit: fill;
+  visibility: hidden;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .fragment-signal[data-avatar-active='true'] .fragment-signal-avatar-idle {
+    visibility: hidden;
+  }
+  .fragment-signal[data-avatar-active='true'] .fragment-signal-avatar-reaction {
+    visibility: visible;
+  }
+}
+.fragment-signal-trigger::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, #8effad30 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.fragment-signal-trigger:is(:hover, :focus-visible)::after {
+  animation: fragment-signal-glint 500ms ease-out;
+}
+.fragment-signal-trigger:is(:hover, :focus-visible),
+.fragment-signal[open] .fragment-signal-trigger {
+  border-color: #a3ffc0;
+  box-shadow:
+    0 0 26px #60ff8050,
+    inset 0 0 20px #60ff801a;
+}
+.fragment-signal-window {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  max-height: max(0px, calc(100dvh - var(--fragment-signal-top) - 16px));
+  border: 1px solid #79ffa776;
+  border-radius: 2px 14px 2px 14px;
+  background:
+    linear-gradient(125deg, #60ff8010, transparent 45%),
+    repeating-linear-gradient(0deg, #60ff8007 0 1px, transparent 1px 4px), rgba(0, 12, 4, 0.98);
+  box-shadow:
+    0 16px 48px #000b,
+    0 0 30px #60ff8028,
+    inset 0 0 30px #60ff8010;
+  overflow: hidden;
+}
+.fragment-signal-window::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background:
+    linear-gradient(#b1ffcc 0 0) top left / 54px 2px no-repeat,
+    linear-gradient(#8affab 0 0) top left / 2px 42px no-repeat,
+    linear-gradient(#b1ffcc 0 0) bottom right / 54px 2px no-repeat,
+    linear-gradient(#8affab 0 0) bottom right / 2px 42px no-repeat;
+  pointer-events: none;
+}
+.fragment-signal-window::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 45%,
+    #7aff9e1c 49%,
+    #b3ffd455 50%,
+    transparent 51%
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+.fragment-signal[open] .fragment-signal-window::after {
+  animation: fragment-signal-scan 600ms ease-out;
+}
+.fragment-signal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #c2ffd5;
+  font: inherit;
+  font-size: 1.4rem;
+  line-height: 1;
+  text-shadow: 0 0 7px #60ff8070;
+  cursor: pointer;
+}
+.fragment-signal-close:is(:hover, :focus-visible) {
+  background: #60ff8024;
+  color: #effff4;
+  box-shadow: inset 0 0 0 1px #9bffb45c;
+  text-shadow: 0 0 10px #60ff80b0;
+}
+.fragment-signal-scroll {
+  min-height: 0;
+  padding: 2.25rem 1rem 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #336442 #001006;
+}
+.fragment-signal-entries {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fragment-signal .fragment-signal-entries > li {
+  padding-left: 0;
+  color: inherit;
+  text-shadow: none;
+}
+.fragment-signal .fragment-signal-entries > li::before {
+  content: none;
+}
+.fragment-signal-entries li + li {
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed #60ff802a;
+}
+.fragment-signal .fragment-signal-entry {
+  height: clamp(144px, 23dvh, 184px);
+  box-sizing: border-box;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  padding: 0.3rem 0.4rem;
+  margin-inline: -0.4rem;
+  border-left: 2px solid transparent;
+}
+.fragment-signal-entry-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.fragment-signal-index {
+  color: #9bffb8;
+  font-size: 0.65rem;
+}
+.fragment-signal-entry {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.fragment-signal-entry time {
+  color: #7db88b;
+  font-size: 0.68rem;
+}
+.fragment-signal-entry strong {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.82rem;
+}
+.fragment-signal .fragment-signal-entry p {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: inherit;
+  text-shadow: none;
+}
+.fragment-signal .fragment-signal-thumbnail {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 140px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin-top: 0.6rem;
+  border: 1px solid #60ff8030;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.fragment-signal .fragment-signal-code {
+  max-height: 8rem;
+  overflow: hidden;
+  margin: 0.6rem 0 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid #60ff8024;
+  border-radius: 4px;
+  background: #000a;
+  color: #b9fbd1;
+  font:
+    0.72rem/1.6 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.fragment-signal .fragment-signal-code code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+.fragment-signal .fragment-signal-archive {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-height: 44px;
+  margin: 0.7rem 0 0 auto;
+  padding: 0.2rem 0.6rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: #90ffa9;
+  font-size: 1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+  text-decoration: none;
+  transform-origin: right center;
+  transition:
+    color 160ms ease,
+    text-shadow 160ms ease,
+    transform 160ms ease;
+}
+.fragment-signal .fragment-signal-archive:is(:hover, :focus-visible) {
+  color: #e0ffe8;
+  text-decoration: none;
+  text-shadow: 0 0 10px #60ff8070;
+  transform: scale(1.06);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fragment-signal .fragment-signal-archive:is(:hover, :focus-visible) {
+    transform: none;
+  }
+}
+.fragment-signal .fragment-signal-entry:hover,
+.fragment-signal-trigger:hover {
+  color: #e0ffe8;
+  text-shadow: 0 0 8px #60ff8050;
+}
+.fragment-signal .fragment-signal-entry:is(:hover, :focus-visible) {
+  color: #e4ffec;
+  border-left-color: #b9ffd0;
+  background: linear-gradient(90deg, #60ff8030, #60ff8012);
+  box-shadow:
+    inset 0 0 0 1px #8effad55,
+    inset 0 0 22px #60ff8010;
+}
+.fragment-signal .fragment-signal-entry:is(:hover, :focus-visible) time,
+.fragment-signal .fragment-signal-entry:is(:hover, :focus-visible) .fragment-signal-index {
+  color: #b9ffd0;
+}
+@keyframes fragment-signal-glint {
+  to {
+    transform: translateX(120%);
+  }
+}
+@keyframes fragment-signal-scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  15%,
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fragment-signal *,
+  .fragment-signal *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.fragment-signal :is(a, button, summary):focus-visible {
+  outline: 1px solid #90ffa9;
+  outline-offset: 3px;
+}
+@media (max-width: 720px) {
+  .fragment-signal {
+    --fragment-signal-top: 132px;
+  }
+}

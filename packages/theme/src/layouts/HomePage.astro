@@ -1,6 +1,13 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import { fragmentsForLocale } from '../utils/fragments';
+import { fragmentPreview } from '../utils/fragment-preview';
 import FormattedDate from '../components/FormattedDate.astro';
+import FragmentSignal from '../components/FragmentSignal.astro';
+import fragmentAvatar from '../assets/theme/avatars/matrix-typist.gif?url';
+import fragmentAvatarStill from '../assets/theme/avatars/matrix-typist-still.png?url';
+import fragmentAvatarReaction from '../assets/theme/avatars/matrix-typist-hover-strip.png?url';
 import HomeWhiteRabbit from '../components/HomeWhiteRabbit.astro';
 import KeyButton from '../effects/key-button/KeyButton.astro';
 import BlinkCursor from '../effects/blink-cursor/BlinkCursor.astro';
@@ -27,9 +34,37 @@ const { locale, latestPosts, totalPosts = latestPosts.length } = Astro.props;
 const messages = getMessages(locale);
 const heroText = getSiteHero(locale) ?? messages.home.hero;
 const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
+const fragments = THEME.FRAGMENTS.enabled
+  ? fragmentsForLocale(await getCollection('fragments'), locale)
+  : [];
+const latestFragments: {
+  entry: CollectionEntry<'fragments'>;
+  preview: ReturnType<typeof fragmentPreview>;
+}[] = [];
+if (fragments.length) {
+  const container = await AstroContainer.create();
+  const feedURL = new URL(localePath(locale, '/fragments/'), Astro.url);
+  for (const entry of fragments.slice(0, 3)) {
+    const { Content } = await render(entry);
+    const html = await container.renderToString(Content);
+    latestFragments.push({ entry, preview: fragmentPreview(html, feedURL) });
+  }
+}
 ---
 
 <MatrixShell locale={locale} title={SITE_TITLE} description={pageDescription}>
+  <Fragment slot="head">
+    {
+      latestFragments.length > 0 && (
+        <link
+          rel="preload"
+          as="image"
+          href={fragmentAvatarReaction}
+          media="(prefers-reduced-motion: no-preference)"
+        />
+      )
+    }
+  </Fragment>
   <div slot="signal-monitor" class="home-signal-monitor">
     <div class="home-signal-viewport" data-door-label={messages.home.openDoor} inert></div>
     <div class="home-signal-code" aria-hidden="true">
@@ -113,6 +148,32 @@ const pageDescription = messages.siteDescription || SITE_DESCRIPTION;
       >
     </p>
   </section>
+  <Fragment slot="fragment-signal">
+    {
+      latestFragments.length > 0 && (
+        <FragmentSignal
+          totalCount={fragments.length}
+          avatar={{
+            src: fragmentAvatar,
+            stillSrc: fragmentAvatarStill,
+            reactionSrc: fragmentAvatarReaction,
+          }}
+          archiveHref={localePath(locale, '/fragments/')}
+          entries={latestFragments.map(({ entry, preview }) => ({
+            href: `${localePath(locale, '/fragments/')}#${entry.data.id}`,
+            date: entry.data.pubDate,
+            title: entry.data.title,
+            preview,
+          }))}
+          labels={{
+            title: messages.fragments.title,
+            close: messages.fragments.close,
+            all: messages.home.viewAll,
+          }}
+        />
+      )
+    }
+  </Fragment>
   {
     THEME.HOME.SHOW_TRACE && (
       <div class="home-terminal-status">

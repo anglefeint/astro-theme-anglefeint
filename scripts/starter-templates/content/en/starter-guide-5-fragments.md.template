@@ -4,7 +4,7 @@ title: 'User Guide 5: Publish Fragments'
 description: 'Publish brief thoughts as Markdown, with optional popup comments.'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-13'
 ---
 
 ## AI-readable content
@@ -110,3 +110,7 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment generates an eight-character Nano ID from case-sensitive letters and digits, checks existing Markdown IDs across languages and retries collisions. All languages from one invocation share the ID and timestamp. Fragment IDs must be exactly eight alphanumeric characters. Old UUID/long-ID entries are not supported: delete and repost them rather than expecting migration or old-link compatibility. Keep the new ID stable after publishing; changing it creates a new comment association.
+
+## Homepage Fragment previews (0.35.0+)
+
+In the current source, enabling `theme.fragments.enabled` also adds a pixel-avatar entrance below the homepage header when the current language has fragments. Open it to preview the latest three; each card opens its original fragment, and the bottom count/arrow opens the full feed. The count means previews / total fragments in this language. Images and code have bounded previews; overflow is clipped. Empty or disabled feeds omit the entrance. No new configuration is needed. Requires theme 0.35.0 or later.

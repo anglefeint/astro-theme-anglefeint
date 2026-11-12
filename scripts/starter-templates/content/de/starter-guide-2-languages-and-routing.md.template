@@ -36,7 +36,7 @@ title, description und pubDate sind Pflicht. subtitle, updatedDate und author si
 
 Nach einer inhaltlichen Änderung `updatedDate` auf das tatsächliche Aktualisierungsdatum setzen. Die Sitemap nutzt `updatedDate`, ersatzweise `pubDate`, nicht bei jedem Build ein neues Datum. Das garantiert keine Indexierung.
 
-heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Bei vorhandenen Dateien in src/assets/blog/default-covers/ wählt der Befehl zufällig ein Titelbild. Bilder werden nicht heruntergeladen. Lesezeit und Metriken sind Schätzungen. readMinutes, wordCount, tokenCount, aiLatencyMs und aiConfidence können sie überschreiben; es wird kein KI-Dienst verbunden.
+heroImage: ./cover.jpg nutzt ein Bild neben dem Beitrag. Bei vorhandenen Dateien in src/assets/blog/default-covers/ wählt der Befehl zufällig ein Titelbild. Bilder werden nicht heruntergeladen. Wörter und Tokens werden geschätzt; wordCount und tokenCount überschreiben sie einzeln. Artikel zeigen keine Lesezeit, Latenz oder Konfidenz. Alte Felder dürfen erhalten bleiben; es wird kein KI-Dienst verbunden.
 
 ## Inhaltsverzeichnis und Tags
 

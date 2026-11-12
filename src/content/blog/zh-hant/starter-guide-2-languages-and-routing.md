@@ -36,7 +36,7 @@ title、description、pubDate 必填；subtitle、updatedDate、author 選填，
 
 實質修改文章後，將 `updatedDate` 設為真實更新日期。sitemap 優先使用 `updatedDate`，未填時使用 `pubDate`，不會在每次建置時製造新日期；日期不保證搜尋引擎收錄。
 
-heroImage: ./cover.jpg 使用文章旁的圖片。若 src/assets/blog/default-covers/ 有圖片，指令會隨機選擇封面，不會下載圖片。閱讀時間與其他指標都是估計值，可用 readMinutes、wordCount、tokenCount、aiLatencyMs、aiConfidence 覆寫；這些資料不代表連接了真實 AI 服務。
+heroImage: ./cover.jpg 使用文章旁的圖片。若 src/assets/blog/default-covers/ 有圖片，指令會隨機選擇封面，不會下載圖片。字詞數與 tokens 都是估計值，可用 wordCount、tokenCount 分別覆寫。文章頁不再顯示閱讀時間、延遲或信心程度；舊文章的相關欄位可以保留，這些資料不代表連接了真實 AI 服務。
 
 ## 目錄與標籤
 

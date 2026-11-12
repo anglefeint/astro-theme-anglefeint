@@ -19,10 +19,14 @@ const { locale, title, description } = Astro.props as Props;
   bodyClass="page-home"
   mainClass="page-main home-content"
 >
-  <link slot="head" rel="stylesheet" href={homePageCssUrl} />
+  <Fragment slot="head">
+    <link rel="stylesheet" href={homePageCssUrl} />
+    <slot name="head" />
+  </Fragment>
   <canvas slot="body-start" id="matrix-bg" aria-hidden="true"></canvas>
   <Fragment slot="body-end">
     <slot name="signal-monitor" />
+    <slot name="fragment-signal" />
     <script>
       import { initHomeEffects } from '../../scripts/home-effects.js';
       initHomeEffects();

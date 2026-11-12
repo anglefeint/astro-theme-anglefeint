@@ -47,9 +47,9 @@ tags: ['astro', 'notes']
 
 Set `updatedDate` to the real date of a substantive article update. The sitemap uses `updatedDate`, falling back to `pubDate`; it does not invent a new date on every build. Dates do not guarantee search-engine indexing.
 
-For a cover, use `heroImage: ./cover.jpg` with the image beside the post, or keep the local cover path assigned by the creation command. Automatic assignment happens only when images exist in `src/assets/blog/default-covers/`; no image is downloaded. `heroImage` is optional. Reading time and related content metrics are calculated automatically, so ordinary posts need no manual values.
+For a cover, use `heroImage: ./cover.jpg` with the image beside the post, or keep the local cover path assigned by the creation command. Automatic assignment happens only when images exist in `src/assets/blog/default-covers/`; no image is downloaded. `heroImage` is optional. Word and token counts are calculated automatically, so ordinary posts need no manual values.
 
-These are estimates, not measurements from an AI service. Frontmatter values for `readMinutes`, `wordCount`, `tokenCount`, `aiLatencyMs`, and `aiConfidence` override the calculated values; omit them to use estimates. Some demonstration posts deliberately contain fixed values.
+These are estimates, not measurements from an AI service. Frontmatter `wordCount` and `tokenCount` override the counts independently. Article pages do not display reading time, latency or confidence; existing fields for these values can remain in older posts.
 
 ## 3. Generate a table of contents with headings
 

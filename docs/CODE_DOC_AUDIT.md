@@ -12,6 +12,43 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-13 Homepage Fragments, avatar archives and article presentation (local)
+
+### Review boundary and routing
+
+按用户要求完整执行文档工作流。源码基线为 `b6c303a`，审查 `b6c303a..81c3764` 四次素材归档提交，以及本次工作区全部已跟踪和未跟踪改动。初始输入共 224 个路径，不以最后一个提交或空暂存区代替完整范围。未把忽略的生成草稿和验收日志当作维护文档。
+
+`suggest:docs` 首次经 npm 传入全部路径触发 Windows 命令行长度限制，未成功完成。随后每批 35 个路径直接调用同一个 `scripts/suggest-doc-updates.mjs`，七批全部成功；JSON 结果合并后直接候选 107 份，传播后没有额外的独有候选，元数据错误为零。宽泛 package/visual/docs 域命中了历史发布记录，不代表这些记录应重写。初始输入、各批输出及候选合并结果保存在忽略的 `acceptance-results/doc-sync-1113-*`；它们是本地过程证据，不是发布凭证。
+
+### Code-first findings and document dispositions
+
+| 核对链路                                                                                 | 当前代码事实                                                                                                                                  | 文档处理                                                                                                                       |
+| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Article schema → metrics → article route → BlogPost → prose CSS                          | 字数/tokens 独立覆盖；旧阅读时长/latency/confidence 字段仍接受，标准页面不显示；正文、标题和面板不再透明度入场或呼吸缩放                      | 同步九语 README、npm README、九语 Guide 2 demo/template；架构说明兼容边界，视觉说明背景网络/标题光带仍保留                     |
+| fragments switch → locale sort → latest three → Astro render/container → preview utility | 沿用既有开关；关闭或当前语言为空时无入口；构建时只渲染三条；提取文本/首张有效图片/首个代码块，保留代码缩进并限长                              | 补九语 README 与九语 Guide 5 demo/template 的未发布说明；架构增加源码/测试映射；完整 feed 与首页裁切明确区分                   |
+| FragmentSignal → disclosure/controller → CSS                                             | 原生 details/summary；展开层自然覆盖入口；无顶部标题/描述/假信号条/每卡箭头；数量和归档箭头共用单个链接；关闭、焦点、头部边界与播放器状态独立 | 更新视觉事实和架构职责，记录等高预览、整卡反馈、对角 L 边框及关闭按钮位置；未给截图外观作验收结论                              |
+| Avatar assets → eager decode → reversible Web Animation → cleanup                        | 默认原朝向 GIF；预加载 PNG strip，正向停在眼笑，退出从当前帧倒放，再恢复敲键盘；快速重入续播；减少动效使用静态图                              | 修正 hover 归档 README 中“每次从头播放、离开直接恢复”的过时描述；原图、镜像、正反 GIF 与帧完整保留；分清归档导出和运行时 strip |
+| Package files/exports → starter manifest → guide overrides                               | 新运行时组件/脚本/样式/素材落在现有包文件模式内；Guide 2/5 已受 manifest 管理；素材源归档和新 demo 碎片不进入消费者 starter                   | 不扩展 manifest、不复制包实现；UPGRADING 和架构写明无配置/内容迁移、个人教程不被升级覆盖                                       |
+| Demo content → manifest → localized feed                                                 | 中英各新增 24 条，分别共 37 条，默认 20+17 分页；其他语言未新增；本地图像与代码等边界样例                                                     | 维护 FRAGMENT_DEMO_CASES 清单/JSON，明确是人工验看素材，不是已完成浏览器验收                                                   |
+| Full feed route CSS / home list selector scope                                           | 相邻 feed 卡间隔为 1.3rem；完整正文自然高度；首页终端列表箭头只作用于 main，不再泄漏到音乐目录                                                | VISUAL_SYSTEMS 同步局部布局事实，无新增播放器逻辑或配置                                                                        |
+
+同步 CHANGELOG 的 Unreleased 与 UPGRADING 的 Pending，明确本轮运行时尚未包含在已发布的 0.34.0 中；四次素材提交不等同于 npm 发布或 starter 交付。本次文档工作不升版本、不提交、不推送、不发布，也不改变运行时代码来迁就说明。
+
+其余候选按职责核对后保持不变：
+
+- `AGENTS.md`、`CLAUDE.md`、`.cursor/rules/00-repo.mdc`、AI/文档/元数据/验证工作流及 CONTRIBUTING：执行规则、命令与同意边界没有变化。
+- BRANCH_POLICY、MAINTAINER_WORKFLOW、PACKAGE_RELEASE、PACKAGING_WORKFLOW、RELEASE_TOOLS、TEMPLATE_ACCEPTANCE：分支、打包、升级保护和发布工具协议没有变化；本轮不是交付，不能补造发布结果。
+- REUSABLE_EFFECTS：没有新增 `effects/*` API 或迁移原有视觉实现；新独立组件仍属 package components/scripts。
+- `anglefeint.md`、ASTRO_THEME_LISTING、THEME_SUBMISSION_CHECKLIST：现有产品定位、投稿和配置说明未与本轮代码冲突，无需重复新组件细节。
+- `docs/releases/**`：保持各版本的实际历史事实及索引，未发布改动只记入 Unreleased/Pending。
+- 另外三份头像归档 README：素材用途、方向、导出与分发归属仍准确，仅 hover 原归档的现行播放说明需要纠正。其他用户教程/翻译没有配置、命令或路由变化，不做全文 demo 遍历；本次仅同步受影响的 Guide 2/5 源文件与分发来源。
+
+### Validation boundary
+
+本轮只执行文档元数据、格式、受影响的本地链接及 Guide 2/5 来源对应检查。此前功能迭代运行过的针对性单元/静态渲染、Astro 诊断和项目构建保留为此前证据，不冒充本轮重新执行。文档修正不需要再次构建。浏览器、截图/视觉测量、线上 demo/Giscus/Cloudflare、全量单元和安装矩阵均未运行；视觉回归仍由用户负责。
+
+最终检查通过：`check:docs` 扫描 107 份维护文档；全仓 `format:check` 通过（首次发现两份新增表格格式问题，修正后完整重跑通过）；20 份受影响非内容文档的本地引用有效；Guide 2/5 共 18 组 demo/template 正文一致，45 个本地引用可由源码或既有 dist 解析，未请求远程地址。八个代表性运行时文件均命中现有 package files 模式，18 个教程的 manifest 来源映射有效，新 demo/归档排除边界不变。最终再次运行建议工具仍为 107 个直接候选、零额外传播和零元数据错误，`git diff --check` 通过。上述检查证明文档结构和已核对内容一致，不代表视觉或在线服务验收。
+
 ## 2026-11-12 Public About/Fragments machine-readable coverage (local)
 
 Code-first chain: explicit About/feed markers → machine/content.mjs adapters → existing machine/generate.mjs owner manifest/index/bundle/discovery pipeline. Public feed pages merge by localized feed root and stable ID; no detail routes or comment identity changes. About reads public DOM plus only the reachable AI popup from its existing runtime JSON; terminal entries, tool/configuration panels and comments never enter output. Website/article JSON-LD receives configured language; About emits AboutPage. No new client loop, CSS, UI dependency, server or configuration is added.

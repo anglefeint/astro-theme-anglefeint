@@ -469,7 +469,7 @@ body.page-home .home-wordmark {
   --startup-cursor-color: var(--matrix-green);
 }
 body.page-home p,
-body.page-home li {
+body.page-home main li {
   color: rgba(220, 255, 228, 0.88);
   text-shadow: 0 0 10px rgba(96, 255, 128, 0.08);
 }
@@ -480,12 +480,12 @@ body.page-home ul {
   margin-left: 0;
 }
 
-body.page-home li {
+body.page-home main li {
   position: relative;
   padding-left: 1.1rem;
 }
 
-body.page-home li::before {
+body.page-home main li::before {
   content: '>';
   position: absolute;
   left: 0;

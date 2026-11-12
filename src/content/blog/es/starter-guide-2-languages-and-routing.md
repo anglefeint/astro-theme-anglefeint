@@ -47,9 +47,9 @@ tags: ['astro', 'notes']
 
 Tras una modificación sustancial, indica la fecha real en `updatedDate`. El sitemap usa `updatedDate` o, si falta, `pubDate`; no inventa una fecha en cada build. Las fechas no garantizan la indexación.
 
-Para la portada, usa `heroImage: ./cover.jpg` y coloca el archivo junto al artículo, o conserva la ruta local asignada por el comando de creación. La asignación automática solo ocurre si hay imágenes en `src/assets/blog/default-covers/`; no descarga imágenes. `heroImage` es opcional. El tiempo de lectura y otras métricas del contenido se calculan automáticamente, por lo que normalmente no necesitan valores manuales.
+Para la portada, usa `heroImage: ./cover.jpg` y coloca el archivo junto al artículo, o conserva la ruta local asignada por el comando de creación. La asignación automática solo ocurre si hay imágenes en `src/assets/blog/default-covers/`; no descarga imágenes. `heroImage` es opcional. Las palabras y los tokens se calculan automáticamente, por lo que normalmente no necesitan valores manuales.
 
-Son estimaciones, no mediciones obtenidas de un servicio de IA. Los valores de frontmatter `readMinutes`, `wordCount`, `tokenCount`, `aiLatencyMs` y `aiConfidence` tienen prioridad sobre el cálculo automático; omítelos para usar estimaciones. Algunos artículos de demostración contienen valores fijos como ejemplo visual.
+Las palabras y los tokens son estimaciones, no mediciones de un servicio de IA. `wordCount` y `tokenCount` en frontmatter sobrescriben cada recuento por separado. Los artículos no muestran tiempo de lectura, latencia ni confianza; los campos antiguos pueden conservarse.
 
 ## 3. Genera el índice con encabezados
 

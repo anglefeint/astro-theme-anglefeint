@@ -281,7 +281,7 @@ The 0.27+ integration starter wires the Markdown processor automatically. Only p
 
 The matching starter builds static files into `dist/`. Upload its contents to a static server that serves directory `index.html` files; Cloudflare and a production Node.js process are not required. Set the public site URL before building. Optional GA4, comments and remote audio still contact their respective services.
 
-The starter estimates words from source text and defaults tokens to `round(max(words, 1) × 1.3)`. These are neither random values nor actual AI usage. Frontmatter `wordCount`, `tokenCount` and `readMinutes` override their values independently. Formula and MDX source can affect estimates. See the repository [article statistics reference](../../docs/ARCHITECTURE.md#article-statistics) for the exact rules and display limitations.
+The starter estimates words from source text and defaults tokens to `round(max(words, 1) × 1.3)`. These are neither random values nor actual AI usage. Frontmatter `wordCount` and `tokenCount` override their values independently. Formula and MDX source can affect estimates. See the repository [article statistics reference](../../docs/ARCHITECTURE.md#article-statistics) for the exact rules and display limitations.
 
 ### Optional machine-readable context
 
@@ -298,3 +298,9 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment generates an eight-character Nano ID from case-sensitive letters and digits, checks existing Markdown IDs across languages and retries collisions. All languages from one invocation share the ID and timestamp. Fragment IDs must be exactly eight alphanumeric characters. Old UUID/long-ID entries are not supported: delete and repost them rather than expecting migration or old-link compatibility. Keep the new ID stable after publishing; changing it creates a new comment association.
+
+## Homepage Fragment previews (0.35.0+)
+
+In the current source, enabling `theme.fragments.enabled` also adds a pixel-avatar entrance below the homepage header when the current language has fragments. Open it to preview the latest three; each card opens its original fragment, and the bottom count/arrow opens the full feed. The count means previews / total fragments in this language. Images and code have bounded previews; overflow is clipped. Empty or disabled feeds omit the entrance. No new configuration is needed. Requires theme 0.35.0 or later.
+
+Article OUTPUT keeps words, tokens and the optional model label. Reading time, latency and confidence are no longer displayed, even when supplied in frontmatter; old fields remain accepted. The article text and its panel appear immediately and remain stationary; the background network and title light band remain.

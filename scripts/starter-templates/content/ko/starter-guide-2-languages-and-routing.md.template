@@ -47,9 +47,9 @@ tags: ['astro', 'notes']
 
 글을 실질적으로 수정하면 `updatedDate`에 실제 수정 날짜를 넣으세요. sitemap은 `updatedDate`, 없으면 `pubDate`를 사용하며 빌드할 때마다 새 날짜를 만들지 않습니다. 날짜가 검색 엔진 색인을 보장하지는 않습니다.
 
-표지는 글 옆에 이미지를 놓고 `heroImage: ./cover.jpg`로 지정하거나 생성 명령이 배정한 로컬 경로를 유지합니다. 자동 배정은 `src/assets/blog/default-covers/`에 이미지가 있을 때만 작동하며 이미지를 다운로드하지 않습니다. `heroImage`는 생략할 수 있습니다. 읽기 시간과 글자 수 등의 지표는 자동 계산하므로 일반 글에서는 직접 입력할 필요가 없습니다.
+표지는 글 옆에 이미지를 놓고 `heroImage: ./cover.jpg`로 지정하거나 생성 명령이 배정한 로컬 경로를 유지합니다. 자동 배정은 `src/assets/blog/default-covers/`에 이미지가 있을 때만 작동하며 이미지를 다운로드하지 않습니다. `heroImage`는 생략할 수 있습니다. 단어 수와 tokens는 자동 계산하므로 일반 글에서는 직접 입력할 필요가 없습니다.
 
-이 값은 추정치이며 AI 서비스에서 측정한 데이터가 아닙니다. frontmatter의 `readMinutes`, `wordCount`, `tokenCount`, `aiLatencyMs`, `aiConfidence` 값이 자동 계산보다 우선하며, 생략하면 추정치를 사용합니다. 일부 데모 글에는 표시 예시를 위한 고정값이 있습니다.
+단어 수와 tokens는 추정치이며 AI 서비스에서 측정한 데이터가 아닙니다. frontmatter의 `wordCount`와 `tokenCount`로 각각 덮어쓸 수 있습니다. 글 페이지에는 읽기 시간, 지연 시간, 신뢰도를 표시하지 않습니다. 기존 글의 관련 필드는 그대로 두어도 됩니다.
 
 ## 3. 제목으로 목차 생성하기
 

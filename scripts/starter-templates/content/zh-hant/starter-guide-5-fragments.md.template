@@ -4,7 +4,7 @@ title: '使用者指南 5：發布碎片'
 description: '以 Markdown 記錄簡短感想，可選彈窗留言。'
 pubDate: '2026-11-11'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-13'
 ---
 
 ## 支援 AI 閱讀的內容
@@ -110,3 +110,7 @@ export const THEME_CONFIG = defineThemeConfig({
 ```
 
 new-fragment 使用區分大小寫的字母與數字產生 8 位 Nano ID，檢查各語言既有 Markdown ID，衝突時重試。同一次命令的所有語言共用 ID 與發佈時間。Fragment 僅接受恰好 8 位英數字 ID，不相容舊 UUID 或長 ID；舊內容請刪除後重新發佈，不提供遷移或舊連結相容。新內容發佈後請保留 ID，修改會改變留言關聯。
+
+## 首頁 Fragment 預覽（0.35.0+）
+
+目前原始碼中，啟用 `theme.fragments.enabled` 且目前語言有碎片時，首頁 header 下方會顯示像素頭像入口。展開後預覽最近三則；整張卡片連到原碎片，底部數量與箭頭連到完整列表。數量代表目前語言的預覽則數 / 總則數。圖片與程式碼採限高預覽，超出部分裁切；停用或沒有內容時不顯示入口。不需新增設定。需要主題 0.35.0 或更新版本。

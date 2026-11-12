@@ -47,9 +47,9 @@ tags: ['astro', 'notes']
 
 实质修改文章后，将 `updatedDate` 设为真实更新日期。sitemap 优先使用 `updatedDate`，未填写时使用 `pubDate`，不会在每次构建时制造新日期；日期不保证搜索引擎收录。
 
-封面用 `heroImage: ./cover.jpg`，文件放在文章旁边；也可以保留新建命令分配的本地封面路径。命令只在 `src/assets/blog/default-covers/` 有图片时自动分配封面，不会下载图片。`heroImage` 可省略。阅读时长和字数等指标已有自动计算，普通文章不用手工填写。
+封面用 `heroImage: ./cover.jpg`，文件放在文章旁边；也可以保留新建命令分配的本地封面路径。命令只在 `src/assets/blog/default-covers/` 有图片时自动分配封面，不会下载图片。`heroImage` 可省略。字词数和 tokens 已有自动计算，普通文章不用手工填写。
 
-这些是估算值，不是连接 AI 服务后测得的数据。frontmatter 中的 `readMinutes`、`wordCount`、`tokenCount`、`aiLatencyMs`、`aiConfidence` 会优先于自动计算；不填写就使用估算值。部分演示文章为了展示效果填有固定值。
+这些是估算值，不是连接 AI 服务后测得的数据。frontmatter 中的 `wordCount`、`tokenCount` 分别覆盖对应统计。文章页不再显示阅读时长、延迟或置信度；旧文章中的相关字段可以保留。
 
 ## 3. 用标题自动生成目录
 

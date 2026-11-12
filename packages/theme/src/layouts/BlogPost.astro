@@ -37,8 +37,6 @@ type Props = CollectionEntry<'blog'>['data'] & {
   headings?: MarkdownHeading[];
   localeHrefs?: Partial<Record<Locale, string>>;
   seoLocaleHrefs?: Partial<Record<Locale, string>>;
-  aiLatencyEstimated?: boolean;
-  aiConfidenceEstimated?: boolean;
 };
 
 const {
@@ -50,14 +48,9 @@ const {
   heroImage,
   ogImage,
   context,
-  readMinutes,
   aiModel,
   aiMode,
   aiState,
-  aiLatencyMs,
-  aiLatencyEstimated = false,
-  aiConfidence,
-  aiConfidenceEstimated = false,
   wordCount,
   tokenCount,
   author,
@@ -104,9 +97,7 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
 const compact = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n));
 const contextText = context ?? description;
 const hasSystemMeta = Boolean(aiModel || aiMode || aiState);
-const hasResponseMeta = aiLatencyMs !== undefined || aiConfidence !== undefined;
 const hasStats = aiModel || wordCount !== undefined || tokenCount !== undefined;
-const confidenceText = aiConfidence !== undefined ? aiConfidence.toFixed(2) : undefined;
 const enableRedQueen = THEME.EFFECTS.ENABLE_RED_QUEEN;
 const comments = articleComments(THEME.COMMENTS, articleSlug);
 const normalizedCommentTerm = comments.TERM.trim();
@@ -206,14 +197,6 @@ const hasCommentsConfig = Boolean(
               </>
             )
           }
-          {
-            readMinutes !== undefined && (
-              <>
-                {' '}
-                | ~{readMinutes} {messages.blog.metaReadMinutes}
-              </>
-            )
-          }
         </div>
         {
           hasSystemMeta && (
@@ -302,7 +285,7 @@ const hasCommentsConfig = Boolean(
           <div class="ai-response-avatar" aria-hidden="true"></div>
           <span class="ai-response-label">{messages.blog.responseOutput}</span>
           {
-            (hasResponseMeta || hasStats) && (
+            hasStats && (
               <div class="ai-response-meta">
                 {aiModel && (
                   <span class="ai-model-id">
@@ -317,18 +300,6 @@ const hasCommentsConfig = Boolean(
                 {tokenCount !== undefined && (
                   <span>
                     {messages.blog.statsTokens} <strong>{compact(tokenCount)}</strong>
-                  </span>
-                )}
-                {aiLatencyMs !== undefined && (
-                  <span>
-                    {messages.blog.latencyLabel}{' '}
-                    <strong>{aiLatencyEstimated ? `~${aiLatencyMs}` : aiLatencyMs} ms</strong>
-                  </span>
-                )}
-                {confidenceText !== undefined && (
-                  <span>
-                    {messages.blog.confidenceLabel}{' '}
-                    <strong>{aiConfidenceEstimated ? `~${confidenceText}` : confidenceText}</strong>
                   </span>
                 )}
               </div>

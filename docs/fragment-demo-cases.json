@@ -1,0 +1,247 @@
+{
+  "locales": ["zh", "en"],
+  "cases": [
+    {
+      "number": 1,
+      "id": "Wkig4mJ0",
+      "filename": "edge-01-image-only.md",
+      "timestamp": "2026-11-12T18:10:59.000Z",
+      "title": {
+        "zh": "无说明图片",
+        "en": "Image only, no alt text"
+      }
+    },
+    {
+      "number": 2,
+      "id": "xpZn3yIu",
+      "filename": "edge-02-code-only.md",
+      "timestamp": "2026-11-12T18:09:59.000Z",
+      "title": {
+        "zh": "纯代码与缩进",
+        "en": "Code only, with indentation"
+      }
+    },
+    {
+      "number": 3,
+      "id": "pJ4FPf5l",
+      "filename": "edge-03-mixed.md",
+      "timestamp": "2026-11-12T18:08:59.000Z",
+      "title": {
+        "zh": "文字、图片和代码",
+        "en": "Text, image and code"
+      }
+    },
+    {
+      "number": 4,
+      "id": "hBB5WHXT",
+      "filename": "edge-04-image-alt.md",
+      "timestamp": "2026-11-12T18:07:59.000Z",
+      "title": {
+        "zh": "带说明文字的图片",
+        "en": "Image with descriptive alt text"
+      }
+    },
+    {
+      "number": 5,
+      "id": "2xotX9gB",
+      "filename": "edge-05-local-image.md",
+      "timestamp": "2026-11-12T18:06:59.000Z",
+      "title": {
+        "zh": "文章目录外的本地图片",
+        "en": "Local Markdown asset"
+      }
+    },
+    {
+      "number": 6,
+      "id": "1mm1Y5Rd",
+      "filename": "edge-06-reference-image.md",
+      "timestamp": "2026-11-12T18:05:59.000Z",
+      "title": {
+        "zh": "引用式图片",
+        "en": "Reference-style image"
+      }
+    },
+    {
+      "number": 7,
+      "id": "YJes9cJp",
+      "filename": "edge-07-html-image.md",
+      "timestamp": "2026-11-12T18:04:59.000Z",
+      "title": {
+        "zh": "HTML 图片",
+        "en": "Raw HTML image"
+      }
+    },
+    {
+      "number": 8,
+      "id": "MtwRQj7A",
+      "filename": "edge-08-portrait-image.md",
+      "timestamp": "2026-11-12T18:03:59.000Z",
+      "title": {
+        "zh": "很高的竖图",
+        "en": "Very tall portrait image"
+      }
+    },
+    {
+      "number": 9,
+      "id": "rs2uYZYd",
+      "filename": "edge-09-panorama-image.md",
+      "timestamp": "2026-11-12T18:02:59.000Z",
+      "title": {
+        "zh": "很宽的横图",
+        "en": "Very wide panorama"
+      }
+    },
+    {
+      "number": 10,
+      "id": "YOC2u7Pf",
+      "filename": "edge-10-multiple-images.md",
+      "timestamp": "2026-11-12T18:01:59.000Z",
+      "title": {
+        "zh": "同一条里的三张图片",
+        "en": "Three images in one note"
+      }
+    },
+    {
+      "number": 11,
+      "id": "SulBpH9Q",
+      "filename": "edge-11-inline-code.md",
+      "timestamp": "2026-11-12T18:00:59.000Z",
+      "title": {
+        "zh": "行内代码与普通文字",
+        "en": "Inline code and prose"
+      }
+    },
+    {
+      "number": 12,
+      "id": "6PwXkBws",
+      "filename": "edge-12-html-code.md",
+      "timestamp": "2026-11-12T17:59:59.000Z",
+      "title": {
+        "zh": "HTML 代码块",
+        "en": "Raw HTML code block"
+      }
+    },
+    {
+      "number": 13,
+      "id": "7o2DpV8P",
+      "filename": "edge-13-shell-code.md",
+      "timestamp": "2026-11-12T17:58:59.000Z",
+      "title": {
+        "zh": "Shell 与反斜杠",
+        "en": "Shell and backslashes"
+      }
+    },
+    {
+      "number": 14,
+      "id": "4f1Ze0Bw",
+      "filename": "edge-14-long-code-line.md",
+      "timestamp": "2026-11-12T17:57:59.000Z",
+      "title": {
+        "zh": "没有空格的一整行代码",
+        "en": "One very long code line"
+      }
+    },
+    {
+      "number": 15,
+      "id": "0jT4ww3w",
+      "filename": "edge-15-many-code-lines.md",
+      "timestamp": "2026-11-12T17:56:59.000Z",
+      "title": {
+        "zh": "二十八行代码",
+        "en": "Twenty-eight code lines"
+      }
+    },
+    {
+      "number": 16,
+      "id": "DcEbdUAs",
+      "filename": "edge-16-escaped-code.md",
+      "timestamp": "2026-11-12T17:55:59.000Z",
+      "title": {
+        "zh": "看起来像 HTML 的代码文本",
+        "en": "HTML-looking code as text"
+      }
+    },
+    {
+      "number": 17,
+      "id": "fUOtZMdb",
+      "filename": "edge-17-unicode.md",
+      "timestamp": "2026-11-12T17:54:59.000Z",
+      "title": {
+        "zh": "中英混排、表情和组合字符",
+        "en": "CJK, emoji and combining characters"
+      }
+    },
+    {
+      "number": 18,
+      "id": "AJw3KdLq",
+      "filename": "edge-18-long-url.md",
+      "timestamp": "2026-11-12T17:53:59.000Z",
+      "title": {
+        "zh": "长链接与长标记",
+        "en": "Long URLs and unbroken tokens"
+      }
+    },
+    {
+      "number": 19,
+      "id": "h0nm1mFe",
+      "filename": "edge-19-quote-links.md",
+      "timestamp": "2026-11-12T17:52:59.000Z",
+      "title": {
+        "zh": "引用、强调和链接",
+        "en": "Quote, emphasis and links"
+      }
+    },
+    {
+      "number": 20,
+      "id": "Y4bP1pA2",
+      "filename": "edge-20-nested-list.md",
+      "timestamp": "2026-11-12T17:51:59.000Z",
+      "title": {
+        "zh": "嵌套列表",
+        "en": "Nested lists"
+      }
+    },
+    {
+      "number": 21,
+      "id": "fTcsGkig",
+      "filename": "edge-21-table.md",
+      "timestamp": "2026-11-12T17:50:59.000Z",
+      "title": {
+        "zh": "小表格",
+        "en": "A small table"
+      }
+    },
+    {
+      "number": 22,
+      "id": "5LgVi9W6",
+      "filename": "edge-22-long-title.md",
+      "timestamp": "2026-11-12T17:49:59.000Z",
+      "title": {
+        "zh": "长标题边界：一段还没有写完但想先记录下来的想法，一段还没有写完但想先记录下来的想法，一段还没有写完但想先记录下来的想法，一段还没有写完但想先记录下来的想法，一段还没有写完但想先记录下来的想法，一段还没有写完但想先记录下来的想法，一段还没有写完但想先记录下来的想法，一段还没有写完但想先记录下来的想法，",
+        "en": "Long title edge: a thought worth keeping before it becomes a complete essay, a thought worth keeping before it becomes a complete essay, a thought worth keeping before it becomes a complete essay, a thought worth keeping before it becomes a complete essay, a thought worth keeping before it becomes a complete essay, a thought worth keeping before it becomes a complete essay, a thought worth keeping before it becomes a complete essay, "
+      }
+    },
+    {
+      "number": 23,
+      "id": "B0qJrJgS",
+      "filename": "edge-23-minimal.md",
+      "timestamp": "2026-11-12T17:48:59.000Z",
+      "title": {
+        "zh": null,
+        "en": null
+      }
+    },
+    {
+      "number": 24,
+      "id": "raJ0dHdx",
+      "filename": "edge-24-same-time.md",
+      "timestamp": "2026-11-12T17:48:59.000Z",
+      "title": {
+        "zh": "同一时间的另一条记录",
+        "en": "Another note at the same timestamp"
+      }
+    }
+  ],
+  "mediaRoot": "/images/fragment-demo-edge/",
+  "purpose": "Manual review of homepage previews, full fragment feed and cross-page share links."
+}
