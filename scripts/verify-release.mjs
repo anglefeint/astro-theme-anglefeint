@@ -97,7 +97,7 @@ async function main(argv) {
       })
     );
     console.log(
-      `Verified @anglefeint/astro-theme@${options.version}; no package was published. Follow the remaining starter/remote/tag/announcement gates.`
+      `Verified @anglefeint/astro-theme@${options.version}; no package was published. Complete selected technical checks, starter delivery and tag/announcement. Demo regression belongs to the user; do not launch browser or hosting checks.`
     );
   } finally {
     try {
