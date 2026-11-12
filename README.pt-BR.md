@@ -195,7 +195,9 @@ Em telas de 1440px ou mais, o terminal inferior direito mostra `Knock, knock.`. 
 
 ## Conteúdo legível por IA
 
-O starter correspondente gera automaticamente `/llms.txt`, índices e arquivos de texto completo por idioma e versões Markdown dos artigos durante `npm run build`. Não é necessária configuração extra: publique todo o conteúdo de `dist/` como de costume. Os arquivos ficam disponíveis após o build e no preview. Para projetos existentes, veja [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+O build inclui artigos públicos, Fragments e About habilitados em `/llms.txt`, índices e textos completos por idioma. As URLs Markdown dos artigos não mudam. Cada idioma tem `/pt-br/fragments/index.md` e `/pt-br/about/index.md` (substitua o idioma). Fragments reúne todas as páginas públicas, preservando ID, data, corpo e links estáveis `/<locale>/fragments/#ID`. O HTML anuncia o Markdown. Disponível após `npm run build` e no preview; publique todo `dist/`.
+
+About exporta a biografia pública, contatos e o painel de texto AI acessível; exclui configurações do terminal, ferramentas e decoração. Não exporta comentários. Páginas/idiomas desativados, conteúdo removido, noindex e canonical externos são excluídos; reconstruir limpa arquivos gerados e links obsoletos. Arquivos do usuário são protegidos e conflitos interrompem o build. Suplementos do site/idioma valem para todos os documentos. JSON-LD inclui o idioma; About usa AboutPage. Sem nova configuração, servidor ou biblioteca UI, nem garantia de indexação ou citação por IA.
 
 As opções `aiReadableContent.notes` (Markdown) e `aiReadableContent.links` (`{ label, href }[]`) em `src/site.config.ts` acrescentam contexto aos índices, coletâneas e artigos Markdown. Cada campo pode ser substituído em `i18n.locales.<code>.aiReadableContent`: campos omitidos herdam o valor global; `notes: ''` / `links: []` os ocultam. [Detalhes](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 

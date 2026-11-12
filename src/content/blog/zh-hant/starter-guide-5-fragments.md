@@ -7,6 +7,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-12'
 ---
 
+## 支援 AI 閱讀的內容
+
+建置會將公開文章、已啟用的 Fragments 和 About 頁面納入 `/llms.txt`、語言索引與全文合集。文章 Markdown 網址維持不變；各語言另有 `/zh-hant/fragments/index.md` 和 `/zh-hant/about/index.md`（依實際語言替換）。Fragments 檔案合併所有公開分頁，保留每則 ID、發布時間、正文及穩定的 `/<locale>/fragments/#ID` 連結。HTML 頁面提供對應 Markdown 的探索連結。檔案在 `npm run build` 後及 preview 中可用，部署整個 `dist/` 即可。
+
+About 匯出公開簡介、聯絡連結及可開啟的 AI 文字彈窗，排除終端設定、工具與裝飾介面；不匯出留言。停用的頁面／語言、已刪除內容、noindex 頁面與站外 canonical 頁面不匯出；重新建置會清除過期產物與探索連結，保護使用者自有檔案，遇到衝突時停止建置。網站／語言補充說明適用所有匯出文件。JSON-LD 包含頁面語言，About 使用 AboutPage。不需新增設定、伺服器或 UI 依賴，也不保證 AI 收錄或引用。
+
 從 0.33.2 起，Fragments 共用文章頁的返回頂部按鈕：捲動後顯示，並遵循減少動態效果偏好，無需額外設定。
 
 既有部落格請先升級至主題 0.29.0 或更新版本：
@@ -73,7 +79,7 @@ theme: {
 
 碎片固定使用 specific、嚴格比對及 `fragment/<id>`，忽略文章 mapping、term、number、shareAcrossLocales、lang。介面隨頁面語言；相同 ID 的翻譯共用留言與表情，文章討論不變。首次點擊才載入留言客戶端。關閉只隱藏彈窗，再次開啟或切換碎片時共用同一個留言實例。
 
-靜態發布：修改 Markdown 後重新建置部署，沒有線上發文後台。碎片不加入文章搜尋、RSS 或文章 Markdown 匯出。圖片可放 `public/images/`，以 `/images/...` 引用。
+碎片仍獨立於文章搜尋和 RSS，但建置時會產生自己的 AI 可讀 Markdown 匯出。圖片可放在 `public/images/`，以 `/images/...` 引用。
 
 先升級至主題 0.29.0 或更新版本，再主動開啟。保留個人內容、設定、音樂及圖片；個人教程不會被替換，請參閱最新 demo。不會合併或刪除 GitHub 討論。
 

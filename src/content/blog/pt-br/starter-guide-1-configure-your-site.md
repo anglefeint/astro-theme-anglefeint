@@ -6,9 +6,15 @@ title: 'Guia 1: Configure seu blog'
 subtitle: 'Instalação, identidade, idiomas e publicação.'
 description: 'Instalação, identidade, idiomas e publicação.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-12'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
+
+## Conteúdo legível por IA
+
+O build inclui artigos públicos, Fragments e About habilitados em `/llms.txt`, índices e textos completos por idioma. As URLs Markdown dos artigos não mudam. Cada idioma tem `/pt-br/fragments/index.md` e `/pt-br/about/index.md` (substitua o idioma). Fragments reúne todas as páginas públicas, preservando ID, data, corpo e links estáveis `/<locale>/fragments/#ID`. O HTML anuncia o Markdown. Disponível após `npm run build` e no preview; publique todo `dist/`.
+
+About exporta a biografia pública, contatos e o painel de texto AI acessível; exclui configurações do terminal, ferramentas e decoração. Não exporta comentários. Páginas/idiomas desativados, conteúdo removido, noindex e canonical externos são excluídos; reconstruir limpa arquivos gerados e links obsoletos. Arquivos do usuário são protegidos e conflitos interrompem o build. Suplementos do site/idioma valem para todos os documentos. JSON-LD inclui o idioma; About usa AboutPage. Sem nova configuração, servidor ou biblioteca UI, nem garantia de indexação ou citação por IA.
 
 ## Instalar e abrir localmente
 

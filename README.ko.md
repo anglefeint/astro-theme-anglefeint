@@ -248,7 +248,9 @@ pnpm에서는 `pnpm doctor` 다음에 `pnpm preview`를 실행하세요. 빌드�
 
 ## AI가 읽을 수 있는 콘텐츠
 
-해당 starter는 `npm run build` 시 `/llms.txt`, 언어별 색인·전체 본문 파일, 글의 Markdown 버전을 자동 생성합니다. 추가 설정 없이 평소처럼 `dist/` 전체를 배포하면 됩니다. 생성 파일은 빌드 후와 preview에서 사용할 수 있습니다. 기존 프로젝트는 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참고하세요.
+빌드 시 공개 글과 활성화된 Fragments, About을 `/llms.txt`, 언어별 색인과 전체 본문 모음에 포함합니다. 글의 Markdown URL은 유지됩니다. 각 언어에 `/ko/fragments/index.md`, `/ko/about/index.md`를 생성합니다(언어 코드는 바꿔 사용하세요). Fragments는 모든 공개 페이지를 합치며 각 ID, 게시 시간, 본문과 안정적인 `/<locale>/fragments/#ID` 링크를 보존합니다. HTML에서 Markdown 링크를 찾을 수 있습니다. `npm run build` 후와 preview에서 사용할 수 있으며 `dist/` 전체를 배포합니다.
+
+About은 공개 소개, 연락처 링크와 열 수 있는 AI 텍스트 팝업을 내보내며 터미널 설정, 도구와 장식 UI는 제외합니다. 댓글은 내보내지 않습니다. 비활성 페이지·언어, 삭제된 내용, noindex와 외부 canonical은 제외하고 재빌드 시 오래된 생성 파일과 발견 링크를 정리합니다. 사용자 파일은 보호하며 충돌 시 빌드를 중단합니다. 사이트·언어 보충 정보는 모든 문서에 적용됩니다. JSON-LD에 언어를 포함하고 About은 AboutPage를 사용합니다. 새 설정·서버·UI 의존성이 필요 없으며 AI 색인이나 인용을 보장하지 않습니다.
 
 `src/site.config.ts`의 선택 설정 `aiReadableContent.notes`(Markdown)와 `aiReadableContent.links`(`{ label, href }[]`)로 색인, 전체 본문 모음, 개별 Markdown에 사이트 설명을 추가할 수 있습니다. `i18n.locales.<code>.aiReadableContent`에서 필드별로 재정의하며, 생략하면 전역 설정을 상속하고 `notes: ''` / `links: []`이면 숨깁니다. [자세히](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
 

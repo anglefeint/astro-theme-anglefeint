@@ -4,9 +4,15 @@ title: '利用ガイド 1：ブログを立ち上げる'
 subtitle: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 description: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-12'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
+
+## AI が読み取れるコンテンツ
+
+ビルド時に公開記事、有効な Fragments と About を `/llms.txt`、言語別索引、全文ファイルへ含めます。記事の Markdown URL は変わりません。各言語に `/ja/fragments/index.md` と `/ja/about/index.md` を生成します（言語コードは置き換えてください）。Fragments は公開された全ページをまとめ、各 ID、公開日時、本文、安定した `/<locale>/fragments/#ID` リンクを保持します。HTML から Markdown を発見できます。`npm run build` 後と preview で利用でき、`dist/` 全体を公開します。
+
+About は公開プロフィール、連絡先、開ける AI テキストポップアップを出力し、端末設定・ツール・装飾 UI は除外します。コメントは出力しません。無効なページ／言語、削除済み内容、noindex、外部 canonical は除外し、再ビルドで古い生成物と発見リンクを削除します。ユーザーの独自ファイルは保護し、競合時はビルドを停止します。サイト／言語の補足情報は全出力に適用します。JSON-LD に言語を含め、About は AboutPage を使います。新しい設定・サーバー・UI 依存は不要で、AI の登録や引用は保証しません。
 
 ## まずは最小限の設定から
 

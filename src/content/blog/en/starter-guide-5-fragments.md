@@ -7,6 +7,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-12'
 ---
 
+## AI-readable content
+
+Builds now include public articles, enabled Fragments and enabled About pages in `/llms.txt`, language indexes and full-text bundles. Article Markdown URLs stay unchanged. Each language has `/en/fragments/index.md` and `/en/about/index.md` (replace `en` with your language); the Fragments file combines all public pages and preserves each ID, publication time, body and stable `/<locale>/fragments/#ID` link. HTML pages advertise their Markdown companion. Files appear after `npm run build` and in preview; deploy all of `dist/`.
+
+About exports its public biography, contact links and reachable AI text popup, excluding terminal configuration, tools and decorative UI. Comments are not exported. Disabled pages/languages, deleted content, noindex pages and off-site canonical pages are excluded; rebuilding removes stale generated exports and discovery links while preserving user-authored files (conflicts stop the build). Site/locale context supplements apply to all exported documents. JSON-LD includes page language; About uses AboutPage. No new configuration, server, UI dependency or guarantee of AI indexing/citation is added.
+
 From 0.33.2, Fragments shares the article back-to-top button: it appears after scrolling and respects reduced-motion preferences. No configuration is needed.
 
 For an existing blog, upgrade to theme 0.29.0 or newer first:
@@ -73,7 +79,7 @@ theme: {
 
 Fragment comments use specific mapping, strict matching and `fragment/<id>`. They ignore article mapping, term, number, shareAcrossLocales and lang; the interface follows the page language. Translations with the same ID share comments and reactions. Article discussion associations stay unchanged. The comment client loads on the first click. Closing hides the popup; reopening or selecting another fragment reuses the same comment instance.
 
-This is static publishing: edit Markdown, then rebuild and redeploy. There is no online posting form. Fragments are separate from article search, RSS and article Markdown exports. Images can use `/images/...` from `public/images/`.
+Fragments remains separate from article search and RSS. Its own AI-readable Markdown export is generated during builds. Images in `public/images/` can be referenced with `/images/...`.
 
 Upgrade to theme 0.29.0 or newer, then opt in using configuration. Personal content, configuration, music and images are preserved. Existing personal tutorials are not replaced; consult the current demo guide. No GitHub discussions are merged or deleted.
 

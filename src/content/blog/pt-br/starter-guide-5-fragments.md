@@ -7,6 +7,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-12'
 ---
 
+## Conteúdo legível por IA
+
+O build inclui artigos públicos, Fragments e About habilitados em `/llms.txt`, índices e textos completos por idioma. As URLs Markdown dos artigos não mudam. Cada idioma tem `/pt-br/fragments/index.md` e `/pt-br/about/index.md` (substitua o idioma). Fragments reúne todas as páginas públicas, preservando ID, data, corpo e links estáveis `/<locale>/fragments/#ID`. O HTML anuncia o Markdown. Disponível após `npm run build` e no preview; publique todo `dist/`.
+
+About exporta a biografia pública, contatos e o painel de texto AI acessível; exclui configurações do terminal, ferramentas e decoração. Não exporta comentários. Páginas/idiomas desativados, conteúdo removido, noindex e canonical externos são excluídos; reconstruir limpa arquivos gerados e links obsoletos. Arquivos do usuário são protegidos e conflitos interrompem o build. Suplementos do site/idioma valem para todos os documentos. JSON-LD inclui o idioma; About usa AboutPage. Sem nova configuração, servidor ou biblioteca UI, nem garantia de indexação ou citação por IA.
+
 A partir de 0.33.2, Fragments compartilha o botão de voltar ao topo dos artigos: aparece após a rolagem e respeita a preferência por movimento reduzido. Não exige configuração.
 
 Se já tem um blog, atualize primeiro para o tema 0.29.0 ou posterior:
@@ -73,7 +79,7 @@ theme: {
 
 Usa specific, correspondência estrita e `fragment/<id>`. Ignora mapping, term, number, shareAcrossLocales e lang dos artigos; a interface segue o idioma da página. Traduções com o mesmo ID compartilham comentários e reações. Discussões de artigos não mudam. O cliente de comentários carrega no primeiro clique. Fechar oculta a janela; ao reabrir ou trocar de fragmento, a mesma instância de comentários é reutilizada.
 
-Publicação estática: edite Markdown, compile e publique novamente. Sem formulário de postagem online. Separado da busca de artigos, RSS e exportação Markdown de artigos. Imagens em `public/images/` podem ser usadas como `/images/...`.
+Fragments continua separado da busca de artigos e RSS, mas gera seu próprio Markdown para IA durante o build. Imagens em `public/images/` podem ser usadas como `/images/...`.
 
 Atualize para o tema 0.29.0 ou posterior e ative a configuração. Conteúdo, configuração, músicas e imagens pessoais são preservados. Guias pessoais não são substituídos; consulte o demo atual. Discussões do GitHub não são mescladas nem excluídas.
 

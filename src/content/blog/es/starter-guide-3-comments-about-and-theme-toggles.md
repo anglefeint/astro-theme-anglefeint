@@ -4,9 +4,15 @@ title: 'Guía 3: Activa y personaliza funciones opcionales'
 subtitle: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 description: 'Configura música, comentarios, About, paginación, funciones e idiomas solo cuando los necesites.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-12'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
+
+## Contenido legible para la IA
+
+La compilación incluye artículos públicos, Fragments y About habilitados en `/llms.txt`, índices y textos completos por idioma. Las URL Markdown de artículos no cambian. Cada idioma tiene `/es/fragments/index.md` y `/es/about/index.md` (sustituye el idioma). Fragments reúne todas sus páginas públicas y conserva ID, fecha, contenido y enlaces estables `/<locale>/fragments/#ID`. El HTML anuncia su Markdown. Disponible tras `npm run build` y en preview; publica todo `dist/`.
+
+About exporta biografía pública, contactos y el panel de texto AI accesible; excluye configuración del terminal, herramientas y decoración. No exporta comentarios. Excluye páginas/idiomas desactivados, contenido eliminado, noindex y canonical externos; al recompilar limpia archivos generados y enlaces obsoletos. Protege archivos del usuario y detiene la compilación si hay conflictos. Los suplementos del sitio/idioma se aplican a todos los documentos. JSON-LD incluye el idioma; About usa AboutPage. No requiere nueva configuración, servidor ni biblioteca UI, ni garantiza indexación o citas de IA.
 
 ## Consulta los valores predeterminados antes de cambiar
 

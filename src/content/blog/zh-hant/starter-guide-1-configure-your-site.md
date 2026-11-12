@@ -6,9 +6,15 @@ title: 使用指南 1：設定你的部落格
 subtitle: 安裝、網站資料、語言與部署。
 description: 安裝、網站資料、語言與部署。
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-12'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 ---
+
+## 支援 AI 閱讀的內容
+
+建置會將公開文章、已啟用的 Fragments 和 About 頁面納入 `/llms.txt`、語言索引與全文合集。文章 Markdown 網址維持不變；各語言另有 `/zh-hant/fragments/index.md` 和 `/zh-hant/about/index.md`（依實際語言替換）。Fragments 檔案合併所有公開分頁，保留每則 ID、發布時間、正文及穩定的 `/<locale>/fragments/#ID` 連結。HTML 頁面提供對應 Markdown 的探索連結。檔案在 `npm run build` 後及 preview 中可用，部署整個 `dist/` 即可。
+
+About 匯出公開簡介、聯絡連結及可開啟的 AI 文字彈窗，排除終端設定、工具與裝飾介面；不匯出留言。停用的頁面／語言、已刪除內容、noindex 頁面與站外 canonical 頁面不匯出；重新建置會清除過期產物與探索連結，保護使用者自有檔案，遇到衝突時停止建置。網站／語言補充說明適用所有匯出文件。JSON-LD 包含頁面語言，About 使用 AboutPage。不需新增設定、伺服器或 UI 依賴，也不保證 AI 收錄或引用。
 
 ## 安裝並在本機開啟
 

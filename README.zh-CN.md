@@ -246,7 +246,9 @@ pnpm 用户使用 `pnpm doctor`，再运行 `pnpm preview`；只构建时则使�
 
 ## 支持 AI 阅读的内容
 
-配套 starter 在 `npm run build` 时自动生成 `/llms.txt`、各语言索引与全文合集，以及文章 Markdown 版本，无需额外配置。照常部署整个 `dist/`；这些文件在构建后及 preview 中可用。已有项目见 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+构建会将公开文章、已启用的 Fragments 和 About 页面纳入 `/llms.txt`、语言索引与全文合集。文章 Markdown 地址保持不变；各语言还会生成 `/zh/fragments/index.md` 和 `/zh/about/index.md`（按实际语言替换 `zh`）。Fragments 文件合并所有公开分页，保留每条 ID、发布时间、正文及稳定的 `/<locale>/fragments/#ID` 链接。HTML 页面提供对应 Markdown 的发现链接。文件在 `npm run build` 后及 preview 中可用，部署整个 `dist/` 即可。
+
+About 导出公开简介、联系链接和可打开的 AI 文本弹窗，排除终端配置、工具和装饰界面；评论不导出。关闭的页面／语言、已删除内容、noindex 页面及站外 canonical 页面不导出；重新构建会清理过期生成文件和发现链接，用户自有文件受保护，冲突时停止构建。站点／语言补充说明适用于所有导出文档。JSON-LD 补充页面语言，About 使用 AboutPage。无需新增配置、服务器或 UI 依赖，也不保证 AI 收录或引用。
 
 可在 `src/site.config.ts` 配置 `aiReadableContent.notes`（Markdown 说明）和 `aiReadableContent.links`（`{ label, href }[]`），自动加入索引、全文合集及单篇 Markdown。语言覆盖放在 `i18n.locales.<code>.aiReadableContent`；未配置字段回退全局，`notes: ''` / `links: []` 显式隐藏。参见[配置与升级说明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 

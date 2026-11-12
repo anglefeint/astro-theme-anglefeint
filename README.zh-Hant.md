@@ -197,7 +197,9 @@ Decoder Lab 的視覺風格致敬 **Cypherpunk（密碼龐克）**，紀念他�
 
 ## 支援 AI 閱讀的內容
 
-配套 starter 在 `npm run build` 時自動產生 `/llms.txt`、各語言索引與全文合集，以及文章 Markdown 版本，無需額外設定。照常部署整個 `dist/`；這些檔案在建置後及 preview 中可用。既有專案見 [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)。
+建置會將公開文章、已啟用的 Fragments 和 About 頁面納入 `/llms.txt`、語言索引與全文合集。文章 Markdown 網址維持不變；各語言另有 `/zh-hant/fragments/index.md` 和 `/zh-hant/about/index.md`（依實際語言替換）。Fragments 檔案合併所有公開分頁，保留每則 ID、發布時間、正文及穩定的 `/<locale>/fragments/#ID` 連結。HTML 頁面提供對應 Markdown 的探索連結。檔案在 `npm run build` 後及 preview 中可用，部署整個 `dist/` 即可。
+
+About 匯出公開簡介、聯絡連結及可開啟的 AI 文字彈窗，排除終端設定、工具與裝飾介面；不匯出留言。停用的頁面／語言、已刪除內容、noindex 頁面與站外 canonical 頁面不匯出；重新建置會清除過期產物與探索連結，保護使用者自有檔案，遇到衝突時停止建置。網站／語言補充說明適用所有匯出文件。JSON-LD 包含頁面語言，About 使用 AboutPage。不需新增設定、伺服器或 UI 依賴，也不保證 AI 收錄或引用。
 
 可在 `src/site.config.ts` 設定 `aiReadableContent.notes`（Markdown 說明）與 `aiReadableContent.links`（`{ label, href }[]`），自動加入索引、全文合集及單篇 Markdown。語言覆寫放在 `i18n.locales.<code>.aiReadableContent`；未設定欄位沿用全域值，`notes: ''` / `links: []` 明確隱藏。參見[設定與升級說明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 
