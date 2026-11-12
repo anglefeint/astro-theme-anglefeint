@@ -103,6 +103,11 @@ export const deliveryTools = {
     command: 'npm run release:verify -- --version <exact-version> [identity options]',
     purpose: 'Read-only recovery; never publishes or installs',
   },
+  'release-closeout': {
+    command: 'npm run release:closeout -- --help',
+    purpose:
+      'Batch fresh release identities, announcement preparation and final read-back; no publication or technical-check reuse',
+  },
 };
 
 export function planNpmTools(targets, tools = npmReleaseTools) {

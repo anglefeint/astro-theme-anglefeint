@@ -159,6 +159,7 @@ Run this workflow whenever repository changes may alter documentation truth:
    - check added source/document links and compare examples against actual configuration/types/commands
    - docs-only corrections do not require runtime changes or a fresh build; run broader checks when behavior or executable commands were also modified, as defined in `docs/AI_WORKFLOW.md`
    - distinguish newly run checks from evidence reused from an earlier release
+   - for release administration, prepare changes/compatibility/check-plan prose before source freeze; changing final refs/timings belong in the GitHub Release and ignored receipts. Use the [batched closeout helper](RELEASE_TOOLS.md#batched-stable-release-closeout), and make one tracked closeout batch only when substantive corrections or intentionally maintained ledger facts require it. Do not repeatedly commit a report of its own deployment. All commit hooks remain enabled; receipts never skip validation.
 8. Report:
    - changed files used as input
    - direct-hit docs

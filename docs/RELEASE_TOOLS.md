@@ -12,6 +12,7 @@ depends_on:
     scripts/release-tools.mjs,
     scripts/verify-published-package.mjs,
     scripts/verify-release.mjs,
+    scripts/release-closeout.mjs,
   ]
 sync_targets: [docs/AI_WORKFLOW.md, docs/MAINTAINER_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 ---
@@ -79,6 +80,30 @@ The JSON catalog marks requiresUserConfirmation. source-check and installed-matr
 Starter generation and user upgrades retain their non-browser doctor contract. Their public scripts are not rewritten by this maintainer refactor. Local tests are not evidence of npm download availability; use the dedicated npm verifier after upload.
 
 ## Evidence and completion
+
+### Batched stable-release closeout
+
+Prepare user-facing changes, migration notes and the version ledger before freezing the source. After the selected checks, npm download verification and starter delivery, use the maintainer-only closeout tool instead of assembling temporary identity/announcement scripts:
+
+```bash
+npm run release:closeout -- prepare --version <version> --source <npm-gitHead> --starter <delivered-starter-sha> --session acceptance-results/<session>/summary.json
+```
+
+Replace the placeholders with recorded values; repeat `--session` only for the specific sessions you want to summarize. This stable-release tool requires clean, pushed main and the exact delivered starter SHA. It batches fresh read-only Git/npm queries, checking source ancestry/version, remote main/starter, registry source/latest/checksums and starter package/lock range, version and integrity. An existing tag must already point to the exact npm source. It writes a new ignored `acceptance-results/release-closeout-<version>-*/` directory containing `notes.md` and `receipt.json`; it does not edit tracked documents. Markdown release-note links become absolute repository links, frontmatter is omitted, delivery identities are appended, and supplied session timings retain failed stages. Raw logs, environment evidence and command arguments are not copied into the public notes.
+
+HTML links/images in release notes must already use absolute URLs; ordinary relative Markdown destinations are normalized automatically, while code examples remain untouched. Review the generated notes. Create/push the exact-source tag and create the GitHub Release with that notes file, serially, using the [package runbook](PACKAGE_RELEASE.md#8-release-notes-contract). Then finish with:
+
+```bash
+npm run release:closeout -- verify --receipt acceptance-results/<closeout>/receipt.json
+```
+
+Verification refetches identities, requires unchanged clean/pushed main, the matching remote source tag and starter, a published non-prerelease GitHub Release, and an exact match with the prepared notes. Modified notes, branch/source/lock/checksum drift, drafts or an incorrect Release body fail. Each successful verification writes a separate observational receipt beneath the preparation directory; it never overwrites the prepared receipt. The CLI uses the shared maintainer lock. These are standalone commands listed by `release:tools list`, not extra npm-upload dependencies.
+
+Neither mode publishes, installs, commits, pushes, creates tags/releases, runs browser/hosting checks, downloads npm tarballs or reruns technical suites. It does not replace the canonical download verifier or starter managed-file drift check. Run that drift check once when selected, rather than before and after every documentation-only step. Session summaries and receipts are observations, never validation caches or permission to skip required checks. Prereleases retain the existing manual closeout path.
+
+### Avoid repeated administrative work
+
+Use one explicit technical plan with one installation level. Run dependency/build-mutating operations serially; batch independent read-only inspections. Preserve staged lint/format/metadata hooks and the starter's installed audit/doctor/build. Prepare the version ledger's changes, compatibility and check plan before the source commit; put changing final refs/timings in the generated announcement and local receipts. A post-delivery documentation commit is needed only for a substantive correction or intentionally maintained ledger facts, and should be one batch. Re-sync starter only if managed inputs changed. Do not add another source commit, starter sync or build merely to record the previous closeout commit's own ref.
 
 Tools retain the shared checkout lock, stage timing, logs and observational fingerprints under ignored acceptance-results. No old summary is used to skip checks. Failures stop subsequent upload; post-upload visibility failures use standalone read-only recovery. Clean/pushed main and authorization remain workflow requirements.
 

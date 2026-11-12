@@ -12,6 +12,18 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-13 Batched release administration (maintainer-only)
+
+基线 `37d81f30a096c5dd91b33521b8e847ad4ed21fa1`。按用户要求，减少零散身份查询、临时公告脚本和重复收尾提交，保留必要技术检查与提交钩子。新增根维护脚本 `scripts/release-closeout.mjs`、npm `release:closeout` 和工具目录入口：prepare 批量读取当前 Git/npm/starter 身份并生成忽略目录中的公告/观察凭证；verify 重新读取身份并核对远程源码标签、已公开稳定 Release 及完整公告正文。只读查询可并行，CLI 复用现有维护锁；它不上传/安装/提交/推送/创建标签或 Release，不运行测试/构建/浏览器，也不下载 npm 包来重复既有下载核验。既有发布、恢复、starter doctor/审计和 pre-commit 保持原实现。
+
+链路映射：`package.json`/`release-tool-plan.mjs` 独立能力 → `release-closeout.mjs` 参数与身份断言 → `maintainer-session.mjs` 原锁/阶段记录 → 版本正文/显式指定 summary → 忽略目录的新 notes/receipt → GitHub Release 只读读回。`tests/release-closeout-tool.unit.test.mjs` 覆盖参数、正文链接、成功往返、脏/未推送工作区、源码/标签/锁/registry 漂移、草稿/错误正文、路径越界及公告被改写；原发布规划测试补工具目录和保留钩子断言。凭证只表示观察到的身份，不能作为技术检查通过缓存；历史会话中的失败仍保留，不复制原始日志/环境/命令参数到公开公告。
+
+同步 RELEASE_TOOLS、PACKAGE_RELEASE、MAINTAINER_WORKFLOW、AI_WORKFLOW、VALIDATION_POLICY、DOC_SYNC_WORKFLOW、CHANGELOG 与本记录：发布前准备 changes/兼容/检查计划，动态 refs/耗时集中进入公告与本地凭证；只有实质纠正或明确维护的账本事实需要一批收尾文档提交，仅受管输入改变才重新同步 starter。不自动降低安装/构建等级，也不取消 hook 的重复检查。
+
+建议工具已按新脚本/目录/npm 命令及责任文档路由核对。AGENTS/CLAUDE/Cursor 入口已有指向现行工具/流程的委派，无需复制新命令细节；架构/视觉、九语 README、npm README、demo/starter 教程、用户配置与历史版本记录没有消费者行为变化，保持不变。元数据协议未改变。没有包内运行时、依赖、starter manifest/脚本改动，不升版本、不发布 npm，也不因这项维护改动同步 starter。
+
+本地验证通过：31 项新旧针对性测试，包含真实临时目录/junction 防越界与本地 CLI 子进程；改动脚本/测试 lint、108 文档元数据、全仓格式、八份责任文档的本地链接、CLI 帮助及 diff 空白检查。只读查询已发布 0.35.0 的官方 npm 完整元数据，确认新适配器使用的 latest/source/integrity 字段结构，未安装或修改发布。成功收尾与失败场景通过注入的 Git/npm/GitHub 响应核对，未对现有 GitHub Release 重写/重新公告，未运行真实新版本发布来测量省时。未提交/推送，原有 hook 与发布/恢复/同步实现保持未修改。
+
 ## 2026-11-13 0.35.0 authorized delivery
 
 用户在上述文档核对完成后，授权必要技术检查并发布 npm/starter。源码 `3a63a6c588d2e335f57fc23ada927d4668ab0d12` 完成 32 项针对性测试、workspace、类型、lint、291 页构建与元数据/格式/局部静态输出核对；独立打包安装/审计/CLI/默认构建通过。npm 0.35.0 仅上传一次，初次及两次只读核验因 registry `TAG_PENDING` 超时，第三次只读恢复匹配 latest、源码、SHA1 与下载完整性。随后交付 starter `b93d5b6e53084f8ea774141b73abb520ea4d7dd2`，依赖范围/锁分别为 `^0.35.0`/`0.35.0`，安装审计、doctor/build、推送与 main 环境恢复通过；三处阻断审计均零已知漏洞。没有浏览器、线上 demo/Cloudflare/Giscus 或完整矩阵验收。实际 refs、耗时与公告入口集中在 [0.35.0 发布账本](releases/0.35.0.md)，本次只补维护记录，不再次发布 npm 或同步未改变的 starter 受管内容。

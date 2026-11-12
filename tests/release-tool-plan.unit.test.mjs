@@ -196,6 +196,8 @@ test('list/plan are read-only and show consent, while pre-push full trigger is a
     execFileSync(process.execPath, ['scripts/release-tools.mjs', 'list'], { encoding: 'utf8' })
   );
   assert(list.tools['unit-tests']);
+  assert.equal(list.standalone['release-closeout'].command, 'npm run release:closeout -- --help');
+  assert.throws(() => planNpmTools(['release-closeout']), /Unknown release tool/);
   const p = JSON.parse(
     execFileSync(process.execPath, ['scripts/release-tools.mjs', 'plan', 'source-check'], {
       encoding: 'utf8',
@@ -208,4 +210,7 @@ test('list/plan are read-only and show consent, while pre-push full trigger is a
   const pkg = JSON.parse(readFileSync('package.json'));
   assert.equal(pkg.scripts['check:types'], 'astro check');
   assert.equal(pkg.scripts['check:about-output'], 'node scripts/check-about-runtime-config.mjs');
+  assert.equal(pkg.scripts['release:closeout'], 'node scripts/release-closeout.mjs');
+  assert.match(readFileSync('.husky/pre-commit', 'utf8'), /npm exec lint-staged/);
+  assert.match(readFileSync('.husky/pre-commit', 'utf8'), /npm run check:docs/);
 });

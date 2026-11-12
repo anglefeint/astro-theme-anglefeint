@@ -43,7 +43,8 @@ All notable changes to this project are documented in this file.
 
 ## Unreleased
 
-These runtime changes have not been published in 0.34.0.
+- Maintainer-only: add a stable-release closeout prepare/verify tool to batch fresh registry/Git/starter identities, generate announcement notes and read back the exact published Release. Keep selected technical checks, npm download verification, starter audit/doctor and commit hooks. Prepare prose before source freeze and retain changing delivery refs/timings in announcements/local evidence instead of repeated self-recording closeout commits. No runtime, consumer script, package version or starter contract change.
+  These runtime changes have not been published in 0.34.0.
 
 - Maintainer-only: unify normal/recovery npm verification across tag, exact-version metadata and downloaded integrity/SHA1, automatically checking the publishing HEAD during normal delivery. Log each failure's stage/code/redacted reason/action; retry only named transient errors and stop immediately on identity/authentication/malformed/unknown failures. Keep the existing 12 attempts, 10-second interval and 15-second fetch timeout. That earlier maintainer-only delivery changed no theme package, consumer command or starter file; npm stayed at 0.33.2 at that time.
 
