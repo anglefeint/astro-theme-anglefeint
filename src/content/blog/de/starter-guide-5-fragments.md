@@ -7,6 +7,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-12'
 ---
 
+## KI-lesbare Inhalte
+
+Der Build nimmt öffentliche Artikel sowie aktivierte Fragments- und About-Seiten in `/llms.txt`, Sprachindizes und Volltextdateien auf. Artikel-Markdown-URLs bleiben gleich. Pro Sprache entstehen `/de/fragments/index.md` und `/de/about/index.md` (Sprachcode ersetzen). Fragments fasst alle öffentlichen Seiten zusammen und bewahrt ID, Veröffentlichungszeit, Text und stabile Links `/<locale>/fragments/#ID`. HTML verweist auf Markdown. Nach `npm run build` und in preview verfügbar; ganz `dist/` veröffentlichen.
+
+About exportiert öffentliche Biografie, Kontaktlinks und das erreichbare AI-Textfenster, aber keine Terminalkonfiguration, Werkzeuge oder Dekoration. Kommentare werden nicht exportiert. Deaktivierte Seiten/Sprachen, gelöschte Inhalte, noindex und externe Canonicals werden ausgeschlossen; erneute Builds entfernen veraltete erzeugte Dateien und Verweise. Eigene Dateien bleiben geschützt; Konflikte stoppen den Build. Website-/Sprachzusätze gelten für alle Dokumente. JSON-LD enthält die Sprache; About verwendet AboutPage. Keine neue Konfiguration, Server oder UI-Bibliothek und keine Garantie für KI-Indexierung oder Zitate.
+
 Ab 0.33.2 verwendet Fragments denselben Nach-oben-Button wie Artikel: Er erscheint nach dem Scrollen und berücksichtigt die Einstellung für reduzierte Bewegung. Keine Konfiguration erforderlich.
 
 Bei einem bestehenden Blog zuerst auf Theme 0.29.0 oder neuer aktualisieren:
@@ -73,7 +79,7 @@ theme: {
 
 Verwendet specific, strikten Abgleich und `fragment/<id>`. mapping, term, number, shareAcrossLocales und lang der Artikel werden ignoriert; die Oberfläche folgt der Seitensprache. Übersetzungen mit gleicher ID teilen Kommentare und Reaktionen. Artikelzuordnungen bleiben bestehen. Der Kommentar-Client lädt beim ersten Klick. Schließen blendet den Dialog aus; erneutes Öffnen oder der Wechsel zu einem anderen Fragment verwendet dieselbe Kommentarinstanz.
 
-Statische Veröffentlichung: Markdown bearbeiten, neu bauen und bereitstellen. Kein Online-Eingabeformular. Getrennt von Artikelsuche, RSS und Artikel-Markdown-Export. Bilder aus `public/images/` mit `/images/...` einbinden.
+Fragments bleibt von Artikelsuche und RSS getrennt, erzeugt beim Build jedoch eigenes KI-lesbares Markdown. Bilder aus `public/images/` mit `/images/...` einbinden.
 
 Auf Theme 0.29.0 oder neuer aktualisieren und die Option aktivieren. Persönliche Inhalte, Konfiguration, Musik und Bilder bleiben erhalten. Persönliche Anleitungen werden nicht überschrieben; aktuelle Demo lesen. GitHub-Diskussionen werden weder zusammengeführt noch gelöscht.
 

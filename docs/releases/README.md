@@ -29,7 +29,9 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 ## Contract
 
-Latest package release: [0.33.2](./0.33.2.md), shared article/Fragments back-to-top control and agent-selected technical validation. npm and starter delivered; its GitHub Release records final delivery identities and timings.
+Current release entry: [0.34.0](./0.34.0.md), About and Fragments machine-readable coverage and language metadata. See its ledger and linked GitHub Release for actual delivery status and timings.
+
+Previous package release: [0.33.2](./0.33.2.md), shared article/Fragments back-to-top control and agent-selected technical validation. npm and starter delivered; its GitHub Release records final delivery identities and timings.
 
 Previous package release: [0.33.1](./0.33.1.md), direct Fragment anchors and composable maintainer release tools; see its ledger and linked GitHub Release for delivery and post-push completion evidence.
 

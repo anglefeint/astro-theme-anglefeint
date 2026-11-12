@@ -4,9 +4,15 @@ title: 'User Guide 1: Set Up Your Blog'
 subtitle: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 description: 'Install the starter, configure your site and languages, replace example posts, and deploy.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-12'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
+
+## AI-readable content
+
+Builds now include public articles, enabled Fragments and enabled About pages in `/llms.txt`, language indexes and full-text bundles. Article Markdown URLs stay unchanged. Each language has `/en/fragments/index.md` and `/en/about/index.md` (replace `en` with your language); the Fragments file combines all public pages and preserves each ID, publication time, body and stable `/<locale>/fragments/#ID` link. HTML pages advertise their Markdown companion. Files appear after `npm run build` and in preview; deploy all of `dist/`.
+
+About exports its public biography, contact links and reachable AI text popup, excluding terminal configuration, tools and decorative UI. Comments are not exported. Disabled pages/languages, deleted content, noindex pages and off-site canonical pages are excluded; rebuilding removes stale generated exports and discovery links while preserving user-authored files (conflicts stop the build). Site/locale context supplements apply to all exported documents. JSON-LD includes page language; About uses AboutPage. No new configuration, server, UI dependency or guarantee of AI indexing/citation is added.
 
 ## Start with the essentials
 

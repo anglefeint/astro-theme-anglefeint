@@ -4,9 +4,15 @@ title: '使用指南 3：按需开启与定制功能'
 subtitle: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 description: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-10'
+updatedDate: '2026-11-12'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
+
+## 支持 AI 阅读的内容
+
+构建会将公开文章、已启用的 Fragments 和 About 页面纳入 `/llms.txt`、语言索引与全文合集。文章 Markdown 地址保持不变；各语言还会生成 `/zh/fragments/index.md` 和 `/zh/about/index.md`（按实际语言替换 `zh`）。Fragments 文件合并所有公开分页，保留每条 ID、发布时间、正文及稳定的 `/<locale>/fragments/#ID` 链接。HTML 页面提供对应 Markdown 的发现链接。文件在 `npm run build` 后及 preview 中可用，部署整个 `dist/` 即可。
+
+About 导出公开简介、联系链接和可打开的 AI 文本弹窗，排除终端配置、工具和装饰界面；评论不导出。关闭的页面／语言、已删除内容、noindex 页面及站外 canonical 页面不导出；重新构建会清理过期生成文件和发现链接，用户自有文件受保护，冲突时停止构建。站点／语言补充说明适用于所有导出文档。JSON-LD 补充页面语言，About 使用 AboutPage。无需新增配置、服务器或 UI 依赖，也不保证 AI 收录或引用。
 
 ## 先看默认状态，再决定改什么
 

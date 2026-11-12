@@ -9,9 +9,17 @@ interface Props {
   description: string;
   bodyClass?: string;
   localeHrefs?: Partial<Record<Locale, string>>;
+  schema?: Record<string, unknown>;
 }
 
-const { locale, title, description, bodyClass = 'hacker-page', localeHrefs } = Astro.props as Props;
+const {
+  locale,
+  title,
+  description,
+  bodyClass = 'hacker-page',
+  localeHrefs,
+  schema,
+} = Astro.props as Props;
 ---
 
 <ThemeFrame
@@ -21,6 +29,7 @@ const { locale, title, description, bodyClass = 'hacker-page', localeHrefs } = A
   bodyClass={bodyClass}
   mainClass="page-main hacker-content"
   localeHrefs={localeHrefs}
+  schema={schema}
 >
   <link slot="head" rel="stylesheet" href={aboutPageCssUrl} />
   <slot name="head" slot="head" />

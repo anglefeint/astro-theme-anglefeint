@@ -7,6 +7,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-12'
 ---
 
+## AI가 읽을 수 있는 콘텐츠
+
+빌드 시 공개 글과 활성화된 Fragments, About을 `/llms.txt`, 언어별 색인과 전체 본문 모음에 포함합니다. 글의 Markdown URL은 유지됩니다. 각 언어에 `/ko/fragments/index.md`, `/ko/about/index.md`를 생성합니다(언어 코드는 바꿔 사용하세요). Fragments는 모든 공개 페이지를 합치며 각 ID, 게시 시간, 본문과 안정적인 `/<locale>/fragments/#ID` 링크를 보존합니다. HTML에서 Markdown 링크를 찾을 수 있습니다. `npm run build` 후와 preview에서 사용할 수 있으며 `dist/` 전체를 배포합니다.
+
+About은 공개 소개, 연락처 링크와 열 수 있는 AI 텍스트 팝업을 내보내며 터미널 설정, 도구와 장식 UI는 제외합니다. 댓글은 내보내지 않습니다. 비활성 페이지·언어, 삭제된 내용, noindex와 외부 canonical은 제외하고 재빌드 시 오래된 생성 파일과 발견 링크를 정리합니다. 사용자 파일은 보호하며 충돌 시 빌드를 중단합니다. 사이트·언어 보충 정보는 모든 문서에 적용됩니다. JSON-LD에 언어를 포함하고 About은 AboutPage를 사용합니다. 새 설정·서버·UI 의존성이 필요 없으며 AI 색인이나 인용을 보장하지 않습니다.
+
 0.33.2부터 Fragments는 글 페이지와 같은 맨 위로 버튼을 사용합니다. 스크롤 후 표시되며 동작 줄이기 설정을 따릅니다. 추가 설정은 필요하지 않습니다.
 
 기존 블로그는 테마를 0.29.0 이상으로 먼저 업그레이드하세요:
@@ -73,7 +79,7 @@ theme: {
 
 조각은 specific, 엄격한 일치, `fragment/<id>`를 사용합니다. 글의 mapping, term, number, shareAcrossLocales, lang을 사용하지 않으며 UI는 페이지 언어를 따릅니다. 같은 ID의 번역은 댓글과 반응을 공유합니다. 글 토론 연결은 유지됩니다. 첫 클릭에서 댓글 클라이언트를 로드합니다. 닫으면 팝업을 숨기며, 다시 열거나 다른 조각으로 전환할 때 같은 댓글 인스턴스를 재사용합니다.
 
-정적 게시입니다. Markdown 수정 후 다시 빌드하고 배포합니다. 온라인 작성 화면은 없습니다. 글 검색, RSS, 글 Markdown 내보내기와 분리됩니다. 이미지는 `public/images/`에 두고 `/images/...`로 참조합니다.
+Fragments는 글 검색과 RSS에 포함되지 않지만 빌드 시 별도의 AI용 Markdown을 생성합니다. 이미지는 `public/images/`에 두고 `/images/...`로 참조합니다.
 
 테마를 0.29.0 이상으로 업그레이드하고 설정으로 켭니다. 개인 콘텐츠, 설정, 음악, 이미지는 보존됩니다. 개인 가이드는 덮어쓰지 않으므로 최신 demo를 참고하세요. GitHub 토론을 합치거나 삭제하지 않습니다.
 

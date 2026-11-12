@@ -248,7 +248,9 @@ pnpm では `pnpm doctor`、次に `pnpm preview` を使います。ビルドの
 
 ## AI が読み取れるコンテンツ
 
-対応する starter は `npm run build` 時に `/llms.txt`、言語別の索引・全文ファイル、記事の Markdown 版を自動生成します。追加設定は不要です。通常どおり `dist/` 全体を公開してください。生成ファイルはビルド後と preview で利用できます。既存プロジェクトは [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) を参照してください。
+ビルド時に公開記事、有効な Fragments と About を `/llms.txt`、言語別索引、全文ファイルへ含めます。記事の Markdown URL は変わりません。各言語に `/ja/fragments/index.md` と `/ja/about/index.md` を生成します（言語コードは置き換えてください）。Fragments は公開された全ページをまとめ、各 ID、公開日時、本文、安定した `/<locale>/fragments/#ID` リンクを保持します。HTML から Markdown を発見できます。`npm run build` 後と preview で利用でき、`dist/` 全体を公開します。
+
+About は公開プロフィール、連絡先、開ける AI テキストポップアップを出力し、端末設定・ツール・装飾 UI は除外します。コメントは出力しません。無効なページ／言語、削除済み内容、noindex、外部 canonical は除外し、再ビルドで古い生成物と発見リンクを削除します。ユーザーの独自ファイルは保護し、競合時はビルドを停止します。サイト／言語の補足情報は全出力に適用します。JSON-LD に言語を含め、About は AboutPage を使います。新しい設定・サーバー・UI 依存は不要で、AI の登録や引用は保証しません。
 
 `src/site.config.ts` の任意設定 `aiReadableContent.notes`（Markdown）と `aiReadableContent.links`（`{ label, href }[]`）は、索引・全文・各記事の Markdown にサイトの補足情報を追加します。`i18n.locales.<code>.aiReadableContent` で項目ごとに上書きでき、省略時は全体設定を継承し、`notes: ''` / `links: []` で非表示にします。[詳細](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
 

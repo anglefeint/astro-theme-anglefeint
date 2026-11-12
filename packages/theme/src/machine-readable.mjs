@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { generateMachineReadable } from './machine/generate.mjs';
 
-/** Build-only export of public article content; no production server is needed. */
+/** Build-only export of public articles, Fragments and About; no production server. */
 export default function machineReadable({ title, description, aiReadableContent, locales } = {}) {
   let config;
   return {
@@ -24,7 +24,7 @@ export default function machineReadable({ title, description, aiReadableContent,
           manifestPath: path.join(fileURLToPath(config.cacheDir), 'machine-readable.json'),
         });
         logger.info(
-          `Exported ${result.articles} articles in ${result.locales} languages (${Math.round(performance.now() - started)}ms).`
+          `Exported ${result.articles} articles, ${result.fragments} Fragments and ${result.about} About pages in ${result.locales} languages (${Math.round(performance.now() - started)}ms).`
         );
       },
     },

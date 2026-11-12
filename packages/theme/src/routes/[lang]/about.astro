@@ -18,6 +18,7 @@ import {
   blogIdToSlugAnyLocale,
   isLocale,
   localePath,
+  getLocaleHreflang,
 } from '@anglefeint/site-i18n/config';
 import { getMessages } from '@anglefeint/site-i18n/messages';
 import { postsForLocale } from '@anglefeint/site-i18n/posts';
@@ -118,6 +119,12 @@ const aboutRuntimeConfig = {
   title={pageTitle}
   description={pageDescription}
   bodyClass="hacker-page about-page"
+  schema={{
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: pageTitle,
+    inLanguage: getLocaleHreflang(locale),
+  }}
 >
   <Fragment slot="body-start">
     <template id="hacker-decoder-tpl"
@@ -333,7 +340,12 @@ const aboutRuntimeConfig = {
     </WindowShell>
   </Fragment>
   <div class="hacker-load-scan" aria-hidden="true"></div>
-  <article class="about-shell" id="about-reading-window">
+  <article
+    class="about-shell"
+    id="about-reading-window"
+    data-machine-page="about"
+    data-machine-locale={locale}
+  >
     <div class="prose">
       <AboutWindowControls
         title={messages.about.title}
@@ -352,7 +364,7 @@ const aboutRuntimeConfig = {
           <span class="hacker-response-label">{ABOUT_CONFIG.labels.responseOutput}</span>
         </div>
         <AboutContents headings={aboutHeadings} label={messages.blog.toc} />
-        <div class="hacker-body">
+        <div class="hacker-body" data-machine-body>
           <h2 id="who" class="about-section-title">01 / {messages.about.who}</h2>
           <p>{ABOUT_CONFIG.sections.who}</p>
 

@@ -10,6 +10,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.34.0: About and Fragments machine-readable content
+
+See the [delivery record](docs/releases/0.34.0.md) for publication status. After release, supported npm schema-1 projects can run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.34.0`), build, preview and redeploy. No new configuration or content migration is required. Existing article Markdown URLs and Fragment IDs/sharing/comment mappings remain unchanged. Enabled public About and Fragments join root/language llms indexes and full-text bundles; their companions are `/<locale>/about/index.md` and `/<locale>/fragments/index.md`. All public feed pages share the aggregate, with stable original `#ID` links. About includes visible biography/contact and its reachable AI text popup, excluding tools/runtime configuration/comments. Rebuilding cleans owned exports after content deletion, feature/language disabling or noindex changes; custom conflicting files stop the build. Personal tutorial copies remain user-owned. Current demo/starter Guides 1, 3 and 5 describe the new behavior. No server or AI service is required and no indexing/citation outcome is guaranteed.
+
 ## 0.33.2: Shared back-to-top control
 
 See the [release record](docs/releases/0.33.2.md) for availability. npm schema-1 users can run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.33.2`), preview and redeploy. Fragments automatically gains the article back-to-top control; no configuration, content or ID migration is needed. Personal tutorial copies remain user-owned. Maintainer validation changes do not alter consumer doctor or upgrade checks.

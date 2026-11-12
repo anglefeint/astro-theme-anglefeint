@@ -7,6 +7,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-12'
 ---
 
+## Contenido legible para la IA
+
+La compilación incluye artículos públicos, Fragments y About habilitados en `/llms.txt`, índices y textos completos por idioma. Las URL Markdown de artículos no cambian. Cada idioma tiene `/es/fragments/index.md` y `/es/about/index.md` (sustituye el idioma). Fragments reúne todas sus páginas públicas y conserva ID, fecha, contenido y enlaces estables `/<locale>/fragments/#ID`. El HTML anuncia su Markdown. Disponible tras `npm run build` y en preview; publica todo `dist/`.
+
+About exporta biografía pública, contactos y el panel de texto AI accesible; excluye configuración del terminal, herramientas y decoración. No exporta comentarios. Excluye páginas/idiomas desactivados, contenido eliminado, noindex y canonical externos; al recompilar limpia archivos generados y enlaces obsoletos. Protege archivos del usuario y detiene la compilación si hay conflictos. Los suplementos del sitio/idioma se aplican a todos los documentos. JSON-LD incluye el idioma; About usa AboutPage. No requiere nueva configuración, servidor ni biblioteca UI, ni garantiza indexación o citas de IA.
+
 Desde 0.33.2, Fragments comparte el botón de volver arriba de los artículos: aparece al desplazarse y respeta la preferencia de movimiento reducido. No requiere configuración.
 
 Si ya tienes un blog, actualiza primero al tema 0.29.0 o posterior:
@@ -73,7 +79,7 @@ theme: {
 
 Se usa specific, coincidencia estricta y `fragment/<id>`. Se ignoran mapping, term, number, shareAcrossLocales y lang de artículos; la interfaz sigue el idioma de página. Traducciones con igual ID comparten comentarios y reacciones. No cambian las discusiones de artículos. El cliente de comentarios se carga en el primer clic. Cerrar oculta el diálogo; al volver a abrirlo o cambiar de fragmento se reutiliza la misma instancia.
 
-Publicación estática: edita Markdown, compila y despliega. No hay formulario de publicación en línea. No se incluye en búsqueda de artículos, RSS ni exportación Markdown de artículos. Usa imágenes en `public/images/` mediante `/images/...`.
+Fragments sigue separado de la búsqueda de artículos y RSS, pero genera su propio Markdown para IA al compilar. Usa imágenes de `public/images/` mediante `/images/...`.
 
 Actualiza al tema 0.29.0 o posterior y activa la configuración. Se conservan contenido, configuración, música e imágenes personales. Las guías personales no se sobrescriben: consulta el demo actual. No se fusionan ni eliminan discusiones de GitHub.
 

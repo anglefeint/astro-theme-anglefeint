@@ -211,7 +211,11 @@ npx anglefeint-new-page projects --theme matrix
 
 Run these inside a project with the theme installed. `npx` resolves the package's local binaries; a local npm installation does not put them on your ordinary terminal's PATH. Starter projects already provide `npm run new-post -- ...` and `npm run new-page -- ...`. The environment-variable example uses POSIX shell syntax. For most users, `#starter` is the recommended installation path.
 
-## Machine-readable articles
+## Machine-readable content
+
+Builds now include public articles, enabled Fragments and enabled About pages in `/llms.txt`, language indexes and full-text bundles. Article Markdown URLs stay unchanged. Each language has `/en/fragments/index.md` and `/en/about/index.md` (replace `en` with your language); the Fragments file combines all public pages and preserves each ID, publication time, body and stable `/<locale>/fragments/#ID` link. HTML pages advertise their Markdown companion. Files appear after `npm run build` and in preview; deploy all of `dist/`.
+
+About exports its public biography, contact links and reachable AI text popup, excluding terminal configuration, tools and decorative UI. Comments are not exported. Disabled pages/languages, deleted content, noindex pages and off-site canonical pages are excluded; rebuilding removes stale generated exports and discovery links while preserving user-authored files (conflicts stop the build). Site/locale context supplements apply to all exported documents. JSON-LD includes page language; About uses AboutPage. No new configuration, server, UI dependency or guarantee of AI indexing/citation is added.
 
 The matching starter also preconfigures the build-only `@anglefeint/astro-theme/machine-readable` integration. Normal builds generate `/llms.txt`, per-language indexes/full-text bundles and article Markdown companions, with discovery links in article HTML. Site identity, URLs, languages and public metadata come from existing settings/pages; no extra configuration or server is needed. Custom integrations can call `machineReadable({ title, description })` in `astro.config.mjs`. Remove the old `public/llms.txt` placeholder when migrating; user-authored conflicting files are never overwritten. Exports skip noindex pages and exclude navigation/player/decorative content; `search: false` controls site search, not public Markdown. Files are available after build/preview, not during dev. See [UPGRADING.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) for existing projects.
 

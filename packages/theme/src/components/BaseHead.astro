@@ -11,7 +11,7 @@ import { publicDir } from 'virtual:anglefeint-social';
 import { resolveSocialImage } from '../social/resolve.mjs';
 import { buildHeadLocaleState, buildJsonLdSchemas } from '../utils/head';
 import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '@anglefeint/site-config/site';
-import { localePath, type Locale } from '@anglefeint/site-i18n/config';
+import { localePath, getLocaleHreflang, type Locale } from '@anglefeint/site-i18n/config';
 import { THEME } from '@anglefeint/site-config/theme';
 
 interface Props {
@@ -71,6 +71,7 @@ const rssURL = new URL(`/${currentLocale}/rss.xml`, siteURL);
 const articleModifiedISO = (modifiedTime ?? publishedTime)?.toISOString();
 const jsonLdSchemas = buildJsonLdSchemas({
   siteTitle: SITE_TITLE,
+  inLanguage: getLocaleHreflang(currentLocale as Locale),
   siteAuthor: SITE_AUTHOR,
   siteURL,
   title,

@@ -82,6 +82,8 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
   {THEME.MATH.ENABLED && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
   <section
     class="fragments-feed"
+    data-machine-page="fragments"
+    data-machine-locale={locale}
     data-fragments
     data-fragment-root={feedHref}
     data-fragment-page={current}

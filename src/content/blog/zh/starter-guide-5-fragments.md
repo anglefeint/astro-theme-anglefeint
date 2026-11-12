@@ -7,6 +7,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-12'
 ---
 
+## 支持 AI 阅读的内容
+
+构建会将公开文章、已启用的 Fragments 和 About 页面纳入 `/llms.txt`、语言索引与全文合集。文章 Markdown 地址保持不变；各语言还会生成 `/zh/fragments/index.md` 和 `/zh/about/index.md`（按实际语言替换 `zh`）。Fragments 文件合并所有公开分页，保留每条 ID、发布时间、正文及稳定的 `/<locale>/fragments/#ID` 链接。HTML 页面提供对应 Markdown 的发现链接。文件在 `npm run build` 后及 preview 中可用，部署整个 `dist/` 即可。
+
+About 导出公开简介、联系链接和可打开的 AI 文本弹窗，排除终端配置、工具和装饰界面；评论不导出。关闭的页面／语言、已删除内容、noindex 页面及站外 canonical 页面不导出；重新构建会清理过期生成文件和发现链接，用户自有文件受保护，冲突时停止构建。站点／语言补充说明适用于所有导出文档。JSON-LD 补充页面语言，About 使用 AboutPage。无需新增配置、服务器或 UI 依赖，也不保证 AI 收录或引用。
+
 从 0.33.2 起，Fragments 复用文章页的返回顶部按钮：滚动后显示，并遵循减少动态效果偏好，无需额外配置。
 
 已有博客请先升级至主题 0.29.0 或更新版本：
@@ -73,7 +79,7 @@ theme: {
 
 碎片评论固定使用 specific、严格匹配和 `fragment/<id>`，不使用文章的 mapping、term、number、shareAcrossLocales 或 lang。评论界面跟随页面语言；相同 ID 的翻译共用评论和表情，不改变文章已有讨论关联。首次点击评论才加载评论客户端。关闭只隐藏弹窗，再次打开或切换碎片时复用同一个评论实例。
 
-这是静态发布：修改 Markdown 后重新构建部署，没有在线发帖后台。碎片独立于文章搜索、RSS 和文章 Markdown 导出；图片可放在 `public/images/`，在正文用 `/images/...` 引用。
+碎片仍独立于文章搜索和 RSS，但构建时会生成自己的 AI 可读 Markdown 导出。图片可放在 `public/images/`，用 `/images/...` 引用。
 
 先升级至主题 0.29.0 或更新版本，再主动配置开启。个人内容、配置、音乐和图片会保留；升级不覆盖个人教程，最新说明可查看 demo。不会合并或删除 GitHub 上的讨论。
 

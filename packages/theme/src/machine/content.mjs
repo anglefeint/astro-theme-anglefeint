@@ -55,16 +55,18 @@ export function markdownBody(html, canonical) {
   return turndown.turndown(body.toString()).trim();
 }
 
-/** Read only rendered public fields, never original frontmatter or source files. */
-export function extractArticle(html, site) {
+/** Explicit page adapters read only public rendered fields, never arbitrary config. */
+export function extractPage(html, site) {
   const doc = parse(html);
   if (/(?:^|[\s,])(?:noindex|none)(?:$|[\s,])/i.test(meta(doc, 'robots'))) return null;
-  const article = doc.querySelector('article[data-machine-readable]');
-  const body = article?.querySelector('.ai-prose-body');
-  const heading = article?.querySelector('h1');
-  if (!body || !heading) return null;
+  const article = doc.querySelector('article[data-machine-readable], [data-machine-page]');
+  const kind = article?.getAttribute('data-machine-page') || 'article';
+  if (!article || !['article', 'about', 'fragments'].includes(kind)) return null;
+  const heading = article.querySelector('h1');
+  const body = article.querySelector(kind === 'article' ? '.ai-prose-body' : '[data-machine-body]');
+  if (!heading || (kind !== 'fragments' && !body)) return null;
   const canonicalValue = doc.querySelector('link[rel="canonical"]')?.getAttribute('href');
-  if (!canonicalValue) throw new Error('Public article is missing its canonical URL.');
+  if (!canonicalValue) throw new Error('Public content is missing its canonical URL.');
   const canonical = new URL(canonicalValue, site);
   if (
     !['https:', 'http:'].includes(canonical.protocol) ||
@@ -74,20 +76,67 @@ export function extractArticle(html, site) {
   const locale =
     article.getAttribute('data-machine-locale') || doc.querySelector('html')?.getAttribute('lang');
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/i.test(locale || ''))
-    throw new Error('Public article has an invalid language code.');
+    throw new Error('Public content has an invalid language code.');
   const fields = {
-    title: compact(heading.textContent),
+    title: compact(heading.getAttribute('aria-label') || heading.textContent),
     description: compact(meta(doc, 'description')),
     url: canonical.href,
     language: locale,
     author: compact(meta(doc, 'author')),
-    published: meta(doc, 'article:published_time'),
-    updated: meta(doc, 'article:modified_time'),
+    published: kind === 'article' ? meta(doc, 'article:published_time') : '',
+    updated: kind === 'article' ? meta(doc, 'article:modified_time') : '',
   };
+  if (kind === 'fragments') {
+    const feedURL = new URL(article.getAttribute('data-fragment-root'), canonical);
+    if (feedURL.origin !== canonical.origin || feedURL.search || feedURL.hash) return null;
+    const entries = article.querySelectorAll('[data-fragment-id]').map((card) => {
+      const id = card.getAttribute('data-fragment-id');
+      const published = card.querySelector('time[datetime]')?.getAttribute('datetime');
+      const content = card.querySelector('.fragment-body');
+      if (
+        !/^[A-Za-z0-9]{8}$/.test(id || '') ||
+        !published ||
+        !Number.isFinite(Date.parse(published)) ||
+        !content
+      )
+        throw new Error('Invalid public Fragment export');
+      const url = new URL(`#${id}`, feedURL).href;
+      return {
+        id,
+        published,
+        url,
+        markdown: `## ${id}\n\nPublished: ${published}\n\n[Original](${url})\n\n${markdownBody(content.toString(), canonical)}`,
+      };
+    });
+    return { ...fields, kind, feedURL: feedURL.href, entries };
+  }
+  let content = markdownBody(body.toString(), canonical);
+  if (kind === 'about' && doc.querySelector('[data-modal="ai"]')) {
+    // This public popup is already rendered by About's runtime. Never export the
+    // enclosing runtime config, terminal entries, effects or other tool panels.
+    const config = doc.querySelector('script#hacker-runtime-config[type="application/json"]');
+    if (config) {
+      const modal = JSON.parse(config.textContent).modalContent?.ai;
+      if (typeof modal?.title === 'string' && typeof modal.body === 'string')
+        content += `\n\n${markdownBody(`<h2>${escapeText(modal.title)}</h2>${modal.body}`, canonical)}`;
+    }
+  }
+  return { ...fields, kind, markdown: documentMarkdown(fields, content) };
+}
+
+const escapeText = (text) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+export function documentMarkdown(fields, content) {
   const yaml = Object.entries(fields)
     .filter(([, value]) => value)
     .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
     .join('\n');
-  const content = markdownBody(body.toString(), canonical);
-  return { ...fields, markdown: `---\n${yaml}\n---\n\n# ${fields.title}\n\n${content}\n` };
+  return `---\n${yaml}\n---\n\n# ${fields.title}\n\n${content}\n`;
+}
+
+// Keep the article-only adapter for existing internal callers and focused tests.
+export function extractArticle(html, site) {
+  const page = extractPage(html, site);
+  return page?.kind === 'article' ? page : null;
 }

@@ -10,6 +10,8 @@ sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
 
 # Visual Systems
 
+Machine-readable About/Fragments support adds only static extraction markers, head discovery links and language JSON-LD. Existing DOM structure, CSS, effects and browser interaction scripts are preserved. About's existing public AI text popup is exported through an allowlisted adapter; no terminal/tool/config dump or duplicate visible content is added. Export generation runs at build time.
+
 Default link previews (0.33.0+) use the approved Anglefeint artwork: ivory wordmark, Matrix code rain, cyan/magenta city lighting, network traces and a small white rabbit, shipped as a compressed 1200×630 JPEG. `site.ogImage` replaces this fallback without overriding article-specific/generated cards or their existing hero fallback. Fragments and its hash links share feed metadata. This changes social metadata only, adding no page animation or browser generation work. Older placeholder assets may still serve existing content and are not deleted merely because the OG fallback changed.
 
 0.27.0 ownership migration: standard route compositions, CyberAtmosphere and rain/dust initialization now ship through the theme integration. Existing visuals, parameters, client lifetimes and interaction contracts below are preserved. User custom pages/assets/configuration stay project-owned. See the 0.27.0 release ledger for actual delivery verification.

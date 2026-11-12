@@ -81,6 +81,8 @@ test('build exports nine languages, base paths and nested slugs, with real disco
     };
     assert.deepEqual(await generateMachineReadable(options), {
       articles: 9,
+      fragments: 0,
+      about: 0,
       locales: 9,
       files: 28,
     });
@@ -118,13 +120,19 @@ test('build exports nine languages, base paths and nested slugs, with real disco
     for (const locale of locales.slice(1))
       await rm(path.join(dir, locale, 'blog'), { recursive: true });
     await writeFile(path.join(dir, 'en/blog/nested/hello/index.html'), page({ robots: 'noindex' }));
-    assert.deepEqual(await generateMachineReadable(options), { articles: 0, locales: 0, files: 1 });
+    assert.deepEqual(await generateMachineReadable(options), {
+      articles: 0,
+      fragments: 0,
+      about: 0,
+      locales: 0,
+      files: 1,
+    });
     for (const locale of locales) {
       await assert.rejects(access(path.join(dir, locale, 'llms.txt')));
       await assert.rejects(access(path.join(dir, locale, 'llms-full.txt')));
     }
     await assert.rejects(access(path.join(dir, 'en/blog/nested/hello/index.md')));
-    assert.match(await readFile(path.join(dir, 'llms.txt'), 'utf8'), /No public articles/);
+    assert.match(await readFile(path.join(dir, 'llms.txt'), 'utf8'), /No public content/);
   } finally {
     await rm(root, { recursive: true, force: true });
   }

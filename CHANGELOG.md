@@ -11,6 +11,12 @@ depends_on:
 
 # Changelog
 
+## [0.34.0] - 2026-11-12
+
+See the [delivery record](docs/releases/0.34.0.md) and its linked GitHub Release for actual delivery status and measured timings.
+
+- Add build-time About and Fragments Markdown companions to the existing machine-readable pipeline. Merge public Fragment pagination per language, preserving ID/time/body and stable share links; export About's public biography/contact and reachable AI text popup without terminal/tool/configuration dumps or comments. Unify language indexes/full-text bundles, discovery, noindex/disabled/deleted-content cleanup and user-file protection. Preserve article URLs and client effects/performance. Add configured language to site/article JSON-LD and AboutPage metadata. Synchronize nine-language README, npm README and demo/starter Guides 1, 3 and 5.
+
 ## [0.33.2] - 2026-11-12
 
 See the [delivery record](docs/releases/0.33.2.md) for publication status and measured validation.

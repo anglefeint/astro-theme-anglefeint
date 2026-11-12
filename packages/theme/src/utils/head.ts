@@ -62,6 +62,7 @@ export function buildHeadLocaleState(
 }
 
 export function buildJsonLdSchemas({
+  inLanguage,
   siteTitle,
   siteAuthor,
   siteURL,
@@ -77,6 +78,7 @@ export function buildJsonLdSchemas({
   tags,
   schema,
 }: {
+  inLanguage?: string;
   siteTitle: string;
   siteAuthor: string;
   siteURL: URL;
@@ -93,6 +95,7 @@ export function buildJsonLdSchemas({
   schema?: Record<string, unknown> | Record<string, unknown>[];
 }) {
   const websiteSchema = {
+    inLanguage,
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: siteTitle,
@@ -115,6 +118,7 @@ export function buildJsonLdSchemas({
     ? {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
+        inLanguage,
         headline: title,
         description,
         image: [imageURL],
