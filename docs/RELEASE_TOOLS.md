@@ -6,7 +6,13 @@ doc_scope: [release, workflow, validation, starter-sync]
 update_triggers: [workflow-change, release-change, script-change, command-change]
 source_of_truth: true
 depends_on:
-  [scripts/release-tool-plan.mjs, scripts/npm-release-tools.mjs, scripts/release-tools.mjs]
+  [
+    scripts/release-tool-plan.mjs,
+    scripts/npm-release-tools.mjs,
+    scripts/release-tools.mjs,
+    scripts/verify-published-package.mjs,
+    scripts/verify-release.mjs,
+  ]
 sync_targets: [docs/AI_WORKFLOW.md, docs/MAINTAINER_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 ---
 
@@ -57,6 +63,8 @@ Choose exactly one installed validation level; combining levels is rejected befo
 Before an authorized release, choose necessary technical validation and preview the combined plan. For example, installed-build and npm-delivery in one invocation perform one independent install/build before uploading. This is not a mandatory recipe for every change. npm-delivery alone only performs mechanics and does not prove source/install/upgrade validation. The agent must report which checks were selected.
 
 The compatibility release:npm entry uses the same mechanics, retaining tag/dry-run/skip-pack/skip-registry-check diagnostics; --skip-checks is deprecated because no full check runs implicitly. Diagnostic omissions still require explanation. Publishing continues from packages/theme, not the preparation tarball. No single-artifact handoff is claimed.
+
+Publication and recovery share tag/exact-version metadata/downloaded-hash validation. Normal upload records HEAD before publication and verifies registry gitHead. Recovery accepts recorded optional expected identities rather than assuming the current checkout is the published source. Each failure is saved in session summary.json as verificationFailures and reports stage/code/reason and retry/stop/exhausted; only recognized propagation/network/rate-limit/server failures retry. Identity/authentication/integrity/malformed/unknown errors stop immediately. Attempts (12), interval (10 seconds) and per-fetch timeout (15 seconds) remain unchanged. See [registry recovery](PACKAGE_RELEASE.md#registry-availability-and-recovery) for the full contract.
 
 ## Consent and other capabilities
 

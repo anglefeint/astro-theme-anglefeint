@@ -88,6 +88,8 @@ Class C: Cross-layer Contract Changes
 
 ### Serial execution and reporting
 
+Registry verification persists sanitized verificationFailures in session summary.json and records each failed attempt's stage, code, bounded/redacted reason and retry/stop/exhausted action. Publication and recovery use one metadata/downloaded-hash contract; only named transient errors retry, while identity, authentication and unknown errors stop. The retry count/interval/fetch timeout remain unchanged. Follow [registry recovery](PACKAGE_RELEASE.md#registry-availability-and-recovery) before resuming an accepted upload; never republish it.
+
 Run main push, npm release, starter sync/push, documentation closeout push and tag push sequentially; await each result before starting the next. Never parallelize operations that share the checkout, dependencies or build directory. The npm tool runner and starter sync entry share `scripts/maintainer-session.mjs`'s checkout-local lock. No pre-push validation hook remains; operators must still await the whole push. Direct `npm run check` and other standalone commands do not acquire this lock.
 
 Each protected entry prints stage start/end, elapsed seconds, a running notice every 30 seconds for asynchronous work, and local log paths. Non-interactive child stdout/stderr is saved in full under ignored `acceptance-results/maintainer-*/`; failures show a bounded tail and remain blocking. `summary.json` records completed stage statuses, durations and command exit codes. npm publish retains inherited terminal input/output for authentication; its stage records duration/status, not interactive output or input. Synchronous registry/audit calls report start/end but cannot emit a heartbeat while blocking Node.

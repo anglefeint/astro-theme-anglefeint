@@ -11,10 +11,11 @@ import {
 } from '../scripts/release-tool-plan.mjs';
 import { createNpmOperations } from '../scripts/npm-release-tools.mjs';
 
-function fixture(opts = {}) {
+function fixture(opts = {}, registryOverrides = {}) {
   const commands = [],
     captures = [],
-    stages = [];
+    stages = [],
+    records = [];
   let audits = 0;
   const pkg = { name: '@anglefeint/astro-theme', version: '0.33.1' };
   const operations = createNpmOperations(opts, {
@@ -24,16 +25,24 @@ function fixture(opts = {}) {
     session: {
       stage: async (label, action) => {
         stages.push(label);
-        return action();
+        const record = {};
+        records.push(record);
+        return action(record);
       },
     },
     run: async (command, args) => commands.push([command, ...args]),
     audit: () => audits++,
-    capture: (_command, args) => {
+    capture: (command, args) => {
       captures.push(args);
+      if (command === 'git') return 'a'.repeat(40);
       if (!args.includes('--json')) return '0.33.0';
+      const dist = { integrity: 'sha512-test', shasum: 'b'.repeat(40) };
       return JSON.stringify(
-        args[0] === 'view' ? pkg.version : [{ ...pkg, integrity: 'sha512-test' }]
+        args[0] === 'view'
+          ? args[2] === 'version'
+            ? pkg.version
+            : { ...pkg, gitHead: 'a'.repeat(40), dist, ...registryOverrides }
+          : [{ ...pkg, ...dist }]
       );
     },
   });
@@ -41,6 +50,7 @@ function fixture(opts = {}) {
     commands,
     captures,
     stages,
+    records,
     operations,
     get audits() {
       return audits;
@@ -58,7 +68,20 @@ test('publication mechanics audit and upload once, without hidden source/install
   );
   assert.equal(f.commands[0][2], 'theme:pack');
   assert(f.captures.some((c) => c[0] === 'pack'));
+  assert(f.captures.some((c) => c[0] === 'rev-parse'));
   assert(!planNpmTools(['npm-delivery']).some((n) => /source|installed|browser/.test(n)));
+});
+
+test('normal delivery rejects a registry source mismatch after a single accepted upload', async () => {
+  const f = fixture({}, { gitHead: 'c'.repeat(40) });
+  await assert.rejects(
+    executeNpmToolPlan(['npm-delivery'], (name) => f.operations[name]()),
+    (error) => error.code === 'IDENTITY_MISMATCH' && error.attempt === 1
+  );
+  assert.equal(f.commands.filter((c) => c[1] === 'publish').length, 1);
+  assert(!f.captures.some((c) => c[0] === 'pack'));
+  assert.equal(f.records.at(-1).verificationFailures[0].code, 'IDENTITY_MISMATCH');
+  assert.equal(f.records.at(-1).verificationFailures[0].action, 'stop');
 });
 
 test('selected checks run once before upload regardless of target order; failure blocks upload', async () => {

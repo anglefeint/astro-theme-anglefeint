@@ -49,7 +49,7 @@ export function parseVerifyArgs(argv) {
 
 export function verifyRelease(
   options,
-  { capture, destination, log, attempts, delayMs, sleep } = {}
+  { capture, destination, log, onFailure, attempts, delayMs, sleep } = {}
 ) {
   return verifyPublishedPackage({
     name: '@anglefeint/astro-theme',
@@ -63,6 +63,7 @@ export function verifyRelease(
     },
     destination,
     log,
+    onFailure,
     attempts,
     delayMs,
     sleep,
@@ -84,17 +85,20 @@ async function main(argv) {
     download = await mkdtemp(path.join(parent, 'registry-verify-'));
     const npmCli = process.env.npm_execpath;
     if (!npmCli) throw new Error('Run through npm run release:verify');
-    await session.stage('Verify published tag, metadata and downloaded package (read-only)', () =>
-      verifyRelease(options, {
-        destination: download,
-        capture: async (args) =>
-          (
-            await exec(process.execPath, [npmCli, ...args], {
-              cwd: root,
-              maxBuffer: 8 * 1024 * 1024,
-            })
-          ).stdout,
-      })
+    await session.stage(
+      'Verify published tag, metadata and downloaded package (read-only)',
+      (record) =>
+        verifyRelease(options, {
+          destination: download,
+          onFailure: (failure) => (record.verificationFailures ??= []).push(failure),
+          capture: async (args) =>
+            (
+              await exec(process.execPath, [npmCli, ...args], {
+                cwd: root,
+                maxBuffer: 8 * 1024 * 1024,
+              })
+            ).stdout,
+        })
     );
     console.log(
       `Verified @anglefeint/astro-theme@${options.version}; no package was published. Complete selected technical checks, starter delivery and tag/announcement. Demo regression belongs to the user; do not launch browser or hosting checks.`

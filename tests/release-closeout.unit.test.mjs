@@ -51,7 +51,17 @@ test('README checks resolve relative paths and fail on missing HTML links', asyn
   }
 });
 
-const artifact = { name: '@anglefeint/astro-theme', version: '0.2.12', integrity: 'sha512-test' };
+const artifact = {
+  name: '@anglefeint/astro-theme',
+  version: '0.2.12',
+  integrity: 'sha512-test',
+  shasum: 'b'.repeat(40),
+};
+const metadata = {
+  name: artifact.name,
+  version: artifact.version,
+  dist: { integrity: artifact.integrity, shasum: artifact.shasum },
+};
 const options = { ...artifact, destination: 'unused', log: () => {}, sleep: async () => {} };
 
 test('registry verification retries visibility and download without publishing', async () => {
@@ -62,15 +72,15 @@ test('registry verification retries visibility and download without publishing',
     capture: async (args) => {
       calls.push(args);
       if (calls.length === 1) return JSON.stringify('0.2.11');
-      if (args[0] === 'view') return JSON.stringify('0.2.12');
-      if (++packs === 1) throw new Error('tarball not ready');
+      if (args[0] === 'view') return JSON.stringify(args[2] === 'version' ? '0.2.12' : metadata);
+      if (++packs === 1) throw Object.assign(new Error('tarball not ready'), { code: 'E404' });
       return JSON.stringify([artifact]);
     },
   });
-  assert.deepEqual(result, artifact);
+  assert.deepEqual(result, { ...artifact, metadata });
   assert.deepEqual(
     calls.map((args) => args[0]),
-    ['view', 'view', 'pack', 'view', 'pack']
+    ['view', 'view', 'view', 'pack', 'view', 'view', 'pack']
   );
   assert.ok(calls.every((args) => args.includes('--fetch-timeout=15000')));
 });
@@ -87,7 +97,7 @@ test('registry exhaustion gives recovery guidance and bounded attempts', async (
       },
       capture: async () => {
         calls += 1;
-        throw new Error('404');
+        throw Object.assign(new Error('not visible'), { code: 'E404' });
       },
     }),
     /Do not republish this version or sync starter yet/
@@ -105,10 +115,16 @@ test('registry custom tags and downloaded identity are checked', async () => {
       attempts: 1,
       capture: async (args) => {
         calls.push(args);
-        return JSON.stringify(args[0] === 'view' ? '0.2.12' : [{ ...artifact, version: '0.2.11' }]);
+        return JSON.stringify(
+          args[0] === 'view'
+            ? args[2] === 'version'
+              ? '0.2.12'
+              : metadata
+            : [{ ...artifact, version: '0.2.11' }]
+        );
       },
     }),
-    /registry verification failed/
+    /Registry verification stop/
   );
   assert.equal(calls[0][1], '@anglefeint/astro-theme@alpha');
   assert.equal(calls[1][1], '@anglefeint/astro-theme@0.2.12');

@@ -29,6 +29,8 @@ All notable changes to this project are documented in this file.
 
 ## Unreleased
 
+- Maintainer-only: unify normal/recovery npm verification across tag, exact-version metadata and downloaded integrity/SHA1, automatically checking the publishing HEAD during normal delivery. Log each failure's stage/code/redacted reason/action; retry only named transient errors and stop immediately on identity/authentication/malformed/unknown failures. Keep the existing 12 attempts, 10-second interval and 15-second fetch timeout. No theme package, consumer command or starter change; npm remains 0.33.2.
+
 ## [0.33.0] - 2026-11-12
 
 See the [delivery record](docs/releases/0.33.0.md) for actual publication and acceptance status.

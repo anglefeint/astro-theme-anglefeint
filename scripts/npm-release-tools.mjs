@@ -29,7 +29,15 @@ function runCapture(cmd, args, options = {}) {
 
   if (result.status !== 0) {
     const detail = result.stderr?.trim() || result.stdout?.trim();
-    throw new Error(`${cmd} ${args.join(' ')} failed${detail ? `:\n${detail}` : ''}`);
+    throw Object.assign(
+      new Error(`${cmd} ${args.join(' ')} failed${detail ? `:\n${detail}` : ''}`),
+      {
+        code: result.error?.code,
+        stdout: result.stdout,
+        stderr: result.stderr,
+        status: result.status,
+      }
+    );
   }
 
   return result.stdout.trim();
@@ -136,6 +144,7 @@ export function createNpmOperations(
   opts,
   { pkg, npmEnv, cacheDir, session, run, capture = runCapture, audit = auditDependencies }
 ) {
+  let publishedSource;
   return {
     ...Object.fromEntries(
       Object.entries(npmReleaseTools)
@@ -162,8 +171,13 @@ export function createNpmOperations(
       run('npm', ['run', 'check:installed', '--', '--audit', '--build'], { env: npmEnv }),
     pack: () => (opts.skipPack ? undefined : run('npm', ['run', 'theme:pack'], { env: npmEnv })),
     'npm-auth': () => (opts.dryRun ? undefined : run('npm', ['whoami'], { env: npmEnv })),
-    'npm-upload': () =>
-      run(
+    'npm-upload': () => {
+      if (!opts.dryRun) {
+        publishedSource = capture('git', ['rev-parse', 'HEAD']);
+        if (!/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/i.test(publishedSource))
+          throw new Error('Cannot establish npm publication source');
+      }
+      return run(
         'npm',
         [
           'publish',
@@ -173,17 +187,20 @@ export function createNpmOperations(
           ...(opts.dryRun ? ['--dry-run'] : []),
         ],
         { cwd: path.join(repoRoot, 'packages/theme'), env: npmEnv, interactive: true }
-      ),
+      );
+    },
     'npm-delivery': () =>
       opts.dryRun
         ? undefined
-        : session.stage('Verify published tag and downloaded package', () =>
+        : session.stage('Verify published tag and downloaded package', (record) =>
             verifyPublishedPackage({
               name: pkg.name,
               version: pkg.version,
               tag: opts.tag || 'latest',
               capture: (args) => capture('npm', args, { env: npmEnv }),
               destination: cacheDir,
+              expected: { source: publishedSource },
+              onFailure: (failure) => (record.verificationFailures ??= []).push(failure),
             })
           ),
   };
