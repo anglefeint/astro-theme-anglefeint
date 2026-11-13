@@ -23,6 +23,7 @@ import { SITE_AUTHOR, SITE_TITLE } from '@anglefeint/site-config/site';
 import { publicDir } from 'virtual:anglefeint-social';
 import { resolveSocialImage } from '../social/resolve.mjs';
 import { imageData } from '../social/model.mjs';
+import { resolveArticleAuthor } from '../utils/article-author';
 import { THEME } from '@anglefeint/site-config/theme';
 import {
   DEFAULT_LOCALE,
@@ -73,7 +74,7 @@ const articleHtml = await Astro.slots.render('default');
 const needsMath = (THEME.MATH?.ENABLED ?? false) && hasMathMarkup(articleHtml);
 const cover = heroImage ? blogCover(coverData, filePath, heroImage) : undefined;
 const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
-const articleAuthor = author?.trim() || SITE_AUTHOR;
+const articleAuthor = resolveArticleAuthor(author, SITE_AUTHOR);
 const authorHref =
   THEME.ABOUT_PAGE_ENABLED && articleAuthor === SITE_AUTHOR
     ? localePath(resolvedLocale, '/about/')

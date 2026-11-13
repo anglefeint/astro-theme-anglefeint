@@ -7,17 +7,13 @@ heroImage: ../../../assets/blog/default-covers/hacker-01.webp
 aiModel: anglefeint-core
 aiMode: narrative
 aiState: stable
-aiLatencyMs: 129
-aiConfidence: 0.98
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-Die Profilseite greift bewusst die Hackerkultur auf. Sie steht für Neugier, Denken in Systemen, sichere Werkzeuge und sorgfältige Arbeit.
+About stellt den Autor mit Hacker-Ästhetik vor: Terminaltext, Fenster und interaktive Werkzeuge geben der Vorstellung den Charakter eines Entwicklerarbeitsplatzes.
 
-KI lässt die Rolle von Entwicklern nicht verschwinden. Sie verändert sie: Wir koordinieren Werkzeuge, setzen Grenzen und bauen zuverlässige Systeme aus probabilistischen Bausteinen.
+Text und Fensterleiste sind sofort sichtbar. Steuerung, virtuelles Terminal und Werkzeuge verhalten sich unabhängig. Dateien und Befehle gehören zur schreibgeschützten virtuellen Umgebung der Website; sie greifen nicht auf das echte Dateisystem des Besuchers zu.
 
-Terminalmotive, Statusbewegung und interaktive Module rechts drücken diese Haltung aus. Die Oberfläche ist zugleich Profil und sichtbare Handwerksprobe.
+Die Neugier der Kommandozeilenkultur bleibt erhalten. Vorstellung, Kontakte und Module lassen sich ändern. Zuerst sollen Leser dich kennenlernen.
 
-Wir respektieren Code als Ausdrucksmittel, arbeiten mit KI unter eigenem Urteil und verstehen technisches Gespür als Teil der Produktqualität.
-
-Diese Atmosphäre schließt die Reise mit einer Überzeugung: Menschen, die Systeme verstehen, bleiben auch in der nächsten Welle zentral.
+Weiterlesen: [Konfigurationsverzeichnis: About](/de/blog/config-about/) · [Konfigurationsverzeichnis: virtuelles Terminal](/de/blog/config-terminal/)

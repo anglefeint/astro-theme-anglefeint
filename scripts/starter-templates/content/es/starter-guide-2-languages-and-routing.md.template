@@ -1,176 +1,233 @@
 ---
 tags: ['anglefeint', 'starter']
-title: 'Guía 2: Escribe y organiza el contenido'
-subtitle: 'Crea artículos y utiliza portadas, etiquetas, índice, imágenes ampliadas, copia de código, búsqueda e imágenes para compartir.'
-description: 'Crea artículos y utiliza portadas, etiquetas, índice, imágenes ampliadas, copia de código, búsqueda e imágenes para compartir.'
+title: 'Guía 2: escribir tu primera entrada'
+subtitle: 'Crear, escribir y previsualizar contenido'
+description: 'Crea una entrada con el flujo predeterminado y aprende frontmatter, etiquetas, código, fórmulas e imágenes.'
 pubDate: '2026-03-07'
 updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
-## Escribe en los archivos de contenido
+Esta es la parte 2 de 8. [Consulta el orden completo](/es/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Busca campos de configuración](/es/blog/config-reference/).
 
-Esta guía presupone que completaste la instalación y los ajustes de la guía 1. Las funciones generales se configuran en `src/site.config.ts`; el título, las etiquetas y las opciones de un artículo van en su frontmatter, entre las dos líneas `---` al principio del Markdown. Son lugares distintos.
+Tras la [instalación y configuración del sitio](/es/blog/starter-guide-1-configure-your-site/), escribir consiste sobre todo en editar archivos de `src/content/blog/`. Pon título, fecha y demás datos de cada entrada en su frontmatter inicial. El nombre del sitio, el autor predeterminado y los controles globales siguen en `src/site.config.ts`.
 
-## 1. Crea un artículo y entiende su URL
+Crea y previsualiza primero una entrada con el flujo predeterminado; elige idiomas después si hace falta. Consulta la referencia de campos cuando la necesites.
 
-Desde la raíz del proyecto, ejecuta:
+## 1. Crear una entrada con el flujo predeterminado
+
+Desde la raíz del proyecto, donde está `package.json`, ejecuta:
 
 ```bash
 npm run new-post -- my-first-post
 ```
 
-Por defecto se crean archivos para los idiomas activos. Para crear solo la versión española, usa este comando en lugar del anterior; no ejecutes ambos:
+Si ya lo hiciste en el primer tutorial, abre el archivo existente y continúa escribiendo. Los archivos existentes se omiten, no se sobrescriben.
+
+Sin `--locales` ni `ANGLEFEINT_LOCALES`, crea `src/content/blog/<语言代码>/my-first-post.md` para cada idioma activo. La configuración inicial activa nueve idiomas y crea nueve estructuras; si cambias los controles de idioma, se usa la selección actual. No traduce el cuerpo.
+
+Elige el archivo de idioma que quieras editar. Su dirección es `/<语言代码>/blog/my-first-post/` y su lista `/<语言代码>/blog/`. Por ejemplo, inglés usa `/en/blog/my-first-post/` y chino `/zh/blog/my-first-post/`, siempre que estén activos. No necesitas crear rutas manualmente.
+
+`my-first-post` es el slug. Usa minúsculas, números y guiones, como `learning-astro-1`; no se permiten espacios, guiones bajos ni `/`. Cambiar el nombre cambia la URL sin redirigir automáticamente la anterior.
+
+El comando añade título, descripción, fecha UTC actual y cuerpo de ejemplo. Si `src/assets/blog/default-covers/` tiene imágenes WebP, PNG o JPEG, elige además una portada al azar. Sin imágenes, omite `heroImage`; no descarga una portada. Sustituye después textos, fecha e imagen.
+
+### Crear solo determinados idiomas
+
+Son alternativas opcionales al comando predeterminado. zh crea solo chino; en,zh crea inglés y chino. No necesitas ejecutar todos los ejemplos:
 
 ```bash
-npm run new-post -- my-first-post --locales es
+# 只创建中文
+npm run new-post -- my-first-post --locales zh
+
+# 创建英文和中文
+npm run new-post -- my-first-post --locales en,zh
 ```
 
-Se crea `src/content/blog/es/my-first-post.md`, cuya URL es `/es/blog/my-first-post/`. El slug admite letras minúsculas, números y guiones, sin espacios ni guiones bajos. Los archivos existentes se omiten, nunca se sobrescriben.
+Sin `--locales` se usan los idiomas activos, salvo que exista `ANGLEFEINT_LOCALES`. Prioridad completa: `--locales` → `ANGLEFEINT_LOCALES` → idiomas activos. Los archivos nuevos de una ejecución comparten portada; los existentes no cambian.
 
-`--locales` elige los archivos que se crearán, pero no activa idiomas. Las rutas siguen dependiendo de la configuración del sitio. Conserva el mismo nombre de archivo en las traducciones y redacta cada versión. Si cambias a un idioma sin traducción de ese artículo, se abre su lista de artículos.
+El comando crea archivos sin traducir ni activar idiomas. Pon las traducciones en su directorio de idioma con el mismo slug. El menú de idioma abre la traducción equivalente si existe; si no, abre la lista de entradas del idioma de destino.
 
-## 2. Escribe el frontmatter y elige una portada
+## 2. Definir título, descripción y fechas
 
-Coloca este frontmatter al principio del archivo y escribe el cuerpo después del segundo `---`:
-
-```yaml
----
-title: 'My first post'
-description: 'What I learned while building my blog.'
-pubDate: '2026-09-18'
-tags: ['astro', 'notes']
----
-```
-
-`title`, `description` y `pubDate` son obligatorios. `subtitle`, `updatedDate` y `author` son opcionales; si omites el autor se utiliza el del sitio. Las listas se ordenan por `pubDate`, del más reciente al más antiguo. Actualmente no hay filtro de borradores ni publicación programada: ni `draft: true` ni una fecha futura ocultan el artículo. Guarda los textos sin terminar fuera del directorio de contenido.
-
-Tras una modificación sustancial, indica la fecha real en `updatedDate`. El sitemap usa `updatedDate` o, si falta, `pubDate`; no inventa una fecha en cada build. Las fechas no garantizan la indexación.
-
-Para la portada, usa `heroImage: ./cover.jpg` y coloca el archivo junto al artículo, o conserva la ruta local asignada por el comando de creación. La asignación automática solo ocurre si hay imágenes en `src/assets/blog/default-covers/`; no descarga imágenes. `heroImage` es opcional. Las palabras y los tokens se calculan automáticamente, por lo que normalmente no necesitan valores manuales.
-
-Las palabras y los tokens son estimaciones, no mediciones de un servicio de IA. `wordCount` y `tokenCount` en frontmatter sobrescriben cada recuento por separado. Los artículos no muestran tiempo de lectura, latencia ni confianza; los campos antiguos pueden conservarse.
-
-## 3. Genera el índice con encabezados
-
-Escribe encabezados normales de segundo y tercer nivel:
+Abre el archivo generado. El frontmatter YAML está entre las dos primeras líneas `---`; después viene el cuerpo. Puedes empezar con este ejemplo y conservar `heroImage` si ya existe:
 
 ```md
-## First topic
+---
+title: '我的第一篇文章'
+description: '记录我用 Anglefeint 搭建博客的过程。'
+pubDate: '2026-11-13'
+tags: ['astro', '笔记']
+---
 
-Write your explanation here.
+这是我的第一篇文章。我准备在这里记录学习过程和遇到的问题。
 
-### A closer look
+## 为什么开始写博客
 
-Add details here.
+写下自己的想法，也给以后的自己留下线索。
+
+### 先从一个小问题开始
+
+今天先记录安装和发布过程。
 ```
 
-El índice está activo por defecto y se genera a partir de `##` y `###`. Aparece a la derecha en pantallas amplias y antes del cuerpo en pantallas estrechas; si no hay encabezados compatibles, no aparece. Puedes probar el de esta página.
+Sustituye la fecha por la fecha real de publicación. `title`, `description` y `pubDate` son obligatorios; `tags` es opcional. La página ya muestra el título, así que el cuerpo suele comenzar con `##` sin repetir `# 我的第一篇文章`.
 
-Para desactivarlo en un artículo, añade al frontmatter existente:
+- `title` aporta el título de entrada, de lista y los metadatos asociados.
+- `description` aporta la presentación y los metadatos. Sin `context` explícito, también aparece bajo el título como línea de contexto.
+- `pubDate` ordena las listas de más reciente a más antigua.
+- Tras cambios importantes en una entrada publicada, añade un `updatedDate` veraz. Se muestra y tiene preferencia en sitemap, pero no sustituye `pubDate` para ordenar.
+
+Usa fechas `YYYY-MM-DD` entre comillas. Para una hora exacta, usa ISO con zona, por ejemplo `'2026-11-13T09:00:00+08:00'`. Las páginas muestran fechas UTC; la conversión puede cambiar el día.
+
+**No existe filtro de borradores ni publicación programada.** Las estructuras de otros idiomas también se hacen públicas al compilar. Termina el contenido necesario y mueve fuera de `src/content/blog/` lo que no esté listo. `draft: true`, una `pubDate` futura y `search: false` no convierten una entrada en privada.
+
+## 3. Escribir y organizar el cuerpo con encabezados
+
+Deja una línea vacía entre párrafos. Esta es sintaxis Markdown habitual:
+
+```md
+这是一段正文，可以使用 **加粗**、_强调_ 和 `行内代码`。
+
+- 第一个要点
+- 第二个要点
+
+[链接文字](https://example.com/)
+
+> 这是一段引用。
+```
+
+`##` y `###` generan automáticamente el índice de contenido. Aparece a la derecha en pantallas anchas y antes del cuerpo en estrechas. Sin encabezados de nivel dos o tres, se oculta. Los niveles más profundos pueden aparecer en el cuerpo, pero no en ese índice.
+
+Para desactivarlo en una entrada, añade al frontmatter existente:
 
 ```yaml
 toc: false
 ```
 
-`toc: true` puede anular la desactivación global; si se omite, se hereda `theme.toc.enabled`. Los encabezados Markdown normales de MDX funcionan, pero no se recopilan automáticamente los generados dentro de componentes o HTML/JSX sin procesar.
+Omitir `toc` hereda `theme.toc.enabled` de `src/site.config.ts`, activo por defecto. `toc: true` puede imponerse al apagado global. El índice usa los encabezados Markdown que proporciona el compilador; no recoge automáticamente los generados dentro de componentes MDX o HTML/JSX sin procesar.
 
-## 4. Organiza los artículos con etiquetas
+### Organizar entradas con etiquetas
 
-Añade `tags: ["astro", "notes"]` al frontmatter. No necesitas configurar etiquetas aparte ni crear rutas manualmente. La compilación genera un índice de etiquetas y listas paginadas por idioma. Tanto la entrada de etiquetas del blog como las etiquetas del artículo son enlaces; comprueba `/es/tags/`.
+Añade `tags: ['astro', '笔记']` al frontmatter para generar enlaces y el archivo de etiquetas del idioma sin rutas manuales. Si chino está activo, visita `/zh/tags/`.
 
-Se distinguen mayúsculas y minúsculas: `Astro` y `astro` son diferentes. Se eliminan espacios al principio y al final, y una etiqueta repetida en el mismo artículo cuenta una vez. Los caracteres no latinos y especiales se codifican en URL estables: usa los enlaces generados en vez de adivinarlos. Renombrar una etiqueta cambia su enlace. Los artículos sin etiquetas siguen apareciendo. `theme.tags.enabled: false` desactiva las entradas y la generación de páginas de etiquetas.
+Se distinguen mayúsculas: `Astro` y `astro` son diferentes. Se recortan espacios exteriores y los duplicados de una entrada cuentan una vez. Usa los enlaces generados: chino y caracteres especiales tienen codificación estable, no adivines las rutas. Renombrar una etiqueta cambia su enlace.
 
-## 5. Amplía imágenes y copia código sin configurar nada
+`theme.tags.enabled: false` desactiva globalmente enlaces y generación de páginas de etiquetas sin eliminar las entradas.
 
-Las imágenes del cuerpo pueden estar junto al artículo o en `public/images/`. Estas son dos alternativas; añade el archivo correspondiente antes de usarlas:
+## 4. Insertar código y fórmulas
 
-```md
-![A description of the image](./photo.jpg)
-
-![A description of the image](/images/photo.jpg)
-```
-
-Haz clic en una imagen normal del cuerpo, o pulsa Enter/Espacio cuando tenga el foco, para ampliarla. Cierra con Esc, el botón de cierre o el fondo. Se excluyen las portadas y las imágenes dentro de enlaces o botones. Se usa la fuente ya seleccionada por el navegador: no se descarga automáticamente un original de mayor resolución ni se ofrece navegación por una galería.
-
-Para el código utiliza bloques Markdown normales:
+Usa una cerca de tres acentos graves seguida del lenguaje:
 
 ````md
 ```js
-console.log('Hello, world!');
+const message = 'Hello, world!';
+console.log(message);
 ```
 ````
 
-Aparece un botón de copia en la esquina superior derecha que conserva sangría y saltos de línea. Pruébalo en HTTPS o localhost. Si falla el acceso al portapapeles, se pide copiar manualmente. Ninguna de estas funciones requiere un interruptor adicional.
+Los bloques reciben automáticamente un botón para copiar con saltos e indentación. Copia texto; no ejecuta JavaScript del bloque. Si el portapapeles no está disponible, muestra un error y puedes seleccionar manualmente el texto. El botón requiere JavaScript.
 
-## 6. Comprueba la búsqueda tras compilar
+Las matemáticas están activas por defecto sin instalar otro plugin. Usa `$...$` en línea o una fórmula de bloque entre líneas separadas `$$`:
 
-La búsqueda está activa por defecto y consulta títulos y cuerpos de artículos del idioma actual. `npm run build` genera el índice. Ejecuta `npm run preview`, abre la búsqueda de la cabecera y busca una frase de un artículo para comprobar su enlace. `npm run dev` muestra un aviso de desarrollo, no búsqueda de texto completo en tiempo real.
+```md
+保存量为 $C_{saved}$。
 
-Para excluir un artículo del índice, añade a su frontmatter:
-
-```yaml
-search: false
+$$
+\frac{a}{b} = x_1 + x_2
+$$
 ```
 
-No es una opción de privacidad ni de borrador: el artículo sigue accesible por URL y en las listas. `theme.search.enabled: false` desactiva la entrada global y la generación del índice. Vuelve a compilar cuando cambien los artículos.
+Escapa un dólar literal ambiguo como `\$`; el código en línea y los bloques no cambian. KaTeX renderiza al compilar. Admite sintaxis matemática, no documentos LaTeX completos. Una fórmula inválida hace fallar la compilación con información de origen. Las fórmulas largas permiten desplazamiento horizontal.
 
-## 7. Imágenes automáticas y personalizadas para compartir
+Combina `math: { enabled: false }` dentro del `theme` existente en `src/site.config.ts` para desactivar matemáticas globalmente. Mantén títulos y descripciones como texto plano, sin depender del renderizado matemático.
 
-Por defecto, la compilación genera un PNG de 1200×630 para artículos sin `ogImage`, usando el título, el autor del artículo (o del sitio) y el nombre del sitio. No necesitas una API de imágenes ni diseñar cada una. Esto no cambia la portada `heroImage`.
+### ¿Cuándo usar MDX?
 
-Las tarjetas automáticas usan un fondo incluido de lluvia de código, terminales y redes de neón, con tu propio nombre de sitio, título y autor. El pequeño crédito `Theme by Anglefeint` abajo a la derecha sigue `theme.footer.showCredits` (por defecto `true`); con `false` se ocultan los créditos del pie y de la imagen. Vuelve a compilar y desplegar tras cambiarlo. Los archivos `ogImage` personalizados no se modifican. El fondo funciona sin conexión y no añade JavaScript al navegador.
+Usa `.md` para escritura normal y `.mdx` para importar y renderizar componentes. El tema recoge ambas extensiones y admite matemáticas en MDX sin otro procesador.
 
-Para elegir tu imagen, coloca `share.png` junto al artículo y añade al frontmatter:
+`new-post` crea `.md`. Si hace falta, renómbralo a `.mdx` conservando el frontmatter. No mantengas `.md` y `.mdx` con el mismo nombre base como entradas distintas en un idioma: resuelven a la misma URL. Componentes y expresiones deben respetar MDX; cambiar la extensión no hace válido cualquier texto.
 
-```yaml
-ogImage: ./share.png
+## 5. Añadir imágenes
+
+Las imágenes del cuerpo pueden estar junto a la entrada o en `public/images/`. Añade el archivo real antes de referenciarlo:
+
+```md
+![照片内容的描述](./photo.jpg)
+
+![照片内容的描述](/images/photo.jpg)
 ```
 
-También puedes usar `ogImage: /images/share.png` para `public/images/share.png`, o una URL HTTPS directa a una imagen. Si falta un archivo local habrá un error; las imágenes externas dependen del servicio que las aloja.
+La primera ruta es relativa al archivo de entrada. La segunda corresponde a `public/images/photo.jpg`, omitiendo `public` de la URL. La descripción se convierte en texto alternativo.
 
-Un `ogImage` explícito tiene prioridad. `theme.socialImage.enabled: false` solo desactiva la generación automática: las imágenes manuales siguen funcionando, y los demás artículos usan la portada o la imagen predeterminada. Inspecciona `og:image` en el HTML compilado. Las imágenes generadas están en `dist/_social/`. Las plataformas pueden conservar en caché una vista previa antigua tras volver a publicar. La fuente incluida no garantiza todos los emojis ni sistemas de escritura.
+Para cambiar la portada, coloca `cover.jpg` junto a la entrada y usa `heroImage: ./cover.jpg` en frontmatter. Acepta imágenes locales y se puede omitir. Las imágenes del cuerpo, portadas e imágenes para compartir son distintas; cambiar la portada no la inserta en el cuerpo.
 
-## 8. Usa new-page para una página independiente
+Las imágenes normales del cuerpo abren una vista ampliada al pulsarlas o enfocarlas y activar Enter/Espacio. Cierra con Esc, el botón o el fondo. Se excluyen portadas e imágenes dentro de enlaces/botones. La vista usa la fuente ya elegida por el navegador; no busca un original mayor ni ofrece navegación de galería.
 
-Por ejemplo, crea una página de presentación de proyectos:
+Tras añadir o sustituir una portada, dev o doctor local prepara archivos adaptativos. Guarda el original y todo `src/assets/blog/covers/`, incluidos manifest.json y generated/. La compilación de despliegue y doctor en CI solo los validan: fallan si faltan, están obsoletos o modificados, sin codificar en el servidor. Los derivados persistentes cubren portadas y las imágenes locales de fragments; las imágenes normales del cuerpo conservan el flujo Markdown/MDX existente.
+
+## 6. Previsualizar localmente y preparar la publicación
+
+Ejecuta `npm run dev` y abre `/<语言代码>/blog/my-first-post/` bajo la dirección de terminal, por ejemplo `/en/blog/my-first-post/` en inglés o `/zh/blog/my-first-post/` en chino. Revisa título, fecha, cuerpo, índice, etiquetas e imágenes. En traducciones nuevas, comprueba también el selector de idioma.
+
+Detén dev antes de publicar y ejecuta:
 
 ```bash
-npm run new-page -- projects --theme cyber
+npm run doctor
+npm run preview
 ```
 
-Se crea `src/pages/[lang]/projects.astro`, que genera `/<idioma>/projects/` para los idiomas activos. Edita ese archivo Astro para añadir contenido. No traduce el cuerpo ni añade automáticamente una entrada a la cabecera.
+doctor incluye comprobaciones y compilación; tras completarlo no repitas inmediatamente check ni build. preview sirve el `dist/` compilado sin publicarlo. Resuelve los errores antes del despliegue y no publiques restos de una compilación fallida.
 
-Elige un solo `--theme`: `base`, `ai`, `cyber`, `hacker` o `matrix`. Se admiten rutas anidadas como `projects/labs`, usando minúsculas, números y guiones. Una página existente produce un error: no ejecutes seguidas las cinco variantes para la misma ruta. Para artículos sigue usando `new-post`.
+### ¿Por qué la búsqueda no encuentra mi entrada en dev?
 
-## En esta serie
+El índice de texto completo se genera al compilar. `npm run dev` muestra un aviso de desarrollo en la búsqueda. Busca una frase del cuerpo en preview compilado para comprobar resultados y navegación.
 
-- [Guía 1: Configura tu blog](/es/blog/starter-guide-1-configure-your-site/)
-- [Guía 2: Escribe y organiza el contenido](/es/blog/starter-guide-2-languages-and-routing/)
-- [Guía 3: Activa y personaliza funciones opcionales](/es/blog/starter-guide-3-comments-about-and-theme-toggles/)
+Por defecto se buscan títulos y cuerpos del idioma actual. Añade `search: false` al frontmatter para excluir una entrada; omitirlo la incluye. No la quita de listas, RSS, sitemap ni enlaces públicos. `theme.search.enabled: false` desactiva tanto la entrada de búsqueda como la generación del índice.
 
----
+Recompila y despliega tras cambiar contenido para actualizar la búsqueda pública. Las fórmulas y la interfaz decorativa no son texto del índice.
 
-## Actualizar el tema
+Consulta tipos, valores y campos sin uso en el [diccionario de artículos](/es/blog/config-article/#frontmatter). Las reglas de búsqueda están en el [diccionario de búsqueda](/es/blog/config-search/#article-search). A continuación tienes una referencia rápida para escribir.
 
-El paquete gestiona páginas estándar, valores predeterminados, traducciones y funciones de compilación. Tus artículos, `src/site.config.ts`, música, imágenes y páginas propias permanecen en el proyecto.
+## Referencia opcional: otros campos de entrada
 
-En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz. Comprueba compatibilidad, guarda los archivos de dependencias, instala una versión exacta y ejecuta doctor. Si falla, restaura los archivos e intenta reinstalar las dependencias anteriores. Publica después con tu proceso habitual; no despliega automáticamente.
+Son campos del frontmatter, no miembros de `site` o `theme` en `src/site.config.ts`. Una entrada normal no necesita rellenarlos todos.
 
-```bash
-npx @anglefeint/astro-theme@latest upgrade
-```
+### Zona del título e imágenes
 
-Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
+| Campo       | Comportamiento actual                                                                                                                         |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `subtitle`  | Subtítulo opcional; no se repite si coincide con la línea de contexto.                                                                        |
+| `context`   | Texto bajo el título; usa `description` por defecto. `''` lo oculta sin cambiar metadatos.                                                    |
+| `author`    | Autor individual; omitido o solo espacios usa el autor del sitio.                                                                             |
+| `heroImage` | Portada local opcional para listas y detalle.                                                                                                 |
+| `ogImage`   | Vista previa explícita para compartir, anterior a las automáticas; acepta imagen relativa, ruta pública como `/images/share.png` o URL HTTPS. |
 
-El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.1` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+Sin `ogImage` se genera una imagen 1200×630 con título, autor y sitio. No sustituye la portada. `theme.socialImage.enabled: false` impide generarla automáticamente; `ogImage` explícita sigue funcionando y las demás entradas usan portada o imagen global. Recompila y despliega tras cambios; las plataformas pueden conservar imágenes antiguas en caché.
 
-Si falla la actualización, no publiques `dist/`: restaurar dependencias no restaura la compilación anterior. Corrige el error y ejecuta `npm run doctor` con éxito antes de desplegar. Con pnpm, revisa la compatibilidad y actualiza manualmente con `pnpm add @anglefeint/astro-theme@latest` y `pnpm run doctor`, conservando tu lockfile.
+### Estadísticas OUTPUT y textos de estado opcionales
 
-[Guía 5: Publicar fragmentos](../starter-guide-5-fragments/) — Publica ideas breves en Markdown con comentarios opcionales en un diálogo.
+| Campo               | Comportamiento actual                                                      |
+| ------------------- | -------------------------------------------------------------------------- |
+| `wordCount`         | Sustituye el conteo automático de palabras/caracteres; entero no negativo. |
+| `tokenCount`        | Sustituye independientemente la estimación de tokens; entero no negativo.  |
+| `aiModel`           | Etiqueta de modelo aportada por el autor en estado del título y OUTPUT.    |
+| `aiMode`, `aiState` | Modo y estado aportados por el autor en la zona de estado del título.      |
 
-## Portadas persistentes de Blog List (0.36.0+)
+Sin sustituciones, los conteos se estiman a partir del código del cuerpo: caracteres Han, kana y Hangul cuentan individualmente; el resto se divide principalmente por espacios. Los tokens por defecto son `round(max(自动字词数, 1) × 1.3)`, una estimación, no un tokenizador real. Cambiar `wordCount` no recalcula tokens; cambia ambos si hace falta.
 
-Este cambio requiere el tema 0.36.0 o posterior y no está en la publicada 0.35.0. Mantén las rutas heroImage o coloca originales nuevos en src/assets/blog/covers/originals/ y referencia cada imagen desde un artículo. dev/doctor locales generan tamaños ausentes u obsoletos. También puedes ejecutar `npx @anglefeint/astro-theme prepare-covers`; `--check` valida sin escribir. Guarda en Git los originales y todo src/assets/blog/covers/ (manifest.json, generated/). El build y doctor en CI solo validan y fallan ante archivos ausentes, obsoletos o modificados; no regeneran en el servidor ni dependen de la caché Astro. La lista usa imágenes adaptables y prioriza dos candidatas. WebP calidad 80 mantiene el objetivo anterior, sin garantizar píxeles sin pérdida; los originales no cambian y SVG/animaciones conservan su formato.
+Se elimina parte del Markdown, pero no es un conteo completo de prosa visible: fórmulas y código MDX pueden influir. Valores desde 1.000 se muestran con un decimal y `k`. Modelo, modo y estado solo muestran texto: no conectan IA, verifican autoría ni ejecutan tareas.
 
-Las portadas de detalle usan los mismos archivos. Las imágenes locales de Fragments comparten la preparación y el proceso de commit; consulta la [Guía 5](../starter-guide-5-fragments/).
+### Compatibilidad y campos sin efecto visual actual
+
+- `readMinutes`, `aiLatencyMs`, `aiConfidence`: se aceptan por compatibilidad, pero ya no se muestran tiempo de lectura, latencia ni confianza. Sus tipos siguen siendo entero positivo, entero no negativo y número 0–1, respectivamente. No los necesitas en entradas nuevas.
+- `canonicalTopic`: admite string, sin conexión con páginas, canonical ni exportaciones; no crea temas ni cambia URLs.
+- `sourceLinks`: admite arrays de URLs, HTTP(S) y añade `https://` a dominios sin protocolo. Actualmente solo valida datos; no muestra fuentes ni las exporta. Escribe enlaces Markdown en el cuerpo para mostrarlos.
+
+Los campos personalizados no admitidos no crean funciones automáticamente: `draft` no crea borradores. Prefiere los campos compatibles y la sintaxis normal descrita arriba.
+
+## Navegación de tutoriales y diccionario de configuración
+
+[Anterior: instalar el blog y poner tus datos](/es/blog/starter-guide-1-configure-your-site/) · [Siguiente: añadir imágenes a entradas y fragments](/es/blog/starter-guide-images/) · [Los ocho tutoriales](/es/blog/starter-guide-1-configure-your-site/#tutorial-order).
+
+Campos relacionados: [entradas, índice y OUTPUT](/es/blog/config-article/), [etiquetas y listas](/es/blog/config-blog-list/), [inclusión en búsqueda](/es/blog/config-search/). El [índice de configuración](/es/blog/config-reference/) contiene rutas completas, valores y límites.

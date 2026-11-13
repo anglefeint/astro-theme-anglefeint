@@ -7,23 +7,18 @@ heroImage: '../../../assets/blog/default-covers/ai-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
 aiState: 'stable'
-aiLatencyMs: 168
-aiConfidence: 0.96
-wordCount: 760
-tokenCount: 1180
+updatedDate: '2026-11-14'
 ---
 
-在这个主题里，最先确定的不是视觉，而是架构边界。结构混乱时，后续每次加功能和修问题都会更贵。
+Anglefeint 的四层组合是一种职责划分：
 
-Anglefeint 采用四层组合：
+- ThemeFrame：共享文档、SEO、导航、页脚和音乐组件。
+- Shell：选择页面的主题样式与背景氛围。
+- Layout：组织正文、封面和辅助区域。
+- Page：读取内容与配置，再组合页面。
 
-- ThemeFrame：统一站点骨架
-- Shell：承载不同路由氛围
-- Layout：组织页面结构
-- Page：只关心内容与数据
+它不要求每个页面都逐层嵌套相同组件。共享结构负责一致性，页面保留各自的数据与交互。
 
-这种分层的价值在于改动隔离：改风格不必改内容逻辑，改内容也不会牵连主题实现。
+标准路由、配置默认值和主题实现由 `@anglefeint/astro-theme` 提供；starter 保留文章、素材、`src/site.config.ts`、自定义页面和部署设置。更新主题不必复制标准页面。站点配置集中在一个入口，文章与碎片仍在各自的内容目录维护。
 
-工程组织上，核心实现放在 @anglefeint/astro-theme，starter 保留内容与配置。这样升级路径可以集中在包更新，而不是反复手动拷文件。
-
-用户配置入口收敛到 site.config.ts。单入口能显著降低上手成本，也让维护更可控。
+继续阅读：[按路由设计视觉系统：多氛围页面策略](/zh/blog/route-visual-system-design/) · [配置字典：站点名称、域名、公共导航、社交和页脚](/zh/blog/config-site-chrome/)

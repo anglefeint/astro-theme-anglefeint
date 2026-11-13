@@ -1,128 +1,211 @@
 ---
 tags: ['anglefeint', 'starter']
-title: 'ユーザーガイド 5：断片を公開する'
-description: '短い思いを Markdown で残し、コメントをダイアログで表示します。'
+title: 'ユーザーガイド4：Fragment を投稿する'
+subtitle: 'Markdown で短い考え、画像、コードを記録して安定したリンクで共有し、必要ならコメントを有効にします。'
+description: 'Fragments の有効化と Markdown の作成・編集から、ホームのプレビュー、ページ分割と共有、多言語、任意の Giscus コメントまで。'
 pubDate: '2026-11-11'
-heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-13'
+heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
-## AI が読み取れるコンテンツ
+入門ガイドの第4 / 8回です。[全ガイドの順序](/ja/blog/starter-guide-1-configure-your-site/#tutorial-order) · [設定リファレンス](/ja/blog/config-reference/)。
 
-ビルド時に公開記事、有効な Fragments と About を `/llms.txt`、言語別索引、全文ファイルへ含めます。記事の Markdown URL は変わりません。各言語に `/ja/fragments/index.md` と `/ja/about/index.md` を生成します（言語コードは置き換えてください）。Fragments は公開された全ページをまとめ、各 ID、公開日時、本文、安定した `/<locale>/fragments/#ID` リンクを保持します。HTML から Markdown を発見できます。`npm run build` 後と preview で利用でき、`dist/` 全体を公開します。
+一言の考え、1枚の画像、短いコードのために、完全な記事を書く必要はありません。Fragments はそれらを時系列の独立一覧にまとめ、ホームから最新内容をプレビューできます。
 
-About は公開プロフィール、連絡先、開ける AI テキストポップアップを出力し、端末設定・ツール・装飾 UI は除外します。コメントは出力しません。無効なページ／言語、削除済み内容、noindex、外部 canonical は除外し、再ビルドで古い生成物と発見リンクを削除します。ユーザーの独自ファイルは保護し、競合時はビルドを停止します。サイト／言語の補足情報は全出力に適用します。JSON-LD に言語を含め、About は AboutPage を使います。新しい設定・サーバー・UI 依存は不要で、AI の登録や引用は保証しません。
+現在の統合版 starter 向けの記事です。既存プロジェクトにコマンドや機能がない場合、[インストールと個人情報の設定](/ja/blog/starter-guide-1-configure-your-site/)にある更新手順を済ませてから進めてください。
 
-0.33.2 以降、Fragments は記事ページと同じトップへ戻るボタンを使います。スクロール後に表示され、動きを減らす設定に対応します。追加設定は不要です。
+## 1. Fragments 一覧を有効にする
 
-既存のブログは、先にテーマを 0.29.0 以降へ更新してください：
-
-```bash
-npx @anglefeint/astro-theme@latest upgrade
-```
-
-`src/site.config.ts` の既存 theme に追加します。断片とコメントは初期状態で無効です。メニューは Decoder Lab の下に表示されます。
+`src/site.config.ts` を開き、次の `fragments` を既存の `theme` に統合します。すでに `theme` があれば中の項目を追加・編集し、同名オブジェクトを重複作成しないでください。
 
 ```ts
 theme: {
-  fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
-},
-```
-
-有効化後は `/<locale>/fragments/` にアクセスします。`pageSize` は 1〜100 の整数です。ファイルは `.md` を使用します。下書きや未来の日付による公開除外はないため、未公開の断片は `src/content/fragments/` の外に保存してください。
-
-有効なすべての言語で、同じ断片のひな形を作成：
-
-有効な全言語を既定で作成するにはテーマ 0.31.0 以降が必要です。先にアップグレードしてください。0.29–0.30 では `--locales` で明示的に指定します。
-
-```bash
-npx @anglefeint/astro-theme@latest new-fragment
-```
-
-`new-post` と同様に、既定ではプロジェクトで有効な全言語に、同じ ID とタイムスタンプのひな形を作成します。自動翻訳はしません。優先順位は `--locales` → `ANGLEFEINT_LOCALES` → 有効な言語です。明示した一覧は空白除去・小文字化・重複除去され、設定の読み込みを省略して指定言語のディレクトリだけを作成します。言語の有効化設定は変更しません。
-
-新 starter は `npm run new-fragment` も提供します。既存プロジェクトはスクリプトを追加せず npx を使えます。
-
-```bash
-npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
-npx @anglefeint/astro-theme@latest new-fragment --locales ja
-```
-
-`src/content/fragments/<locale>/` の Markdown を編集します。タイトルは任意です：
-
-後から翻訳を追加する場合は元の Markdown を対象言語フォルダーへコピーし、id を維持して本文を翻訳します。
-
-```md
----
-id: 'q8Lm3XzP'
-pubDate: 2026-11-11T08:30:00+08:00
----
-
-断片.
-```
-
-編集やファイル名変更時も id を維持します。同じ断片の翻訳だけ同じ ID を使います。同一言語の重複 ID はビルドエラーです。pubDate に時刻とタイムゾーンを含め、UTC 表示・新しい順に並べます。
-
-コメントは `theme.fragments.comments.enabled` を true にし、`theme.comments` の repo、repoId、category、categoryId を Giscus から設定します。ガイド 4 を参照。記事コメントは無効のままで構いません。 [Giscus](https://giscus.app/) · [4](../starter-guide-4-giscus-comments/)
-
-```ts
-theme: {
-  fragments: { enabled: true, comments: { enabled: true } },
-  comments: {
-    repo: 'yourname/your-repository',
-    repoId: 'R_...',
-    category: 'Your category',
-    categoryId: 'DIC_...',
+  fragments: {
+    enabled: true,
+    pageSize: 20,
+    comments: { enabled: false },
   },
 },
 ```
 
-断片は specific、厳密一致、`fragment/<id>` を使用します。記事の mapping、term、number、shareAcrossLocales、lang は使用せず、表示言語はページに従います。同じ ID の翻訳はコメントとリアクションを共有します。記事の関連付けは変わりません。最初のクリックでコメントクライアントを読み込みます。閉じるとダイアログを非表示にし、再表示や別の断片への切り替えでは同じコメントインスタンスを再利用します。
+| 項目                               | 既定値と実際の役割                                                                         |
+| ---------------------------------- | ------------------------------------------------------------------------------------------ |
+| `theme.fragments.enabled`          | 既定 `false`。有効な言語の一覧を生成し、内容のあるホームにプレビュー入口を表示できます。   |
+| `theme.fragments.pageSize`         | 既定 `20`。1ページの件数を1–100の整数で指定し、ブログの記事数とは独立しています。          |
+| `theme.fragments.comments.enabled` | 既定 `false`。コメントのポップアップを有効にし、後述する Giscus リポジトリ設定も必要です。 |
 
-Fragments は記事検索と RSS には含めませんが、ビルド時に独自の AI 向け Markdown を出力します。画像は `public/images/` に置き `/images/...` で参照できます。
+`npm run dev` で起動し、ターミナルの URL 配下の `/<locale>/fragments/`（例：`/en/fragments/`、`/zh/fragments/`）を開きます。対象言語が有効であることが前提です。内容がなくても空一覧を表示し、ページファイルを先に作る必要はありません。無効時は一覧もホーム入口も生成しませんが、Markdown は削除しません。
 
-テーマを 0.29.0 以降へ更新し、設定で有効化します。個人のコンテンツ・設定・音楽・画像を保持します。個人ガイドは上書きされないため最新 demo を参照してください。GitHub の議論は統合・削除しません。
+## 2. 既定の手順で Fragment を作る
 
-コメントは外部から読み込みます。Giscus の準備が完了するまで読み込み表示を維持し、失敗または15秒のタイムアウト時に再試行を表示します。ネットワークや設定を確認してください。記事と同じ Giscus 連携を使用するため、Giscus の npm パッケージを別途インストールする必要はなく、記事の対応関係も変わりません。
+プロジェクトルートで実行します。
 
 ```bash
-npm run build
+npm run new-fragment
 ```
 
-0.32.0 以降のページ送り改善：断片は Blog とページ番号、ネオン表示、設定したしきい値で表示されるページ移動欄を共有します。`theme.pagination` は両方の一覧に適用され、断片の1ページあたりの件数は引き続き `theme.fragments.pageSize` で個別に設定します。
+`--locales` と `ANGLEFEINT_LOCALES` が未指定なら、有効な全言語に同じ Fragment のひな形を生成し、初期状態は9ファイルです。保存先は `src/content/fragments/<locale>/` で、同じ実行のファイルは ID と公開日時を共有しますが、自動翻訳は行いません。ターミナルに実際のパスが表示されます。ファイル名は UTC 日付とランダム ID を含む `2026-11-13-q8Lm3XzP.md` などです。実際に生成されたファイルを開き、例のファイル名を手作業で作る必要はありません。
 
-## 安定した共有リンク（0.32.0 以降）
+簡体中国語のみなら `npm run new-fragment -- --locales zh`、複数言語なら `--locales en,zh` を使えます。これらは代替手順なので1つを選び、全部実行する必要はありません。対象言語の自動有効化も行いません。公開前に未完成の他言語ひな形を内容ディレクトリから移してください。
 
-0.32.0 以降の共有機能：日付のリンクで一覧内の断片を定位でき、その横でリンクをコピーできます。共有には `/ja/fragments/#ID` を使用します。ID は Markdown frontmatter の id です。現在のページに対象がない場合のみ、言語別の小さな静的索引を読み込み、現在のページへ移動します。追加、日付や pageSize の変更後は再ビルドし、ID は変えないでください。ページをまたぐ定位とコピーには JavaScript が必要です。
+**コマンドを1回実行するたびに新しい Fragment を作成します。** 続きを書くときは元ファイルを編集し、同じ内容のために作成コマンドを再実行しないでください。slug の指定は不要で、既存ファイルも上書きしません。
 
-閲覧中の URL にページ番号が付いていても、共有には日付リンクかコピー操作を使ってください。存在する旧ページは古いアンカーを補正できますが、消えたページ番号はサイト通常の 404 になります。この機能は 404 ページを処理しません。
+現在の starter には `new-fragment` スクリプトがあります。旧プロジェクトにない場合はテーマの更新を確認して、プロジェクト内の CLI を使います。
 
-断片が存在しない場合や通信失敗時は案内を表示し、移動を繰り返しません。クリップボードが使えない場合は手動コピー用のリンクを表示します。この機能にはテーマ 0.32.0 以降が必要です。自動定位を利用する前に更新してください。
+```bash
+npx @anglefeint/astro-theme new-fragment
+```
 
-## 既定の共有画像と Fragment の短い ID（0.33.0+）
+これは先ほどの作成コマンドの別表記です。「同じ」Fragment を作るために両方実行しないでください。
 
-src/site.config.ts の既存の site 設定に site.ogImage を追加できます。public ルートのパス（/images/share.jpg は public/images/share.jpg）または HTTPS URL を指定します。空欄なら内蔵の 1200×630 Anglefeint 画像を使います。Fragments とすべての #ID 共有リンクは同じ画像を使います。記事固有の画像と自動生成画像が優先され、自動生成を無効にした場合も記事のカバー画像がサイト既定画像より優先されます。変更後は再ビルドしてデプロイしてください。共有サービスにはキャッシュが残る場合があります。
+## 3. 仮の本文を置き換え、ID は残す
+
+先頭は frontmatter で、2本目の `---` の後が本文です。生成済みの `id` と `pubDate` を保ち、仮本文を自分の考えに置き換えます。次は形式の例であり、自分の ID を例の ID で上書きしないでください。
+
+```md
+---
+id: 'q8Lm3XzP'
+pubDate: '2026-11-13T09:00:00+08:00'
+---
+
+今天把一个困扰很久的问题解决了，记下这个小进展。
+```
+
+現在対応する frontmatter は3項目です。
+
+| 項目      | 指定方法                                                                                                                  |
+| --------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `id`      | 必須。大小文字を区別する英数字8文字ちょうどです。コマンドが生成して既存 ID と照合するため、自分で考える必要はありません。 |
+| `pubDate` | 必須。解析可能な公開日時。生成された ISO 時刻を残すか、時刻・タイムゾーン付きの値を推奨します。                           |
+| `title`   | 任意の文字列。一覧カードの見出しに表示し、省略しても投稿できます。                                                        |
+
+タイトルが必要なら同じ frontmatter に `title: '一个小进展'` を追加します。記事の `description` やカバー用の `heroImage` は必要なく、画像は本文に記入します。
+
+一覧は `pubDate` の新しい順、同時刻なら ID 順で、ファイル名順ではありません。UTC 表示のため、指定したローカル時刻と異なる場合があります。本文やファイル名の変更だけではコメント・共有の識別は変わりません。日時を変えると並び順とページ位置が変わります。
+
+**公開後は ID を保持してください。** 同一言語の ID 重複はエラーで、異なる Fragment に同じ ID を使わないでください。旧 UUID や長い ID は現形式に合いません。元内容をバックアップしてから互換性を処理してください。旧 ID・共有リンク・コメントの自動移行はありません。一括 ID 変更を通常のファイル整理として行わないでください。
+
+収集対象は `src/content/fragments/` の `.md` のみで、`.mdx` は使えません。下書き・未来日フィルターもないため、`draft: true` や未来の日時では隠せず、未公開の内容はこのディレクトリの外へ置きます。
+
+## 4. 画像、コード、数式を追加する
+
+通常の Markdown の段落、リンク、リスト、引用を使えます。画像の例です。
+
+```md
+![这次进展的截图](/images/fragments/progress.png)
+```
+
+実画像を先に `public/images/fragments/progress.png` に置いてください。Fragment の隣に `photo.png` を置き、`![图片说明](./photo.png)` でも参照できます。その他の記法、サイズ、コミット対象は[記事と Fragments に画像を追加する](/ja/blog/starter-guide-images/)を参照してください。
+
+コードは Markdown のフェンスとインデントを保ちます。
+
+````md
+```js
+const progress = {
+  done: true,
+};
+```
+````
+
+コードブロックは表示用であり、JavaScript を書いても実行しません。記事のコピーボタンや画像拡大が Fragment にもあるとは限りません。現在の Fragments 一覧には、その2つの記事向けインタラクションを組み込んでいません。
+
+全体で数学が有効なら、Fragment も `$x_1$` のインライン数式と2行の `$$` の間の独立数式に対応します。ビルド時に描画し、誤った数式はコンパイル・ビルドを失敗させます。`theme.math.enabled` を無効にすると数学処理を止めます。記法は[最初の記事を書く](/ja/blog/starter-guide-2-languages-and-routing/)を参照してください。
+
+ローカル dev または doctor が対応する Fragment 画像のレスポンシブ画像を準備します。Markdown、原画像、`src/assets/blog/covers/` 全体をコミットしてください。配備ビルドと CI doctor は検証だけで、プラットフォームで補完しません。本文だけをコミットして画像を漏らさないでください。
+
+## 5. ホームのプレビューと一覧のページ分割
+
+Fragments が有効で現在の言語に内容があれば、ホームの header 下にピクセルアバターの入口を表示します。開くと最新3件までプレビューできます。別のホーム設定は不要で、記事数の `homeLatestCount` とは独立しています。
+
+プレビューは文面、最初の有効画像、最初のコードの抜粋を含められますが、本文全体ではありません。画像とコードは高さを制限して切り取り、複数の画像やコードを全部表示しません。カード全体から対応 Fragment へ、下部の「プレビュー件数 / 現在の言語の総件数 →」から全一覧へ移動します。2件なら `2 / 2` で、固定3件ではありません。空一覧にはホーム入口を表示しません。
+
+全一覧は `theme.fragments.pageSize` で分割します。簡体中国語の例では最初が `/zh/fragments/`、2ページ目が `/zh/fragments/2/` です。外観・ページジャンプは共通の `theme.pagination` を使い、ブログの `blogPageSize` は Fragment の件数を決めません。
+
+一覧で言語を切り替えると対象言語の1ページ目に移動し、同じ訳文やページ番号を維持する保証はありません。訳文の件数は異なってもよく、総数は言語ごとに数えます。
+
+## 6. Fragment を共有する
+
+Fragment は一覧内に表示し、各項目の独立した詳細ページは生成しません。共有にはカードの日付リンクか隣のコピーリンクボタンを使います。例：
+
+```text
+https://your-domain.example/zh/fragments/#q8Lm3XzP
+```
+
+ドメインと ID を実際の値に置き換えます。日付リンクとコピーは一覧のルートに ID を付け、現在のページ位置に依存しません。追加、日付変更、pageSize 変更後に再ビルド・再配備すると位置索引も更新します。
+
+対象が現在のページにない場合、JavaScript が現在の言語の静的索引を必要時に読み、対象ページへ移動して位置を合わせます。JavaScript がなくてもページ一覧は読めますが、ページ横断の自動移動とコピーボタンは使えません。クリップボード権限がなければ選択可能な URL を表示して手動コピーできます。
+
+`/2/` を含むアドレスバーの URL を長期共有に使わないでください。旧ページが残っていれば古いアンカーを補正できますが、ページ番号自体が消えた場合は通常の404になり、位置移動スクリプトは404を処理しません。削除済み ID や索引の読込失敗は案内を表示しますが、削除した内容は復元しません。
+
+すべての Fragment 共有リンクは、その言語の一覧ページの共有画像を共用し、ID ごとの画像は生成しません。既定画像の変更は[画像ガイドの共有画像説明](/ja/blog/starter-guide-images/)を参照してください。
+
+## 7. 同じ Fragment に翻訳を加える
+
+簡体中国語と英語だけのひな形なら、先ほどの既定コマンドの代わりに次を使えます。
+
+```bash
+npm run new-fragment -- --locales zh,en
+```
+
+同じ実行で生成した言語ファイルは ID と日時を共有し、本文は自分で翻訳します。`--locales` は作成対象だけを選び、言語を有効にしません。優先順位は `--locales` → `ANGLEFEINT_LOCALES` 環境変数 → 有効言語で、省略時も自動翻訳は行いません。
+
+既存の簡体中国語 Fragment に英語を追加するなら、元ファイルを `src/content/fragments/en/` にコピーし、`id` と `pubDate` を残してタイトル・本文を翻訳します。新しい ID が発行されるため、同じ Fragment の翻訳に作成コマンドを再実行しないでください。異なる言語は同一 ID を共有できますが、同一言語には同 ID を2ファイル置けません。
+
+同一 ID の翻訳はコメントを共有します。ID が異なれば文面やファイル名が同じでも自動的に関連付きません。
+
+## 8. 必要に応じてコメントを有効にする
+
+記録だけならコメントは無効のままで構いません。読者のコメントが必要なら[Giscus ガイド](/ja/blog/starter-guide-4-giscus-comments/)で公開リポジトリ、Discussions、Giscus アプリ、カテゴリを用意し、実際の ID を得てから既存設定に統合します。
 
 ```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { ogImage: '/images/share.jpg' },
-});
+theme: {
+  fragments: {
+    enabled: true,
+    comments: { enabled: true },
+  },
+  comments: {
+    repo: 'yourname/your-repository',
+    repoId: 'REPLACE_WITH_REPO_ID',
+    category: 'Announcements',
+    categoryId: 'REPLACE_WITH_CATEGORY_ID',
+  },
+},
 ```
 
-new-fragment は大文字・小文字を区別する英数字 8 文字の Nano ID を生成し、各言語の既存 Markdown ID と重複すると再試行します。同じ実行の全言語は ID と公開日時を共有します。Fragment ID は英数字 8 文字のみです。以前の UUID や長い ID は非対応のため、古い項目は削除して再投稿してください。移行や旧リンク互換機能はありません。公開後の ID は維持してください。変更するとコメントの関連付けも変わります。
+アカウント、リポジトリ、カテゴリ、2つの ID を実値に変え、既存の `theme.comments` の他設定を残してください。4つのリポジトリ・カテゴリ項目の不足は設定エラーです。仮値を入れても外部設定が有効とは限りません。Giscus script の貼付や追加 npm パッケージは不要です。
 
-## ホームの Fragment プレビュー（0.35.0+）
+Fragment 用スイッチは `theme.fragments.comments.enabled` です。そのために記事用 `theme.comments.enabled` を true にする必要はありません。記事コメントがすでに有効なら維持して構いません。
 
-現在のソースでは、`theme.fragments.enabled` が有効で現在の言語に投稿があると、ホームのヘッダー下にピクセルアバターの入口が表示されます。開くと最新3件をプレビューでき、カードは元の投稿へ、下部の件数と矢印は一覧へ移動します。件数は現在の言語のプレビュー数 / 総数です。画像とコードは高さを制限し、超過部分を切り取ります。無効時や投稿がない場合は入口を表示しません。追加設定は不要です。テーマ0.35.0以降が必要です。
+Fragments は `specific`、厳密照合、`fragment/<id>` に固定し、記事の mapping、term、number、shareAcrossLocales、固定 lang は使いません。UI はページ言語に従い、同 ID の訳文は議論とリアクションを共有しますが、コメント本文の自動翻訳はありません。他の共通外観設定は `theme.comments` を使います。
 
-## ローカル画像とデプロイ（0.36.0+）
+一覧のコメントボタンを押して初めてクライアントを読みます。閉じてもインスタンスを維持し、再表示・別 Fragment で再利用します。失敗や約15秒未準備なら再試行を表示するため、読込表示を接続成功と見なさないでください。投稿には GitHub 認証が必要です。
 
-テーマ 0.36.0 以降が必要です。公開済みの 0.35.0 には含まれません。`/images/fragments/photo.png` は `public/images/fragments/photo.png` を参照します。Markdown と同じ場所の画像には `./photo.png` を使えます。Markdown、参照形式、HTML `img` に対応し、元画像は移動・上書きしません。
+ID を変更しても旧コメントは移行せず、Fragment を消しても GitHub の議論は削除しません。議論移行が必要なら自分で判断し、自動統合を期待しないでください。
 
-更新後はローカルの dev または doctor がレスポンシブ画像を自動準備します。手動実行も可能です。
+## 9. 公開前の確認
+
+dev で内容、日時、ホームのプレビュー、ページ分割を確認します。公開前に dev を止めて実行してください。
 
 ```bash
-npx @anglefeint/astro-theme prepare-covers
+npm run doctor
+npm run preview
 ```
 
-元画像と `src/assets/blog/covers/` 全体（manifest.json と generated/）をコミットしてください。ビルドと CI doctor は検証のみ行い、不足・古いファイルがあれば停止します。デプロイ先では再生成しません。一覧とホームのプレビューが画像を共有し、不足する幅・高さを補います。一覧の最初の画像を優先し、後続とホームの縮小画像は遅延読み込みします。アニメーションと SVG は元の形式を維持し、外部画像はローカル変換しません。
+doctor はローカル画像の準備・検証・ビルドを含み、成功直後の build は不要です。ビルド後の preview で共有リンクの移動と画像、設定した場合はコメントを確認します。プレビューでは公開せず、新しい静的出力を再配備して初めてオンラインが変わります。
+
+Fragment は記事全文検索と記事 RSS には入りません。ビルドはその言語の `/zh/fragments/index.md`（他言語は zh を変更）に公開 Fragment をまとめ、ID、日時、本文、安定リンクを保持し、AI 可読索引にも加えます。私的バックアップではなく公開出力で、コメントは含みません。
+
+- 一覧がない：Fragments と対象言語のスイッチを確認。
+- ホームにアバターがない：現在の言語に実際の内容があるか確認。他言語にあっても現在言語にあるとは限りません。
+- 既存ファイルが原因で作成に失敗：既存 frontmatter の ID 形式を確認。作成器は Markdown の ID を読んで重複を確認します。
+- 重複 ID のビルドエラー：同じ言語に2ファイルを置いていないか確認。翻訳は別の言語ディレクトリに置きます。
+- 画像ビルド失敗：[画像ガイド](/ja/blog/starter-guide-images/)に従って元画像、マニフェスト、派生画像を準備・コミット。
+- コメント失敗：実際のリポジトリ ID、アプリ権限、カテゴリ、ネットワーク、ブラウザーの遮断を確認し、ID を繰り返し変えないこと。
+
+更新が必要なら[第1回の更新手順](/ja/blog/starter-guide-1-configure-your-site/)を参照してください。
+
+## ガイドと設定リファレンス
+
+[前の記事：記事と Fragments に画像を追加する](/ja/blog/starter-guide-images/) · [次の記事：ページと機能を自分好みに変える](/ja/blog/starter-guide-3-comments-about-and-theme-toggles/) · [8本のガイドの総合案内](/ja/blog/starter-guide-1-configure-your-site/#tutorial-order)。
+
+関連項目：[Fragments のスイッチ、ページ分割、内容項目](/ja/blog/config-fragments/)、[Fragment のコメント](/ja/blog/config-comments/)。完全なパス、既定値、制約は[設定リファレンス総合案内](/ja/blog/config-reference/)を参照してください。

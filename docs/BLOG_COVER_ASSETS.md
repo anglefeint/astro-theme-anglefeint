@@ -9,6 +9,7 @@ depends_on:
   [
     packages/theme/src/covers/prepare.mjs,
     packages/theme/src/covers/integration.mjs,
+    packages/theme/src/covers/project.mjs,
     packages/theme/src/covers/fragment-sources.mjs,
     packages/theme/src/covers/fragment-markdown.mjs,
     packages/theme/src/covers/fragment-render.mjs,
@@ -55,6 +56,8 @@ The package article route passes `post.filePath` to `BlogPost.astro`, which rend
 
 ## Fragment images
 
+The existing `theme.fragments.enabled` switch gates Fragment discovery in the Astro integration (including dev refresh) and in `prepare-covers`/doctor via the project-config adapter. When disabled, old Fragment Markdown and its local image references are not inspected or required; broken or missing Fragment-only originals/derivatives do not block dev/build. This does not skip blog covers or delete any files. Re-enabling restores image preparation/validation. The low-level `prepareCovers` API accepts `fragmentsEnabled` explicitly and does not load site config itself.
+
 Keep existing Fragment Markdown image links, reference-style images and raw HTML `img` links. A root path such as `/images/fragments/photo.png` reads `public/images/fragments/photo.png`; a relative path reads from the Markdown file's directory. Public originals stay in place. Remote/data URLs are not downloaded by preparation; SVG and animation keep their original formats. Do not infer references from fenced/inline code or frontmatter. Missing supported local image files fail preparation clearly; linked sources cannot escape the project.
 
 The existing `prepare-covers` command now prepares these images too. Dev watches referenced public images as well as content/source assets; local doctor prepares, and build/config sync/CI doctor only validate. Commit Fragment originals plus the same `src/assets/blog/covers/manifest.json` and generated files. The directory name is retained for compatibility; a separate Fragment derivative folder or new setup step is not required. Only currently referenced variants deploy, including images referenced exclusively by Fragments.
@@ -65,10 +68,11 @@ Feed math CSS is included only if enabled and the current page's rendered cards 
 
 ## Module boundaries
 
-The image integration owns preparation, its cached manifest snapshot, the virtual-module adapter and Markdown processor configuration. The root integration only supplies the existing mathematics flag; it does not store image data or broker callbacks between modules. A snapshot updates once per preparation, rather than rebuilding all image data for every Markdown document.
+The image integration owns preparation, its cached manifest snapshot, the virtual-module adapter and Markdown processor configuration. The root integration only supplies the existing mathematics and Fragments enabled flags; it does not store image data or broker callbacks between modules. A snapshot updates once per preparation, rather than rebuilding all image data for every Markdown document.
 
 | Module                                          | Responsibility                                          | Dependency boundary                                                         |
 | ----------------------------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `covers/project.mjs`                            | Read the feature flag for CLI preparation               | Project-config loading stays outside the source collector/encoder           |
 | `covers/fragment-sources.mjs`                   | Extract source references and resolve local paths       | Preparation/source inspection; no Satteri compiler or page renderer         |
 | `covers/fragment-markdown.mjs`                  | Adapt source references to stable Markdown markers      | Public Satteri plugin API; no image encoding or final page rendering        |
 | `covers/fragment-render.mjs`                    | Turn markers into final image HTML                      | HTML and supplied manifest only; no filesystem, Markdown parser or compiler |

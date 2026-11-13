@@ -87,6 +87,8 @@ Home now composes `effects/key-button/KeyButton.astro`, `blink-cursor/BlinkCurso
 
 The white rabbit's SVG, canvas and internal visibility rules live in `effects/white-rabbit/WhiteRabbit.astro`; `white-rabbit.js` binds an explicitly supplied trigger and visual for the four original one-second/30fps particle modes. `components/HomeWhiteRabbit.astro` remains a layout wrapper, `home-page.css` owns desktop/mobile article/archive placement and hover/focus reveal, and `scripts/home-rabbit-decode.js` retains shuffled modes plus one resize listener for the group. Home's existing page lifecycle coordinator still owns pause/resume/disposal. There is no idle particle loop or new per-rabbit global listener. See [Reusable effects](REUSABLE_EFFECTS.md#white-rabbit).
 
+The homepage corridor preview retains successful module loads, clears rejected loads for a later activation, and ignores failures from obsolete activations. The next activation can reattempt the existing import path; this does not guarantee recovery from every browser/module or network failure. No corridor artwork, unlock timing or visual parameters change.
+
 ### Foreground interaction and content counts
 
 - Both package-owned homepage routes pass the full localized post total to package-owned `HomePage.astro` alongside the existing latest-post slice. The heading displays actual shown/total counts, including empty libraries; it does not change `THEME.HOME_LATEST_COUNT`. A 1.4s step cursor follows the localized latest label and remains static under reduced motion.
@@ -206,7 +208,11 @@ The shared footer uses understated inherited-color Anglefeint and Astro links, s
 
 ## 3) Blog Post (`body.ai-page`)
 
-`effects/ai-background/AiBackground.astro` now owns the ambient layer markup/CSS (glow, haze, vignette, stripes, noise, hex grid, twelve particles and the network canvas). `ai-network.js` receives a supplied canvas; `scripts/blogpost/network-canvas.js` remains an article adapter with viewport/window sizing and deferred startup owned by `blogpost-effects.js`. This is distinct from Decoder's SVG network: the existing 30fps Canvas graph, deterministic seed, DPR cap and six signal paths are retained. Generic container use adds a ResizeObserver; the article adapter disables it to retain its existing window-driven lifecycle. Disposal cancels frames/listeners and releases backing dimensions. Hero rendering, reading progress, pointer feedback and article interactions remain page-owned.
+The article motion coordinator reacts to system reduced-motion changes in the current document. It disposes the previous hero/network/monitor/interaction scope, cancels its pending idle/load work and mounts the current preference. Reduced motion draws static cover/network content and hides/stops the monitor; switching back uses the original phased startup and normal visuals. Reading progress, copy controls, section links and image preview are not remounted. One page-owned listener survives BFCache retention and is removed on final page disposal; renderer visibility listeners retain their existing behavior.
+
+Article construction uses a build-scoped locale/translation index, retaining existing date order, ties, three related posts and menu/SEO translation rules. This changes data preparation, not displayed layout or content selection.
+
+`effects/ai-background/AiBackground.astro` now owns the ambient layer markup/CSS (glow, haze, vignette, stripes, noise, hex grid, twelve particles and the network canvas). `ai-network.js` receives a supplied canvas; `scripts/blogpost/network-canvas.js` remains an article adapter with viewport/window sizing and deferred startup owned by `scripts/blogpost/motion.js`. This is distinct from Decoder's SVG network: the existing 30fps Canvas graph, deterministic seed, DPR cap and six signal paths are retained. Generic container use adds a ResizeObserver; the article adapter disables it to retain its existing window-driven lifecycle. Disposal cancels frames/listeners and releases backing dimensions. Hero rendering, reading progress, pointer feedback and article interactions remain page-owned.
 
 `effects/red-queen/RedQueen.astro` owns the TV shell, badge, loading state and open/replay button together with `red-queen.css`/`red-queen.js`. It accepts media URLs and localized labels, with inline placement by default. Article CSS retains gutter placement and the <=1300px hide rule; the article adapter explicitly enables the original delayed autoplay. Standalone mounting defaults to click-to-play. Playback decoding/fallback, retries, warmup and cleanup remain in one implementation; disposal also restores the collapsed button state and removes its click handler. No extra media or animation package is introduced.
 
@@ -239,6 +245,7 @@ The shared footer uses understated inherited-color Anglefeint and Astro links, s
   - Replay button uses loading/disabled state while media preloading is in progress.
   - Canvas is created on playback start and destroyed after playback ends (DOM teardown by design).
   - If preload fails or times out, playback is aborted and monitor stays collapsed.
+  - Verification and playback decoders are explicitly closed on completion/failure/teardown; frames resolving after cancellation are closed without being drawn. Persistent decode errors have at most six retries before browser-image fallback, whose failures also have at most six retries before collapsing. Normal media/frame/hold/warmup timing is unchanged; this is not a new visual reduction or a measured memory claim.
   - Lifecycle and performance gates are documented here (technical contract); do not move this logic detail into `README.md`.
 
 ## 4) About (`body.hacker-page`)

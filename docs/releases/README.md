@@ -29,7 +29,9 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 ## Contract
 
-Latest package release: [0.35.0](./0.35.0.md), homepage Matrix Fragment previews, reversible avatar reactions and static article presentation. npm and starter delivered; its ledger and linked GitHub Release record actual source identities, registry recovery and technical evidence. Demo regression remains user-owned.
+Current release source: [0.36.1](./0.36.1.md), article/runtime reliability fixes and nine-language publishing guides. Its ledger defines compatibility and the selected technical plan; the linked GitHub Release and closeout evidence record actual delivery status and timings. Previous image/About release: [0.36.0](./0.36.0.md).
+
+Previous package release: [0.35.0](./0.35.0.md), homepage Matrix Fragment previews, reversible avatar reactions and static article presentation. npm and starter delivered; its ledger and linked GitHub Release record actual source identities, registry recovery and technical evidence. Demo regression remains user-owned.
 
 Previous package release: [0.34.0](./0.34.0.md), About and Fragments machine-readable coverage and language metadata. See its ledger and linked GitHub Release for actual delivery status and timings.
 

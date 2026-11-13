@@ -5,10 +5,13 @@ description: '为什么 Anglefeint 提供 AI 阅读入口：GEO、人类与 Agen
 pubDate: '2026-11-04'
 heroImage: '../../../assets/blog/default-covers/ai-03.webp'
 tags: ['AI', 'GEO', 'Anglefeint']
+updatedDate: '2026-11-14'
 ---
 
-我让 Anglefeint 支持 AI 阅读，一方面是为了 GEO（生成式引擎优化），让文章在生成式搜索和回答中更容易被发现、理解与引用；另一方面是因为我相信，未来人类社会会是人类与 Agent 共存的社会，博客也需要同时面向这两类读者。
+我希望博客既能被人直接阅读，也能让 Agent 查找、理解和引用。机器可读入口保留正文和来源地址，让读者能沿引用回到网页。
 
-人可以直接阅读网页，也可以让 Agent 查找资料、比较观点，再沿着来源链接回到原文，因此机器可读的内容需要保留完整正文、作者信息与原文地址。
+Anglefeint 在构建时从公开页面生成 `llms.txt`、各语言索引、全文合集和文章 Markdown。已启用且符合导出条件的 About 与 Fragments 也纳入对应导出；作者不需要重复维护一份正文。
 
-Anglefeint 在构建时自动生成 llms.txt、各语言索引与全文合集，以及单篇文章的 Markdown，全部来自同一份文章源文件，作者无需重复维护，读者也可以从文章页打开 Markdown 版本。
+这为内容发现和 GEO 提供基础，但不保证搜索引擎收录、排名或引用。导出的是公开内容，私密信息不应写入公开文章或配置补充说明。
+
+继续阅读：[配置字典：GA4 访问统计、AI 阅读补充说明](/zh/blog/config-analytics-ai/)

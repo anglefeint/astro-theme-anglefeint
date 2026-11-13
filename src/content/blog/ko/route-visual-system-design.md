@@ -3,28 +3,24 @@ title: '라우트 기반 비주얼 시스템 설계'
 subtitle: '페이지 목적에 맞는 분위기 분리'
 description: 'Anglefeint가 읽기 단계에 맞춰 시각 분위기를 분리하는 방법을 설명합니다.'
 pubDate: '2026-03-03'
-updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
 aiState: 'stable'
-aiLatencyMs: 171
-aiConfidence: 0.95
-wordCount: 700
-tokenCount: 1080
+updatedDate: '2026-11-14'
 ---
 
-많은 블로그 테마는 모든 페이지에 같은 스킨을 적용합니다. Anglefeint는 라우트별로 분위기를 다르게 설계했습니다.
+페이지마다 독자의 목적이 달라 분위기를 나눕니다.
 
-- `/<locale>/` : Matrix 분위기의 첫 화면
-- `/<locale>/blog/` : cyber 아카이브 탐색 화면
-- `/<locale>/blog/<slug>/` : AI 독서 인터페이스
-- `/<locale>/about/` : hacker 프로필 화면
+- 홈: 첫인상을 만드는 Matrix.
+- Blog List와 태그: 발견을 위한 Cyberpunk.
+- 글 상세: 긴 글을 읽는 AI.
+- About: 저자와 도구를 소개하는 Hacker.
+- Fragments: Cyberpunk 탐색 분위기.
+- Decoder Lab: 로컬 디코딩 도구와 네트워크 배경.
 
-기본값인 `i18n.routing.defaultLocalePrefix: 'always'`에서는 `/`가 기본 언어 홈(초기값 `/en/`)으로 이동합니다. `'never'`로 바꾸면 기본 언어 홈만 `/`로 이동하며 블로그와 About 경로의 언어 접두사는 유지됩니다. About은 `theme.enableAboutPage: true`가 필요합니다. 태그 기능을 켜면 `/<locale>/tags/`와 태그 결과 페이지도 Cyber 분위기를 공유합니다.
+기본적으로 홈에도 언어 접두사가 있고 `/`는 기본 언어 홈인 초기 `/en/`로 이동합니다. `defaultLocalePrefix: 'never'`는 그 홈만 바꾸며 블로그 등의 경로에는 언어 접두사가 남습니다.
 
-핵심 원칙은 배경은 읽기를 지원해야 한다입니다.
+About, Decoder, 태그, Fragments는 별도의 스위치가 있으며 Fragments는 기본적으로 꺼져 있습니다. 설정 사전에서 필드를 확인하세요.
 
-홈은 인상 형성, 목록은 탐색 효율, 상세는 본문 집중, About은 맥락 보강이라는 역할을 분리했습니다。
-
-이 방식은 스타일 정체성을 유지하면서도 콘텐츠 우선순위를 안정적으로 지켜 줍니다.
+이어서 읽기: [Anglefeint 아키텍처: 왜 4계층 조합인가](/ko/blog/architecture-of-anglefeint/) · [설정 사전: 언어 활성화, 주소, UI 번역과 대체값](/ko/blog/config-languages/)

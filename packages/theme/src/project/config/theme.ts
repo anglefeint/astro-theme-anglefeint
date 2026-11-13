@@ -4,6 +4,7 @@ import { fragmentSettings } from '@anglefeint/astro-theme/utils/fragments';
 import { validateComments } from '@anglefeint/astro-theme/utils/comments';
 import { normalizeMusic } from '@anglefeint/astro-theme/utils/music';
 import { THEME_CONFIG } from '@anglefeint/user-config';
+import { validateBlogPageSize } from '../../utils/blog-pagination';
 
 const commentsConfig = THEME_CONFIG.theme.comments;
 validateComments(commentsConfig);
@@ -28,7 +29,7 @@ export const THEME = {
   },
   MUSIC: normalizeMusic(THEME_CONFIG.theme.music),
   /** Posts per page on blog list */
-  BLOG_PAGE_SIZE: THEME_CONFIG.theme.blogPageSize,
+  BLOG_PAGE_SIZE: validateBlogPageSize(THEME_CONFIG.theme.blogPageSize),
   /** Number of latest posts shown on home page */
   HOME_LATEST_COUNT: THEME_CONFIG.theme.homeLatestCount,
   /** Whether to enable the About page (disable to hide from nav/routes if needed) */

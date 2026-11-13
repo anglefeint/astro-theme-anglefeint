@@ -5,10 +5,13 @@ description: 'Why Anglefeint supports AI reading: GEO, coexistence with agents, 
 pubDate: '2026-11-04'
 heroImage: '../../../assets/blog/default-covers/ai-03.webp'
 tags: ['AI', 'GEO', 'Anglefeint']
+updatedDate: '2026-11-14'
 ---
 
-I made Anglefeint readable by AI for two reasons: GEO, or generative engine optimization, so articles are easier to discover, understand, and cite in generative search and answers; and my belief that future society will be shared by humans and agents, so a blog should serve both.
+I want a blog that people can read directly and Agents can find, understand and cite. Machine-readable entry points retain prose and source URLs so citations can lead back to the website.
 
-People may read a page themselves or ask an agent to find sources and compare ideas before following a link to the original, which makes complete text, authorship, and source URLs important in machine-readable content.
+At build time, Anglefeint generates `llms.txt`, language indexes, full-text collections and article Markdown from public pages. Enabled About and Fragments content meeting export conditions is also included in the corresponding exports. Authors do not maintain a second copy of the prose.
 
-At build time, Anglefeint automatically generates llms.txt, language-specific indexes and full-text bundles, and Markdown for individual articles from the same source files, so authors maintain one version and readers can open Markdown directly from the article page.
+This supports discovery and GEO, but does not guarantee indexing, rankings or citations. Exports are public; private information should not appear in public articles or supplemental configuration notes.
+
+Read next: [Configuration Reference: GA4 Analytics and AI-Readable Context](/en/blog/config-analytics-ai/)

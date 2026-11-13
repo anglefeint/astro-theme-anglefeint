@@ -7,15 +7,13 @@ heroImage: ../../../assets/blog/default-covers/matrix-02.webp
 aiModel: anglefeint-core
 aiMode: narrative
 aiState: stable
-aiLatencyMs: 126
-aiConfidence: 0.98
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-Beim Öffnen einer Website fühlen wir zuerst und lesen danach. Deshalb beginnt die Startseite mit Matrix: grünem Code, Terminalrhythmus, Scanlinien und kontrolliertem Rauschen.
+Die Startseite ist eine Eröffnungsszene. Grüner Matrix-Coderegen, Terminaltext und leuchtende Rahmen machen ihre Identität erkennbar. Das Kino inspiriert die Atmosphäre; die Seite stellt Website, Autor und aktuelle Inhalte vor.
 
-Das signalisiert ein Projekt für Menschen, die Systeme, Werkzeuge und klare Signale mögen. Die vertraute Referenz soll über Nostalgie hinaus sofortige Wiedererkennung schaffen.
+Links führen zu Artikeln. Bei aktiviertem Fragments öffnet der Pixelavatar die drei neuesten Einträge und einen Link zum gesamten Feed. Avatar und Fenster sind eigenständige Komponenten; Vorschauen bleiben außerhalb des Hauptpanels.
 
-Die Seite funktioniert wie ein erster Handschlag: Ungewissheit beim Ankommen, ein klares Identitätssignal und anschließend bewusstes Weitergehen.
+Farbe, Rhythmus und Interaktion bilden die Identität. Leser können weiterhin Text auswählen, Links folgen und Inhalte entdecken.
 
-Das ist Produktpositionierung, Weltenbau und eine stabile Auftaktszene, die die Atmosphären der übrigen Routen trägt. Matrix ist unser Prolog.
+Weiterlesen: [Konfigurationsverzeichnis: Startseite](/de/blog/config-home/) · [Konfigurationsverzeichnis: Fragments](/de/blog/config-fragments/)

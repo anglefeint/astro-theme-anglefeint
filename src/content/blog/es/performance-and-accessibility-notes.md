@@ -7,22 +7,13 @@ heroImage: '../../../assets/blog/default-covers/ai-03.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
 aiState: 'stable'
-aiLatencyMs: 173
-aiConfidence: 0.94
-wordCount: 680
-tokenCount: 1020
+updatedDate: '2026-11-14'
 ---
 
-Un tema visual puede ser distintivo sin sacrificar la experiencia de lectura.
+La expresión cinematográfica debe convivir con lectura sostenida. Queremos mantener lluvia de código, haces de neón y redes con un coste razonable.
 
-En Anglefeint, la atmósfera se trata como capa de apoyo y la superficie del artículo sigue siendo el plano principal de información.
+Texto y efectos separan responsabilidades: el texto está en HTML, las imágenes tienen dimensiones y recursos adaptables y los módulos gestionan eventos, temporizadores y limpieza. Los efectos compatibles con movimiento reducido siguen la preferencia del sistema; los detalles varían por módulo.
 
-Decisiones de implementación:
+Rendimiento y accesibilidad dependen de página, dispositivo y contenido. Una puntuación no garantiza todos los artículos. El lector debe poder leer, operar y salir; el autor, mantener el sitio.
 
-- efectos organizados por responsabilidad de ruta
-- capas de layout reutilizables para comportamiento estable
-- estructura de contenido consistente entre idiomas
-
-El objetivo es sostener identidad visual fuerte sin convertir el sitio en una simple demo.
-
-Con límites claros de arquitectura, estilo y mantenibilidad pueden coexistir.
+Sigue leyendo: [Referencia de configuración: inicio](/es/blog/config-home/) · [Referencia de configuración: detalle de artículos](/es/blog/config-article/)

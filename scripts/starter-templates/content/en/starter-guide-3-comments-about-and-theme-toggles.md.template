@@ -1,77 +1,80 @@
 ---
 tags: ['anglefeint', 'starter']
-title: 'User Guide 3: Enable and Customize Optional Features'
-subtitle: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
-description: 'Configure music, comments, About, pagination, feature switches, and languages only when you need them.'
+title: 'User Guide 5: Adjust Pages and Features to Your Liking'
+subtitle: 'Customize the homepage, About, Decoder, social links, footer, music and pagination by the area you want to change.'
+description: 'Make small configuration changes to page content and features, with actual defaults, scope, merging rules and local checks.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
-## AI-readable content
+This is part 5 of 8. [See the full tutorial sequence](/en/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Look up configuration fields](/en/blog/config-reference/).
 
-Builds now include public articles, enabled Fragments and enabled About pages in `/llms.txt`, language indexes and full-text bundles. Article Markdown URLs stay unchanged. Each language has `/en/fragments/index.md` and `/en/about/index.md` (replace `en` with your language); the Fragments file combines all public pages and preserves each ID, publication time, body and stable `/<locale>/fragments/#ID` link. HTML pages advertise their Markdown companion. Files appear after `npm run build` and in preview; deploy all of `dist/`.
+Once the blog runs, start with the area you want to change. You need not fill every field or copy all examples.
 
-About exports its public biography, contact links and reachable AI text popup, excluding terminal configuration, tools and decorative UI. Comments are not exported. Disabled pages/languages, deleted content, noindex pages and off-site canonical pages are excluded; rebuilding removes stale generated exports and discovery links while preserving user-authored files (conflicts stop the build). Site/locale context supplements apply to all exported documents. JSON-LD includes page language; About uses AboutPage. No new configuration, server, UI dependency or guarantee of AI indexing/citation is added.
+Merge TypeScript fragments into the existing `defineThemeConfig({...})` in `src/site.config.ts`. Keep only one `theme`, one `i18n` and one `social` per object. Edit matching fields, retaining other personal settings. Objects merge with defaults; arrays replace entire arrays, so include all links, tracks or entries you want to retain.
 
-## Check the defaults before changing anything
+This is a task-oriented guide to common settings, not the complete field dictionary. Find your target area and read its section.
 
-This guide covers the accompanying starter. Merge all TypeScript snippets into the `defineThemeConfig({...})` object in `src/site.config.ts`. Configure only what you want to change.
+## 1. Adjust homepage prompts and effects
 
-| Feature                                                  | Default                     |
-| -------------------------------------------------------- | --------------------------- |
-| Search, table of contents, tags, automatic social images | On                          |
-| Body image previews and code copying                     | Automatic; no configuration |
-| About and the Red Queen article monitor                  | On                          |
-| Music and Giscus comments                                | Off                         |
-| Latest homepage posts / posts per blog page              | 3 / 10                      |
-
-## 1. Enable the music player
-
-Put your audio at `public/music/my-song.mp3` (create the directory if necessary), then add:
+See [installation and personal information](/en/blog/starter-guide-1-configure-your-site/) for the distinction between site name, homepage title and introduction. These settings adjust prompt sections and interactions:
 
 ```ts
 theme: {
-  music: {
-    enabled: true,
-    tracks: [
-      { title: 'My Song', artist: 'Artist Name', src: '/music/my-song.mp3' },
-    ],
+  home: {
+    showInitialize: true,
+    showFollow: true,
+    showTrace: true,
   },
+  effects: { enableHomePassage: false },
 },
 ```
 
-The URL omits `public`. Each track requires `title` and `src`; `artist` is optional. Add more objects to `tracks` for more songs. Direct HTTPS audio URLs also work; local disk paths and music-platform sharing pages are not audio URLs. Avoid spaces and backslashes, and prefer simple filenames. No songs are bundled.
+| Field                             | Default | What changes                                                                                                                                       |
+| --------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `theme.home.showInitialize`       | `true`  | Shows the Initialize/done startup text; false hides that section.                                                                                  |
+| `theme.home.showFollow`           | `true`  | Shows the Wake Up/Follow prompt; false hides it independently.                                                                                     |
+| `theme.home.showTrace`            | `true`  | Shows the bottom PIRATE SIGNAL/TRACE area; false hides it.                                                                                         |
+| `theme.effects.enableHomePassage` | `false` | Allows homepage post-title links to play an approximately eight-second Matrix passage before navigation; reduced motion retains direct navigation. |
 
-An empty playlist hides the player. With music enabled, invalid titles or URL formats cause configuration errors. The player mounts on pages using the shared theme layout; there is no per-page visibility switch. It sits at the lower left on desktop. On mobile, each page starts collapsed; expanding it temporarily hides back-to-top.
+These fields do not disable all code rain or change the global palette. `showTrace` does not control the lower-right widescreen terminal.
 
-On the first visit, audio loads only after clicking PLAY. The tab session remembers the track, position and volume. If playback was active, navigating, reloading or returning with Back/Forward attempts to resume at the saved position; manual pause stays paused. A short gap is expected, not seamless playback. If the browser blocks automatic playback, click PLAY to continue. A removed track is not replaced automatically. Without storage, manual playback still works but session resume is unavailable. First check that `/music/my-song.mp3` is accessible. When a track ends, the next starts automatically; after the last, playback returns to the first. Set `enabled: false` to disable the player.
+### Change the widescreen terminal text
 
-Playback downloads the complete track into a browser Blob before starting, so seeking does not require HTTP Range support. Large files or slow connections increase startup time and memory use. Pause/resume reuses the loaded track; changing tracks releases it. Navigation loads the track again (the browser HTTP cache may help). External audio hosts must allow cross-origin fetch (CORS); putting files in `public/music/` avoids this requirement.
-
-## 2. Enable Giscus comments
-
-[Comments setup guide](/en/blog/starter-guide-4-giscus-comments/)
-
-## 3. Replace About content
-
-About body paragraphs and the signature preserve line breaks in configuration strings: `\n` starts a new line and `\n\n` leaves a blank line. Long sentences still wrap. This is plain text, not Markdown or HTML; do not insert `<br>`.
-
-About is enabled by default. Configure its content per language without editing the page template:
+It defaults to `Knock, knock.`. Set English first to provide shared text for languages without their own override:
 
 ```ts
 i18n: {
   locales: {
-    en: {
+    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+  },
+},
+```
+
+For language-specific text, set its `messages.home.transmission`. This field uses current-language configuration → English configuration → `Knock, knock.`, rather than the complete normal message fallback chain. The terminal appears in wide layouts; absence on a phone is not a configuration failure. Clicking the keyhole opens the corridor preview.
+
+About's Oracle entry uses an independent scene preview, unaffected by the homepage passage switch. These terminal/status texts create atmosphere rather than reporting actual machines, networks or security.
+
+See the [homepage reference](/en/blog/config-home/#startup-switches) for complete definitions.
+
+## 2. Replace About with your introduction
+
+Open `/zh/about/` for the Chinese example. Body and contact details are configured per language, without editing theme page templates:
+
+```ts
+i18n: {
+  locales: {
+    zh: {
       about: {
-        metaLine: '$ profile booted | mode: builder',
+        metaLine: '$ profile | building and learning',
         sections: {
-          who: 'Introduce yourself here.',
-          what: 'Describe what you build.',
-          ethos: ['Keep learning.', 'Build useful things.'],
-          now: 'What you are working on now.',
-          contactLead: 'Get in touch.',
-          signature: '> Your signature',
+          who: '我是小林，喜欢开发与写作。',
+          what: '这里记录我的项目和学习笔记。',
+          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
+          now: '最近在整理个人博客。',
+          contactLead: '欢迎联系我。',
+          signature: '> 谢谢你来这里。',
         },
         contact: {
           email: 'you@example.com',
@@ -84,25 +87,114 @@ i18n: {
 },
 ```
 
-This changes only English About content; fill in other locales separately, as nothing is automatically translated. `sidebar`, `labels`, `modals`, and `effects` also support overrides. Start with the body and contact details. About tool windows are theme demonstrations; writing their text does not connect a real AI service.
+Replace the sample name and addresses. `metaLine` is the panel's top status text. `who`, `what`, `ethos` and `now` hold biography, work, principles and current activity. `contactLead` introduces contact details; `signature` is the signature. `ethos` is a string array and replaces all previous entries when supplied.
 
-Visit `/en/about/` to check the body, email, and GitHub links. Set `theme.enableAboutPage: false` to hide the navigation item and stop generating About routes. Rebuild after changing it.
+Paragraphs and signature are plain text. `\n` creates a line break and `\n\n` a blank line. Markdown/HTML are not parsed; do not use `<br>`. This example changes Simplified Chinese only. Other languages need their own text; no translation happens automatically. Missing fields use the language's configuration fallback rules.
 
-### Decoder Lab: a tribute to cypherpunks
+Window controls close, minimize or fullscreen the panel and store its state locally in the browser. AI output and download progress are theme interactions, not connections to an AI service activated by entering text. Decoder tools process input locally in the browser.
 
-Decoder Lab takes its visual inspiration from the **cypherpunk** movement, in tribute to its contributions to human freedom, privacy and open code. Its peer-to-peer network motif and local processing reflect the idea of keeping tools and data in the hands of the individual.
+To remove About, set `enableAboutPage: false` in `theme`; the default is `true`. This removes standard About routes and related public navigation/contact entries. Links you wrote in bodies or footer are not deleted automatically; review them too.
 
-We share this conviction: **privacy and freedom cannot depend solely on the goodwill of those in power.** Individuals should be able to protect their communications, choose what to reveal and to whom, and verify for themselves where possible, without placing all their trust in governments, platforms or other third parties.
+See [About fields](/en/blog/config-about/#about-content) for more content settings, and [terminal messages](/en/blog/config-terminal/#messages) for command prompts and the read-only reader.
 
-**“Cypherpunks write code.”** This line from [A Cypherpunk’s Manifesto](https://www.activism.net/cypherpunk/manifesto.html) describes a way to act: turn ideals into usable software and publish the code so others can inspect, use and build on it. We honour that commitment to defending individual autonomy through technology.
+## 3. Adjust Decoder and reading cards
 
-Decoder Lab reflects this spirit through local processing, inspectable source code and a peer-to-peer network motif.
+Decoder Lab is enabled by default at `/zh/decoder/` in the Chinese example. Its visuals honor cypherpunks and digital-freedom pioneers; local processing and peer-to-peer imagery reflect personal control over tools and data.
 
-Open **Decoder Lab** from the About decoder dialog or visit `/en/decoder/` for text decoding, token-call interpretation and address inspection in your browser. No RPC, wallet connection or API key is required. Address inspection checks format and supported checksums; it does not query balances or establish ownership. Set `theme.enableDecoderPage: false` in `src/site.config.ts` to disable the page and its entry links.
+It decodes text, interprets supported token calls and checks address formats without RPC, wallet connection or an API key. It does not query balances, execute transactions or prove ownership. Providing calldata does not verify a contract's real behavior.
 
-## 4. Adjust post counts and pagination
+Set `enableDecoderPage: false` in `theme` to disable the standalone page and theme-provided links independently. Disabling About does not disable Decoder, or vice versa. Maintain custom links yourself.
 
-You may set only the first two counts; add `pagination` when you want a fixed pagination appearance:
+Tribute text and reading cards are configured per language. For example, replace the Chinese list:
+
+```ts
+i18n: {
+  locales: {
+    zh: {
+      messages: {
+        decoderPage: {
+          readings: {
+            tribute: '思想与代码，让隐私和自由更进一步。',
+            links: [
+              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+            ],
+          },
+        },
+      },
+    },
+  },
+},
+```
+
+`tribute: ''` hides the tribute and `links: []` hides cards. Omission retains defaults. Each entry requires `title` and `href`; `author`, `year` and `cover` are optional. A cover can be a built-in name such as `privacy-code` or `bitcoin`, a public image path or HTTPS URL. Omission gives a text-only card.
+
+`links` replaces the whole list rather than appending. Include old entries to retain them. These are links you provide, not automatically fetched/reprinted articles or verified external resources.
+
+See the [Decoder reference](/en/blog/config-decoder/#readings) for entry types, built-in covers and defaults.
+
+## 4. Adjust social links and footer
+
+Basic social accounts use `social.links`, sharing array order between header and footer. For a custom icon, first add `public/icons/community.svg`:
+
+```ts
+social: {
+  links: [
+    { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
+    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+  ],
+},
+```
+
+`iconSrc` supports local public SVG, PNG and WebP paths beginning with `/`, not remote URLs, queries, fragments or encoded characters. It overrides `icon` and preserves image colors. If both are absent, the label appears as text. `label` supplies the accessible name. Missing files or unsupported built-in icon names cause configuration errors.
+
+Optional `rel` describes link relationships. For example, use `rel: 'me'` for your Mastodon account. The theme retains `noopener noreferrer` and does not add `me` automatically by platform. Identity verification belongs to the platform: deploy the site first, then provide the actual page containing the reciprocal link in your profile. Verification is not guaranteed by the theme.
+
+Header social links are hidden on mobile; the footer retains them. `links: []` leaves three non-clickable placeholders rather than hiding the area.
+
+### Footer credits, text and extra links
+
+```ts
+site: { tagline: '保持好奇，持续记录。' },
+theme: {
+  footer: {
+    showCredits: true,
+    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+  },
+},
+```
+
+- `site.tagline` is plain custom text. An empty string hides it, and it is not translated automatically. The old default `Built with Astro.` is treated as built-in credit to prevent duplication.
+- `theme.footer.showCredits` defaults to `true`, controlling the theme and Astro credits. Turning it off retains copyright, custom text and extra links. It also controls theme credit on automatic article sharing images, not custom images.
+- `theme.footer.links` defaults to an empty array and appears between copyright and credits, independently of social icons. Labels retain your text, are not translated, and are unaffected by showCredits.
+
+Copyright uses the global site name and the build-time year. Rebuild and deploy after changing text, credits or year-dependent output.
+
+See [social fields](/en/blog/config-site-chrome/#social-fields) and [footer fields](/en/blog/config-site-chrome/#footer) for icon paths and credit/link rules.
+
+## 5. Enable the music player
+
+Add your audio at `public/music/my-song.mp3`, then merge:
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+Music defaults to off and includes no tracks. Every entry needs `title` and `src`; `artist` is optional. An empty playlist hides the player. Retain wanted entries when expanding the array. Audio URLs omit `public`, cannot be local disk paths or platform sharing pages, and may be direct HTTPS URLs. Avoid spaces/backslashes. Empty titles or invalid URL formats cause configuration errors; valid formatting does not prove file availability.
+
+The player appears on pages using the shared theme layout, without per-page visibility switches. Each new page starts collapsed. On first use, PLAY triggers audio loading. Tracks advance in order and wrap from last to first. Expanding the mobile player temporarily hides back-to-top.
+
+The tab session remembers track, position and volume. Active playback attempts to resume after navigation/reload; a manual pause remains paused. Playback is not seamless and browsers may block automatic resume. Without storage, manual playback works without session resume.
+
+The implementation downloads the whole track into a Blob before playing, so seeking does not depend on server Range support. Large files increase waiting and memory. Remote hosts must allow CORS; same-site public files need no cross-origin setup. Confirm the audio URL is available. Disable music with `theme.music.enabled: false`.
+
+See the [music reference](/en/blog/config-music/#track-fields) for track fields, status messages and resume limits.
+
+## 6. Adjust list counts and pagination
 
 ```ts
 theme: {
@@ -117,146 +209,62 @@ theme: {
 },
 ```
 
-`homeLatestCount` controls recent posts on the homepage. `blogPageSize` controls posts per blog page and is also used by tag post lists. Use reasonable positive integers.
+`homeLatestCount` defaults to 3 homepage posts; `blogPageSize` defaults to 10 posts per blog/tag page. Use reasonable positive integers. Neither controls the homepage's fixed maximum of three fragment previews. Full fragment lists use `theme.fragments.pageSize`.
 
-`windowSize` controls the page-number window, clamped to 5–21, not the number of posts per page. The jump input appears only when `jump.enabled` is true and total pages exceed `showJumpThreshold` (over 12 by default). `enterToGo` controls jumping with Enter.
+`windowSize` defaults to 7 and controls the page-number window, not items per page; rendering limits it to 5–21. Jump controls require `jump.enabled` true and total pages greater than `showJumpThreshold`, defaulting to more than 12. `enterToGo` permits Enter navigation.
 
-Style modes are `fixed`, `sequential`, and `random`. The example fixes variant 1. With JavaScript enabled, default `random` picks the wrapper and button colors again on each document load; random results may repeat. Without JavaScript, the generated HTML keeps a stable wrapper variant and static button colors. `style.enabled: false` uses the basic variant without disabling pagination.
+The default style mode is `random`; this example selects `fixed` to pin a variant. `sequential` follows page order. Client initialization in `random` picks again and may repeat colors. Without JavaScript, static build-time pagination remains. `variants` controls the number of selectable variants, clamped during rendering to 1–12; `fixedVariant` is limited to that range.
 
-## 5. Disable enhancements you do not need
+`style.enabled: false` uses a basic style without removing pagination. Blog, tags and Fragments share these settings; consider all three.
 
-These are available off switches, not a recommendation to disable everything. Keep only fields you want to change:
+See [Blog List and tags](/en/blog/config-blog-list/#pagination-window) for complete ranges, variants and interface text.
 
-```ts
-theme: {
-  enableAboutPage: false,
-  effects: { enableRedQueen: false },
-  search: { enabled: false },
-  toc: { enabled: false },
-  tags: { enabled: false },
-  socialImage: { enabled: false },
-},
-```
+## 7. Disable only the features you do not need
 
-`enableRedQueen` controls only the article Red Queen monitor, not the entire AI theme or all effects. `toc` is a site default that a post’s `toc: true` can override. Disabling `socialImage` leaves manual `ogImage` working. Search and tag switches affect both their entries and generated output. Existing layouts determine the four page atmospheres; there is no global selector that switches the whole site among the four themes.
+These switches have distinct scopes. Do not disable the whole table merely to configure one feature.
 
-## 6. Add languages and adjust the homepage URL
+| Configuration path             | Default | Effect of false                                                       |
+| ------------------------------ | ------- | --------------------------------------------------------------------- |
+| `theme.enableAboutPage`        | `true`  | Stops About generation and hides related theme entries.               |
+| `theme.enableDecoderPage`      | `true`  | Stops Decoder generation and hides related theme entries.             |
+| `theme.effects.enableRedQueen` | `true`  | Hides the article Red Queen monitor, not all AI-page effects.         |
+| `theme.search.enabled`         | `true`  | Disables article-search UI and index generation.                      |
+| `theme.toc.enabled`            | `true`  | Disables default contents; per-post `toc: true` still overrides.      |
+| `theme.tags.enabled`           | `true`  | Disables tag links/pages without deleting posts.                      |
+| `theme.math.enabled`           | `true`  | Disables Markdown/MDX mathematical processing.                        |
+| `theme.socialImage.enabled`    | `true`  | Stops automatic article sharing images; explicit ogImage still works. |
 
-For example, add French:
+For example, merge only `theme: { effects: { enableRedQueen: false } }` to hide the monitor without changing search, music or About.
 
-```ts
-i18n: {
-  locales: {
-    fr: {
-      meta: { label: 'Français', hreflang: 'fr', ogLocale: 'fr_FR', enabled: true, fallback: ['en'] },
-      site: { hero: 'Bienvenue sur mon blog.' },
-      messages: { nav: { home: 'Accueil' }, siteDescription: 'Mes notes et projets.' },
-    },
-  },
-},
-```
+Comments and fragments default to off and need not be enabled for other features. See [Giscus comments](/en/blog/starter-guide-4-giscus-comments/) and [fragments](/en/blog/starter-guide-5-fragments/) when needed. Contents, formulas and sharing images are explained in [writing posts](/en/blog/starter-guide-2-languages-and-routing/) and [images](/en/blog/starter-guide-images/).
 
-Then create content with `npm run new-post -- french-note --locales fr`. Provide interface text, a homepage introduction, About, and post translations yourself. `fallback` supplies missing configuration/text; it neither translates posts nor inserts other languages’ posts into a list. The default locale is added to the fallback chain when needed.
+## 8. Create a custom page for your work
 
-Change `meta.label` to rename a language in the menu; for example, `zh` defaults to “简体中文”. `hreflang` / `ogLocale` describe language metadata. Changing the displayed name does not change the locale code or URL.
-
-The default `i18n.routing.defaultLocalePrefix: 'always'` redirects `/` to the default-language homepage. `'never'` serves that homepage at `/` and redirects `/<default-locale>/` back to `/`. This affects only the default homepage, not blog paths: `/en/blog/` does not become `/blog/`.
-
-## 7. Merge settings and verify
-
-For example, combine the post count and music in one `theme` object:
-
-```ts
-theme: {
-  homeLatestCount: 5,
-  music: {
-    enabled: true,
-    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
-  },
-},
-```
-
-Keep existing settings such as `theme.comments` in that same object. Do not overwrite your configuration with a whole example. Arrays replace previous arrays, so retain existing tracks or social links when adding entries.
-
-Check the feature in development, then run `npm run doctor` and `npm run preview`. Doctor includes checks and a build; do not repeat `check` and `build` after it succeeds. Test search in the built preview. Deploy the new output to publish changes.
-
-## 8. Show or hide footer credits
-
-The footer displays the current build year and your `site.title`. By default it also links to the theme and Astro: `© 2026 My Blog · Theme by Anglefeint · Built with Astro`. The year is generated during the build, not hard-coded.
-
-To hide both technical credits, merge this setting into `src/site.config.ts`:
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  theme: {
-    footer: { showCredits: false },
-  },
-});
-```
-
-Set `showCredits: true` to restore them. Hiding credits removes both links; it keeps the copyright line. An optional `site.tagline` adds your own plain text independently of this switch. Its default is empty; the former default `Built with Astro.` is treated as the built-in credit to avoid duplication. No `All rights reserved` text is added.
-
-Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls the Initialize/done sequence, `showFollow` controls Wake Up/Follow, and `showTrace` controls the lower-right terminal status. All default to `true`; set each to `false` to hide it independently.
-
-Optional `theme.footer.links` adds a separate footer row: each entry has `label` and `href`, with dots between links. Empty or omitted links hide the row. Labels keep their configured text across languages; this row is independent of social icons and `showCredits`.
-
-```ts
-theme: {
-  home: { showInitialize: true, showFollow: true, showTrace: true },
-  footer: {
-    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
-  },
-},
-```
-
-Automatic cards use a bundled code-rain, terminal and neon-network background, with your own site name, title and author. The small `Theme by Anglefeint` credit at the bottom right follows `theme.footer.showCredits` (default `true`); set it to `false` to hide both footer credits and this image credit. Rebuild and redeploy after changing it. Custom `ogImage` files are never modified. The artwork works offline and adds no browser JavaScript.
-
-Standard pages, configuration defaults and build features come from the theme package in the 0.27+ integration starter. Keep your configuration values in `src/site.config.ts`. Theme upgrades do not rewrite your articles, music, images or custom pages; pre-0.27 copied skeletons require the one-time migration in the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
-
-## In this series
-
-- [User Guide 1: Set Up Your Blog](/en/blog/starter-guide-1-configure-your-site/)
-- [User Guide 2: Write and Organize Content](/en/blog/starter-guide-2-languages-and-routing/)
-- [User Guide 3: Enable and Customize Optional Features](/en/blog/starter-guide-3-comments-about-and-theme-toggles/)
-
-## Mathematical formulas
-
-Markdown and MDX articles support LaTeX-style math globally by default. Write `$C_{saved}$` inline or put a formula between separate `$$` lines. No per-post flag or extra plugin installation is needed.
-
-```markdown
-Inline: $C_{saved}$
-
-$$
-\frac{a}{b}
-$$
-```
-
-Disable with `theme: { math: { enabled: false } }` in `src/site.config.ts`. Escape literal dollars as `\$` when ambiguous; code spans and fenced code remain literal. Disabling math restores normal MDX rules, including JavaScript expressions in braces.
-
-Rendering happens at build time with local KaTeX styles/fonts and accessible MathML, without a browser math engine. Long display formulas scroll horizontally. Invalid formulas stop the build with a source/error message. Keep titles and descriptions plain text; formulas are excluded from search indexing. Supported math is KaTeX syntax, not complete LaTeX documents.
-
-In the 0.27+ integration starter, the theme package wires the Markdown processor automatically, including math. Only pre-0.27 copied skeletons require the one-time migration; do not copy processor or adapter implementations into a new project.
-
-$C_{saved}$
-
-$$
-\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
-$$
-
----
-
-## Upgrade the theme
-
-The integration starter keeps standard pages, configuration defaults, translations and build features in the theme package. Your articles, `src/site.config.ts`, music, images and custom pages remain in your project.
-
-For integration starters using npm, run the command below from the project root. It checks project/Node/Astro compatibility, backs up dependency files, installs an exact theme version and runs doctor. On failure it restores dependency files and attempts to reinstall the previous dependencies. Rebuild output is ready for your normal deployment; the command does not publish your site.
+To present projects separately, run this at the project root:
 
 ```bash
-npx @anglefeint/astro-theme@latest upgrade
+npm run new-page -- projects
 ```
 
-Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
+It creates `src/pages/[lang]/projects.astro` with the default `base` layout, generating `/<语言代码>/projects/` for enabled languages, such as `/en/projects/` or `/zh/projects/`. Edit that Astro file's body. It does not translate content or add a header navigation item. Link it from the body or footer links.
 
-The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.1` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.
+Add `--theme` when you want a specific atmosphere. For example, `npm run new-page -- portfolio --theme cyber` creates another Cyberpunk page. Options are `base`, `ai`, `cyber`, `hacker` and `matrix`. This selects the new page's layout, not a global theme switch. Slugs use lowercase letters, numbers and hyphens, with nested paths such as `projects/labs` supported. Avoid reserved standard routes. Existing files cause an error, so do not run five theme commands for the same path consecutively.
 
-If an upgrade fails, do not deploy `dist/`: dependency rollback does not restore previous build output. Resolve the error and run `npm run doctor` successfully before deploying. pnpm users update explicitly with `pnpm add @anglefeint/astro-theme@latest` and `pnpm run doctor`; keep their lockfile and review release compatibility first.
+## 9. Confirm saved changes
+
+Open the changed page in dev and check content, links and feature entries. For old environment overrides, follow [the first tutorial](/en/blog/starter-guide-1-configure-your-site/). Diagnose missing icons, audio requests and external links by their paths/network rather than repeatedly overwriting the whole configuration.
+
+Stop dev before publication, then run:
+
+```bash
+npm run doctor
+npm run preview
+```
+
+doctor includes local preparation, checks and building. Do not immediately repeat check or build after success. Verify search in built preview; preview itself does not publish. Redeploy all of `dist/` for live changes, because saving configuration locally does not update production.
+
+## Tutorial navigation and configuration reference
+
+[Previous: publish a fragment](/en/blog/starter-guide-5-fragments/) · [Next: let readers leave comments](/en/blog/starter-guide-4-giscus-comments/) · [All eight tutorials](/en/blog/starter-guide-1-configure-your-site/#tutorial-order).
+
+Related fields: [homepage](/en/blog/config-home/), [About](/en/blog/config-about/), [terminal](/en/blog/config-terminal/), [Decoder](/en/blog/config-decoder/), [navigation, social links and footer](/en/blog/config-site-chrome/), [music](/en/blog/config-music/), [lists and pagination](/en/blog/config-blog-list/). Full paths, defaults and limits are in the [reference index](/en/blog/config-reference/).

@@ -7,23 +7,18 @@ heroImage: '../../../assets/blog/default-covers/ai-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
 aiState: 'stable'
-aiLatencyMs: 168
-aiConfidence: 0.96
-wordCount: 760
-tokenCount: 1180
+updatedDate: '2026-11-14'
 ---
 
-이 테마는 시각 효과보다 구조를 먼저 정했습니다. 구조가 불명확하면 기능 추가와 수정 비용이 빠르게 커지기 때문입니다.
+Anglefeint는 네 가지 역할을 조합합니다.
 
-Anglefeint는 4계층으로 구성됩니다.
+- ThemeFrame: 문서, SEO, 탐색, 푸터, 음악의 공통 구성.
+- Shell: 페이지별 스타일과 배경 분위기.
+- Layout: 본문, 커버, 보조 영역의 배치.
+- Page: 콘텐츠와 설정을 읽고 페이지를 구성.
 
-- ThemeFrame: 공통 프레임과 전역 골격
-- Shell: 라우트별 분위기 레이어
-- Layout: 페이지 구조 조합
-- Page: 콘텐츠와 라우팅 데이터
+이는 역할 구분이며 모든 페이지가 같은 네 컴포넌트를 중첩한다는 뜻은 아닙니다. 공통 구조는 일관성을 담당하고 각 페이지는 데이터와 상호작용을 유지합니다.
 
-이 분리는 스타일 변경과 콘텐츠 변경을 분리해 줍니다. 스타일을 바꿔도 콘텐츠 로직을 다시 짤 필요가 없습니다.
+표준 경로, 기본값, 테마 구현은 `@anglefeint/astro-theme`에 있습니다. starter에는 글, 자료, `src/site.config.ts`, 사용자 페이지, 배포 설정이 남습니다. 업데이트하려고 표준 페이지를 복사할 필요가 없습니다. 사이트 설정은 한 진입점에서, 글과 Fragments는 각 콘텐츠 디렉터리에서 관리합니다.
 
-레포 구조에서도 핵심 구현은 @anglefeint/astro-theme 패키지로 두고, starter는 콘텐츠/설정 중심으로 유지합니다. 업그레이드 경로를 패키지 업데이트 중심으로 단순화하기 위함입니다.
-
-사용자 설정은 site.config.ts를 중심으로 모아 두었습니다. 단일 진입점은 학습 비용과 운영 비용을 모두 낮춥니다.
+이어서 읽기: [라우트 기반 비주얼 시스템 설계](/ko/blog/route-visual-system-design/) · [설정 사전: 사이트 이름, 도메인, 공용 내비게이션, 소셜, 푸터](/ko/blog/config-site-chrome/)

@@ -75,14 +75,38 @@ export const STARTER_CONTENT_SLUGS = [
   'welcome-to-anglefeint',
   'starter-guide-1-configure-your-site',
   'starter-guide-2-languages-and-routing',
+  'starter-guide-images',
+  'starter-guide-5-fragments',
   'starter-guide-3-comments-about-and-theme-toggles',
   'starter-guide-4-giscus-comments',
-  'starter-guide-5-fragments',
+  'starter-guide-languages',
+  'starter-guide-deployment',
+  'config-reference',
+  'config-home',
+  'config-blog-list',
+  'config-article',
+  'config-fragments',
+  'config-about',
+  'config-decoder',
+  'config-music',
+  'config-comments',
+  'config-languages',
+  'config-search',
+  'config-analytics-ai',
+  'config-site-chrome',
+  'config-terminal',
 ];
 
-export const STARTER_CONTENT_MANAGED_FILES = STARTER_CONTENT_LOCALES.flatMap((locale) =>
-  STARTER_CONTENT_SLUGS.map((slug) => `${STARTER_CONTENT_ROOT}/${locale}/${slug}.md`)
-);
+// Reserved for future articles introduced in only some languages. The current
+// tutorial and configuration-reference set is available in every supported locale.
+export const STARTER_CONTENT_EXTRA_FILES = [];
+
+export const STARTER_CONTENT_MANAGED_FILES = [
+  ...STARTER_CONTENT_LOCALES.flatMap((locale) =>
+    STARTER_CONTENT_SLUGS.map((slug) => `${STARTER_CONTENT_ROOT}/${locale}/${slug}.md`)
+  ),
+  ...STARTER_CONTENT_EXTRA_FILES,
+];
 
 // Tutorial overrides feed distribution; keep maintainer-authored demo guides current too.
 Object.assign(

@@ -1,24 +1,48 @@
 ---
-tags:
-  - anglefeint
-  - starter
-title: 使用指南 1：設定你的部落格
-subtitle: 安裝、網站資料、語言與部署。
-description: 安裝、網站資料、語言與部署。
+tags: ['anglefeint', 'starter']
+title: '使用指南 1：安裝部落格，換成自己的資訊'
+subtitle: '在本機執行部落格，修改自己的資訊，按預設流程建立文章，再依需求調整語言和首頁文字。'
+description: '從安裝啟動到個人資訊、預設建立流程和本機驗證；首頁文字與語言依需求調整，已有專案可檢視文末升級說明。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-12'
-heroImage: ../../../assets/blog/default-covers/cyber-02.webp
+updatedDate: '2026-11-14'
+heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
-## 支援 AI 閱讀的內容
+本篇是入門教學的第 1 / 8 篇。[檢視完整教學順序](/zh-hant/blog/starter-guide-1-configure-your-site/#tutorial-order) · [依欄位查設定字典](/zh-hant/blog/config-reference/)。
 
-建置會將公開文章、已啟用的 Fragments 和 About 頁面納入 `/llms.txt`、語言索引與全文合集。文章 Markdown 網址維持不變；各語言另有 `/zh-hant/fragments/index.md` 和 `/zh-hant/about/index.md`（依實際語言替換）。Fragments 檔案合併所有公開分頁，保留每則 ID、發布時間、正文及穩定的 `/<locale>/fragments/#ID` 連結。HTML 頁面提供對應 Markdown 的探索連結。檔案在 `npm run build` 後及 preview 中可用，部署整個 `dist/` 即可。
+讀完這篇，你可以在自己的電腦上打開部落格，把網站名稱、首頁介紹和聯絡方式換成自己的，並知道接下來在哪裡寫文章。音樂、評論和頁面自訂可以等需要時再設定。
 
-About 匯出公開簡介、聯絡連結及可開啟的 AI 文字彈窗，排除終端設定、工具與裝飾介面；不匯出留言。停用的頁面／語言、已刪除內容、noindex 頁面與站外 canonical 頁面不匯出；重新建置會清除過期產物與探索連結，保護使用者自有檔案，遇到衝突時停止建置。網站／語言補充說明適用所有匯出文件。JSON-LD 包含頁面語言，About 使用 AboutPage。不需新增設定、伺服器或 UI 依賴，也不保證 AI 收錄或引用。
+如果你已經有一個使用 Anglefeint 的專案，直接在原專案修改設定；需要更新主題時，檢視文末「已有專案如何升級」，不用重新安裝一份部落格。
 
-## 安裝並在本機開啟
+<a id="tutorial-order"></a>
 
-使用 Node.js 22.12.0 或更新版本。在父目錄執行以下指令，建立 my-blog 並略過相依套件安裝，再安裝並啟動；若換名字，同時修改建立指令與 cd。
+## 八篇教學怎麼讀？
+
+第一次使用可以依照下面順序閱讀；碎片、評論和多語言調整都是依需求操作，不需要為了完成安裝而開啟。閱讀繁體中文教學不要求先修改專案的預設語言；需要調整語言時再依照對應章節操作。以後只想改某個欄位時，直接從[設定字典總入口](/zh-hant/blog/config-reference/)查詢。
+
+| 順序 | 教學                                                                                                | 讀完可以做什麼                                     |
+| ---- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| 1    | [安裝部落格，換成自己的資訊](/zh-hant/blog/starter-guide-1-configure-your-site/)                    | 執行部落格、修改個人資訊，了解預設流程。           |
+| 2    | [寫第一篇文章](/zh-hant/blog/starter-guide-2-languages-and-routing/)                                | 建立文章、填寫日期，使用標題、標籤、程式碼和公式。 |
+| 3    | [給文章和碎片添加圖片](/zh-hant/blog/starter-guide-images/)                                         | 放入原圖、設定封面、準備圖片並提交衍生檔案。       |
+| 4    | [發佈一條碎片](/zh-hant/blog/starter-guide-5-fragments/)                                            | 建立碎片，保留穩定 ID，添加配圖和程式碼。          |
+| 5    | [把頁面和功能調整成自己喜歡的樣子](/zh-hant/blog/starter-guide-3-comments-about-and-theme-toggles/) | 調整頁面內容、音樂和分頁，建立自訂頁面。           |
+| 6    | [讓讀者留下評論](/zh-hant/blog/starter-guide-4-giscus-comments/)                                    | 連線 Giscus，選擇文章、碎片及譯文討論的關聯方式。  |
+| 7    | [讓更多語言的讀者使用部落格](/zh-hant/blog/starter-guide-languages/)                                | 依需求選擇語言、調整首頁地址並補充譯文。           |
+| 8    | [把部落格發佈到自己的網域](/zh-hant/blog/starter-guide-deployment/)                                 | 檢查建置產物、部署完整檔案並綁定網域。             |
+
+可以隨時從各篇開頭或結尾返回這份目錄，繼續下一步或查找需要的內容。
+
+## 1. 安裝並打開部落格
+
+先準備 Node.js 22.12.0 或更新版本和 npm。在終端機執行下面兩條指令，確認它們能輸出版本號：
+
+```bash
+node --version
+npm --version
+```
+
+在你打算存放專案的目錄中建立部落格。下面的指令會新建 `my-blog` 資料夾，不會自動安裝相依：
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
@@ -27,105 +51,159 @@ npm install
 npm run dev
 ```
 
-開啟終端顯示的網址。使用 pnpm 時保持同一建立指令，再用 pnpm install 與 pnpm dev 取代 npm 的安裝與啟動指令。
+你可以把 `my-blog` 換成其他目錄名，同時修改 `cd` 後的名稱。打開終端機顯示的本機網址；不要假定連接埠一定相同，連接埠被佔用時可能變化。開發服務保持執行，按 `Ctrl+C` 停止。
 
-## 網站資料與首頁網址
+後續指令都在這個專案根目錄執行，也就是包含 `package.json` 的目錄。再次打開已有專案時，只需進入該目錄執行 `npm run dev`。首次安裝相依或相依發生變化時才需要執行 `npm install`。
 
-編輯 src/site.config.ts 裡的設定物件，保留 imports 與 exports。替換網域、名稱、作者與文字，並將範例合併至現有設定。
+這篇使用 npm。使用 pnpm 的新專案可把安裝、啟動指令換成 `pnpm install`、`pnpm dev`，但文末的自動升級工具目前只支援 npm 專案。一個專案保持使用同一種套件管理工具。
+
+## 2. 換成自己的網站資訊和首頁文字
+
+安裝後的專案已經有 `src/site.config.ts`，直接打開這個檔案編輯，不需要新建設定檔案或重新宣告設定物件。starter 預設省略 `site` 並使用主題預設值；在現有的 `defineThemeConfig({ ... })` 內加入下面的欄位即可。如果檔案已經有 `site`，直接修改其中的欄位，保留其他個人設定，不要重複添加同名物件。檔案原有的 import、export 和其他內容保持不動。
 
 ```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { title: 'My Blog', author: 'Your Name', url: 'https://your-domain.example' },
-  i18n: {
-    defaultLocale: 'zh-hant',
-    routing: { defaultLocalePrefix: 'never' },
-    locales: {
-      'zh-hant': {
-        site: { hero: 'My Blog' },
-        messages: { siteDescription: 'My Blog' },
-      },
-    },
-  },
-});
+site: {
+  title: '小林的博客',
+  description: '记录开发、阅读和生活。',
+  url: 'https://example.com',
+  author: '小林',
+  tagline: '保持好奇，持续记录。',
+},
 ```
 
-site.url 影響 canonical、RSS、sitemap 與分享圖網址。建置環境或 .env 中的 PUBLIC_SITE_URL 優先於設定檔；變更後需重啟開發伺服器或重新建置。首頁可見介紹來自該語言的 site.hero，描述來自 messages.siteDescription。只修改 site.description 不會取代它們。
+這段只顯示現有物件內部的成員，不是一個新的完整設定檔案。把姓名、文字和網域替換成自己的；它不會改變預設語言或啟用語言列表。`site.url` 填最終上線的網域地址，例如 `https://your-domain.example`，不要填本機預覽網址或某篇文章的網址。暫時沒有網域可以先保留範例，在正式部署前換掉。目前主題按網域根目錄部署使用，不能僅設定 Astro `base` 就認為子目錄部署已調整。
 
-在 0.27+ 整合版 starter 中，主題套件讀取專案根目錄 `.env` 或託管建置環境的 `PUBLIC_SITE_URL`，優先於 `site.url`，統一用於 canonical、RSS、sitemap 與分享圖網址。變更後重啟開發伺服器或重新建置。保留 starter 的 `astro.config.mjs` 整合入口，無需維護本機網址解析腳本或複製轉接器。0.27 以前的舊骨架需依升級指南完成一次遷移。
+這些欄位分別控制：
 
-defaultLocalePrefix: 'never' 讓預設語言首頁直接顯示於 /。預設的 'always' 會導向 `/<語言>/`，可能短暫顯示 “Redirecting to home…”。即使使用 'never'，文章仍位於 /zh-hant/blog/。
+| 欄位               | 實際作用                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------ |
+| `site.title`       | 全站名稱，用於頁面標題、導覽、頁尾等；沒有單獨設定首頁標題時，也作為首頁大標題的最終回退值 |
+| `site.author`      | 未單獨填寫作者的文章所使用的預設作者                                                       |
+| `site.url`         | canonical、RSS、sitemap 和分享圖片等輸出使用的網站地址                                     |
+| `site.description` | 網站級預設描述；首頁優先使用解析後的 `messages.siteDescription`，為空才使用這個值          |
+| `site.tagline`     | 頁尾自訂文字；設為 `''` 不顯示這段文字，主題和 Astro 署名由另一個開關控制                  |
 
-`social.links` 使用 `href`、`label` 與 `icon`：`github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`。自訂本機 SVG/PNG/WebP 可放入 `public/icons/`，設定 `iconSrc: "/icons/community.svg"`，優先於 `icon` 並保留原色；兩項都省略則顯示文字。路徑限制與範例見 [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-Hant.md)。空清單會保留不可點擊的裝飾圖示。site.tagline 可增加頁尾文字。
+### 依需求修改某種語言的首頁文字
 
-頁尾將版權、佈景主題/Astro 署名及選填的 `site.tagline` 分組呈現，下方保留社群圖示。內建署名隨頁面語言切換，自訂說明在各語言中保留原文；空白說明不占空間，手機上的長文案自動換行。現有設定及 `PUBLIC_SITE_TAGLINE` 覆寫仍有效，無須遷移。
-
-## 選擇語言
-
-預設啟用 en、ja、ko、es、zh、pt-br、de、ru、zh-hant 九種語言，英語是初始預設語言。可合併下列設定停用部分語言：
+首頁可見介紹和首頁中繼描述需要在對應語言下填寫。下面以專案預設的英文首頁為例，在現有設定物件內添加或合併 `i18n`；已有同名物件時只修改對應欄位：
 
 ```ts
 i18n: {
   locales: {
-    ja: { meta: { enabled: false } },
-    ko: { meta: { enabled: false } },
+    en: {
+      site: { hero: 'Notes on projects, reading and everyday life.' },
+      messages: { siteDescription: 'Personal projects and learning notes by Lin.' },
+    },
   },
 },
 ```
 
-省略語言不代表停用，因為設定會與預設值合併。預設語言永遠保持啟用。若只需要單一語言，請明確停用另外八種。這不會刪除檔案或翻譯文章。
+`i18n.locales.en.site.hero` 控制英文首頁大標題下面的可見介紹，`messages.siteDescription` 控制該頁 SEO 描述。前者設為 `''` 可以清空可見介紹，不會清空後者。將 en 換成其他已啟用的語言代碼，就能修改那種語言的文字；這不會改變預設語言，也不會自動翻譯其他語言。
 
-## 替換範例並撰寫文章
+首頁大標題預設使用全站名稱；如果希望它不同，在同一個 `en.site` 中添加 `homeTitle`，保留已有的 `hero`：
 
-每種語言都有歡迎文章與三篇指南。先備份，再刪除不需要的範例；保留其他文章仍在使用的圖片。
+```ts
+site: {
+  homeTitle: "Lin's Digital Garden",
+  hero: 'Notes on projects, reading and everyday life.',
+},
+```
+
+這裡的 `site` 位於 `i18n.locales.en` 內，不是頂層 `site`。`homeTitle` 只修改首頁可見大標題，不會替換瀏覽器標題、導覽、頁尾或 RSS 中的全站名稱。未設定或只有空白時，會沿該語言的回退鏈查找，最後使用全站名稱。完整欄位見[首頁字典](/zh-hant/blog/config-home/#home-title)。
+
+### 放上自己的社交連結
+
+在現有設定物件內添加或修改 `social.links`，把 `yourname` 換成真實帳號：
+
+```ts
+social: {
+  links: [{ href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' }],
+},
+```
+
+每條連結填寫 `href`（目標地址）和 `label`（無障礙名稱），`icon` 是選用的內建圖標名。內建圖標支援 `github`、`twitter`、`mastodon`、`youtube`、`bluesky`、`linkedin`、`discord`、`telegram`、`instagram`、`facebook`、`whatsapp`、`line`。
+
+`social.links` 同時用於頂部和頁尾，按陣列順序顯示；手機寬度下頂部社交入口隱藏，頁尾仍保留。陣列會整體替換預設列表，添加新帳號時也要保留希望繼續顯示的條目。暫時不放帳號可以使用 `social: { links: [] }`；空列表會保留三個不可點選的佔位圖標，並非隱藏整個區域。
+
+### 修改了卻沒有變化？
+
+先檢查專案根目錄的 `.env`、其他適用的 `.env.*` 檔案，以及託管平臺建置環境中有沒有舊的覆寫值：
+
+- `PUBLIC_SITE_TITLE` 覆寫網站名稱。
+- `PUBLIC_SITE_AUTHOR` 覆寫預設作者。
+- `PUBLIC_SITE_URL` 覆寫網站地址。
+- `PUBLIC_SITE_DESCRIPTION` 覆寫網站級預設描述，但不會取代非空的首頁語言描述。
+- `PUBLIC_SITE_TAGLINE` 覆寫頁尾自訂文字。
+
+不需要這些覆寫時移除對應變數，統一使用設定檔案即可，不必為了使用主題新建 `.env`。修改環境變數後重啟開發服務；發佈的網站需要重新建置和部署，本機保存檔案不會直接修改線上頁面。
+
+## 3. 先保留預設語言，依需求調整
+
+初始設定啟用 `en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant` 九種語言，預設語言是 `en`。瀏覽 `/` 會跳轉到 `/en/`；閱讀繁體中文教學不需要先把部落格改為中文，也不需要為了建立第一篇文章關閉其他語言。
+
+如果你想更換預設語言、只保留部分語言，或讓預設語言首頁直接使用根地址 `/`，按[第七篇：讓更多語言的讀者使用部落格](/zh-hant/blog/starter-guide-languages/)操作即可，這是選用設定。省略某種語言不會關閉它，需要明確設定 `meta.enabled: false`；預設語言始終啟用。關閉語言不刪除文章檔案。
+
+語言設定的型別、預設值和地址關系見[語言字典](/zh-hant/blog/config-languages/#registry)。系統不會自動翻譯文章或首頁文字；繼續下面的預設建立流程時，留意生成了哪些語言檔案。
+
+## 4. 用自己的文章替換範例
+
+文章位於 `src/content/blog/<语言代码>/`。 starter 中的 `welcome-to-anglefeint.md`、`starter-guide-*.md` 和 `config-*.md` 都是一般部落格文章，分別用於歡迎範例、八篇教學和設定字典。備份或提交到 Git 後，可以按語言保留或刪除不需要的內容；只刪歡迎文章與教學，不會同時刪掉字典。不要刪除仍被其他內容引用的圖片。
+
+按預設流程建立文章：
 
 ```bash
 npm run new-post -- my-first-post
-# --locales en,pt-br
 ```
 
-指令會為每個啟用的語言建立骨架，初始設定共九份。它不會自動翻譯，也不會覆寫現有檔案。請編輯 src/content/blog/zh-hant/my-first-post.md 的標題、描述與正文。
+沒有指定 `--locales` 或 `ANGLEFEINT_LOCALES` 時，指令會為專案全部已啟用語言生成同名範本；初始設定會生成九份。它不會自動翻譯，同名檔案已存在時會跳過，不覆寫已有內容。
 
-## 檢查與部署
+打開 `src/content/blog/<语言代码>/my-first-post.md`，填寫標題、簡介和內文；對應網址是 `/<语言代码>/blog/my-first-post/`。例如英文檔案在 en 目錄、網址為 `/en/blog/my-first-post/`，中文對應 zh 目錄和 `/zh/blog/my-first-post/`。發佈前把未完成、不準備公開的範本移出內容目錄，不能把它們當作自動隱藏的草稿。
+
+如果只想建立某種語言，可以改用 `npm run new-post -- my-first-post --locales zh`；指定多種語言可用 `--locales en,zh`。這些是選用用法，不必重複執行全部範例；`--locales` 本身不會啟用語言。
+
+文章欄位、封面、程式碼和數學公式的詳細寫法見[寫文章與管理內容](/zh-hant/blog/starter-guide-2-languages-and-routing/)。
+
+## 5. 在本機確認修改結果
+
+回到開發頁面確認：網站名稱和首頁介紹已經替換、語言選單符合預期、自己的文章可以打開、社交連結指向真實帳號。目錄中的其他語言文章只有在對應語言啟用時才會生成其路由。
+
+檢查建置結果前，先按 `Ctrl+C` 停止開發服務，再執行：
 
 ```bash
 npm run doctor
 npm run preview
 ```
 
-doctor 包含檢查與建置。preview 僅在本機顯示結果，不會發布到網路。靜態輸出在 dist/，包含搜尋索引與分享圖。託管服務使用 npm run build 建置，以 dist 為輸出目錄。依照 [Astro 部署指南](https://docs.astro.build/en/guides/deploy/) 完成發布，並檢查頁面、語言切換、搜尋及 /zh-hant/rss.xml。
+本機 `doctor` 會準備缺少或過期的回應式圖片檔案、執行 Astro 檢查並建置網站；About 開啟時還會檢查對應執行時設定。成功後不必緊接著重複執行 `check` 或 `build`。任何一步失敗時先處理終端機錯誤，再執行 `doctor`；不要把失敗後殘留的 `dist/` 用於部署。
 
-不需要綁定 Cloudflare。Netlify、Vercel、Cloudflare Pages、GitHub Pages、自建伺服器設定及目前的網域根路徑限制，見 [README 部署說明](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.zh-Hant.md#deployment)。
+`preview` 打開的是 `dist/` 中已經建置的靜態網站，瀏覽終端機給出的網址即可；它不會把部落格發佈到互聯網。文章搜尋需要在建置後的預覽中驗證，`dev` 沒有實時全文搜尋。按 `Ctrl+C` 停止預覽。
 
-## 設定原則
+以後發佈時，託管平臺的建置指令是 `npm run build`，輸出目錄為 `dist`，需要部署其中全部檔案。新增或更換本機圖片後，先在本機執行 dev 或 doctor，提交原圖和生成的整個 `src/assets/blog/covers/` 目錄；部署建置及 CI doctor 只驗證這些回應式檔案，缺少或過期會失敗，不在平臺上補生成。修改內容或設定後，需要重新建置並部署。
 
-- [使用指南 1：設定你的部落格](/zh-hant/blog/starter-guide-1-configure-your-site/)
-- [使用指南 2：撰寫與整理內容](/zh-hant/blog/starter-guide-2-languages-and-routing/)
-- [使用指南 3：選用功能](/zh-hant/blog/starter-guide-3-comments-about-and-theme-toggles/)
+## 已有專案如何升級
 
----
+新安裝的部落格不需要再執行本節。已有專案先保存自己的改動，例如提交到 Git，然後停止開發服務和預覽，在原專案根目錄執行：
 
-## 升級主題
+```bash
+npx @anglefeint/astro-theme@latest upgrade --check
+```
 
-集成版 starter 的標準頁面、設定預設值、翻譯與建置功能由主題套件維護。文章、`src/site.config.ts`、音樂、圖片與自訂頁面留在使用者專案。
-
-使用 npm 的集成版專案在根目錄執行下列指令。工具檢查專案、Node 與 Astro 相容性、備份依賴檔案、安裝確切主題版本並執行 doctor；失敗時還原依賴檔案並嘗試重裝原依賴。完成後依原流程部署，不會自動發布網站。
+`--check` 會查詢目標版本並檢查專案、Node.js 和 Astro 相容性，不修改專案檔案，也不執行安裝或建置。確認通過後再執行實際升級：
 
 ```bash
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 以前的專案需一次重新安裝遷移：在新目錄建立範本，複製文章與資源，將個人設定合併至新的 site config。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔。保留 slug、語言路徑、音樂與圖片 URL、網域及部署設定。
+自動升級適用於使用 npm、帶有 `package-lock.json` 的整合版 starter。專案的 `package.json` 應帶有 `anglefeint.projectSchema: 1`，標準頁面由主題套件提供。檢測到 pnpm、yarn 或 bun 鎖檔案時會停止；不要為了繞過檢查刪除自己的鎖檔案。非 npm 專案需使用原套件管理工具，在確認目標版本相容後更新相依並執行專案的 doctor，自動升級工具不提供這一路徑的回滾。
 
-自動升級目前僅支援 npm，遇到 pnpm/yarn/bun 鎖檔會停止。`--check` 僅檢查，`--to 0.27.1` 指定版本。請參閱[升級指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)與 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
+升級工具更新主題相依並執行 doctor，不重寫你的文章、設定、音樂、圖片或自建頁面。它會把 `package.json`、`package-lock.json` 備份到 `.anglefeint/backups/`，不是整站備份。安裝或 doctor 失敗時會還原這兩個相依檔案並嘗試重新安裝原相依；如果還原安裝也失敗，按終端機錯誤修復相依，再成功執行 `npm run doctor`。舊的建置產物不會一起還原，失敗後不要部署 `dist/`。
 
-升級失敗時不要部署 `dist/`：相依套件回復不會還原舊建置產物。修正錯誤並成功執行 `npm run doctor` 後再部署。pnpm 使用者先確認版本相容，再以 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手動更新，保留自己的鎖定檔。
+Node.js、Astro 或 starter schema 不相容時會停止，不會自動遷移 Astro。`--to` 可指定一個相容的明確主題版本，但不支援自動降級；版本變更說明可查 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。升級成功後可直接執行 `npm run preview` 檢查已建置的結果，再按原流程部署，無需為了升級立即再建置一遍。
 
-## 預設分享圖與 Fragment 短 ID（0.33.0+）
+0.27 之前的複製式舊範本不支援原地自動升級。應在另一個目錄按本文安裝新 starter，保留舊專案，將文章和資源遷入新專案，再將個人設定值合併到新的 `src/site.config.ts`。不要複製舊標準路由、adapter 或 defaults/schema/runtime 輔助檔案；核對文章 slug、語言路徑、音樂和圖片 URL，以及網域和託管設定，再完成本機檢查和部署。
 
-在 src/site.config.ts 既有 site 設定中合併 site.ogImage，可填 public 根路徑（如 /images/share.jpg，對應 public/images/share.jpg）或 HTTPS 圖片網址。留空使用內建的 1200×630 Anglefeint 分享圖。Fragments 及所有 #ID 分享連結共用此圖。文章專屬圖、自動產生的文章圖維持優先；停用自動產生時，文章封面也優先於網站預設圖。更換後重新建置並部署，分享平台仍可能快取預覽。
+## 教學導覽與設定查閱
 
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { ogImage: '/images/share.jpg' },
-});
-```
+[下一篇：寫第一篇文章](/zh-hant/blog/starter-guide-2-languages-and-routing/) · [八篇教學總入口](/zh-hant/blog/starter-guide-1-configure-your-site/#tutorial-order)。
+
+本篇相關欄位：[網站、社交和頁尾](/zh-hant/blog/config-site-chrome/)、[首頁標題與介紹](/zh-hant/blog/config-home/)、[語言設定](/zh-hant/blog/config-languages/)。完整路徑、預設值和限制見[設定字典總入口](/zh-hant/blog/config-reference/)。

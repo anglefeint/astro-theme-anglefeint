@@ -1,32 +1,19 @@
 ---
 title: 'Por que el detalle del post es AI'
-subtitle: 'Red neuronal, telemetria de modelo y monitor Red Queen'
-description: 'Sistema visual de detalle: red AI, lenguaje de estado y canal simbolico con Red Queen en el lateral.'
+subtitle: 'Texto, redes y Red Queen'
+description: 'Una interfaz con fondo de red, panel OUTPUT y monitor Red Queen.'
 pubDate: '2026-03-04'
 heroImage: '../../../assets/blog/default-covers/ai-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'narrative'
 aiState: 'stable'
-aiLatencyMs: 118
-aiConfidence: 0.99
-wordCount: 362
-tokenCount: 860
+updatedDate: '2026-11-14'
 ---
 
-La pagina de detalle es donde la lectura entra en foco profundo. Por eso su atmosfera es AI.
+El artículo usa un lenguaje de sala de control AI: fondo de red, OUTPUT y monitor Red Queen alrededor del texto. Expresan interés por AI y cine, no llamadas a modelos ni evaluación de credibilidad.
 
-Nuestra tesis es simple: AI va a reconfigurar como las personas producen, deciden y colaboran. La pagina de detalle debe sentirse como una sala de control de ese futuro.
+El texto aparece inmediatamente y el panel permanece quieto. Índice, copia de código y vistas de imágenes ayudan a leer; red, bandas de luz y monitor interactivo mantienen la identidad.
 
-Por eso rodeamos la prosa con estructuras de red neuronal, frases de estado del modelo y senales del sistema. Pero mantenemos una regla clara: los efectos apoyan al texto, no lo reemplazan.
+OUTPUT muestra el recuento y tokens estimados del texto, salvo valores manuales. No son consumo real. No aparecen tiempo de lectura, latency ni confidence. Modelo, modo y estado de los ejemplos son metadatos del autor.
 
-En el lateral izquierdo aparece un monitor inspirado en Red Queen, una referencia clasica de AI biotecnologica. Funciona como simbolo doble: inteligencia util y elegante, pero tambien potencialmente peligrosa.
-
-La implementacion se organiza en capas:
-
-- nucleo de lectura estable,
-- capa de interfaz reactiva,
-- capa cinematica con arranque controlado.
-
-No queremos sacrificar identidad por puntuacion. Optimizamos pipeline y tiempos para sostener estilo y rendimiento al mismo tiempo.
-
-En resumen: el detalle es nuestra sala AI para lectura larga.
+Sigue leyendo: [Referencia de configuración: detalle de artículos](/es/blog/config-article/)

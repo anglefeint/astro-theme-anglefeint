@@ -1,77 +1,80 @@
 ---
 tags: ['anglefeint', 'starter']
-title: '使用指南 3：按需开启与定制功能'
-subtitle: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
-description: '按需要配置音乐、评论、About、分页、功能开关和多语言，不必一次填完所有参数。'
+title: '使用指南 5：把页面和功能调整成自己喜欢的样子'
+subtitle: '按想修改的页面查找：首页、About、Decoder、社交链接、页脚、音乐和分页。'
+description: '通过小范围配置调整页面内容和功能，说明实际默认值、生效范围、合并方式与本地验证步骤。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
-## 支持 AI 阅读的内容
+本篇是入门教程的第 5 / 8 篇。[查看完整教程顺序](/zh/blog/starter-guide-1-configure-your-site/#tutorial-order) · [按字段查配置字典](/zh/blog/config-reference/)。
 
-构建会将公开文章、已启用的 Fragments 和 About 页面纳入 `/llms.txt`、语言索引与全文合集。文章 Markdown 地址保持不变；各语言还会生成 `/zh/fragments/index.md` 和 `/zh/about/index.md`（按实际语言替换 `zh`）。Fragments 文件合并所有公开分页，保留每条 ID、发布时间、正文及稳定的 `/<locale>/fragments/#ID` 链接。HTML 页面提供对应 Markdown 的发现链接。文件在 `npm run build` 后及 preview 中可用，部署整个 `dist/` 即可。
+博客已经能运行后，可以从自己想改的地方开始。你不需要先填写所有配置，也不需要把下面的示例全部复制进去。
 
-About 导出公开简介、联系链接和可打开的 AI 文本弹窗，排除终端配置、工具和装饰界面；评论不导出。关闭的页面／语言、已删除内容、noindex 页面及站外 canonical 页面不导出；重新构建会清理过期生成文件和发现链接，用户自有文件受保护，冲突时停止构建。站点／语言补充说明适用于所有导出文档。JSON-LD 补充页面语言，About 使用 AboutPage。无需新增配置、服务器或 UI 依赖，也不保证 AI 收录或引用。
+所有 TypeScript 片段都合并到 `src/site.config.ts` 现有的 `defineThemeConfig({...})` 对象里。一个对象中只保留一个 `theme`、一个 `i18n`、一个 `social`；同名字段直接修改，保留其他个人设置。对象与默认值合并，数组则整体替换，因此增添链接、歌曲或条目时要保留希望继续显示的内容。
 
-## 先看默认状态，再决定改什么
+这篇按操作目标提供常用配置，不是完整字段字典。先找到页面上想修改的区域，再选择对应一节即可。
 
-本文适用于配套的 starter；所有 TypeScript 片段都合并到 `src/site.config.ts` 的 `defineThemeConfig({...})` 对象中。只配置你需要改变的项目。
+## 1. 调整首页提示和效果
 
-| 功能                             | 默认状态           |
-| -------------------------------- | ------------------ |
-| 搜索、文章目录、标签、自动分享图 | 开启               |
-| 正文图片预览、代码复制           | 自动生效，无需配置 |
-| About、Red Queen 文章监视器      | 开启               |
-| 音乐、Giscus 评论                | 关闭               |
-| 首页最新文章 / 博客每页文章      | 3 / 10             |
-
-## 1. 开启音乐播放器
-
-先把自己的音频放到 `public/music/my-song.mp3`（目录不存在就创建），再加入：
+站点名称、首页大标题和介绍的区别，见[安装博客，换成自己的信息](/zh/blog/starter-guide-1-configure-your-site/)。这里调整首页的提示段和交互：
 
 ```ts
 theme: {
-  music: {
-    enabled: true,
-    tracks: [
-      { title: 'My Song', artist: 'Artist Name', src: '/music/my-song.mp3' },
-    ],
+  home: {
+    showInitialize: true,
+    showFollow: true,
+    showTrace: true,
+  },
+  effects: { enableHomePassage: false },
+},
+```
+
+| 字段                              | 默认值  | 改变什么                                                                              |
+| --------------------------------- | ------- | ------------------------------------------------------------------------------------- |
+| `theme.home.showInitialize`       | `true`  | 显示 Initialize／done 启动文字段；设为 false 隐藏该段                                 |
+| `theme.home.showFollow`           | `true`  | 显示 Wake Up／Follow 提示段；设为 false 独立隐藏                                      |
+| `theme.home.showTrace`            | `true`  | 显示首页底部的 PIRATE SIGNAL／TRACE 状态区；设为 false 隐藏该区                       |
+| `theme.effects.enableHomePassage` | `false` | 开启后，首页文章标题链接可触发约 8 秒的 Matrix 穿越后导航；减少动态效果时保持直接导航 |
+
+这些字段没有提供关闭整页代码雨或切换全站配色的能力。`showTrace` 也不是右下角宽屏终端的开关。
+
+### 修改宽屏终端文字
+
+宽屏终端默认显示 `Knock, knock.`。可以先设置英文配置，供没有单独覆盖的语言共用：
+
+```ts
+i18n: {
+  locales: {
+    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
   },
 },
 ```
 
-网址中不包含 `public`。每首必填 `title`、`src`，`artist` 可省略；增加歌曲就继续往 `tracks` 数组里写对象。也支持 HTTPS 音频直链，不支持把本地磁盘路径或音乐平台分享页面当作音频地址。地址不要包含空格或反斜杠，建议简单文件名。主题不附带歌曲。
+需要某种语言独立文案时，在该语言的 `messages.home.transmission` 设置。这一项的取值顺序为当前语言配置 → 英文配置 → `Knock, knock.`，不走普通界面文案的完整回退链。终端在宽屏布局中出现，手机上看不到不代表配置失败；点击钥匙孔按钮才打开走廊预览。
 
-空歌单不显示播放器；启用后错误的标题或地址格式会报配置错误。播放器默认挂载在使用主题公共布局的页面，没有逐页显示开关。桌面位于左下角；手机每页默认收起，展开时临时隐藏回到顶部。
+About 的 Oracle 入口独立使用场景预览，不受首页文章穿越开关控制。上述终端文字和底部状态用于页面氛围，不代表真实机器、网络或安全状态。
 
-首次访问时，点击 PLAY 后才加载音频。同一标签页会话内记住曲目、进度和音量；此前正在播放时，切页、刷新或前进后退会尝试从保存位置续播，主动暂停后仍保持暂停。切页可能短暂停顿，不是无缝播放。浏览器阻止自动播放时，点击 PLAY 继续。原曲目被删除时不会自动播放替代曲目。存储不可用时仍可手动播放，但无法会话续播。 先确认 `/music/my-song.mp3` 可以直接访问。当前曲目结束后自动播放下一首，最后一首结束后回到第一首。`enabled: false` 关闭播放器。
+这些开关和宽屏终端文字的完整定义见[首页字典](/zh/blog/config-home/#startup-switches)。
 
-播放前会完整下载当前歌曲，转成浏览器 Blob 后再播放，因此进度跳转不依赖服务器的 HTTP Range 支持。大文件或慢网络会增加等待时间和内存占用。暂停后继续会复用已加载的歌曲，切歌会释放旧歌曲；切页后重新加载，浏览器 HTTP 缓存可能减少下载。外部音频服务器必须允许跨域下载（CORS）；放在 `public/music/` 中的同站点文件不需要跨域配置。
+## 2. 把 About 换成自己的介绍
 
-## 2. 开启 Giscus 评论
-
-[评论配置教程](/zh/blog/starter-guide-4-giscus-comments/)
-
-## 3. 替换 About 内容
-
-About 正文段落和签名保留配置字符串中的换行：`\n` 换行，`\n\n` 留一空行，长句仍自动折行。这仍是纯文本，不解析 Markdown 或 HTML，不要插入 `<br>`。
-
-About 默认开启。按语言配置正文，不需要直接改页面模板：
+打开 `/zh/about/` 可以看到当前内容。正文和联系方式按语言配置，无需修改主题页面模板：
 
 ```ts
 i18n: {
   locales: {
     zh: {
       about: {
-        metaLine: '$ profile booted | mode: builder',
+        metaLine: '$ profile | building and learning',
         sections: {
-          who: 'Introduce yourself here.',
-          what: 'Describe what you build.',
-          ethos: ['Keep learning.', 'Build useful things.'],
-          now: 'What you are working on now.',
-          contactLead: 'Get in touch.',
-          signature: '> Your signature',
+          who: '我是小林，喜欢开发与写作。',
+          what: '这里记录我的项目和学习笔记。',
+          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
+          now: '最近在整理个人博客。',
+          contactLead: '欢迎联系我。',
+          signature: '> 谢谢你来这里。',
         },
         contact: {
           email: 'you@example.com',
@@ -84,25 +87,114 @@ i18n: {
 },
 ```
 
-示例只改变 `zh` 的 About；其他语言需要分别填写，不会自动翻译。`sidebar`、`labels`、`modals`、`effects` 也支持覆盖，普通使用先改正文和联系方式即可。About 的工具窗口是主题交互展示，不会因为填写文案就连接真实 AI 服务。
+替换示例姓名和地址。`metaLine` 是个人面板顶部状态文字；`who`、`what`、`ethos`、`now` 分别填写自我介绍、所做的事、理念和近况；`contactLead` 是联系引导，`signature` 是签名。`ethos` 是字符串数组，提供新数组会整体替换原条目。
 
-访问 `/zh/about/` 核对正文和邮件/GitHub 链接。不需要 About 时设置 `theme.enableAboutPage: false`，会同时隐藏导航入口并停止生成 About 路由；修改后重新构建。
+正文段落和签名是纯文本：字符串中的 `\n` 换行，`\n\n` 留空行；不解析 Markdown 或 HTML，不要用 `<br>` 换行。这个示例只修改简体中文；其他语言需要自己的文案，不会自动翻译。缺失字段会根据该语言的配置回退规则补齐。
 
-### Decoder Lab：致敬密码朋克
+About 的窗口控件可以关闭、最小化或全屏面板，并在浏览器本地记录状态。页面工具中的 AI 输出和下载进度是主题交互展示，不会因为填写了文案就连接真实 AI 服务；解码工具处理的是浏览器本地输入。
 
-Decoder Lab 的视觉风格致敬 **Cypherpunk（密码朋克）**，纪念他们为人类自由、隐私与开放代码作出的贡献。点对点网络意象与本地处理方式，呼应了让工具与数据掌握在个人手中的理念。
+不需要 About 时，在 `theme` 中设置 `enableAboutPage: false`；默认是 `true`。关闭后不生成 About 路由，公共导航及相关 About 联系入口也随之隐藏。自己写在正文或页脚中的链接不会被自动删除，应一并检查。
 
-我们认同这样的信念：**隐私和自由不能只靠掌权者的善意。** 个人应当有能力保护自己的通信，自主决定向谁透露什么，并在可能时亲自验证，而不必把信任全部交给政府、平台或其他第三方。
+更多内容字段见[About 字典](/zh/blog/config-about/#about-content)；命令提示和只读阅读器文案见[终端字典](/zh/blog/config-terminal/#messages)。
 
-**“Cypherpunks write code.”——密码朋克写代码。** [《密码朋克宣言》](https://www.activism.net/cypherpunk/manifesto.html)中的这句话，也代表了一种行动方式：把理念变成可用的软件，公开代码，让其他人能够检查、使用和继续建设。我们向这种用技术守护个人自主权的精神致敬。
+## 3. 调整 Decoder 页面和阅读卡片
 
-Decoder Lab 以本地处理、可查看的源码和点对点网络意象回应这份精神。
+Decoder Lab 位于 `/zh/decoder/`，默认开启。它的视觉致敬密码朋克与数字自由的先行者；本地处理和点对点网络意象呼应个人掌握工具与数据的理念。
 
-从 About 解码弹窗打开 **Decoder Lab**，或访问 `/zh/decoder/`，即可在浏览器本地进行文本解码、代币调用解释和地址检查，无需 RPC、连接钱包或 API Key。地址检查核对格式及支持的校验和，不查询余额，也不确认地址归属。在 `src/site.config.ts` 设置 `theme.enableDecoderPage: false` 可关闭页面及入口。
+工具提供文本解码、支持的代币调用解释和地址格式检查，不需要 RPC、钱包连接或 API Key。它不查询余额、执行交易或证明地址归属；输入 calldata 也不等于验证了合约真实行为。
 
-## 4. 调整文章数量与分页
+在 `theme` 中设置 `enableDecoderPage: false` 可以独立关闭 Decoder 页面和主题提供的相关入口；关闭 About 不等于关闭 Decoder，反过来也一样。自定义链接仍需自己维护。
 
-可以只写前两个数量字段；需要固定分页外观时再加入 `pagination`：
+阅读区的致敬文字和卡片按语言配置，例如替换中文列表：
+
+```ts
+i18n: {
+  locales: {
+    zh: {
+      messages: {
+        decoderPage: {
+          readings: {
+            tribute: '思想与代码，让隐私和自由更进一步。',
+            links: [
+              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+            ],
+          },
+        },
+      },
+    },
+  },
+},
+```
+
+`tribute: ''` 隐藏致敬文字，`links: []` 隐藏卡片，省略则保留默认内容。每项填写 `title`、`href`，`author`、`year`、`cover` 可选。`cover` 可用内置名称（例如 `privacy-code`、`bitcoin`），或 public 图片路径／HTTPS 图片地址；省略则是无图卡片。
+
+`links` 替换整份列表，不是追加一条；想保留旧条目时把它们一起写入。这里是你提供的资料入口，不会抓取或转载目标文章，也不会自动验证外部资源。
+
+阅读条目的逐字段类型、内置封面与默认列表见[Decoder 字典](/zh/blog/config-decoder/#readings)。
+
+## 4. 调整社交入口和页脚
+
+基础社交账号填写在 `social.links`，顶部与页脚共用数组顺序。想加自定义图标，可以先放入 `public/icons/community.svg`：
+
+```ts
+social: {
+  links: [
+    { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
+    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+  ],
+},
+```
+
+`iconSrc` 支持 public 内的本地 SVG、PNG、WebP，路径以 `/` 开始，不填写远程 URL、查询参数、片段或编码字符。它优先于 `icon`，保留原图颜色；两项都省略则显示文字。`label` 提供可访问名称。文件缺失或填写不支持的内置图标名会报配置错误。
+
+可选 `rel` 用于身份等链接关系。例如自己的 Mastodon 账号可以设置 `rel: 'me'`；主题始终保留 `noopener noreferrer`，不会按平台自动加 `me`。身份验证由对应平台处理，网站必须先部署，并在对方资料中填写包含返回链接的实际页面地址，主题不保证验证结果。
+
+手机宽度下顶部社交入口隐藏，页脚仍显示。`links: []` 保留三个不可点击的占位图标，并不是隐藏整个社交区域。
+
+### 页脚署名、说明和额外链接
+
+```ts
+site: { tagline: '保持好奇，持续记录。' },
+theme: {
+  footer: {
+    showCredits: true,
+    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+  },
+},
+```
+
+- `site.tagline` 是自定义纯文字，空字符串隐藏；不会自动翻译。旧默认文字 `Built with Astro.` 会视为内置署名，避免重复显示。
+- `theme.footer.showCredits` 默认 `true`，控制主题和 Astro 两项署名；关闭后仍保留版权行、自定义说明和额外链接。它也控制自动生成的文章分享图中的主题署名，不修改自定义图片。
+- `theme.footer.links` 默认空数组，在版权和署名之间显示链接，与社交图标独立；标签保留你填写的文字，不自动翻译，也不受 showCredits 控制。
+
+版权名称使用全站名称，年份在构建时生成。修改文案、署名或年份相关结果后，需要重新构建部署。
+
+图标路径、链接字段和署名规则见[公共界面的社交字段](/zh/blog/config-site-chrome/#social-fields)与[页脚字段](/zh/blog/config-site-chrome/#footer)。
+
+## 5. 开启音乐播放器
+
+先将自己的音频放入 `public/music/my-song.mp3`，再合并：
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+音乐默认关闭，主题不附带歌曲。每首需要 `title`、`src`，`artist` 可省略；空歌单不会显示播放器。增加歌曲时保留原数组中的条目。音频网址不含 `public`，不能使用本机磁盘路径或平台分享页面；支持 HTTPS 音频直链，地址不使用空格或反斜杠。标题为空或地址格式错误会报配置错误，但填写格式正确不保证文件实际可访问。
+
+播放器出现在使用主题公共布局的页面，没有逐页显示开关；每个新页面初始收起。首次访问点击 PLAY 才加载音频，当前曲目结束后播放下一首，最后一首结束后回到第一首。手机展开播放器时会临时隐藏回到顶部按钮。
+
+同一标签页会话会记住曲目、进度和音量；此前正在播放时，切页或刷新会尝试续播，手动暂停后保持暂停。它不是无缝播放，浏览器也可能阻止自动播放；存储不可用时仍可手动播放，但不保留会话续播。
+
+当前实现会完整下载歌曲，转成 Blob 后播放，进度跳转不依赖服务器 Range 支持。大文件会增加等待和内存占用；外链服务器必须允许 CORS，同站点 public 文件无需跨域设置。先确认音频地址能访问；不需要音乐时设置 `theme.music.enabled: false`。
+
+曲目字段、状态文案与续播边界见[音乐播放器字典](/zh/blog/config-music/#track-fields)。
+
+## 6. 调整列表数量和分页
 
 ```ts
 theme: {
@@ -117,146 +209,62 @@ theme: {
 },
 ```
 
-`homeLatestCount` 是首页最新文章数，`blogPageSize` 是博客分页每页数量，标签文章列表也使用该分页大小。使用合理的正整数。
+`homeLatestCount` 默认 3，控制首页最新文章数；`blogPageSize` 默认 10，控制博客及标签列表每页文章数。使用合理的正整数。它们不控制首页最多三条的碎片预览，碎片列表每页数量另由 `theme.fragments.pageSize` 设置。
 
-`windowSize` 控制页码展示窗口，代码限制在 5–21；不等于每页文章数。跳页输入仅在 `jump.enabled` 为真且总页数大于 `showJumpThreshold` 时出现，默认超过 12 页才显示；`enterToGo` 控制回车跳页。
+`windowSize` 默认 7，控制页码展示窗口，渲染时限制在 5–21，不是每页文章数。跳页入口需要 `jump.enabled` 为 true 且总页数大于 `showJumpThreshold`；默认超过 12 页出现，`enterToGo` 决定是否允许回车跳页。
 
-样式模式有 `fixed`、`sequential`、`random`，示例固定第 1 种。启用 JavaScript 时，默认 `random` 在每次页面加载时重新随机选择分页容器与按钮颜色，结果可能重复。没有 JavaScript 时，构建的 HTML 保留稳定的容器样式和静态按钮颜色。`style.enabled: false` 使用基础变体，不会关闭分页。
+样式默认是 `random`；示例选择 `fixed` 来固定变体。`sequential` 按页面顺序选变体；`random` 的客户端初始化会重新随机选择样式，结果可能重复。关闭 JavaScript 时仍有构建出的静态分页样式。`variants` 控制参与选择的变体数量，渲染时限制在 1–12；`fixedVariant` 限制在当前变体范围内。
 
-## 5. 关闭不需要的增强功能
+`style.enabled: false` 使用基础样式，不会关闭分页。Blog、标签和 Fragments 共用这些分页设置，修改时应留意三处的效果。
 
-下面展示可关闭的项目，不是建议全部关闭；只保留你想改的字段：
+分页字段的完整范围、变体和界面文字见[Blog List 与标签列表字典](/zh/blog/config-blog-list/#pagination-window)。
 
-```ts
-theme: {
-  enableAboutPage: false,
-  effects: { enableRedQueen: false },
-  search: { enabled: false },
-  toc: { enabled: false },
-  tags: { enabled: false },
-  socialImage: { enabled: false },
-},
-```
+## 7. 只关闭自己不需要的功能
 
-`enableRedQueen` 只控制文章页 Red Queen 监视器，不是关闭整个 AI 主题或所有动效。`toc` 是站点默认，单篇 `toc: true` 仍可覆盖；关闭 `socialImage` 不影响手工 `ogImage`。搜索和标签的关闭会同时影响入口及对应构建产物。四种页面氛围仍由现有布局决定，没有一个切换全站四种主题的配置项。
+以下是各开关的影响范围；不要为了配置一个功能，就把整张表全部关闭。
 
-## 6. 增加语言与调整首页地址
+| 配置路径                       | 默认值 | 设为 false 后                                       |
+| ------------------------------ | ------ | --------------------------------------------------- |
+| `theme.enableAboutPage`        | `true` | 不生成 About 页面并隐藏主题相关入口                 |
+| `theme.enableDecoderPage`      | `true` | 不生成 Decoder 页面并隐藏主题相关入口               |
+| `theme.effects.enableRedQueen` | `true` | 隐藏文章页 Red Queen 监视器，不关闭整个 AI 页面效果 |
+| `theme.search.enabled`         | `true` | 关闭站内文章搜索入口及索引生成                      |
+| `theme.toc.enabled`            | `true` | 关闭默认文章目录，单篇 `toc: true` 仍可覆盖         |
+| `theme.tags.enabled`           | `true` | 关闭标签入口及标签页面生成，不删除文章              |
+| `theme.math.enabled`           | `true` | 关闭 Markdown／MDX 数学处理                         |
+| `theme.socialImage.enabled`    | `true` | 停止自动生成文章分享图，手动 ogImage 仍有效         |
 
-新增法语的示例：
+例如只关闭文章监视器，合并 `theme: { effects: { enableRedQueen: false } }` 即可。它不会改变搜索、音乐或 About 设置。
 
-```ts
-i18n: {
-  locales: {
-    fr: {
-      meta: { label: 'Français', hreflang: 'fr', ogLocale: 'fr_FR', enabled: true, fallback: ['en'] },
-      site: { hero: 'Bienvenue sur mon blog.' },
-      messages: { nav: { home: 'Accueil' }, siteDescription: 'Mes notes et projets.' },
-    },
-  },
-},
-```
+评论和碎片默认关闭，不需要为了使用其他功能把它们开启；需要时分别阅读[配置 Giscus 评论](/zh/blog/starter-guide-4-giscus-comments/)和[发布一条碎片](/zh/blog/starter-guide-5-fragments/)。文章目录、公式和分享图细节见[写第一篇文章](/zh/blog/starter-guide-2-languages-and-routing/)与[图片教程](/zh/blog/starter-guide-images/)。
 
-随后用 `npm run new-post -- french-note --locales fr` 创建内容。新语言需要你提供界面文案、首页介绍、About 和文章译文；`fallback` 提供缺失配置/文案的回退，不翻译文章，也不把其他语言的文章自动塞进列表。默认语言会被加入必要的回退链。
+## 8. 需要作品页时创建自定义页面
 
-现有语言的菜单名称改 `meta.label` 即可，比如 `zh` 默认为“简体中文”；`hreflang` / `ogLocale` 是页面语言元信息，改变显示名称不改变语言代码或网址。
-
-`i18n.routing.defaultLocalePrefix: 'always'` 是默认值：`/` 跳到默认语言首页。`'never'` 则用 `/` 作为默认语言首页，`/<默认语言>/` 跳回 `/`。这个开关只改变默认语言首页，不会把 `/zh/blog/` 变成 `/blog/`。
-
-## 7. 合并配置并验证效果
-
-例如同时改文章数量和音乐，应合并为一个 `theme`：
-
-```ts
-theme: {
-  homeLatestCount: 5,
-  music: {
-    enabled: true,
-    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
-  },
-},
-```
-
-已有 `theme.comments` 等设置也保留在同一个对象里。不要用示例整体覆盖自己的配置；数组会整体替换，因此增加歌曲或社交链接时保留原来的条目。
-
-修改后先在开发页面检查对应功能，再运行 `npm run doctor` 和 `npm run preview`。doctor 已包含检查与构建，成功后无需重复运行 check 和 build；搜索用构建后的预览验证。上线必须重新部署构建产物。
-
-## 8. 显示或隐藏页脚署名
-
-页脚显示本次构建时的年份与 `site.title`，默认还提供主题和 Astro 链接：`© 2026 My Blog · Theme by Anglefeint · Built with Astro`。年份在构建时生成，不写死。
-
-要隐藏两项技术署名，把以下设置合并到 `src/site.config.ts`：
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  theme: {
-    footer: { showCredits: false },
-  },
-});
-```
-
-设置 `showCredits: true` 可恢复显示。关闭后两条署名链接都移除，版权行保留。可选的 `site.tagline` 独立追加自定义纯文字，不受此开关控制；默认为空，旧默认值 `Built with Astro.` 视为内置署名，避免重复。不会追加 `All rights reserved`。
-
-首页开关位于 `src/site.config.ts`：`theme.home.showInitialize` 控制 Initialize/done 启动段，`showFollow` 控制 Wake Up/Follow 提示段，`showTrace` 控制右下角状态。均默认 `true`，分别设为 `false` 可独立隐藏。
-
-可选的 `theme.footer.links` 在页脚多显示一行，每项填写 `label` 和 `href`，链接之间用中间点分隔；省略或空数组隐藏该行。标签在各语言中保持配置原文，不影响社交图标，也不受 `showCredits` 控制。
-
-```ts
-theme: {
-  home: { showInitialize: true, showFollow: true, showTrace: true },
-  footer: {
-    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
-  },
-},
-```
-
-自动分享图使用随主题提供的代码雨、终端与霓虹网络背景，站点名、标题和作者仍取自你的内容。右下角的小字 `Theme by Anglefeint` 沿用 `theme.footer.showCredits`（默认 `true`）；设为 `false` 会同时隐藏页脚署名和图片署名，修改后重新构建部署。不会修改自定义的 `ogImage`。背景离线使用，不增加浏览器 JavaScript。
-
-0.27+ 集成版 starter 的标准页面、配置默认值和构建功能由主题包提供；个人配置仍在 `src/site.config.ts`。主题升级不会重写文章、音乐、图片或自建页面。0.27 之前的旧骨架需按[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)完成一次迁移。
-
-## 这套教程
-
-- [使用指南 1：搭建你的博客](/zh/blog/starter-guide-1-configure-your-site/)
-- [使用指南 2：写文章与管理内容](/zh/blog/starter-guide-2-languages-and-routing/)
-- [使用指南 3：按需开启与定制功能](/zh/blog/starter-guide-3-comments-about-and-theme-toggles/)
-
-## 数学公式
-
-Markdown 和 MDX 文章默认全局支持 LaTeX 风格数学公式。行内写 `$C_{saved}$`，独立公式放在单独两行 `$$` 之间，无需每篇开关或自行安装插件。
-
-```markdown
-Inline: $C_{saved}$
-
-$$
-\frac{a}{b}
-$$
-```
-
-在 `src/site.config.ts` 中设置 `theme: { math: { enabled: false } }` 可关闭。普通美元有歧义时写成 `\$`；行内代码和代码块保持原样。关闭数学后恢复普通 MDX 规则，包括花括号中的 JavaScript 表达式。
-
-公式在构建时渲染，样式和字体随站点提供，保留可访问的 MathML，不加载浏览器数学引擎。长独立公式可横向滚动。错误公式会中止构建并提示来源与原因。标题和摘要保持纯文本；搜索索引排除公式。支持 KaTeX 数学语法，不是完整 LaTeX 文档。
-
-0.27+ 集成版 starter 由主题包自动接入 Markdown 处理器和数学支持。只有 0.27 之前的旧骨架需要按升级指南完成一次迁移；新项目无需复制处理器或适配器实现。
-
-$C_{saved}$
-
-$$
-\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
-$$
-
----
-
-## 升级主题
-
-集成版 starter 将标准页面、配置默认值、翻译和构建功能放在主题包中。文章、`src/site.config.ts`、音乐、图片和自建页面保留在用户项目中。
-
-使用 npm 的集成版项目在根目录运行下列命令。它检查项目、Node 和 Astro 兼容性，备份依赖文件，安装明确的主题版本并运行 doctor；失败时恢复依赖文件并尝试重新安装原依赖。完成后按原有流程部署，命令不会自动发布网站。
+要单独展示项目，可以在根目录运行：
 
 ```bash
-npx @anglefeint/astro-theme@latest upgrade
+npm run new-page -- projects
 ```
 
-0.27 之前的项目需要一次重新安装迁移：在新目录创建模板，复制文章和资源，将个人设置合并进新的 site config。不要复制旧标准路由、adapter 或 defaults/schema/runtime 辅助文件。保留文章 slug、语言路径、音乐和图片 URL、域名及部署设置。
+命令创建 `src/pages/[lang]/projects.astro`，默认使用 `base` 布局，通过当前启用语言生成 `/<语言代码>/projects/`，例如 `/en/projects/` 或 `/zh/projects/`。编辑这个 Astro 文件填写正文；它不会自动翻译内容，也不会自动增加顶部导航栏目。可以在正文或页脚 links 中提供入口。
 
-自动升级暂仅支持 npm；检测到 pnpm/yarn/bun 锁文件会停止。`--check` 只读检查兼容性，`--to 0.27.1` 指定版本。Astro 或 starter schema 变化时请阅读[升级指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)和 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
+需要指定风格时再使用 `--theme`，例如 `npm run new-page -- portfolio --theme cyber` 创建另一个 Cyberpunk 页面。可选值是 `base`、`ai`、`cyber`、`hacker`、`matrix`，控制这个新页面使用的布局，不会切换全站的四种氛围。slug 使用小写英文字母、数字和连字符，可用 `projects/labs` 这样的嵌套路径。不要与包提供的标准页面路径冲突；同名文件已经存在时会报错，不要把同一路径的五种主题命令连续运行。
 
-升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。
+## 9. 保存后如何确认生效
+
+先在 dev 中打开刚修改的页面：检查内容和链接、功能入口是否按预期出现。环境变量有旧覆盖值时按[第一篇的排查步骤](/zh/blog/starter-guide-1-configure-your-site/)处理。缺少自定义图标、音频请求失败或外链异常，应分别检查路径和网络，不要靠重复覆盖整份配置排错。
+
+发布前停止 dev，运行：
+
+```bash
+npm run doctor
+npm run preview
+```
+
+doctor 已包含本地准备、检查和构建；成功后不必立即再运行 check 或 build。搜索需要在构建后的 preview 中验证；preview 本身不发布网站。正式网站仍需重新部署整个 `dist/`，本地保存配置不会立即改变线上页面。
+
+## 教程导航与配置查阅
+
+[上一篇：发布一条碎片](/zh/blog/starter-guide-5-fragments/) · [下一篇：让读者留下评论](/zh/blog/starter-guide-4-giscus-comments/) · [八篇教程总入口](/zh/blog/starter-guide-1-configure-your-site/#tutorial-order)。
+
+本篇相关字段：[首页](/zh/blog/config-home/)、[About](/zh/blog/config-about/)、[终端](/zh/blog/config-terminal/)、[Decoder](/zh/blog/config-decoder/)、[公共导航、社交和页脚](/zh/blog/config-site-chrome/)、[音乐播放器](/zh/blog/config-music/)、[列表和分页](/zh/blog/config-blog-list/)。完整路径、默认值和限制见[配置字典总入口](/zh/blog/config-reference/)。

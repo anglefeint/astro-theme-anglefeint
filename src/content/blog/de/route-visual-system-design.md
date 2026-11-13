@@ -3,22 +3,24 @@ title: Visuelle Gestaltung nach Route
 subtitle: Jede Lesestufe erhält ihre Atmosphäre.
 description: Jede Lesestufe erhält ihre Atmosphäre.
 pubDate: '2026-03-03'
-updatedDate: '2026-10-03'
 heroImage: ../../../assets/blog/default-covers/cyber-02.webp
 aiModel: anglefeint-core
 aiMode: analysis
 aiState: stable
-aiLatencyMs: 171
-aiConfidence: 0.95
+updatedDate: '2026-11-14'
 ---
 
-Anglefeint ordnet Atmosphären den Routen zu:
+Jede Seite erfüllt eine andere Aufgabe:
 
-- `/<locale>/`: Matrix-Einstieg.
-- `/<locale>/blog/`: Cyberpunk-Archiv.
-- `/<locale>/blog/<slug>/`: KI-Leseoberfläche.
-- `/<locale>/about/`: Hacker-Profil.
+- Startseite: Matrix für den ersten Eindruck.
+- Blog List und Tags: Cyberpunk zum Entdecken.
+- Artikel: AI für längeres Lesen.
+- About: Hacker für Autor und Werkzeuge.
+- Fragments: Cyberpunk zum Durchstöbern.
+- Decoder Lab: lokale Werkzeuge mit Netzwerkhintergrund.
 
-defaultLocalePrefix: 'always' leitet / zur Standardstartseite weiter, anfangs /en/. Mit 'never' liegt nur diese Seite unter /. Artikel und Profil behalten das Präfix. About benötigt theme.enableAboutPage; aktivierte Tag-Seiten nutzen Cyberpunk.
+Standardmäßig hat die Startseite ein Sprachpräfix; `/` führt zur Startseite der Standardsprache, anfangs `/en/`. `defaultLocalePrefix: 'never'` ändert nur diese Startseite; andere Routen behalten ihre Präfixe.
 
-Der Hintergrund unterstützt das Lesen. Der Einstieg vermittelt Identität, die Liste lädt zum Entdecken ein, Artikel betonen den Text und das Profil liefert Kontext. So bleibt die visuelle Persönlichkeit mit einer klaren Hierarchie vereinbar.
+About, Decoder, Tags und Fragments haben unabhängige Schalter. Fragments ist standardmäßig deaktiviert. Die Felder stehen im Lexikon.
+
+Weiterlesen: [Anglefeint-Architektur: vier Ebenen für Wartbarkeit und Wiederverwendung](/de/blog/architecture-of-anglefeint/) · [Konfigurationsverzeichnis: Sprachen, Adressen und Fallback](/de/blog/config-languages/)

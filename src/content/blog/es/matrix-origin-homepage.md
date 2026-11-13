@@ -7,24 +7,13 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'narrative'
 aiState: 'stable'
-aiLatencyMs: 126
-aiConfidence: 0.98
-wordCount: 320
-tokenCount: 780
+updatedDate: '2026-11-14'
 ---
 
-Cuando una persona entra a un sitio, primero siente y despues lee.
+El inicio es una escena de apertura. Lluvia de código verde Matrix, texto de terminal y bordes luminosos hacen reconocible su identidad. El cine inspira el ambiente; la página presenta el sitio, el autor y el contenido reciente.
 
-Por eso nuestra portada abre con atmosfera Matrix. Codigo verde, ritmo de terminal, scanline y ruido controlado no son adorno: son una declaracion de identidad.
+Los enlaces llevan a artículos. Con Fragments activado, el avatar de píxeles abre las últimas tres entradas y el enlace al listado completo. Avatar y ventana son componentes separados; las vistas no se mezclan en el panel principal.
 
-La referencia es conocida, pero el objetivo no es solo nostalgia. El objetivo es reconocimiento inmediato: en una sola pantalla queremos dejar claro que esto no es un blog generico.
+Color, ritmo e interacción construyen la identidad. Sigue siendo un inicio donde seleccionar texto, seguir enlaces y explorar.
 
-La portada funciona como un protocolo de handshake:
-
-- entras con incertidumbre,
-- recibes una senal clara,
-- sigues navegando con intencion.
-
-En producto, esto es posicionamiento. En diseno, es worldbuilding. En ingenieria, es una primera escena estable que soporta las atmosferas de las demas rutas.
-
-Matrix es nuestro prologo.
+Sigue leyendo: [Referencia de configuración: inicio](/es/blog/config-home/) · [Referencia de configuración: Fragments](/es/blog/config-fragments/)

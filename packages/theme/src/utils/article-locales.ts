@@ -18,7 +18,7 @@ export async function resolveArticleLocaleHrefs({
   seoLocaleHrefs?: LocaleHrefs;
   loadPosts: () => Promise<{ id: string }[]>;
 }): Promise<LocaleHrefs> {
-  // Explicit mappings, including an empty map, remain authoritative for custom routes.
+  // Standard routes provide build-scoped indexed maps; custom maps (even empty) are authoritative.
   if (seoLocaleHrefs !== undefined) return seoLocaleHrefs;
   if (!ENABLED_LOCALES.includes(locale) || !pathname.startsWith(`/${locale}/blog/`)) return {};
   const normalize = (value: string) =>

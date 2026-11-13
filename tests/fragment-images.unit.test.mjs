@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, readFile, writeFile, realpath, rm } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
+import process from 'node:process';
 import { pathToFileURL, URL } from 'node:url';
 import sharp from 'sharp';
 import { parse } from 'node-html-parser';
@@ -17,6 +18,76 @@ import { fragmentImagePlugin } from '../packages/theme/src/covers/fragment-markd
 import { rewriteFragmentImages } from '../packages/theme/src/covers/fragment-render.mjs';
 import { fragmentFeedHtml } from '../packages/theme/src/utils/fragment-html.ts';
 import { fragmentPreview } from '../packages/theme/src/utils/fragment-preview.ts';
+import blogCovers from '../packages/theme/src/covers/integration.mjs';
+import { prepareProjectCovers } from '../packages/theme/src/covers/project.mjs';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
+
+test('disabled fragments do not require old images or derivatives in dev, build or CLI preparation', async (t) => {
+  const root = await realpath(await mkdtemp(path.join(os.tmpdir(), 'anglefeint-disabled-images-')));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const dir = path.join(root, 'src/content/fragments/en');
+  await mkdir(dir, { recursive: true });
+  const file = path.join(dir, 'old.md');
+  await writeFile(file, '![deleted](./missing.png)');
+  const configFile = path.join(root, 'src/site.config.ts');
+  await writeFile(
+    configFile,
+    'export const THEME_CONFIG = { theme: { fragments: { enabled: false } } };'
+  );
+  const setup = {
+    config: {
+      root: pathToFileURL(root + '/'),
+      srcDir: pathToFileURL(path.join(root, 'src') + '/'),
+      base: '/',
+    },
+    updateConfig() {},
+    logger: { info() {} },
+  };
+  for (const command of ['dev', 'build']) {
+    await blogCovers({ fragmentsEnabled: false }).hooks['astro:config:setup']({
+      ...setup,
+      command,
+    });
+    await assert.rejects(
+      blogCovers({ fragmentsEnabled: true }).hooks['astro:config:setup']({ ...setup, command }),
+      /ENOENT/
+    );
+  }
+  await prepareProjectCovers({ root });
+  await prepareProjectCovers({ root, check: true });
+  const cli = await promisify(execFile)(
+    process.execPath,
+    [
+      fileURLToPath(new URL('../packages/theme/src/cli.mjs', import.meta.url)),
+      'prepare-covers',
+      '--check',
+    ],
+    { cwd: root }
+  );
+  assert.match(cli.stdout, /0 generated/);
+  assert.equal(await readFile(file, 'utf8'), '![deleted](./missing.png)');
+
+  await writeFile(
+    path.join(dir, 'missing.png'),
+    await sharp({ create: { width: 20, height: 10, channels: 3, background: 'green' } })
+      .png()
+      .toBuffer()
+  );
+  await assert.rejects(
+    prepareCovers({ root, fragmentsEnabled: true, check: true }),
+    /Missing, stale/
+  );
+  await prepareCovers({ root, fragmentsEnabled: false, check: true });
+  await writeFile(
+    configFile,
+    'export const THEME_CONFIG = { theme: { fragments: { enabled: true } } };'
+  );
+  await assert.rejects(prepareProjectCovers({ root, check: true }), /Missing, stale/);
+  const prepared = await prepareProjectCovers({ root });
+  assert.equal(coverFiles(prepared).length, 1, 're-enabling restores normal image preparation');
+});
 
 test('fragment image inventory ignores frontmatter/code and resolves reference-style images', () => {
   const source =

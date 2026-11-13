@@ -10,6 +10,12 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.36.1: runtime fixes and refreshed publishing guides
+
+See the [0.36.1 delivery record](docs/releases/0.36.1.md) for publication status. Supported npm schema-1 projects keep the existing `npx @anglefeint/astro-theme@latest upgrade` flow, then rebuild and deploy. No dependency, config field or project-schema migration is added. Existing `theme.blogPageSize` must be a positive safe integer; the default remains 10. Author/share-image normalization, disabled Fragment image-reference isolation, bounded Red Queen decoding, preview-load retries, live reduced-motion response and build-scoped article indexing are package fixes. Cover-source pools and article cover references are still processed when Fragments is disabled.
+
+The refreshed README, eight tutorials and configuration reference are new starter/demo content; npm upgrades do not replace your personal copies. Three redundant demo articles were removed, so their former demo URLs disappear; personal articles are not removed. Existing article slugs, content directories, assets and CLI defaults remain unchanged.
+
 ## 0.36.0: persistent responsive content images
 
 See the [0.36.0 delivery record](docs/releases/0.36.0.md) for actual publication status. This version keeps existing heroImage paths and adds project-owned `src/assets/blog/covers/manifest.json`/`generated/`. Before deployment, run the updated local dev/doctor or `npx @anglefeint/astro-theme prepare-covers`, then commit originals and the entire covers directory. Builds/config sync and CI doctor reject missing/stale/corrupted derivatives without regenerating; no host image cache is required. Local doctor prepares before its unchanged checks, allowing supported local npm upgrades from older packages to create initial derivatives. The dependency-only upgrader still preserves articles/config/original media; new or refreshed derived files may remain after a later doctor failure and can be regenerated. Blog archive/detail covers and local Fragment images share these derivatives; existing Fragment root-public and relative image links stay valid. SVG/animation keep their formats, and unrelated article-body images keep their existing processing. See [the asset workflow](docs/BLOG_COVER_ASSETS.md).

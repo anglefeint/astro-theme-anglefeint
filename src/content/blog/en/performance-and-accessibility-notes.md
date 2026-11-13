@@ -7,22 +7,13 @@ heroImage: '../../../assets/blog/default-covers/ai-03.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
 aiState: 'stable'
-aiLatencyMs: 173
-aiConfidence: 0.94
-wordCount: 680
-tokenCount: 1020
+updatedDate: '2026-11-14'
 ---
 
-Visual themes should feel distinctive, but they still need to be practical for long-form reading.
+Cinematic visuals must work alongside sustained reading. We want code rain, neon beams and networks to stay expressive while keeping their implementation cost reasonable.
 
-In Anglefeint, route atmosphere is treated as a support layer. The article surface remains the main information plane.
+Content and effects have separate responsibilities: prose is in HTML, images provide dimensions and responsive assets, and modules manage their listeners, timers and cleanup. Effects supporting reduced motion follow the system preference; exact behavior varies by module.
 
-Implementation choices follow this principle:
+Performance and accessibility depend on the page, device and content. One score cannot guarantee every article’s results. Readers should be able to read, operate and leave; authors should be able to maintain the site over time.
 
-- effects are grouped by route responsibility
-- reusable layout layers keep behavior predictable
-- content structure is preserved across locales
-
-The goal is consistent reading flow with a strong visual identity, without turning pages into demo-only showcases.
-
-A theme can be expressive and still remain maintainable when architecture and responsibilities are explicit.
+Read next: [Configuration Reference: Homepage](/en/blog/config-home/) · [Configuration Reference: Article Detail Pages](/en/blog/config-article/)

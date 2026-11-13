@@ -1,77 +1,80 @@
 ---
 tags: ['anglefeint', 'starter']
-title: '사용 가이드 3: 필요한 기능 켜기와 사용자 설정'
-subtitle: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
-description: '음악, 댓글, About, 페이지 나누기, 기능 스위치, 다국어를 필요에 따라 설정합니다.'
+title: '사용 가이드 5: 페이지와 기능을 취향에 맞게 조정하기'
+subtitle: '바꾸고 싶은 영역별로 찾아보세요. 홈, About, Decoder, 소셜 링크, 푸터, 음악, 페이지 나누기를 다룹니다.'
+description: '작은 설정 변경으로 페이지 내용과 기능을 조정하며 실제 기본값, 적용 범위, 병합 방법, 로컬 확인 절차를 설명합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
-## AI가 읽을 수 있는 콘텐츠
+이 글은 입문 가이드의 5 / 8편입니다. [전체 가이드 순서](/ko/blog/starter-guide-1-configure-your-site/#tutorial-order) · [필드별 설정 사전](/ko/blog/config-reference/).
 
-빌드 시 공개 글과 활성화된 Fragments, About을 `/llms.txt`, 언어별 색인과 전체 본문 모음에 포함합니다. 글의 Markdown URL은 유지됩니다. 각 언어에 `/ko/fragments/index.md`, `/ko/about/index.md`를 생성합니다(언어 코드는 바꿔 사용하세요). Fragments는 모든 공개 페이지를 합치며 각 ID, 게시 시간, 본문과 안정적인 `/<locale>/fragments/#ID` 링크를 보존합니다. HTML에서 Markdown 링크를 찾을 수 있습니다. `npm run build` 후와 preview에서 사용할 수 있으며 `dist/` 전체를 배포합니다.
+블로그가 실행된다면 바꾸고 싶은 부분부터 시작하세요. 모든 설정을 먼저 채우거나 아래 예시를 전부 복사할 필요는 없습니다.
 
-About은 공개 소개, 연락처 링크와 열 수 있는 AI 텍스트 팝업을 내보내며 터미널 설정, 도구와 장식 UI는 제외합니다. 댓글은 내보내지 않습니다. 비활성 페이지·언어, 삭제된 내용, noindex와 외부 canonical은 제외하고 재빌드 시 오래된 생성 파일과 발견 링크를 정리합니다. 사용자 파일은 보호하며 충돌 시 빌드를 중단합니다. 사이트·언어 보충 정보는 모든 문서에 적용됩니다. JSON-LD에 언어를 포함하고 About은 AboutPage를 사용합니다. 새 설정·서버·UI 의존성이 필요 없으며 AI 색인이나 인용을 보장하지 않습니다.
+모든 TypeScript 조각은 `src/site.config.ts`의 기존 `defineThemeConfig({...})` 객체에 합칩니다. 한 객체에는 `theme`, `i18n`, `social`을 하나씩만 두고 같은 이름의 필드는 직접 수정하며 다른 개인 설정을 유지하세요. 객체는 기본값과 병합하지만 배열은 전체를 대체합니다. 링크, 곡, 항목을 추가할 때 계속 표시할 내용도 남겨 두세요.
 
-## 기본 상태부터 보고 필요한 것만 변경
+이 글은 작업별 자주 쓰는 설정을 설명하며 전체 필드 사전은 아닙니다. 페이지에서 바꾸고 싶은 영역에 해당하는 절을 선택하세요.
 
-함께 제공되는 starter를 기준으로 설명합니다. 모든 TypeScript 예제는 `src/site.config.ts`의 `defineThemeConfig({...})` 객체에 합칩니다. 변경할 항목만 설정하세요.
+## 1. 홈 안내와 효과 조정하기
 
-| 기능                                  | 기본 상태              |
-| ------------------------------------- | ---------------------- |
-| 검색, 글 목차, 태그, 자동 공유 이미지 | 켜짐                   |
-| 본문 이미지 미리보기, 코드 복사       | 자동 적용, 설정 불필요 |
-| About, 글의 Red Queen 모니터          | 켜짐                   |
-| 음악, Giscus 댓글                     | 꺼짐                   |
-| 홈 최신 글 / 블로그 페이지당 글       | 3 / 10                 |
-
-## 1. 음악 플레이어 켜기
-
-음원을 `public/music/my-song.mp3`에 넣고 아래 설정을 추가합니다. 폴더가 없으면 만드세요.
+사이트 이름, 홈 대제목, 소개의 차이는 [블로그 설치와 내 정보 설정](/ko/blog/starter-guide-1-configure-your-site/)에서 설명합니다. 여기서는 홈 안내와 상호작용을 조정합니다.
 
 ```ts
 theme: {
-  music: {
-    enabled: true,
-    tracks: [
-      { title: 'My Song', artist: 'Artist Name', src: '/music/my-song.mp3' },
-    ],
+  home: {
+    showInitialize: true,
+    showFollow: true,
+    showTrace: true,
   },
+  effects: { enableHomePassage: false },
 },
 ```
 
-주소에는 `public`을 넣지 않습니다. 곡마다 `title`, `src`는 필수이고 `artist`는 선택입니다. 곡을 늘리려면 `tracks` 배열에 객체를 추가하세요. HTTPS 음원 직링크도 가능하지만 로컬 디스크 경로나 음악 서비스 공유 페이지는 음원 주소가 아닙니다. 공백과 역슬래시를 피하고 간단한 파일명을 쓰세요. 곡은 기본 제공하지 않습니다.
+| 필드                              | 기본값  | 바뀌는 내용                                                                                                |
+| --------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `theme.home.showInitialize`       | `true`  | Initialize／done 시작 문구를 표시하며 false면 해당 부분을 숨깁니다.                                        |
+| `theme.home.showFollow`           | `true`  | Wake Up／Follow 안내를 표시하며 false면 독립적으로 숨깁니다.                                               |
+| `theme.home.showTrace`            | `true`  | 홈 아래 PIRATE SIGNAL／TRACE 상태 영역을 표시하며 false면 숨깁니다.                                        |
+| `theme.effects.enableHomePassage` | `false` | 켜면 홈 글 제목 링크가 약 8초의 Matrix 이동 효과 뒤 탐색할 수 있습니다. 동작 줄이기에서는 바로 탐색합니다. |
 
-재생 목록이 비면 플레이어를 표시하지 않습니다. 활성 상태에서 제목이나 주소 형식이 잘못되면 설정 오류가 납니다. 공통 테마 레이아웃을 쓰는 페이지에 표시되며 페이지별 스위치는 없습니다. 데스크톱에서는 왼쪽 아래에 있고 모바일에서는 페이지마다 접힌 상태로 시작합니다. 펼치면 맨 위로 가기 버튼을 잠시 숨깁니다.
+전체 코드 비를 끄거나 사이트 전체 색상을 바꾸는 필드는 아닙니다. `showTrace`는 오른쪽 아래 와이드스크린 터미널의 스위치도 아닙니다.
 
-첫 방문에서는 PLAY를 눌러야 음원을 불러옵니다. 같은 탭 세션에서 곡, 위치, 음량을 기억합니다. 재생 중이었다면 페이지 이동, 새로고침, 뒤로 또는 앞으로 이동할 때 저장 위치에서 이어 재생을 시도하며, 직접 일시 정지했다면 정지 상태를 유지합니다. 잠시 끊길 수 있으며 끊김 없는 재생은 아닙니다. 브라우저가 자동 재생을 차단하면 PLAY를 누르세요. 기존 곡이 삭제되어도 다른 곡을 자동 재생하지 않습니다. 저장소를 사용할 수 없으면 수동 재생은 가능하지만 세션 이어 재생은 불가능합니다. 먼저 `/music/my-song.mp3`에 직접 접근할 수 있는지 확인하세요. 곡이 끝나면 다음 곡을 재생하고 마지막 곡 다음에는 첫 곡으로 돌아갑니다. `enabled: false`로 끕니다.
+### 와이드스크린 터미널 문구 바꾸기
 
-재생 전에 곡 전체를 다운로드하여 브라우저 Blob으로 변환하므로 탐색에 서버의 HTTP Range 지원이 필요하지 않습니다. 파일이 크거나 네트워크가 느리면 대기 시간과 메모리 사용량이 늘어납니다. 일시 정지 후 재생할 때는 불러온 곡을 재사용하고, 곡을 바꾸면 이전 곡을 해제합니다. 페이지 이동 후에는 다시 불러오며 브라우저 HTTP 캐시가 도움이 될 수 있습니다. 외부 음원 서버는 교차 출처 다운로드(CORS)를 허용해야 합니다. 같은 사이트의 `public/music/`에 두면 별도의 CORS 설정이 필요 없습니다.
-
-## 2. Giscus 댓글 켜기
-
-[댓글 설정 가이드](/ko/blog/starter-guide-4-giscus-comments/)
-
-## 3. About 내용 교체하기
-
-About 본문 단락과 서명은 설정 문자열의 줄바꿈을 유지합니다. `\n`은 줄바꿈, `\n\n`은 빈 줄이며 긴 문장은 자동으로 줄바꿈됩니다. 일반 텍스트이므로 Markdown이나 HTML을 해석하지 않습니다. `<br>`을 넣지 마세요.
-
-About은 기본으로 켜져 있습니다. 페이지 템플릿 대신 언어별 설정으로 본문을 바꿉니다.
+기본 문구는 `Knock, knock.`입니다. 별도 덮어쓰기가 없는 언어도 공유하도록 먼저 영어 설정을 넣을 수 있습니다.
 
 ```ts
 i18n: {
   locales: {
-    ko: {
+    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+  },
+},
+```
+
+독립적인 문구가 필요한 언어의 `messages.home.transmission`에 설정하세요. 이 값의 순서는 현재 언어 설정 → 영어 설정 → `Knock, knock.`이며 일반 UI 문구의 전체 대체값 연결을 따르지 않습니다. 터미널은 넓은 화면 레이아웃에 나타납니다. 모바일에 안 보인다고 설정 실패는 아닙니다. 열쇠구멍 버튼을 눌러야 복도 미리보기가 열립니다.
+
+About의 Oracle 입구는 독립적인 장면 미리보기를 사용하며 홈 글 이동 효과 스위치에 영향을 받지 않습니다. 터미널 문구와 하단 상태는 분위기 연출이며 실제 기기, 네트워크, 보안 상태를 의미하지 않습니다.
+
+스위치와 터미널 문구의 전체 정의는 [홈 사전](/ko/blog/config-home/#startup-switches)을 참고하세요.
+
+## 2. About을 내 소개로 바꾸기
+
+`/zh/about/`를 열면 중국어 간체 콘텐츠를 볼 수 있습니다. 본문과 연락처는 언어별로 설정하며 테마 페이지 템플릿을 수정할 필요는 없습니다.
+
+```ts
+i18n: {
+  locales: {
+    zh: {
       about: {
-        metaLine: '$ profile booted | mode: builder',
+        metaLine: '$ profile | building and learning',
         sections: {
-          who: 'Introduce yourself here.',
-          what: 'Describe what you build.',
-          ethos: ['Keep learning.', 'Build useful things.'],
-          now: 'What you are working on now.',
-          contactLead: 'Get in touch.',
-          signature: '> Your signature',
+          who: '我是小林，喜欢开发与写作。',
+          what: '这里记录我的项目和学习笔记。',
+          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
+          now: '最近在整理个人博客。',
+          contactLead: '欢迎联系我。',
+          signature: '> 谢谢你来这里。',
         },
         contact: {
           email: 'you@example.com',
@@ -84,25 +87,114 @@ i18n: {
 },
 ```
 
-이 예제는 한국어 About만 바꿉니다. 다른 언어도 각각 작성해야 하며 자동 번역하지 않습니다. `sidebar`, `labels`, `modals`, `effects`도 재정의할 수 있지만 먼저 본문과 연락처를 바꾸면 됩니다. About 도구 창은 테마의 상호작용 예시이며 문구를 채운다고 실제 AI 서비스와 연결되지 않습니다.
+예시 이름과 주소를 바꾸세요. `metaLine`은 개인 패널 위 상태 문구입니다. `who`, `what`, `ethos`, `now`에는 자기소개, 하는 일, 가치관, 근황을 씁니다. `contactLead`는 연락 안내이고 `signature`는 서명입니다. `ethos`는 문자열 배열이며 새 배열은 이전 항목 전체를 대체합니다.
 
-`/ko/about/`에서 본문과 이메일·GitHub 링크를 확인하세요. `theme.enableAboutPage: false`는 메뉴를 숨기고 About 경로 생성도 중단합니다. 변경 후 다시 빌드하세요.
+문단과 서명은 일반 텍스트입니다. 문자열 안의 `\n`은 줄바꿈, `\n\n`은 빈 줄입니다. Markdown과 HTML을 해석하지 않으므로 `<br>`로 줄바꿈하지 마세요. 이 예시는 중국어 간체만 수정합니다. 다른 언어는 직접 작성해야 하며 자동 번역하지 않습니다. 빠진 필드는 해당 언어의 설정 대체 규칙으로 채웁니다.
 
-### Decoder Lab: 사이퍼펑크에 대한 경의
+About 창 컨트롤은 닫기, 최소화, 전체 화면을 지원하며 브라우저 로컬에 상태를 기록합니다. 페이지 도구의 AI 출력과 다운로드 진행은 테마 상호작용이며 문구를 넣었다고 실제 AI 서비스에 연결하지 않습니다. 디코딩 도구는 브라우저 로컬 입력을 처리합니다.
 
-Decoder Lab의 시각적 스타일은 **cypherpunk(사이퍼펑크)** 운동에서 영감을 받아 인간의 자유, 프라이버시, 열린 코드에 대한 기여에 경의를 표합니다. P2P 네트워크 이미지와 로컬 처리는 도구와 데이터를 개인의 손에 두자는 생각을 반영합니다.
+About이 필요 없다면 `theme`에 `enableAboutPage: false`를 설정하세요. 기본은 `true`입니다. 끄면 About 라우트를 만들지 않으며 공용 내비게이션과 관련 About 연락 입구도 숨깁니다. 본문이나 푸터에 직접 쓴 링크는 자동 삭제하지 않으므로 함께 확인하세요.
 
-우리는 **프라이버시와 자유를 권력자의 선의에만 맡길 수 없다**고 생각합니다. 개인은 자신의 통신을 보호하고 누구에게 무엇을 공개할지 선택하며, 가능하다면 직접 검증할 수 있어야 합니다. 정부나 플랫폼, 제삼자에게 모든 신뢰를 맡길 필요는 없어야 합니다.
+콘텐츠 필드는 [About 사전](/ko/blog/config-about/#about-content), 명령 안내와 읽기 전용 리더 문구는 [터미널 사전](/ko/blog/config-terminal/#messages)을 참고하세요.
 
-**“Cypherpunks write code.” — 사이퍼펑크는 코드를 쓴다.** [A Cypherpunk’s Manifesto](https://www.activism.net/cypherpunk/manifesto.html)의 이 말은 이상을 사용할 수 있는 소프트웨어로 만들고, 코드를 공개하여 다른 사람이 검토하고 사용하며 발전시키도록 하는 실천을 뜻합니다. 기술로 개인의 자율성을 지키려는 그 정신에 경의를 표합니다.
+## 3. Decoder 페이지와 읽기 카드 조정하기
 
-Decoder Lab은 로컬 처리, 확인 가능한 소스 코드, P2P 네트워크 이미지로 그 정신을 담습니다.
+Decoder Lab은 `/zh/decoder/`에 있으며 기본 활성입니다. 시각적 표현은 사이퍼펑크와 디지털 자유의 선구자에 대한 헌사입니다. 로컬 처리와 P2P 네트워크 이미지는 개인이 도구와 데이터를 직접 통제한다는 생각을 반영합니다.
 
-전체 **Decoder Lab**는 `/<locale>/decoder/`에서 로컬 처리 기록, EVM/HyperEVM/TRON의 ERC-20/TRC-20 호출 해석 및 EVM/TRON/Bitcoin 주소 확인을 제공합니다. About 디코더 창에서 열 수 있습니다. `src/site.config.ts`에서 `theme.enableDecoderPage: false`로 페이지와 링크를 독립적으로 끌 수 있습니다. RPC, 지갑 연결, API 키가 필요 없습니다.
+텍스트 디코딩, 지원하는 토큰 호출 해석, 주소 형식 검사를 제공하며 RPC, 지갑 연결, API Key는 필요하지 않습니다. 잔액을 조회하거나 거래를 실행하거나 주소 소유권을 증명하지 않습니다. calldata 입력도 계약의 실제 동작 검증이 아닙니다.
 
-## 4. 글 수와 페이지 나누기 조정
+`theme`의 `enableDecoderPage: false`는 Decoder 페이지와 테마 관련 입구를 독립적으로 끕니다. About을 끈다고 Decoder가 꺼지지 않으며 반대도 같습니다. 사용자 링크는 직접 관리해야 합니다.
 
-앞의 두 개수만 설정해도 됩니다. 페이지 나누기 모양을 고정하려면 `pagination`을 추가하세요.
+읽기 영역의 헌사 문구와 카드는 언어별로 설정합니다. 다음은 중국어 간체 목록을 대체하는 예시입니다.
+
+```ts
+i18n: {
+  locales: {
+    zh: {
+      messages: {
+        decoderPage: {
+          readings: {
+            tribute: '思想与代码，让隐私和自由更进一步。',
+            links: [
+              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+            ],
+          },
+        },
+      },
+    },
+  },
+},
+```
+
+`tribute: ''`는 헌사 문구를, `links: []`는 카드를 숨깁니다. 생략하면 기본 내용을 유지합니다. 각 항목에는 `title`, `href`를 쓰며 `author`, `year`, `cover`는 선택 사항입니다. `cover`는 `privacy-code`, `bitcoin` 같은 내장 이름, public 이미지 경로, HTTPS 이미지 주소를 지원하며 생략하면 이미지 없는 카드입니다.
+
+`links`는 한 항목을 추가하는 것이 아니라 전체 목록을 대체합니다. 이전 항목을 유지하려면 함께 쓰세요. 제공한 자료의 입구일 뿐 대상 글을 수집·재게시하거나 외부 자원을 자동 검증하지 않습니다.
+
+항목별 타입, 내장 표지, 기본 목록은 [Decoder 사전](/ko/blog/config-decoder/#readings)을 참고하세요.
+
+## 4. 소셜 입구와 푸터 조정하기
+
+소셜 계정은 `social.links`에 쓰며 상단과 푸터가 같은 배열 순서를 사용합니다. 사용자 아이콘을 추가하려면 먼저 `public/icons/community.svg`에 넣으세요.
+
+```ts
+social: {
+  links: [
+    { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
+    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+  ],
+},
+```
+
+`iconSrc`는 public 안의 로컬 SVG, PNG, WebP를 지원합니다. `/`로 시작하는 경로이며 원격 URL, 쿼리, 조각, 인코딩 문자를 넣지 마세요. `icon`보다 우선하고 원래 색상을 유지합니다. 둘 다 생략하면 텍스트를 표시합니다. `label`은 접근 가능한 이름입니다. 파일이 없거나 지원하지 않는 내장 아이콘 이름이면 설정 오류가 납니다.
+
+선택적인 `rel`은 신원 등 링크 관계에 사용합니다. 예를 들어 내 Mastodon 계정에 `rel: 'me'`를 지정할 수 있습니다. 테마는 항상 `noopener noreferrer`를 유지하며 플랫폼별로 `me`를 자동 추가하지 않습니다. 신원 확인은 해당 플랫폼이 처리합니다. 먼저 사이트를 배포하고 상대 프로필에 반환 링크가 있는 실제 페이지 주소를 넣어야 하며 테마가 검증 결과를 보장하지는 않습니다.
+
+모바일 너비에서는 상단 소셜 입구를 숨기지만 푸터는 표시합니다. `links: []`는 클릭 불가능한 자리표시 아이콘 세 개를 유지하며 소셜 영역 전체를 숨기지 않습니다.
+
+### 푸터 크레딧, 설명, 추가 링크
+
+```ts
+site: { tagline: '保持好奇，持续记录。' },
+theme: {
+  footer: {
+    showCredits: true,
+    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+  },
+},
+```
+
+- `site.tagline`은 일반 텍스트이며 빈 문자열이면 숨깁니다. 자동 번역하지 않습니다. 예전 기본 문구 `Built with Astro.`는 내장 크레딧으로 취급해 중복 표시를 피합니다.
+- `theme.footer.showCredits`는 기본 `true`이며 테마와 Astro 두 크레딧을 제어합니다. 꺼도 저작권 행, 사용자 설명, 추가 링크는 유지합니다. 자동 글 공유 이미지의 테마 크레딧도 제어하지만 사용자 이미지는 수정하지 않습니다.
+- `theme.footer.links`는 기본 빈 배열이며 저작권과 크레딧 사이에 소셜 아이콘과 독립적인 링크를 표시합니다. 입력한 라벨을 유지하고 자동 번역하지 않으며 showCredits의 영향도 받지 않습니다.
+
+저작권 이름은 사이트 전체 이름을 쓰고 연도는 빌드할 때 만듭니다. 문구, 크레딧, 연도 관련 결과를 바꾸면 다시 빌드하고 배포해야 합니다.
+
+아이콘 경로, 링크 필드, 크레딧 규칙은 [공용 UI 소셜 필드](/ko/blog/config-site-chrome/#social-fields)와 [푸터 필드](/ko/blog/config-site-chrome/#footer)를 참고하세요.
+
+## 5. 음악 플레이어 켜기
+
+내 오디오를 `public/music/my-song.mp3`에 넣고 합치세요.
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+음악은 기본 꺼짐이며 테마에 곡을 포함하지 않습니다. 각 곡에 `title`, `src`가 필요하며 `artist`는 생략 가능합니다. 빈 재생목록은 플레이어를 표시하지 않습니다. 곡을 추가할 때 기존 배열 항목을 유지하세요. 오디오 URL에는 `public`을 넣지 않으며 로컬 디스크 경로나 플랫폼 공유 페이지는 안 됩니다. HTTPS 오디오 직접 링크를 지원하며 공백·역슬래시는 쓰지 마세요. 빈 제목이나 잘못된 주소 형식은 설정 오류가 나지만 형식이 올바르다고 실제 접근을 보장하지는 않습니다.
+
+플레이어는 공용 테마 레이아웃 페이지에 나타나며 페이지별 표시 스위치는 없습니다. 새 페이지에서는 처음에 접힙니다. 첫 방문에서 PLAY를 눌러야 오디오를 로드합니다. 현재 곡이 끝나면 다음 곡, 마지막 곡 뒤에는 첫 곡으로 돌아갑니다. 모바일에서 플레이어를 펼치면 맨 위로 버튼을 잠시 숨깁니다.
+
+같은 탭 세션에서 곡, 진행 위치, 음량을 기억합니다. 이전에 재생 중이었다면 페이지 이동·새로고침 후 재생 재개를 시도하며 직접 일시정지했다면 멈춘 상태를 유지합니다. 끊김 없는 재생은 아니며 브라우저가 자동 재생을 막을 수도 있습니다. 저장소를 사용할 수 없어도 수동 재생은 가능하지만 세션 재개를 유지하지 않습니다.
+
+현재 구현은 곡 전체를 내려받아 Blob으로 만든 뒤 재생하므로 탐색은 서버 Range 지원에 의존하지 않습니다. 큰 파일은 대기와 메모리 사용을 늘립니다. 외부 서버는 CORS를 허용해야 하고 같은 사이트 public 파일은 교차 출처 설정이 필요 없습니다. 오디오 주소 접근부터 확인하세요. 음악이 필요 없다면 `theme.music.enabled: false`를 설정합니다.
+
+곡 필드, 상태 문구, 재개 한계는 [음악 플레이어 사전](/ko/blog/config-music/#track-fields)을 참고하세요.
+
+## 6. 목록 개수와 페이지 나누기 조정하기
 
 ```ts
 theme: {
@@ -117,146 +209,62 @@ theme: {
 },
 ```
 
-`homeLatestCount`는 홈의 최신 글 수, `blogPageSize`는 블로그 페이지당 글 수이며 태그 글 목록도 같은 값을 사용합니다. 적절한 양의 정수를 지정하세요.
+`homeLatestCount`는 기본 3이며 홈 최신 글 수를, `blogPageSize`는 기본 10이며 블로그·태그 목록의 페이지당 글 수를 제어합니다. 적절한 양의 정수를 쓰세요. 홈 최대 세 개의 Fragment 미리보기는 제어하지 않으며 Fragment 목록의 개수는 `theme.fragments.pageSize`로 정합니다.
 
-`windowSize`는 페이지 번호 표시 범위로 코드에서 5–21로 제한하며 페이지당 글 수와 다릅니다. 이동 입력창은 `jump.enabled`가 참이고 총 페이지 수가 `showJumpThreshold`를 넘을 때만 표시됩니다. 기본은 12페이지 초과입니다. `enterToGo`는 Enter 이동을 제어합니다.
+`windowSize`는 기본 7이며 페이지 번호 표시 창을 제어합니다. 렌더링 시 5–21로 제한하고 페이지당 글 수와는 다릅니다. 이동 입구는 `jump.enabled`가 true이고 전체 페이지가 `showJumpThreshold`보다 많아야 나타납니다. 기본은 12페이지 초과이며 `enterToGo`는 Enter 이동 허용 여부입니다.
 
-스타일은 `fixed`, `sequential`, `random`입니다. JavaScript가 켜져 있으면 기본 `random`은 페이지를 불러올 때마다 컨테이너와 버튼 색상을 다시 선택하며 같은 결과가 반복될 수 있습니다. JavaScript가 없으면 생성된 HTML의 고정된 컨테이너 스타일과 정적 버튼 색상을 사용합니다. `style.enabled: false`는 기본 스타일로 되돌리며 페이지 나누기는 유지합니다.
+기본 스타일은 `random`이며 예시는 `fixed`로 변형을 고정합니다. `sequential`은 페이지 순서로 선택합니다. `random`의 클라이언트 초기화는 다시 무작위 선택하므로 결과가 반복될 수 있습니다. JavaScript를 꺼도 빌드한 정적 페이지 스타일은 유지합니다. `variants`는 선택할 변형 개수이며 렌더링 시 1–12로 제한합니다. `fixedVariant`는 현재 변형 범위로 제한합니다.
 
-## 5. 필요 없는 부가 기능 끄기
+`style.enabled: false`는 기본 스타일을 쓰며 페이지 나누기를 끄지 않습니다. Blog, 태그, Fragments가 공유하므로 세 곳의 효과를 확인하세요.
 
-아래는 끌 수 있는 옵션을 보여주는 예이지 전부 끄라는 권장은 아닙니다. 변경할 항목만 남기세요.
+전체 범위, 변형, UI 문구는 [Blog List와 태그 목록 사전](/ko/blog/config-blog-list/#pagination-window)을 참고하세요.
 
-```ts
-theme: {
-  enableAboutPage: false,
-  effects: { enableRedQueen: false },
-  search: { enabled: false },
-  toc: { enabled: false },
-  tags: { enabled: false },
-  socialImage: { enabled: false },
-},
-```
+## 7. 필요 없는 기능만 끄기
 
-`enableRedQueen`은 글의 Red Queen 모니터만 제어하며 AI 테마 전체나 모든 효과를 끄지 않습니다. `toc`는 사이트 기본값이라 개별 글의 `toc: true`가 우선합니다. `socialImage`를 꺼도 수동 `ogImage`는 유지됩니다. 검색과 태그는 입구와 빌드 결과물에 함께 영향을 줍니다. 네 가지 분위기는 기존 레이아웃으로 결정되며 사이트 전체를 네 테마 사이에서 전환하는 설정은 없습니다.
+스위치별 영향 범위입니다. 한 기능을 설정하려고 표 전체를 끌 필요는 없습니다.
 
-## 6. 언어 추가와 홈 주소 변경
+| 설정 경로                      | 기본값 | false일 때                                                        |
+| ------------------------------ | ------ | ----------------------------------------------------------------- |
+| `theme.enableAboutPage`        | `true` | About 페이지를 만들지 않고 관련 테마 입구를 숨깁니다.             |
+| `theme.enableDecoderPage`      | `true` | Decoder 페이지를 만들지 않고 관련 테마 입구를 숨깁니다.           |
+| `theme.effects.enableRedQueen` | `true` | 글 Red Queen 모니터를 숨기며 AI 페이지 효과 전체를 끄지 않습니다. |
+| `theme.search.enabled`         | `true` | 사이트 글 검색 입구와 인덱스 생성을 끕니다.                       |
+| `theme.toc.enabled`            | `true` | 기본 글 목차를 끄며 개별 `toc: true`는 덮어쓸 수 있습니다.        |
+| `theme.tags.enabled`           | `true` | 태그 입구와 페이지 생성을 끄며 글은 삭제하지 않습니다.            |
+| `theme.math.enabled`           | `true` | Markdown／MDX 수식 처리를 끕니다.                                 |
+| `theme.socialImage.enabled`    | `true` | 자동 글 공유 이미지 생성을 멈추며 수동 ogImage는 유효합니다.      |
 
-프랑스어를 추가하는 예입니다.
+글 모니터만 끄려면 `theme: { effects: { enableRedQueen: false } }`만 합치세요. 검색, 음악, About 설정은 바뀌지 않습니다.
 
-```ts
-i18n: {
-  locales: {
-    fr: {
-      meta: { label: 'Français', hreflang: 'fr', ogLocale: 'fr_FR', enabled: true, fallback: ['en'] },
-      site: { hero: 'Bienvenue sur mon blog.' },
-      messages: { nav: { home: 'Accueil' }, siteDescription: 'Mes notes et projets.' },
-    },
-  },
-},
-```
+댓글과 Fragments는 기본 꺼짐이며 다른 기능을 쓰기 위해 켤 필요가 없습니다. 필요할 때 [Giscus 댓글 설정](/ko/blog/starter-guide-4-giscus-comments/), [Fragment 게시하기](/ko/blog/starter-guide-5-fragments/)를 읽으세요. 목차, 수식, 공유 이미지는 [첫 글 쓰기](/ko/blog/starter-guide-2-languages-and-routing/)와 [이미지 가이드](/ko/blog/starter-guide-images/)를 참고하세요.
 
-이후 `npm run new-post -- french-note --locales fr`로 콘텐츠를 만듭니다. UI 문구, 홈 소개, About, 글 번역은 직접 작성해야 합니다. `fallback`은 누락된 설정과 문구를 보완할 뿐 글을 번역하거나 다른 언어의 글을 목록에 넣지 않습니다. 필요한 경우 기본 언어가 대체 언어 체인에 추가됩니다.
+## 8. 작품 페이지가 필요하면 사용자 페이지 만들기
 
-메뉴 언어 이름은 `meta.label`로 바꿉니다. 예를 들어 `zh`의 기본 이름은 “简体中文”입니다. `hreflang` / `ogLocale`은 언어 메타 정보이며 표시 이름을 바꿔도 언어 코드나 URL은 바뀌지 않습니다.
-
-기본 `i18n.routing.defaultLocalePrefix: 'always'`는 `/`를 기본 언어 홈으로 보냅니다. `'never'`는 `/`를 기본 언어 홈으로 쓰고 `/<기본 언어>/`를 `/`로 보냅니다. 기본 언어 홈에만 적용하며 `/ko/blog/`를 `/blog/`로 바꾸지 않습니다.
-
-## 7. 설정 합치기와 검증
-
-예를 들어 글 수와 음악은 하나의 `theme` 안에 합칩니다.
-
-```ts
-theme: {
-  homeLatestCount: 5,
-  music: {
-    enabled: true,
-    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
-  },
-},
-```
-
-기존 `theme.comments` 등도 같은 객체에 유지하세요. 예제로 자신의 설정 전체를 덮어쓰지 마세요. 배열은 전체를 교체하므로 곡이나 소셜 링크를 추가할 때 기존 항목도 남겨야 합니다.
-
-개발 화면에서 기능을 확인한 뒤 `npm run doctor`와 `npm run preview`를 실행하세요. doctor에는 검사와 빌드가 포함되므로 성공 후 check와 build를 반복할 필요가 없습니다. 검색은 빌드된 미리보기에서 확인하고, 게시하려면 새 결과물을 배포하세요.
-
-## 8. 푸터 출처 표시 또는 숨기기
-
-푸터에는 빌드 시점의 연도와 `site.title`이 표시됩니다. 기본적으로 테마와 Astro 링크도 표시됩니다: `© 2026 My Blog · Theme by Anglefeint · Built with Astro`. 연도는 고정값이 아니라 빌드 시 생성됩니다.
-
-두 기술 출처를 모두 숨기려면 다음 설정을 `src/site.config.ts`에 병합하세요:
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  theme: {
-    footer: { showCredits: false },
-  },
-});
-```
-
-`showCredits: true`로 다시 표시할 수 있습니다. 숨기면 두 링크가 모두 제거되고 저작권 줄은 유지됩니다. 선택 사항인 `site.tagline`은 이 스위치와 별개로 사용자 지정 일반 텍스트를 추가합니다. 기본값은 빈 문자열이며, 이전 기본값인 `Built with Astro.`는 중복을 방지하기 위해 내장 출처로 처리합니다. `All rights reserved`는 추가하지 않습니다.
-
-`src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다.
-
-선택 사항인 `theme.footer.links`는 푸터에 별도 행을 추가합니다. 각 항목의 `label`과 `href`를 설정하며 링크 사이에는 가운데 점이 표시됩니다. 생략하거나 빈 배열을 사용하면 숨겨집니다. 라벨은 언어가 바뀌어도 설정한 원문을 유지하며 소셜 아이콘 및 `showCredits`와 독립적입니다.
-
-```ts
-theme: {
-  home: { showInitialize: true, showFollow: true, showTrace: true },
-  footer: {
-    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
-  },
-},
-```
-
-자동 공유 이미지는 코드 레인, 터미널, 네온 네트워크 배경을 포함하며 사이트 이름, 제목, 작성자는 사용자 콘텐츠에서 가져옵니다. 오른쪽 아래의 작은 `Theme by Anglefeint` 문구는 `theme.footer.showCredits`(기본 `true`)를 따릅니다. `false`로 설정하면 푸터와 이미지의 크레딧을 함께 숨깁니다. 변경 후 다시 빌드하고 배포하세요. 사용자 지정 `ogImage`는 수정하지 않습니다. 배경은 오프라인으로 사용되며 브라우저 JavaScript를 추가하지 않습니다.
-
-0.27+ 통합 starter의 표준 페이지, 설정 기본값, 빌드 기능은 테마 패키지가 제공합니다. 개인 설정은 `src/site.config.ts`에 유지됩니다. 테마 업그레이드는 글, 음악, 이미지, 사용자 페이지를 덮어쓰지 않습니다. 0.27 이전 구조는 [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)에 따라 한 번 이전하세요.
-
-## 이 가이드 시리즈
-
-- [사용 가이드 1: 블로그 시작하기](/ko/blog/starter-guide-1-configure-your-site/)
-- [사용 가이드 2: 글 작성과 콘텐츠 관리](/ko/blog/starter-guide-2-languages-and-routing/)
-- [사용 가이드 3: 필요한 기능 켜기와 사용자 설정](/ko/blog/starter-guide-3-comments-about-and-theme-toggles/)
-
-## 수학 공식
-
-Markdown과 MDX 글에서 LaTeX 형식 수식을 기본으로 전체 활성화합니다. 인라인은 `$C_{saved}$`, 독립 수식은 별도 줄의 `$$`로 감쌉니다. 글마다 설정하거나 플러그인을 직접 설치할 필요가 없습니다.
-
-```markdown
-Inline: $C_{saved}$
-
-$$
-\frac{a}{b}
-$$
-```
-
-`src/site.config.ts`에서 `theme: { math: { enabled: false } }`로 끌 수 있습니다. 모호한 달러 기호는 `\$`로 쓰세요. 코드 영역은 그대로 유지됩니다. 끄면 중괄호 안의 JavaScript 표현식을 포함한 일반 MDX 규칙으로 돌아갑니다.
-
-빌드 시 렌더링하며 로컬 스타일·글꼴과 접근 가능한 MathML을 사용합니다. 브라우저 수식 엔진은 필요 없습니다. 긴 독립 수식은 가로로 스크롤합니다. 잘못된 수식은 출처와 원인을 표시하고 빌드를 중단합니다. 제목·요약은 일반 텍스트로 작성하며 수식은 검색 색인에서 제외됩니다. 완전한 LaTeX 문서가 아닌 KaTeX 수학 문법을 지원합니다.
-
-0.27+ 통합 starter에서는 테마 패키지가 수학 지원을 포함한 Markdown 처리기를 자동으로 연결합니다. 한 번의 이전이 필요한 것은 0.27 이전 구조뿐입니다. 새 프로젝트에 처리기나 어댑터 구현을 복사하지 마세요.
-
-$C_{saved}$
-
-$$
-\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
-$$
-
----
-
-## 테마 업그레이드
-
-표준 페이지, 기본 설정, 번역과 빌드 기능은 테마 패키지가 관리합니다. 글, `src/site.config.ts`, 음악, 이미지와 사용자 페이지는 프로젝트에 남습니다.
-
-npm을 사용하는 새 integration starter의 루트에서 아래 명령을 실행하세요. 호환성을 검사하고 의존성 파일을 백업한 뒤 정확한 버전을 설치하고 doctor를 실행합니다. 실패하면 의존성 파일을 복원하고 이전 의존성 재설치를 시도합니다. 배포는 기존 절차로 진행하며 자동 게시하지 않습니다.
+프로젝트를 따로 보여 주려면 루트에서 실행하세요.
 
 ```bash
-npx @anglefeint/astro-theme@latest upgrade
+npm run new-page -- projects
 ```
 
-0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
+`src/pages/[lang]/projects.astro`를 만들며 기본 `base` 레이아웃을 사용하고 활성 언어에 `/<locale>/projects/`를 생성합니다. 예시는 `/en/projects/`, `/zh/projects/`입니다. Astro 파일을 편집해 본문을 넣으세요. 자동 번역하거나 상단 내비게이션을 추가하지 않습니다. 본문이나 푸터 links에 입구를 제공할 수 있습니다.
 
-자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
+스타일이 필요할 때 `--theme`를 사용하세요. 예를 들어 `npm run new-page -- portfolio --theme cyber`는 다른 Cyberpunk 페이지를 만듭니다. 값은 `base`, `ai`, `cyber`, `hacker`, `matrix`이며 새 페이지 레이아웃만 정하고 사이트 전체의 네 분위기를 전환하지 않습니다. slug는 소문자 영문, 숫자, 하이픈이며 `projects/labs` 같은 중첩 경로도 가능합니다. 패키지의 표준 경로와 충돌하지 마세요. 같은 파일이 있으면 오류가 나므로 같은 경로에 다섯 테마 명령을 연속 실행하지 마세요.
 
-업그레이드 실패 시 `dist/`를 배포하지 마세요. 의존성 복원은 이전 빌드 결과물을 복원하지 않습니다. 오류를 해결하고 `npm run doctor`가 성공한 뒤 배포하세요. pnpm 사용자는 릴리스 호환성을 확인하고 잠금 파일을 유지한 채 `pnpm add @anglefeint/astro-theme@latest`와 `pnpm run doctor`로 수동 업데이트하세요.
+## 9. 저장 후 적용 확인하기
+
+먼저 dev에서 바꾼 페이지를 열고 콘텐츠, 링크, 기능 입구가 예상대로인지 확인하세요. 환경변수에 예전 덮어쓰기가 있다면 [첫 가이드의 확인 절차](/ko/blog/starter-guide-1-configure-your-site/)를 따르세요. 사용자 아이콘 없음, 오디오 요청 실패, 외부 링크 문제는 각각 경로와 네트워크를 확인하고 전체 설정을 반복 덮어쓰며 해결하려 하지 마세요.
+
+배포 전에 dev를 멈추고 실행하세요.
+
+```bash
+npm run doctor
+npm run preview
+```
+
+doctor는 로컬 준비, 검사, 빌드를 포함합니다. 성공 직후 check나 build를 반복할 필요는 없습니다. 검색은 빌드 뒤 preview에서 확인해야 하며 preview 자체는 게시하지 않습니다. 실제 사이트는 `dist/` 전체를 다시 배포해야 하며 로컬 설정 저장만으로 온라인 페이지가 바뀌지 않습니다.
+
+## 가이드 탐색과 설정 조회
+
+[이전 글: Fragment 게시하기](/ko/blog/starter-guide-5-fragments/) · [다음 글: 독자에게 댓글 받기](/ko/blog/starter-guide-4-giscus-comments/) · [여덟 편의 가이드 시작 페이지](/ko/blog/starter-guide-1-configure-your-site/#tutorial-order).
+
+관련 필드: [홈](/ko/blog/config-home/), [About](/ko/blog/config-about/), [터미널](/ko/blog/config-terminal/), [Decoder](/ko/blog/config-decoder/), [공용 내비게이션·소셜·푸터](/ko/blog/config-site-chrome/), [음악 플레이어](/ko/blog/config-music/), [목록과 페이지 나누기](/ko/blog/config-blog-list/). 전체 경로, 기본값, 제한은 [설정 사전 시작 페이지](/ko/blog/config-reference/)를 참고하세요.

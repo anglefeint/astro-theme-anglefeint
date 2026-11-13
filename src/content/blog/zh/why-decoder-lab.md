@@ -5,10 +5,13 @@ description: 'Decoder Lab 首先致敬密码朋克对人类自由与隐私的贡
 pubDate: '2026-11-04'
 heroImage: '../../../assets/blog/default-covers/hacker-02.webp'
 tags: ['Cypherpunk', 'Decoder Lab', 'Anglefeint']
+updatedDate: '2026-11-14'
 ---
 
-我做 Decoder Lab，首先是为了致敬密码朋克（Cypherpunk）与数字自由的先行者对全人类的贡献：他们以思想和代码推动加密通信、个人隐私与自由，以及数字货币的发展，让更多人拥有保护信息、自由交流和自主协作的工具。
+Decoder Lab 是对密码朋克与数字自由先行者的致意：把加密、隐私和自主协作的理念，放进可以亲手操作的小工具。
 
-其次，我希望这份致敬也有实际用途，所以把文本解码、支持的代币调用解析和地址格式检查做成了博客里的小工具；这些处理在浏览器本地完成，不需要连接钱包、API Key 或 RPC，也与主题的终端和网络意象相呼应。
+页面提供文本解码、支持的代币调用解析和地址格式检查。处理在浏览器本地完成，不需要钱包、API Key 或 RPC；地址格式通过不代表链上有效、有余额或交易安全。
 
-[Decoder Lab](/zh/decoder/) 底部的资源链接全部可以修改，博主可在 `src/site.config.ts` 的 `i18n.locales.<code>.messages.decoderPage.readings.links` 中设置每项的 `title` 和 `href`，替换整份列表或用空数组隐藏，让它成为自己的阅读推荐。
+底部阅读资源可以替换或隐藏；独立页面与 About 中的工具入口有各自的配置。它补充了主题的工具气质，支持范围和具体配置以字典为准。
+
+继续阅读：[配置字典：Decoder](/zh/blog/config-decoder/)

@@ -12,8 +12,8 @@ async function main() {
     }
     if (args.some((arg) => arg !== '--check') || new Set(args).size !== args.length)
       throw new Error('Usage: astro-theme prepare-covers [--check]');
-    const { prepareCovers } = await import('./covers/prepare.mjs');
-    const result = await prepareCovers({ check: args.includes('--check') });
+    const { prepareProjectCovers } = await import('./covers/project.mjs');
+    const result = await prepareProjectCovers({ check: args.includes('--check') });
     console.log(
       `[covers] ${result.encoded} generated, ${result.reused} reused. Commit src/assets/blog/covers/ with your originals.`
     );
@@ -33,10 +33,10 @@ async function main() {
   if (command === 'doctor') {
     if (args.length) throw new Error('doctor takes no arguments.');
     await inspectIntegrationProject(process.cwd());
-    const { prepareCovers } = await import('./covers/prepare.mjs');
+    const { prepareProjectCovers } = await import('./covers/project.mjs');
     // Local doctor/upgrade prepares project-owned derivatives; CI remains validation-only.
     const ci = Boolean(process.env.CI && !['false', '0'].includes(process.env.CI.toLowerCase()));
-    await prepareCovers({ check: ci });
+    await prepareProjectCovers({ check: ci });
     process.stdout.write(await npmCommand(['exec', '--', 'astro', 'check'], process.cwd()));
     process.stdout.write(await npmCommand(['run', 'build'], process.cwd()));
     // Source validation is shipped with the package, not copied into the starter.

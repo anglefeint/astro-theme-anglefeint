@@ -1,23 +1,19 @@
 ---
 title: Warum Artikel eine KI-Ästhetik haben
-subtitle: 'Neuronale Strukturen, Statussignale und der Red-Queen-Monitor.'
-description: 'Neuronale Strukturen, Statussignale und der Red-Queen-Monitor.'
+subtitle: 'Text, Netzwerke und Red Queen'
+description: 'Eine Leseoberfläche mit Netzwerkhintergrund, OUTPUT-Panel und Red-Queen-Monitor.'
 pubDate: '2026-03-04'
 heroImage: ../../../assets/blog/default-covers/ai-02.webp
 aiModel: anglefeint-core
 aiMode: narrative
 aiState: stable
-aiLatencyMs: 118
-aiConfidence: 0.99
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-Auf der Artikelseite beginnt konzentriertes Lesen. Deshalb nutzt sie eine KI-Atmosphäre statt eines weiteren Retro-Terminals oder einer reinen Cyberpunk-Szene.
+Artikel nutzen die Bildsprache eines AI-Kontrollraums: Netzwerk, OUTPUT-Panel und Red-Queen-Monitor umgeben den Text. Sie zeigen Interesse an AI und Kino, keine Modellaufrufe oder Glaubwürdigkeitsbewertung.
 
-KI wird verändern, wie Menschen entwickeln, entscheiden und kommunizieren. Neuronale Strukturen, Modellstatus und kontrollierte Signale umgeben den Text und lassen diese Zukunft im Hintergrund anklingen, ohne den Inhalt zu verdrängen.
+Text erscheint sofort, sein Panel bleibt still. Inhaltsverzeichnis, Codekopieren und Bildvorschauen helfen beim Lesen; Netzwerk, Lichtbänder und Monitor erhalten die Identität.
 
-Links steht ein von Red Queen inspirierter Monitor als symbolischer Warnkanal. Die Referenz an eine biotechnologische KI erinnert daran, dass Intelligenz elegant, nützlich und gefährlich zugleich sein kann.
+OUTPUT zeigt Textumfang und geschätzte Tokens aus dem Text, sofern keine manuellen Werte vorliegen. Das ist kein tatsächlicher Modellverbrauch. Lesezeit, latency und confidence werden nicht angezeigt. Modell-, Modus- und Statusangaben der Beispiele sind Autorenmetadaten.
 
-Die Seite besteht aus einem stabilen Lesekern, einer reaktiven Oberfläche und filmischen Effekten mit kontrolliertem Start. Wir optimieren Ablauf, Timing und Rendering, ohne der Szene ihre Persönlichkeit zu nehmen.
-
-So entsteht ein KI-Kontrollraum für längeres Lesen.
+Weiterlesen: [Konfigurationsverzeichnis: Artikeldetailseite](/de/blog/config-article/)

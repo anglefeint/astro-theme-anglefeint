@@ -5,10 +5,13 @@ description: 'GEO, convivência com agentes e Markdown automático como motivos 
 pubDate: '2026-11-04'
 heroImage: '../../../assets/blog/default-covers/ai-03.webp'
 tags: ['AI', 'GEO', 'Anglefeint']
+updatedDate: '2026-11-14'
 ---
 
-Tornei o Anglefeint legível por IA por dois motivos: GEO, para facilitar que artigos sejam encontrados, compreendidos e citados em buscas e respostas generativas, e minha convicção de que a sociedade futura será compartilhada por pessoas e agentes, portanto um blog deve receber ambos.
+Quero um blog que pessoas leiam e Agents encontrem, compreendam e citem. Entradas legíveis por máquinas preservam texto e URL de origem para voltar à página.
 
-Uma pessoa pode ler diretamente ou pedir a um agente que encontre fontes e compare ideias antes de voltar ao original, por isso o conteúdo legível por máquinas precisa preservar o texto completo, a autoria e os endereços de origem.
+Na compilação, Anglefeint gera `llms.txt`, índices por idioma, coleções completas e Markdown de artigos a partir de páginas públicas. About e Fragments ativados que atendem às condições também entram nas respectivas exportações. Não se mantém outra cópia do texto.
 
-No build, o Anglefeint gera automaticamente llms.txt, índices e coletâneas completas por idioma e o Markdown de cada artigo a partir dos mesmos arquivos, permitindo que o autor mantenha uma única versão e o leitor abra Markdown pela página do artigo.
+Isso apoia descoberta e GEO, mas não garante indexação, posição ou citações. As exportações são públicas: não inclua segredos em artigos nem notas complementares públicas.
+
+Continue lendo: [Referência de configuração: GA4 e complementos de leitura por IA](/pt-br/blog/config-analytics-ai/)

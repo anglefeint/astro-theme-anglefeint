@@ -13,6 +13,21 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.36.1] - 2026-11-14
+
+- Normalize article authors once for both bylines and generated social-image keys, including blank and padded frontmatter values.
+- Honor the Fragments feature switch throughout image discovery, dev refresh, build validation and local CLI preparation. Disabled content and its unused derivatives no longer block the site; originals remain untouched.
+- Close Red Queen verification/playback decoders and late frames on completion, cancellation and failure. Bound playback decode retries and image fallback retries without changing successful playback timing, artwork or effects.
+- Reject invalid `theme.blogPageSize` values at configuration resolution; retain the default 10 and accept positive safe integers.
+- Allow homepage corridor previews to retry failed module loads, retain successful modules and ignore obsolete activation failures.
+
+- React to live system reduced-motion changes through an article-only motion scope; preserve reading controls, existing static fallbacks and normal startup timing.
+- Build article routes from one locale/translation index: sort each locale once, select the same latest three related posts and pass menu/SEO maps directly, avoiding per-article full scans without cross-build caches.
+
+- Reorganize nine-language READMEs, eight task-based tutorials and modular configuration references; preserve default CLI behavior. Refresh ten design/entry articles per locale and remove three redundant demo articles. Starter includes the localized welcome/tutorial/reference set.
+
+No new configuration fields, dependencies or default workflow are introduced. See the [delivery record](docs/releases/0.36.1.md) for release status and validation scope.
+
 ## [0.36.0] - 2026-11-13
 
 - Prepare persistent responsive images for Fragment Markdown/reference/HTML local sources, including public images; preserve originals, animation and vectors. Fill missing dimensions, prioritize the first feed image, lazy-load the remainder and reuse candidates in homepage previews. Load Fragment math CSS only when the current page contains formulas; builds validate committed assets without deployment-time encoding.

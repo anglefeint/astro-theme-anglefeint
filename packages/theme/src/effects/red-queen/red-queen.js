@@ -1,4 +1,5 @@
 import { createEffectScope } from '../../scripts/effects/lifecycle.js';
+import { createDecoderPool } from './decoder-pool.js';
 const instances = new WeakMap();
 function mount(shell, prefersReducedMotion, scope, autoPlay) {
   if (!shell) return;
@@ -44,6 +45,7 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
   var playlistIndex = 0;
   var imageCache = Object.create(null);
   var mediaDataCache = Object.create(null);
+  var decoders = createDecoderPool();
   var hasRevealed = false;
   var forceStaticUntil = 0;
 
@@ -65,6 +67,12 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
 
   if (prefersReducedMotion) {
     // Playlist assets are animated even when rendered as plain images.
+    const previousHidden = shell.hidden;
+    const previousDisplay = shell.style.display;
+    scope.add(() => {
+      shell.hidden = previousHidden;
+      shell.style.display = previousDisplay;
+    });
     shell.hidden = true;
     shell.style.display = 'none';
     return;
@@ -144,6 +152,7 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
     var tryCount = typeof attempt === 'number' ? attempt : 0;
     var cachedData = mediaDataCache[item.url];
     function retryOrFail() {
+      if (token !== playToken || !isPlaying) return;
       if (tryCount >= PRELOAD_RETRY_MAX) {
         done(false);
         return;
@@ -155,19 +164,23 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
     }
 
     function verifyBuffer(buffer) {
+      if (token !== playToken || !isPlaying) return;
       mediaDataCache[item.url] = buffer;
-      var decoder = new ImageDecoder({ data: buffer, type: item.type });
-      decoder.tracks.ready
+      var decoder = decoders.open(buffer, item.type);
+      return decoder.ready
         .then(async function () {
-          var result = await decoder.decode({ frameIndex: 0 });
-          if (result && result.image && result.image.close) result.image.close();
-          done(true);
+          var frame = await decoder.decode(0);
+          if (frame) frame.close();
+          if (token === playToken && isPlaying) done(true);
         })
-        .catch(retryOrFail);
+        .catch(retryOrFail)
+        .finally(() => decoder.close());
     }
 
     if (cachedData instanceof ArrayBuffer) {
-      verifyBuffer(cachedData);
+      Promise.resolve()
+        .then(() => verifyBuffer(cachedData))
+        .catch(retryOrFail);
       return;
     }
 
@@ -302,6 +315,7 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
   function teardownPlayback() {
     isPlaying = false;
     playToken++;
+    decoders.clear();
     setLoading(false);
     forceStaticUntil = 0;
     clearSequenceTimer();
@@ -456,6 +470,11 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
       }, holdMs);
     };
     img.onerror = function () {
+      if (token !== playToken || !isPlaying) return;
+      if (tryCount >= PRELOAD_RETRY_MAX) {
+        collapseAfterPlayback(token);
+        return;
+      }
       var retryDelay = Math.min(1200, 180 * (tryCount + 1));
       scheduleSequence(function () {
         fallbackPlay(index, token, tryCount + 1);
@@ -476,25 +495,38 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
 
     function decodeFromData(data) {
       if (token !== playToken || !isPlaying) return;
-      var decoder = new ImageDecoder({ data: data, type: item.type });
+      var decoder;
+      try {
+        decoder = decoders.open(data, item.type);
+      } catch {
+        fallbackPlay(index, token, 0);
+        return;
+      }
       var frameIndex = 0;
+      var decodeFailures = 0;
 
       function decodeNext() {
         if (token !== playToken || !isPlaying) return;
         decoder
-          .decode({ frameIndex: frameIndex })
-          .then(function (result) {
-            if (token !== playToken || !isPlaying) return;
+          .decode(frameIndex)
+          .then(function (frame) {
+            if (!frame) return;
+            if (token !== playToken || !isPlaying) {
+              frame.close();
+              decoder.close();
+              return;
+            }
             releaseCurrentFrame();
-            currentFrame = result.image;
+            currentFrame = frame;
             if (index === 0) revealMonitor(token);
-            var baseDelay = result.image.duration ? result.image.duration / 1000 : 33;
+            var baseDelay = frame.duration ? frame.duration / 1000 : 33;
             var delay = Math.max(16, baseDelay);
             if (index === 0 && forceStaticUntil > performance.now()) {
               delay += Math.ceil(forceStaticUntil - performance.now());
             }
             frameIndex++;
-            if (frameIndex >= decoder.tracks.selectedTrack.frameCount) {
+            if (frameIndex >= decoder.frameCount) {
+              decoder.close();
               var holdDelay = item.holdLast || 0;
               scheduleSequence(function () {
                 decodeWithImageDecoder(index + 1, token);
@@ -504,17 +536,25 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
             scheduleSequence(decodeNext, delay);
           })
           .catch(function () {
+            if (token !== playToken || !isPlaying) return;
+            // Count failures across restarts, so a broken later frame cannot loop forever.
+            if (++decodeFailures > PRELOAD_RETRY_MAX) {
+              decoder.close();
+              fallbackPlay(index, token, 0);
+              return;
+            }
             frameIndex = 0;
             scheduleSequence(decodeNext, 100);
           });
       }
 
-      decoder.tracks.ready
+      decoder.ready
         .then(function () {
           if (token !== playToken || !isPlaying) return;
           decodeNext();
         })
         .catch(function () {
+          decoder.close();
           if (token !== playToken || !isPlaying) return;
           fallbackPlay(index, token, 0);
         });
@@ -560,8 +600,7 @@ function mount(shell, prefersReducedMotion, scope, autoPlay) {
       if (token !== playToken || !isPlaying) return;
       setLoading(false);
       if (!ok) {
-        isPlaying = false;
-        destroyCanvas();
+        teardownPlayback();
         setCollapsed(true);
         return;
       }

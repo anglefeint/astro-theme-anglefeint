@@ -8,7 +8,7 @@ import { fragmentImagePlugin } from './fragment-markdown.mjs';
 
 const virtualId = 'virtual:anglefeint-blog-covers';
 
-export default function blogCovers({ mathEnabled = true } = {}) {
+export default function blogCovers({ mathEnabled = true, fragmentsEnabled = false } = {}) {
   let state, config, data;
   return {
     name: 'anglefeint-blog-covers',
@@ -21,6 +21,7 @@ export default function blogCovers({ mathEnabled = true } = {}) {
           publicDir: config.publicDir ? fileURLToPath(config.publicDir) : undefined,
           base: config.base,
           check: command !== 'dev',
+          fragmentsEnabled,
         });
         data = coverData(state, config.base);
         if (state.encoded)
@@ -92,6 +93,7 @@ export default function blogCovers({ mathEnabled = true } = {}) {
                   srcDir: state.srcDir,
                   publicDir: state.publicDir,
                   base: config.base,
+                  fragmentsEnabled,
                 });
                 const updatedData = coverData(updated, config.base);
                 const differs =

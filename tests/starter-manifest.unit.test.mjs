@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import {
   STARTER_CONTENT_LOCALES,
+  STARTER_CONTENT_EXTRA_FILES,
   STARTER_CONTENT_MANAGED_FILES,
   STARTER_CONTENT_ROOT,
   STARTER_CONTENT_SLUGS,
@@ -26,15 +27,36 @@ test('starter content whitelist expands to the expected localized guide files', 
     'welcome-to-anglefeint',
     'starter-guide-1-configure-your-site',
     'starter-guide-2-languages-and-routing',
+    'starter-guide-images',
+    'starter-guide-5-fragments',
     'starter-guide-3-comments-about-and-theme-toggles',
     'starter-guide-4-giscus-comments',
-    'starter-guide-5-fragments',
+    'starter-guide-languages',
+    'starter-guide-deployment',
+    'config-reference',
+    'config-home',
+    'config-blog-list',
+    'config-article',
+    'config-fragments',
+    'config-about',
+    'config-decoder',
+    'config-music',
+    'config-comments',
+    'config-languages',
+    'config-search',
+    'config-analytics-ai',
+    'config-site-chrome',
+    'config-terminal',
   ]);
 
   assert.equal(
     STARTER_CONTENT_MANAGED_FILES.length,
-    STARTER_CONTENT_LOCALES.length * STARTER_CONTENT_SLUGS.length
+    STARTER_CONTENT_LOCALES.length * STARTER_CONTENT_SLUGS.length +
+      STARTER_CONTENT_EXTRA_FILES.length
   );
+
+  assert.deepEqual(STARTER_CONTENT_EXTRA_FILES, []);
+  assert.equal(new Set(STARTER_CONTENT_MANAGED_FILES).size, STARTER_CONTENT_MANAGED_FILES.length);
 
   for (const locale of STARTER_CONTENT_LOCALES) {
     for (const slug of STARTER_CONTENT_SLUGS) {

@@ -3,28 +3,24 @@ title: 'Route-Based Visual System Design'
 subtitle: 'Different routes, different moods'
 description: 'How Anglefeint maps visual atmospheres to reading stages without breaking content focus.'
 pubDate: '2026-03-03'
-updatedDate: '2026-09-19'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
 aiState: 'stable'
-aiLatencyMs: 171
-aiConfidence: 0.95
-wordCount: 700
-tokenCount: 1080
+updatedDate: '2026-11-14'
 ---
 
-Many blog themes apply one skin across all pages. Anglefeint uses route-based visual mapping.
+Readers do different things on different pages, so routes have distinct atmospheres:
 
-- `/<locale>/` : Matrix terminal mood for first impression
-- `/<locale>/blog/` : cyber archive mood for browsing
-- `/<locale>/blog/<slug>/` : AI reading interface for long-form focus
-- `/<locale>/about/` : hacker terminal profile style
+- Home: Matrix for the first impression.
+- Blog List and tags: Cyberpunk for discovery.
+- Articles: AI for long-form reading.
+- About: Hacker for the author and tools.
+- Fragments: the Cyberpunk browsing atmosphere.
+- Decoder Lab: local decoding tools with a network background.
 
-With the default `i18n.routing.defaultLocalePrefix: 'always'`, `/` redirects to the default locale homepage (initially `/en/`). With `'never'`, only the default locale homepage moves to `/`; blog and About routes remain localized. About requires `theme.enableAboutPage: true`. When tags are enabled, `/<locale>/tags/` and tag result pages share the Cyber atmosphere.
+By default, Home has a language prefix and `/` redirects to the default-language home, initially `/en/`. `defaultLocalePrefix: 'never'` changes only that home; blog and other routes keep their prefixes.
 
-The core principle is simple: background supports reading, not the other way around.
+About, Decoder, tags and Fragments have independent switches. Fragments is disabled by default. The reference explains their settings.
 
-Each route has a clear objective in the reading journey. Home builds identity, blog list improves exploration, article pages prioritize the text surface, and About provides context.
-
-This route-level strategy keeps visual identity strong while maintaining a clear content hierarchy.
+Read next: [Anglefeint Architecture: Why the Four-Layer Composition Prioritizes Lightweight Runtime, Safer Upgrades, and Long-Term Reusability for Real Projects](/en/blog/architecture-of-anglefeint/) · [Configuration Reference: Languages, URLs, Messages and Fallback](/en/blog/config-languages/)

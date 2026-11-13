@@ -7,17 +7,13 @@ heroImage: ../../../assets/blog/default-covers/hacker-01.webp
 aiModel: anglefeint-core
 aiMode: narrative
 aiState: stable
-aiLatencyMs: 129
-aiConfidence: 0.98
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-A página Sobre adota deliberadamente a cultura hacker. Ela expressa uma maneira de pensar: curiosidade, atenção ao sistema, domínio dos comandos e cuidado com o trabalho.
+About apresenta o autor com estética Hacker: terminal, janelas e ferramentas interativas dão à apresentação o caráter de um espaço de criação.
 
-A IA não elimina o papel de quem desenvolve. Ele evolui: coordenamos ferramentas, definimos limites e construímos sistemas confiáveis com componentes probabilísticos.
+Texto e barra aparecem desde o início. Controles, terminal virtual e ferramentas têm comportamentos separados. Arquivos e comandos pertencem ao ambiente virtual somente leitura do site, sem acesso ao sistema de arquivos real do visitante.
 
-Elementos de terminal, sinais de estado e módulos interativos à direita mostram essa postura. A interface é apresentação pessoal e demonstração de cuidado.
+Preserva a curiosidade da linha de comando. Você pode mudar apresentação, contatos e módulos. Seu primeiro propósito é ajudar os leitores a conhecer você.
 
-Respeitamos o código como meio de expressão, trabalhamos com IA sem abrir mão do julgamento e tratamos o discernimento de engenharia como qualidade de produto.
-
-Essa atmosfera encerra o percurso com uma convicção: pessoas que entendem sistemas continuarão centrais na próxima onda.
+Continue lendo: [Referência de configuração: About](/pt-br/blog/config-about/) · [Referência de configuração: avisos do terminal e leitor somente leitura](/pt-br/blog/config-terminal/)

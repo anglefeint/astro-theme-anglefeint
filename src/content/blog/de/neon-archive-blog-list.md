@@ -7,17 +7,13 @@ heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 aiModel: anglefeint-core
 aiMode: narrative
 aiState: stable
-aiLatencyMs: 131
-aiConfidence: 0.98
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-Eine Liste gilt oft als neutrales Archiv. Wir behandeln sie wie eine Straße.
+In Blog List überfliegen Leser Titel und Titelbilder, um die nächste Lektüre zu wählen. Wir stellen uns eine Neonstraße im Regen vor: Lichtstrahlen, Regen und leuchtende Kanten schaffen Cyberpunk; Karten bleiben lesbare Schilder.
 
-Die Gestaltung orientiert sich an Blade Runner und der räumlichen Dichte von Cyberpunk 2077: nasse Reflexionen, geschichteter Nebel, Neonkontraste und bewegtes Licht.
+Titelbilder, Titel und Zusammenfassungen helfen bei der Auswahl, Paginierung ordnet weitere Artikel. Aktivierte Tags teilen diese Atmosphäre. Titelbilder nutzen vorab erzeugte Größen, damit der Browser passend zum Layout wählen kann.
 
-Hier entscheiden Leser: Sie überfliegen Titel, vergleichen Zusammenhänge und wählen ihr nächstes Ziel. Eine kontrollierte Atmosphäre unterstützt die Orientierung.
+Entdecken steht im Mittelpunkt. Der Hintergrund bleibt präsent, Karteninhalt und Interaktionszustände bleiben klar. Listengröße, Titelbilder und Tags erklärt das Lexikon.
 
-Lesbare Typografie, Tiefe ohne Fokusverlust und flüssige Effekte sind das Ziel. Karten und Seitennavigation werden zum begehbaren Korridor aus Schildern, Regen und Leuchten.
-
-Diese Bildsprache spricht auch über technische Beschleunigung, Anpassung und Identität in einer durch Oberflächen vermittelten Welt. Sie unterstützt die Entdeckung von Inhalten.
+Weiterlesen: [Konfigurationsverzeichnis: Blog List und Taglisten](/de/blog/config-blog-list/)

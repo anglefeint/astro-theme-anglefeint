@@ -5,10 +5,13 @@ description: 'Decoder Lab würdigt Beiträge der Cypherpunks zur Menschheit und 
 pubDate: '2026-11-04'
 heroImage: '../../../assets/blog/default-covers/hacker-02.webp'
 tags: ['Cypherpunk', 'Decoder Lab', 'Anglefeint']
+updatedDate: '2026-11-14'
 ---
 
-Ich habe Decoder Lab zuerst geschaffen, um die Beiträge der Cypherpunks und Wegbereiter digitaler Freiheit zur Menschheit zu würdigen: Ihre Ideen und ihr Code haben private Kommunikation, Privatsphäre und individuelle Freiheit sowie digitales Geld vorangebracht und mehr Menschen Werkzeuge zum Schutz von Informationen und zur selbstbestimmten Zusammenarbeit gegeben.
+Decoder Lab würdigt Cypherpunks und Wegbereiter digitaler Freiheit mit praktischen Werkzeugen zu Verschlüsselung, Privatsphäre und selbstbestimmter Zusammenarbeit.
 
-Diese Würdigung soll auch praktisch nützen, weshalb Textdekodierung, die Analyse unterstützter Token-Aufrufe und Adressformatprüfungen direkt im Browser laufen, ohne Wallet-Verbindung, API-Schlüssel oder RPC, passend zu den Terminal- und Netzwerkmotiven des Themes.
+Es bietet Textdecodierung, Analyse unterstützter Token-Aufrufe und Adressformatprüfungen. Alles läuft lokal im Browser, ohne Wallet, API Key oder RPC. Ein gültiges Format belegt weder Gültigkeit auf der Blockchain noch Guthaben oder Sicherheit.
 
-Alle Quellen-URLs unten im [Decoder Lab](/de/decoder/) lassen sich über `i18n.locales.<code>.messages.decoderPage.readings.links` in `src/site.config.ts` ändern: Mit title und href pro Eintrag ersetzen Sie die gesamte Liste durch eigene Empfehlungen, ein leeres Array blendet sie aus.
+Leseempfehlungen lassen sich ersetzen oder ausblenden. Die eigene Seite und der Werkzeugeinstieg in About haben getrennte Einstellungen. Eingaben und Konfiguration beschreibt das Lexikon.
+
+Weiterlesen: [Konfigurationsverzeichnis: Decoder](/de/blog/config-decoder/)

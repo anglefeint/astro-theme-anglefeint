@@ -7,22 +7,18 @@ heroImage: ../../../assets/blog/default-covers/ai-02.webp
 aiModel: anglefeint-core
 aiMode: analysis
 aiState: stable
-aiLatencyMs: 168
-aiConfidence: 0.96
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-A arquitetura veio antes do acabamento visual. Uma estrutura pouco clara torna cada recurso novo mais caro.
+O Anglefeint combina quatro responsabilidades:
 
-- ThemeFrame: estrutura compartilhada e moldura global.
-- Shell: atmosfera e envoltório visual de cada rota.
-- Layout: composição da estrutura da página.
-- Page: conteúdo e dados da rota.
+- ThemeFrame: documento, SEO, navegação, rodapé e música compartilhados.
+- Shell: estilos e atmosfera da página.
+- Layout: disposição do texto, capas e áreas auxiliares.
+- Page: leitura de conteúdo e configuração, e composição.
 
-Essa separação permite mudar estilo e conteúdo de forma independente. A implementação compartilhada fica no pacote @anglefeint/astro-theme, enquanto o starter mantém conteúdo e configuração. Atualizações compatíveis podem seguir pelo pacote, reduzindo cópias manuais e conflitos.
+Não é obrigatório aninhar quatro componentes iguais em toda página. A estrutura comum oferece consistência; cada página mantém seus dados e interações.
 
-site.config.ts concentra a configuração pública. Os adaptadores continuam gerados ou sincronizados, para que quem só quer publicar não precise procurar opções por muitos arquivos.
+Rotas padrão, valores iniciais e implementação pertencem a `@anglefeint/astro-theme`. O starter mantém artigos, recursos, `src/site.config.ts`, páginas próprias e ajustes de implantação. Atualizar não exige copiar páginas padrão. A configuração tem uma entrada; artigos e Fragments ficam em seus diretórios.
 
-O resultado é uma escolha prática: páginas leves, comportamento onde necessário, menos acoplamento entre visual, rotas e conteúdo, e componentes reutilizáveis para novas páginas.
-
-Expressão criativa na superfície e estabilidade operacional por baixo tornam o tema útil além da demonstração.
+Continue lendo: [Design visual por rota](/pt-br/blog/route-visual-system-design/) · [Referência de configuração: identidade, navegação e rodapé](/pt-br/blog/config-site-chrome/)

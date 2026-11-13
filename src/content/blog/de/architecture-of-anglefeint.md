@@ -7,22 +7,18 @@ heroImage: ../../../assets/blog/default-covers/ai-02.webp
 aiModel: anglefeint-core
 aiMode: analysis
 aiState: stable
-aiLatencyMs: 168
-aiConfidence: 0.96
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-Die Architektur stand vor der visuellen Ausarbeitung fest. Unklare Strukturen machen jede neue Funktion teurer.
+Anglefeint kombiniert vier Aufgabenbereiche:
 
-- ThemeFrame: gemeinsamer Rahmen und globale Seitenhülle.
-- Shell: Atmosphäre und visuelle Hülle einer Route.
-- Layout: Zusammenstellung der Seitenstruktur.
-- Page: Inhalte und Routendaten.
+- ThemeFrame: gemeinsames Dokument, SEO, Navigation, Footer und Musik.
+- Shell: seitenspezifische Stile und Hintergrund.
+- Layout: Anordnung von Text, Titelbildern und ergänzenden Bereichen.
+- Page: Inhalte und Konfiguration lesen, die Seite zusammensetzen.
 
-So können Stil und Inhalt unabhängig wachsen. Gemeinsame Implementierung liegt in @anglefeint/astro-theme, Inhalte und Konfiguration bleiben im Starter. Kompatible Änderungen lassen sich über das Paket aktualisieren, mit weniger manuellen Kopien und Konflikten.
+Es ist keine Pflicht, auf jeder Seite dieselben vier Komponenten zu verschachteln. Gemeinsame Struktur sorgt für Konsistenz; Seiten behalten eigene Daten und Interaktionen.
 
-site.config.ts bündelt die öffentlichen Einstellungen. Adapter bleiben generiert oder synchronisiert, damit Nutzer nicht verstreute Dateien durchsuchen müssen.
+Standardrouten, Vorgaben und Implementierung gehören zu `@anglefeint/astro-theme`. Der Starter behält Artikel, Medien, `src/site.config.ts`, eigene Seiten und Deployment-Einstellungen. Updates erfordern kein Kopieren von Standardseiten. Die Konfiguration hat einen Einstiegspunkt; Artikel und Fragments bleiben in ihren Inhaltsverzeichnissen.
 
-Das bringt schlanke Seiten, Verhalten nur dort, wo es gebraucht wird, geringe Kopplung zwischen Gestaltung, Routing und Inhalt sowie wiederverwendbare Bausteine für neue Seiten.
-
-Kreativer Ausdruck an der Oberfläche und betriebliche Stabilität darunter machen ein Theme auch jenseits der Demo brauchbar.
+Weiterlesen: [Visuelle Gestaltung nach Route](/de/blog/route-visual-system-design/) · [Konfigurationsverzeichnis: Website, Navigation, soziale Links und Fußzeile](/de/blog/config-site-chrome/)

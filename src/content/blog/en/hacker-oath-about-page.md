@@ -7,24 +7,13 @@ heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'narrative'
 aiState: 'stable'
-aiLatencyMs: 129
-aiConfidence: 0.98
-wordCount: 346
-tokenCount: 834
+updatedDate: '2026-11-14'
 ---
 
-Our About page is intentionally hacker-themed.
+About introduces the author through Hacker aesthetics: terminal text, windows and interactive tools give a personal introduction the character of a builder’s workspace.
 
-Not because "hacker" is fashionable, but because it still describes how many of us think: command-first, system-level, curious, and uncompromising about craft.
+Prose and the window bar appear immediately. Window controls, the virtual terminal and optional tools have separate behaviors. Terminal files and commands belong to the site’s read-only virtual environment; they do not access the visitor’s real filesystem.
 
-In an AI-heavy era, the role of developers does not disappear. It evolves. We orchestrate tools, define constraints, and build reliable systems out of probabilistic components.
+It preserves the curiosity of command-line culture. Authors can change their introduction, contacts and module switches. Its first purpose is still to help readers get to know you.
 
-So the page uses terminal motifs, status motion, and interactive right-side modules to express that mindset. The interface is both profile and proof.
-
-What this page says is simple:
-
-- we respect code as a medium,
-- we work with AI, not under AI,
-- we treat engineering taste as part of product quality.
-
-The hacker atmosphere is our self-recognition layer. It closes the route journey with a clear belief: builders who understand systems will remain central in the next wave.
+Read next: [Configuration Reference: About](/en/blog/config-about/) · [Configuration Reference: Terminal Prompts and Read-Only Reader](/en/blog/config-terminal/)

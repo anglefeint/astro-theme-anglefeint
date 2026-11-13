@@ -62,6 +62,7 @@ export async function collectCoverSources({
   srcDir,
   publicDir = path.join(root, 'public'),
   base = '/',
+  fragmentsEnabled = true,
 }) {
   const requestedRoot = path.resolve(root),
     requestedSrc = path.resolve(srcDir);
@@ -95,7 +96,9 @@ export async function collectCoverSources({
     sources.set(key, actual);
     posts[slash(path.relative(root, file))] = key;
   }
-  for (const file of await filesIn(path.join(srcDir, 'content/fragments'))) {
+  for (const file of fragmentsEnabled
+    ? await filesIn(path.join(srcDir, 'content/fragments'))
+    : []) {
     if (!/\.md$/i.test(file)) continue;
     const images = {};
     for (const src of fragmentImageReferences(await readFile(file, 'utf8')).references) {
@@ -180,8 +183,9 @@ export async function prepareCovers({
   publicDir = path.join(root, 'public'),
   base = '/',
   check = false,
+  fragmentsEnabled = true,
 } = {}) {
-  const inventory = await collectCoverSources({ root, srcDir, publicDir, base });
+  const inventory = await collectCoverSources({ root, srcDir, publicDir, base, fragmentsEnabled });
   root = inventory.root;
   srcDir = inventory.srcDir;
   const directory = path.join(srcDir, COVER_DIRECTORY),

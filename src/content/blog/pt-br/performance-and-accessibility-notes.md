@@ -7,15 +7,13 @@ heroImage: ../../../assets/blog/default-covers/ai-03.webp
 aiModel: anglefeint-core
 aiMode: analysis
 aiState: stable
-aiLatencyMs: 173
-aiConfidence: 0.94
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-Um tema visual precisa ter personalidade e continuar útil para textos longos.
+A expressão cinematográfica deve conviver com leitura prolongada. Queremos manter chuva de código, fachos de neon e redes com custo razoável.
 
-No Anglefeint, a atmosfera apoia a leitura; a superfície do artigo continua sendo o plano principal de informação.
+Texto e efeitos separam responsabilidades: o texto está no HTML, imagens têm dimensões e recursos responsivos e os módulos gerenciam eventos, temporizadores e limpeza. Efeitos compatíveis com movimento reduzido seguem a preferência do sistema; os detalhes variam por módulo.
 
-Os efeitos são agrupados pela responsabilidade de cada rota. Camadas reutilizáveis tornam o comportamento previsível. A estrutura do conteúdo é preservada entre idiomas.
+Desempenho e acessibilidade dependem da página, do dispositivo e do conteúdo. Uma pontuação não garante todos os artigos. O leitor deve poder ler, operar e sair; o autor, manter o site.
 
-Queremos fluxo de leitura consistente e identidade marcante, sem transformar páginas em simples vitrines. Responsabilidades claras permitem combinar expressão visual e manutenção.
+Continue lendo: [Referência de configuração: página inicial](/pt-br/blog/config-home/) · [Referência de configuração: detalhes da publicação](/pt-br/blog/config-article/)

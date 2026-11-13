@@ -12,6 +12,36 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-14 Publishing guides, design articles and 0.36.1 preparation
+
+以 main `91877fe` 之后的当前工作区为核对范围。运行时七项修复沿配置入口、图片集成/CLI、文章路径/分享图和效果生命周期追踪，责任说明落在 ARCHITECTURE、BLOG_COVER_ASSETS、REUSABLE_EFFECTS、VISUAL_SYSTEMS。九语 README 保留首次安装、默认 CLI、写作、部署、升级和预览图；八篇教程与十四篇配置字典说明实际代码，不要求读者回 README 查细节，分发模板按 manifest 保持一致。
+
+旧文章每语言保留十篇，各自保持职责和 slug；欢迎文章改为八篇教程与字典入口，保留独立架构/路由/五篇页面工具设计短文。删除三篇重复或过时文章：升级模型、Hello World、社区长欢迎词；不清理素材，不改变个人博客文章。旧文手填的 wordCount/tokenCount 和已不展示的 latency/confidence 示例值移除，恢复自动统计。欢迎文章是 starter 的直接源，不新增重复模板；其他设计文章不进入 starter。
+
+本次准备 0.36.1：将相关字典/图片教程的未发布提示收敛到明确的 0.36.1 与 0.36.0 边界，更新 CHANGELOG、UPGRADING 和版本索引。默认流程、公开配置字段与消费者文件所有权不变。维护/发布政策、agent 入口和历史发布记录无需重写；历史审计中的旧命令只作为当时记录保留，不是当前操作入口。
+
+选定检查与交付范围见 [0.36.1 源码记录](releases/0.36.1.md)。本节记录文档处置，不预先声称技术检查或发布成功；新执行结果、源码/npm/starter/公告身份及阶段计时保存在会话证据与最终 GitHub Release。demo 验收仍由用户负责。
+
+## 2026-11-14 Article motion preferences and build-scoped content index
+
+继续修复已核实的第六、七项。文章脚本将复制、章节链接、图片预览、阅读进度保留在页面作用域；独立 motion 模块监听系统偏好，只销毁并重建封面、网络、Red Queen 和依赖偏好的交互组。旧 idle/load/timer 工作取消，pageshow 复核缓存页面期间可能错过的设置变化；最终退出移除监听。Red Queen 的减弱动画隐藏状态在销毁时恢复，保证恢复正常偏好后能重新显示。没有改素材、CSS、正常启动延迟或公开配置。
+
+标准文章路由通过纯函数 article-paths 在一次数据准备中建立语言分组、ID 集合和 slug 译文映射；每组只排序一次，用最新四篇候选排除自身后保留原有三篇推荐。菜单缺译文仍回目标语言列表，SEO 只列实际存在的已启用译文。两个链接策略分别保留；路由直接给 BlogPost 传入现有 menu/SEO 属性，避免渲染阶段再扫描集合。独立/自定义 BlogPost 的自动发现及显式空映射规则不变。没有全局内容缓存，后续调用随内容或语言变化重新建立数据。
+
+文档定点更新 ARCHITECTURE、REUSABLE_EFFECTS、VISUAL_SYSTEMS 与 Unreleased changelog；九语文章字典说明实时偏好行为，并逐字同步 starter 模板。总入口、其他字典、CLI/README、维护流程和历史发布记录无相关契约变化，不作重复改写。运行时新模块随主题包目录分发，不复制到个人 starter；包文件检查补齐必需路径。
+
+28 项选定测试通过，覆盖偏好双向切换、迟到回调取消、idle/load 两种启动方式、缓存恢复、失败隔离、Red Queen 可见性恢复、推荐顺序/同日稳定排序、嵌套 Unicode slug、缺失译文、菜单与 SEO 差异、内容更新及 starter 一致性。3,000 篇模拟集合只遍历输入一次，slug 与译文路径计算次数随输入/唯一 slug 线性增长；这不是实际构建耗时基准。类型检查 0 errors/0 warnings、2 条既有 hints；定点 ESLint 和包文件检查通过。一次主工程构建成功生成 498 页。未运行浏览器/截图、全量套件或线上验收，未改版本、提交、推送或发布。
+
+## 2026-11-14 Reliability fixes: metadata, optional images and media teardown
+
+按用户确认，仅修复五项已核实问题：文章页与分享图端点共用作者归一化；关闭 Fragments 后图片扫描、dev 更新、build 校验和 CLI 准备遵守同一开关；Red Queen 独立管理解码器与迟到帧并限制失败重试；博客每页数量在配置入口与运行时适配器验证为正的安全整数；首页走廊预览清除失败模块缓存并忽略过期激活的失败。没有更换素材、CSS 或正常播放参数，也没有新增配置字段、改变默认语言/CLI 用法。动态减弱动画监听和文章构建遍历优化不在本轮范围。
+
+模块边界落在 utils/article-author、utils/blog-pagination、covers/project 和 effects/red-queen/decoder-pool。图片 collector 不自行加载项目配置；根 integration 只传已有开关，不接管图片状态。正常分享图、默认分页 10、原图/旧派生文件保留和成功模块复用均保留。Red Queen 的资源释放断言来自模拟解码器测试，不冒充浏览器内存测量或视觉验收。
+
+文档同步 ARCHITECTURE、BLOG_COVER_ASSETS、REUSABLE_EFFECTS、VISUAL_SYSTEMS 和 Unreleased changelog；九语 config-blog-list、config-fragments 与图片教程共 27 篇定点更新，并逐字同步 starter 模板。README 的命令、首次流程与预览图保持原样；历史发布记录、维护政策和素材归档不回写。新增模块由包目录自动分发，打包检查补充其必需路径，不复制到个人项目。
+
+33 项选定测试通过，涵盖实际分享图端点、非法分页、关闭/重开 Fragments、真实 CLI 的只读图片检查、解码失败/超时/迟到帧、预览失败重试、已有配置及 starter 模板一致性。类型检查 0 errors/0 warnings、2 条既有 hints；定点 ESLint、包文件检查和文档元数据检查通过。仅运行一次主工程构建，498 页成功。未运行全量单元套件、浏览器/截图、线上服务或部署检查；没有版本升级、提交、推送或发布。
+
 ## 2026-11-13 Release handoff, announcement orchestration and timing
 
 以已发布 0.36.0 的 main `903f2a2182adc3586d20e35376e5e050e857c4c0` 为基线，仅调整维护工具和流程。新增 release:flow 的 source/announce 两个默认计划入口：source 在共享 session/lock 内执行选定检查和既有 npm 前置机制，接正常提交钩子、提交树核对、结构化 starter 预检、推送核对及单次上传/下载验证；announce 从已审阅的 notes/receipt 重新核对身份后接精确源 tag、Release 和原完整回读。没有嵌套调用持锁 CLI，没有缓存历史通过结果；上传已接受后仍只读恢复，不能重跑 source 上传。原 prepare/verify 保持只读，starter 的安装审计/doctor/build 未削减。

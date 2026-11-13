@@ -7,22 +7,18 @@ heroImage: ../../../assets/blog/default-covers/ai-02.webp
 aiModel: anglefeint-core
 aiMode: analysis
 aiState: stable
-aiLatencyMs: 168
-aiConfidence: 0.96
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-我們先決定架構，再打磨視覺。結構不清楚，每增加一個功能就會更昂貴。
+Anglefeint 的四層組合是職責劃分：
 
-- ThemeFrame：共用框架與全域頁面外殼。
-- Shell：路由氛圍與視覺包裝。
-- Layout：頁面結構的組合。
-- Page：內容與路由資料。
+- ThemeFrame：共用文件、SEO、導覽、頁尾和音樂。
+- Shell：選擇頁面樣式與背景氛圍。
+- Layout：組織本文、封面和輔助區域。
+- Page：讀取內容與設定，再組合頁面。
 
-這讓樣式與內容能獨立演進。共用實作放在 @anglefeint/astro-theme，starter 保留內容與設定。相容的更新可透過套件進行，減少手動複製與合併衝突。
+它不要求每頁逐層巢狀相同元件。共用結構負責一致性，頁面保留各自的資料與互動。
 
-site.config.ts 集中使用者設定，介接檔則維持產生或同步，讓只想穩定發布的人不必在散落檔案中尋找選項。
+標準路由、預設值和實作由 `@anglefeint/astro-theme` 提供；starter 保留文章、素材、`src/site.config.ts`、自訂頁面和部署設定。更新不必複製標準頁面。設定集中在一個入口，文章與碎片仍在各自的內容目錄維護。
 
-實際收益包括輕量頁面、只在需要處附加行為、視覺與路由及內容之間的低耦合，以及可用於新頁面的共用元件。
-
-表層保有創作表達，底層維持運作穩定，主題才不會只適合展示。
+延伸閱讀：[依路由設計視覺系統](/zh-hant/blog/route-visual-system-design/) · [設定字典：網站名稱、網域、公共導覽、社交和頁尾](/zh-hant/blog/config-site-chrome/)

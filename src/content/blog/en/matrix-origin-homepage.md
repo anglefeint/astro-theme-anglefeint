@@ -7,24 +7,13 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'narrative'
 aiState: 'stable'
-aiLatencyMs: 126
-aiConfidence: 0.98
-wordCount: 320
-tokenCount: 780
+updatedDate: '2026-11-14'
 ---
 
-When someone opens a site, they do not read first. They feel first.
+Home is an opening scene. Matrix-green code rain, terminal text and glowing borders make its identity recognizable on arrival. Cinema inspires the atmosphere; the page introduces the site, its author and recent content.
 
-That is why our homepage starts with a Matrix atmosphere. Green code, terminal rhythm, scanline texture, and controlled noise are not decoration for us. They are a statement: this project is built for people who still like systems, tools, and signal.
+An opening also needs a next step. Links lead to articles. When Fragments is enabled, the pixel avatar opens previews of the latest three entries and a link to the full feed. Avatar and window are separate components, keeping previews outside the main home panel.
 
-The visual language comes from a familiar source, but the goal is not nostalgia alone. The goal is instant recognition. In one screen, we want users to know this is not a generic blog shell.
+Color, rhythm and interaction build its identity. Readers can still select text, follow links and explore.
 
-The homepage acts like a handshake protocol:
-
-- enter with uncertainty,
-- receive a clear identity pulse,
-- continue with intent.
-
-In product terms, this is positioning. In creative terms, this is worldbuilding. In engineering terms, this is a stable first scene that can carry the rest of the route-specific atmospheres.
-
-Matrix is our prologue.
+Read next: [Configuration Reference: Homepage](/en/blog/config-home/) · [Configuration Reference: Fragments](/en/blog/config-fragments/)

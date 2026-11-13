@@ -7,17 +7,13 @@ heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 aiModel: anglefeint-core
 aiMode: narrative
 aiState: stable
-aiLatencyMs: 131
-aiConfidence: 0.98
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-Uma lista costuma ser tratada como arquivo neutro. Nós a tratamos como uma rua.
+Blog List é onde percorrer títulos e capas para escolher a próxima leitura. Imaginamos uma rua de neon sob chuva: fachos de luz, chuva e bordas brilhantes criam Cyberpunk; os cartões são placas legíveis.
 
-A direção visual se inspira no clima de Blade Runner e na densidade espacial de Cyberpunk 2077: reflexos molhados, névoa em camadas, contrastes de neon e luz em movimento.
+Capas, títulos e resumos orientam; a paginação organiza mais artigos. Tags ativadas compartilham a atmosfera. As capas usam tamanhos gerados previamente para o navegador escolher conforme o layout.
 
-É aqui que o leitor escolhe: examina títulos, compara contextos e decide o próximo destino. Uma atmosfera bem controlada ajuda a orientação.
+A descoberta é a prioridade. O fundo mantém sua presença e os cartões deixam claros conteúdo e estados de interação. Quantidade, capas e tags estão no dicionário.
 
-Buscamos tipografia legível, profundidade sem perder foco e efeitos que preservem a fluidez. Cartões e paginação passam a formar um corredor navegável de sinais, chuva e brilho.
-
-Essa linguagem também abre uma conversa sobre aceleração tecnológica, adaptação e identidade em um mundo mediado por interfaces. É uma experiência ambiental a serviço da descoberta de conteúdo.
+Continue lendo: [Referência de configuração: Blog List e listas de tags](/pt-br/blog/config-blog-list/)

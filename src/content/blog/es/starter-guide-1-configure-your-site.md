@@ -1,163 +1,209 @@
 ---
 tags: ['anglefeint', 'starter']
-title: 'Guía 1: Configura tu blog'
-subtitle: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
-description: 'Instala el starter, configura el sitio y los idiomas, sustituye los ejemplos y publica tu blog.'
+title: 'Guía 1: instalar el blog y poner tus datos'
+subtitle: 'Instalación, información personal y flujo predeterminado'
+description: 'Instala Anglefeint, configura tus datos y conoce los pasos iniciales y la actualización.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
-## Contenido legible para la IA
+Esta es la parte 1 de 8. [Consulta el orden completo de los tutoriales](/es/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Busca campos de configuración](/es/blog/config-reference/).
 
-La compilación incluye artículos públicos, Fragments y About habilitados en `/llms.txt`, índices y textos completos por idioma. Las URL Markdown de artículos no cambian. Cada idioma tiene `/es/fragments/index.md` y `/es/about/index.md` (sustituye el idioma). Fragments reúne todas sus páginas públicas y conserva ID, fecha, contenido y enlaces estables `/<locale>/fragments/#ID`. El HTML anuncia su Markdown. Disponible tras `npm run build` y en preview; publica todo `dist/`.
+Al terminar, podrás abrir el blog en tu equipo, cambiar el nombre del sitio, la presentación de inicio y los datos de contacto, y localizar dónde escribir tu primera entrada. La música, los comentarios y la personalización de páginas pueden esperar hasta que los necesites.
 
-About exporta biografía pública, contactos y el panel de texto AI accesible; excluye configuración del terminal, herramientas y decoración. No exporta comentarios. Excluye páginas/idiomas desactivados, contenido eliminado, noindex y canonical externos; al recompilar limpia archivos generados y enlaces obsoletos. Protege archivos del usuario y detiene la compilación si hay conflictos. Los suplementos del sitio/idioma se aplican a todos los documentos. JSON-LD incluye el idioma; About usa AboutPage. No requiere nueva configuración, servidor ni biblioteca UI, ni garantiza indexación o citas de IA.
+Si ya tienes un proyecto Anglefeint, modifica ese proyecto. Para actualizar el tema, utiliza «Actualizar un proyecto existente» más abajo; no necesitas instalarlo otra vez.
 
-## Empieza por lo esencial
+<a id="tutorial-order"></a>
 
-Esta serie corresponde al starter actual y explica la puesta en marcha, la escritura y las funciones opcionales. No necesitas conocer todos los ajustes para empezar. Sustituye la identidad del sitio y el contenido, y conserva los demás valores predeterminados. Estas guías son artículos normales: puedes probar su índice, la copia de código y la búsqueda.
+## ¿En qué orden debo leer los ocho tutoriales?
 
-## 1. Instala y abre el sitio localmente
+Para una primera instalación, sigue este orden. Fragments, los comentarios y los cambios de idioma son opcionales; instalar el blog no exige activarlos. El idioma de la documentación no determina el idioma predeterminado del sitio. Consulta la sección de idiomas cuando quieras cambiarlo. Para buscar un campo concreto después, abre el [índice de configuración](/es/blog/config-reference/).
 
-Con Node.js 22.12.0 o posterior, ejecuta:
+| Orden | Tutorial                                                                                                 | Qué podrás hacer después                                                                    |
+| ----- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| 1     | [Instalar el blog y poner tus datos](/es/blog/starter-guide-1-configure-your-site/)                      | Ejecutar el blog, sustituir los datos personales y entender el flujo predeterminado.        |
+| 2     | [Escribir tu primera entrada](/es/blog/starter-guide-2-languages-and-routing/)                           | Crear entradas, definir fechas y usar encabezados, etiquetas, código y fórmulas.            |
+| 3     | [Añadir imágenes a entradas y fragments](/es/blog/starter-guide-images/)                                 | Añadir originales, elegir portadas, preparar imágenes y guardar los derivados en Git.       |
+| 4     | [Publicar un fragment](/es/blog/starter-guide-5-fragments/)                                              | Crear un fragment, conservar su ID estable y añadir imágenes y código.                      |
+| 5     | [Ajustar las páginas y funciones a tu gusto](/es/blog/starter-guide-3-comments-about-and-theme-toggles/) | Cambiar contenido, música y paginación, y crear páginas personalizadas.                     |
+| 6     | [Permitir comentarios de lectores](/es/blog/starter-guide-4-giscus-comments/)                            | Conectar Giscus y elegir cómo comparten discusiones las entradas, fragments y traducciones. |
+| 7     | [Ofrecer el blog en más idiomas](/es/blog/starter-guide-languages/)                                      | Elegir idiomas, ajustar las direcciones de inicio y añadir traducciones.                    |
+| 8     | [Publicar el blog en tu dominio](/es/blog/starter-guide-deployment/)                                     | Comprobar los archivos compilados, desplegarlos completos y conectar un dominio.            |
+
+Los enlaces al principio y al final de cada tutorial vuelven aquí para que puedas continuar o buscar un tema concreto.
+
+## 1. Instalar y abrir el blog
+
+Prepara Node.js 22.12.0 o posterior y npm. Ejecuta estos comandos en una terminal y comprueba que ambos muestran una versión:
+
+```bash
+node --version
+npm --version
+```
+
+Crea el blog en el directorio donde guardas los proyectos. Esto crea `my-blog` sin instalar las dependencias automáticamente:
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
-```
-
-El comando crea `my-blog` sin instalar dependencias. Ejecútalo desde el directorio padre; si cambias el nombre, actualiza tanto el comando como cd. Después instala e inicia:
-
-```bash
 cd my-blog
 npm install
 npm run dev
 ```
 
-Abre la URL indicada en la terminal; el puerto puede cambiar si está ocupado. Con pnpm, usa el mismo comando de creación y después `pnpm install` y `pnpm dev` en lugar de los comandos npm de instalación e inicio.
+Puedes sustituir `my-blog` por otro nombre; cambia también el comando `cd`. Abre la dirección local que muestra la terminal. No supongas que el puerto es fijo: puede cambiar si está ocupado. Mantén el servidor de desarrollo en ejecución y detenlo con `Ctrl+C`.
 
-## 2. Cambia el nombre, la presentación y los enlaces
+Ejecuta los siguientes comandos desde la raíz del proyecto, el directorio que contiene `package.json`. Al volver a un proyecto existente, entra en ese directorio y ejecuta `npm run dev`. Solo necesitas `npm install` para instalar las dependencias por primera vez o cuando cambien.
 
-Abre `src/site.config.ts`. Conserva sus importaciones y exportaciones y edita el objeto de `defineThemeConfig({...})`. Este es un ejemplo completo de la declaración de configuración: sustituye el dominio, el nombre, los textos y los enlaces.
+Este tutorial utiliza npm. Los proyectos nuevos con pnpm pueden usar `pnpm install` y `pnpm dev`, pero el actualizador automático descrito abajo solo admite proyectos npm. Utiliza un único gestor por proyecto.
+
+## 2. Cambiar la información del sitio y los textos de inicio
+
+El proyecto instalado ya incluye `src/site.config.ts`. Edita ese archivo; no crees otro archivo de configuración ni declares un objeto nuevo. El starter omite `site` y usa los valores del tema. Añade estos campos dentro del `defineThemeConfig({ ... })` existente. Si ya existe `site`, modifica sus campos y conserva el resto de tus ajustes en vez de duplicarlo. Mantén los imports, exports y demás contenido del archivo.
 
 ```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: {
-    title: 'My Blog',
-    description: 'My notes and projects.',
-    url: 'https://example.com',
-    author: 'Your Name',
-    tagline: '',
-  },
-  i18n: {
-    defaultLocale: 'es',
-    locales: {
-      es: {
-        site: { hero: 'Welcome to my blog.' },
-        messages: { siteDescription: 'My notes and projects.' },
-      },
-    },
-  },
-  social: {
-    links: [{ href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' }],
-  },
-});
+site: {
+  title: '小林的博客',
+  description: '记录开发、阅读和生活。',
+  url: 'https://example.com',
+  author: '小林',
+  tagline: '保持好奇，持续记录。',
+},
 ```
 
-`site.title` es el nombre del sitio. En `site.url` indica la URL completa de publicación: afecta a canonical, RSS, sitemap y las direcciones de imágenes para compartir. `site.author` es el autor predeterminado de los artículos y `site.tagline` es el texto del pie.
+Es un fragmento del objeto existente, no un archivo completo nuevo. Sustituye el nombre, los textos y el dominio. No cambia los idiomas predeterminados ni los activos. Pon en `site.url` el dominio público definitivo, por ejemplo `https://your-domain.example`, no la dirección local ni la URL de una entrada. Puedes mantener temporalmente el ejemplo si aún no tienes dominio, pero cámbialo antes del despliegue. El tema espera actualmente publicarse en la raíz de un dominio; establecer solo `base` de Astro no garantiza compatibilidad completa con subdirectorios.
 
-El pie separa el copyright, los créditos del tema/Astro y el texto opcional `site.tagline`, con los iconos sociales debajo. Los créditos siguen el idioma de la página; tu texto se conserva en todos los idiomas. El texto vacío no ocupa espacio y los textos largos se ajustan en móviles. La configuración existente y `PUBLIC_SITE_TAGLINE` siguen funcionando; no hace falta migrar.
+Los campos cumplen estas funciones:
 
-La presentación bajo el título principal de inicio se configura mediante `site.hero` del idioma actual. `site.description` es la descripción general predeterminada, mientras que la metadescripción de inicio da prioridad a `messages.siteDescription` del idioma. Cambiar solo `site.description` no sustituye la presentación visible.
+| Campo              | Función real                                                                                                                                  |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `site.title`       | Nombre global en los títulos de página, navegación, pie y otras salidas; último recurso para el título de inicio si no hay uno independiente. |
+| `site.author`      | Autor predeterminado para entradas sin autor propio.                                                                                          |
+| `site.url`         | Dirección pública para URLs canonical, RSS, sitemap y archivos compartidos.                                                                   |
+| `site.description` | Descripción global de respaldo; el inicio prefiere el valor resuelto de `messages.siteDescription` y solo usa este si está vacío.             |
+| `site.tagline`     | Texto personalizado del pie; `''` lo oculta. Los créditos del tema y Astro tienen un control separado.                                        |
 
-Los iconos sociales admiten `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`. Para una imagen propia, guarda un SVG/PNG/WebP local en `public/icons/` y asigna `iconSrc: "/icons/community.svg"`: tiene prioridad sobre `icon` y conserva sus colores. Omite ambos campos para mostrar texto. Consulta las reglas de rutas y ejemplos en el [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.es.md). Usa `social: { links: [] }` para quitar todos los enlaces. Una lista vacía sigue mostrando tres iconos de muestra sin enlace (Mastodon, Twitter y GitHub) en la cabecera y el pie de página; si la lista contiene elementos, solo se muestran los configurados. Las variables de entorno como `PUBLIC_SITE_TITLE` y `PUBLIC_SITE_URL` tienen prioridad sobre el archivo; compruébalas si un cambio no se refleja.
+### Cambiar opcionalmente los textos de inicio de un idioma
 
-En el starter integrado 0.27+, el paquete del tema lee `PUBLIC_SITE_URL` del `.env` raíz o del entorno de compilación y lo prioriza sobre `site.url` para canonical, RSS, sitemap e imágenes sociales. Reinicia desarrollo o recompila tras cambiarlo. Conserva la integración en `astro.config.mjs`; no hacen falta un resolvedor local de URL ni adapters copiados. Las estructuras anteriores a 0.27 necesitan la migración inicial de la guía de actualización.
-
-## 3. Conserva los idiomas que necesites
-
-Por defecto están activos `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru` y `zh-hant`. El primer ejemplo establece `es` como idioma predeterminado, pero no desactiva los demás. Para usar solo español, integra lo siguiente en tu `i18n` existente y conserva los textos de inicio anteriores:
+Configura la presentación visible y la descripción de metadatos bajo el idioma correspondiente. Este ejemplo utiliza el inicio inglés predeterminado del proyecto. Añade o combina `i18n` dentro del objeto existente; si ya está, modifica sus campos:
 
 ```ts
 i18n: {
-  defaultLocale: 'es',
   locales: {
-    en: { meta: { enabled: false } },
-    ja: { meta: { enabled: false } },
-    ko: { meta: { enabled: false } },
-    es: { meta: { enabled: true } },
-    zh: { meta: { enabled: false } },
-    'pt-br': { meta: { enabled: false } },
-    de: { meta: { enabled: false } },
-    ru: { meta: { enabled: false } },
-    'zh-hant': { meta: { enabled: false } },
+    en: {
+      site: { hero: 'Notes on projects, reading and everyday life.' },
+      messages: { siteDescription: 'Personal projects and learning notes by Lin.' },
+    },
   },
 },
 ```
 
-La configuración se combina recursivamente con los valores predeterminados. Omitir un idioma no lo elimina: hay que indicar `meta.enabled: false`. El idioma predeterminado permanece activo. Estos ajustes controlan el menú y las rutas, pero no traducen artículos ni borran archivos. Abre `/es/` y revisa el selector de idiomas.
+`i18n.locales.en.site.hero` controla la presentación visible bajo el título del inicio inglés; `messages.siteDescription` controla la descripción SEO. Poner `''` en el primero vacía la presentación sin borrar el segundo. Sustituye en por otro código de idioma activo para editar sus textos. Esto no cambia el idioma predeterminado ni traduce los demás.
 
-## 4. Sustituye los ejemplos y escribe tu primer artículo
+El título de inicio usa por defecto el nombre global. Para uno diferente, añade `homeTitle` al mismo `en.site`, conservando `hero`:
 
-Los artículos están en `src/content/blog/<idioma>/`. Cada idioma predeterminado incluye `welcome-to-anglefeint.md` y tres archivos `starter-guide-*.md`, incluida esta guía. Tras hacer una copia de seguridad, puedes eliminar los Markdown de ejemplo que no quieras o conservar las guías como referencia. No borres los directorios de configuración ni imágenes que sigan usando otros artículos.
+```ts
+site: {
+  homeTitle: "Lin's Digital Garden",
+  hero: 'Notes on projects, reading and everyday life.',
+},
+```
+
+Este `site` está dentro de `i18n.locales.en`, no en el `site` superior. `homeTitle` solo cambia el título visible del inicio, no el nombre global de pestañas, navegación, pie ni RSS. Si se omite o está en blanco, se recorre la cadena de respaldo de idiomas antes de usar el nombre global. Consulta la definición completa en el [diccionario de inicio](/es/blog/config-home/#home-title).
+
+### Añadir tus enlaces sociales
+
+Añade o edita `social.links` en el objeto existente y sustituye `yourname` por tu cuenta:
+
+```ts
+social: {
+  links: [{ href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' }],
+},
+```
+
+Cada elemento necesita `href` (destino) y `label` (nombre accesible). `icon` es un nombre opcional de icono integrado. Se admiten `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp` y `line`.
+
+La cabecera y el pie comparten `social.links` en el orden del array. Los enlaces sociales de cabecera se ocultan en pantallas móviles; los del pie permanecen. Los arrays sustituyen toda la lista predeterminada, así que incluye todos los elementos que quieras conservar. Usa `social: { links: [] }` si aún no tienes cuentas. La lista vacía mantiene tres iconos no pulsables de referencia, sin ocultar toda la zona.
+
+### ¿Has cambiado algo y no ves diferencias?
+
+Comprueba si hay sustituciones antiguas en `.env` de la raíz, otros `.env.*` aplicables y el entorno de compilación de tu alojamiento:
+
+- `PUBLIC_SITE_TITLE` sustituye el nombre del sitio.
+- `PUBLIC_SITE_AUTHOR` sustituye el autor predeterminado.
+- `PUBLIC_SITE_URL` sustituye la dirección del sitio.
+- `PUBLIC_SITE_DESCRIPTION` sustituye la descripción global, pero no una descripción de inicio localizada no vacía.
+- `PUBLIC_SITE_TAGLINE` sustituye el texto personalizado del pie.
+
+Elimina las sustituciones innecesarias y usa el archivo de configuración. No necesitas un `.env` solo para usar el tema. Reinicia dev si cambias variables de entorno. Las páginas publicadas exigen recompilar y volver a desplegar; guardar un archivo local no cambia la web pública.
+
+## 3. Mantener los idiomas predeterminados y ajustarlos si hace falta
+
+La configuración inicial activa `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru` y `zh-hant`, con `en` como predeterminado. Visitar `/` redirige a `/en/`. El idioma de la documentación no obliga a cambiar el sitio a chino ni a desactivar otros idiomas antes de crear una entrada.
+
+Para cambiar el predeterminado, conservar solo ciertos idiomas o servir su inicio directamente en `/`, sigue la [parte 7: ofrecer el blog en más idiomas](/es/blog/starter-guide-languages/). Es opcional. Omitir un idioma no lo desactiva: establece explícitamente `meta.enabled: false`. El idioma predeterminado permanece activo. Desactivar un idioma no borra sus entradas.
+
+Consulta tipos, valores y direcciones en el [diccionario de idiomas](/es/blog/config-languages/#registry). El tema no traduce automáticamente entradas ni textos de inicio. Fíjate en qué archivos crea el comando predeterminado de abajo.
+
+## 4. Sustituir los ejemplos por tus entradas
+
+Las entradas están en `src/content/blog/<语言代码>/`. `welcome-to-anglefeint.md`, `starter-guide-*.md` y `config-*.md` son artículos normales del starter: bienvenida, ocho tutoriales y diccionario de configuración. Tras una copia o commit, conserva o elimina contenido por idioma. Borrar bienvenida y tutoriales no elimina el diccionario. No borres imágenes aún referenciadas.
+
+Crea una entrada con el flujo predeterminado:
 
 ```bash
 npm run new-post -- my-first-post
 ```
 
-El comando crea archivos con el mismo nombre para los idiomas activos; no traduce el texto. Edita el título, la descripción y el cuerpo en `src/content/blog/es/my-first-post.md` y visita `/es/blog/my-first-post/`. La guía 2 explica los campos, las imágenes y las etiquetas.
+Sin `--locales` ni `ANGLEFEINT_LOCALES`, crea estructuras equivalentes para todos los idiomas activos: nueve archivos en la configuración inicial. No traduce contenido. Omite los archivos existentes en lugar de sobrescribirlos.
 
-## 5. Comprueba, compila y publica
+Abre `src/content/blog/<语言代码>/my-first-post.md` y edita título, descripción y cuerpo. Su dirección es `/<语言代码>/blog/my-first-post/`. Por ejemplo, el archivo inglés está en en y usa `/en/blog/my-first-post/`; el chino está en zh y usa `/zh/blog/my-first-post/`. Antes de publicar, mueve fuera del directorio de contenido los borradores que no quieras hacer públicos: no se ocultan automáticamente.
 
-Durante el desarrollo usa `npm run dev`. Antes de publicar, ejecuta desde el proyecto:
+Para crear solo un idioma, puedes usar `npm run new-post -- my-first-post --locales zh`; para varios, `--locales en,zh`. Elige el formato que necesites en lugar de ejecutar todos los ejemplos. `--locales` no activa un idioma por sí mismo.
+
+Consulta [escribir y gestionar contenido](/es/blog/starter-guide-2-languages-and-routing/) para campos, portadas, código y fórmulas.
+
+## 5. Confirmar el resultado localmente
+
+Comprueba las páginas de desarrollo: nombre y presentación propios, menú de idiomas correcto, entrada accesible y enlaces sociales reales. Los archivos en otros directorios de idioma solo generan rutas mientras esos idiomas estén activos.
+
+Antes de comprobar la compilación, detén dev con `Ctrl+C` y ejecuta:
 
 ```bash
 npm run doctor
 npm run preview
 ```
 
-`doctor` comprueba el proyecto y lo compila en `dist/`, con el índice de búsqueda y las imágenes sociales predeterminadas. Si termina correctamente, no hace falta ejecutar check ni build otra vez. `preview` muestra ese resultado localmente; no lo publica. Deténlo con Ctrl+C.
+El `doctor` local prepara las imágenes adaptativas ausentes o desactualizadas, ejecuta las comprobaciones Astro y compila. Si About está activo, también verifica su configuración de ejecución. Tras completarlo, no repitas inmediatamente `check` ni `build`. Si falla algo, resuelve el error de terminal y repite `doctor`; no publiques el `dist/` sobrante de una compilación fallida.
 
-En el alojamiento estático, establece `npm run build` como comando de compilación y `dist` como directorio de salida. Cambia antes `site.url` por tu dominio real. Consulta la [guía de despliegue de Astro](https://docs.astro.build/en/guides/deploy/) para conectar el repositorio, configurar el dominio y publicar en tu plataforma. Comprueba después inicio, artículos, cambio de idioma, búsqueda y `/<idioma>/rss.xml`. Cada cambio de contenido o configuración requiere compilar y desplegar de nuevo.
+`preview` sirve la web estática compilada en `dist/`; abre la dirección mostrada. No publica el blog en internet. Prueba la búsqueda en esta vista compilada, pues `dev` no tiene búsqueda real de texto completo. Detén preview con `Ctrl+C`.
 
-Cloudflare es opcional. Consulta la [configuración por plataforma en README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.es.md#deployment), incluida la limitación actual de publicar en la raíz del dominio.
+Para desplegar, usa `npm run build`, salida `dist` y todos los archivos generados. Al añadir o sustituir imágenes locales, ejecuta dev o doctor localmente y guarda en Git los originales y todo `src/assets/blog/covers/`. La compilación de despliegue y doctor en CI validan esos archivos sin generarlos; si faltan o están obsoletos, fallan. Los cambios de contenido o configuración requieren recompilar y desplegar otra vez.
 
-## 6. Recuerda tres reglas de configuración
+## Actualizar un proyecto existente
 
-Mantén una sola clave `theme` y una sola `i18n` en el mismo objeto. Integra los ajustes de cada función en los objetos existentes, sin duplicar claves. Los campos omitidos conservan los valores predeterminados; las matrices, como canciones o enlaces sociales, se sustituyen enteras.
+Omite esta sección en una instalación nueva. En un proyecto existente, guarda primero los cambios, por ejemplo con Git, detén dev y preview y ejecuta desde su raíz original:
 
-En el starter integrado 0.27+, el paquete proporciona páginas estándar, valores predeterminados y funciones de build. Tus ajustes permanecen en `src/site.config.ts`. Actualizar el tema no reescribe artículos, música, imágenes ni páginas propias. Las estructuras anteriores a 0.27 requieren la migración inicial de la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+```bash
+npx @anglefeint/astro-theme@latest upgrade --check
+```
 
-## En esta serie
-
-- [Guía 1: Configura tu blog](/es/blog/starter-guide-1-configure-your-site/)
-- [Guía 2: Escribe y organiza el contenido](/es/blog/starter-guide-2-languages-and-routing/)
-- [Guía 3: Activa y personaliza funciones opcionales](/es/blog/starter-guide-3-comments-about-and-theme-toggles/)
-
----
-
-## Actualizar el tema
-
-El paquete gestiona páginas estándar, valores predeterminados, traducciones y funciones de compilación. Tus artículos, `src/site.config.ts`, música, imágenes y páginas propias permanecen en el proyecto.
-
-En el nuevo starter de integración con npm, ejecuta lo siguiente desde la raíz. Comprueba compatibilidad, guarda los archivos de dependencias, instala una versión exacta y ejecuta doctor. Si falla, restaura los archivos e intenta reinstalar las dependencias anteriores. Publica después con tu proceso habitual; no despliega automáticamente.
+`--check` consulta la versión objetivo y comprueba compatibilidad del proyecto, Node.js y Astro sin modificar archivos, instalar ni compilar. Si termina bien, ejecuta la actualización real:
 
 ```bash
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Los proyectos anteriores a 0.27 necesitan una migración inicial a un starter nuevo. Créalo en otra carpeta, copia artículos y recursos y combina tus ajustes con el nuevo site config. No copies rutas estándar antiguas, adapters ni helpers defaults/schema/runtime. Conserva slugs, rutas de idioma, URL de música e imágenes y ajustes del alojamiento.
+La actualización automática admite starters de integración con npm y `package-lock.json`. `package.json` debe contener `anglefeint.projectSchema: 1` y las páginas estándar deben proceder del paquete del tema. Un lockfile de pnpm, yarn o bun detiene el actualizador; no lo borres para eludir esta protección. Otros gestores deben actualizar dependencias con su gestor original tras revisar compatibilidad y ejecutar doctor. El actualizador automático no ofrece reversión en ese caso.
 
-El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun. `--check` comprueba sin escribir; `--to 0.27.1` elige versión. Consulta la [guía](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) y [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+El actualizador cambia la dependencia del tema y ejecuta doctor sin reescribir entradas, configuración, música, imágenes ni páginas personalizadas. Guarda `package.json` y `package-lock.json` en `.anglefeint/backups/`; no es una copia completa del sitio. Si falla la instalación o doctor, restaura ambos archivos e intenta reinstalar las dependencias anteriores. Si la restauración también falla, resuelve el error y ejecuta correctamente `npm run doctor`. La salida compilada anterior no se restaura: no publiques `dist/` tras un fallo.
 
-Si falla la actualización, no publiques `dist/`: restaurar dependencias no restaura la compilación anterior. Corrige el error y ejecuta `npm run doctor` con éxito antes de desplegar. Con pnpm, revisa la compatibilidad y actualiza manualmente con `pnpm add @anglefeint/astro-theme@latest` y `pnpm run doctor`, conservando tu lockfile.
+Una incompatibilidad de Node.js, Astro o schema detiene la actualización; las migraciones Astro no son automáticas. `--to` elige una versión explícita compatible del tema, pero no admite bajar automáticamente de versión. Consulta los cambios en [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases). Tras actualizar, usa `npm run preview` para revisar el resultado ya compilado y despliega normalmente; no hace falta compilar inmediatamente otra vez.
 
-## Imagen predeterminada y IDs cortos de Fragment (0.33.0+)
+Los esqueletos copiados anteriores a 0.27 no se actualizan en el mismo directorio. Instala un starter nuevo en otro directorio, conserva el proyecto antiguo, migra entradas y recursos y combina los valores personales en el nuevo `src/site.config.ts`. No copies rutas estándar, adaptadores ni helpers antiguos de defaults/schema/runtime. Comprueba slugs, rutas de idioma, música, imágenes, dominio y alojamiento; completa después las verificaciones locales y el despliegue.
 
-Añade site.ogImage a la configuración site existente en src/site.config.ts. Acepta una ruta desde public (/images/share.jpg corresponde a public/images/share.jpg) o una URL HTTPS. Si queda vacío, se usa la imagen Anglefeint incluida de 1200×630. Fragments y todos sus enlaces #ID comparten esta imagen. Las imágenes propias y generadas de los artículos conservan la prioridad; con la generación desactivada, la portada del artículo también precede a la imagen del sitio. Reconstruye y despliega después de cambiarla; las plataformas pueden mantener la vista previa en caché.
+## Navegación de tutoriales y diccionario de configuración
 
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { ogImage: '/images/share.jpg' },
-});
-```
+[Siguiente: escribir tu primera entrada](/es/blog/starter-guide-2-languages-and-routing/) · [Los ocho tutoriales](/es/blog/starter-guide-1-configure-your-site/#tutorial-order).
+
+Campos relacionados: [sitio, redes y pie](/es/blog/config-site-chrome/), [título y presentación de inicio](/es/blog/config-home/), [idiomas](/es/blog/config-languages/). El [índice de configuración](/es/blog/config-reference/) contiene rutas completas, valores y límites.

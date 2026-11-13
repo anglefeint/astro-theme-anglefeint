@@ -1,6 +1,6 @@
 import { mountKeyButton } from '../effects/key-button/key-button.js';
 // Interaction only: scene timing and rendering belong to the shared passage player.
-export function initSignalPreview(signal) {
+export function initSignalPreview(signal, loadPlayer = () => import('./matrix-passage/player.js')) {
   const panel = document.querySelector('.home-signal-monitor');
   const viewport = panel?.querySelector('.home-signal-viewport');
   if (!viewport) return;
@@ -70,7 +70,10 @@ export function initSignalPreview(signal) {
     timer = window.setTimeout(async () => {
       timer = 0;
       try {
-        loading ??= import('./matrix-passage/player.js');
+        loading ??= loadPlayer().catch((error) => {
+          loading = undefined;
+          throw error;
+        });
         const { playPassage } = await loading;
         if (signal.aborted || paused || request !== revision || !interested()) return;
         if (close) close.resume();
@@ -81,6 +84,7 @@ export function initSignalPreview(signal) {
           panel.querySelector('.home-signal-scroll')?.focus({ preventScroll: true });
         if (entrance) entrance.inert = true;
       } catch {
+        if (signal.aborted || request !== revision) return;
         clear();
       }
     }, 800);

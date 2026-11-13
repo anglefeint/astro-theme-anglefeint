@@ -10,40 +10,22 @@ import {
   type Locale,
   blogIdToSlugAnyLocale,
   isLocale,
+  localePath,
 } from '@anglefeint/site-i18n/config';
-import { postsForLocale } from '@anglefeint/site-i18n/posts';
+import { buildArticlePaths } from '../../../utils/article-paths';
 
 export const getStaticPaths = (async () => {
-  const all = await getCollection('blog');
-  return ENABLED_LOCALES.flatMap((locale) => {
-    const localizedPosts = postsForLocale(all, locale);
-    return localizedPosts.map((post) => {
-      const related = localizedPosts
-        .filter((p) => p.id !== post.id)
-        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-        .slice(0, 3);
-      return {
-        params: { lang: locale, slug: blogIdToSlugAnyLocale(post.id) },
-        props: { post, related, locale },
-      };
-    });
+  return buildArticlePaths(await getCollection('blog'), {
+    locales: ENABLED_LOCALES,
+    slugOf: blogIdToSlugAnyLocale,
+    menuPath: alternatePathForLocale,
+    seoPath: localePath,
   });
 }) satisfies GetStaticPaths;
-const { post, related, locale } = Astro.props;
+const { post, related, locale, articleSlug, localeHrefs, seoLocaleHrefs } = Astro.props;
 const lang = (Astro.params.lang ?? locale ?? DEFAULT_LOCALE) as string;
 const resolvedLocale: Locale = isLocale(lang) ? lang : DEFAULT_LOCALE;
 const { Content, headings } = await render(post);
-const allPosts = await getCollection('blog');
-const currentSlug = blogIdToSlugAnyLocale(post.id);
-const localeHrefs = Object.fromEntries(
-  ENABLED_LOCALES.map((targetLocale) => {
-    const targetId = `${targetLocale}/${currentSlug}`;
-    const href = allPosts.some((p) => p.id === targetId)
-      ? alternatePathForLocale(targetLocale, `/blog/${currentSlug}/`)
-      : alternatePathForLocale(targetLocale, '/blog/');
-    return [targetLocale, href];
-  })
-) as Partial<Record<Locale, string>>;
 
 const computed = deriveMetrics(countWords(post.body ?? ''));
 const resolvedData = {
@@ -55,12 +37,13 @@ const resolvedData = {
 ---
 
 <BlogPost
-  articleSlug={currentSlug}
+  articleSlug={articleSlug}
   filePath={post.filePath}
   {...resolvedData}
   headings={headings}
   related={related}
   localeHrefs={localeHrefs}
+  seoLocaleHrefs={seoLocaleHrefs}
 >
   <Content />
 </BlogPost>

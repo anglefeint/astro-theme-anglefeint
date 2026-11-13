@@ -1,23 +1,19 @@
 ---
 title: Por que os artigos usam uma estética de IA
-subtitle: 'Redes neurais, sinais de estado e o monitor Red Queen.'
-description: 'Redes neurais, sinais de estado e o monitor Red Queen.'
+subtitle: 'Texto, redes e Red Queen'
+description: 'Uma interface com fundo de rede, painel OUTPUT e monitor Red Queen.'
 pubDate: '2026-03-04'
 heroImage: ../../../assets/blog/default-covers/ai-02.webp
 aiModel: anglefeint-core
 aiMode: narrative
 aiState: stable
-aiLatencyMs: 118
-aiConfidence: 0.99
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-A página de artigo pede concentração. Sua atmosfera é a de uma interface de IA, em vez de repetir o terminal retrô ou a rua cyberpunk.
+O artigo usa a linguagem de uma sala de controle AI: fundo de rede, OUTPUT e monitor Red Queen ao redor do texto. Expressam interesse por AI e cinema, não chamadas a modelos nem avaliação de credibilidade.
 
-Acreditamos que a IA transformará como as pessoas constroem, decidem e se comunicam. A página sugere esse futuro com estruturas neurais, linguagem de estado de modelos e sinais controlados ao redor do texto, sem tomar seu lugar.
+O texto aparece imediatamente e o painel fica parado. Sumário, cópia de código e prévias de imagens ajudam a ler; rede, faixas luminosas e monitor interativo mantêm a identidade.
 
-À esquerda, um monitor inspirado na Red Queen funciona como um canal simbólico de alerta. A referência à IA biotecnológica lembra que inteligência pode ser elegante, útil e perigosa ao mesmo tempo.
+OUTPUT mostra contagem e tokens estimados do texto, salvo valores manuais. Não são consumo real. Tempo de leitura, latency e confidence não aparecem. Modelo, modo e estado dos exemplos são metadados do autor.
 
-São três camadas: um núcleo estável de leitura, uma interface reativa e efeitos cinematográficos com inicialização controlada. Otimizamos a execução, o tempo e a renderização sem apagar a identidade da cena.
-
-Esta é nossa sala de controle de IA para a leitura longa.
+Continue lendo: [Referência de configuração: detalhes da publicação](/pt-br/blog/config-article/)

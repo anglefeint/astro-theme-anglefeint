@@ -7,23 +7,18 @@ heroImage: '../../../assets/blog/default-covers/ai-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
 aiState: 'stable'
-aiLatencyMs: 168
-aiConfidence: 0.96
-wordCount: 760
-tokenCount: 1180
+updatedDate: '2026-11-14'
 ---
 
-En este tema, la arquitectura se definió antes que el acabado visual. Cuando la estructura no está clara, cada cambio futuro cuesta más.
+Anglefeint combina cuatro responsabilidades:
 
-Anglefeint usa cuatro capas:
+- ThemeFrame: documento, SEO, navegación, pie y música compartidos.
+- Shell: estilos y ambiente de cada página.
+- Layout: disposición del texto, portadas y áreas auxiliares.
+- Page: consulta de contenido y configuración, y composición.
 
-- ThemeFrame: marco común y estructura base
-- Shell: atmósfera visual por ruta
-- Layout: composición estructural de página
-- Page: contenido y datos de ruta
+No obliga a anidar cuatro componentes iguales en cada página. La estructura común aporta coherencia; cada página conserva sus datos e interacciones.
 
-Esta separación permite evolucionar estilo y contenido de forma independiente.
+Rutas estándar, valores predeterminados e implementación pertenecen a `@anglefeint/astro-theme`. El starter conserva artículos, recursos, `src/site.config.ts`, páginas propias y ajustes de despliegue. Actualizar no exige copiar páginas estándar. La configuración tiene una entrada; artículos y Fragments permanecen en sus directorios.
 
-A nivel de repositorio, el núcleo vive en @anglefeint/astro-theme y starter se enfoca en contenido y configuración. Así, la actualización se concentra en el paquete y no en copiar archivos manualmente.
-
-La configuración de usuario se centraliza en site.config.ts. Un solo punto de entrada reduce fricción y facilita el mantenimiento.
+Sigue leyendo: [Diseño visual por rutas](/es/blog/route-visual-system-design/) · [Referencia de configuración: sitio, navegación, redes y pie](/es/blog/config-site-chrome/)

@@ -1,128 +1,211 @@
 ---
 tags: ['anglefeint', 'starter']
-title: 'Guia 5: Publicar fragmentos'
-description: 'Publique pensamentos breves em Markdown, com comentários opcionais em uma janela.'
+title: 'Guia 4: publicar um Fragment'
+subtitle: 'Registre ideias curtas em Markdown, acrescente imagens ou código e compartilhe um link estável; habilite comentários quando precisar.'
+description: 'Da habilitação e criação de Fragments à edição, prévia inicial, paginação, compartilhamento, traduções e comentários Giscus opcionais.'
 pubDate: '2026-11-11'
-heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 updatedDate: '2026-11-13'
+heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
-## Conteúdo legível por IA
+Esta é a parte 4 de 8 do guia inicial. [Veja a ordem completa](/pt-br/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Consulte a referência por campo](/pt-br/blog/config-reference/).
 
-O build inclui artigos públicos, Fragments e About habilitados em `/llms.txt`, índices e textos completos por idioma. As URLs Markdown dos artigos não mudam. Cada idioma tem `/pt-br/fragments/index.md` e `/pt-br/about/index.md` (substitua o idioma). Fragments reúne todas as páginas públicas, preservando ID, data, corpo e links estáveis `/<locale>/fragments/#ID`. O HTML anuncia o Markdown. Disponível após `npm run build` e no preview; publique todo `dist/`.
+Para registrar uma ideia curta, uma imagem ou código, não é preciso escrever um artigo inteiro. Fragments organiza esses registros em uma lista cronológica e oferece uma prévia dos mais recentes na página inicial.
 
-About exporta a biografia pública, contatos e o painel de texto AI acessível; exclui configurações do terminal, ferramentas e decoração. Não exporta comentários. Páginas/idiomas desativados, conteúdo removido, noindex e canonical externos são excluídos; reconstruir limpa arquivos gerados e links obsoletos. Arquivos do usuário são protegidos e conflitos interrompem o build. Suplementos do site/idioma valem para todos os documentos. JSON-LD inclui o idioma; About usa AboutPage. Sem nova configuração, servidor ou biblioteca UI, nem garantia de indexação ou citação por IA.
+Este guia considera o starter integrado atual. Se seu projeto não tiver os comandos ou recursos descritos, siga primeiro as instruções de atualização em [instalar o blog e colocar suas informações](/pt-br/blog/starter-guide-1-configure-your-site/).
 
-A partir de 0.33.2, Fragments compartilha o botão de voltar ao topo dos artigos: aparece após a rolagem e respeita a preferência por movimento reduzido. Não exige configuração.
+## 1. Habilitar a lista de Fragments
 
-Se já tem um blog, atualize primeiro para o tema 0.29.0 ou posterior:
-
-```bash
-npx @anglefeint/astro-theme@latest upgrade
-```
-
-Adicione ao theme existente em `src/site.config.ts`. Fragmentos e comentários ficam desativados por padrão. O menu aparece abaixo de Decoder Lab.
+Abra `src/site.config.ts` e mescle `fragments` no `theme` existente. Adicione ou altere os campos desse objeto, sem criar outro com o mesmo nome:
 
 ```ts
 theme: {
-  fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
-},
-```
-
-Após ativar, acesse `/<locale>/fragments/`. `pageSize` aceita inteiros de 1 a 100. Os arquivos usam `.md`; não há filtro de rascunhos ou datas futuras. Guarde os fragmentos ainda não publicados fora de `src/content/fragments/`.
-
-Crie esqueletos do mesmo fragmento em todos os idiomas habilitados:
-
-A geração padrão para todos os idiomas habilitados exige o tema 0.31.0 ou mais recente. Atualize primeiro; nas versões 0.29–0.30, informe `--locales` explicitamente.
-
-```bash
-npx @anglefeint/astro-theme@latest new-fragment
-```
-
-Como `new-post`, por padrão cria esqueletos para todos os idiomas habilitados no projeto, com o mesmo ID e data e hora; não traduz o conteúdo. Prioridade: `--locales` → `ANGLEFEINT_LOCALES` → idiomas habilitados. Listas explícitas removem espaços e duplicatas e são convertidas para minúsculas; ignoram a leitura da configuração e criam apenas os diretórios solicitados, sem habilitar idiomas na configuração.
-
-Novos starters também oferecem `npm run new-fragment`; projetos existentes podem usar npx sem adicionar scripts.
-
-```bash
-npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
-npx @anglefeint/astro-theme@latest new-fragment --locales pt-br
-```
-
-Edite o Markdown gerado em `src/content/fragments/<locale>/`. O título é opcional:
-
-Para adicionar uma tradução depois, copie o Markdown original para a pasta do idioma, mantenha id e traduza o texto.
-
-```md
----
-id: 'q8Lm3XzP'
-pubDate: 2026-11-11T08:30:00+08:00
----
-
-Fragmentos.
-```
-
-Mantenha id ao editar ou renomear. Apenas traduções do mesmo fragmento compartilham ID. IDs duplicados no mesmo idioma impedem a compilação. pubDate inclui horário e fuso; exibição em UTC e ordem do mais recente.
-
-Ative `theme.fragments.comments.enabled` e preencha repo, repoId, category e categoryId em `theme.comments` com os valores do Giscus. Consulte o Guia 4. Comentários dos artigos podem continuar desativados. [Giscus](https://giscus.app/) · [4](../starter-guide-4-giscus-comments/)
-
-```ts
-theme: {
-  fragments: { enabled: true, comments: { enabled: true } },
-  comments: {
-    repo: 'yourname/your-repository',
-    repoId: 'R_...',
-    category: 'Your category',
-    categoryId: 'DIC_...',
+  fragments: {
+    enabled: true,
+    pageSize: 20,
+    comments: { enabled: false },
   },
 },
 ```
 
-Usa specific, correspondência estrita e `fragment/<id>`. Ignora mapping, term, number, shareAcrossLocales e lang dos artigos; a interface segue o idioma da página. Traduções com o mesmo ID compartilham comentários e reações. Discussões de artigos não mudam. O cliente de comentários carrega no primeiro clique. Fechar oculta a janela; ao reabrir ou trocar de fragmento, a mesma instância de comentários é reutilizada.
+| Campo                              | Valor padrão e efeito real                                                                                             |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `theme.fragments.enabled`          | `false` por padrão; habilita listas nos idiomas ativos e permite uma prévia inicial quando há conteúdo naquele idioma. |
+| `theme.fragments.pageSize`         | `20` por padrão; quantidade por página, um inteiro de 1 a 100, independente dos artigos do blog.                       |
+| `theme.fragments.comments.enabled` | `false` por padrão; habilita o popup de comentários e exige também a configuração Giscus explicada adiante.            |
 
-Fragments continua separado da busca de artigos e RSS, mas gera seu próprio Markdown para IA durante o build. Imagens em `public/images/` podem ser usadas como `/images/...`.
+Execute `npm run dev` e abra `/<语言代码>/fragments/`, como `/en/fragments/` ou `/zh/fragments/`. O idioma correspondente precisa estar habilitado. Sem conteúdo, aparece uma lista vazia, sem criar um arquivo de página. Desabilitar Fragments remove as rotas e a prévia inicial, mas não apaga os arquivos Markdown.
 
-Atualize para o tema 0.29.0 ou posterior e ative a configuração. Conteúdo, configuração, músicas e imagens pessoais são preservados. Guias pessoais não são substituídos; consulte o demo atual. Discussões do GitHub não são mescladas nem excluídas.
+## 2. Criar Fragments pelo fluxo padrão
 
-Os comentários carregam remotamente. O aviso permanece até o Giscus estar pronto; em caso de falha ou após 15 segundos aparece Tentar novamente. Verifique a rede ou a configuração. A janela reutiliza a integração Giscus dos artigos; não é necessário instalar outro pacote npm do Giscus e as associações existentes não mudam.
+Na raiz do projeto, execute:
 
 ```bash
-npm run build
+npm run new-fragment
 ```
 
-Paginação a partir da versão 0.32.0: os fragmentos compartilham com o Blog os números de página, os estilos de neon e o salto de página exibido conforme o limite configurado. `theme.pagination` controla as duas listas; `theme.fragments.pageSize` continua definindo separadamente os fragmentos por página.
+Sem `--locales` nem `ANGLEFEINT_LOCALES`, o comando cria o esqueleto do mesmo Fragment para todos os idiomas habilitados; na configuração inicial, são nove arquivos em `src/content/fragments/<语言代码>/`. Eles compartilham ID e data da mesma execução, sem tradução automática. O terminal mostra os caminhos reais. O nome se parece com `2026-11-13-q8Lm3XzP.md`, com data UTC e ID aleatório: abra o arquivo realmente gerado, sem criar manualmente esse nome de exemplo.
 
-## Links estáveis para compartilhar (0.32.0+)
+Para criar apenas chinês simplificado, use `npm run new-fragment -- --locales zh`; para idiomas específicos, `--locales en,zh`. São alternativas: escolha uma, sem executar todas, e habilite os idiomas separadamente. Antes de publicar, retire da coleção os esqueletos de outros idiomas ainda incompletos.
 
-Compartilhamento a partir da versão 0.32.0: a data aponta para o fragmento na lista, com um controle de cópia ao lado. Compartilhe `/pt-br/fragments/#ID`, usando o id do frontmatter Markdown. Somente quando o fragmento não está na página atual é carregado um pequeno índice estático por idioma para localizar sua página. Reconstrua após adicionar conteúdo ou alterar datas ou pageSize, mantendo os IDs. A localização entre páginas e a cópia exigem JavaScript.
+**Cada execução cria um novo Fragment.** Para continuar escrevendo um existente, edite o arquivo original em vez de executar o comando novamente. O comando não pede slug nem sobrescreve arquivos existentes.
 
-O endereço de navegação pode incluir um número de página; compartilhe pelo link da data ou pelo controle de cópia. Páginas antigas ainda existentes corrigem âncoras desatualizadas; um número de página removido continua mostrando o 404 normal do site. O recurso não intercepta páginas 404.
+O starter atual inclui o script `new-fragment`. Se um projeto antigo não o tiver, confirme que o tema foi atualizado e use a CLI instalada no projeto:
 
-Fragmentos ausentes ou falhas de rede mostram uma mensagem, sem saltos repetidos. Se a área de transferência estiver bloqueada, um link selecionável permite copiar manualmente. O recurso exige o tema 0.32.0 ou posterior; atualize antes de usar a localização automática.
+```bash
+npx @anglefeint/astro-theme new-fragment
+```
 
-## Imagem padrão e IDs curtos de Fragment (0.33.0+)
+Essa é uma alternativa ao comando anterior, não outro passo para criar “o mesmo” Fragment.
 
-Adicione site.ogImage ao objeto site existente em src/site.config.ts. Use um caminho a partir de public (/images/share.jpg corresponde a public/images/share.jpg) ou uma URL HTTPS. Em branco, utiliza a imagem Anglefeint incluída de 1200×630. Fragments e todos os links #ID compartilham essa imagem. As imagens específicas e geradas dos artigos mantêm prioridade; com a geração desativada, a capa do artigo também precede a imagem do site. Reconstrua e publique após alterar; plataformas podem manter a prévia em cache.
+## 3. Substituir o texto provisório e preservar o ID
+
+O frontmatter fica no início; o corpo começa depois do segundo `---`. Preserve `id` e `pubDate` gerados e substitua o texto provisório pela sua ideia. O exemplo mostra apenas o formato: não troque seu ID pelo ID do exemplo.
+
+```md
+---
+id: 'q8Lm3XzP'
+pubDate: '2026-11-13T09:00:00+08:00'
+---
+
+今天把一个困扰很久的问题解决了，记下这个小进展。
+```
+
+Há três campos de frontmatter suportados:
+
+| Campo     | Como preencher                                                                                                                                     |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`      | Obrigatório, exatamente 8 letras inglesas ou números, com distinção de maiúsculas. A CLI gera e verifica IDs existentes; não é preciso inventá-lo. |
+| `pubDate` | Obrigatório, data de publicação interpretável; prefira o ISO gerado ou informe horário com fuso.                                                   |
+| `title`   | String opcional mostrada como título do card; publicar sem ela também funciona.                                                                    |
+
+Para adicionar um título, acrescente `title: '一个小进展'` ao mesmo frontmatter. Fragments não exige `description` de artigo nem tem o campo de capa `heroImage`; imagens ficam no corpo.
+
+A ordenação usa `pubDate` do mais recente ao mais antigo e depois ID em caso de empate, não o nome do arquivo. As datas aparecem em UTC e podem diferir do horário local informado. Alterar só o corpo ou o nome não muda a identidade de compartilhamento ou comentários; alterar a data muda a ordenação e a página.
+
+**Preserve o ID depois de publicar.** Repetir ID dentro do mesmo idioma gera erro; registros diferentes não devem reutilizá-lo. UUIDs e IDs antigos longos não são válidos no formato atual. Faça backup antes de tratar a compatibilidade: o tema não migra automaticamente IDs, links ou comentários antigos. Não considere uma troca de IDs em massa uma simples organização de arquivos.
+
+A coleção lê apenas `.md` em `src/content/fragments/`, não `.mdx`. Não há filtro de rascunhos nem de datas futuras: `draft: true` e horários futuros não ocultam conteúdo. Mantenha fora desse diretório o que não estiver pronto para ser público.
+
+## 4. Adicionar imagens, código e fórmulas
+
+Você pode usar parágrafos, links, listas e citações Markdown. Exemplo de imagem:
+
+```md
+![这次进展的截图](/images/fragments/progress.png)
+```
+
+Coloque antes o arquivo real em `public/images/fragments/progress.png`. Outra opção é `photo.png` junto do Fragment, referenciado por `![图片说明](./photo.png)`. Mais exemplos, dimensões e arquivos para commit estão em [adicionar imagens a artigos e Fragments](/pt-br/blog/starter-guide-images/).
+
+Preserve as cercas e a indentação dos blocos:
+
+````md
+```js
+const progress = {
+  done: true,
+};
+```
+````
+
+O código é conteúdo exibido; JavaScript escrito nele não é executado. Não presuma que os botões de copiar código e ampliar imagens dos artigos também existam nos Fragments: a lista atual não usa essas duas interações.
+
+Com matemática global habilitada, Fragments aceita fórmulas em linha como `$x_1$` e fórmulas destacadas entre linhas `$$`. São renderizadas no build; fórmulas inválidas causam falha de compilação ou build. `theme.math.enabled` desabilitado interrompe esse processamento. Consulte a sintaxe em [escrever o primeiro artigo](/pt-br/blog/starter-guide-2-languages-and-routing/).
+
+dev ou doctor local prepara arquivos responsivos das imagens suportadas. Faça commit do Markdown, dos originais e de todo `src/assets/blog/covers/`. O build de publicação e o doctor de CI só validam, sem gerar faltantes na plataforma. Não envie só o texto deixando as imagens de fora.
+
+## 5. Prévia inicial e paginação da lista
+
+Com Fragments habilitado e conteúdo no idioma atual, aparece um avatar pixelado abaixo do header da página inicial. Ao abri-lo, você vê no máximo os três registros mais recentes. Não há outra opção inicial para ligar, e `homeLatestCount` controla artigos, não essa quantidade.
+
+A prévia pode conter resumo de texto, a primeira imagem válida e o primeiro bloco de código, não o corpo completo. Imagens e código têm altura limitada e excesso recortado; múltiplas imagens ou blocos não aparecem integralmente. Clique no card para abrir o registro. O link inferior “itens mostrados / total do idioma →” abre a lista completa: com dois itens, mostra `2 / 2`, não três fixos. Sem conteúdo, o avatar não aparece.
+
+A lista completa usa `theme.fragments.pageSize`. No exemplo em chinês, a primeira página é `/zh/fragments/` e a segunda `/zh/fragments/2/`. Estilo e salto de página compartilham `theme.pagination`; `blogPageSize` não define a quantidade de Fragments.
+
+A troca de idioma abre a primeira página da lista de destino, sem garantir o mesmo item ou número de página. Cada idioma pode ter outra quantidade de traduções e seu próprio total.
+
+## 6. Compartilhar um Fragment
+
+Fragments são exibidos na lista, sem uma página de detalhe individual. Compartilhe pelo link da data ou pelo botão de copiar ao lado, por exemplo:
+
+```text
+https://your-domain.example/zh/fragments/#q8Lm3XzP
+```
+
+Substitua domínio e ID pelos valores reais. O link da data e a cópia usam a raiz da lista mais o ID, sem depender da página atual do registro. Depois de adicionar conteúdo, mudar a data ou pageSize, novo build e publicação atualizam também o índice de localização.
+
+Se o item não estiver na página atual, JavaScript lê sob demanda o índice estático daquele idioma, navega para a página correta e o localiza. Sem JavaScript, a paginação comum continua disponível, mas não a localização automática entre páginas nem a cópia. Se a área de transferência impedir a cópia, o link fica selecionável para copiar manualmente.
+
+Não use um endereço com `/2/` como link permanente. Uma página antiga ainda existente pode corrigir um hash desatualizado; se o número da página já não existir, ocorre o 404 normal, que o script não intercepta. Conteúdo apagado, ID inexistente ou falha do índice geram avisos, sem restaurar registros removidos.
+
+Todos os links de Fragments usam a imagem de compartilhamento da lista daquele idioma, sem imagem por ID. Para alterar a padrão, veja as [instruções de compartilhamento do guia de imagens](/pt-br/blog/starter-guide-images/).
+
+## 7. Adicionar uma tradução do mesmo Fragment
+
+Para gerar apenas os esqueletos em chinês e inglês, use este comando no lugar do padrão:
+
+```bash
+npm run new-fragment -- --locales zh,en
+```
+
+Os arquivos da mesma execução compartilham ID e timestamp; traduza o corpo manualmente. `--locales` escolhe arquivos, não habilita idiomas. A prioridade é `--locales` → `ANGLEFEINT_LOCALES` → idiomas habilitados. Omitir parâmetros não ativa tradução automática.
+
+Para traduzir um Fragment chinês já existente, copie-o para `src/content/fragments/en/`, preserve `id` e `pubDate` e traduza título e corpo. Não execute de novo o comando de criação para completar “o mesmo” item: ele gera outra identidade. Traduções podem compartilhar ID entre idiomas, mas um idioma não pode conter dois arquivos do mesmo ID.
+
+Traduções com ID igual compartilham comentários. Texto ou nome de arquivo igual não associa IDs diferentes.
+
+## 8. Habilitar comentários quando precisar
+
+Se quiser apenas registrar conteúdo, mantenha comentários desabilitados. Para receber respostas, siga primeiro o [guia Giscus](/pt-br/blog/starter-guide-4-giscus-comments/) e prepare repositório público, Discussions, aplicativo e categoria. Obtenha os IDs reais e mescle na configuração existente:
 
 ```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { ogImage: '/images/share.jpg' },
-});
+theme: {
+  fragments: {
+    enabled: true,
+    comments: { enabled: true },
+  },
+  comments: {
+    repo: 'yourname/your-repository',
+    repoId: 'REPLACE_WITH_REPO_ID',
+    category: 'Announcements',
+    categoryId: 'REPLACE_WITH_CATEGORY_ID',
+  },
+},
 ```
 
-new-fragment gera um Nano ID de oito letras e dígitos, diferencia maiúsculas e minúsculas, verifica IDs Markdown de todos os idiomas e repete em caso de colisão. Cada execução compartilha ID e data entre idiomas. São aceitos apenas IDs alfanuméricos com exatamente oito caracteres. UUIDs e IDs longos antigos não são suportados: exclua e publique novamente, sem migração ou compatibilidade com links antigos. Preserve o novo ID publicado; alterá-lo cria outra associação de comentários.
+Substitua conta, repositório, categoria e os dois IDs de exemplo. Preserve os outros campos de um `theme.comments` existente. A falta de um dos quatro campos de conexão causa erro; valores provisórios não demonstram validade no serviço remoto. Não é preciso colar um script Giscus nem instalar outro pacote npm Giscus.
 
-## Prévia de Fragments na página inicial (0.35.0+)
+A opção de Fragments é `theme.fragments.comments.enabled`. Ela não exige habilitar `theme.comments.enabled` dos artigos. Se os comentários de artigos já estiverem ativos, mantenha essa escolha.
 
-No código atual, ativar `theme.fragments.enabled` adiciona um avatar em pixels abaixo do cabeçalho da página inicial quando há fragmentos no idioma atual. Ao abrir, aparecem os três mais recentes. Cada cartão abre o original; a contagem e a seta inferiores abrem a lista completa. A contagem significa prévias / total no idioma. Imagens e código têm altura limitada, com o excesso recortado. O botão não aparece quando desativado ou sem conteúdo. Não exige nova configuração; requer o tema 0.35.0 ou posterior.
+Fragments fixa `specific`, correspondência estrita e `fragment/<id>`. Não usa mapping, term, number, shareAcrossLocales ou lang fixo dos artigos. A interface segue o idioma atual, e traduções do mesmo ID compartilham discussão e reações; as respostas não são traduzidas. As demais opções visuais compartilhadas continuam em `theme.comments`.
 
-## Imagens locais e publicação (0.36.0+)
+O cliente só carrega ao clicar no botão de comentários do card. Fechar preserva a instância, reutilizada ao reabrir ou trocar o item. Falha ou cerca de 15 segundos sem ficar pronto oferecem nova tentativa. Um aviso de carregamento não prova conexão bem-sucedida. Para comentar, o visitante precisa autorizar o GitHub.
 
-Requer o tema 0.36.0 ou posterior; não está incluído na 0.35.0 publicada. `/images/fragments/photo.png` corresponde a `public/images/fragments/photo.png`; use `./photo.png` para uma imagem junto ao Markdown. Imagens Markdown, referências e HTML `img` são aceitos. Os originais não são movidos nem sobrescritos.
+Mudar o ID não move comentários antigos; apagar um Fragment não apaga a discussão no GitHub. Avalie a migração separadamente, sem esperar uma mesclagem automática do tema.
 
-Após atualizar, dev ou doctor local prepara os arquivos responsivos. Você também pode executar:
+## 9. Conferir antes de publicar
+
+Em dev, confira conteúdo, horário, prévia inicial e paginação. Antes de publicar, pare dev e execute:
 
 ```bash
-npx @anglefeint/astro-theme prepare-covers
+npm run doctor
+npm run preview
 ```
 
-Versione os originais e todo `src/assets/blog/covers/` (manifest.json e generated/). O build e CI doctor apenas validam e falham se houver arquivos ausentes ou desatualizados; a hospedagem não os regenera. A lista e as prévias compartilham arquivos e completam dimensões ausentes. A primeira imagem da lista tem prioridade; as seguintes e miniaturas da página inicial carregam sob demanda. Animações e SVG mantêm o formato; imagens remotas não são convertidas localmente.
+doctor inclui preparação local de imagens, verificações e build; após o sucesso não é preciso repetir build imediatamente. No preview do build, confira imagens e localização dos links e, se configurado, o popup de comentários. A prévia não publica: é necessário republicar os arquivos estáticos atualizados para mudar o site online.
+
+Fragments não entra na busca completa de artigos nem no RSS de artigos. O build gera `/zh/fragments/index.md` no exemplo, trocando `zh` pelos demais idiomas. Ele reúne os Fragments públicos daquele idioma com ID, data, corpo e links estáveis e participa dos índices legíveis por IA. É uma saída pública, não um backup privado; comentários ficam de fora.
+
+- Lista ausente: confira a opção fragments e se o idioma está habilitado.
+- Sem avatar inicial: confira se há Fragments no idioma atual; conteúdo em outro idioma não basta.
+- Criação falha por arquivos antigos: confira o formato do ID no frontmatter. A CLI lê IDs existentes para evitar duplicações.
+- Build aponta ID repetido: procure cópias no mesmo idioma; traduções devem ficar na pasta de outro idioma.
+- Build falha por imagens: siga o [guia de imagens](/pt-br/blog/starter-guide-images/) e prepare e versione originais, manifesto e derivados.
+- Comentários falham: confira IDs reais, autorização do aplicativo, categoria, rede e bloqueios do navegador, sem trocar repetidamente os IDs dos Fragments.
+
+Para atualizar o tema, veja as [instruções do primeiro guia](/pt-br/blog/starter-guide-1-configure-your-site/).
+
+## Navegação e referência de configuração
+
+[Anterior: adicionar imagens a artigos e Fragments](/pt-br/blog/starter-guide-images/) · [Próximo: ajustar páginas e recursos](/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/) · [Índice dos oito guias](/pt-br/blog/starter-guide-1-configure-your-site/#tutorial-order).
+
+Campos relacionados: [opções, paginação e conteúdo de Fragments](/pt-br/blog/config-fragments/) e [comentários de Fragments](/pt-br/blog/config-comments/). Consulte caminhos completos, valores padrão e limites no [índice da referência](/pt-br/blog/config-reference/).

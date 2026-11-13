@@ -7,29 +7,13 @@ heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'narrative'
 aiState: 'stable'
-aiLatencyMs: 131
-aiConfidence: 0.98
-wordCount: 338
-tokenCount: 812
+updatedDate: '2026-11-14'
 ---
 
-A post list is usually treated as a plain archive. We treat it as a street.
+Blog List is where readers scan titles and covers and choose what to read. We imagine a neon street in the rain: light beams, rain and glowing edges establish Cyberpunk, while article cards act as readable signs.
 
-The visual direction is intentionally rooted in cyberpunk culture. We borrow mood and rhythm from the Blade Runner film series and the spatial density of Cyberpunk 2077: wet reflections, layered haze, neon contrast, and moving light pressure that makes the scene feel alive.
+Covers, titles and summaries guide browsing; pagination organizes more articles. Enabled tag lists and results share this atmosphere. Covers use pre-generated size variants so browsers can choose an image for the layout.
 
-Why spend this much energy on a list page?
+Discovery comes first. The background keeps its cinematic presence, while content and interactive states stay clear. The reference explains list size, covers and tags.
 
-Because this is where decisions happen. People scan titles, compare context, and choose where to go next. If atmosphere is controlled, it helps orientation instead of distracting from it.
-
-Our implementation goals are straightforward:
-
-- cinematic mood with readable typography,
-- strong depth cues without sacrificing focus,
-- controlled effects that keep interaction smooth.
-
-That is why this list is more than cards plus pagination. It acts like a navigable corridor: signs, rain, glow, and direction. Users are not just scrolling a feed, they are moving through a designed environment.
-
-We also believe this visual language points to something bigger: technology will keep reshaping how humans live, decide, and create. Cyberpunk aesthetics are not only about style; they are a way to discuss acceleration, adaptation, and identity in a future where interfaces increasingly mediate reality.
-
-For us, this is not decoration for decoration's sake.
-It is environmental UX for content discovery.
+Read next: [Configuration Reference: Blog List and Tag Lists](/en/blog/config-blog-list/)

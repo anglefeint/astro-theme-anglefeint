@@ -1,5 +1,6 @@
 import { deepMerge, type DeepPartial } from '../utils/merge.ts';
 import type { ThemeConfig, AboutConfig } from './schema.ts';
+import { validateBlogPageSize } from '../utils/blog-pagination.ts';
 
 export const DEFAULT_ABOUT_CONFIG: AboutConfig = {
   metaLine: '$ profile booted | mode: builder',
@@ -658,5 +659,7 @@ const defaultThemeConfig: ThemeConfig = {
 };
 
 export function defineThemeConfig(config: DeepPartial<ThemeConfig>): ThemeConfig {
-  return deepMerge(defaultThemeConfig, config);
+  const merged = deepMerge(defaultThemeConfig, config);
+  validateBlogPageSize(merged.theme.blogPageSize);
+  return merged;
 }

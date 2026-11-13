@@ -6,18 +6,18 @@
   </a>
 </p>
 
-<p align="center">人間の読者と AI エージェントのために作られた、多彩な雰囲気と映画的な表現を持つ個人発信向け Astro テーマ。</p>
+<p align="center">人間の読者と AI エージェントのための、映画のような複数の世界観を持つ Astro 個人出版テーマ。</p>
 
-`llms.txt`、多言語インデックス、全文バンドル、記事の Markdown を自動生成し、AI エージェントによる閲覧・引用と GEO（生成エンジン最適化）を支援します。
+`llms.txt`、多言語索引、全文集合、記事 Markdown を自動生成し、AI エージェントによる読取・引用と GEO（生成エンジン最適化）を支援します。
 
 <p align="center">
-  <a href="https://demo.anglefeint.com/">デモ</a>
+  <a href="https://demo.anglefeint.com/">ライブデモ</a>
   ·
   <a href="https://github.com/anglefeint/astro-theme-anglefeint">リポジトリ</a>
 </p>
 
 <p align="center">
-  <a href="#ai-assistant">AI アシスタント</a> · <a href="#installation">インストール</a> · <a href="#setup">サイト設定</a> · <a href="#writing">記事を書く</a> · <a href="#upgrade">アップグレード</a> · <a href="#deployment">ビルドと公開</a>
+  <a href="#ai-assistant">AI アシスタント</a> · <a href="#installation">インストール</a> · <a href="#setup">サイト設定</a> · <a href="#writing">記事を書く</a> · <a href="#upgrade">更新</a> · <a href="#deployment">ビルドと公開</a>
 </p>
 
 <p align="center">
@@ -28,22 +28,32 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+## Anglefeint でできること
+
+Markdown／MDX で記事、Fragments で短い考えを投稿できます。多言語、検索、タグ、目次、コードコピー、画像プレビュー、数式、自動共有画像を内蔵し、コメント・音楽・GA4 は任意で有効にできます。
+
+| ページ           | 世界観                                             |
+| ---------------- | -------------------------------------------------- |
+| ホーム           | Matrix：緑のコード雨、ターミナル、ピクセルアバター |
+| ブログ・タグ一覧 | Cyberpunk：ネオン、雨幕、街の光線                  |
+| About            | Hacker：自己紹介、仮想ターミナル、対話型ツール     |
+| 記事詳細         | AI：ネットワーク背景、モニター、OUTPUT 読書パネル  |
+
+公開記事、About、Fragments の Markdown、`llms.txt`、多言語全文集合もビルド時に生成します。AI ツールが読める静的出力で本番サーバーは不要ですが、モデルの収集や引用を保証しません。
+
 <a id="ai-assistant"></a>
 
-## AI アシスタントを使う
+## AI アシスタントと協力する
 
-Cursor、Codex、Claude Code でサイト設定、記事作成、ページのカスタマイズを進められます。まず現在のプロジェクトの AGENTS.md を読み、コードと実際の設定を基準にしてください。CLAUDE.md と Cursor ルールも同じ指示を参照します。
+Cursor、Codex、Claude Code にプロジェクトの `AGENTS.md` に従ってサイト設定や内容管理を依頼できます。`CLAUDE.md` と Cursor ルールも同じ案内を参照します。変更したいことを伝え、実設定とこの記事の該当節を確認してもらい、詳細な項目はデモの設定リファレンスで調べます。
 
-- **ブログ利用者（starter）**: [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) から始め、必要に応じて[設定](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/ja/starter-guide-1-configure-your-site.md)／[執筆](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/ja/starter-guide-2-languages-and-routing.md)ガイドを参照してください。
-- **テーマ開発者（main）**: [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [AI ワークフロー](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md) を読みます。実装構造は[アーキテクチャ](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)、コード変更後の説明更新は[文書同期手順](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md)に従ってください。
+テーマ開発はリポジトリの [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) と[貢献ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CONTRIBUTING.md)から始めてください。ブログ利用者が保守者の公開手順を先に学ぶ必要はありません。
 
 <a id="installation"></a>
 
-## インストール
+## 1. インストールして起動する
 
-このテンプレートは **Astro 7** を使用します。
-
-Node.js 22.12.0 以降を使用します。ブログを作成する親ディレクトリで次のコマンドを実行し、開発サーバーが表示する URL を開いてください。
+**Node.js 22.12.0 以降**が必要で、**Astro 7** ベースです。ブログを置くディレクトリで実行します。
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
@@ -52,244 +62,234 @@ npm install
 npm run dev
 ```
 
-既存のブログではそのフォルダーで `npm install` と `npm run dev` を実行し、再作成しないでください。別のコマンドの前に Ctrl+C で dev を停止するか、別のターミナルを使います。pnpm では `pnpm install` と `pnpm dev` を使います。
+表示された URL を開きます。既存ブログは元ディレクトリで `npm install`、`npm run dev` を実行し、再作成しません。停止は Ctrl+C です。以降はプロジェクトルートで dev を止めるか別ターミナルを開いて実行します。
+
+新規プロジェクトでは `pnpm install`、`pnpm dev` も使えます。1プロジェクトは同じパッケージマネージャーを維持してください。以下は npm を使い、自動更新も現在 npm のみ対応します。
+
+詳細：[ブログをインストールして自分の情報に変える](https://demo.anglefeint.com/ja/blog/starter-guide-1-configure-your-site/)。
 
 <a id="setup"></a>
 
-## サイト設定
+## 2. 初期設定：自分の情報に変える
 
-`src/site.config.ts` の既存の設定オブジェクトを編集します。サイト情報、ソーシャルリンク、About、テーマの設定はここに集約されています。import/export を残し、既存のオブジェクトに設定をまとめてください。
+インストール済みプロジェクトには `src/site.config.ts` があります。**このファイルを直接編集し、設定ファイルや設定オブジェクトを新設する必要はありません**。
+
+既存 `defineThemeConfig({ ... })` 内に次の `site` を追加し、名前、著者、説明、ドメインを自分のものに変えます。starter は site を省略して既定値を使います。すでに site があればその中を編集して他設定を残し、同名オブジェクトを重複させません。既存 import、export、他設定は維持します。
 
 ```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: {
-    title: 'My Blog',
-    author: 'Your Name',
-    description: 'My notes and projects.',
-    url: 'https://your-domain.example',
-  },
-});
+site: {
+  title: '我的博客',
+  author: '你的名字',
+  description: '记录项目、阅读和生活。',
+  url: 'https://your-domain.example',
+},
 ```
 
-`site.url` に実際のサイト URL を設定します。`PUBLIC_SITE_URL` が設定されている場合はそちらが優先されます。記事や設定を変更したら再ビルドして公開してください。
+これはサイト情報だけを変え、言語設定は変えません。言語別 `homeTitle` 未指定ならホーム見出しは全体 `title` です。紹介文、About、ソーシャルリンクも変更でき、詳細はこの節のガイドと辞書を参照してください。
+
+`site.url` は本番の公開 URL で dev URL ではありません。配備環境の `PUBLIC_SITE_URL` が優先するため、旧ドメインのままなら確認してください。
+
+初期状態は9言語有効、既定は英語で `/` は `/en/` へ移動します。日本語 README を読むためにブログを日本語へ変える必要はありません。既定言語や使う言語を変える場合は[多言語ガイド](https://demo.anglefeint.com/ja/blog/starter-guide-languages/)へ。省略で言語は無効にならず、既定言語は常に有効、自動翻訳もしません。例の記事はバックアップ・Git コミット後に削除できますが、使用中の画像は残してください。
+
+手順：[導入と初期設定](https://demo.anglefeint.com/ja/blog/starter-guide-1-configure-your-site/)、[言語とホーム URL](https://demo.anglefeint.com/ja/blog/starter-guide-languages/)。項目：[サイトと公共 UI](https://demo.anglefeint.com/ja/blog/config-site-chrome/)、[ホーム](https://demo.anglefeint.com/ja/blog/config-home/)。
 
 <a id="writing"></a>
 
-## 新しい記事を作成
+## 3. 最初の記事を書く
 
-まず日本語の記事を1つ作成します：
+プロジェクトルートで作成します。
 
 ```bash
-npm run new-post -- my-first-post --locales ja
+npm run new-post -- my-first-post
 ```
 
-`src/content/blog/ja/my-first-post.md` のタイトル、説明、本文を編集します。すべての有効な言語に同じ slug の雛形を作るには `--locales` を省略します。初期設定では9ファイルを作成し、自動翻訳や既存ファイルの上書きはしません。
+`--locales` と `ANGLEFEINT_LOCALES` がなければ有効な全言語に同名のひな形を作ります。初期状態は9ファイル、調整後は現在の有効言語です。本文は自動翻訳せず、既存ファイルも上書きしません。
 
-Slug ルール: 小文字英字・数字・ハイフンのみを使用してください（例: `my-first-post`）。
-`src/assets/blog/default-covers/` に画像がある場合、コマンドの実行ごとにカバーをランダムに1枚選び、その実行で新規作成するすべての言語の記事に設定します。既存ファイルは上書きしません。`heroImage` は後から変更できます。
-ロケールを明示指定する場合:
+`src/content/blog/<locale>/my-first-post.md` に生成し、URL は `/<locale>/blog/my-first-post/`、一覧は `/<locale>/blog/` です。英語は `src/content/blog/en/my-first-post.md`、簡体中国語は `src/content/blog/zh/my-first-post.md`。必要なファイルを開いてタイトル・説明・本文を変え、ルートは手動作成しません。最小の内容例です。
+
+```md
+---
+title: '我的第一篇文章'
+description: '记录这次开始写博客的想法。'
+pubDate: '2026-11-13'
+---
+
+这里开始写正文。
+```
+
+上は必須項目だけで、生成済みカバーなどの任意項目は残せます。通常の slug は `my-first-post` のように英小文字・数字・ハイフンを使います。
+
+指定言語だけに作りたい場合は `--locales` を使います。次は選択肢で、全部実行する必要はありません。
 
 ```bash
+# 只生成英文
+npm run new-post -- my-first-post --locales en
+
+# 只生成中文
+npm run new-post -- my-first-post --locales zh
+
+# 生成指定的多种语言
 npm run new-post -- my-first-post --locales en,zh
-# または
-ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
 ```
 
-`ANGLEFEINT_LOCALES=...` は Bash/POSIX シェル用の構文です。PowerShell では上の `--locales` コマンドを使ってください。
+`--locales` は作成先だけで言語を有効化しません。ページ生成には言語の有効化が必要です。同じ呼出しの新規ファイルは素材があれば同じランダムカバーを共有し、既存ファイルは残します。
 
-URL のルール:
+`ANGLEFEINT_LOCALES` も使用でき、優先順は `--locales` → 環境変数 → 有効言語です。Bash は `ANGLEFEINT_LOCALES=zh,en npm run new-post -- my-first-post`、PowerShell は上の `--locales` を使えます。
 
-- ファイル: `src/content/blog/ja/my-first-post.md`
-- URL: `/ja/blog/my-first-post/`
-- ブログ一覧: `/ja/blog/`
-- ルートを手動で追加する必要はありません。Astro が build 時に自動生成します。
+**下書き・未来日付の自動非表示は現在ありません。** 他言語のひな形も公開されるため、公開前に必要な内容を完成し、未公開のファイルは集合の外へ移します。`draft: true`、`search: false` は非公開化ではありません。
 
-`--locales` は記事ファイルだけを作成し、言語を有効化しません。ルートを生成するには `src/site.config.ts` で対象言語を追加・有効化してください。
+手順：[最初の記事](https://demo.anglefeint.com/ja/blog/starter-guide-2-languages-and-routing/)、[画像](https://demo.anglefeint.com/ja/blog/starter-guide-images/)。項目：[記事詳細と frontmatter](https://demo.anglefeint.com/ja/blog/config-article/)。
 
-## 新しいページを作成
+## 4. Fragment を投稿する
 
-`new-post` はブログ記事専用です。カスタムページは次のコマンドを使用します:
-
-```bash
-npm run new-page -- projects --theme base
-```
-
-利用可能なテーマ: `base`, `ai`, `cyber`, `hacker`, `matrix`。
-`src/pages/[lang]/projects.astro` が生成され、`getStaticPaths()` で全ロケールに展開されます。
-slug ルール: 小文字・数字・ハイフンのみ（例: `projects/labs` のようなネストは可）。`_` と大文字は不可です。
-
-例（`projects` 用に 1 つだけ選んでください。続けて実行すると、2 回目以降はファイルが存在するため失敗します）:
-
-```bash
-npm run new-page -- projects --theme base
-npm run new-page -- projects --theme ai
-npm run new-page -- projects --theme cyber
-npm run new-page -- projects --theme hacker
-npm run new-page -- projects --theme matrix
-```
-
-## 断片
-
-0.33.2 以降、Fragments は記事ページと同じトップへ戻るボタンを使います。スクロール後に表示され、動きを減らす設定に対応します。追加設定は不要です。
-
-断片にはテーマ 0.29.0 以降が必要です。既存のブログは更新してから以下の設定とコマンドを使用してください。
-
-短い思いを Markdown で残し、コメントをダイアログで表示します。 src/site.config.ts の既存 theme に追加します。断片とコメントは初期状態で無効です。メニューは Decoder Lab の下に表示されます。
+Fragments は短文、画像、コードに適しています。**テーマと新規 starter は既定で無効、デモは独自に有効にしています。** 使う場合は既存 `theme` に `fragments.enabled: true` を統合します。同名 theme を重複作成しないでください。
 
 ```ts
-fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+theme: {
+  fragments: { enabled: true },
+},
 ```
 
-有効な全言語を既定で作成するにはテーマ 0.31.0 以降が必要です。先にアップグレードしてください。0.29–0.30 では `--locales` で明示的に指定します。
+すでに enabled true なら不要、false なら true に変えます。一覧とホーム入口のスイッチで、コメントは引き続き既定無効です。
+
+次で1件を作成します。既定は有効な全言語に同じ内容のひな形を生成します。
 
 ```bash
-npx @anglefeint/astro-theme@latest new-fragment
+npm run new-fragment
 ```
 
-`new-post` と同様に、既定ではプロジェクトで有効な全言語に、同じ ID とタイムスタンプのひな形を作成します。自動翻訳はしません。優先順位は `--locales` → `ANGLEFEINT_LOCALES` → 有効な言語です。明示した一覧は空白除去・小文字化・重複除去され、設定の読み込みを省略して指定言語のディレクトリだけを作成します。言語の有効化設定は変更しません。
+指定言語だけなら次のパラメーターを選べます。
 
 ```bash
-npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
-npx @anglefeint/astro-theme@latest new-fragment --locales ja
+# 只生成中文
+npm run new-fragment -- --locales zh
+
+# 生成指定的多种语言
+npm run new-fragment -- --locales en,zh
 ```
 
-0.32.0 以降の共有機能：日付のリンクで一覧内の断片を定位でき、その横でリンクをコピーできます。共有には `/ja/fragments/#ID` を使用します。ID は Markdown frontmatter の id です。現在のページに対象がない場合のみ、言語別の小さな静的索引を読み込み、現在のページへ移動します。追加、日付や pageSize の変更後は再ビルドし、ID は変えないでください。ページをまたぐ定位とコピーには JavaScript が必要です。
+1回ごとに新規作成します。例は別の使い方なので1つを選び、全部実行しません。CLI から言語スイッチも自動変更しません。
 
-0.32.0 以降のページ送り改善：断片は Blog とページ番号、ネオン表示、設定したしきい値で表示されるページ移動欄を共有します。`theme.pagination` は両方の一覧に適用され、断片の1ページあたりの件数は引き続き `theme.fragments.pageSize` で個別に設定します。
+保存先は `src/content/fragments/<locale>/`、名前の例は `2026-11-13-aB3dE6gH.md` で実際のパスをターミナルに出します。本文を編集し、生成した英数字8文字 ID は維持してください。同時生成は ID・公開日を共有します。同じ内容の追記に作成コマンドを再実行しません。
 
-[ユーザーガイド 5：断片を公開する](https://demo.anglefeint.com/ja/blog/starter-guide-5-fragments/)
+一覧は `/<locale>/fragments/`、例は `/en/fragments/`、`/zh/fragments/` です。その言語に内容があればホームにアバター入口が出ます。安定リンクは `/<locale>/fragments/#ID` でページ番号を識別子にしません。ID 変更はリンク・コメントに影響し、コメントは既定無効です。
 
-<a id="upgrade"></a>
+手順：[Fragment 投稿](https://demo.anglefeint.com/ja/blog/starter-guide-5-fragments/)。項目：[Fragments](https://demo.anglefeint.com/ja/blog/config-fragments/)。
 
-## テーマの更新
+## 5. 独自ページを作成する
 
-標準ページ、設定の既定値、翻訳とビルド機能はテーマパッケージが管理します。記事、`src/site.config.ts`、音楽、画像、独自ページはプロジェクトに残ります。
-
-npm を使う新しい integration starter では、ルートで次のコマンドを実行します。互換性を確認し、依存ファイルをバックアップして特定バージョンをインストールし、doctor を実行します。失敗時は依存ファイルを戻して以前の依存関係の再インストールを試みます。公開は通常のデプロイ手順で行ってください。
+記事は new-post、プロジェクト・作品などの独立ページは new-page です。
 
 ```bash
-npx @anglefeint/astro-theme@latest upgrade
+npm run new-page -- projects
 ```
 
-0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+`src/pages/[lang]/projects.astro` を既定 base で生成します。編集後は `/<locale>/projects/`、例 `/en/projects/` を開きます。1ファイルで有効な全言語のページを生成し、自動翻訳・ナビ追加は行いません。
 
-自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
+外観を選ぶ場合は `--theme` を追加できます。base、matrix、cyber、hacker、ai に対応し、例の `npm run new-page -- portfolio --theme cyber` は別の Cyberpunk ページを作ります。
 
-<a id="deployment"></a>
-
-## ビルドと公開
+入れ子のパスも使えます。例：
 
 ```bash
-npm run build
+npm run new-page -- projects/labs --theme hacker
 ```
 
-静的サイトは `dist/` に生成されます。その**すべての内容**を任意の静的ホスティングに公開してください。本番の Node.js サーバーやホスティング用アダプターは不要です。
+各セグメントは英小文字・数字・ハイフンで、大文字・アンダースコア・先頭末尾 / は不可です。既存ファイルを上書きせず、標準予約ページもこのコマンドでは再作成できません。
 
-`npm run preview` でビルド結果をローカル確認できます。公開は行いません。`npm run doctor` はチェックとビルドをまとめて実行します。
+詳細：[ページカスタマイズ](https://demo.anglefeint.com/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)。
 
-ドメインのルートで公開し、各ディレクトリの index.html を配信してください。サブパス公開は追加対応が必要で、Astro `base` の設定だけでは不十分です。
+## 6. 画像を準備して生成物を保持する
 
-記事 sitemap は `updatedDate`、未指定なら `pubDate` を使います。integration は端末 JSON の `X-Robots-Tag: noindex` を出力の `dist/_headers` に統合し、既存ルールとソースファイルを保持します。Cloudflare Pages 等の対応ホスト以外では同等のヘッダー設定が必要です。Astro preview はホストルールを適用しないため、公開後の応答を確認してください。
+本文は通常の Markdown 画像です。記事の隣に photo.jpg を置き `![画像の説明](./photo.jpg)` と書けます。カバーは frontmatter の `heroImage: ./cover.jpg` に設定し、先に実ファイルを用意します。public の URL に public 接頭辞は付けません。
+
+カバーと対応する Fragment のローカル画像は永続レスポンシブファイルが必要です。ローカルで準備、または現出力だけを確認できます。
+
+```bash
+npx @anglefeint/astro-theme prepare-covers
+npx @anglefeint/astro-theme prepare-covers --check
+```
+
+ローカル dev・doctor は不足・期限切れを補いますが、build・CI doctor は検証のみで配備側は生成しません。原画像と `src/assets/blog/covers/` 全体（manifest.json、generated/）を Git にコミットします。missing／stale／modified はローカル準備・コミット後に再ビルドしてください。
+
+通常記事の全本文画像が圧縮された意味ではありません。対象範囲、パス、共有画像は[画像ガイド](https://demo.anglefeint.com/ja/blog/starter-guide-images/)へ。
 
 <a id="reference"></a>
 
-## 機能と設定のリファレンス
+## 必要に応じて機能を設定する
 
-ブログとタグの記事一覧はカード／リスト表示を切り替えられ、選択をブラウザーに保存します。
+よく使うコマンドと初回操作はこのページだけで進められます。細かい変更にはガイド・辞書を使ってください。辞書は型、既定値、制約、例、未使用状態を項目別に説明します。
 
-### ホームの演出とデコードツール
+| 目的                                           | 操作ガイド                                                                                                                                                                              | 設定リファレンス                                                                                                                                                                               |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ホーム、サイト情報、ナビ、ソーシャル、フッター | [ページと機能](https://demo.anglefeint.com/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                                   | [ホーム](https://demo.anglefeint.com/ja/blog/config-home/)、[サイトと公共 UI](https://demo.anglefeint.com/ja/blog/config-site-chrome/)                                                         |
+| 件数、タグ、ページ分割                         | [ページと機能](https://demo.anglefeint.com/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                                   | [Blog List とタグ](https://demo.anglefeint.com/ja/blog/config-blog-list/)                                                                                                                      |
+| 記事目次、数式、OUTPUT、検索収録               | [記事ガイド](https://demo.anglefeint.com/ja/blog/starter-guide-2-languages-and-routing/)                                                                                                | [記事詳細](https://demo.anglefeint.com/ja/blog/config-article/)、[検索と発見](https://demo.anglefeint.com/ja/blog/config-search/)                                                              |
+| About、ターミナル、Decoder                     | [ページと機能](https://demo.anglefeint.com/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                                   | [About](https://demo.anglefeint.com/ja/blog/config-about/)、[ターミナル](https://demo.anglefeint.com/ja/blog/config-terminal/)、[Decoder](https://demo.anglefeint.com/ja/blog/config-decoder/) |
+| 音楽とコメント                                 | [音楽設定](https://demo.anglefeint.com/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)、[読者コメント](https://demo.anglefeint.com/ja/blog/starter-guide-4-giscus-comments/) | [音楽](https://demo.anglefeint.com/ja/blog/config-music/)、[Giscus と多言語共有](https://demo.anglefeint.com/ja/blog/config-comments/)                                                         |
+| 言語、解析、公開テキスト補足                   | [多言語](https://demo.anglefeint.com/ja/blog/starter-guide-languages/)、[公開](https://demo.anglefeint.com/ja/blog/starter-guide-deployment/)                                           | [言語と補完](https://demo.anglefeint.com/ja/blog/config-languages/)、[GA4・AI 補足](https://demo.anglefeint.com/ja/blog/config-analytics-ai/)                                                  |
 
-任意の Matrix 演出：`theme.effects.enableHomePassage` は既定で `false`。有効時はホームの記事リンクで緑の演出を 8 秒再生してから移動します。About の `Oracle` は独立して動作し、クリック時に前回と異なる 4 種類の配色から選びます。到着後はドラッグで周囲を見回し、右クリックで廊下へ戻れます。Escape または × で閉じます。動きを減らす設定では通常の移動と静止した Oracle プレビューを使います。
+場所が不明なら[設定リファレンス総合案内](https://demo.anglefeint.com/ja/blog/config-reference/)へ。1言語の文面変更で内容は自動翻訳せず、設定・記事変更には再ビルド・再配備が必要です。
 
-幅1440px以上では右下の端末に `Knock, knock.` が表示されます。文章は選択・コピー・スクロールでき、独立した鍵穴ボタンで共通の廊下プレビューを開始します。`src/site.config.ts` の `i18n.locales.en.messages.home.transmission` を全言語の共通文として設定し、必要な言語だけ `i18n.locales.<code>.messages.home.transmission` で上書きします。優先順は現在の言語設定 → 英語設定 → `Knock, knock.` です。通常のUI翻訳とは異なります。変更後は再ビルド・再デプロイしてください。
+<a id="upgrade"></a>
 
-ホームのスイッチは `src/site.config.ts` の `theme.home` にあります。`showInitialize` は Initialize/done、`showFollow` は Wake Up/Follow、`showTrace` は右下の状態表示です。すべて既定は `true`、`false` で個別に非表示にできます。 0.18.1:下部の2つのステータスは初期状態で非表示です。マウスを重ねた項目や選択した項目だけが現れ、全選択では両方が現れます。光るカーソルは右側のトレースにのみ連動します。
+## 7. 既存ブログを更新する
 
-言語別のホーム大見出しは `src/site.config.ts` の `i18n.locales.<code>.site.homeTitle` で設定できます（例：`ja: { site: { homeTitle: "私のデジタルガーデン" } }`）。追加した言語にも対応します。未設定・空白の場合は `meta.fallback` の順に探し、最後に全体の `site.title`（または `PUBLIC_SITE_TITLE`）を使います。ホームの見出しだけが変わり、ブラウザータイトル、ナビゲーション、フッター、RSS、SEO のサイト名は共通です。変更後は再ビルドして公開してください。
+新規インストールならこの節は不要で、[検証・プレビュー・初回公開](#deployment)に進めます。
 
-About には各言語の目次と強調された Contact 欄があります。目次は広い画面では本文枠の右側、小さい画面では本文内に表示されます。Frontier の Contact から `/<locale>/about/#contact` へ直接移動できます。About を無効にするとこのリンクは消えますが、Decoder Lab は独立した設定を維持します。
+Git コミットなどで変更を保存し、dev・preview を止め、元のプロジェクトルートで互換性を確認して更新します。
 
-About のウィンドウ操作は閲覧パネルの閉じる・最小化・全画面表示と対応する端末コマンドを提供し、ブラウザー内に状態を保存します。integration の標準ページはパッケージと共に更新されます。0.27 より前のプロジェクトは上記の初回移行が必要です。
+```bash
+npx @anglefeint/astro-theme@latest upgrade --check
+npx @anglefeint/astro-theme@latest upgrade
+```
 
-About の **Hacker Decryptor** は、Base64/Base64URL、URLエンコード、16進数、HTMLエンティティ、Unicodeエスケープ、JWTのヘッダーとペイロードをブラウザー内でデコードします。形式の自動判定とページ配色に合わせた数字の結果アニメーションに対応。サイドバーのDecryptorから開けます。APIや追加設定は不要です。
+`--check` は変更・インストール・ビルドをしません。実更新は npm、package-lock.json、anglefeint.projectSchema: 1 の統合 starter 用です。pnpm／yarn／bun でロックを消して回避しないでください。
 
-完全版の **Decoder Lab** は `/<locale>/decoder/` にあります。ローカル処理履歴、EVM/HyperEVM/TRONのERC-20/TRC-20呼び出し解釈、EVM/TRON/Bitcoinアドレス確認に対応。Aboutの解読ダイアログから開けます。`src/site.config.ts` の `theme.enableDecoderPage: false` でページとリンクを個別に無効化できます。RPC、ウォレット接続、APIキーは不要です。
+テーマ依存を更新して doctor を実行し、記事、個人設定、音楽、画像、独自ページを残します。2つの依存ファイルを `.anglefeint/backups/` へ保存しますが全体バックアップではありません。失敗時は復元と旧依存再導入を試みます。失敗後の dist は公開しません。
 
-0.20.0 以降：ヘッダーの独立した **Frontier** 矢印からも Decoder Lab を開けます。画像付きカードは原文と資料・プロジェクトの公式サイトにリンクし、本文は転載しません。`src/site.config.ts` の `i18n.locales.<code>.messages.decoderPage.readings` で `tribute` と `links` 全体を設定します。空の文章は謝辞を、`links: []` はカードを非表示にします。件数の上限はなく、デスクトップでは1行最大8件です。[設定例](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration)を参照してください。
+特定版は `npx @anglefeint/astro-theme@latest upgrade --to <version>` を使い、互換性のある明確な版に置換します。自動ダウングレードはありません。成功時は検証・ビルド済みなので直接 `npm run preview` へ進め、直後の build は不要です。自動公開・不整合 Astro の自動移行は行いません。
 
-Decoder Lab のビジュアルは **cypherpunk（サイファーパンク）** 運動に着想を得ており、人間の自由、プライバシー、オープンなコードへの貢献に敬意を表しています。ピアツーピアのネットワーク表現とローカル処理は、個人がツールとデータを自分の手に持つという理念を反映しています。
+0.27 前のコピー式旧構成は直接更新できません。別 starter を作り旧プロジェクトを残して内容・素材を移します。旧標準ルート・adapter はコピーしません。
 
-## 動作要件
+詳細と復旧：[既存プロジェクトの更新](https://demo.anglefeint.com/ja/blog/starter-guide-1-configure-your-site/)、[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)、[リリース](https://github.com/anglefeint/astro-theme-anglefeint/releases)。
 
-- Node.js `22.12.0+`（LTS 推奨）
-- 0.8.0 starter の記載コマンドは Linux 上の npm + Node 22、pnpm 10 + Node 24 で検証済みです。yarn/bun は未検証です。[検証記録](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)を参照してください。
+<a id="deployment"></a>
 
-## 公開前のチェックとプレビュー
+## 8. 検証、プレビュー、初回公開
 
-サイト設定と記事の編集後、開発サーバーを停止して実行します：
+プロジェクトルートで dev を停止し、検証とビルドの後にプレビューします。
 
 ```bash
 npm run doctor
 npm run preview
 ```
 
-`doctor` はチェックとビルドを含むため、`npm run check` を重ねて実行する必要はありません。`preview` の URL を開き、終了時は `Ctrl+C` を押します。プレビューはローカル表示のみで、公開はしません。
+`npm run doctor` は検証とビルドを含み、`npm run check` は同義なので一方を選び、直後に check・build を繰り返しません。Astro／TypeScript だけなら `npm run check:no-build`。preview はローカル表示で Ctrl+C で停止し、サイトはアップロードしません。実検索はビルド後の preview で使い、dev は案内のみです。
 
-完全なチェックを省き、ビルドとプレビューだけ行う場合：
+ビルドだけなら次の組に置き換えます。どちらか1つを選びます。
 
 ```bash
 npm run build
 npm run preview
 ```
 
-pnpm では `pnpm doctor`、次に `pnpm preview` を使います。ビルドのみなら `pnpm build`、次に `pnpm preview` です。
+pnpm は `pnpm run doctor`／`pnpm preview`、または `pnpm build`／`pnpm preview` です。`pnpm doctor` は pnpm 自身の診断を呼ぶため省略しないでください。1組を選び重複ビルドしません。
 
-静的ファイルは `dist/` に出力されます。ホストのビルドコマンドを `npm run build`、出力先を `dist/` に設定し、[Astro デプロイガイド](https://docs.astro.build/en/guides/deploy/)に従って公開します。本番ドメイン、記事、言語メニュー、検索を確認してください。
+静的ホストへの初回公開：
 
-## AI が読み取れるコンテンツ
+1. site.url または PUBLIC_SITE_URL を正式 URL にし、ソース、原画像、生成物をコミットします。
+2. ビルドは `npm run build`、出力は `dist`。手動なら成功ビルドの **dist 全内容** をアップロードします。
+3. _astro/、pagefind/、_social/、公開テキストなどを含め、HTML だけを配備しません。
+4. ドメインルート・ディレクトリ index を使います。任意サブパスは追加対応が必要で Astro base だけで対応済みとは扱いません。
+5. ホストでドメイン・HTTPS を設定し、ホーム、記事、言語、画像、検索を確認します。
 
-ビルド時に公開記事、有効な Fragments と About を `/llms.txt`、言語別索引、全文ファイルへ含めます。記事の Markdown URL は変わりません。各言語に `/ja/fragments/index.md` と `/ja/about/index.md` を生成します（言語コードは置き換えてください）。Fragments は公開された全ページをまとめ、各 ID、公開日時、本文、安定した `/<locale>/fragments/#ID` リンクを保持します。HTML から Markdown を発見できます。`npm run build` 後と preview で利用でき、`dist/` 全体を公開します。
+静的出力なので本番 Node.js・追加 adapter は不要です。ターミナル JSON の noindex は dist/_headers に統合し、対応ホストが適用します。他は同等設定が必要で Astro preview は再現しません。内容・設定変更後は再ビルドと全配備を行います。
 
-About は公開プロフィール、連絡先、開ける AI テキストポップアップを出力し、端末設定・ツール・装飾 UI は除外します。コメントは出力しません。無効なページ／言語、削除済み内容、noindex、外部 canonical は除外し、再ビルドで古い生成物と発見リンクを削除します。ユーザーの独自ファイルは保護し、競合時はビルドを停止します。サイト／言語の補足情報は全出力に適用します。JSON-LD に言語を含め、About は AboutPage を使います。新しい設定・サーバー・UI 依存は不要で、AI の登録や引用は保証しません。
+詳細：[独自ドメインでブログを公開する](https://demo.anglefeint.com/ja/blog/starter-guide-deployment/)。
 
-`src/site.config.ts` の任意設定 `aiReadableContent.notes`（Markdown）と `aiReadableContent.links`（`{ label, href }[]`）は、索引・全文・各記事の Markdown にサイトの補足情報を追加します。`i18n.locales.<code>.aiReadableContent` で項目ごとに上書きでき、省略時は全体設定を継承し、`notes: ''` / `links: []` で非表示にします。[詳細](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context)。
+## ライセンス
 
-## 初期設定：サイト情報とホームの URL
-
-公開前に、`src/site.config.ts` 内の既存の `defineThemeConfig({...})` オブジェクトを編集してください。以下の項目を既存の設定に統合し、ファイルの import/export、言語設定、機能設定は残します。タイトル、著者名、`https://your-domain.example` は自分の情報に置き換えてください。
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: {
-    title: '私のブログ',
-    author: 'あなたの名前',
-    url: 'https://your-domain.example',
-  },
-  i18n: {
-    defaultLocale: 'ja',
-    routing: {
-      defaultLocalePrefix: 'never',
-    },
-  },
-});
-```
-
-**ホームへのアクセス方法を選びます：**
-
-- `'always'`（テーマの既定値）：`/` から `/<既定の言語>/`（初期設定では `/en/`）へ移動します。ホームが表示される前に **「Redirecting to home…」** が一瞬見える場合があります。
-- `'never'`（上の例）：`/` に既定言語のホームを直接表示するため、ルート URL では中間のリダイレクト画面を経由しません。`/<既定の言語>/` は `/` に戻ります。この例の既定言語は日本語です。
-
-`defaultLocale` には、有効な言語（`ja`、`en`、`zh`、`ko`、`es` など）を指定します。この設定が変えるのは既定言語の**ホーム**だけです。ブログや記事には引き続き `/ja/blog/` のような言語プレフィックスが付きます。
-
-canonical、フィード、サイトマップに正しいドメインを使うため、`site.url` に本番サイトの URL を設定してください。環境ファイルやホスティングのビルド設定に `PUBLIC_SITE_URL` がある場合は、そちらが優先されるため併せて確認します。変更後は再ビルドしてデプロイしてください（`npm run build`、または連携済みホスティングのビルド）。ローカルファイルの編集だけでは公開サイトは更新されません。
-
-## 使用する言語を選ぶ
-
-標準で9言語が有効です：`en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant`。既定は英語です。不要な言語は `src/site.config.ts` で `i18n.locales.<code>.meta.enabled: false` にします。設定の省略では無効にならず、既定言語は常に有効です。`new-post` は初期状態で9ファイルを作成しますが、自動翻訳はしません。日本語だけ作成する場合：`npm run new-post -- my-post --locales ja`。
-
-## 言語
-
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+このテーマは [MIT License](LICENSE) で公開しています。
 
 ## プレビュー
 
@@ -303,15 +303,9 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 
 ### 共有プレビュー
 
-![Anglefeint の既定の共有画像](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+![Anglefeint 既定共有画像](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
 
-この内蔵の 1200×630 画像は、Fragments など、専用の共有画像がないページの既定プレビューです。`site.ogImage` で置き換えられます。
-
-記事ごとに、`npm run build` 時にタイトル、著者、サイト名から 1200×630 の PNG を自動生成します。生成はビルド時に行われ、共有リンクを開く際は静的画像を使います。画像 API や追加のブラウザー JavaScript は不要です。これらの情報を変更したら、再ビルドしてデプロイしてください。
-
-記事の frontmatter の `ogImage` は自動生成画像より優先されます。`theme.socialImage.enabled` を `false` にすると、記事の `heroImage` がサイトの既定画像より優先され、内蔵画像は最後のフォールバックになります。
-
-### ページのスクリーンショット
+### ページスクリーンショット
 
 | ホーム                                                         | ブログ一覧                                                                |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -329,9 +323,9 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 | ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.jpg) |
 
-| ブログのページ送り                                                                   | 記事の関連記事                                                                |
-| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| ![ブログのページ送り](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![記事の関連記事](public/images/theme-previews/preview-blog-post-related.jpg) |
+| ブログのページ分割                                                                   | 関連記事                                                                |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| ![ブログのページ分割](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![関連記事](public/images/theme-previews/preview-blog-post-related.jpg) |
 
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
@@ -340,280 +334,3 @@ canonical、フィード、サイトマップに正しいドメインを使う�
 | Decoder Lab · サイファーパンク資料                                                   |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
-
-## ルートごとの雰囲気
-
-- `/<default-locale>/`（デフォルトでは `/` がここへリダイレクト）：Matrix 風ターミナルのホーム
-- `/:lang/blog`：サイバーパンク調のアーカイブ
-- `/:lang/blog/[slug]`：AI インターフェース風の読書レイアウト
-- `/:lang/about`：任意で有効化できるハッカー風 About ページ
-
-## テーマ命名ルール
-
-- テーマ引数: `base`, `ai`, `cyber`, `hacker`, `matrix`
-- 内部セレクタ/スクリプト接頭辞: `ai-*`, `cyber-*`, `hacker-*`
-- 構成レイヤー: `ThemeFrame -> Shell -> Layout -> Page`
-
-## 主な機能
-
-- 現在の言語の記事を検索する Pagefind 全文検索
-- 自動生成の記事目次と静的タグ一覧
-- コードのコピーと本文画像のプレビュー
-- Astro 7 の静的出力
-- Markdown + MDX コンテンツコレクション
-- スターター同梱のサンプルロケール: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`
-- ロケール別 RSS
-- Sitemap + robots 対応
-- 設定駆動のカスタマイズ
-- 短いページでもフッターを下部に固定
-
-## テーマ設定
-
-1. 環境変数でサイト情報を上書きする場合のみ `.env.example` を `.env` にコピーします。それ以外は `src/site.config.ts` を使います。
-2. `src/site.config.ts` を編集:
-   - `site.title`、`site.description`、`site.url`、`site.author`、`site.tagline`: サイト identity と既定メタデータ
-   - `i18n.defaultLocale`: 既定ロケールを設定
-   - `i18n.routing.defaultLocalePrefix`: 既定ロケールを `/<default-locale>/`（デフォルト）に置くか `/` に置くかを設定
-   - `i18n.locales`: 単一の設定源として対応ロケールを追加・削除
-   - `i18n.locales.<code>.messages`: ロケール別 UI 文言の上書き
-   - `i18n.locales.<code>.meta.label`: 言語メニューの表示名（`zh` の既定値は `简体中文`）。変更しても URL は変わりません
-   - `i18n.locales.<code>.site.hero`: ロケール別ホーム hero 文言の上書き
-   - `social.links`: SNS リンク
-   - `i18n.locales.<code>.about`: ロケール別 About コンテンツとランタイム文言
-   - `theme.enableAboutPage`: About の表示切り替え
-   - `theme.effects.enableRedQueen`: 記事ページのサイドモニター演出をオン/オフ
-   - `theme.comments`: Giscus を有効化・設定（コア ID + 動作パラメータ）
-3. `src/content/blog/<locale>/` のサンプル記事を差し替え。
-
-About の本文段落と署名では設定文字列の改行を保持します。`\n` は改行、`\n\n` は空行になり、長文は自動で折り返します。通常のテキストのままで、Markdown や HTML は解釈しません。`<br>` は挿入しないでください。
-
-フッターは著作権、テーマ/Astro のクレジット、任意の `site.tagline` を別々に表示し、その下にソーシャルアイコンを配置します。クレジットはページの言語に従い、独自の文言は全言語でそのまま表示します。空の文言はスペースを取らず、長文はモバイルで折り返します。既存の設定と `PUBLIC_SITE_TAGLINE` による上書きは維持され、移行は不要です。
-
-任意の `theme.footer.links` はフッターに独立した行を追加します。各項目は `label` と `href` を持ち、リンク間に中点を表示します。省略または空配列で非表示になります。ラベルは各言語でも設定した原文を保ち、ソーシャルアイコンや `showCredits` とは独立しています。
-
-### 任意：Google Analytics 4
-
-`src/site.config.ts` の既存の `defineThemeConfig({...})` に次のトップレベル設定を追加・編集します（`site` と同じ階層で、`theme` の中ではありません）。
-
-```ts
-analytics: {
-  googleAnalyticsId: 'G-XXXXXXXXXX',
-},
-```
-
-Google Analytics → 管理 → データストリーム → ウェブストリームから **測定 ID**（`G-...`）をコピーします。プロパティ名や数字のプロパティ ID ではありません。空欄なら無効です。全言語・全テーマのページで同じ ID を使い、ページパスで言語を比較できます。再ビルド・再デプロイ後、公開サイトを開いて GA4 のリアルタイムレポートで確認してください。
-
-開発モードと localhost・ループバックでのプレビューは送信しません。設定済みのリモート・LAN アドレスのプレビューは計測します。初期状態では Google スクリプトを読み込みません。GTM、Zaraz、手動コードとの二重導入を避けてください。同意バナーや同意管理は含まれません。必要なサイトは計測を有効にする前に整備してください。ブロッカーにより計測できない場合があります。既存プロジェクトには対応する設定補助ファイルとアダプターが必要です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)を参照してください。
-
-### 任意: Giscus コメント
-
-`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
-
-コメントはデフォルトで無効です。有効化するには:
-
-1. `src/site.config.ts` で `theme.comments.enabled = true` を設定。
-2. 必須項目を設定:
-   - `theme.comments.repo`
-   - `theme.comments.repoId`
-   - `theme.comments.category`
-   - `theme.comments.categoryId`
-3. 任意項目:
-   - `theme.comments.shareAcrossLocales` (`false`)
-   - `theme.comments.mapping`
-   - `theme.comments.term`（`mapping = "specific"` のとき必須） — `shareAcrossLocales: false`
-   - `theme.comments.number`（`mapping = "number"` のとき必須）
-   - `theme.comments.strict`
-   - `theme.comments.reactionsEnabled`
-   - `theme.comments.emitMetadata`
-   - `theme.comments.inputPosition`（`top` または `bottom`）
-   - `theme.comments.theme`
-   - `theme.comments.lang`
-   - `theme.comments.loading`
-   - `theme.comments.crossorigin`
-
-`shareAcrossLocales: false`: コア ID が不足するとコメントは表示されません。コメント有効時に `mapping="specific"` の `term` が空、または `mapping="number"` の `number` が正の整数文字列でない場合、設定エラーで開発・ビルドが停止することがあります。
-
-CLI はマージ後の設定で有効な言語を使用します。設定エラーでは生成を停止し、明示的な `--locales` または `ANGLEFEINT_LOCALES` は設定読み込みを省略します。
-
-コメントと翻訳間の共有は既定で無効です。通常のパス別コメントには上の設定を使います。翻訳間で一つのディスカッションを共有する場合、リポジトリとカテゴリの値を残し、対応付けの設定を次のようにします：
-
-```ts
-theme: {
-  comments: {
-    // enabled、repo、repoId、category、categoryId は元の値を残します。
-    shareAcrossLocales: true,
-    mapping: 'specific',
-    term: '',
-    number: '',
-    strict: '1',
-    lang: '',
-  },
-},
-```
-
-共有時は mapping が specific、term と number が空、strict が文字列の 1 である必要があります。記事が言語接頭辞を除いた完全な slug を data-term に渡します。9言語で cypherpunk-ideals-ai-and-the-future-of-crypto を共有できます。guides/setup と other/setup は別のディスカッションです。slug がない場合はエラーです。翻訳には同じ slug を使います。lang が空なら画面言語に従い、指定すれば固定されます。本文は翻訳せず、ディスカッションとリアクションを共有します。
-
-共有しない場合、自分の mapping、term、number、strict は従来通りです。specific には空でない term、number には正の整数文字列が必要です。共有とコメントが有効な状態で、mapping の不一致、空でない term/number、1 以外の strict は設定エラーになります。翻訳2件と別の記事で対応付けを確認してください。投稿には GitHub の認可が必要です。既存の comments に統合し、他の設定を上書きしないでください。
-
-既存のディスカッションを自動で統合・移動・削除しません。共有を有効にすると別のディスカッションに切り替わり、以前のコメントが表示されない場合があります。変更前に mapping、term、number、strict を保存してください。戻す場合は shareAcrossLocales: false にして各値を元に戻します。旧コメントの移行が必要なら GitHub 上で確認して手動で対応してください。テーマは移行しません。
-
-[コメント設定ガイド](https://demo.anglefeint.com/ja/blog/starter-guide-4-giscus-comments/)
-
-## 設定ポイント
-
-- 単一エントリ: `src/site.config.ts`
-- ホームの説明は解決済み `messages.siteDescription`（内蔵・フォールバック言語を含む）を優先し、空の場合のみ `site.description` を使います。
-- 言語設定は既定値と深くマージされます。無効化には `i18n.locales.<code>.meta.enabled = false` を指定します。既定言語は常に有効です。
-- サイト情報は `PUBLIC_*` 環境変数でも上書き可能
-
-## ソーシャルリンク
-
-`src/site.config.ts` の `social.links` を設定します。ヘッダーとフッターは配列の順序を共有します。必要なリンクだけ追加してください：
-
-```ts
-// src/site.config.ts — defineThemeConfig({ ... })
-social: {
-  links: [
-    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
-    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
-  ],
-},
-```
-
-組み込みの `icon` 名： `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
-
-任意の `rel` に `me` や `me nofollow` などを空白区切りで指定できます。組み込みアイコン・独自画像・テキストリンクに共通です。省略・空欄では `noopener noreferrer` を維持します。小文字化・重複除去を行い、安全属性は常に保持し、競合する `opener` は無視します。プラットフォームによる `me` の自動付与はありません。自分のアカウントにのみ指定してください。[Mastodon の確認](https://docs.joinmastodon.org/user/profile/#link-verification)には、デプロイ後にプロフィール項目へサイトの HTTPS URL を保存します。リンクがある実ページ（例：`/en/`）を使用してください。ルートの HTML リダイレクトページにはリンクがない場合があります。確認は Mastodon サーバーが行います。
-
-```ts
-{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
-```
-
-カスタム画像は `community.svg` を `public/icons/` に置き、リンクに `iconSrc: "/icons/community.svg"` を指定します。ローカルの SVG、PNG、WebP に対応。パスは `/` で始め、外部 URL、クエリ、フラグメント、エンコード文字は使いません。Astro の `base` は自動で付加されます。ファイルがない場合や未対応のアイコン名は開発・ビルド時に設定エラーになります。
-
-優先順位は `iconSrc` → `icon` → テキストです。組み込みアイコンはメニューの色を継承し、カスタム画像は元の色を保ちます。`label` はアクセシブルな名前です。フッターは必要に応じて折り返し、ヘッダーは1行のまま横スクロールできます。720px 以下では従来どおりヘッダーのソーシャルリンクを非表示にします。フッターは表示されます。空の `links` はクリックできない既存の3つのプレースホルダーを表示します。変更後は再ビルド・デプロイしてください。
-
-## ドキュメント
-
-- [アーキテクチャ](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)
-- [ビジュアルシステム](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/VISUAL_SYSTEMS.md)
-- [提出チェックリスト](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
-- [テーマ掲載文案](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md)
-- [アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
-- [変更履歴](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
-
-## 記事検索
-
-検索は既定で有効です。ヘッダーから現在の言語の記事タイトルと本文を検索できます。`npm run build` が索引を自動生成し、静的サイトと一緒に配信します。サーバーやアカウントは不要です。
-
-`src/site.config.ts` の `theme.search.enabled: false` で検索と索引生成を無効化できます。記事の frontmatter に `search: false` を指定すると、その記事を除外します。ナビゲーション、目次、関連記事、コメント、装飾文は対象外です。
-
-ローカル検索は `npm run build` の後、`npm run preview` で確認します。`npm run dev` は開発用の案内を表示します。記事更新後は再ビルドしてください。
-
-## 記事の目次
-
-記事ページでは Markdown の `##`、`###` 見出しから折りたたみ可能な目次を自動生成し、広い画面では本文の右側に追従し、狭い画面では本文の前に表示します。初期状態では展開します。該当する見出しがなければ表示しません。長い見出しは折り返し、番号は追加しません。
-
-`src/site.config.ts` の `theme.toc.enabled` でサイトの既定値（初期値 `true`）を変更できます。記事の frontmatter に `toc: false` を指定すると非表示、`toc: true` を指定するとサイトの既定値が無効でも表示します。省略するとサイト設定を継承します。
-
-MDX 内の Markdown 見出しに対応しますが、コンポーネントが生成する見出しや HTML/JSX の見出しは自動収集しません。独自の記事ルートでは `render(post)` の `headings` を `BlogPost` に渡してください。省略時は目次を表示しません。
-
-## タグ一覧
-
-記事の frontmatter に `tags: ["Astro", "フロントエンド"]` を追加すると、ビルド時に言語ごとのタグ一覧とページ分割された記事一覧が生成されます。タグのない記事はそのまま使えます。`src/site.config.ts` の `theme: { tags: { enabled: false } }` で無効化できます。大文字・小文字は区別し、前後の空白と重複は除去します。特殊な名前は安定した URL に符号化され、名前を変更すると URL も変わります。追加コマンドは不要です。
-
-`/<locale>/tags/` に直接アクセスするか、ブログのタグリンクから開けます。記事のタグは `/<locale>/tags/<tagSlug>/` を開きます。その言語にタグがない場合、一覧は空になりブログのタグ入口は表示されません。
-
-## コードのコピー
-
-コードブロックの右上にコピーボタンが自動表示されます。通常の Markdown を使うだけで、設定は不要です。HTTPS または localhost が必要で、失敗時は手動コピーの案内を表示します。
-
-## 本文画像のプレビュー
-
-本文のリンクなし画像はクリックまたは Enter/Space で拡大できます。Esc、閉じるボタン、背景で閉じ、読書位置を維持します。リンク付き画像の動作は変わりません。
-
-ブラウザーが選択済みの画像ソースを表示し、高解像度の原本を別途取得しません。記事のカバー画像とリンク・ボタン内の画像は対象外です。
-
-## 記事の共有画像
-
-この機能は 0.5.0 と対応する starter で利用できます。0.4.0 には含まれていません。
-
-`npm run build` は `ogImage` 未指定の記事に、タイトル・著者・サイト名を含む 1200×630 PNG を自動生成します。`heroImage` は変更しません。記事の隣の画像は `ogImage: ./share.png`、public 内は `ogImage: /images/share.png` で指定できます。HTTPS URL も使えますが、可用性とキャッシュは提供元に依存します。ローカル画像がない場合はエラーになります。
-
-自動共有画像には、コードレイン・ターミナル・ネオンネットワークの同梱背景を使い、サイト名・タイトル・著者は自分の情報を表示します。右下の小さな `Theme by Anglefeint` は `theme.footer.showCredits`（既定 `true`）に従います。`false` にするとフッターと画像のクレジットを非表示にします。変更後は再ビルド・再デプロイしてください。独自の `ogImage` は変更しません。背景はオフラインで使え、ブラウザー JavaScript は増えません。
-
-`src/site.config.ts` の `theme: { socialImage: { enabled: false } }` で自動生成を停止できます。手動画像は常に優先され、それ以外は既存のカバーまたは既定画像に戻ります。変更後は再ビルド・デプロイしてください。生成先は `dist/_social/`、正確な URL は記事 HTML の `og:image` にあります。共有先のキャッシュは即時更新されない場合があります。
-
-同梱フォントで標準の9言語に対応し、画像 API やブラウザー JS は不要です。長いタイトルは画像内のみ省略します。すべての絵文字や文字体系は保証しません。ビルド時間とインストール容量は増えますが、記事ページへのフォント追加配信はありません。
-
-## 任意の音楽プレーヤー
-
-公開デモでは Free Music Archive の8曲を使用しています。starter の音楽は既定で無効です。作者、出典、各曲のライセンス（CC0 1.0 または CC BY 4.0）は[音楽クレジット](https://demo.anglefeint.com/music/credits.html)を参照してください。音楽はテーマコードの MIT ライセンスとは別で、npm パッケージや starter には含まれません。音楽を追加・再利用する際は、各ライセンスと帰属表示の条件に従ってください。
-
-既定では無効です。音声ファイルを `public/music/` に置き、次の設定を `src/site.config.ts` に追加します：
-
-```ts
-theme: {
-  music: {
-    enabled: true,
-    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
-  },
-},
-```
-
-0.18.1:有効なプレーヤーは新しいページでコンパクト表示から始まり、OPEN で展開します。再生位置、音量、再開動作は初期サイズに影響されません。
-
-各曲に `title` と `src` を指定し、`artist` は任意です。HTTPS の音声 URL も利用できます。空のリストでは表示されません。初回訪問では PLAY を押してから音声を読み込みます。同じタブのセッション内で曲・位置・音量を記憶します。再生中にページ移動、再読み込み、戻る・進むを行うと保存位置からの再生を試み、手動で一時停止した場合は停止状態を保ちます。短い途切れが生じる場合があり、シームレス再生ではありません。ブラウザーが自動再生をブロックした場合は PLAY を押してください。削除された曲の代わりに別の曲を自動再生しません。ストレージが使えない場合も手動再生は可能ですが、セッションの再生再開はできません。
-
-再生前に曲全体をダウンロードしてブラウザーの Blob に変換するため、シークにサーバーの HTTP Range 対応は不要です。大きなファイルや遅い回線では待ち時間とメモリー使用量が増えます。一時停止からの再開は読み込み済みの曲を再利用し、曲の切り替え時に古い曲を解放します。ページ移動後は再読み込みしますが、ブラウザーの HTTP キャッシュが利用される場合があります。外部音源にはクロスオリジン取得を許可する CORS 設定が必要です。同一サイトの `public/music/` に置けば、この設定は不要です。
-
-## ライセンス
-
-MIT License。`LICENSE` を参照。
-
-## 数式
-
-Markdown と MDX の記事では、LaTeX 形式の数式が既定で全体に有効です。インラインは `$C_{saved}$`、独立した数式は別々の行の `$$` で囲みます。記事ごとの指定やプラグインの追加インストールは不要です。
-
-```markdown
-Inline: $C_{saved}$
-
-$$
-\frac{a}{b}
-$$
-```
-
-`src/site.config.ts` の `theme: { math: { enabled: false } }` で無効にできます。曖昧なドル記号は `\$` と書きます。コードはそのまま表示されます。無効時は波括弧内の JavaScript 式を含む通常の MDX 規則に戻ります。
-
-ビルド時にレンダリングし、ローカルのスタイル・フォントとアクセシブルな MathML を使用します。ブラウザー用数式エンジンは不要です。長い独立数式は横スクロールできます。不正な数式はファイルと原因を示してビルドを停止します。タイトルと概要はプレーンテキストにし、数式は検索対象から除外されます。KaTeX の数式構文に対応し、完全な LaTeX 文書には対応しません。
-
-0.27 以降の統合 starter では、テーマパッケージが数式対応を含む Markdown 処理器を自動で接続します。一度の移行が必要なのは 0.27 より前の構成だけです。新しいプロジェクトへ処理器やアダプター実装をコピーしないでください。
-
-## 記事の統計
-
-語数はソース本文の概算です。中日韓の文字は一文字ずつ、それ以外は主に空白で区切って数えます。tokens は `round(max(words, 1) × 1.3)` による推定で、モデルの分かち書き結果や実際の AI 使用量ではありません。1,000 以上は小数一桁と k で表示します。frontmatter の `wordCount`、`tokenCount` は個別に上書きでき、wordCount の変更だけでは tokens は再計算されません。数式や MDX のソースも推定に影響します。
-
-## 既定の共有画像と Fragment の短い ID（0.33.0+）
-
-src/site.config.ts の既存の site 設定に site.ogImage を追加できます。public ルートのパス（/images/share.jpg は public/images/share.jpg）または HTTPS URL を指定します。空欄なら内蔵の 1200×630 Anglefeint 画像を使います。Fragments とすべての #ID 共有リンクは同じ画像を使います。記事固有の画像と自動生成画像が優先され、自動生成を無効にした場合も記事のカバー画像がサイト既定画像より優先されます。変更後は再ビルドしてデプロイしてください。共有サービスにはキャッシュが残る場合があります。
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { ogImage: '/images/share.jpg' },
-});
-```
-
-new-fragment は大文字・小文字を区別する英数字 8 文字の Nano ID を生成し、各言語の既存 Markdown ID と重複すると再試行します。同じ実行の全言語は ID と公開日時を共有します。Fragment ID は英数字 8 文字のみです。以前の UUID や長い ID は非対応のため、古い項目は削除して再投稿してください。移行や旧リンク互換機能はありません。公開後の ID は維持してください。変更するとコメントの関連付けも変わります。
-
-## ホームの Fragment プレビュー（0.35.0+）
-
-現在のソースでは、`theme.fragments.enabled` が有効で現在の言語に投稿があると、ホームのヘッダー下にピクセルアバターの入口が表示されます。開くと最新3件をプレビューでき、カードは元の投稿へ、下部の件数と矢印は一覧へ移動します。件数は現在の言語のプレビュー数 / 総数です。画像とコードは高さを制限し、超過部分を切り取ります。無効時や投稿がない場合は入口を表示しません。追加設定は不要です。テーマ0.35.0以降が必要です。
-
-記事の OUTPUT は語数、tokens、任意のモデル名を維持します。読了時間、latency、confidence は frontmatter に指定しても表示しません。旧フィールドは引き続き使用できます。本文とパネルはすぐに表示され、静止します。背景ネットワークと見出しの光帯は維持します。これらの表示変更も次回リリース待ちです。
-
-## Blog List の永続カバー画像（0.36.0+）
-
-この変更には次回のテーマリリースが必要です。公開済み0.35.0には含まれません。既存の heroImage パスを維持するか、新しい原画像を src/assets/blog/covers/originals/ に置いて記事から参照します。ローカル dev/doctor は不足・古い一覧用サイズを生成します。`npx @anglefeint/astro-theme prepare-covers` も使え、`--check` は書き込まず検証します。原画像と src/assets/blog/covers/ 全体（manifest.json、generated/）をGitにコミットしてください。ビルドとCIのdoctorは検証のみで、不足・古い・変更済みファイルをエラーにし、配信環境で再生成せずAstroキャッシュにも依存しません。一覧はレスポンシブ画像を使い、カバー候補2枚を優先します。WebP品質80は従来のエンコード目標で、画素の無損失を保証しません。原画像は変更せず、SVG/アニメーションは元形式を維持します。
-
-記事詳細のメインカバーも同じレスポンシブ画像を使用します。Canvas エフェクトは選択済みの画像を再利用し、元画像を別途ダウンロードしません。
-
-Fragments のローカル画像も同じ保存先を使用します。public の `/images/...` と Markdown／HTML の相対画像リンクに対応し、不足する幅・高さを補います。一覧とホームのプレビューは同じレスポンシブ画像を共有し、外部画像は変換しません。

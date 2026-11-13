@@ -28,7 +28,19 @@ test('distributed tutorial overrides use the current integration guidance', asyn
     const body = await readFile(new URL('../' + source, import.meta.url), 'utf8');
     assert.match(body, /^---\r?\n/, destination);
     assert.doesNotMatch(body, /export const STARTER_SOURCE_OVERRIDES/);
-    assert.match(body, /npx @anglefeint\/astro-theme@latest upgrade/);
+    // Each tutorial either explains upgrading or links to the self-contained
+    // installation guide; unrelated tutorials need not repeat upgrade commands.
+    const locale = destination.split('/').at(-2);
+    assert.ok(
+      body.includes('npx @anglefeint/astro-theme@latest upgrade') ||
+        body.includes(`/${locale}/blog/starter-guide-1-configure-your-site/`),
+      destination
+    );
+    assert.equal(
+      body,
+      await readFile(new URL('../' + destination, import.meta.url), 'utf8'),
+      `${destination} must match its starter template`
+    );
     // The integration's upgrade introduction is already published. Later
     // sections may accurately distinguish a new CLI change awaiting release.
     const upgradeIntroduction = body.split('```')[0];
@@ -36,7 +48,7 @@ test('distributed tutorial overrides use the current integration guidance', asyn
     assert.doesNotMatch(body, /UPGRADING\.md#unreleased-/);
     tutorials++;
   }
-  assert.equal(tutorials, 45);
+  assert.equal(tutorials, 198);
 });
 
 test('starter generation fixes legacy commands, is idempotent and excludes maintainer dependencies', () => {

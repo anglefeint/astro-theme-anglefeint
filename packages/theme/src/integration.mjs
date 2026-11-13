@@ -167,7 +167,10 @@ export default function anglefeint(themeConfig) {
       },
     },
     mdx(),
-    blogCovers({ mathEnabled: themeConfig.theme.math.enabled }),
+    blogCovers({
+      mathEnabled: themeConfig.theme.math.enabled,
+      fragmentsEnabled: themeConfig.theme.fragments?.enabled ?? false,
+    }),
     socialImage(),
     {
       name: 'anglefeint-content-exports',

@@ -7,23 +7,18 @@ heroImage: '../../../assets/blog/default-covers/ai-02.webp'
 aiModel: 'anglefeint-core'
 aiMode: 'analysis'
 aiState: 'stable'
-aiLatencyMs: 168
-aiConfidence: 0.96
-wordCount: 760
-tokenCount: 1180
+updatedDate: '2026-11-14'
 ---
 
-このテーマでは、見た目より先に構造を決めました。理由は明確で、構造が曖昧だと改修コストが急増するからです。
+Anglefeint は四つの役割を組み合わせます。
 
-Anglefeint は次の四層で構成されています。
+- ThemeFrame：文書、SEO、ナビゲーション、フッター、音楽の共通部分。
+- Shell：ページ固有のスタイルと背景。
+- Layout：本文、カバー、補助領域の配置。
+- Page：コンテンツと設定を読み、ページを構成。
 
-- ThemeFrame: 共通フレームと全体の土台
-- Shell: ルートごとの雰囲気を担う層
-- Layout: ページ構造の組み立て
-- Page: コンテンツとルーティングデータ
+全ページが同じ四層を順番に入れ子にするという意味ではありません。共通構造で一貫性を保ち、各ページがデータと操作を受け持ちます。
 
-この分離により、ビジュアル変更とコンテンツ変更を独立して進められます。
+標準ルート、既定値、実装は `@anglefeint/astro-theme` が提供します。starter には記事、素材、`src/site.config.ts`、独自ページ、デプロイ設定を残します。テーマ更新のために標準ページをコピーする必要はありません。設定は一つの入口に、記事と Fragments は各コンテンツディレクトリに置きます。
 
-実装は @anglefeint/astro-theme に集約し、starter はコンテンツと設定を中心に保ちます。これにより、更新はパッケージ経由で扱いやすくなります。
-
-利用者向け設定は site.config.ts を中心に整理しています。入口を一つにすることで、導入と運用の負担を下げています。
+続けて読む: [ルート別ビジュアル設計](/ja/blog/route-visual-system-design/) · [設定リファレンス：サイト名、ドメイン、共通ナビゲーション、ソーシャル、フッター](/ja/blog/config-site-chrome/)

@@ -7,15 +7,13 @@ heroImage: ../../../assets/blog/default-covers/ai-03.webp
 aiModel: anglefeint-core
 aiMode: analysis
 aiState: stable
-aiLatencyMs: 173
-aiConfidence: 0.94
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-Ein visuelles Theme soll eigenständig wirken und trotzdem für lange Texte geeignet sein.
+Filmische Gestaltung muss längeres Lesen ermöglichen. Coderegen, Neonstrahlen und Netzwerke sollen bei angemessenem Aufwand präsent bleiben.
 
-Bei Anglefeint unterstützt die Atmosphäre das Lesen. Die Artikelfläche bleibt die wichtigste Informationsebene.
+Inhalt und Effekte teilen Aufgaben: Text steht im HTML, Bilder haben Größenangaben und responsive Varianten, Module verwalten Listener, Timer und Bereinigung. Unterstützte Effekte berücksichtigen die Systemeinstellung für reduzierte Bewegung; Details unterscheiden sich je Modul.
 
-Effekte sind nach Routenverantwortung gruppiert. Wiederverwendbare Layout-Ebenen machen Verhalten vorhersehbar. Inhaltsstrukturen bleiben sprachübergreifend erhalten.
+Leistung und Barrierefreiheit hängen von Seite, Gerät und Inhalt ab. Eine Punktzahl garantiert nicht alle Artikel. Leser sollen lesen, bedienen und gehen können; Autoren sollen die Website langfristig pflegen können.
 
-Unser Ziel ist ein beständiger Lesefluss mit starker Identität, ohne Seiten auf reine Vorführungen zu reduzieren. Klare Zuständigkeiten verbinden Ausdruckskraft und Wartbarkeit.
+Weiterlesen: [Konfigurationsverzeichnis: Startseite](/de/blog/config-home/) · [Konfigurationsverzeichnis: Artikeldetailseite](/de/blog/config-article/)

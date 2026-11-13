@@ -5,10 +5,13 @@ description: 'GEO, das Zusammenleben mit Agenten und automatisch erzeugtes Markd
 pubDate: '2026-11-04'
 heroImage: '../../../assets/blog/default-covers/ai-03.webp'
 tags: ['AI', 'GEO', 'Anglefeint']
+updatedDate: '2026-11-14'
 ---
 
-Ich habe Anglefeint aus zwei Gründen für KI lesbar gemacht: GEO soll das Finden, Verstehen und Zitieren von Artikeln in generativer Suche und Antworten erleichtern, und ich glaube an eine Zukunft, in der Menschen und Agenten zusammenleben, weshalb ein Blog beide ansprechen sollte.
+Ich möchte einen Blog, den Menschen lesen und Agents finden, verstehen und zitieren können. Maschinenlesbare Zugänge bewahren Text und Quell-URL, damit Zitate zur Seite zurückführen.
 
-Menschen können selbst lesen oder Agenten Quellen suchen und Ansichten vergleichen lassen, bevor sie zum Original zurückkehren; deshalb braucht maschinenlesbarer Inhalt den vollständigen Text, Angaben zur Urheberschaft und Originaladressen.
+Beim Build erzeugt Anglefeint `llms.txt`, Sprachindizes, Volltextsammlungen und Artikel-Markdown aus öffentlichen Seiten. Aktivierte About- und Fragments-Inhalte, die Exportbedingungen erfüllen, kommen ebenfalls in die entsprechenden Exporte. Eine zweite Textfassung ist nicht nötig.
 
-Anglefeint erzeugt beim Build automatisch llms.txt, sprachbezogene Verzeichnisse und Volltextsammlungen sowie Markdown einzelner Artikel aus denselben Quelldateien, sodass Autoren nur eine Fassung pflegen und Leser Markdown direkt auf der Artikelseite öffnen können.
+Das unterstützt Auffindbarkeit und GEO, garantiert aber keine Indexierung, Platzierung oder Zitate. Exporte sind öffentlich: Geheimnisse gehören nicht in öffentliche Artikel oder ergänzende Konfigurationsnotizen.
+
+Weiterlesen: [Konfigurationsverzeichnis: GA4 und KI-Leseergänzungen](/de/blog/config-analytics-ai/)

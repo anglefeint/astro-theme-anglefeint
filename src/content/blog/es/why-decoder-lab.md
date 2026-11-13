@@ -5,10 +5,13 @@ description: 'Un homenaje a las contribuciones de los cypherpunks a la humanidad
 pubDate: '2026-11-04'
 heroImage: '../../../assets/blog/default-covers/hacker-02.webp'
 tags: ['Cypherpunk', 'Decoder Lab', 'Anglefeint']
+updatedDate: '2026-11-14'
 ---
 
-Construí Decoder Lab, ante todo, para homenajear las contribuciones de los cypherpunks y los pioneros de la libertad digital a la humanidad: sus ideas y código impulsaron las comunicaciones privadas, la privacidad y la libertad individual y el dinero digital, ampliando las herramientas para proteger información, comunicarse libremente y cooperar con autonomía.
+Decoder Lab homenajea a los cypherpunks y pioneros de la libertad digital convirtiendo ideas de cifrado, privacidad y colaboración autónoma en herramientas prácticas.
 
-También quise darle una utilidad práctica mediante la decodificación de texto, la interpretación de llamadas de tokens compatibles y la comprobación de formatos de direcciones dentro del navegador, sin conectar carteras, claves API ni RPC, en consonancia con las imágenes de terminales y redes del tema.
+Ofrece decodificación de texto, análisis de llamadas de tokens compatibles y comprobación de formato de direcciones. Todo se procesa localmente en el navegador, sin cartera, API Key ni RPC. Un formato válido no prueba validez en cadena, fondos ni seguridad.
 
-Todas las URL de recursos al pie de [Decoder Lab](/es/decoder/) pueden modificarse en `i18n.locales.<code>.messages.decoderPage.readings.links` de `src/site.config.ts`: configura title y href de cada elemento para sustituir la lista completa por tus recomendaciones o usa un array vacío para ocultarla.
+Los recursos de lectura pueden sustituirse u ocultarse. La página independiente y la herramienta de About tienen sus propios ajustes. El diccionario documenta entradas compatibles y configuración.
+
+Sigue leyendo: [Referencia de configuración: Decoder](/es/blog/config-decoder/)

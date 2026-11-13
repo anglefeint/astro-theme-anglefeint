@@ -5,6 +5,7 @@ import { SITE_AUTHOR, SITE_TITLE } from '@anglefeint/site-config/site';
 import { ENABLED_LOCALES } from '@anglefeint/site-i18n/config';
 import { imageData, socialKey } from './model.mjs';
 import { renderSocialImage } from './render.mjs';
+import { resolveArticleAuthor } from '../utils/article-author';
 
 export const prerender = true;
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -16,7 +17,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     if (!ENABLED_LOCALES.includes(locale) || post.data.ogImage) continue;
     const data = imageData(
       post.data.title,
-      post.data.author ?? SITE_AUTHOR,
+      resolveArticleAuthor(post.data.author, SITE_AUTHOR),
       SITE_TITLE,
       locale,
       THEME.FOOTER?.SHOW_CREDITS ?? true

@@ -1,176 +1,233 @@
 ---
 tags: ['anglefeint', 'starter']
-title: 'User Guide 2: Write and Organize Content'
-subtitle: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
-description: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
+title: 'User Guide 2: Write Your First Post'
+subtitle: 'Create a post, set its title and date, write the body, and organize it with headings, tags, code and formulas.'
+description: 'Create posts using the default workflow and preview them locally; reference supported fields, Markdown and MDX, contents, tags, search and statistics.'
 pubDate: '2026-03-07'
 updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
-## Daily writing starts with content files
+This is part 2 of 8. [See the full tutorial sequence](/en/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Look up configuration fields](/en/blog/config-reference/).
 
-This guide assumes you completed setup in Guide 1. Site-wide options belong in `src/site.config.ts`; a post’s title, tags, and overrides belong in its Markdown frontmatter, between the opening pair of `---` lines. These are different places.
+After [installation and site setup](/en/blog/starter-guide-1-configure-your-site/), daily writing mainly means editing files under `src/content/blog/`. Put per-post details such as title and date in frontmatter at the top of the file. The site name, default author and global switches remain in `src/site.config.ts`.
 
-## 1. Create a post and understand its URL
+First create and preview a post using the default workflow, then choose languages if needed. Read the field reference later as required.
 
-From the project root, run:
+## 1. Create a post using the default workflow
+
+In the project root, the directory containing `package.json`, run:
 
 ```bash
 npm run new-post -- my-first-post
 ```
 
-By default, files are created for enabled locales. To create only an English version, use this command instead; do not run both:
+If you ran this in the first tutorial, open the existing file and continue writing. Existing files are skipped, not overwritten.
+
+Without `--locales` or `ANGLEFEINT_LOCALES`, the command creates `src/content/blog/<语言代码>/my-first-post.md` for every enabled language. The initial configuration enables nine languages and therefore creates nine skeletons; changed language switches determine the current selection. It does not translate the body.
+
+Choose the language file you want to edit. Its address is `/<语言代码>/blog/my-first-post/`, and its list is `/<语言代码>/blog/`. For example, English uses `/en/blog/my-first-post/` and Chinese `/zh/blog/my-first-post/`, provided the corresponding language is enabled. No manual route is needed.
+
+`my-first-post` is the post slug. Use lowercase letters, numbers and hyphens, such as `learning-astro-1`; spaces, underscores and `/` are invalid. Renaming the file changes its URL without automatically redirecting the old address.
+
+The command supplies a title, description, current UTC date and placeholder body. If `src/assets/blog/default-covers/` contains WebP, PNG or JPEG images, it also randomly chooses a cover. With no images, `heroImage` is omitted; no cover is downloaded. Replace the generated text, date and image afterward.
+
+### Create only selected languages
+
+These are optional alternatives to the default command. Select zh for Chinese only, or en,zh for English and Chinese. You do not need to run every example:
 
 ```bash
-npm run new-post -- my-first-post --locales en
+# 只创建中文
+npm run new-post -- my-first-post --locales zh
+
+# 创建英文和中文
+npm run new-post -- my-first-post --locales en,zh
 ```
 
-It creates `src/content/blog/en/my-first-post.md` at `/en/blog/my-first-post/`. Use lowercase letters, numbers, and hyphens in the slug, without spaces or underscores. Existing files are skipped, never overwritten.
+When `--locales` is omitted, enabled project languages are used unless `ANGLEFEINT_LOCALES` is set. The complete precedence is `--locales` → `ANGLEFEINT_LOCALES` → enabled languages. New files from one invocation share the chosen cover; existing files remain unchanged.
 
-`--locales` selects files to create; it does not enable locales. Routes still depend on site configuration. Keep the same filename across translations and write each body yourself. Switching a post to a language without that translation leads to that language’s blog list.
+The command creates files without translating or enabling languages. Put translations in the corresponding language directory with the same slug. The article language menu opens a matching translation when one exists; otherwise it opens the target language's blog list.
 
-## 2. Fill in frontmatter and choose a cover
+## 2. Set the title, description and dates
 
-Put this usable frontmatter at the very beginning of the file; write the body after the second `---`:
-
-```yaml
----
-title: 'My first post'
-description: 'What I learned while building my blog.'
-pubDate: '2026-09-18'
-tags: ['astro', 'notes']
----
-```
-
-`title`, `description`, and `pubDate` are required. `subtitle`, `updatedDate`, and `author` are optional; the author falls back to the site author. Lists sort by `pubDate`, newest first. There is currently no draft or scheduled-publication filter: neither `draft: true` nor a future date hides a post. Keep unfinished content outside the content directory.
-
-Set `updatedDate` to the real date of a substantive article update. The sitemap uses `updatedDate`, falling back to `pubDate`; it does not invent a new date on every build. Dates do not guarantee search-engine indexing.
-
-For a cover, use `heroImage: ./cover.jpg` with the image beside the post, or keep the local cover path assigned by the creation command. Automatic assignment happens only when images exist in `src/assets/blog/default-covers/`; no image is downloaded. `heroImage` is optional. Word and token counts are calculated automatically, so ordinary posts need no manual values.
-
-These are estimates, not measurements from an AI service. Frontmatter `wordCount` and `tokenCount` override the counts independently. Article pages do not display reading time, latency or confidence; existing fields for these values can remain in older posts.
-
-## 3. Generate a table of contents with headings
-
-Write normal second- and third-level headings:
+Open the generated file. YAML frontmatter is the section between the first two `---` lines; the body follows. You can begin with this example, retaining an existing `heroImage` if desired:
 
 ```md
-## First topic
+---
+title: '我的第一篇文章'
+description: '记录我用 Anglefeint 搭建博客的过程。'
+pubDate: '2026-11-13'
+tags: ['astro', '笔记']
+---
 
-Write your explanation here.
+这是我的第一篇文章。我准备在这里记录学习过程和遇到的问题。
 
-### A closer look
+## 为什么开始写博客
 
-Add details here.
+写下自己的想法，也给以后的自己留下线索。
+
+### 先从一个小问题开始
+
+今天先记录安装和发布过程。
 ```
 
-The table of contents is enabled by default and uses `##` and `###`. It appears to the right on wide screens and above the body on narrow screens, and is absent when there are no matching headings. Try this page’s table of contents.
+Replace the date with the actual publication date. `title`, `description` and `pubDate` are required; `tags` is optional. The page already displays the title, so the body usually starts at `##` instead of repeating `# 我的第一篇文章`.
 
-To disable it for one post, add this inside the existing frontmatter:
+- `title` supplies the article title, list title and associated metadata.
+- `description` supplies the introduction and page metadata. Without an explicit `context`, it also appears as the context line below the title.
+- `pubDate` determines list order, newest first.
+- After substantive changes to a published post, add a truthful `updatedDate`. It is displayed and preferred by the sitemap, but does not replace `pubDate` for sorting.
+
+Use quoted `YYYY-MM-DD` dates. For an exact time, use ISO with a timezone, such as `'2026-11-13T09:00:00+08:00'`. Article pages display UTC dates, so timezone conversion can change the day.
+
+**There is no draft or scheduled-publication filter.** Other-language skeletons also become public during the build. Complete the content you need and move unready files outside `src/content/blog/`. `draft: true`, a future `pubDate` and `search: false` cannot make an article private.
+
+## 3. Write the body and organize it with headings
+
+Leave an empty line between paragraphs. Common Markdown syntax includes:
+
+```md
+这是一段正文，可以使用 **加粗**、_强调_ 和 `行内代码`。
+
+- 第一个要点
+- 第二个要点
+
+[链接文字](https://example.com/)
+
+> 这是一段引用。
+```
+
+Using `##` and `###` creates a table of contents automatically. It appears to the right on wide screens and before the body on narrow screens. Without level-two or level-three headings, it is hidden. Deeper headings may appear in the body but are not included in this contents list.
+
+To disable the contents for one post, add this to its existing frontmatter:
 
 ```yaml
 toc: false
 ```
 
-`toc: true` overrides a site-wide disabled setting; omission inherits `theme.toc.enabled`. Normal Markdown headings in MDX work, but headings generated inside components or raw HTML/JSX are not automatically collected.
+Omitting `toc` inherits `theme.toc.enabled` from `src/site.config.ts`, which defaults to on. `toc: true` can override a global off setting. The contents uses compiler-provided Markdown headings; headings generated inside MDX components or raw HTML/JSX are not automatically collected.
 
-## 4. Organize posts with tags
+### Organize posts with tags
 
-Add `tags: ["astro", "notes"]` to frontmatter. No separate tag configuration or manual routes are needed. Builds create a tag index and paginated lists for each language; the blog tag entry and post tags are clickable. Check `/en/tags/`.
+Set `tags: ['astro', '笔记']` in frontmatter to generate tag links and the current language's tag archive without manual routes. For the enabled Chinese language, visit `/zh/tags/`.
 
-Tags are case-sensitive: `Astro` and `astro` differ. Surrounding whitespace is trimmed, and repeated tags in one post count once. Non-Latin text and special characters receive stable encoded URLs; use generated links rather than guessing. Renaming a tag changes its link. Untagged posts still display normally. `theme.tags.enabled: false` disables tag links and tag page generation.
+Tags are case-sensitive: `Astro` and `astro` are different. Outer whitespace is trimmed, and duplicates within one post count once. Use generated links: Chinese and special characters have stable encoding, so do not guess paths. Renaming a tag changes its link.
 
-## 5. Image previews and code copying need no setup
+Global `theme.tags.enabled: false` disables tag links and page generation without removing the posts.
 
-Body images can reference files beside the post or in `public/images/`. These are two alternatives; add the corresponding image before using either:
+## 4. Insert code and mathematical formulas
 
-```md
-![A description of the image](./photo.jpg)
-
-![A description of the image](/images/photo.jpg)
-```
-
-Click an ordinary body image, or press Enter/Space when focused, to enlarge it. Close with Esc, the close button, or the backdrop. Covers and images inside links or buttons are excluded. The preview uses the image source already selected by the browser; it does not automatically fetch a higher-resolution original or provide gallery navigation.
-
-Use ordinary fenced code blocks:
+Use a three-backtick fence followed by the language name:
 
 ````md
 ```js
-console.log('Hello, world!');
+const message = 'Hello, world!';
+console.log(message);
 ```
 ````
 
-A copy button appears at the top right, preserving indentation and line breaks. Test on HTTPS or localhost. If clipboard access fails, a message asks you to copy manually. Neither feature needs an extra switch.
+Article code blocks receive a copy button automatically, preserving line breaks and indentation. It copies text; JavaScript in a code block is not executed. If the clipboard is unavailable, a failure message appears and you can select the text manually. The button requires JavaScript.
 
-## 6. Test search after building
+Mathematics is enabled by default without another plugin installation. Use `$...$` inline, or put a display formula between separate `$$` lines:
 
-Search is enabled by default and searches post titles and body text in the current language. `npm run build` generates the index. Run `npm run preview`, open header search, and search for a sentence from a post to verify its link. `npm run dev` shows a development notice instead of live full-text search.
+```md
+保存量为 $C_{saved}$。
 
-To exclude one post from the index, add to frontmatter:
-
-```yaml
-search: false
+$$
+\frac{a}{b} = x_1 + x_2
+$$
 ```
 
-This is not a privacy or draft setting: the post remains directly accessible and visible in lists. `theme.search.enabled: false` disables both the global entry and index generation. Rebuild after changing posts.
+Escape an ambiguous literal dollar sign as `\$`; inline and fenced code remain unchanged. KaTeX renders formulas during compilation. Its mathematical syntax is supported, not complete LaTeX documents. Invalid formulas fail compilation or building with source information. Long display formulas scroll horizontally.
 
-## 7. Automatic and custom social images
+Merge `math: { enabled: false }` into the existing `theme` in `src/site.config.ts` to disable mathematics globally. Keep titles and descriptions plain text rather than relying on mathematical rendering there.
 
-By default, a build generates a 1200×630 PNG for posts without `ogImage`, using the title, post author (or site author), and site name. No image API or per-post design work is needed. This does not change the body cover, `heroImage`.
+### When should I use MDX?
 
-Automatic cards use a bundled code-rain, terminal and neon-network background, with your own site name, title and author. The small `Theme by Anglefeint` credit at the bottom right follows `theme.footer.showCredits` (default `true`); set it to `false` to hide both footer credits and this image credit. Rebuild and redeploy after changing it. Custom `ogImage` files are never modified. The artwork works offline and adds no browser JavaScript.
+Use `.md` for ordinary writing. Use `.mdx` when importing and rendering components. The theme collects both extensions and supports mathematics in MDX without another processor.
 
-For a custom image, put `share.png` beside the post and add to frontmatter:
+`new-post` creates `.md`. Rename it to `.mdx` when needed, retaining frontmatter. Do not keep `.md` and `.mdx` with the same basename in one language as separate posts: they resolve to the same article URL. Components and expressions must follow MDX syntax; changing the extension does not make arbitrary text valid MDX.
 
-```yaml
-ogImage: ./share.png
+## 5. Add images
+
+Body images can sit beside the article or in `public/images/`. Add the actual file before referencing it:
+
+```md
+![照片内容的描述](./photo.jpg)
+
+![照片内容的描述](/images/photo.jpg)
 ```
 
-Alternatively, use `ogImage: /images/share.png` for `public/images/share.png`. Direct HTTPS image URLs also work. Missing local files cause errors; external images depend on the external service.
+The first path is relative to the article file. The second maps to `public/images/photo.jpg`, omitting `public` from the URL. The description becomes alternative text.
 
-An explicit `ogImage` takes priority. `theme.socialImage.enabled: false` only disables generation: manual images still work, while other posts fall back to a cover or default image. Inspect `og:image` in the built post HTML; generated files are under `dist/_social/`. Sharing platforms may cache an old preview after redeployment. The bundled font does not guarantee support for every emoji or writing system.
+To change the cover, place `cover.jpg` beside the article and set `heroImage: ./cover.jpg` in frontmatter. This field accepts local images and may be omitted. Body images, covers and sharing images serve different purposes; changing the cover does not insert it into the body.
 
-## 8. Use new-page for a standalone page
+Ordinary body images open a larger preview when clicked or focused and activated with Enter/Space. Close it with Esc, the close button or backdrop. Covers and images inside links/buttons are excluded. The preview uses the image source already selected by the browser; it does not fetch a higher-resolution original or offer gallery navigation.
 
-For example, create a project introduction page:
+After adding or replacing a cover, local dev or doctor prepares responsive files. Commit the original and all of `src/assets/blog/covers/`, including manifest.json and generated/. Deployment builds and CI doctor only validate these files, failing for missing, stale or modified output rather than encoding on the server. Persistent derivatives cover article covers and fragment-local images; ordinary article body images retain the existing Markdown/MDX image pipeline.
+
+## 6. Preview locally and prepare to publish
+
+Run `npm run dev` and open `/<语言代码>/blog/my-first-post/`, such as English `/en/blog/my-first-post/` or Chinese `/zh/blog/my-first-post/`, below the printed terminal address. Check the title, date, body, contents, tags and images. For new translations, check language-switch destinations too.
+
+Stop dev before publication, then run:
 
 ```bash
-npm run new-page -- projects --theme cyber
+npm run doctor
+npm run preview
 ```
 
-This creates `src/pages/[lang]/projects.astro`, generating `/<locale>/projects/` for enabled locales. Edit that Astro file to provide content. The command neither translates the body nor adds a header navigation item.
+doctor includes checks and a build; do not immediately repeat check or build after success. preview serves the built `dist/` without publishing. Fix build errors before deployment and do not deploy leftover output after failure.
 
-Choose one `--theme`: `base`, `ai`, `cyber`, `hacker`, or `matrix`. Page slugs support nested paths such as `projects/labs`, still using lowercase letters, numbers, and hyphens. An existing page causes an error; do not run five theme variants for the same path in sequence. Use `new-post` for articles.
+### Why does search not find my post in dev?
 
-## In this series
+The full-text index is generated during building. `npm run dev` shows a development notice in the search interface. Search for a sentence from the body in the built preview to check full search and article navigation.
 
-- [User Guide 1: Set Up Your Blog](/en/blog/starter-guide-1-configure-your-site/)
-- [User Guide 2: Write and Organize Content](/en/blog/starter-guide-2-languages-and-routing/)
-- [User Guide 3: Enable and Customize Optional Features](/en/blog/starter-guide-3-comments-about-and-theme-toggles/)
+By default, search covers article titles and bodies in the current language. Add `search: false` to frontmatter to exclude one post; omission includes it. This does not remove it from lists, RSS, sitemap or public links. Global `theme.search.enabled: false` disables both the entry point and index generation.
 
----
+Rebuild and redeploy after content changes to update live search. Formulas and decorative UI are not search body content.
 
-## Upgrade the theme
+For types, defaults and currently unused fields, open the [article configuration reference](/en/blog/config-article/#frontmatter). Independent search rules are in the [search reference](/en/blog/config-search/#article-search). The following is a writing-oriented quick reference.
 
-The integration starter keeps standard pages, configuration defaults, translations and build features in the theme package. Your articles, `src/site.config.ts`, music, images and custom pages remain in your project.
+## Optional reference: other article fields
 
-For integration starters using npm, run the command below from the project root. It checks project/Node/Astro compatibility, backs up dependency files, installs an exact theme version and runs doctor. On failure it restores dependency files and attempts to reinstall the previous dependencies. Rebuild output is ready for your normal deployment; the command does not publish your site.
+These are article frontmatter fields, not members of `site` or `theme` in `src/site.config.ts`. Ordinary posts need not fill them all.
 
-```bash
-npx @anglefeint/astro-theme@latest upgrade
-```
+### Title area and images
 
-Pre-0.27 projects require a one-time fresh-starter migration: create a new template in a separate directory, migrate articles and resources, and merge personal values into the new site configuration. Do not copy the old standard routes, adapters or default/schema/runtime helpers. Keep article slugs, locale paths, music/image URLs and hosting settings.
+| Field       | Current behavior                                                                                                                                        |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `subtitle`  | Optional subtitle; not repeated when identical to the context line.                                                                                     |
+| `context`   | Text below the title; defaults to `description`. `''` hides this line without changing page metadata.                                                   |
+| `author`    | Per-post author; omitted or whitespace-only uses the site author.                                                                                       |
+| `heroImage` | Optional local cover used by lists and article detail.                                                                                                  |
+| `ogImage`   | Explicit sharing preview, before automatic images; accepts an article-relative image, a public path such as `/images/share.png`, or an HTTPS image URL. |
 
-The automatic updater currently supports npm only and refuses pnpm/yarn/bun lockfiles. `--check` previews compatibility without changing files; `--to 0.27.1` selects an exact release. Read the [upgrade guide](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) and [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases), especially for Astro or starter-schema changes.
+Posts without `ogImage` receive a 1200×630 sharing image containing title, author and site name. It does not replace the body cover. Global `theme.socialImage.enabled: false` stops automatic generation; explicit `ogImage` still works, while other posts fall back to the cover or site default. Rebuild and redeploy after changes; sharing platforms may cache old images.
 
-If an upgrade fails, do not deploy `dist/`: dependency rollback does not restore previous build output. Resolve the error and run `npm run doctor` successfully before deploying. pnpm users update explicitly with `pnpm add @anglefeint/astro-theme@latest` and `pnpm run doctor`; keep their lockfile and review release compatibility first.
+### OUTPUT statistics and optional status text
 
-[User Guide 5: Publish Fragments](../starter-guide-5-fragments/) — Publish brief thoughts as Markdown, with optional popup comments.
+| Field               | Current behavior                                                   |
+| ------------------- | ------------------------------------------------------------------ |
+| `wordCount`         | Overrides the automatic word/character count; nonnegative integer. |
+| `tokenCount`        | Independently overrides the token estimate; nonnegative integer.   |
+| `aiModel`           | Author-supplied model label in the title status area and OUTPUT.   |
+| `aiMode`, `aiState` | Author-supplied mode and state text in the title status area.      |
 
-## Persistent Blog List covers (0.36.0+)
+Without overrides, counts are estimated from the body source: Han characters, kana and Hangul count individually; other text is mainly split on whitespace. Default tokens are `round(max(自动字词数, 1) × 1.3)`, an estimate rather than a real model tokenizer. Overriding `wordCount` does not recalculate tokens; set both separately if necessary.
 
-This source change requires theme 0.36.0 or newer; it is not included in published 0.35.0. Keep existing heroImage paths, or place new originals in src/assets/blog/covers/originals/ and reference them from a post. Local dev and local doctor prepare missing/stale Blog List sizes automatically. You can also run `npx @anglefeint/astro-theme prepare-covers`; add `--check` for validation without writes. Commit the originals and all of src/assets/blog/covers/ (manifest.json and generated/). Builds and CI doctor only validate and fail if files are missing, stale or modified; they never regenerate on the deployment host or require an Astro image cache. The list uses native responsive images and prioritizes two cover candidates. WebP quality 80 preserves the existing encoding target, not lossless pixels; originals remain unchanged. SVG/animated covers retain their original format.
+Some Markdown is stripped, but this is not a complete count of visible prose: formulas and MDX source can affect it. Values of 1,000 or more display with one decimal and `k`. Model, mode and state only display text; they do not connect AI services, verify authorship or execute tasks.
 
-These files also serve article detail covers. Local Fragment images share the same preparation and commit workflow; see [User Guide 5](../starter-guide-5-fragments/).
+### Compatibility and fields without current display effects
+
+- `readMinutes`, `aiLatencyMs`, `aiConfidence`: accepted for old posts, but article pages no longer display reading time, latency or confidence. Their retained types are positive integer, nonnegative integer and number from 0–1 respectively. New posts need not set them.
+- `canonicalTopic`: accepts a string but is not connected to pages, canonical URLs or exports; it creates no topic or article URL change.
+- `sourceLinks`: accepts source URL arrays, supporting HTTP(S) and adding `https://` to bare domains. It currently validates data only, without displaying references or adding them to exports. Write Markdown links in the body for readers to see them.
+
+Unsupported custom fields do not automatically create features; `draft`, for example, does not provide draft behavior. Prefer the supported fields and normal body syntax above.
+
+## Tutorial navigation and configuration reference
+
+[Previous: install the blog and make it yours](/en/blog/starter-guide-1-configure-your-site/) · [Next: add images to posts and fragments](/en/blog/starter-guide-images/) · [All eight tutorials](/en/blog/starter-guide-1-configure-your-site/#tutorial-order).
+
+Related fields: [article fields, contents and OUTPUT](/en/blog/config-article/), [tags and lists](/en/blog/config-blog-list/), [search inclusion](/en/blog/config-search/). Full paths, defaults and limits are in the [reference index](/en/blog/config-reference/).

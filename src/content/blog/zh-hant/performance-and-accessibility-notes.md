@@ -7,15 +7,13 @@ heroImage: ../../../assets/blog/default-covers/ai-03.webp
 aiModel: anglefeint-core
 aiMode: analysis
 aiState: stable
-aiLatencyMs: 173
-aiConfidence: 0.94
-updatedDate: '2026-10-03'
+updatedDate: '2026-11-14'
 ---
 
-視覺主題需要鮮明個性，也要適合長文閱讀。
+電影化視覺需要與持續閱讀一起成立。我們希望保留程式碼雨、霓虹光束和網路背景的存在感，同時控制成本。
 
-Anglefeint 的氛圍是支援層，文章表面仍是主要資訊平面。
+內容與效果分工：本文在 HTML 中，圖片提供尺寸與響應式資源，模組各自管理事件、計時器與清理。支援減少動態效果的模組依系統偏好調整，細節因模組而異。
 
-特效依路由責任分組，共用版型讓行為容易預期，多語言之間保留內容結構。
+效能與無障礙取決於頁面、裝置與內容，不能用一次評分保證所有文章。讀者應能閱讀、操作和離開，作者也應能長期維護。
 
-我們希望閱讀流程穩定、視覺個性鮮明，而不是讓頁面只適合展示。清楚的責任分工，才能同時保有表現力與可維護性。
+延伸閱讀：[設定字典：首頁](/zh-hant/blog/config-home/) · [設定字典：文章詳情頁](/zh-hant/blog/config-article/)
