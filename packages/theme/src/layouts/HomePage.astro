@@ -3,6 +3,8 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { fragmentsForLocale } from '../utils/fragments';
 import { fragmentPreview } from '../utils/fragment-preview';
+import imageData from 'virtual:anglefeint-blog-covers';
+import { rewriteFragmentImages } from '../covers/fragment-render.mjs';
 import FormattedDate from '../components/FormattedDate.astro';
 import FragmentSignal from '../components/FragmentSignal.astro';
 import fragmentAvatar from '../assets/theme/avatars/matrix-typist.gif?url';
@@ -46,7 +48,7 @@ if (fragments.length) {
   const feedURL = new URL(localePath(locale, '/fragments/'), Astro.url);
   for (const entry of fragments.slice(0, 3)) {
     const { Content } = await render(entry);
-    const html = await container.renderToString(Content);
+    const html = rewriteFragmentImages(await container.renderToString(Content), imageData);
     latestFragments.push({ entry, preview: fragmentPreview(html, feedURL) });
   }
 }

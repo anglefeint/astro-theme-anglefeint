@@ -1,5 +1,8 @@
 ---
 import { Image } from 'astro:assets';
+import coverData from 'virtual:anglefeint-blog-covers';
+import { blogCover } from '../utils/blog-cover';
+import { hasMathMarkup } from '../utils/math-markup';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { resolveArticleLocaleHrefs } from '../utils/article-locales';
 import themeRedqueen1 from '../assets/theme/red-queen/theme-redqueen1.webp';
@@ -37,6 +40,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
   headings?: MarkdownHeading[];
   localeHrefs?: Partial<Record<Locale, string>>;
   seoLocaleHrefs?: Partial<Record<Locale, string>>;
+  filePath?: string;
 };
 
 const {
@@ -63,7 +67,11 @@ const {
   related = [],
   localeHrefs,
   seoLocaleHrefs,
+  filePath,
 } = Astro.props;
+const articleHtml = await Astro.slots.render('default');
+const needsMath = (THEME.MATH?.ENABLED ?? false) && hasMathMarkup(articleHtml);
+const cover = heroImage ? blogCover(coverData, filePath, heroImage) : undefined;
 const resolvedLocale: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
 const articleAuthor = author?.trim() || SITE_AUTHOR;
 const authorHref =
@@ -135,7 +143,7 @@ const hasCommentsConfig = Boolean(
   seoLocaleHrefs={articleLocaleHrefs}
 >
   <link slot="head" rel="stylesheet" href={blogPostCssUrl} />
-  {(THEME.MATH?.ENABLED ?? false) && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
+  {needsMath && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
   <Fragment slot="body-start">
     <AiBackground sizing="viewport" />
     {
@@ -249,9 +257,10 @@ const hasCommentsConfig = Boolean(
               <div class="hero-image">
                 <div class="hero-stack">
                   <div class="hero-base-wrap">
-                    <Image
+                    <img
                       class="hero-base-image"
-                      src={heroImage}
+                      {...cover}
+                      sizes="(max-width: 820px) calc(100vw - 3rem), 780px"
                       alt=""
                       loading="eager"
                       decoding="async"
@@ -259,7 +268,7 @@ const hasCommentsConfig = Boolean(
                     />
                   </div>
                   <div class="hero-canvas-wrap" aria-hidden="true">
-                    <canvas class="hero-canvas" data-hero-src={heroImage.src} />
+                    <canvas class="hero-canvas" />
                   </div>
                 </div>
                 <div class="hero-frame" aria-hidden="true">
@@ -318,7 +327,7 @@ const hasCommentsConfig = Boolean(
           })}
           data-pagefind-body
         >
-          <slot />
+          <Fragment set:html={articleHtml} />
           <span class="ai-block-cursor" aria-hidden="true"></span>
         </div>
       </div>

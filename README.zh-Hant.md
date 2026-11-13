@@ -517,4 +517,12 @@ new-fragment 使用區分大小寫的字母與數字產生 8 位 Nano ID，檢�
 
 目前原始碼中，啟用 `theme.fragments.enabled` 且目前語言有碎片時，首頁 header 下方會顯示像素頭像入口。展開後預覽最近三則；整張卡片連到原碎片，底部數量與箭頭連到完整列表。數量代表目前語言的預覽則數 / 總則數。圖片與程式碼採限高預覽，超出部分裁切；停用或沒有內容時不顯示入口。不需新增設定。需要主題 0.35.0 或更新版本。
 
-文章 OUTPUT 保留字數、tokens 與可選模型名稱；不再顯示閱讀時間、latency 和 confidence，即使 frontmatter 有填寫。舊欄位仍可保留。正文與面板直接出現並保持靜止，背景網路與標題光帶保留。這些顯示調整同樣等待下一次主題發佈。
+文章 OUTPUT 保留字數、tokens 與可選模型名稱；不再顯示閱讀時間、latency 和 confidence，即使 frontmatter 有填寫。舊欄位仍可保留。正文與面板直接出現並保持靜止，背景網路與標題光帶保留。這些顯示調整從 0.35.0 起可用。
+
+## Blog List 持久化封面（0.36.0+）
+
+此原始碼變更需要主題 0.36.0 或更新版本，已發佈的 0.35.0 尚未包含。現有 heroImage 路徑不需更動，也可將新原圖放入 src/assets/blog/covers/originals/ 並由文章引用。本機 dev 與本機 doctor 自動補齊缺少或過期的列表封面尺寸；也可執行 `npx @anglefeint/astro-theme prepare-covers`，加上 `--check` 則僅檢查不寫入。原圖及整個 src/assets/blog/covers/（manifest.json、generated/）都要提交到 Git。建置及 CI doctor 僅驗證，缺少、過期或遭修改時失敗，不在部署端重新生成，也不依賴 Astro 圖片快取。列表採原生響應式圖片，優先載入兩張封面候選。WebP 品質 80 沿用現有編碼目標，並非像素無損保證；原圖不變，SVG/動畫封面保留原格式。
+
+文章詳情頁主封面也使用這些響應式檔案；Canvas 特效重用頁面已選擇的圖片，不再另行下載原圖。
+
+碎片本機圖片也使用相同衍生目錄，包括 public 中的 `/images/...` 和 Markdown／HTML 相對圖片連結。自動補齊缺少的寬高，列表與首頁預覽共用響應式檔案；遠端圖片不做本機轉換。

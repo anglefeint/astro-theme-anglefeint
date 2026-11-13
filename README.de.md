@@ -518,3 +518,11 @@ new-fragment erzeugt eine achtstellige Nano ID aus Groß-/Kleinbuchstaben und Zi
 Im aktuellen Quellcode erscheint unter dem Startseiten-Header ein Pixel-Avatar, wenn `theme.fragments.enabled` aktiviert ist und die aktuelle Sprache Fragmente enthält. Beim Öffnen werden die neuesten drei angezeigt. Jede Karte führt zum Original; Anzahl und Pfeil unten führen zur vollständigen Liste. Die Anzahl bedeutet Vorschauen / Gesamtzahl dieser Sprache. Bilder und Code haben eine begrenzte Höhe; Überlauf wird abgeschnitten. Bei deaktiviertem oder leerem Feed entfällt der Einstieg. Keine neue Konfiguration nötig; Theme 0.35.0 oder neuer erforderlich.
 
 OUTPUT behält Wortzahl, tokens und den optionalen Modellnamen. Lesezeit, latency und confidence werden auch bei gesetztem Frontmatter nicht mehr angezeigt; alte Felder bleiben zulässig. Text und Panel erscheinen sofort und bleiben unbewegt. Hintergrundnetz und Lichtband unter dem Titel bleiben erhalten.
+
+## Dauerhafte Blog-List-Titelbilder (0.36.0+)
+
+Diese Änderung benötigt Theme 0.36.0 oder neuer und ist nicht in der veröffentlichten 0.35.0 enthalten. Bestehende heroImage-Pfade bleiben; neue Originale können unter src/assets/blog/covers/originals/ liegen und vom Artikel referenziert werden. Lokales dev/doctor erzeugt fehlende oder veraltete Listengrößen. Alternativ: `npx @anglefeint/astro-theme prepare-covers`; `--check` prüft ohne Schreiben. Originale und das gesamte src/assets/blog/covers/ (manifest.json, generated/) gehören ins Git. Build und CI-doctor prüfen nur und brechen bei fehlenden, veralteten oder geänderten Dateien ab; keine Neuerzeugung beim Hoster oder Abhängigkeit vom Astro-Bildcache. Die Liste nutzt responsive Bilder und priorisiert zwei Kandidaten. WebP-Qualität 80 behält das bisherige Kodierungsziel bei, ohne verlustfreie Pixel zu garantieren; Originale sowie SVG-/Animationsformate bleiben erhalten.
+
+Das Hauptbild der Artikelseite nutzt dieselben responsiven Dateien; der Canvas-Effekt verwendet das ausgewählte Bild erneut, ohne das Original separat herunterzuladen.
+
+Lokale Fragment-Bilder nutzen denselben Speicher, einschließlich `/images/...` unter public und relativer Markdown/HTML-Bildlinks. Fehlende Abmessungen werden ergänzt; Feed und Startseitenvorschau teilen responsive Dateien. Externe Bilder werden nicht konvertiert.

@@ -6,7 +6,7 @@ import type { GetStaticPaths } from 'astro';
 import { terminalDocumentId } from '@anglefeint/astro-theme/utils/terminal-document';
 import TerminalBackdrop from '@anglefeint/astro-theme/components/shared/TerminalBackdrop.astro';
 import WindowShell from '@anglefeint/astro-theme/components/shared/WindowShell.astro';
-import DecoderWorkbench from '@anglefeint/astro-theme/components/decoder/DecoderWorkbench.astro';
+import DecoderForm from '@anglefeint/astro-theme/components/decoder/DecoderForm.astro';
 import HackerShell from '@anglefeint/astro-theme/layouts/shells/HackerShell.astro';
 import { getCollection } from 'astro:content';
 import { getAboutConfig } from '@anglefeint/site-config/about';
@@ -128,7 +128,7 @@ const aboutRuntimeConfig = {
 >
   <Fragment slot="body-start">
     <template id="hacker-decoder-tpl"
-      ><DecoderWorkbench labels={decoder} pageLabels={messages.decoderPage} /></template
+      ><DecoderForm labels={decoder} pageLabels={messages.decoderPage} /></template
     >
     <TerminalBackdrop
       class="hacker-bg"

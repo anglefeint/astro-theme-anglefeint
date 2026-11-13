@@ -6,7 +6,7 @@ title: 'Anleitung 2: Inhalte schreiben und ordnen'
 subtitle: 'Beiträge, Bilder, Tags, Inhaltsverzeichnis und Suche.'
 description: 'Beiträge, Bilder, Tags, Inhaltsverzeichnis und Suche.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-11'
+updatedDate: '2026-11-13'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
@@ -89,3 +89,9 @@ Automatische Updates unterstützen derzeit nur npm; pnpm/yarn/bun-Lockdateien we
 Bei einem fehlgeschlagenen Upgrade `dist/` nicht veröffentlichen: Die Wiederherstellung der Abhängigkeiten stellt keine alten Build-Dateien wieder her. Fehler beheben und `npm run doctor` erfolgreich ausführen. Mit pnpm zuerst die Kompatibilität prüfen, dann mit `pnpm add @anglefeint/astro-theme@latest` und `pnpm run doctor` manuell aktualisieren; die eigene Lockdatei behalten.
 
 [Anleitung 5: Fragmente veröffentlichen](../starter-guide-5-fragments/) — Kurze Gedanken als Markdown mit optionalen Kommentaren im Dialog.
+
+## Dauerhafte Blog-List-Titelbilder (0.36.0+)
+
+Diese Änderung benötigt Theme 0.36.0 oder neuer und ist nicht in der veröffentlichten 0.35.0 enthalten. Bestehende heroImage-Pfade bleiben; neue Originale können unter src/assets/blog/covers/originals/ liegen und vom Artikel referenziert werden. Lokales dev/doctor erzeugt fehlende oder veraltete Listengrößen. Alternativ: `npx @anglefeint/astro-theme prepare-covers`; `--check` prüft ohne Schreiben. Originale und das gesamte src/assets/blog/covers/ (manifest.json, generated/) gehören ins Git. Build und CI-doctor prüfen nur und brechen bei fehlenden, veralteten oder geänderten Dateien ab; keine Neuerzeugung beim Hoster oder Abhängigkeit vom Astro-Bildcache. Die Liste nutzt responsive Bilder und priorisiert zwei Kandidaten. WebP-Qualität 80 behält das bisherige Kodierungsziel bei, ohne verlustfreie Pixel zu garantieren; Originale sowie SVG-/Animationsformate bleiben erhalten.
+
+Artikel-Hauptbilder nutzen dieselben Dateien. Lokale Fragment-Bilder teilen Vorbereitung und Commit-Ablauf; siehe [Anleitung 5](../starter-guide-5-fragments/).

@@ -10,6 +10,18 @@ sync_targets: [README.md, ASTRO_THEME_LISTING.md, CLAUDE.md]
 
 # Visual Systems
 
+## Performance evidence and visual intent
+
+For the 0.36.0 image/About startup work, source inspection and static builds establish resource paths, dimensions, stylesheet placement and lifecycle guards. They do not establish a new PageSpeed score. Associate a lab report with its URL, mobile/desktop profile, timestamp and deployed assets; an older production report does not describe unpublished local changes.
+
+- A late largest-content paint with a large image payload is a reason to inspect that image, its candidate sizes and discovery. Confirm the LCP element/breakdown before assigning every millisecond to download time.
+- Network-tree completion is not main-thread blocking. Requests may overlap; adding their individual durations does not yield page render delay. Late optional media may finish after content is already readable.
+- Missing image geometry is a concrete layout-shift candidate. Preserve source ratio or explicit author dimensions rather than adding opacity entrances or guessing a fixed height for mixed Fragment content.
+- Speed Index reflects visual progression. A scanning/pixelating cover or active cinematic background can continue changing after reading is possible. Keep readable content available and retain signature effects; compare in motion before reducing their visual presence.
+- Third-party analytics reflow/unused-code warnings and the theme's own measurements have separate owners. Do not attribute a third-party task to terminal/Canvas code or promise it will disappear after a theme-only change.
+
+Keep technical evidence separate from user visual acceptance and new lab measurements. The current [validation policy](VALIDATION_POLICY.md) controls browser/visual/deployment checks; a documentation pass does not silently add them.
+
 Machine-readable About/Fragments support adds only static extraction markers, head discovery links and language JSON-LD. Existing DOM structure, CSS, effects and browser interaction scripts are preserved. About's existing public AI text popup is exported through an allowlisted adapter; no terminal/tool/config dump or duplicate visible content is added. Export generation runs at build time.
 
 Default link previews (0.33.0+) use the approved Anglefeint artwork: ivory wordmark, Matrix code rain, cyan/magenta city lighting, network traces and a small white rabbit, shipped as a compressed 1200×630 JPEG. `site.ogImage` replaces this fallback without overriding article-specific/generated cards or their existing hero fallback. Fragments and its hash links share feed metadata. This changes social metadata only, adding no page animation or browser generation work. Older placeholder assets may still serve existing content and are not deleted merely because the OG fallback changed.
@@ -26,7 +38,7 @@ Homepage switches in `src/site.config.ts`: `theme.home.showInitialize` controls 
 
 ## Article mathematics
 
-Global mathematics is enabled in the current starter. `packages/theme/src/styles/math.css` imports bundled KaTeX styles/fonts and inherits article text color. Display formulas own horizontal overflow within the prose width; inline formulas remain inline. The BlogPost head includes the stylesheet only when the math adapter is enabled, with false fallback for old adapters. No canvas/background effect or article width contract changes. HTML plus MathML preserves accessible output; formula subtrees are excluded only from Pagefind, not accessibility. Nine-language browser checks cover 320, 390, 721 and 1440 px widths. Formula syntax, disabled-state MDX behavior and migration are user-guide concerns, not additional visual toggles.
+Global mathematics is enabled in the current starter. `packages/theme/src/styles/math.css` imports bundled KaTeX styles/fonts and inherits article text color. Display formulas own horizontal overflow within the prose width; inline formulas remain inline. The BlogPost head includes the stylesheet only when the math adapter is enabled and the rendered default-slot HTML contains formula markup (`anglefeint-math` or `katex`). It renders the body once and reuses that HTML, so Markdown/MDX components and accessible MathML remain intact; escaped code, comments and currency do not trigger CSS. Old adapters retain the false fallback. Fragment feeds likewise include math CSS only when enabled and the current page contains formula markup. This article loading change targets 0.36.0. No canvas/background effect or article width contract changes. HTML plus MathML preserves accessible output; formula subtrees are excluded only from Pagefind, not accessibility. Nine-language browser checks cover 320, 390, 721 and 1440 px widths. Formula syntax, disabled-state MDX behavior and migration are user-guide concerns, not additional visual toggles.
 
 This theme uses four distinct atmospheres by route.
 
@@ -148,6 +160,8 @@ Cyber rain and dust are independently reusable through `effects/cyber-rain/` and
 
 ### Shared archive views
 
+Pending next release: archive covers use persisted WebP srcsets generated at 400/640/800/960/1200px, capped to source size, with EXIF orientation and original aspect ratio. Existing container cropping, frames, rain, lights, typography and Cards/List preference remain unchanged. The first two actual cover images are eager/high candidates across desktop/mobile; others stay lazy/auto. Native eager requests can still occur when a remembered List view hides those candidates; no client-controlled image-discovery layer is added. SVG/multi-frame covers remain original. [Cover assets](BLOG_COVER_ASSETS.md) documents source ownership, build-only validation and tests; no PageSpeed score improvement is claimed without a new measurement.
+
 `BlogCards.astro` and `blog-list.css` own both views on blog and tag archive routes. Archives containing the component use a viewport-bounded 1280px content width; the tag directory itself retains its separate width.
 
 | Surface          | Current behavior                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
@@ -229,11 +243,29 @@ The shared footer uses understated inherited-color Anglefeint and Astro links, s
 
 ## 4) About (`body.hacker-page`)
 
+About reading paragraphs, lists and signature are visible from the initial render; there is no paragraph opacity/translate entrance or reveal observer. Window chrome always reserves its normal-flow height, including without JavaScript; only its controls wait for listener binding. Section-title typing retains full localized text in flow and animates an aria-hidden overlay, so typing does not change heading wrapping. Reduced motion and missing IntersectionObserver show titles immediately.
+
+Oracle passage styles/code and its Matrix glyph font load on pointer/focus intent or click. The About decoder loads its controller/styles when opened, reusing the shared form markup without importing the standalone network backdrop into the About template. Closing, switching tools or disposing About cancels pending activation; failed decoder loads show the existing localized failure message and reopening retries. The standalone decoder remains styled on initial render. Terminal background, light bands, palette choices and tool visuals are preserved. These startup changes target 0.36.0; PageSpeed/CLS improvements require a new measurement.
+
 Direct body paragraphs and the signature use `white-space: pre-line`: actual line feeds in configured text remain visible, consecutive line feeds leave blank lines, and ordinary long text still wraps. This does not parse Markdown/HTML or create additional paragraph elements. The rule does not target headings, list items, sidebar labels or modal content.
+
+### About startup ownership and failure behavior
+
+| Boundary                     | Source                                                                                                         | Contract                                                                                                                                                                                     |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Reading and window readiness | `components/about/AboutWindowControls.astro`, `scripts/about/window.js`, `styles/about/window.css`             | SSR chrome occupies its final normal-flow space; buttons enable after binding and disable on disposal. Saved close/minimize preferences still apply                                          |
+| Section-title decoration     | `scripts/about/interactions.js`, `styles/about/panel.css`                                                      | Full text reserves wrapping and remains accessible; only an aria-hidden absolute layer types. Timers/observer stop on disposal; reduced motion or unavailable observer uses immediate titles |
+| Decoder form and entry       | `components/decoder/DecoderForm.astro`, `DecoderWorkbench.astro`, `scripts/about/modals.js`, `decoder-tool.js` | About reuses unstyled form markup; the standalone wrapper owns initial styles/background. Modal revisions reject stale loads after closing, switching or disposal                            |
+| Oracle activation            | `scripts/about/oracle.js`, `oracle-player.js`                                                                  | Intent may prewarm; activation awaits styles and glyph-font preparation before drawing. Disposal prevents pending startup; active playback restores focus/inert/scroll state                 |
+| Shared style readiness       | `scripts/effects/stylesheet.js`                                                                                | Cache successful/in-flight loads; remove failed links/cache entries so the next activation can retry. Styles can remain for later activation in the same document                            |
+
+Use CSS asset URLs (`?url`) plus explicit stylesheet readiness for these optional tools. A dynamic JavaScript import containing a normal CSS import did not, by itself, keep the tool CSS out of the built About head; shared/extracted CSS also needs actual output inspection. The font is requested after its stylesheet is ready because passage glyphs are rasterized into Canvas. This is an ownership/timing change, not removal of the tool's visual identity.
+
+Pending module/style requests are not necessarily network-aborted when a page/tool closes. Revision/disposal checks prevent their late result from reopening or mutating the inactive UI. Loading failure leaves reading usable; the decoder shows its existing localized failure message, and reopening retries. No permanent animation loop is introduced by the stylesheet loader or idle decoder clock. The selected non-browser regression is `tests/about-startup.unit.test.mjs`; browser interaction/visual acceptance remains user-owned under the [validation policy](VALIDATION_POLICY.md).
 
 - Hacker/terminal profile page
 - Modal-driven right sidebar tools; below 900px the existing folder tools stay hidden, while the independent Oracle button remains reachable at the lower right. Oracle selects a route-derived palette at click time without immediately repeating the previous choice, restores scroll/focus/inert state on Escape/close-button dismissal, and retains a static preview under reduced motion.
-- Runtime text and modal content from `src/site.config.ts -> i18n.locales.<code>.about` (selected via `src/config/about.ts`)
+- Runtime text and modal content from `src/site.config.ts -> i18n.locales.<code>.about`, selected by the package's `project/config/about.ts` through `@anglefeint/site-config/about`; the root adapter is a diagnostic fixture.
 - Interaction script: `packages/theme/src/scripts/about-effects.js`
 - Opening a tool resolves its modal title from decorative scrambled glyphs in 360ms and briefly lights the window edge. The real title stays available to assistive technology and reserves layout space; the animated duplicate is aria-hidden. Grapheme segmentation preserves localized text. Closing, reopening or reinitializing cancels the title timer; hidden documents finish on the next tick. Reduced motion and labels over 64 graphemes display immediately. Tool contents and controls are available without waiting for the decoration.
 

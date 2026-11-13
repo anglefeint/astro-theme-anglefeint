@@ -4,7 +4,7 @@ title: 'Guía 2: Escribe y organiza el contenido'
 subtitle: 'Crea artículos y utiliza portadas, etiquetas, índice, imágenes ampliadas, copia de código, búsqueda e imágenes para compartir.'
 description: 'Crea artículos y utiliza portadas, etiquetas, índice, imágenes ampliadas, copia de código, búsqueda e imágenes para compartir.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-11'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -168,3 +168,9 @@ El actualizador automático admite solo npm y rechaza bloqueos de pnpm/yarn/bun.
 Si falla la actualización, no publiques `dist/`: restaurar dependencias no restaura la compilación anterior. Corrige el error y ejecuta `npm run doctor` con éxito antes de desplegar. Con pnpm, revisa la compatibilidad y actualiza manualmente con `pnpm add @anglefeint/astro-theme@latest` y `pnpm run doctor`, conservando tu lockfile.
 
 [Guía 5: Publicar fragmentos](../starter-guide-5-fragments/) — Publica ideas breves en Markdown con comentarios opcionales en un diálogo.
+
+## Portadas persistentes de Blog List (0.36.0+)
+
+Este cambio requiere el tema 0.36.0 o posterior y no está en la publicada 0.35.0. Mantén las rutas heroImage o coloca originales nuevos en src/assets/blog/covers/originals/ y referencia cada imagen desde un artículo. dev/doctor locales generan tamaños ausentes u obsoletos. También puedes ejecutar `npx @anglefeint/astro-theme prepare-covers`; `--check` valida sin escribir. Guarda en Git los originales y todo src/assets/blog/covers/ (manifest.json, generated/). El build y doctor en CI solo validan y fallan ante archivos ausentes, obsoletos o modificados; no regeneran en el servidor ni dependen de la caché Astro. La lista usa imágenes adaptables y prioriza dos candidatas. WebP calidad 80 mantiene el objetivo anterior, sin garantizar píxeles sin pérdida; los originales no cambian y SVG/animaciones conservan su formato.
+
+Las portadas de detalle usan los mismos archivos. Las imágenes locales de Fragments comparten la preparación y el proceso de commit; consulta la [Guía 5](../starter-guide-5-fragments/).

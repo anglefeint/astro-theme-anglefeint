@@ -114,3 +114,15 @@ new-fragment 使用区分大小写的字母和数字生成 8 位 Nano ID，读�
 ## 首页 Fragment 预览（0.35.0+）
 
 当前源码中，开启 `theme.fragments.enabled` 且当前语言存在碎片时，首页 header 下方会出现像素头像入口。点开预览最近三条；整张卡片进入原碎片，底部数量与箭头进入完整列表。数量表示当前语言的预览条数 / 总条数。图片和代码采用限高预览，超出部分裁切；关闭功能或没有内容时不显示入口。无需新增配置。需要主题 0.35.0 或更新版本。
+
+## 本地图片与部署（0.36.0+）
+
+需要主题 0.36.0 或更新版本，已发布的 0.35.0 不包含此功能。保留现有路径：`/images/fragments/photo.png` 对应 `public/images/fragments/photo.png`；也可以在碎片 Markdown 旁放 `photo.png`，使用 `./photo.png`。支持 Markdown 图片、引用式图片及 HTML `img`，原图不移动、不覆盖。
+
+升级后，本地 dev 或本地 doctor 会自动准备响应式文件，也可手动执行：
+
+```bash
+npx @anglefeint/astro-theme prepare-covers
+```
+
+提交原图和整个 `src/assets/blog/covers/`（manifest.json 与 generated/）。构建及 CI doctor 只校验，文件缺失或过期时会停止，不在部署平台重新生成。列表与首页预览共用这些文件并补齐缺失宽高；列表首图优先，其余图片和首页缩略图懒加载。动画与 SVG 保留原格式，远程图片不在本地转换。

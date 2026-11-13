@@ -4,7 +4,6 @@
   pointer-events: none;
 }
 .about-shell[hidden],
-.about-window-bar[hidden],
 .about-window-dock[hidden] {
   display: none !important;
 }

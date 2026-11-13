@@ -61,6 +61,8 @@ const { entries, totalCount, avatar, archiveHref, labels } = Astro.props;
                   <img
                     class="fragment-signal-thumbnail"
                     src={entry.preview.image.src}
+                    srcset={entry.preview.image.srcset}
+                    sizes="(max-width: 480px) calc(100vw - 4rem), 366px"
                     alt={entry.preview.image.alt}
                     width={entry.preview.image.width}
                     height={entry.preview.image.height}

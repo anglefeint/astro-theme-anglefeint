@@ -6,7 +6,7 @@ title: 'Guia 2: Escreva e organize conteúdo'
 subtitle: 'Artigos, imagens, tags, sumário, busca e compartilhamento.'
 description: 'Artigos, imagens, tags, sumário, busca e compartilhamento.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-11'
+updatedDate: '2026-11-13'
 heroImage: ../../../assets/blog/default-covers/cyber-03.webp
 ---
 
@@ -89,3 +89,9 @@ O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. 
 Se a atualização falhar, não publique `dist/`: restaurar dependências não restaura o build anterior. Resolva o erro e execute `npm run doctor` com sucesso antes do deploy. Com pnpm, confira a compatibilidade e atualize manualmente com `pnpm add @anglefeint/astro-theme@latest` e `pnpm run doctor`, mantendo seu lockfile.
 
 [Guia 5: Publicar fragmentos](../starter-guide-5-fragments/) — Publique pensamentos breves em Markdown, com comentários opcionais em uma janela.
+
+## Capas persistentes de Blog List (0.36.0+)
+
+Esta alteração exige o tema 0.36.0 ou posterior e não está na versão publicada 0.35.0. Mantenha os caminhos heroImage ou coloque novos originais em src/assets/blog/covers/originals/ e referencie-os nos artigos. dev/doctor locais geram tamanhos ausentes ou desatualizados. Também é possível executar `npx @anglefeint/astro-theme prepare-covers`; `--check` valida sem gravar. Inclua no Git os originais e todo src/assets/blog/covers/ (manifest.json, generated/). O build e doctor em CI apenas validam e falham para arquivos ausentes, antigos ou modificados; não regeneram na hospedagem nem dependem do cache Astro. A lista usa imagens responsivas e prioriza duas candidatas. WebP qualidade 80 mantém o objetivo anterior, sem garantir pixels sem perdas; originais não mudam e SVG/animações mantêm seu formato.
+
+As capas dos artigos usam os mesmos arquivos. Imagens locais de Fragments compartilham a preparação e o processo de commit; veja o [Guia 5](../starter-guide-5-fragments/).

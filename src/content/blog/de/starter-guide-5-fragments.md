@@ -114,3 +114,15 @@ new-fragment erzeugt eine achtstellige Nano ID aus Groß-/Kleinbuchstaben und Zi
 ## Fragment-Vorschau auf der Startseite (0.35.0+)
 
 Im aktuellen Quellcode erscheint unter dem Startseiten-Header ein Pixel-Avatar, wenn `theme.fragments.enabled` aktiviert ist und die aktuelle Sprache Fragmente enthält. Beim Öffnen werden die neuesten drei angezeigt. Jede Karte führt zum Original; Anzahl und Pfeil unten führen zur vollständigen Liste. Die Anzahl bedeutet Vorschauen / Gesamtzahl dieser Sprache. Bilder und Code haben eine begrenzte Höhe; Überlauf wird abgeschnitten. Bei deaktiviertem oder leerem Feed entfällt der Einstieg. Keine neue Konfiguration nötig; Theme 0.35.0 oder neuer erforderlich.
+
+## Lokale Bilder und Deployment (0.36.0+)
+
+Erfordert Theme 0.36.0 oder neuer; in der veröffentlichten 0.35.0 ist dies nicht enthalten. `/images/fragments/photo.png` verweist auf `public/images/fragments/photo.png`; für ein Bild neben dem Markdown gilt `./photo.png`. Markdown-Bilder, Bildreferenzen und HTML `img` werden unterstützt. Originale werden weder verschoben noch überschrieben.
+
+Nach dem Update bereitet lokales dev oder doctor responsive Dateien vor. Alternativ:
+
+```bash
+npx @anglefeint/astro-theme prepare-covers
+```
+
+Committe Originale und das gesamte `src/assets/blog/covers/` (manifest.json und generated/). Build und CI doctor prüfen nur und stoppen bei fehlenden oder veralteten Dateien; die Hosting-Plattform erzeugt sie nicht erneut. Feed und Vorschau teilen Dateien und ergänzen fehlende Abmessungen. Das erste Feed-Bild hat Priorität, weitere Bilder und Startseitenvorschauen laden verzögert. Animationen und SVG behalten ihr Format; externe Bilder werden nicht lokal konvertiert.

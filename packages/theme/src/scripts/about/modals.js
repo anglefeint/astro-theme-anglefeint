@@ -1,11 +1,26 @@
 import { createTitleReveal } from '../effects/title-reveal.js';
-import { createDecoderController } from '../decoder/controller.js';
 import { createWindowController } from '../window-controller.js';
 import { mountHelpKeyboard } from './modal-keyboard.js';
 import { mountScriptFolders } from './modal-scripts.js';
 import { renderProgressModal } from './modal-progress.js';
 let cleanupAboutModals;
-export function initAboutModals(runtimeConfig, prefersReducedMotion, decoderClock) {
+let decoderModule;
+const loadDecoder = () =>
+  (decoderModule ||= import('./decoder-tool.js')
+    .then(async (tool) => {
+      await tool.prepareStyles();
+      return tool;
+    })
+    .catch((error) => {
+      decoderModule = undefined;
+      throw error;
+    }));
+export function initAboutModals(
+  runtimeConfig,
+  prefersReducedMotion,
+  decoderClock,
+  loadTool = loadDecoder
+) {
   cleanupAboutModals?.();
   const overlay = document.getElementById('hacker-modal');
   if (!overlay) return;
@@ -15,15 +30,15 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion, decoderCloc
   const decoderEntry = overlay.querySelector('[data-decoder-entry]');
   let cleanupKeyboard, cleanupProgress, cleanupScripts;
   const titleReveal = createTitleReveal(modalTitle, prefersReducedMotion);
-  const decryptor = createDecoderController(
-    overlay,
-    runtimeConfig.decoderLabels || {},
-    decoderClock
-  );
+  let decryptor;
+  let revision = 0;
+  let disposed = false;
   function stopTool() {
+    revision++;
+    modalBody.removeAttribute('aria-busy');
     titleReveal.stop();
     if (decoderEntry) decoderEntry.hidden = true;
-    decryptor.stop();
+    decryptor?.stop();
     cleanupScripts?.();
     cleanupScripts = undefined;
     cleanupProgress?.();
@@ -46,9 +61,29 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion, decoderCloc
       (data.type === 'scripts' ? ' hacker-modal-scripts-wrap' : '');
     if (data.type === 'decryptor') {
       modalEl.classList.add('hacker-modal-decoder');
-      const template = document.getElementById('hacker-decoder-tpl');
-      if (template) modalBody.replaceChildren(template.content.cloneNode(true));
-      decryptor.start();
+      const request = revision;
+      modalBody.setAttribute('aria-busy', 'true');
+      void loadTool()
+        .then(({ createDecoderController }) => {
+          if (disposed || request !== revision) return;
+          const template = document.getElementById('hacker-decoder-tpl');
+          if (template) modalBody.replaceChildren(template.content.cloneNode(true));
+          decryptor ||= createDecoderController(
+            overlay,
+            runtimeConfig.decoderLabels || {},
+            decoderClock
+          );
+          decryptor.start();
+        })
+        .catch(() => {
+          if (!disposed && request === revision) {
+            decryptor?.stop();
+            modalBody.textContent = runtimeConfig.decoderLabels?.loadFailed || '';
+          }
+        })
+        .finally(() => {
+          if (!disposed && request === revision) modalBody.removeAttribute('aria-busy');
+        });
     } else if (data.type === 'keyboard') {
       modalEl.classList.add('hacker-modal-wide');
       cleanupKeyboard = mountHelpKeyboard(overlay, modalBody, runtimeConfig);
@@ -70,7 +105,6 @@ export function initAboutModals(runtimeConfig, prefersReducedMotion, decoderCloc
         { signal: listeners.signal }
       )
     );
-  let disposed = false;
   const dispose = () => {
     if (disposed) return;
     disposed = true;

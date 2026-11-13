@@ -1,15 +1,22 @@
-import { playPassage } from '../matrix-passage/player.js';
-import { randomPassagePalette } from '../matrix-passage/palettes.js';
-import '../../styles/matrix-font.css';
-import '../../styles/home-passage.css';
+let playerModule;
+const loadPlayer = () =>
+  (playerModule ||= import('./oracle-player.js').catch((error) => {
+    playerModule = undefined;
+    throw error;
+  }));
 
-export function initOracle() {
+export function initOracle(load = loadPlayer) {
   const button = document.querySelector('[data-oracle]');
   if (!button) return;
   const listeners = new AbortController();
   let disposed = false;
-  // Canvas textures need the real glyph font before their one-time rasterization.
-  const fontReady = document.fonts.load('22px "Matrix Code NFI"').catch(() => {});
+  const warm = () => {
+    void load()
+      .then((player) => player.prepareFont())
+      .catch(() => {});
+  };
+  button.addEventListener('pointerenter', warm, { signal: listeners.signal, once: true });
+  button.addEventListener('focus', warm, { signal: listeners.signal, once: true });
   let starting = false;
   let previousPalette;
   let closePlayer;
@@ -46,11 +53,12 @@ export function initOracle() {
     async (event) => {
       if (closePlayer || starting) return;
       starting = true;
-      const palette = randomPassagePalette(Math.random, previousPalette);
-      previousPalette = palette;
-      await fontReady;
-      if (disposed) return;
       try {
+        const { playPassage, randomPassagePalette, prepareFont } = await load();
+        await prepareFont();
+        if (disposed) return;
+        const palette = randomPassagePalette(Math.random, previousPalette);
+        previousPalette = palette;
         closePlayer = playPassage({
           trigger: button,
           event,
@@ -79,7 +87,7 @@ export function initOracle() {
         document.addEventListener('keydown', keyboard, true);
       } catch {
         // Keep About usable on devices without WebGL.
-        button.focus({ preventScroll: true });
+        if (!disposed) button.focus({ preventScroll: true });
       } finally {
         starting = false;
       }

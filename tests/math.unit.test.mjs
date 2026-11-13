@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { URL } from 'node:url';
 import { markdownToHtml, mdxToJs } from 'satteri';
 import markdown from '../packages/theme/src/markdown.mjs';
+import { hasMathMarkup } from '../packages/theme/src/utils/math-markup.ts';
 
 const options = (enabled = true) => ({
   ...markdown({ enabled }).options,
@@ -23,6 +24,7 @@ $$`,
   assert.match(html, /<math/);
   assert.match(html, /<mfrac>/);
   assert.match(html, /data-pagefind-ignore/);
+  assert.equal(hasMathMarkup(html), true);
 });
 
 test('math leaves escaped currency and code untouched; disabled keeps dollar text', async () => {
@@ -31,9 +33,17 @@ test('math leaves escaped currency and code untouched; disabled keeps dollar tex
   assert.doesNotMatch(html, /class="katex/);
   assert.match(html, /Cost \$50 and \$100/);
   assert.match(html, /<code>\$x\$<\/code>/);
+  assert.equal(hasMathMarkup(html), false);
   const off = await markdownToHtml('$C_{saved}$\n\n$$\n\\frac{a}{b}\n$$', options(false));
   assert.doesNotMatch(off.html, /katex|<math/);
   assert.match(off.html, /\$C_\{saved\}\$/);
+});
+
+test('rendered math detection ignores comments and escaped markup examples', () => {
+  assert.equal(hasMathMarkup('<!-- <span class="katex">fake</span> -->'), false);
+  assert.equal(hasMathMarkup('<pre>&lt;span class="katex"&gt;sample&lt;/span&gt;</pre>'), false);
+  assert.equal(hasMathMarkup('<span class="custom katex">actual formula</span>'), true);
+  assert.equal(hasMathMarkup('<p>katex is a renderer; $50 is a price.</p>'), false);
 });
 
 test('MDX math compiles alongside expressions without interpreting formula braces', async () => {

@@ -33,7 +33,10 @@ function mathPlugin() {
 }
 
 /** Shared by Astro Markdown and MDX. Math is enabled unless explicitly disabled. */
-export default function markdown({ enabled = true } = {}) {
+export default function markdown({ enabled = true, fragmentImages } = {}) {
   if (typeof enabled !== 'boolean') throw new TypeError('theme.math.enabled must be a boolean.');
-  return satteri({ features: { math: enabled }, mdastPlugins: enabled ? [mathPlugin()] : [] });
+  return satteri({
+    features: { math: enabled },
+    mdastPlugins: [...(enabled ? [mathPlugin()] : []), ...(fragmentImages ? [fragmentImages] : [])],
+  });
 }

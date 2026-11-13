@@ -12,6 +12,8 @@ import {
   STARTER_CONTENT_ROOT,
   STARTER_OBSOLETE_FILES,
   starterSourcePath,
+  STARTER_COVER_ROOT,
+  starterCoverFiles,
 } from '../../scripts/starter-manifest.mjs';
 
 import { buildStarterPackage, starterPackageDrift } from '../../scripts/starter-package.mjs';
@@ -372,7 +374,19 @@ async function commitStarterIfNeeded(sourceRef, changedFiles) {
     console.log('[maintainer:sync-starter] starter already up to date.');
     return false;
   }
-  const staged = [...new Set([...MANAGED_FILES, ...STARTER_SYNC_FILES, ...changedFiles])];
+  let covers = [];
+  try {
+    covers = starterCoverFiles(
+      JSON.parse(
+        await readFile(path.join(process.cwd(), STARTER_COVER_ROOT, 'manifest.json'), 'utf8')
+      )
+    );
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  const staged = [
+    ...new Set([...MANAGED_FILES, ...STARTER_SYNC_FILES, ...changedFiles, ...covers]),
+  ];
   if (staged.length > 0) {
     await run('git', ['add', '--', ...staged]);
   }
@@ -450,8 +464,8 @@ export async function syncStarter(
     await run('npm', ['update', '--prefer-online']);
     await auditDependencies(repoRoot);
     await run('npm', ['run', 'check']);
-    // Generated check runs package doctor: Astro check, build, then runtime assertions.
-    // No source/config/dependency mutation occurs before committing its output.
+    // Local doctor prepares persistent covers, then runs Astro check/build/runtime assertions.
+    // Stage its explicit manifest-owned derivatives; never stage an entire user directory.
 
     const changed = [...changedManaged, ...removedObsolete, ...removedUnexpectedContent];
     if (sanitized) changed.push('package.json');

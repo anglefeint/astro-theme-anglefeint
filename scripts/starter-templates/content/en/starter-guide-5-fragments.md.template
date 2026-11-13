@@ -114,3 +114,15 @@ new-fragment generates an eight-character Nano ID from case-sensitive letters an
 ## Homepage Fragment previews (0.35.0+)
 
 In the current source, enabling `theme.fragments.enabled` also adds a pixel-avatar entrance below the homepage header when the current language has fragments. Open it to preview the latest three; each card opens its original fragment, and the bottom count/arrow opens the full feed. The count means previews / total fragments in this language. Images and code have bounded previews; overflow is clipped. Empty or disabled feeds omit the entrance. No new configuration is needed. Requires theme 0.35.0 or later.
+
+## Local images and deployment (0.36.0+)
+
+This needs theme 0.36.0 or newer; it is not included in published 0.35.0. Keep `/images/fragments/photo.png` in `public/images/fragments/photo.png`, or use `./photo.png` beside the Fragment Markdown. Markdown images, reference-style images and HTML `img` links are supported. Originals stay in place.
+
+After updating, local dev or local doctor prepares responsive files automatically. You can also run:
+
+```bash
+npx @anglefeint/astro-theme prepare-covers
+```
+
+Commit the original images and `src/assets/blog/covers/` (manifest.json and generated/). Builds and CI doctor validate these files and stop if they are missing or stale; the deployment host does not regenerate them. The feed and homepage preview reuse the files and fill missing width/height. The first feed image is prioritized; later images and homepage thumbnails are lazy. Animated images and SVG keep their formats; remote images are not converted locally.

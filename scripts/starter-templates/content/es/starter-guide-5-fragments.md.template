@@ -114,3 +114,15 @@ new-fragment genera un Nano ID de ocho letras y dígitos, distingue mayúsculas 
 ## Vista previa de Fragments en inicio (0.35.0+)
 
 En el código actual, activar `theme.fragments.enabled` añade un avatar de píxeles bajo la cabecera de inicio si hay fragmentos en el idioma actual. Al abrirlo se muestran los tres más recientes. Cada tarjeta abre el original; el contador y la flecha inferiores abren la lista completa. El contador indica vistas previas / total del idioma. Imágenes y código tienen altura limitada y se recorta el exceso. No aparece si está desactivado o vacío. No requiere nueva configuración; necesita el tema 0.35.0 o posterior.
+
+## Imágenes locales y despliegue (0.36.0+)
+
+Requiere el tema 0.36.0 o posterior; no está incluido en 0.35.0. `/images/fragments/photo.png` corresponde a `public/images/fragments/photo.png`; usa `./photo.png` para una imagen junto al Markdown. Se admiten imágenes Markdown, referencias y HTML `img`. Los originales no se mueven ni sobrescriben.
+
+Tras actualizar, dev o doctor local prepara los archivos adaptables. También puedes ejecutar:
+
+```bash
+npx @anglefeint/astro-theme prepare-covers
+```
+
+Confirma los originales y todo `src/assets/blog/covers/` (manifest.json y generated/). La compilación y CI doctor solo validan y fallan si faltan archivos o están desactualizados; el servidor de despliegue no los regenera. La lista y las vistas previas comparten archivos y completan las dimensiones ausentes. La primera imagen de la lista tiene prioridad; las siguientes y las miniaturas de inicio usan carga diferida. Las animaciones y SVG mantienen su formato; las imágenes remotas no se convierten localmente.

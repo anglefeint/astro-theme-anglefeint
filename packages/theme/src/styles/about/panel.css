@@ -210,20 +210,6 @@
   white-space: pre-line;
 }
 
-.hacker-body p,
-.hacker-body h2,
-.hacker-body blockquote,
-.hacker-body .about-manifest {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-}
-.hacker-body .hacker-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 .hacker-body a {
   color: rgba(255, 255, 255, 0.9);
   text-decoration-color: rgba(255, 255, 255, 0.35);
@@ -260,6 +246,17 @@
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.82);
   margin: 2rem 0 0.65rem;
+}
+.about-title-text {
+  position: relative;
+  display: block;
+}
+.about-title-sizing {
+  color: transparent;
+}
+.about-title-typing {
+  position: absolute;
+  inset: 0;
 }
 /* ── manifest box ── */
 .about-manifest {
@@ -469,8 +466,6 @@
   padding-left: 0.65rem;
   border-left: 2px solid #ad8c55;
   letter-spacing: 0.015em;
-  opacity: 1;
-  transform: none;
 }
 .about-page .hacker-body .about-contact-title {
   color: #ffda93;
@@ -478,10 +473,6 @@
   padding: 0.55rem 0.65rem;
   background: linear-gradient(90deg, #efbd661a, transparent);
   text-shadow: 0 0 14px #efbd6630;
-}
-.about-page .hacker-body .about-contact-copy {
-  opacity: 1;
-  transform: none;
 }
 .about-page .about-contact-copy a {
   color: #ffda93;

@@ -173,7 +173,6 @@ export function initAboutWindow() {
     persist();
     lifetime.frame(() => target.scrollIntoView({ behavior: 'instant', block: 'start' }));
   }
-  bar.hidden = false;
   const initialTarget = anchorTarget();
   if (initialTarget) revealAnchor(initialTarget);
   else {
@@ -301,6 +300,10 @@ export function initAboutWindow() {
     },
     { signal }
   );
+  const controls = panel.querySelectorAll('[data-about-action]');
+  controls.forEach((button) => {
+    button.disabled = false;
+  });
   return {
     async command(input) {
       const command = input.trim();
@@ -327,7 +330,9 @@ export function initAboutWindow() {
       panel.removeAttribute('data-minimized');
       panel.removeAttribute('aria-hidden');
       panel.inert = false;
-      bar.hidden = true;
+      controls.forEach((button) => {
+        button.disabled = true;
+      });
       dock.hidden = true;
       opener.hidden = true;
       delete document.body.dataset.aboutWindow;

@@ -9,11 +9,12 @@ interface Props {
 const { title, close, collapse, fullscreen, restore } = Astro.props;
 ---
 
-<div class="about-window-bar" hidden>
+<div class="about-window-bar">
   <div class="about-window-controls">
     <button
       type="button"
       data-about-action="close"
+      disabled
       aria-label={close}
       title={`${close} · close`}
       aria-controls="about-reading-window"><span aria-hidden="true">×</span></button
@@ -21,6 +22,7 @@ const { title, close, collapse, fullscreen, restore } = Astro.props;
     <button
       type="button"
       data-about-action="minimize"
+      disabled
       aria-label={collapse}
       title={`${collapse} · minimize`}
       aria-controls="about-reading-window"><span aria-hidden="true">−</span></button
@@ -28,6 +30,7 @@ const { title, close, collapse, fullscreen, restore } = Astro.props;
     <button
       type="button"
       data-about-action="maximize"
+      disabled
       aria-label={fullscreen}
       title={`${fullscreen} · maximize`}
       aria-controls="about-reading-window"

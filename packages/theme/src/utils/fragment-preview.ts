@@ -2,7 +2,7 @@ import { parse } from 'node-html-parser';
 
 export type FragmentPreview = {
   text: string;
-  image?: { src: string; alt: string; width?: number; height?: number };
+  image?: { src: string; alt: string; width?: number; height?: number; srcset?: string };
   code?: string;
 };
 
@@ -26,6 +26,15 @@ export function fragmentPreview(html: string, baseURL: string | URL, limit = 180
         width: dimension(image.getAttribute('width')),
         height: dimension(image.getAttribute('height')),
       };
+      // Only propagate generated same-origin candidates, never arbitrary author srcset values.
+      const candidates = (image.getAttribute('srcset') ?? '').split(',').map((part) => part.trim());
+      if (
+        candidates.length &&
+        candidates.every((part) =>
+          /^\/(?!\/)[^\s,:?#]*_blog-covers\/[a-z0-9-]+\.webp [1-9]\d*w$/.test(part)
+        )
+      )
+        result.image.srcset = candidates.join(', ');
       break;
     } catch {
       // Skip unusable image URLs; do not turn a bad thumbnail into a build failure.

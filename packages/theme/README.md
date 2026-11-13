@@ -304,3 +304,11 @@ new-fragment generates an eight-character Nano ID from case-sensitive letters an
 In the current source, enabling `theme.fragments.enabled` also adds a pixel-avatar entrance below the homepage header when the current language has fragments. Open it to preview the latest three; each card opens its original fragment, and the bottom count/arrow opens the full feed. The count means previews / total fragments in this language. Images and code have bounded previews; overflow is clipped. Empty or disabled feeds omit the entrance. No new configuration is needed. Requires theme 0.35.0 or later.
 
 Article OUTPUT keeps words, tokens and the optional model label. Reading time, latency and confidence are no longer displayed, even when supplied in frontmatter; old fields remain accepted. The article text and its panel appear immediately and remain stationary; the background network and title light band remain.
+
+## Persistent Blog List covers (0.36.0+)
+
+This source change requires theme 0.36.0 or newer; it is not included in published 0.35.0. Keep existing heroImage paths, or place new originals in src/assets/blog/covers/originals/ and reference them from a post. Local dev and local doctor prepare missing/stale Blog List sizes automatically. You can also run `npx @anglefeint/astro-theme prepare-covers`; add `--check` for validation without writes. Commit the originals and all of src/assets/blog/covers/ (manifest.json and generated/). Builds and CI doctor only validate and fail if files are missing, stale or modified; they never regenerate on the deployment host or require an Astro image cache. The list uses native responsive images and prioritizes two cover candidates. WebP quality 80 preserves the existing encoding target, not lossless pixels; originals remain unchanged. SVG/animated covers retain their original format.
+
+Article detail covers use these same responsive files; their Canvas effect reuses the selected image instead of downloading the original separately.
+
+Local Fragment images also use this store, including `/images/...` files in public and relative Markdown/HTML image links. Missing dimensions are filled automatically; the feed and homepage previews share responsive files. Remote images are left unchanged.

@@ -1,5 +1,6 @@
 ---
-import { Image } from 'astro:assets';
+import coverData from 'virtual:anglefeint-blog-covers';
+import { blogCover } from '../utils/blog-cover';
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 import { cleanTags, tagSlug } from '../utils/tags';
@@ -40,6 +41,12 @@ const archiveLabels: Record<string, [string, string]> = {
   ru: ['Статьи', 'Дата публикации'],
 };
 const archive = archiveLabels[resolvedLocale] ?? archiveLabels.en;
+const eagerCovers = new Set(
+  posts
+    .filter((post) => post.data.heroImage)
+    .slice(0, 2)
+    .map((post) => post.id)
+);
 ---
 
 <div class="blog-browser" data-blog-browser data-view="cards">
@@ -109,15 +116,16 @@ const archive = archiveLabels[resolvedLocale] ?? archiveLabels.en;
               </span>
               {post.data.heroImage && (
                 <div class="img-wrapper">
-                  <Image
-                    width={index === 0 ? 1200 : 720}
-                    height={index === 0 ? 600 : 360}
+                  <img
+                    {...blogCover(coverData, post.filePath, post.data.heroImage)}
+                    loading={eagerCovers.has(post.id) ? 'eager' : 'lazy'}
+                    fetchpriority={eagerCovers.has(post.id) ? 'high' : 'auto'}
+                    decoding="async"
                     sizes={
                       index === 0
-                        ? '(max-width: 720px) 100vw, 1280px'
-                        : '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 410px'
+                        ? '(max-width: 1344px) calc(100vw - 4rem), 1248px'
+                        : '(max-width: 720px) calc(100vw - 4rem), (max-width: 1100px) calc((100vw - 6rem) / 2), (max-width: 1344px) calc((100vw - 8rem) / 3), 400px'
                     }
-                    src={post.data.heroImage}
                     alt=""
                   />
                 </div>

@@ -4,7 +4,7 @@ title: '使用指南 2：写文章与管理内容'
 subtitle: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 description: '创建文章，配置封面与标签，使用目录、代码复制、图片预览、搜索和分享图。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-11'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -168,3 +168,9 @@ npx @anglefeint/astro-theme@latest upgrade
 升级失败时不要部署 `dist/`：依赖回滚不会恢复旧构建产物。修复错误并成功运行 `npm run doctor` 后再部署。pnpm 用户先确认版本兼容，再用 `pnpm add @anglefeint/astro-theme@latest` 和 `pnpm run doctor` 手动更新，保留自己的锁文件。
 
 [用户指南 5：发布碎片](../starter-guide-5-fragments/) — 用 Markdown 记录简短感想，可选弹窗评论。
+
+## Blog List 持久化封面（0.36.0+）
+
+此源码改动需要主题 0.36.0 或更新版本，已发布的 0.35.0 尚不包含。现有 heroImage 路径不用改，也可把新原图放入 src/assets/blog/covers/originals/ 并由文章引用。本地 dev 和本地 doctor 自动补齐缺失或过期的列表封面尺寸；也可运行 `npx @anglefeint/astro-theme prepare-covers`，加 `--check` 则只检查不写入。原图和整个 src/assets/blog/covers/（manifest.json、generated/）都要提交到 Git。构建与 CI doctor 仅核验，缺失、过期或被修改时失败，不在部署端重新生成，也不依赖 Astro 图片缓存。列表使用原生响应式图片，优先加载两张封面候选。WebP 质量 80 沿用现有编码目标，不是无损像素保证；原图保持不变，SVG/动态封面保留原格式。
+
+这些文件也用于文章详情页主封面；碎片本地图片使用相同的准备和提交流程，见[用户指南 5](../starter-guide-5-fragments/)。

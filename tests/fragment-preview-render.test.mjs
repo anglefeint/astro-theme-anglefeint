@@ -7,6 +7,7 @@ import { URL } from 'node:url';
 import sharp from 'sharp';
 import { parse } from 'node-html-parser';
 import { fragmentFixture } from './fragments-fixture.mjs';
+import { prepareCovers } from '../packages/theme/src/covers/prepare.mjs';
 
 test(
   'homepage build previews local/public images and code through the actual content pipeline',
@@ -42,6 +43,7 @@ test(
           `---\nid: '${id}'\npubDate: '${date}'\n---\n\n${body}\n`
         );
       }
+      await prepareCovers({ root: fixture.root });
       await fixture.build({ comments: false });
       const doc = parse(await fixture.read('en/index.html'), {
         blockTextElements: { script: true, style: true },
@@ -61,10 +63,9 @@ test(
         /const x = 1;\n {2}console\.log/
       );
       assert.equal(entries[1].querySelector('script'), null);
-      assert.equal(
-        entries[2].querySelector('img').getAttribute('src'),
-        '/images/preview-public.png'
-      );
+      assert.match(entries[2].querySelector('img').getAttribute('src'), /^\/_blog-covers\//);
+      assert.equal(entries[2].querySelector('img').getAttribute('width'), '32');
+      assert.match(entries[2].querySelector('img').getAttribute('srcset'), /32w$/);
       assert.equal(entries[2].querySelector('pre code').textContent, 'first\n  second');
       for (const entry of entries) assert.equal(entry.querySelector('a'), null);
     } finally {

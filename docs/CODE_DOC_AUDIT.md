@@ -12,6 +12,78 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-13 Retrospective documentation workflow and engineering notes
+
+审阅边界：基线 `3d88682f2da8d4a6a5468867288bc77940f18a7c` 与其后的当前工作区，覆盖持久图片、About 首屏/工具加载、文章封面/数学样式、Fragments 图片/分页及模块拆分。没有把已提交的维护发布优化重复当成待发布主题功能。`suggest:docs -- --json` 初次输入 81 条变更路径，文档补齐后为 101 条；direct-hit 109、额外 propagated 0、metadata errors 0。广域 scope 已命中全部候选，不能据此要求重写每份文档；按职责作以下处置。
+
+| 文档职责/发布面                                                         | 本轮处置                                                                                                                                                         |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| BLOG_COVER_ASSETS                                                       | 沉淀持久化/哈希/候选尺寸/DOM Canvas 复用/稳定标记等选择理由与限制；增加排错表及 Fragment/Home 源码—测试映射；更正 custom srcDir/publicDir/base 与标准 CLI 的边界 |
+| VISUAL_SYSTEMS                                                          | 增加报告解读与证据边界、About 启动/样式/字体/取消激活机制及源码职责；修正 About 配置来源指向包内适配器，而非根诊断 fixture                                       |
+| anglefeint 中文总览                                                     | 补当前未发布改动的中文技术导览与规范文档链接；纠正 0.27.0 仍未发布及默认远程模板验收的过时当前态描述，不据此声称新的 registry/部署结果                           |
+| CHANGELOG                                                               | 将未发布主题条目移到顶部，和仓库中已可用但不需 npm 的维护工具分开；删除错指 0.34.0 的待发布说明；既有版本发布事实不改写                                          |
+| 九语 Guide 5 demo/template                                              | 定点补本地/public/相对图片、原图保留、准备命令、派生文件提交、部署只读校验和格式/懒加载边界，并标注未包含于 0.35.0                                               |
+| 九语 Guide 2 demo/template                                              | 补文章详情及 Fragments 共用同一图片流程，并链接当前语言 Guide 5；不新增第二套操作或配置                                                                          |
+| ARCHITECTURE / UPGRADING / MAINTAINER_WORKFLOW / 九语 README/npm README | 复核本工作区已有的所有权、升级准备、打包及用户步骤描述；当前轮次以规范细节/教程补齐为主，不重复拷贝机制正文                                                      |
+| REUSABLE_EFFECTS、配置/策略/薄 agent 入口与其他教程                     | 现有视觉 API、配置字段、验证授权与发布原则没有新增变动；scripts/effects 的样式 loader 是运行时辅助，不误列为新的视觉组件                                         |
+| 历史 releases、素材归档与营销说明                                       | 保留各自历史/产品职责；不以新的本地实现回写旧发布记录，不把技术整理宣传成已上线性能成绩                                                                          |
+
+实现对照沿原始输入/配置 → 准备与集成 → 页面/脚本/样式 → 既有测试契约核对。优先复用既有规范文档，未新建平行的性能实现手册。About 明确说明 `?url`/样式就绪、字体栅格化顺序、成功样式复用与失败重试，且销毁守卫取消的是激活结果，不承诺已取消网络请求。图片文档明确质量 80 为有损目标、1200px 上限/DPR 取舍、远程/矢量/动画/自定义布局回退，以及旧 dev 进程与新清单竞争的排错方式。
+
+本轮新执行：49 项新增本地链接/锚点、源码元数据依赖及定点教程目的地检查通过；包 CLI 的 `prepare-covers --help` 用法与示例一致；元数据/格式及 diff 空白检查作为文档收尾。上述最近技术轮次的测试、类型与构建证据保留在各节，不冒充本轮重新执行。未跑全量教程正文比对、demo 遍历、浏览器/截图、真实评论或线上/部署/registry 检查；没有改运行时代码、升版本、提交、推送或发布。
+
+## 2026-11-13 Module-boundary review of pending performance changes
+
+按用户要求检查这几轮未提交改动，确认两处跨层耦合及一处重复规则：原 fragment-images 同时承担源扫描/路径、Satteri 编译和最终 HTML；总 integration 用 onUpdate/可变变量转接图片模块内部状态；封面和碎片分别拼装 fallback/srcset。将其拆成 fragment-sources、fragment-markdown、fragment-render 三个职责模块，页面只引用 renderer；公共 responsive.mjs 和 types.d.ts 定义图片选择规则/清单形状；blog-cover 保留集合 filePath 适配。删除未发布的旧混合模块，不保留无调用的转发壳。
+
+图片 integration 内部管理准备状态、缓存清单快照、虚拟模块与 Markdown 配置，根 integration 只传现有数学开关。快照仅在准备/更新后重算，不对每份 Markdown 重建整个清单，也不增加全局状态或第二套编码器。编码、文件名、派生图片、公开命令/配置与页面视觉行为不变。依赖闭包检查确认 fragment-render 仅引入 responsive 与 node-html-parser，不含文件系统、Markdown 源解析或 Satteri；fragment-sources 不含编译器/页面渲染依赖；根入口无图片状态中转。
+
+同时复核 About：窗口控制、正文交互、工具控制器、按需样式 loader 已各有明确生命周期；DecoderForm 为共享表单，DecoderWorkbench 为独立页样式/背景包装，未将不相同的 Oracle/decoder 状态机强行合并。延迟初始化的关闭/切换/销毁守卫保留，7 项既有 About 启动单元回归通过。图片相关 9 项单元与两项真实静态构建通过，覆盖 dev 更新、持久数据、Blog/详情、Fragments/Home、base 和 Markdown/MDX/数学样式。主工程 291 页构建通过（26.96s），随后快照缓存调整由同一组图片单元/两项隔离构建再验证；Astro 455 文件零错误/警告、1 个既有 e2e 类型提示。打包文件清单与 lint 通过，文档/格式按本轮收尾。
+
+更新 ARCHITECTURE、BLOG_COVER_ASSETS 的模块图谱与本记录；源码文件重命名同步调用方、单元导入及打包断言。README/教程/配置/升级/发布政策和视觉说明不受此结构重构影响，不追加用户步骤。此前工作完整保留；没有浏览器、截图、线上/部署检查、提交、推送或发布。
+
+## 2026-11-13 Fragment responsive images and per-page math (local preparation)
+
+按用户确认将本地碎片图片纳入原持久派生链：prepare-covers 收集 Markdown 图片、引用式图片和 HTML img，解析 public 根路径/相对路径，忽略 frontmatter/代码/远程及 data URL；源文件与原链接保留，动画/SVG 不转成静态图。复用现有质量/宽度规则、哈希校验、原子写入、路径/链接边界、dev/local doctor 准备与 build/config sync/CI doctor 只读验证。引用仅来自碎片的派生文件也纳入静态复制与 starter 清单枚举，不增加复制式消费者实现或站点配置项。存储目录沿用 src/assets/blog/covers，不新建第二套图片缓存。
+
+通过公开 Satteri MDAST 插件 API 将支持的碎片图片编译为稳定源标记；Feed/Home 从当前虚拟清单解析最终 URL 并移除标记，避免只改图不改 Markdown 时沿用编译缓存中的旧哈希 URL。输出 srcset/sizes、async 解码与缺失宽高；已有尺寸保留，单边尺寸按源比例补另一边。每页首图 eager/high，其他图及首页缩略图 lazy，首页只传递受限的同源派生候选。相对 SVG/动画仍交给原 Astro 路径处理。Feed 以容器一次渲染每张卡片并复用 HTML，仅当当前页有实际公式且数学开关启用才引入 math.css；评论、分页、锚点与正文代码保留。
+
+本地准备从原 16 源/80 派生扩展到 20 源/87 派生，新增 7 个文件，原图未修改。首次主构建发现旧 dev 进程将清单覆盖回旧库存，停止该进程并重新准备/只读校验后通过；没有绕过构建校验或更改部署行为。22 项相关单元测试、3 项隔离静态构建测试通过，覆盖原封面复用/修复/边界、碎片 Markdown/HTML/引用、动画/SVG、尺寸、源变更但不重新编译、带 base 的分页及首页共享、数学按页加载、既有九语分页/开关/评论标记。主工程 291 页构建通过（32.37s）；Astro 451 文件零错误/警告、1 个既有 e2e 类型提示；打包 CLI、相关 lint 通过。没有浏览器/截图/视觉测量、真实评论、线上 PageSpeed 或 Cloudflare/demo 检查，不宣称具体 LCP/CLS/分数改善。
+
+按源码职责同步 BLOG_COVER_ASSETS、ARCHITECTURE、VISUAL_SYSTEMS、UPGRADING、CHANGELOG、九语 README/npm README 与打包必需文件断言。教程中的发布/准备操作和配置结构未变，历史记录、发布工作流与薄 agent 入口不变；上轮 Blog/About 工作完整保留。文档元数据与全仓格式按本轮收尾，没有提交、推送或发布。
+
+## 2026-11-13 Article responsive cover and conditional mathematics (local preparation)
+
+按用户确认优化可控资源，沿用现有持久封面清单/宽度配方，不更改原图或部署流程。文章路由将公开 post.filePath 交给 BlogPost，主封面使用原生 srcset/sizes、原尺寸占位和 eager/high 优先级；自定义调用缺 filePath 仍回退原 URL。hero Canvas 等待/复用该 DOM 图片，以 naturalWidth/naturalHeight 保持源图裁剪，覆盖已缓存、后续加载和响应式候选切换；删除独立 new Image 原图路径。扫描/像素化/背景与光带保留，正文图片和相关推荐维持原处理。
+
+BlogPost 通过公开 Astro.slots.render 一次渲染正文，复用 HTML，构建时用现有 node-html-parser 识别实际 anglefeint-math/katex 元素，数学开关开启且有公式才输出 math.css。不从 Markdown 的美元符号猜测，不引入客户端发现/加载层；Fragments 全局开关控制样式的既有规则不变。无配置项、依赖、图片配方或生成资产变化。红皇后和第三方统计本轮不变，不将晚启动请求链解释为正文阻塞。
+
+技术证据：14 项相关单元测试通过，包含图片缓存/加载/切换/销毁与自然尺寸、数学/MDX/注释/代码/价格检测及持久封面生命周期；一次隔离 Astro 静态构建通过，在带 base 的 Blog/Tag 与详情页核对持久 srcset、eager/high、无独立 Canvas 源、普通/公式/MDX/no-cover 正文及数学 CSS 条件，原封面文件逐字节复制且清单未被构建修改。主工程一次构建 291 页（28.23s），Astro 447 文件零错误/警告、1 个既有 e2e 类型提示。相关 lint、文档元数据和全仓格式按本轮检查收尾；没有浏览器、截图/视觉测量或线上 PageSpeed 复测，不宣称具体分数/CLS/SI 改善。
+
+同步 ARCHITECTURE、VISUAL_SYSTEMS、BLOG_COVER_ASSETS、CHANGELOG、九语 README 和 npm README 的当前未发布范围。Guide 2 的原图路径、准备/提交/部署操作未变，其他教程、配置/升级/发布政策、agent 入口及历史证据不变；上轮封面及 About 改动完整保留。没有提交、推送或发布。
+
+## 2026-11-13 About immediate reading and tool loading (local preparation)
+
+按用户确认删除 About 正文段落/引用/manifest 的 opacity/translate 入场与对应 observer；窗口栏 SSR 即占位，按钮绑定后启用、销毁时禁用，不再切换整条栏的 hidden。分节标题保留完整的流内文本占位和可访问文本，仅在 aria-hidden 绝对定位层打字，完成/销毁恢复全文，减少长标题换行导致的布局变化。终端背景、光带和已有工具视觉保留。
+
+Oracle → 动态 oracle-player → 按需 passage/font CSS → 字体就绪 → 播放；pointer/focus 可预热，未交互不启动请求。About 弹窗 → 动态 decoder-tool → 样式就绪 → 共享 DecoderForm/控制器，关闭/切换/销毁用 revision 守卫阻止过期启动，错误显示现有本地化提示、重开可重试。独立 DecoderWorkbench 作为带样式/背景的薄包装保留。首次构建发现 Astro 会将普通动态模块 CSS 提前加入页头，后改为公开 `?url` 资源和小型共享 stylesheet 加载器，并重建核对；没有改上游源码。样式成功后保留复用、失败移除链接并允许重试。
+
+本地证据：24 项相关 About 启动/竞态/样式加载与现有解码单元测试通过；最终构建 291 页（27.28s）。直接读取九语静态 About 产物，确认窗口栏无 hidden、按钮初始 disabled、无正文 reveal 规则，Oracle/解码器核心 CSS 不在初始 stylesheet 链接中、字体资源路径有效，独立 Decoder 初始样式保留；About-runtime 配置校验九页通过。新工具依赖为动态导入，独立 decoder clock 产物仅 244 字节；共享光标等基础 CSS 仍可由初始公共 chunk 引入，不宣称全部工具相关样式都已后移。代码/文档格式、lint、类型和元数据结果随本轮检查记录，不将静态产物检查视作视觉/CLS 实测。
+
+同步 ARCHITECTURE、VISUAL_SYSTEMS 和 CHANGELOG 的未发布行为说明。复核 REUSABLE_EFFECTS：新增 loader 是 scripts/effects 下的运行时辅助，不是 packages/theme/src/effects 下新增视觉 API，原视觉 API/适配器契约未变，无需新增视觉条目。README/教程/配置/升级/发布政策及历史记录不受本轮 About 行为影响，不额外改写；保留上轮尚未提交的封面工作。没有浏览器、截图/视觉测量、Cloudflare/demo/Giscus 或新 PageSpeed 检查，没有提交、推送或发布。
+
+## 2026-11-13 Persistent Blog List covers (local preparation)
+
+以 `3d88682f2da8d4a6a5468867288bc77940f18a7c` 为基线，按用户确认执行独立于部署缓存的封面派生方案。`covers/prepare.mjs` 扫描现有默认封面池、新 originals 池与文章 heroImage 本地引用，原路径/原图不变，原比例 WebP 80 派生宽度及源/规则/输出哈希保存在项目 `src/assets/blog/covers/`。当前 16 张封面生成 80 份持久文件；重复准备 0 编码、80 复用，坏/缺单份仅补该份。SVG/多帧保留原始格式，EXIF 自动转正，小源不放大。原型错误来自 Windows 短路径别名与测试直接打开图片留下的原生文件句柄，已规范路径、用内存读取测试图片并重跑通过；没有修改上游实现。
+
+链路：package CLI/dev/local doctor 准备 → manifest 与生成文件提交 → build/config sync/CI doctor 只读核验 → Vite 私有虚拟清单以公开 content filePath 关联文章 → BlogCards 原生 img/srcset → build 原字节复制至 `_blog-covers`。不通过 Astro Image 二次转换，不需部署缓存/图片服务器，不改详情页图片、头像 GIF 或视觉样式。前两个实际封面 eager/high、其他 lazy/auto，List 隐藏模式可能仍下载这两个候选的原生行为已说明，不以新客户端发现层掩盖该取舍。
+
+包文件列表增加 src/covers，原 starter 十一个脚本和依赖更新器不变；local doctor 在原检查前准备，CI doctor 只验，兼容本地旧版本 upgrade 后调用新 doctor。starter manifest 管理空 originals 占位，并通过 starterCoverFiles 显式列出自己 doctor 生成的清单/文件进行暂存；不复制 demo 清单或覆盖消费者原图。独立安装工具先准备后执行默认构建，包内 CLI 清单加入新运行时文件。
+
+文档职责同步：新增 BLOG_COVER_ASSETS 源码/生命周期/测试映射，更新架构、视觉、维护、升级、CHANGELOG、九语 README/npm README 和九对 Guide 2 demo/template，均说明未包含在已发布的 0.35.0。工作流/验证/元数据/薄 agent 入口、其他教程和历史发布记录没有执行政策或消费者说明变动，保持不变。建议工具按新增运行时/CLI/manifest 和文档输入路由核对；初次新文档 scope 使用不支持的 assets 值，已修正为 visual-system，元数据检查通过。没有升版本、提交、推送或发布，也没有浏览器、截图/视觉测量、线上 Pagespeed/demo/Giscus/Cloudflare 检查。
+
+本地证据：29 项相关单元/CLI/doctor/starter 回归及 1 项真实隔离静态构建通过；后者无预存 Astro 缓存，验证带 base 的 Blog/Tag 原生 srcset、两张 eager/high、其余 lazy，以及部署文件与持久源逐字节一致。主工程一次构建 291 页（28.81s），导出 162 文章/165 碎片/9 About；Astro 440 文件零错误/警告、1 个既有 e2e 类型提示。独立打包安装/审计/CLI/默认构建通过，审计零已知漏洞。九对 Guide 2 正文与本地文档引用通过。改动文件 lint、109 文档元数据及全仓格式检查通过。现有主工程产物另核对 10 张列表封面、2 张 eager，以及 50 份实际被文章引用的派生文件逐字节复制；全部 80 份本地池派生文件只读检查有效，没有要求未引用的池图片也部署。不以这些结果宣称 PageSpeed 分数或人工视觉验收。
+
 ## 2026-11-13 Batched release administration (maintainer-only)
 
 基线 `37d81f30a096c5dd91b33521b8e847ad4ed21fa1`。按用户要求，减少零散身份查询、临时公告脚本和重复收尾提交，保留必要技术检查与提交钩子。新增根维护脚本 `scripts/release-closeout.mjs`、npm `release:closeout` 和工具目录入口：prepare 批量读取当前 Git/npm/starter 身份并生成忽略目录中的公告/观察凭证；verify 重新读取身份并核对远程源码标签、已公开稳定 Release 及完整公告正文。只读查询可并行，CLI 复用现有维护锁；它不上传/安装/提交/推送/创建标签或 Release，不运行测试/构建/浏览器，也不下载 npm 包来重复既有下载核验。既有发布、恢复、starter doctor/审计和 pre-commit 保持原实现。

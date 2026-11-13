@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url';
 import search from './search.mjs';
 import socialImage from './social-image.mjs';
 import machineReadable from './machine-readable.mjs';
-import markdown from './markdown.mjs';
 import sitemap from './sitemap.mjs';
+import blogCovers from './covers/integration.mjs';
 import { resolveSiteUrl } from './project/site-url.mjs';
 import { loadEnv } from 'vite';
 
@@ -142,7 +142,6 @@ export default function anglefeint(themeConfig) {
           updateConfig({
             compressHTML: true,
             site: resolveSiteUrl(themeConfig.site.url, fileURLToPath(config.root)),
-            markdown: { processor: markdown({ enabled: themeConfig.theme.math.enabled }) },
             vite: {
               resolve: {
                 alias: {
@@ -168,6 +167,7 @@ export default function anglefeint(themeConfig) {
       },
     },
     mdx(),
+    blogCovers({ mathEnabled: themeConfig.theme.math.enabled }),
     socialImage(),
     {
       name: 'anglefeint-content-exports',

@@ -189,9 +189,9 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 
 `npm run new-page -- projects --theme base` 创建本地多语言页面。主题变体包括 base、ai、cyber、hacker、matrix；重复页面报错。CLI 实现和 config loader 位于 `packages/theme/src/cli-*.mjs`、`packages/theme/src/scaffold/`。
 
-0.27.0 将标准路由与搜索／目录／标签／分享图／机器可读输出／sitemap 接入收进主题集成。旧项目先按 [UPGRADING](UPGRADING.md) 迁移到新的薄 starter；之后 npm 项目运行 `npx @anglefeint/astro-theme@latest upgrade`，检查版本／schema／Node／Astro，备份并更新依赖、运行 doctor，失败时尝试恢复依赖。内容、个人配置、音乐图片和自建页不被覆盖。跨 schema 自动迁移与自动部署尚未实现；0.27.0 目前仅在本地准备，未发布。维护者的 starter 同步不是用户升级命令。
+0.27.0 将标准路由与搜索／目录／标签／分享图／机器可读输出／sitemap 接入收进主题集成。旧项目先按 [UPGRADING](UPGRADING.md) 迁移到新的薄 starter；之后 npm 项目运行 `npx @anglefeint/astro-theme@latest upgrade`，检查版本／schema／Node／Astro，备份并更新依赖、运行 doctor，失败时尝试恢复依赖。内容、个人配置、音乐图片和自建页不被覆盖。跨 schema 自动迁移与自动部署尚未实现；实际版本交付以版本记录为准。维护者的 starter 同步不是用户升级命令。
 
-发布顺序是：代码/验证/版本准备提交 → 推送 main → npm 发布和下载核验 → starter 同步、验证和推送 → 远程模板验收 → 发布记录收尾 → 标签指向 npm 源码提交并创建 GitHub Release。逐步命令以 [发布 runbook](docs/PACKAGE_RELEASE.md) 为准。
+发布按改动选择技术检查并准备文档，然后依次处理 main 源码、npm 上传/下载身份核验、starter 自有安装/doctor/审计与推送，最后通过批量收尾工具处理公告和身份读回；标签对应实际 npm 源码。浏览器、远程模板验收及部署检查不默认执行，具体授权与检查选择见[验证政策](docs/VALIDATION_POLICY.md)，逐步命令以[发布 runbook](docs/PACKAGE_RELEASE.md)为准。
 
 ## 7. 文档工作流与验证边界
 
@@ -220,3 +220,14 @@ machine_summary: Current Chinese overview of the Anglefeint Astro theme reposito
 Decoder Lab composes `packages/theme/src/components/shared/NetworkBackdrop.astro`, a randomized moving SVG peer network with reduced-motion and visibility lifecycle handling. `WindowShell.astro` owns its structural stylesheet and body/actions slots. Music retains one session and delegates mounting to `scripts/music/deck.js`; Oracle uses the shared matrix-passage engine and About retains its adapter. Page effect scopes isolate optional initialization and release owned resources; Home signal-preview interaction and About title reveal are separate modules. See [Architecture](docs/ARCHITECTURE.md) and [Visual Systems](docs/VISUAL_SYSTEMS.md) for implementation contracts.
 
 0.20.0 新增独立 Frontier 导航箭头与 `components/decoder/DecoderReadings.astro`。About 保持直接链接；当前 Frontier 中的 Contact 与 Decoder 分别跟随各自开关，两者都关闭时才隐藏箭头。阅读区默认包含原文与资料／项目官网，使用本地配图，不转载正文。`i18n.locales.<code>.messages.decoderPage.readings` 接受 `tribute` 与完整替换的 `links` 列表，1 项、30 项都完整渲染；宽屏每行最多八张。路由负责传入已解析消息，配置类型沿用 `DeepPartial<Messages>`，不新增适配器或功能开关。具体字段、空值行为与图片别名见[包配置说明](packages/theme/README.md#decoder-reading-configuration)，实际 npm 与公开 starter 交付验收见 [0.20.0 发布记录](docs/releases/0.20.0.md)。
+
+## 0.36.0 性能改动的技术边界
+
+以下为 0.36.0 的源码实现，实际 npm/starter/公告状态见[交付记录](docs/releases/0.36.0.md)，不以本地技术检查声称线上性能成绩。原图、个人内容与四种视觉身份保留。
+
+- **持久图片**：Blog 列表/标签、文章主封面与本地 Fragment 图片共用一个派生目录、编码器和哈希规则。dev/本地 doctor 准备，构建与 CI doctor 只读校验并复制；无需部署缓存。CLI 仍是 `prepare-covers [--check]`，生成目录仍为 `src/assets/blog/covers/`。原图与清单/派生文件一起提交。具体输入、格式、回退、定制目录限制与故障处理见[图片工作流](docs/BLOG_COVER_ASSETS.md)。
+- **模块分层**：来源扫描/路径、Markdown 标记、最终 HTML 各自独立；图片集成私有管理清单快照和编译器配置。页面不依赖扫描器/编译器，封面与碎片共用尺寸候选选择和类型。加载优先级和布局尺寸仍由页面负责。
+- **详情封面与公式**：Canvas 复用页面选中的响应式封面，以自然尺寸绘制，避免另取原图。文章与碎片分页依据实际渲染公式决定是否加载数学 CSS，代码/价格不按美元符号猜测。
+- **About 首屏与工具**：正文和窗口栏直接显示，按钮绑定后启用；分节标题用完整文字占位。Oracle/解码器按交互加载重资源，显式等待样式/字体，关闭/切换/销毁守卫阻止过期结果激活。机制和源码职责见[About 技术边界](docs/VISUAL_SYSTEMS.md#about-startup-ownership-and-failure-behavior)。
+
+LCP、CLS 和 Speed Index 的候选原因不能直接当作实测结论。旧线上报告不代表当前未发布源码；静态构建、宽高与资源哈希检查也不证明新分数。保留动效，先处理资源、几何占位和加载时机；新测量及用户视觉验收与技术检查分开记录。各轮实际检查见[核对记录](docs/CODE_DOC_AUDIT.md)。

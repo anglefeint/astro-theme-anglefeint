@@ -1,6 +1,11 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import { hasMathMarkup } from '../../../utils/math-markup';
+import { fragmentFeedHtml } from '../../../utils/fragment-html';
+import imageData from 'virtual:anglefeint-blog-covers';
+import { rewriteFragmentImages } from '../../../covers/fragment-render.mjs';
 import CyberShell from '../../../layouts/shells/CyberShell.astro';
 import FragmentComments from '../../../components/FragmentComments.astro';
 import BackToTop from '../../../components/shared/BackToTop.astro';
@@ -49,9 +54,19 @@ const paginationModel = buildPaginationModel({
   windowSize: THEME.PAGINATION.WINDOW_SIZE,
   showJumpThreshold: THEME.PAGINATION.SHOW_JUMP_THRESHOLD,
 });
-const cards = await Promise.all(
-  entries.map(async (entry) => ({ entry, Content: (await render(entry)).Content }))
-);
+const container = await AstroContainer.create();
+let hasImage = false;
+const cards = [];
+for (const entry of entries) {
+  const { Content } = await render(entry);
+  const rendered = fragmentFeedHtml(
+    rewriteFragmentImages(await container.renderToString(Content), imageData),
+    !hasImage
+  );
+  hasImage ||= rendered.hasImage;
+  cards.push({ entry, html: rendered.html });
+}
+const needsMath = THEME.MATH.ENABLED && cards.some(({ html }) => hasMathMarkup(html));
 // Locale switches always target page one: pagination counts may differ by language.
 const localeHrefs = Object.fromEntries(
   ENABLED_LOCALES.map((code) => [code, localePath(code, '/fragments/')])
@@ -79,7 +94,7 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
   localeHrefs={localeHrefs}
   includeAlternateLinks={current === 1}
 >
-  {THEME.MATH.ENABLED && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
+  {needsMath && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
   <section
     class="fragments-feed"
     data-machine-page="fragments"
@@ -105,7 +120,7 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
     <p class="fragment-link-status" data-fragment-link-status role="status" hidden></p>
     {!cards.length && <p>{labels.empty}</p>}
     {
-      cards.map(({ entry, Content }) => (
+      cards.map(({ entry, html }) => (
         <article
           class="fragment-card"
           id={entry.data.id}
@@ -164,7 +179,7 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
           <div class="fragment-copy-fallback" data-fragment-copy-feedback hidden />
           {entry.data.title && <h2>{entry.data.title}</h2>}
           <div class="fragment-body">
-            <Content />
+            <Fragment set:html={html} />
           </div>
           {THEME.FRAGMENTS.comments.enabled && (
             <button

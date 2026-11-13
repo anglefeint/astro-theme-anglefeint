@@ -10,6 +10,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.36.0: persistent responsive content images
+
+See the [0.36.0 delivery record](docs/releases/0.36.0.md) for actual publication status. This version keeps existing heroImage paths and adds project-owned `src/assets/blog/covers/manifest.json`/`generated/`. Before deployment, run the updated local dev/doctor or `npx @anglefeint/astro-theme prepare-covers`, then commit originals and the entire covers directory. Builds/config sync and CI doctor reject missing/stale/corrupted derivatives without regenerating; no host image cache is required. Local doctor prepares before its unchanged checks, allowing supported local npm upgrades from older packages to create initial derivatives. The dependency-only upgrader still preserves articles/config/original media; new or refreshed derived files may remain after a later doctor failure and can be regenerated. Blog archive/detail covers and local Fragment images share these derivatives; existing Fragment root-public and relative image links stay valid. SVG/animation keep their formats, and unrelated article-body images keep their existing processing. See [the asset workflow](docs/BLOG_COVER_ASSETS.md).
+
 ## 0.35.0: homepage Fragment previews and article presentation
 
 See the [0.35.0 delivery record](docs/releases/0.35.0.md) for actual publication status. Once available, supported npm schema-1 projects can run `npx @anglefeint/astro-theme@latest upgrade` (or `--to 0.35.0`), build and redeploy. Archiving avatar artwork alone does not deliver the runtime. No new configuration or content migration is needed. Enabled, nonempty localized Fragment collections gain a homepage avatar entrance with the latest three previews. Image/code previews are clipped; links still open the complete original fragments. The full feed keeps natural card heights with larger gaps. Disabled/empty collections omit the entrance.

@@ -114,3 +114,15 @@ new-fragment gera um Nano ID de oito letras e dígitos, diferencia maiúsculas e
 ## Prévia de Fragments na página inicial (0.35.0+)
 
 No código atual, ativar `theme.fragments.enabled` adiciona um avatar em pixels abaixo do cabeçalho da página inicial quando há fragmentos no idioma atual. Ao abrir, aparecem os três mais recentes. Cada cartão abre o original; a contagem e a seta inferiores abrem a lista completa. A contagem significa prévias / total no idioma. Imagens e código têm altura limitada, com o excesso recortado. O botão não aparece quando desativado ou sem conteúdo. Não exige nova configuração; requer o tema 0.35.0 ou posterior.
+
+## Imagens locais e publicação (0.36.0+)
+
+Requer o tema 0.36.0 ou posterior; não está incluído na 0.35.0 publicada. `/images/fragments/photo.png` corresponde a `public/images/fragments/photo.png`; use `./photo.png` para uma imagem junto ao Markdown. Imagens Markdown, referências e HTML `img` são aceitos. Os originais não são movidos nem sobrescritos.
+
+Após atualizar, dev ou doctor local prepara os arquivos responsivos. Você também pode executar:
+
+```bash
+npx @anglefeint/astro-theme prepare-covers
+```
+
+Versione os originais e todo `src/assets/blog/covers/` (manifest.json e generated/). O build e CI doctor apenas validam e falham se houver arquivos ausentes ou desatualizados; a hospedagem não os regenera. A lista e as prévias compartilham arquivos e completam dimensões ausentes. A primeira imagem da lista tem prioridade; as seguintes e miniaturas da página inicial carregam sob demanda. Animações e SVG mantêm o formato; imagens remotas não são convertidas localmente.

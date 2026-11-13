@@ -11,6 +11,28 @@ depends_on:
 
 # Changelog
 
+All notable changes to this project are documented in this file.
+
+## [0.36.0] - 2026-11-13
+
+- Prepare persistent responsive images for Fragment Markdown/reference/HTML local sources, including public images; preserve originals, animation and vectors. Fill missing dimensions, prioritize the first feed image, lazy-load the remainder and reuse candidates in homepage previews. Load Fragment math CSS only when the current page contains formulas; builds validate committed assets without deployment-time encoding.
+
+- Reuse persistent responsive cover variants on article details and draw the hero Canvas from the selected DOM image, avoiding a separate original-image request. Preserve monitor cropping/effects and eager/high priority. Include article KaTeX CSS only when math is enabled and the rendered body contains formula markup, covering Markdown and MDX without guessing from dollar signs in code or currency.
+
+- Show About reading text and window chrome immediately, enable controls after binding, and keep section-title typing from changing layout. Load Oracle passage/font and About decoder controller/styles on interaction, with close/switch/disposal guards and retryable failures. Reuse shared decoder form markup while retaining the standalone decoder's initial styles/background.
+
+- Add persistent Blog List/tag cover derivatives and `prepare-covers [--check]`: local dev/doctor prepares WebP width variants with source/recipe/output hashes, while build/config sync/CI doctor validate and copy committed bytes without host image-cache dependence. Keep original paths, vector/animated passthrough and article-body image processing. Use native srcset/sizes and two eager/high cover candidates, with remaining covers lazy. Preserve layout/effects and stage only starter-owned derived paths; no automatic npm publication or version bump in this preparation.
+
+See the [0.36.0 delivery record](docs/releases/0.36.0.md) for preparation and actual delivery status. These changes are not included in 0.35.0.
+
+## Repository-only maintenance
+
+The following tools are already available in the repository. They do not require a theme npm version.
+
+- Maintainer-only: add a stable-release closeout prepare/verify tool to batch fresh registry/Git/starter identities, generate announcement notes and read back the exact published Release. Keep selected technical checks, npm download verification, starter audit/doctor and commit hooks. Prepare prose before source freeze and retain changing delivery refs/timings in announcements/local evidence instead of repeated self-recording closeout commits. No runtime, consumer script, package version or starter contract change.
+
+- Maintainer-only: unify normal/recovery npm verification across tag, exact-version metadata and downloaded integrity/SHA1, automatically checking the publishing HEAD during normal delivery. Log each failure's stage/code/redacted reason/action; retry only named transient errors and stop immediately on identity/authentication/malformed/unknown failures. Keep the existing 12 attempts, 10-second interval and 15-second fetch timeout. That earlier maintainer-only delivery changed no theme package, consumer command or starter file; npm stayed at 0.33.2 at that time.
+
 ## [0.35.0] - 2026-11-13
 
 See the [delivery record](docs/releases/0.35.0.md) for actual npm, starter and GitHub Release status.
@@ -38,15 +60,6 @@ See the [delivery record](docs/releases/0.33.1.md) for actual publication and ac
 
 - Simplify Fragment sharing links to `/<locale>/fragments/#ID`, using the existing eight-character ID directly for card anchors, date links, copying and cross-page navigation. JSON page indexes and comment identities are unchanged. Synchronize nine-language README and demo/starter guides.
 - Separate maintainer npm release operations from agent workflow policy: add a discoverable tool catalog, read-only dependency plans and composable execution with single-invocation deduplication. Keep all default gates, blocking audits, existing release flags and standalone recovery; no cross-invocation result cache.
-
-All notable changes to this project are documented in this file.
-
-## Unreleased
-
-- Maintainer-only: add a stable-release closeout prepare/verify tool to batch fresh registry/Git/starter identities, generate announcement notes and read back the exact published Release. Keep selected technical checks, npm download verification, starter audit/doctor and commit hooks. Prepare prose before source freeze and retain changing delivery refs/timings in announcements/local evidence instead of repeated self-recording closeout commits. No runtime, consumer script, package version or starter contract change.
-  These runtime changes have not been published in 0.34.0.
-
-- Maintainer-only: unify normal/recovery npm verification across tag, exact-version metadata and downloaded integrity/SHA1, automatically checking the publishing HEAD during normal delivery. Log each failure's stage/code/redacted reason/action; retry only named transient errors and stop immediately on identity/authentication/malformed/unknown failures. Keep the existing 12 attempts, 10-second interval and 15-second fetch timeout. That earlier maintainer-only delivery changed no theme package, consumer command or starter file; npm stayed at 0.33.2 at that time.
 
 ## [0.33.0] - 2026-11-12
 

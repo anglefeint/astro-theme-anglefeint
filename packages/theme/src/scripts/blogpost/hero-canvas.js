@@ -10,8 +10,8 @@ function mount(prefersReducedMotion, scope) {
   var ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  var src = canvas.getAttribute('data-hero-src');
-  if (!src) return;
+  var img = shell.querySelector('.hero-base-image');
+  if (!img) return;
 
   var heroStart = 0;
   var heroRaf = 0;
@@ -51,8 +51,8 @@ function mount(prefersReducedMotion, scope) {
   }
 
   function drawBase(ctx, img, w, h) {
-    var iw = img.width;
-    var ih = img.height;
+    var iw = img.naturalWidth;
+    var ih = img.naturalHeight;
     var scale = Math.max(w / iw, h / ih);
     var sw = w / scale;
     var sh = h / scale;
@@ -335,26 +335,21 @@ function mount(prefersReducedMotion, scope) {
     else scope.listen(window, 'load', afterLoad, { once: true });
   }
 
-  var img = new Image();
-  img.onload = function () {
+  function imageReady() {
+    if (!img.complete || !img.naturalWidth) return;
     canvas.img = img;
     sizeCanvas();
     drawStaticFrame(img);
+    if (heroEffectsPrepared) buildEdge(img);
     wrap.classList.add('ready');
     if (prefersReducedMotion) {
       return;
     }
     // Keep first paint static for LCP, then prepare heavy effects when idle.
     scheduleHeroEffectsPrepare();
-  };
-  img.onerror = function () {
-    wrap.classList.add('ready');
-  };
-  scope.add(() => {
-    img.onload = null;
-    img.onerror = null;
-  });
-  img.src = new URL(src, window.location.href).href;
+  }
+  scope.listen(img, 'load', imageReady);
+  if (img.complete) imageReady();
 
   scope.listen(
     window,

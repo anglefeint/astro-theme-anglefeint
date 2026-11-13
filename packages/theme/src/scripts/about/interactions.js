@@ -24,73 +24,44 @@ export function initAboutInteractions(prefersReducedMotion) {
     );
   }
 
-  var paras = document.querySelectorAll(
-    '.hacker-body p, .hacker-body h2, .hacker-body blockquote, .about-manifest'
-  );
-  if (window.IntersectionObserver) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('hacker-visible');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: '0px 0px -60px 0px', threshold: 0.1 }
-    );
-    lifetime.observe(io);
-    paras.forEach(function (p) {
-      io.observe(p);
-    });
-  } else {
-    paras.forEach(function (p) {
-      p.classList.add('hacker-visible');
-    });
-  }
-
   var titles = document.querySelectorAll('.about-section-title:not([data-static-title])');
-  if (prefersReducedMotion && titles.length) {
-    titles.forEach(function (el) {
-      var fullText = el.getAttribute('data-full-text') || el.textContent || '';
+  if (!prefersReducedMotion && window.IntersectionObserver && titles.length) {
+    const overlays = new Map();
+    titles.forEach((el) => {
+      const fullText = el.getAttribute('data-full-text') || el.textContent || '';
       el.setAttribute('data-full-text', fullText);
-      el.textContent = fullText;
-      el.style.minHeight = '1.2em';
+      const wrapper = document.createElement('span');
+      wrapper.className = 'about-title-text';
+      const sizing = document.createElement('span');
+      sizing.className = 'about-title-sizing';
+      sizing.textContent = fullText;
+      const typing = document.createElement('span');
+      typing.className = 'about-title-typing';
+      typing.setAttribute('aria-hidden', 'true');
+      wrapper.append(sizing, typing);
+      el.replaceChildren(wrapper);
+      overlays.set(el, typing);
     });
-  } else if (window.IntersectionObserver && titles.length) {
-    titles.forEach(function (el) {
-      var fullText = el.getAttribute('data-full-text') || el.textContent || '';
-      el.setAttribute('data-full-text', fullText);
-      el.textContent = '';
-      el.style.minHeight = '1.2em';
-    });
-
-    var tio = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            tio.unobserve(entry.target);
-            var text = entry.target.getAttribute('data-full-text') || '';
-            var i = 0;
-            entry.target.textContent = '';
-            function type() {
-              if (i <= text.length) {
-                entry.target.textContent = text.slice(0, i);
-                i++;
-                lifetime.timeout(type, 32);
-              }
-            }
-            type();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          const text = entry.target.getAttribute('data-full-text') || '';
+          const typing = overlays.get(entry.target);
+          let i = 0;
+          function type() {
+            typing.textContent = text.slice(0, ++i);
+            if (i < text.length) lifetime.timeout(type, 32);
+            else entry.target.textContent = text;
           }
+          type();
         });
       },
       { rootMargin: '0px 0px -40px 0px', threshold: 0.1 }
     );
-
-    lifetime.observe(tio);
-    titles.forEach(function (el) {
-      tio.observe(el);
-    });
+    lifetime.observe(observer);
+    titles.forEach((el) => observer.observe(el));
   }
 
   var regen = document.querySelector('.hacker-regenerate');

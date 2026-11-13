@@ -121,6 +121,7 @@ try {
     false
   );
   assert.equal((await inspectIntegrationProject(project)).anglefeint.projectSchema, 1);
+  await npm(['exec', '--', 'astro-theme', 'prepare-covers']);
   await npm(['run', 'new-fragment']);
   const fragmentFiles = await readdir(path.join(project, 'src/content/fragments/en'));
   assert.equal(fragmentFiles.length, 1);
