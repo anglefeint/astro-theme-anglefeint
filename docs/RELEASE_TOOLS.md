@@ -13,6 +13,10 @@ depends_on:
     scripts/verify-published-package.mjs,
     scripts/verify-release.mjs,
     scripts/release-closeout.mjs,
+    scripts/release-preparation.mjs,
+    scripts/starter-static.mjs,
+    scripts/git-snapshot.mjs,
+    tools/maintainer/sync-starter.mjs,
   ]
 sync_targets: [docs/AI_WORKFLOW.md, docs/MAINTAINER_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 ---
@@ -36,6 +40,7 @@ Listing/planning never publishes. Running without a publishing target cannot upl
 | Tool                                                | Work                                                                                       |
 | --------------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | docs-check                                          | Document metadata only.                                                                    |
+| starter-static-check                                | Virtual starter README links, consumer guidance and metadata; no installation or build.    |
 | lint / format-check                                 | Lint / formatting. Run broad formatting scans after fixture cleanup.                       |
 | types-check                                         | Astro diagnostics, no build.                                                               |
 | unit-tests                                          | Only literal --test tests/name.test.mjs files; no implicit full suite.                     |
@@ -72,7 +77,7 @@ Publication and recovery share tag/exact-version metadata/downloaded-hash valida
 The JSON catalog marks requiresUserConfirmation. source-check and installed-matrix cannot execute through the runner without --confirmed. First explain the exact check, why it is needed, its scope and expected cost, and receive explicit approval. That flag records approval; passing it is never a substitute for asking. plan remains read-only and shows confirmationRequired.
 
 - Starter preflight: maintainer:sync-starter:check (expected drift exits 1).
-- Starter delivery: release:starter; optional release:starter:push includes the push. Choose one delivery path. Install, audit, doctor/build and main dependency restoration remain intact.
+- Starter delivery: release:starter; optional release:starter:push includes the push. Choose one delivery path. Install, audit and doctor/build run in a separate Git worktree with its own node_modules. Main is not switched or reinstalled.
 - Registry recovery: release:verify -- --version <exact-version>, preferably with recorded source/hash identities. Read-only; never reuploads or switches branches.
 - check:template, its pnpm/upgrade variants, check:upgrade, e2e and music-browser scripts contain browser actions. They are not default release steps and require user confirmation with reasons before the agent calls them.
 - Cloudflare account/settings/build polling, public-demo inventories/tutorial comparisons and real Giscus checks are not default tools. Demo regression belongs to the user. Optional agent investigation requires specific consent as described in the validation policy.
@@ -83,6 +88,16 @@ Starter generation and user upgrades retain their non-browser doctor contract. T
 
 ### Source handoff and announcement execution
 
+Prepare the candidate version, lockfile version, changelog, version ledger and commit-message file together. Then collect a single review bundle before staging:
+
+```bash
+npm run release:flow -- prepare --version 0.37.0 --message-file acceptance-results/commit-message.txt --check unit-tests --test tests/example.unit.test.mjs --check lint
+```
+
+Replace the example version/test with actual inputs. `prepare` accepts the source flow's check arguments but rejects `--execute`. It verifies the local version/lock/changelog/ledger and virtual starter distribution, collects NUL-safe staged/unstaged/untracked scope (including rename sources), runs documentation suggestions and writes `scope.json`, `doc-inputs.json`, `doc-suggestions.txt`, `commit-message.txt` and structured `plan.json` arguments into an ignored `acceptance-results/release-prepare-*` directory. Documentation inputs use the helper's JSON `--files-from` interface so large path lists and literal names do not depend on shell command length or comma splitting. Review every group, especially `review-other`, and the actual diff before staging explicit paths. Preparation does not edit source/version/docs, stage files, query npm, install, commit, push or publish. Its report grants no approval and cannot skip later fresh checks. It deliberately does not invent release prose or infer whether a file is authorized.
+
+`npm run check:starter-static` is the independent static entry. It resolves manifest overrides and the retained starter baseline, subtracts obsolete/unmanaged article paths, and checks links/guidance against that virtual output rather than files merely present on main. For example, a local CONTRIBUTING.md link fails when starter does not contain it, while an existing retained LICENSE remains valid. No browser or demo prose inventory is performed.
+
 `release:flow` is maintainer-only and plans by default. Prepare the version, changelog, migration/check-plan prose and a commit-message file first; review and stage the intended changes together. Technical outcomes/identities/timings go into session evidence and the announcement, rather than another tracked-document edit between checks and commit.
 
 ```bash
@@ -91,9 +106,9 @@ npm run release:flow -- source --version 0.37.0 --message-file acceptance-result
 
 Replace the example version and test with the actual candidate and existing literal test path. Inspect the plan, then add `--execute` only for an authorized release. The flag selects execution; it does not grant authorization or exceptional browser/full-suite consent. Select checks once, either in this flow or through the manual path; do not prepend the same independent checks and then repeat them inside it. One installation level and the existing tool-selection rules remain enforced. Exceptional source/matrix checks stay on their separately consented manual path.
 
-The flow holds one checkout session/lock and delegates to the canonical npm tool runner. Selected checks, registry-version gate, blocking main audit, packing and npm authentication complete first. Immediately before upload, it checks the staged tree/version again, commits through normal hooks using `--file`, checks the resulting clean tree, runs the structured starter drift preflight, pushes main and confirms the remote source. Then the existing single upload and exact-source/tag/download verifier run. Managed starter drift is data; unexpected preflight errors stop. Unstaged/untracked source, `HUSKY=0`, check/hook errors, hook-modified source or push/source drift stop before upload. It never stages unrelated files, changes versions or edits documentation itself.
+The flow holds one checkout session/lock and delegates to the canonical npm tool runner. A fresh virtual starter static check runs before expensive selected checks; explicitly selecting starter-static-check does not run it twice in that invocation. Selected checks, registry-version gate, blocking main audit, packing and npm authentication complete first. Immediately before upload, it checks the staged tree/version again, commits through normal hooks using `--file`, checks the resulting clean tree, runs the structured starter drift preflight, pushes main and confirms the remote source. Then the existing single upload and exact-source/tag/download verifier run. Managed starter drift is data; unexpected preflight errors stop. Unstaged/untracked source, `HUSKY=0`, check/hook errors, hook-modified source or push/source drift stop before upload. It never stages unrelated files, changes versions or edits documentation itself.
 
-If hooks change the tested tree, the local commit remains for review/revalidation; the flow does not push it automatically. If an upload is accepted but verification fails, do not rerun source handoff: use the existing read-only `release:verify` recovery. The next step after verified npm delivery remains the existing starter delivery, including its install/audit/doctor/build and main restoration.
+If hooks change the tested tree, the local commit remains for review/revalidation; the flow does not push it automatically. If an upload is accepted but verification fails, do not rerun source handoff: use the existing read-only `release:verify` recovery. The next step after verified npm delivery remains the existing starter delivery, including its isolated install/audit/doctor/build; main dependencies remain untouched.
 
 After starter delivery, prepare and review the normal closeout `notes.md`/`receipt.json`. Then:
 
@@ -105,6 +120,12 @@ npm run release:flow -- announce --receipt acceptance-results/<closeout>/receipt
 Announcement execution revalidates the reviewed note hash and fresh source/npm/starter identities before effects, refuses conflicting local/remote tags, creates/pushes a missing exact-source tag, creates a missing Release using the reviewed file, and runs the original complete readback verifier. It reuses an already correct tag/Release rather than forcing tags or editing announcement bodies. An existing wrong body/draft, unknown lookup/authentication error or changed receipt/source stops. A partial tag/Release failure can be retried against the same unchanged reviewed receipt; npm is never involved. Only the known `gh release view` missing-release response is treated as absence. Manual commands remain available for diagnostics/prereleases.
 
 The source flow supplies its owning session to the npm runner and calls the structured preflight directly. It does not invoke another lock-taking CLI while holding the lock. This preserves serialization without nested-lock deadlocks. Both flows retain detailed failure logs and accurate session timing; no historical receipt skips technical validation.
+
+### Isolated starter and batched Git reads
+
+The parent maintainer session serializes delivery under its existing lock. Starter generation freezes source and destination commits, reads each tree once and obtains requested blobs with one binary-safe `git cat-file --batch` process per tree. Missing paths remain distinct from empty files; Git errors, malformed batches and unsupported managed symlinks fail rather than appearing as missing content. Preflight and delivery each read fresh snapshots; no cross-session result cache skips checks.
+
+Delivery registers a unique `anglefeint-starter-worktree-*` checkout under the operating system temporary directory (outside the source tree) of the existing starter branch. All file generation, dependency updates, blocking audit, doctor/build, staging, normal commit and optional push use that directory. Main's branch, node_modules, dev servers and build output are untouched. Source-ref drift or hook-modified/uncommitted tested files stops push. Only manifest-owned paths/dependencies/derived covers are staged. Success removes the clean generated worktree without force; failure retains it and reports its path. A branch already checked out elsewhere is refused by Git. Inspect and resolve a retained worktree before retrying; do not reset main or reinstall its dependencies as recovery. See [failure recovery](MAINTAINER_WORKFLOW.md#failure-recovery).
 
 ### Batched stable-release closeout
 

@@ -129,7 +129,7 @@ Publish npm when the change affects installed users through the package, for exa
 If npm release is required, compose an explicit plan from the [tool catalog](RELEASE_TOOLS.md). Preserve these constraints:
 
 - Prepare the version, changelog and release ledger; keep main clean and commit/push the technically validated source after applicable starter drift preflight.
-- Prefer the [source handoff](RELEASE_TOOLS.md#source-handoff-and-announcement-execution): finish/stage reviewed version and check-plan prose first, select necessary checks inside one planned `release:flow source` invocation, then execute it for an authorized release. It retains normal commit hooks, structured starter preflight, main push and canonical npm mechanics under one lock. Do not duplicate the same checks outside and inside the flow or hand-edit tracked result prose after checks merely to record their completion.
+- First use `release:flow prepare` to collect the scope, virtual starter static check, documentation suggestions and handoff files; review and stage explicit paths. Preparation is not approval or a reusable validation result. Prefer the [source handoff](RELEASE_TOOLS.md#source-handoff-and-announcement-execution): finish/stage reviewed version and check-plan prose first, select necessary checks inside one planned `release:flow source` invocation, then execute it for an authorized release. It retains normal commit hooks, structured starter preflight, main push and canonical npm mechanics under one lock. Do not duplicate the same checks outside and inside the flow or hand-edit tracked result prose after checks merely to record their completion.
 - Select `npm-delivery` for complete npm delivery. Preview with `npm run release:tools -- plan npm-delivery`, then execute with `npm run release:tools -- run npm-delivery`. The planner includes npm mechanics only. Explicitly select the relevant technical tools; all selected checks run before upload. It never consumes earlier check results. Existing `release:npm` remains a compatible entry.
 - Do not routinely prepend a full dry-run. Upload once, and recover accepted uploads through read-only registry verification.
 - Only after exact download/tag verification, deliver and push starter, complete the selected technical acceptance and exact-source tag/GitHub Release. Demo regression is user-owned and does not block package completion.
@@ -154,8 +154,9 @@ If npm release is not required but starter should still change:
   - reinstalling starter dependencies
   - validating starter via `check` and `build`
   - staging only manifest-owned starter files plus starter dependency files
-  - returning to the original branch only after a successful starter sync
-  - restoring `main` dependencies after switching back
+  - generating and validating in a dedicated starter worktree
+  - retaining failed worktrees for inspection and removing clean successful ones
+  - leaving the original branch, dependencies and development servers untouched
 - Starter validation must work in both:
   - workspace-link development installs on `main`
   - installed-package starter environments where `@anglefeint/astro-theme` resolves from `node_modules`

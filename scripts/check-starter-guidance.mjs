@@ -5,8 +5,11 @@ import path from 'node:path';
 import matter from './parse-frontmatter.mjs';
 import { checkReadmeLinks } from './check-readme-links.mjs';
 
-export async function checkStarterGuidance(root) {
-  const read = (file) => readFile(path.join(root, file), 'utf8');
+export async function checkStarterGuidance(
+  root,
+  { read: readSource = readFile, exists = access } = {}
+) {
+  const read = (file) => readSource(path.join(root, file), 'utf8');
   const pkg = JSON.parse(await read('package.json'));
   const files = ['AGENTS.md', 'CLAUDE.md', '.cursor/rules/00-repo.mdc'];
   const guide = await read('AGENTS.md');
@@ -18,7 +21,7 @@ export async function checkStarterGuidance(root) {
     assert.ok(pkg.scripts[command], `AGENTS.md names an unavailable command: ${command}`);
   }
   assert.doesNotMatch(guide, /docs\/(?:AI_WORKFLOW|MAINTAINER_WORKFLOW)|npm run release:/);
-  await checkReadmeLinks(root, files);
+  await checkReadmeLinks(root, files, { read: readSource, exists });
   const readmes = [
     'README',
     'README.zh-CN',
@@ -38,7 +41,7 @@ export async function checkStarterGuidance(root) {
     assert.ok(!ids.has(data.doc_id), `${file}: duplicate document identity`);
     ids.add(data.doc_id);
     for (const target of [...(data.depends_on ?? []), ...(data.sync_targets ?? [])]) {
-      await access(path.join(root, target));
+      await exists(path.join(root, target));
     }
   }
   for (const name of readmes) assert.ok((await read(`${name}.md`)).includes('AGENTS.md'));

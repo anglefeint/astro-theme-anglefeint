@@ -12,6 +12,16 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-14 Release preparation, early static checks and isolated starter worktrees
+
+按 0.36.1 阶段日志定位瓶颈后，仅调整维护工具。`release:flow prepare` 集中检查本地版本/lock/changelog/版本说明、收集含重命名的 NUL 分隔改动范围、运行虚拟 starter 静态检查和文档建议，并输出忽略目录中的 scope/message/结构化计划；不改版本、暂存、联网发布或授予批准。source 在耗时检查前再次执行新鲜的静态分发检查，同一调用显式选择该项不会重复执行。
+
+`scripts/git-snapshot.mjs` 固定提交后批量读取 tree/blob，二进制与空文件保持原样，缺文件和 Git/解码错误分开。starter 静态视图以清单覆盖和保留的目标树为准，扣除废弃路径及不分发的旧文章，再复用 README 链接、消费者指引和元数据检查；主仓库存在但 starter 缺失的链接不再漏过。
+
+starter 生成/安装/审计/doctor/build/正常提交/可选推送移到系统临时目录中的独立 worktree，main 分支、依赖、开发服务与构建目录不切换或恢复。成功只移除本仓库注册且路径受限的干净工作树；失败保留现场，不 force 清理。源引用漂移、钩子改变已测内容或非受管暂存内容阻断提交/推送；失败后的分支占用与人工检查/清理方式同步到维护指南。
+
+责任文档：RELEASE_TOOLS、AI_WORKFLOW、MAINTAINER_WORKFLOW、VALIDATION_POLICY、PACKAGE_RELEASE、DOC_SYNC_WORKFLOW、AGENTS 与本记录。消费者 README、九语教程/字典、视觉系统、运行时代码及历史发布证据不受本次维护契约影响，不额外改写；维护脚本不加入 starter 清单。选择批量读取、静态失效链接、准备范围、隔离目录、失败阻断和真实 Git 钩子的针对性测试，以及 lint、文档元数据和临时夹具清理后的格式检查。不执行真实发布、浏览器或部署检查；不升级 npm 版本。
+
 ## 2026-11-14 Publishing guides, design articles and 0.36.1 preparation
 
 以 main `91877fe` 之后的当前工作区为核对范围。运行时七项修复沿配置入口、图片集成/CLI、文章路径/分享图和效果生命周期追踪，责任说明落在 ARCHITECTURE、BLOG_COVER_ASSETS、REUSABLE_EFFECTS、VISUAL_SYSTEMS。九语 README 保留首次安装、默认 CLI、写作、部署、升级和预览图；八篇教程与十四篇配置字典说明实际代码，不要求读者回 README 查细节，分发模板按 manifest 保持一致。

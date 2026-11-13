@@ -102,7 +102,7 @@ These records have `observationalOnly: true`: they are diagnostic context, not r
 
 New summaries record session/stage timestamps, operation time, child-command time, measured explicit verifier backoff, evidence collection, between-stage time and separate lock wait. Session wall coverage uses the union of stage intervals; overlaps are flagged. Command and backoff are subsets of operation time, not extra wall time to add. `commandSeconds` measures only `session.run` children; filesystem/capture work remains in operation time. Child execution includes network waiting, so it is not CPU time or pure registry propagation. Report agent/tool gaps outside the process separately; never attribute an entire handoff interval to Git execution. Older summaries without these fields show `not recorded`, not estimated zero. See the [timing contract](RELEASE_TOOLS.md#avoid-repeated-administrative-work).
 
-Starter sync runs the generated `npm run check` once after installation/audit. That script invokes package-owned `astro-theme doctor`, which runs Astro check, `npm run build` and the enabled About runtime assertions; a second immediately adjacent standalone build is unnecessary. A failed doctor/build still blocks commit/push and preserves the starter checkout for inspection. Independent consumer acceptance continues to execute the separate public `build` script as part of all eleven scripts.
+Starter sync runs the generated `npm run check` once after installation/audit. That script invokes package-owned `astro-theme doctor`, which runs Astro check, `npm run build` and the enabled About runtime assertions; a second immediately adjacent standalone build is unnecessary. A failed doctor/build still blocks commit/push and preserves its isolated starter worktree for inspection. Independent consumer acceptance continues to execute the separate public `build` script as part of all eleven scripts.
 
 The 0.36.0 persisted-image feature adds local preparation before those doctor checks (CI doctor validates only). Starter's own onboarding covers generate its own manifest/variants; main's demo manifest is never copied wholesale. `STARTER_COVER_ROOT`/`starterCoverFiles()` enumerate only generated manifest-owned paths for staging after a successful doctor. The empty originals placeholder is manifest-managed; real originals/derivatives remain personal content and are not upgrade-overwritten. Independent installed checks explicitly prepare before their build assertions. Ordinary builds stay validation/copy-only. See [cover assets](BLOG_COVER_ASSETS.md).
 
@@ -110,7 +110,7 @@ After an accepted npm upload whose registry verification timed out, use the stan
 
 The lock is released on normal success/failure. After a forcibly interrupted process, inspect `acceptance-results/.maintainer-lock/owner.json` and confirm that its process and children have stopped before removing a stale lock; never delete an active session's lock. Reporting remains observational; current tool selection follows the validation policy. Logs can contain sensitive tool output: keep them ignored and review/redact before sharing. These tools remain maintainer-only and need no npm release.
 
-Keep scratch Astro projects and historical source clones outside the checkout, or remove/archive their source files after verification. Reports may stay in ignored `acceptance-results/`, but consumer TypeScript discovery during a local starter checkout can still inspect project copies there. Ensure local evidence stays ignored across branch switches; never commit it or weaken starter source checks to hide a scratch project.
+Keep scratch Astro projects and historical source clones outside the checkout, or remove/archive their source files after verification. Reports may stay in ignored `acceptance-results/`, but project copies there can still enter TypeScript or formatting discovery. Generated starter worktrees therefore live outside the checkout. Ensure local evidence stays ignored across branch switches; never commit it or weaken starter source checks to hide a scratch project.
 
 Demo identity and translated introductions belong in main's `src/site.config.ts`. Starter sync and drift checks resolve that destination through `starterSourcePath()` to `scripts/starter-templates/site.config.ts.template`; keep this template generic. The independent installed-starter check uses the same mapping. Do not copy the demo config into starter or add the source template to its distributed files. Consumer configuration remains `src/site.config.ts`.
 
@@ -206,22 +206,17 @@ Select workspace-link and scaffold assertions when those inputs change. Discover
 - After selected technical acceptance, record actual results, tag the published npm source commit, and create/read back the GitHub Release using `docs/PACKAGE_RELEASE.md`. npm publication alone does not complete a release.
 - `npm run release:starter` stages starter changes from `scripts/starter-manifest.mjs` plus starter dependency files; it must not rely on `git add -A`.
 
-If `npm run release:starter` fails, return to `main` and fix the sync contract or package-side issue there. Do not patch starter runtime logic manually.
+If `npm run release:starter` fails, fix the sync contract or package-side issue on `main`; the current main checkout and dependencies have not been changed. Do not patch starter runtime logic manually.
 
 ## Failure Recovery
 
 If `npm run release:starter` fails mid-run:
 
-1. check which branch you are on
-2. if you are left on `starter` with synced-but-uncommitted changes:
-   - inspect the failure
-   - generated release tarballs should already be cleaned automatically, but still remove any remaining stray artifacts (for example `test-results/`, temporary `tests/`)
-   - if you need to return to `main` before finishing, stash with untracked files:
-     - `git stash -u`
-3. return to `main`
-4. run `npm install` to restore maintainer dependencies and hooks before retrying commits or checks
-5. fix the contract or maintainer-tooling issue on `main`
-6. rerun `npm run release:starter`
+1. Read the retained worktree path in the error/session log. It is a generated `anglefeint-starter-worktree-*` directory under the OS temporary directory, not the main checkout.
+2. Inspect `git -C <exact-worktree-path> status` and its diff/logs; save any evidence or changes you need. Audit/build/hook/source-drift failures block commit or push as appropriate. A failed push may leave a valid local starter commit.
+3. Fix maintainer/runtime issues on main. Do not patch starter runtime as the source of truth, stop dev servers, switch main branches, or reinstall main dependencies for this recovery.
+4. Before retrying, resolve the retained generated worktree. Git refuses a second checkout of its active branch. After reviewing/saving its contents, explicitly clear only its generated changes if necessary, then remove that exact registered worktree with `git worktree remove <exact-worktree-path>`. Dirty removal is refused; the tool never forces deletion or resets main. Do not delete an arbitrary computed path or run a global worktree prune as a substitute.
+5. Rerun the normal starter command. Installation, audit and doctor/build run freshly; an old receipt does not bypass them.
 
 If npm was already published successfully, do not publish that version again. Retry only starter generation/validation/push. `release:starter:push` pushes even when no new sync commit is needed, so an earlier unpushed commit can be delivered after recovery. Source and target branches must differ, and `main` cannot be a sync target.
 
@@ -258,10 +253,10 @@ When delegating to AI/coding agents, require this sequence:
 ## Branch Switching Hygiene
 
 - After switching branches, run `npm install` before commit/push operations.
-- `npm run release:starter` installs dependencies on `starter` and restores dependencies after switching back to the original branch.
+- `npm run release:starter` uses a dedicated OS-temporary worktree and node_modules for starter. It never checks out starter in main or reinstalls main dependencies; running development servers remain untouched.
 - `main` provides `npm run check:workspace-link`; select it when dependency restoration or workspace wiring needs validation.
 - `main` keeps pre-commit staged lint/format and document metadata checks; the unconditional pre-push check is removed.
 - `starter` must stay hook-free (no `prepare`, no `lint-staged`, no `.husky`) to avoid user template friction.
 - `starter` must stay maintainer-tooling-free (no `maintainer:*` or `release:starter*` scripts in starter `package.json`).
 - If hooks still misbehave after reinstall, treat it as a local environment issue and recover locally before proceeding.
-- `release:starter` is expected to leave the repo on `starter` when starter validation fails; treat that as the deliberate recovery state, not as a bug in the workflow.
+- A failed `release:starter` retains its isolated worktree for inspection; the original checkout remains on its branch. Successful clean worktrees are removed without force.

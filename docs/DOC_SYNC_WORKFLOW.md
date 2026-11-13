@@ -138,10 +138,11 @@ Run this workflow whenever repository changes may alter documentation truth:
 
 ## Execution Chain
 
-1. Start with the repository helper:
+1. Start with the repository helper (release preparation may collect this output once through `release:flow prepare` alongside scope and virtual starter checks):
    - `npm run suggest:docs`
    - optional explicit paths:
      - `npm run suggest:docs -- src/site.config.ts docs/ARCHITECTURE.md`
+   - For large explicit sets, `npm run suggest:docs -- --files-from acceptance-results/doc-inputs.json` reads a JSON string array without shell-length limits; an explicit empty array stays empty. Release preparation writes this input file and collects the output automatically.
    - Default input is the current Git working tree, not the conversation or commit history. For already committed work, inspect a deliberately chosen commit range and pass its changed paths explicitly. A clean worktree does not mean historical changes have been documented.
 2. The helper will:
    - discover maintained markdown files

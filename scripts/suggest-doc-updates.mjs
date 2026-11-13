@@ -116,11 +116,22 @@ function resolveDocMetadata(file) {
 function parseArgs(argv) {
   const files = [];
   let json = false;
+  let filesFrom = false;
 
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--json') {
       json = true;
+      continue;
+    }
+    if (arg === '--files-from') {
+      const file = argv[++i];
+      if (!file) throw new Error('--files-from requires a JSON file.');
+      const entries = JSON.parse(readFileSync(file, 'utf8'));
+      if (!Array.isArray(entries) || entries.some((entry) => typeof entry !== 'string'))
+        throw new Error('--files-from requires a JSON string array.');
+      files.push(...entries);
+      filesFrom = true;
       continue;
     }
     if (arg === '--files') {
@@ -137,7 +148,7 @@ function parseArgs(argv) {
     files.push(arg);
   }
 
-  return { files: files.map(normalizePath), json };
+  return { files: files.map(normalizePath), json, filesFrom };
 }
 
 function getChangedFilesFromGit() {
@@ -354,8 +365,8 @@ function collectDocs() {
 }
 
 function main() {
-  const { files: argvFiles, json } = parseArgs(process.argv.slice(2));
-  const changedFiles = argvFiles.length > 0 ? argvFiles : getChangedFilesFromGit();
+  const { files: argvFiles, json, filesFrom } = parseArgs(process.argv.slice(2));
+  const changedFiles = filesFrom || argvFiles.length > 0 ? argvFiles : getChangedFilesFromGit();
 
   if (changedFiles.length === 0) {
     const message = {

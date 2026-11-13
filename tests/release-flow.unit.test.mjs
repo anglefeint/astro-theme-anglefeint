@@ -90,7 +90,11 @@ async function sourceFixture(t, fail) {
     if (fail === 'preflight') throw new Error('preflight failed');
     return { drift: ['package.json'] };
   };
-  return { root, session, capture, runNpm, preflight, calls, state, env: {} };
+  const staticCheck = async () => {
+    calls.push('starter-static');
+    if (fail === 'starter-static') throw new Error('static distribution failed');
+  };
+  return { root, session, capture, runNpm, preflight, staticCheck, calls, state, env: {} };
 }
 
 test('plan defaults are non-mutating and checks/messages remain explicit', () => {
@@ -119,6 +123,7 @@ test('source checks and npm prerequisites precede commit/hooks/preflight/push an
   const f = await sourceFixture(t);
   assert.equal((await runSourceFlow(options(), f)).source, source);
   for (const [a, b] of [
+    ['starter-static', 'docs-check'],
     ['docs-check', 'commit'],
     ['npm-auth', 'commit'],
     ['commit', 'preflight'],
@@ -130,6 +135,7 @@ test('source checks and npm prerequisites precede commit/hooks/preflight/push an
   assert.equal(f.calls.filter((call) => call === 'npm-upload').length, 1);
 });
 for (const failure of [
+  'starter-static',
   'docs-check',
   'audit-main',
   'npm-auth',
@@ -152,6 +158,15 @@ test('an accepted upload with failed verification is not uploaded twice', async 
   const f = await sourceFixture(t, 'npm-delivery');
   await assert.rejects(runSourceFlow(options(), f));
   assert.equal(f.calls.filter((call) => call === 'npm-upload').length, 1);
+});
+
+test('an explicitly selected static tool is not rerun after the intrinsic early check', async (t) => {
+  const f = await sourceFixture(t);
+  const opts = options();
+  opts.checks.push('starter-static-check');
+  await runSourceFlow(opts, f);
+  assert.equal(f.calls.filter((call) => call === 'starter-static').length, 1);
+  assert(!f.calls.includes('starter-static-check'));
 });
 test('unstaged source and disabled hooks block handoff', async (t) => {
   const f = await sourceFixture(t);
@@ -191,6 +206,7 @@ test('real local commit executes its hook without nested locks; npm and push are
           ? `${(await git('rev-parse', 'HEAD')).trim()}\trefs/heads/main`
           : git(...args),
       preflight: async () => ({ drift: [] }),
+      staticCheck: async () => {},
       runNpm: async (_targets, _opts, { beforeUpload, session: owner }) => {
         assert.equal(owner, session);
         await beforeUpload();

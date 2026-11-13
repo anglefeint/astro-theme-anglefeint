@@ -13,6 +13,12 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## Maintenance - 2026-11-14 (no npm release)
+
+- Collect release scope, version/docs readiness, virtual starter links, documentation suggestions and structured handoff files in `release:flow prepare`; never infer authorization, stage source or cache check results.
+- Validate virtual starter links/guidance before expensive source checks. Generate and validate starter in an isolated temporary Git worktree with independent dependencies, preserving main and its dev servers. Keep audit, doctor/build, manifest-only staging and normal hooks; retain failures and refuse forced cleanup.
+- Batch fixed-commit Git tree/blob reads for preflight and generation, preserving binary/empty files and distinguishing missing paths from Git errors. Update maintainer workflows and regression coverage. Package version remains 0.36.1.
+
 ## [0.36.1] - 2026-11-14
 
 - Normalize article authors once for both bylines and generated social-image keys, including blank and padded frontmatter values.

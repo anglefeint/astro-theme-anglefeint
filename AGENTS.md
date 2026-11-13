@@ -124,6 +124,7 @@ npm run suggest:docs
 npm run check
 npm run check:no-build
 npm run check:docs
+npm run check:starter-static
 npm run check:workspace-link
 npm run check:integration
 npm run lint

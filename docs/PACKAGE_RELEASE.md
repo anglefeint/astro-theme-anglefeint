@@ -39,6 +39,8 @@ git commit -m "chore(release): bump @anglefeint/astro-theme to <version>"
 git push origin main
 ```
 
+Before staging, use the [preparation bundle and early static check](RELEASE_TOOLS.md#source-handoff-and-announcement-execution) to collect scope, version/docs, commit message and selected checks. Review the actual diff; the bundle neither grants approval nor skips source validation. Starter delivery runs its unchanged audit/doctor contract in an isolated temporary worktree, not in the active main checkout.
+
 ## 2) Pre-release checks
 
 Use [Release tools](RELEASE_TOOLS.md) to choose independent checks for the actual change. Preview their combination with npm-delivery, then execute the selected technical tools and publication mechanics. The planner does not pull in full source checks or an installed matrix automatically.

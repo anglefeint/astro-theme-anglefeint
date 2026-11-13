@@ -11,11 +11,15 @@ import { runNpmTools } from './npm-release-tools.mjs';
 import { npmReleaseTools, planNpmTools, validateToolSelection } from './release-tool-plan.mjs';
 import { checkPreparedCloseout, verifyCloseout } from './release-closeout.mjs';
 import { preflightStarter } from '../tools/maintainer/sync-starter.mjs';
+import { checkStarterStatic } from './starter-static.mjs';
+import { prepareRelease } from './release-preparation.mjs';
 
 const exec = promisify(execFile);
 const usage = `Usage: npm run release:flow -- source --version <version> --message-file <file> --check <tool> [--check <tool> ...] [--test tests/name.test.mjs ...] [--execute]
+       npm run release:flow -- prepare --version <version> --message-file <file> --check <tool> [--test tests/name.test.mjs ...]
        npm run release:flow -- announce --receipt <reviewed-receipt.json> [--execute]
-Default is plan only. source operates on reviewed, already staged changes.
+prepare writes an ignored review bundle only; source/announce default to plan only.
+source operates on reviewed, already staged changes.
 source runs selected checks and npm prerequisites, normal commit hooks, starter preflight,
 main push and one canonical npm upload/download verification under one shared lock.
 announce uses reviewed closeout notes, never uploads npm, and never moves an existing tag.
@@ -24,10 +28,10 @@ announce uses reviewed closeout notes, never uploads npm, and never moves an exi
 export function parseFlowArgs(args) {
   if (args.length === 1 && ['--help', '-h'].includes(args[0])) return { help: true };
   const [mode, ...rest] = args;
-  if (!['source', 'announce'].includes(mode)) throw new Error(usage);
+  if (!['prepare', 'source', 'announce'].includes(mode)) throw new Error(usage);
   const options = { mode, checks: [], testFiles: [], execute: false };
   const seen = new Set();
-  const allowed = mode === 'source' ? ['version', 'message-file', 'check', 'test'] : ['receipt'];
+  const allowed = mode !== 'announce' ? ['version', 'message-file', 'check', 'test'] : ['receipt'];
   for (let i = 0; i < rest.length; i++) {
     const flag = rest[i];
     if (flag === '--execute' && !seen.has(flag)) {
@@ -50,7 +54,8 @@ export function parseFlowArgs(args) {
     else if (key === 'test') options.testFiles.push(value);
     else options[key] = value;
   }
-  if (mode === 'source') {
+  if (mode !== 'announce') {
+    assert(!(mode === 'prepare' && options.execute), 'prepare never accepts --execute.');
     assert.match(options.version ?? '', /^\d+\.\d+\.\d+$/);
     assert.ok(options['message-file'], 'A reviewed commit message file is required.');
     assert.ok(options.checks.length, 'Select necessary technical checks explicitly.');
@@ -111,6 +116,7 @@ export async function runSourceFlow(
     capture,
     runNpm = runNpmTools,
     preflight = preflightStarter,
+    staticCheck = checkStarterStatic,
     env = process.env,
   } = {}
 ) {
@@ -126,9 +132,12 @@ export async function runSourceFlow(
     await requireVersion();
     return (await capture('git', ['write-tree'])).trim();
   });
+  await session.stage('Validate starter static distribution before expensive checks', () =>
+    staticCheck({ root })
+  );
   let source;
   await runNpm(
-    [...options.checks, 'npm-delivery'],
+    [...options.checks.filter((name) => name !== 'starter-static-check'), 'npm-delivery'],
     { testFiles: options.testFiles },
     {
       session,
@@ -153,7 +162,7 @@ export async function runSourceFlow(
           source = (await capture('git', ['rev-parse', 'HEAD'])).trim();
         });
         await session.stage('Starter managed-file preflight', async (record) => {
-          const result = await preflight({ from: 'main', target: 'starter' });
+          const result = await preflight({ root, from: 'main', target: 'starter' });
           record.starterDrift = result.drift;
           console.log(
             `[release:flow] ${result.drift.length} managed starter changes to deliver after npm verification.`
@@ -240,10 +249,31 @@ export async function runAnnouncementFlow(
 async function main(args) {
   const options = parseFlowArgs(args);
   if (options.help) return console.log(usage);
+  if (options.mode === 'prepare') {
+    const session = await createMaintainerSession('release preparation');
+    try {
+      console.log(
+        JSON.stringify(
+          await session.stage('Prepare scope, static distribution and handoff files', () =>
+            prepareRelease(options)
+          ),
+          null,
+          2
+        )
+      );
+    } finally {
+      await session.close();
+    }
+    return;
+  }
   const plan =
     options.mode === 'source'
       ? [
-          ...planNpmTools([...options.checks, 'npm-delivery']).flatMap((name) =>
+          'starter static distribution before expensive checks',
+          ...planNpmTools([
+            ...options.checks.filter((name) => name !== 'starter-static-check'),
+            'npm-delivery',
+          ]).flatMap((name) =>
             name === 'npm-upload'
               ? ['normal commit hooks', 'structured starter preflight', 'push/confirm main', name]
               : [name]

@@ -20,17 +20,17 @@ export function collectLinks(markdown) {
   return links;
 }
 
-export async function checkReadmeLinks(root, files) {
+export async function checkReadmeLinks(root, files, { read = readFile, exists = access } = {}) {
   for (const file of files) {
     const source = path.resolve(root, file);
-    for (const href of collectLinks(await readFile(source, 'utf8'))) {
+    for (const href of collectLinks(await read(source, 'utf8'))) {
       if (!href || /^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(href)) continue;
       const target = decodeURIComponent(href.split(/[?#]/)[0]);
       const resolved = target.startsWith('/')
         ? path.resolve(root, `.${target}`)
         : path.resolve(path.dirname(source), target);
       try {
-        await access(resolved);
+        await exists(resolved);
       } catch {
         throw new Error(`${file}: missing local link ${href}`);
       }

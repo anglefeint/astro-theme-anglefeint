@@ -6,6 +6,11 @@ export const npmReleaseTools = {
   },
   'audit-main': { needs: [], purpose: 'Blocking audit of main dependencies' },
   'docs-check': { needs: [], purpose: 'Document metadata', script: 'check:docs' },
+  'starter-static-check': {
+    needs: [],
+    purpose: 'Virtual starter links, guidance and metadata before installation',
+    script: 'check:starter-static',
+  },
   lint: { needs: [], purpose: 'JavaScript lint', script: 'lint' },
   'format-check': {
     needs: [],
@@ -66,6 +71,12 @@ export const npmReleaseTools = {
 // Existing standalone capabilities stay separate: asking for recovery or starter sync must
 // never pull npm publication into a dependency graph.
 export const deliveryTools = {
+  'release-preparation': {
+    command:
+      'npm run release:flow -- prepare --version <version> --message-file <file> --check <tool>',
+    purpose:
+      'Collect reviewable scope, current version/docs, virtual starter links and a handoff argument file; never stages, pushes or publishes',
+  },
   'source-handoff': {
     command:
       'npm run release:flow -- source --version <version> --message-file <file> --check <tool>',
