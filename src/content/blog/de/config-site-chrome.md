@@ -20,16 +20,16 @@ site ist ein Objekt; alle Felder dürfen in Teilkonfigurationen fehlen. Sie wirk
 
 | Vollständiger Pfad | Typ              | Theme-Standard                                                                          | Wirkung, Grenzen und Beispiel                                                                                                                                                                                              |
 | ------------------ | ---------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `site.title`       | string           | `"My Blog"`                                                                             | Marke im Header, Copyrightname, RSS-Titel, strukturierte Website-Daten sowie einige Seiten und Freigabebilder. Nicht derselbe wie großer Startseitentitel. Kein einheitlicher Leerstring-Fallback; etwa `"我的博客"`       |
-| `site.description` | string           | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | Eine Quelle globaler und Maschinenindex-Beschreibung. Startseite bevorzugt messages.siteDescription, About/Listen haben eigene Werte. Ersetzt nicht jede Seite; etwa `"记录项目、阅读和生活。"`                            |
+| `site.title`       | string           | `"My Blog"`                                                                             | Marke im Header, Copyrightname, RSS-Titel, strukturierte Website-Daten sowie einige Seiten und Freigabebilder. Nicht derselbe wie großer Startseitentitel. Kein einheitlicher Leerstring-Fallback; etwa `"Mein Blog"`      |
+| `site.description` | string           | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | Eine Quelle globaler und Maschinenindex-Beschreibung. Startseite bevorzugt messages.siteDescription, About/Listen haben eigene Werte. Ersetzt nicht jede Seite; etwa `"Projekte, Lektüre und Alltag."`                     |
 | `site.url`         | string           | `"https://example.com"`                                                                 | Öffentliche absolute HTTP(S)-Adresse für Astro site, canonical, RSS, Sitemap und Exporte. Kein einzelner Artikel. Kauft keine Domain und erledigt weder DNS, Zertifikat noch Deployment; etwa `"https://blog.example.com"` |
-| `site.author`      | string           | `"Your Name"`                                                                           | Standardautor und strukturierte Daten; Artikel-author überschreibt. Copyright nutzt title, nicht author. About-Text und E-Mail ändern sich nicht automatisch; etwa `"小林"`                                                |
-| `site.tagline`     | string           | `""`                                                                                    | Getrimmter Zusatzsatz in Fußzeile, leer verborgen. Exakt alter Standard Built with Astro. bleibt ebenfalls verborgen gegen doppelte Nennung; etwa `"保持好奇，持续构建。"`                                                 |
+| `site.author`      | string           | `"Your Name"`                                                                           | Standardautor und strukturierte Daten; Artikel-author überschreibt. Copyright nutzt title, nicht author. About-Text und E-Mail ändern sich nicht automatisch; etwa `"Alex"`                                                |
+| `site.tagline`     | string           | `""`                                                                                    | Getrimmter Zusatzsatz in Fußzeile, leer verborgen. Exakt alter Standard Built with Astro. bleibt ebenfalls verborgen gegen doppelte Nennung; etwa `"Bleib neugierig und entwickle weiter."`                                |
 | `site.ogImage`     | string, optional | `""`                                                                                    | Globales Freigabebild ohne vorrangiges Seitenbild. Leerraum nutzt Theme-Bild. Lokaler public-Pfad oder HTTPS-URL, kein Avatar oder Massen-Titelbildersatz; etwa `"/images/share.webp"`                                     |
 
-site.title ist global, `i18n.locales.<语言>.site.homeTitle` nur die sichtbare Startseitenüberschrift der Sprache. Letztere sucht nichtleere Sprach-Fallbacks und zuletzt globalen Namen; siehe [Startseitentitel](/de/blog/config-home/#home-title). messages.siteTitle steuert beide derzeit nicht.
+site.title ist global, `i18n.locales.<Sprachcode>.site.homeTitle` nur die sichtbare Startseitenüberschrift der Sprache. Letztere sucht nichtleere Sprach-Fallbacks und zuletzt globalen Namen; siehe [Startseitentitel](/de/blog/config-home/#home-title). messages.siteTitle steuert beide derzeit nicht.
 
-site.description ist nicht die sichtbare Einführung. Diese verwendet `i18n.locales.<语言>.site.hero`, die Startseitenmetabeschreibung zusätzlich messages.siteDescription. Priorität im [Startseitenverzeichnis](/de/blog/config-home/#site-fallbacks). Globale Änderungen ersetzen keine vorhandene persönliche About-Vorstellung.
+site.description ist nicht die sichtbare Einführung. Diese verwendet `i18n.locales.<Sprachcode>.site.hero`, die Startseitenmetabeschreibung zusätzlich messages.siteDescription. Priorität im [Startseitenverzeichnis](/de/blog/config-home/#site-fallbacks). Globale Änderungen ersetzen keine vorhandene persönliche About-Vorstellung.
 
 ### Freigabebild-Priorität und Pfade
 
@@ -45,13 +45,13 @@ site.ogImage ist ein String, kein Astro-image-import-Objekt. Artikel-frontmatter
 
 Dies sind gelesene Umgebungsvariablen, keine zusätzlichen site.config-Felder. Alle string; ohne Angabe gilt das site-Feld. Nullish coalescing behandelt leer nicht automatisch als fehlend.
 
-| Variable                | Vorrang vor      | Beispiel                                 |
-| ----------------------- | ---------------- | ---------------------------------------- |
-| PUBLIC_SITE_TITLE       | site.title       | PUBLIC_SITE_TITLE=我的博客               |
-| PUBLIC_SITE_DESCRIPTION | site.description | PUBLIC_SITE_DESCRIPTION=项目与学习笔记   |
-| PUBLIC_SITE_AUTHOR      | site.author      | PUBLIC_SITE_AUTHOR=小林                  |
-| PUBLIC_SITE_TAGLINE     | site.tagline     | PUBLIC_SITE_TAGLINE=保持好奇             |
-| PUBLIC_SITE_URL         | site.url         | PUBLIC_SITE_URL=https://blog.example.com |
+| Variable                | Vorrang vor      | Beispiel                                         |
+| ----------------------- | ---------------- | ------------------------------------------------ |
+| PUBLIC_SITE_TITLE       | site.title       | PUBLIC_SITE_TITLE=Mein Blog                      |
+| PUBLIC_SITE_DESCRIPTION | site.description | PUBLIC_SITE_DESCRIPTION=Projekte und Lernnotizen |
+| PUBLIC_SITE_AUTHOR      | site.author      | PUBLIC_SITE_AUTHOR=Alex                          |
+| PUBLIC_SITE_TAGLINE     | site.tagline     | PUBLIC_SITE_TAGLINE=Neugierig bleiben            |
+| PUBLIC_SITE_URL         | site.url         | PUBLIC_SITE_URL=https://blog.example.com         |
 
 Die Integration liest PUBLIC_SITE_URL entsprechend dev/build und --mode mit Vite-dotenv, damit Astro site und öffentliche URLs übereinstimmen. Bestehende Prozesswerte schlagen dotenv. Vergiss Hosting-PUBLIC_SITE_URL nicht, wenn nur site.url geändert wurde. Leer kann Text entfernen oder URLs ungültig machen, stellt keine Vorgaben wieder her.
 
@@ -84,17 +84,17 @@ Sprachen und Adressen stehen im [Sprachenverzeichnis](/de/blog/config-languages/
 
 ### Sieben Header- und Fußzeilentexte
 
-Präfix `i18n.locales.<语言>.messages`, optionale string mit Sprachvorgaben und Fallback. Tabelle zeigt vereinfachtes Chinesisch/Englisch. Alle bedingt bei vorhandenem Bereich und Klartext ohne Markdown/HTML.
+Präfix `i18n.locales.<Sprachcode>.messages`, optionale string mit Sprachvorgaben und Fallback. Tabelle zeigt vereinfachtes Chinesisch/Englisch. Alle bedingt bei vorhandenem Bereich und Klartext ohne Markdown/HTML.
 
-| Relatives Feld     | Standard vereinfachtes Chinesisch / Englisch | Wirkung und Grenzen                                              | Beispiel     |
-| ------------------ | -------------------------------------------- | ---------------------------------------------------------------- | ------------ |
-| `nav.home`         | 首页 / Home                                  | Startseitentext, keine Routenänderung                            | `"首页"`     |
-| `nav.blog`         | 博客 / Blog                                  | Blogtext, keine Routenänderung                                   | `"文章"`     |
-| `nav.about`        | 关于 / About                                 | About-Navigation und Wiederöffnen des Textfensters               | `"关于我"`   |
-| `nav.status`       | system: online / system: online              | Statischer Headerstatus, keine Netzwerk-/API-/Gesundheitsmessung | `"系统在线"` |
-| `nav.statusAria`   | 系统状态 / System status                     | Zugänglicher Statusname, kein Monitoring-Schalter                | `"站点状态"` |
-| `footer.theme`     | 主题： / Theme by                            | Präfix der Nennung; Anglefeint-Linktext/-ziel fest               | `"主题来自"` |
-| `footer.builtWith` | 构建工具： / Built with                      | Astro-Präfix, Linktext/-ziel fest                                | `"使用"`     |
+| Relatives Feld     | Standard vereinfachtes Chinesisch / Englisch | Wirkung und Grenzen                                              | Beispiel          |
+| ------------------ | -------------------------------------------- | ---------------------------------------------------------------- | ----------------- |
+| `nav.home`         | 首页 / Home                                  | Startseitentext, keine Routenänderung                            | `"Start"`         |
+| `nav.blog`         | 博客 / Blog                                  | Blogtext, keine Routenänderung                                   | `"Beiträge"`      |
+| `nav.about`        | 关于 / About                                 | About-Navigation und Wiederöffnen des Textfensters               | `"Über mich"`     |
+| `nav.status`       | system: online / system: online              | Statischer Headerstatus, keine Netzwerk-/API-/Gesundheitsmessung | `"System online"` |
+| `nav.statusAria`   | 系统状态 / System status                     | Zugänglicher Statusname, kein Monitoring-Schalter                | `"Websitestatus"` |
+| `footer.theme`     | 主题： / Theme by                            | Präfix der Nennung; Anglefeint-Linktext/-ziel fest               | `"Theme von"`     |
+| `footer.builtWith` | 构建工具： / Built with                      | Astro-Präfix, Linktext/-ziel fest                                | `"Erstellt mit"`  |
 
 messages.langLabel gehört zur Sprachsteuerung, meta.label zu Optionen, siehe [Sprachtexte](/de/blog/config-languages/#common-messages). Contact/Fragments nutzen ihre Module, keine erfundenen messages.nav-Felder.
 
@@ -152,12 +152,12 @@ Bei gültigem iconSrc zählt icon nicht. Symbolgröße und Abstand sind Layoutpa
 
 ## theme.footer: Links und Nennung
 
-| Vollständiger Pfad         | Typ / Standard                         | Status, Wirkung und Grenzen                                                                                                                                          | Beispiel                                                  |
-| -------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| theme.footer.showCredits   | boolean / true                         | Wirksam: Theme-/Astro-Links. Entfernt nicht Copyright, soziale Links, Satz oder weitere Links. Steuert auch Nennung automatischer Artikelbilder, nicht eigene Bilder | false                                                     |
-| theme.footer.links         | { label: string; href: string }[] / [] | Wirksam: eigene Links in Array-Reihenfolge, vollständiger Ersatz ohne Headeränderung. Layout kann Decoder ergänzen; [] garantiert keine linklose Fußzeile            | [{ label: '项目', href: 'https://example.com/project/' }] |
-| theme.footer.links[].label | string, Pflicht / keiner               | Bedingt: sichtbarer Klartextname ohne automatischen Zieltitel                                                                                                        | '项目'                                                    |
-| theme.footer.links[].href  | string, Pflicht / keiner               | Bedingt: unverändertes Ziel ohne Symbolpfadprüfung oder automatisches base; interne Pfade selbst korrekt setzen. Standard im aktuellen Tab                           | 'https://example.com/project/'                            |
+| Vollständiger Pfad         | Typ / Standard                         | Status, Wirkung und Grenzen                                                                                                                                          | Beispiel                                                     |
+| -------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| theme.footer.showCredits   | boolean / true                         | Wirksam: Theme-/Astro-Links. Entfernt nicht Copyright, soziale Links, Satz oder weitere Links. Steuert auch Nennung automatischer Artikelbilder, nicht eigene Bilder | false                                                        |
+| theme.footer.links         | { label: string; href: string }[] / [] | Wirksam: eigene Links in Array-Reihenfolge, vollständiger Ersatz ohne Headeränderung. Layout kann Decoder ergänzen; [] garantiert keine linklose Fußzeile            | [{ label: 'Projekt', href: 'https://example.com/project/' }] |
+| theme.footer.links[].label | string, Pflicht / keiner               | Bedingt: sichtbarer Klartextname ohne automatischen Zieltitel                                                                                                        | 'Projekt'                                                    |
+| theme.footer.links[].href  | string, Pflicht / keiner               | Bedingt: unverändertes Ziel ohne Symbolpfadprüfung oder automatisches base; interne Pfade selbst korrekt setzen. Standard im aktuellen Tab                           | 'https://example.com/project/'                               |
 
 Eigene Links stehen vor Layout-Ergänzungen, ohne Deduplizierung. Aktiver Decoder ergänzt den vollständigen Werkzeuglink mit messages.decoderPage.fullTool. Deaktiviere bei Bedarf Decoder selbst, statt footer.links zu leeren.
 
@@ -171,37 +171,37 @@ Erhalte persönliche Angaben und vereinige nur benötigte Felder:
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录项目、阅读和生活。',
+  title: 'Alex’ Blog',
+  description: 'Projekte, Lektüre und Alltag.',
   url: 'https://blog.example.com',
-  author: '小林',
-  tagline: '保持好奇，持续构建。',
+  author: 'Alex',
+  tagline: 'Bleib neugierig und entwickle weiter.',
 },
 social: {
   links: [
     { label: 'GitHub', href: 'https://github.com/yourname', icon: 'github' },
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: 'Projektseite', href: 'https://example.com/project/' },
   ],
 },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目', href: 'https://example.com/project/' }],
+    links: [{ label: 'Projekt', href: 'https://example.com/project/' }],
   },
 },
 ```
 
 Ersetze Konten, Domains und Links. Das Theme prüft sie nicht online. Eigene Symbole und globale Bilder brauchen zuerst passende public-Dateien, dann iconSrc oder site.ogImage.
 
-Nur chinesische Navigation und Präfixe:
+Nur deutsche Navigation und Präfixe:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
-        nav: { home: '首页', blog: '文章', about: '关于我' },
-        footer: { theme: '主题来自', builtWith: '使用' },
+        nav: { home: 'Start', blog: 'Beiträge', about: 'Über mich' },
+        footer: { theme: 'Theme von', builtWith: 'Erstellt mit' },
       },
     },
   },
@@ -212,9 +212,9 @@ i18n: {
 
 ## Derzeit ungenutzt: messages.siteTitle
 
-`i18n.locales.<语言>.messages.siteTitle` ist optionale string-Überschreibung; vereinfachtes Chinesisch und Englisch haben beide 'Angle Feint'. Standardstartseitentitel und globale Identität lesen es nicht. Status „derzeit ungenutzt“. siteTitle: '我的博客' ändert diese Namen nicht.
+`i18n.locales.<Sprachcode>.messages.siteTitle` ist optionale string-Überschreibung; vereinfachtes Chinesisch und Englisch haben beide 'Angle Feint'. Standardstartseitentitel und globale Identität lesen es nicht. Status „derzeit ungenutzt“. siteTitle: 'Mein Blog' ändert diese Namen nicht.
 
-Startseitentitel verwendet `i18n.locales.<语言>.site.homeTitle`, öffentliche Marke oberstes site.title; siehe [Startseite](/de/blog/config-home/#home-title) und [Identität](#identity). Zum Umbenennen ist dieses reservierte Feld unnötig.
+Startseitentitel verwendet `i18n.locales.<Sprachcode>.site.homeTitle`, öffentliche Marke oberstes site.title; siehe [Startseite](/de/blog/config-home/#home-title) und [Identität](#identity). Zum Umbenennen ist dieses reservierte Feld unnötig.
 
 <a id="boundaries"></a>
 

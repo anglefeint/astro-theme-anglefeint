@@ -4,7 +4,7 @@ title: 'ユーザーガイド4：Fragment を投稿する'
 subtitle: 'Markdown で短い考え、画像、コードを記録して安定したリンクで共有し、必要ならコメントを有効にします。'
 description: 'Fragments の有効化と Markdown の作成・編集から、ホームのプレビュー、ページ分割と共有、多言語、任意の Giscus コメントまで。'
 pubDate: '2026-11-11'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -68,7 +68,7 @@ id: 'q8Lm3XzP'
 pubDate: '2026-11-13T09:00:00+08:00'
 ---
 
-今天把一个困扰很久的问题解决了，记下这个小进展。
+長く悩んでいた問題が今日解決したので、小さな進歩を記録します。
 ```
 
 現在対応する frontmatter は3項目です。
@@ -79,7 +79,7 @@ pubDate: '2026-11-13T09:00:00+08:00'
 | `pubDate` | 必須。解析可能な公開日時。生成された ISO 時刻を残すか、時刻・タイムゾーン付きの値を推奨します。                           |
 | `title`   | 任意の文字列。一覧カードの見出しに表示し、省略しても投稿できます。                                                        |
 
-タイトルが必要なら同じ frontmatter に `title: '一个小进展'` を追加します。記事の `description` やカバー用の `heroImage` は必要なく、画像は本文に記入します。
+タイトルが必要なら同じ frontmatter に `title: '小さな進歩'` を追加します。記事の `description` やカバー用の `heroImage` は必要なく、画像は本文に記入します。
 
 一覧は `pubDate` の新しい順、同時刻なら ID 順で、ファイル名順ではありません。UTC 表示のため、指定したローカル時刻と異なる場合があります。本文やファイル名の変更だけではコメント・共有の識別は変わりません。日時を変えると並び順とページ位置が変わります。
 
@@ -92,10 +92,10 @@ pubDate: '2026-11-13T09:00:00+08:00'
 通常の Markdown の段落、リンク、リスト、引用を使えます。画像の例です。
 
 ```md
-![这次进展的截图](/images/fragments/progress.png)
+![今回の進歩のスクリーンショット](/images/fragments/progress.png)
 ```
 
-実画像を先に `public/images/fragments/progress.png` に置いてください。Fragment の隣に `photo.png` を置き、`![图片说明](./photo.png)` でも参照できます。その他の記法、サイズ、コミット対象は[記事と Fragments に画像を追加する](/ja/blog/starter-guide-images/)を参照してください。
+実画像を先に `public/images/fragments/progress.png` に置いてください。Fragment の隣に `photo.png` を置き、`![画像の説明](./photo.png)` でも参照できます。その他の記法、サイズ、コミット対象は[記事と Fragments に画像を追加する](/ja/blog/starter-guide-images/)を参照してください。
 
 コードは Markdown のフェンスとインデントを保ちます。
 
@@ -111,7 +111,7 @@ const progress = {
 
 全体で数学が有効なら、Fragment も `$x_1$` のインライン数式と2行の `$$` の間の独立数式に対応します。ビルド時に描画し、誤った数式はコンパイル・ビルドを失敗させます。`theme.math.enabled` を無効にすると数学処理を止めます。記法は[最初の記事を書く](/ja/blog/starter-guide-2-languages-and-routing/)を参照してください。
 
-ローカル dev または doctor が対応する Fragment 画像のレスポンシブ画像を準備します。Markdown、原画像、`src/assets/blog/covers/` 全体をコミットしてください。配備ビルドと CI doctor は検証だけで、プラットフォームで補完しません。本文だけをコミットして画像を漏らさないでください。
+ローカル dev または doctor が対応する Fragment 画像のレスポンシブ画像を準備します。Markdown、原画像、`src/assets/blog/covers/` 全体をコミットしてください。通常の build と doctor は CI でも、正しい原画像から必要な派生画像を自動で補完・修復します。正しい既存資源は再利用し、原画像の欠落や不正なパスはエラーです。本文だけをコミットして画像を漏らさないでください。
 
 ## 5. ホームのプレビューと一覧のページ分割
 

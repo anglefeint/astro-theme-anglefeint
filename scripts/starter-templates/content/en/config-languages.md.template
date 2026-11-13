@@ -16,11 +16,11 @@ This page covers i18n registration, addressing and resolution, without repeating
 
 ## i18n.defaultLocale and i18n.locales
 
-| Full path             | Type / theme default                                                      | Status, purpose and limits                                                                                                                                                                                                 | Example                                                    |
-| --------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| i18n.defaultLocale    | string / 'en'                                                             | Active: root homepage language/redirect, required fallback and default-language links. Empty strings normalize to en. No browser-language detection. The default language is always enabled, regardless of enabled: false. | i18n: { defaultLocale: 'zh' }                              |
-| i18n.locales          | Record<string, LocaleConfig> / nine built-in languages below              | Active: keys define language codes, content directories and URLs. Recursive merging means omitting a built-in language does not delete it. New languages need your own messages and content.                               | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
-| `i18n.locales.<语言>` | Partial LocaleConfig / built-ins have existing settings; new codes do not | Active: contains meta, site, messages, about and aiReadableContent. Omitted fields follow merging/fallback; an empty object does not clear an existing language.                                                           | locales: { zh: { meta: { enabled: false } } }              |
+| Full path               | Type / theme default                                                      | Status, purpose and limits                                                                                                                                                                                                 | Example                                                    |
+| ----------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| i18n.defaultLocale      | string / 'en'                                                             | Active: root homepage language/redirect, required fallback and default-language links. Empty strings normalize to en. No browser-language detection. The default language is always enabled, regardless of enabled: false. | i18n: { defaultLocale: 'zh' }                              |
+| i18n.locales            | Record<string, LocaleConfig> / nine built-in languages below              | Active: keys define language codes, content directories and URLs. Recursive merging means omitting a built-in language does not delete it. New languages need your own messages and content.                               | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
+| `i18n.locales.<locale>` | Partial LocaleConfig / built-ins have existing settings; new codes do not | Active: contains meta, site, messages, about and aiReadableContent. Omitted fields follow merging/fallback; an empty object does not clear an existing language.                                                           | locales: { zh: { meta: { enabled: false } } }              |
 
 A language key is neither its menu name nor hreflang. EN is not automatically normalized to en, nor zh-CN directories to zh. Use consistent lowercase codes in directories, configuration and creation commands, such as zh, en, pt-br and zh-hant. Scaffolding accepts two or three letters with an optional hyphenated segment. Runtime normalization is not a comprehensive language-code/path validator: do not enter paths or arbitrary punctuation.
 
@@ -44,7 +44,7 @@ Without overrides, all nine languages are enabled. Default language en has no fa
 
 <a id="meta"></a>
 
-## `i18n.locales.<语言>.meta`: five metadata fields
+## `i18n.locales.<locale>.meta`: five metadata fields
 
 Relative fields below belong inside meta. Built-in defaults are above; normalization for new languages is below. Input supports partial overrides, so types do not require rewriting every field each time.
 
@@ -78,21 +78,21 @@ Assuming defaultLocale en:
 | /en/about/        | English About, when enabled    | English About, when enabled    |
 | /zh/              | Chinese homepage, when enabled | Chinese homepage, when enabled |
 
-Redirects between root and localized homepages are static meta-refresh pages with canonical and noindex. They neither detect visitor location nor configure a server 301. Internal locale-path helpers normally still create `/<代码>/.../`; each entry decides whether to use the root homepage.
+Redirects between root and localized homepages are static meta-refresh pages with canonical and noindex. They neither detect visitor location nor configure a server 301. Internal locale-path helpers normally still create `/<locale>/.../`; each entry decides whether to use the root homepage.
 
 <a id="overrides"></a>
 
 ## Where site, messages and about overrides belong
 
-The full prefix is `i18n.locales.<语言>`. Objects merge recursively; arrays replace entirely; undefined does not overwrite existing values. Empty strings, false and empty arrays remain, interpreted by each field.
+The full prefix is `i18n.locales.<locale>`. Objects merge recursively; arrays replace entirely; undefined does not overwrite existing values. Empty strings, false and empty arrays remain, interpreted by each field.
 
-| Relative path  | Type / default                                                                         | Purpose, limits and example                                                                                                                                             | Field reference                                          |
-| -------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| site           | { homeTitle?: string; hero?: string } / built-in localized homepage settings           | Localized homepage content only; does not replace top-level site identity. Example: site: { homeTitle: '我的博客' }                                                     | [Homepage](/en/blog/config-home/#site-fallbacks)         |
-| site.homeTitle | optional string / unset                                                                | Uses the first nonempty trimmed title in the current/direct fallback languages, finally SITE_TITLE. Example '我的博客'. Empty strings do not stop fallback.             | [Homepage heading](/en/blog/config-home/#home-title)     |
-| site.hero      | optional string / built-in locale introduction; unset for new languages                | First defined value in the chain. Empty strings clear it and stop fallback. If none exists, messages.home.hero is the final homepage backup. Example '记录项目与生活。' | [Homepage introduction](/en/blog/config-home/#home-hero) |
-| messages       | DeepPartial<Messages> / locale overrides usually unset; runtime adds built-in messages | Buttons, status, meta descriptions, etc. Example messages: { nav: { home: '主页' } }. Changes text without adding functionality or translating content.                 | [Configuration index](/en/blog/config-reference/)        |
-| about          | DeepPartial<AboutConfig> / built-in localized About settings                           | Recursively merges the chain over base About. Example about: { sections: { who: '我是一名开发者。' } }. Does not read Markdown body automatically.                      | [About](/en/blog/config-about/#about-content)            |
+| Relative path  | Type / default                                                                         | Purpose, limits and example                                                                                                                                                        | Field reference                                          |
+| -------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| site           | { homeTitle?: string; hero?: string } / built-in localized homepage settings           | Localized homepage content only; does not replace top-level site identity. Example: site: { homeTitle: 'My blog' }                                                                 | [Homepage](/en/blog/config-home/#site-fallbacks)         |
+| site.homeTitle | optional string / unset                                                                | Uses the first nonempty trimmed title in the current/direct fallback languages, finally SITE_TITLE. Example 'My blog'. Empty strings do not stop fallback.                         | [Homepage heading](/en/blog/config-home/#home-title)     |
+| site.hero      | optional string / built-in locale introduction; unset for new languages                | First defined value in the chain. Empty strings clear it and stop fallback. If none exists, messages.home.hero is the final homepage backup. Example 'Projects and everyday life.' | [Homepage introduction](/en/blog/config-home/#home-hero) |
+| messages       | DeepPartial<Messages> / locale overrides usually unset; runtime adds built-in messages | Buttons, status, meta descriptions, etc. Example messages: { nav: { home: 'Start' } }. Changes text without adding functionality or translating content.                           | [Configuration index](/en/blog/config-reference/)        |
+| about          | DeepPartial<AboutConfig> / built-in localized About settings                           | Recursively merges the chain over base About. Example about: { sections: { who: 'I am a developer.' } }. Does not read Markdown body automatically.                                | [About](/en/blog/config-about/#about-content)            |
 
 Exact built-in hero defaults follow. The default configuration does not supply homeTitle:
 
@@ -139,12 +139,12 @@ Fallback does not add English articles to Chinese lists, generate translated fil
 
 ## Language selector and shared text
 
-These optional string fields live under `i18n.locales.<语言>.messages` and use ordinary message resolution. Localized siteTitle currently does not change standard site identity; its type, default and unused status are in the [site reference](/en/blog/config-site-chrome/#legacy-site-title).
+These optional string fields live under `i18n.locales.<locale>.messages` and use ordinary message resolution. Localized siteTitle currently does not change standard site identity; its type, default and unused status are in the [site reference](/en/blog/config-site-chrome/#legacy-site-title).
 
-| Relative field  | Simplified Chinese / English defaults                                                            | Status, purpose and limits                                                                                                                     | Example value          |
-| --------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| langLabel       | 语言 / Language                                                                                  | Active: public language-selector tooltip and accessible name, not option names. Options use meta.label.                                        | '选择语言'             |
-| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | Conditional: homepage meta description, not the visible introduction or a description shared by all pages. Other pages have their own sources. | '我的项目与学习笔记。' |
+| Relative field  | Simplified Chinese / English defaults                                                            | Status, purpose and limits                                                                                                                     | Example value                  |
+| --------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| langLabel       | 语言 / Language                                                                                  | Active: public language-selector tooltip and accessible name, not option names. Options use meta.label.                                        | 'Choose a language'            |
+| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | Conditional: homepage meta description, not the visible introduction or a description shared by all pages. Other pages have their own sources. | 'My projects and study notes.' |
 
 Use module references for internal feature messages. A field with no consumer does not become active just because its type exists. The comment iframe also follows theme.comments.lang, fixed to English by default; see [comments](/en/blog/config-comments/#appearance).
 
@@ -152,7 +152,7 @@ Use module references for internal feature messages. A field with no consumer do
 
 ## aiReadableContent: special locale supplement fallback
 
-`i18n.locales.<语言>.aiReadableContent` overrides global notes / links independently and does not use meta.fallback. Omitted fields inherit global values. Empty notes or an empty links array explicitly clear them; {} alone does not clear global content.
+`i18n.locales.<locale>.aiReadableContent` overrides global notes / links independently and does not use meta.fallback. Omitted fields inherit global values. Empty notes or an empty links array explicitly clear them; {} alone does not clear global content.
 
 Types, defaults, validation and complete examples are in the [AI-readable context reference](/en/blog/config-analytics-ai/#locale-supplement). This is neither translation nor About body; all supplements are public. Links resolve relative to the published site root. A leading / bypasses deployment base; see [link resolution](/en/blog/config-analytics-ai/#supplement).
 

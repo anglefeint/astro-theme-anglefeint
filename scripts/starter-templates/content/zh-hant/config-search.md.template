@@ -4,7 +4,7 @@ title: '設定字典：搜尋與內容發現'
 subtitle: '搜尋入口、文章收錄、語言索引與其他內容入口。'
 description: '以實際程式碼說明站內搜尋設定、文字和單篇收錄規則，區分搜尋、最新文章、相關文章、標籤、RSS 與機器閱讀出口。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -27,9 +27,9 @@ heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 
 ## 單篇 search：不是 site.config 欄位
 
-| 位置                                                        | 型別 / 預設值                                      | 狀態、作用與限制                                                                                                | 範例          |
-| ----------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------- |
-| `src/content/blog/<语言>/某篇文章.md` 的 frontmatter.search | boolean，可省略 / schema 未設定，文章布局預設 true | 條件生效：全域搜尋開啟時決定是否輸出該篇索引根標記；false 不影響列表、相關文章、RSS、機器閱讀出口或公開文章地址 | search: false |
+| 位置                                                           | 型別 / 預設值                                      | 狀態、作用與限制                                                                                                | 範例          |
+| -------------------------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------- |
+| `src/content/blog/<locale>/some-post.md` 的 frontmatter.search | boolean，可省略 / schema 未設定，文章布局預設 true | 條件生效：全域搜尋開啟時決定是否輸出該篇索引根標記；false 不影響列表、相關文章、RSS、機器閱讀出口或公開文章地址 | search: false |
 
 只排除這篇文章的站內搜尋收錄，可以在已有 frontmatter 中添加：
 
@@ -51,21 +51,21 @@ search: false
 
 ## messages.search：十一項搜尋文字
 
-完整前綴是 `i18n.locales.<语言>.messages.search.`。以下均為可省略的 string，預設取內建目前語言文字與語言回退鏈。表中只列中文 / 英文預設值；每行範例是欄位值。所有欄位條件生效：搜尋入口存在且對應介面或狀態出現時使用。
+完整前綴是 `i18n.locales.<locale>.messages.search.`。以下均為可省略的 string，預設取內建目前語言文字與語言回退鏈。表中只列中文 / 英文預設值；每行範例是欄位值。所有欄位條件生效：搜尋入口存在且對應介面或狀態出現時使用。
 
 | 欄位          | 簡體中文 / 英文預設值                                                                                                                | 作用、限制與佔位符                                                                   | 範例值                              |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ----------------------------------- |
 | `label`       | 搜索 / Search                                                                                                                        | 搜尋入口按鈕的無障礙名稱、提示及彈窗標題；不是要搜尋的關鍵字                         | `"搜索文章"`                        |
-| `close`       | 关闭搜索 / Close search                                                                                                              | 關閉按鈕的無障礙名稱和提示；可見 esc 提示及圖標由實作固定                            | `"关闭搜索"`                        |
-| `placeholder` | 搜索文章… / Search articles…                                                                                                         | 搜尋框佔位文字及其無障礙標籤；不預填關鍵字                                           | `"输入文章关键词"`                  |
-| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | 正式環境環境中沒有輸入關鍵字時的提示                                                 | `"搜索当前语言的文章。"`            |
+| `close`       | 关闭搜索 / Close search                                                                                                              | 關閉按鈕的無障礙名稱和提示；可見 esc 提示及圖標由實作固定                            | `"關閉搜索"`                        |
+| `placeholder` | 搜索文章… / Search articles…                                                                                                         | 搜尋框佔位文字及其無障礙標籤；不預填關鍵字                                           | `"輸入文章關鍵詞"`                  |
+| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | 正式環境環境中沒有輸入關鍵字時的提示                                                 | `"搜索當前語言的文章。"`            |
 | `loading`     | 正在搜索… / Searching…                                                                                                               | 正在檢索或準備檢索的提示，不改變延遲與資源載入策略                                   | `"正在查找…"`                       |
-| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | 沒有結果的提示；目前語言沒有索引時也可能顯示它                                       | `"没有找到相关文章。"`              |
-| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | 索引清單、搜尋模組或結果詳情載入失敗的提示；不用於生成建置錯誤                       | `"搜索暂时不可用，请重试。"`        |
-| `retry`       | 重试 / Retry                                                                                                                         | 失敗狀態的重試按鈕文字；點選會重試載入搜尋引擎，不會在瀏覽器重建索引                 | `"重新加载"`                        |
-| `more`        | 加载更多 / Load more                                                                                                                 | 還有未顯示結果時的繼續載入按鈕；不改變每批數量                                       | `"更多结果"`                        |
+| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | 沒有結果的提示；目前語言沒有索引時也可能顯示它                                       | `"沒有找到相關文章。"`              |
+| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | 索引清單、搜尋模組或結果詳情載入失敗的提示；不用於生成建置錯誤                       | `"搜索暫時不可用，請重試。"`        |
+| `retry`       | 重试 / Retry                                                                                                                         | 失敗狀態的重試按鈕文字；點選會重試載入搜尋引擎，不會在瀏覽器重建索引                 | `"重新載入"`                        |
+| `more`        | 加载更多 / Load more                                                                                                                 | 還有未顯示結果時的繼續載入按鈕；不改變每批數量                                       | `"更多結果"`                        |
 | `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | 有結果時的數量提示；保留字面佔位符 {count}，腳本替換第一個該佔位符，不是已顯示卡片數 | `"共找到 {count} 篇文章"`           |
-| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | dev 模式提示，開發時不執行真實檢索；不能靠改文字生成索引                             | `"请构建后在 preview 中测试搜索。"` |
+| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | dev 模式提示，開發時不執行真實檢索；不能靠改文字生成索引                             | `"請構建后在 preview 中測試搜索。"` |
 
 文字按文字輸出，不執行設定裡的 HTML。空字串會覆寫文字，不會隱藏相應按鈕；錯誤使用空字串還可能讓控制項失去清楚的無障礙名稱。results 的 {count} 不會自動附加到你自訂的句子中，想顯示數字就保留一次佔位符。
 
@@ -77,13 +77,13 @@ search: false
 theme: { search: { enabled: true } },
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       messages: {
         search: {
           label: '搜索文章',
-          placeholder: '输入文章关键词',
+          placeholder: '輸入文章關鍵詞',
           results: '共找到 {count} 篇文章',
-          empty: '没有找到相关文章。',
+          empty: '沒有找到相關文章。',
         },
       },
     },
@@ -127,14 +127,14 @@ preview 使用建置產物；編輯文章、語言中繼資料、單篇收錄開
 
 下面沿用各模組已有欄位與預設值；主說明仍在原字典，不新增另一套搜尋設定。
 
-| 設定路徑或位置                                  | 型別 / 預設值                               | 實際作用與限制、範例                                                                                    | 詳細說明                                                   |
-| ----------------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| theme.homeLatestCount                           | number / 3                                  | 首頁最新文章數量；如 theme: { homeLatestCount: 5 }。不改變搜尋結果批次或文章底部相關文章數量            | [首頁數量](/zh-hant/blog/config-home/#latest-count)        |
-| theme.blogPageSize                              | number / 10                                 | Blog List 與標籤文章列表每頁數量；如 theme: { blogPageSize: 8 }。不是搜尋結果數量                       | [列表分頁](/zh-hant/blog/config-blog-list/#page-size)      |
-| theme.tags.enabled                              | boolean / true                              | 標籤入口與標準標籤頁；如 theme: { tags: { enabled: false } }。關閉不刪除文章 tags，也不關閉站內全文搜尋 | [標籤開關](/zh-hant/blog/config-blog-list/#tags-enabled)   |
-| 文章 frontmatter.tags                           | string[]，可省略 / 未設定                   | 用於標籤歸檔與頁面標籤顯示；例值 ['Astro', '随笔']。不參與目前“相关文章”的相關度計算，也不是搜尋白名單  | [文章欄位](/zh-hant/blog/config-article/#frontmatter)      |
-| `i18n.locales.<语言>.messages.blog.related`     | string / 內建目前語言，簡體中文與英文見下表 | 文章底部相關文章標題，只改文字；例值 '继续阅读'                                                         | [文章文字](/zh-hant/blog/config-article/#article-messages) |
-| `i18n.locales.<语言>.messages.blog.relatedAria` | string / 內建目前語言，簡體中文與英文見下表 | 相關文章區域無障礙名稱；例值 '其他文章'                                                                 | [文章文字](/zh-hant/blog/config-article/#article-messages) |
+| 設定路徑或位置                                    | 型別 / 預設值                               | 實際作用與限制、範例                                                                                     | 詳細說明                                                   |
+| ------------------------------------------------- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| theme.homeLatestCount                             | number / 3                                  | 首頁最新文章數量；如 theme: { homeLatestCount: 5 }。不改變搜尋結果批次或文章底部相關文章數量             | [首頁數量](/zh-hant/blog/config-home/#latest-count)        |
+| theme.blogPageSize                                | number / 10                                 | Blog List 與標籤文章列表每頁數量；如 theme: { blogPageSize: 8 }。不是搜尋結果數量                        | [列表分頁](/zh-hant/blog/config-blog-list/#page-size)      |
+| theme.tags.enabled                                | boolean / true                              | 標籤入口與標準標籤頁；如 theme: { tags: { enabled: false } }。關閉不刪除文章 tags，也不關閉站內全文搜尋  | [標籤開關](/zh-hant/blog/config-blog-list/#tags-enabled)   |
+| 文章 frontmatter.tags                             | string[]，可省略 / 未設定                   | 用於標籤歸檔與頁面標籤顯示；例值 ['Astro', '隨筆']。不參與目前「相關文章」的相關度計算，也不是搜尋白名單 | [文章欄位](/zh-hant/blog/config-article/#frontmatter)      |
+| `i18n.locales.<locale>.messages.blog.related`     | string / 內建目前語言，簡體中文與英文見下表 | 文章底部相關文章標題，只改文字；例值 '繼續閱讀'                                                          | [文章文字](/zh-hant/blog/config-article/#article-messages) |
+| `i18n.locales.<locale>.messages.blog.relatedAria` | string / 內建目前語言，簡體中文與英文見下表 | 相關文章區域無障礙名稱；例值 '其他文章'                                                                  | [文章文字](/zh-hant/blog/config-article/#article-messages) |
 
 相關文章實際選取目前語言中排除自身後的最新三篇，不依據共同標籤、canonicalTopic 或內容相似度。沒有獨立 relatedCount、相關文章開關或手動推薦名單的 site.config 欄位；沒有其他文章時不顯示該區域。search: false 的文章仍可能被推薦。
 
@@ -149,11 +149,11 @@ preview 使用建置產物；編輯文章、語言中繼資料、單篇收錄開
 
 | 入口                   | 目前行為及設定關系                                                                                                                                                                                                                       |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/<语言>/rss.xml`      | 每個啟用語言的文章摘要訂閱；標題使用全站名稱，描述使用該語言 messages.blog.archiveDescription。條目來自該語言文章的 title、description、pubDate 與公開路徑；不因單篇 search: false 排除，也不是全文 RSS。沒有 theme.search 內的 RSS 開關 |
+| `/<locale>/rss.xml`    | 每個啟用語言的文章摘要訂閱；標題使用全站名稱，描述使用該語言 messages.blog.archiveDescription。條目來自該語言文章的 title、description、pubDate 與公開路徑；不因單篇 search: false 排除，也不是全文 RSS。沒有 theme.search 內的 RSS 開關 |
 | 頁面中繼資訊與搜尋引擎 | 與站內搜尋索引是不同輸出；search: false 不自動添加 noindex 或關閉 sitemap，不能用它控制互聯網搜尋引擎抓取                                                                                                                                |
 | 公開機器閱讀文字       | 文章、About、Fragments 等有自己的導出管線，不相依 Pagefind 收錄；語言級公開補充見[語言字典](/zh-hant/blog/config-languages/#ai-context)。search: false 不作為這些產物的私密過濾器                                                        |
 
-網站名稱、網域和訂閱描述應填寫真實值；部署與公開地址見[發佈教學](/zh-hant/blog/starter-guide-deployment/)，RSS 使用的 archiveDescription 見[列表文字](/zh-hant/blog/config-blog-list/#archive-messages)。不要把“站内没有结果”理解成“网站没有公开这个内容”。
+網站名稱、網域和訂閱描述應填寫真實值；部署與公開地址見[發佈教學](/zh-hant/blog/starter-guide-deployment/)，RSS 使用的 archiveDescription 見[列表文字](/zh-hant/blog/config-blog-list/#archive-messages)。不要把「站內沒有結果」理解成「網站沒有公開這個內容」。
 
 目前全域搜尋開關、單篇 search 和十一項搜尋文字都有消費位置，沒有需要填寫的舊搜尋相容欄位。canonicalTopic 等目前不消費的文章欄位，也不會因為放在搜尋附近就自動成為索引分類；相關狀態見[文章字典](/zh-hant/blog/config-article/#legacy-frontmatter)。沒有公開的跨語言合併搜尋、圖片 OCR、搜尋詞分析、搜尋結果權重或新增索引型別設定。
 

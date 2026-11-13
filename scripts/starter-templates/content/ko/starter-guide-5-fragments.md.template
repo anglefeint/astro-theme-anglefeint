@@ -4,7 +4,7 @@ title: '사용 가이드 4: Fragment 게시하기'
 subtitle: 'Markdown으로 짧은 생각을 기록하고 이미지나 코드를 넣어 안정적인 링크로 공유합니다. 댓글은 필요할 때 켜세요.'
 description: 'Fragments 활성화와 Markdown 생성·편집부터 홈 미리보기, 페이지 나누기와 공유, 다국어, 선택적인 Giscus 댓글까지 안내합니다.'
 pubDate: '2026-11-11'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -68,7 +68,7 @@ id: 'q8Lm3XzP'
 pubDate: '2026-11-13T09:00:00+08:00'
 ---
 
-今天把一个困扰很久的问题解决了，记下这个小进展。
+오랫동안 고민한 문제를 오늘 해결했습니다. 이 작은 진전을 기록합니다.
 ```
 
 현재 지원하는 frontmatter는 세 가지입니다.
@@ -79,7 +79,7 @@ pubDate: '2026-11-13T09:00:00+08:00'
 | `pubDate` | 필수이며 해석 가능한 게시 날짜입니다. 생성된 ISO 시간을 유지하거나 시간과 시간대가 있는 값을 권장합니다.                                |
 | `title`   | 선택 문자열이며 입력하면 목록 카드 제목으로 표시합니다. 없어도 정상 게시할 수 있습니다.                                                 |
 
-제목을 넣으려면 같은 frontmatter에 `title: '一个小进展'` 같은 값을 추가하면 됩니다. 글과 달리 `description`은 필요하지 않으며 글 표지 `heroImage`도 없습니다. 이미지는 본문에 씁니다.
+제목을 넣으려면 같은 frontmatter에 `title: '작은 진전'` 같은 값을 추가하면 됩니다. 글과 달리 `description`은 필요하지 않으며 글 표지 `heroImage`도 없습니다. 이미지는 본문에 씁니다.
 
 목록은 `pubDate` 최신순이며 시간이 같으면 ID로 정렬합니다. 파일 이름순이 아닙니다. 페이지는 UTC 시간을 표시하므로 입력한 로컬 시간대와 다를 수 있습니다. 본문이나 파일 이름만 바꿔도 댓글·공유 정체성은 유지됩니다. 날짜를 바꾸면 정렬과 소속 페이지가 달라집니다.
 
@@ -92,7 +92,7 @@ pubDate: '2026-11-13T09:00:00+08:00'
 일반 Markdown 문단, 링크, 목록, 인용을 사용할 수 있습니다. 이미지 예시는 다음과 같습니다.
 
 ```md
-![这次进展的截图](/images/fragments/progress.png)
+![이번 진전의 스크린샷](/images/fragments/progress.png)
 ```
 
 먼저 실제 파일을 `public/images/fragments/progress.png`에 넣으세요. Fragment 옆에 `photo.png`를 두고 `![설명](./photo.png)`로 참조해도 됩니다. 다른 문법, 파일 크기, Git 커밋 요구 사항은 [글과 Fragments에 이미지 넣기](/ko/blog/starter-guide-images/)를 참고하세요.
@@ -111,7 +111,7 @@ const progress = {
 
 사이트 수식이 켜져 있으면 Fragments도 `$x_1$` 인라인과 두 줄의 `$$` 사이 독립 수식을 지원합니다. 빌드 시 렌더링하며 잘못된 수식은 컴파일·빌드를 실패시킵니다. `theme.math.enabled`를 끄면 수식 처리를 끕니다. 문법은 [첫 글 쓰기](/ko/blog/starter-guide-2-languages-and-routing/)를 참고하세요.
 
-로컬 dev나 doctor는 지원하는 Fragment 이미지의 반응형 파일을 준비합니다. Fragment Markdown, 원본과 `src/assets/blog/covers/` 전체를 커밋하세요. 배포 빌드·CI doctor는 검사만 하며 플랫폼에서 추가 생성하지 않습니다. 본문만 커밋하고 이미지 파일을 빠뜨리지 마세요.
+일반 dev·build·doctor는 CI에서도 누락되거나 오래되거나 손상된 파생 이미지를 필요에 따라 생성하며 올바른 기존 파일은 재사용합니다. 원본 누락, 잘못된 이미지와 안전하지 않은 경로는 오류입니다. 명시적 `prepare-covers --check`와 설정 동기화는 읽기 전용 검사입니다. 원본과 `src/assets/blog/covers/` 전체를 Git에 저장하면 재사용할 수 있어 배포 플랫폼의 이미지 캐시에 의존하지 않습니다. Fragment Markdown과 원본을 빠뜨리지 말고 커밋하세요. build 자동 준비의 지원 버전는 [이미지 가이드](/ko/blog/starter-guide-images/)를 참고하세요.
 
 ## 5. 홈 미리보기와 목록 페이지 나누기
 

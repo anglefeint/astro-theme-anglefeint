@@ -4,7 +4,7 @@ title: '使用指南 6：讓讀者留下評論'
 subtitle: '連線 Giscus，開啟文章或碎片評論，並選擇多語言版本是否共用討論。'
 description: '說明 Giscus 準備、主題設定、文章討論映射、多語言共享、碎片評論差異，以及常見設定和載入問題。'
 pubDate: '2026-11-10'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 

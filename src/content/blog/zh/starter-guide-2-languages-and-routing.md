@@ -8,6 +8,8 @@ updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
+**版本说明：** 正常 build／CI doctor 自动补齐图片需要主题 0.36.2 或更新版本；0.36.1 需先运行 dev 或 prepare-covers。显式 `prepare-covers --check` 保持只读。
+
 本篇是入门教程的第 2 / 8 篇。[查看完整教程顺序](/zh/blog/starter-guide-1-configure-your-site/#tutorial-order) · [按字段查配置字典](/zh/blog/config-reference/)。
 
 完成[安装与站点设置](/zh/blog/starter-guide-1-configure-your-site/)后，日常写作主要修改 `src/content/blog/` 中的文章文件。标题、日期等单篇信息写在文件顶部的 frontmatter 中；站点名称、默认作者和全站开关仍在 `src/site.config.ts` 配置。
@@ -164,7 +166,7 @@ $$
 
 普通正文图片可点击，或聚焦后按 Enter／空格放大；Esc、关闭按钮或蒙版可收起。封面以及链接、按钮内部的图片不参与该预览。预览使用浏览器已选中的图片源，不会另外请求更高清的原图，也不提供相册切换。
 
-新增或更换封面后，本地 dev 或 doctor 会准备响应式文件。提交原图和整个 `src/assets/blog/covers/`（包含 manifest.json 和 generated/）；部署构建与 CI doctor 只校验，缺失、过期或被修改时失败，不在部署端重新编码。此处的持久派生规则用于封面及碎片本地图片，普通文章正文图片仍走原有 Markdown/MDX 图片处理。
+新增或更换封面后，正常 dev、build 和 doctor（含 CI）会准备响应式文件：复用有效文件，自动补齐缺失、过期或损坏的派生文件。建议提交原图和整个 `src/assets/blog/covers/`（包含 manifest.json 和 generated/），以便其他环境复用；即使派生文件未提交，正常 build 也会从有效原图生成。原图缺失或路径越界仍会报错。此处的持久派生规则用于封面及碎片本地图片，普通文章正文图片仍走原有 Markdown/MDX 图片处理。
 
 ## 6. 在本地预览，再准备发布
 

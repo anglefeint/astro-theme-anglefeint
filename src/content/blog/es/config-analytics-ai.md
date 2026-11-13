@@ -4,9 +4,11 @@ title: 'Referencia de configuración: GA4 y contexto para IA'
 subtitle: 'Estadísticas y complementos públicos para máquinas'
 description: 'Tipos, valores, validación y herencia de analytics y aiReadableContent.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/ai-02.webp'
 ---
+
+Las cadenas chinas de los ejemplos bajo `locales.zh` son intencionales: ilustran cómo personalizar el contenido chino sin cambiar los demás idiomas. Los valores predeterminados chino/inglés de las tablas son citas del tema, no traducciones pendientes.
 
 Para publicar por primera vez, consulta [despliegue](/es/blog/starter-guide-deployment/) para ID y textos públicos. El archivo se explica en [instalación](/es/blog/starter-guide-1-configure-your-site/); otros módulos en el [índice](/es/blog/config-reference/).
 
@@ -60,12 +62,12 @@ El componente trata adaptadores antiguos sin ANALYTICS como no configurados. Es 
 
 Objeto MachineReadableSupplement opcional, sin definir por defecto. Omitirlo sigue generando salidas para máquinas, sin contexto extra. {} no desactiva exportaciones.
 
-| Ruta completa                   | Tipo / predeterminado                                                 | Estado, función y límites                                                                                                           | Ejemplo                                                       |
-| ------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| aiReadableContent.notes         | string opcional / sin definir, salida vacía                           | Condicional: contexto público Markdown. Vacío/espacios omite sección. No sustituye cuerpo ni son instrucciones IA privadas          | '本站内容是个人学习笔记，可能持续修订。'                      |
-| aiReadableContent.links         | { label: string; href: string }[] opcional / sin definir, lista vacía | Condicional: enlaces extra públicos. Array sustituye; [] limpia. Sin límite público ni descarga automática del destino              | [{ label: '项目主页', href: 'https://example.com/project/' }] |
-| aiReadableContent.links[].label | string obligatoria / ninguno                                          | Condicional: no vacío tras trim; pliega saltos a espacios y escapa barras/corchetes. No busca título del destino                    | '项目主页'                                                    |
-| aiReadableContent.links[].href  | string obligatoria / ninguno                                          | Condicional: no vacío, resuelto contra raíz pública; solo HTTP(S) sin credenciales. Inválido falla, sin verificar existencia/acceso | 'https://example.com/project/'                                |
+| Ruta completa                   | Tipo / predeterminado                                                 | Estado, función y límites                                                                                                           | Ejemplo                                                                  |
+| ------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| aiReadableContent.notes         | string opcional / sin definir, salida vacía                           | Condicional: contexto público Markdown. Vacío/espacios omite sección. No sustituye cuerpo ni son instrucciones IA privadas          | 'Este sitio reúne apuntes personales que pueden revisarse.'              |
+| aiReadableContent.links         | { label: string; href: string }[] opcional / sin definir, lista vacía | Condicional: enlaces extra públicos. Array sustituye; [] limpia. Sin límite público ni descarga automática del destino              | [{ label: 'Página del proyecto', href: 'https://example.com/project/' }] |
+| aiReadableContent.links[].label | string obligatoria / ninguno                                          | Condicional: no vacío tras trim; pliega saltos a espacios y escapa barras/corchetes. No busca título del destino                    | 'Página del proyecto'                                                    |
+| aiReadableContent.links[].href  | string obligatoria / ninguno                                          | Condicional: no vacío, resuelto contra raíz pública; solo HTTP(S) sin credenciales. Inválido falla, sin verificar existencia/acceso | 'https://example.com/project/'                                           |
 
 notes/links no tienen ajuste general de longitud y deben respetar tipos. Tipo erróneo, etiquetas vacías, protocolos no web o credenciales pueden impedir compilar. No ejecuta comandos ni llama modelos para generar contexto.
 
@@ -87,9 +89,9 @@ Un / inicial usa raíz del dominio, sin conservar /project/. Difiere del prefijo
 
 ```ts
 aiReadableContent: {
-  notes: '本站内容是个人学习笔记，可能持续修订。详情见[文章列表](zh/blog/)。',
+  notes: 'Este sitio reúne apuntes personales que pueden revisarse. Consulta la [lista de entradas](es/blog/).',
   links: [
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: 'Página del proyecto', href: 'https://example.com/project/' },
   ],
 },
 ```
@@ -98,14 +100,14 @@ aiReadableContent: {
 
 ## aiReadableContent por idioma
 
-Prefijo `i18n.locales.<语言>.aiReadableContent`, opcional y sin definir. Igual semántica global, heredando campo a campo si se omiten:
+Prefijo `i18n.locales.<locale>.aiReadableContent`, opcional y sin definir. Igual semántica global, heredando campo a campo si se omiten:
 
-| Campo relativo | Tipo / predeterminado                                            | Función y límites                                                                           | Ejemplo              |
-| -------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------- |
-| notes          | string opcional / hereda notes global                            | Condicional: contexto público del idioma. Vacío/espacios limpia sin respaldo de otro idioma | '中文内容持续更新。' |
-| links          | { label: string; href: string }[] opcional / hereda links global | Condicional: sustituye todo array; [] limpia, no añade al global                            | []                   |
-| links[].label  | string obligatoria / ninguno                                     | Requerido en elementos propios; misma validación/escape global                              | '中文文章'           |
-| links[].href   | string obligatoria / ninguno                                     | Requerido en elementos propios; resuelve contra raíz pública, no directorio de idioma       | 'zh/blog/'           |
+| Campo relativo | Tipo / predeterminado                                            | Función y límites                                                                           | Ejemplo                                             |
+| -------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| notes          | string opcional / hereda notes global                            | Condicional: contexto público del idioma. Vacío/espacios limpia sin respaldo de otro idioma | 'El contenido en chino se actualiza continuamente.' |
+| links          | { label: string; href: string }[] opcional / hereda links global | Condicional: sustituye todo array; [] limpia, no añade al global                            | []                                                  |
+| links[].label  | string obligatoria / ninguno                                     | Requerido en elementos propios; misma validación/escape global                              | 'Artículos en chino'                                |
+| links[].href   | string obligatoria / ninguno                                     | Requerido en elementos propios; resuelve contra raíz pública, no directorio de idioma       | 'zh/blog/'                                          |
 
 Para notas chinas sin enlaces extra chinos:
 
@@ -135,11 +137,11 @@ Rutas relativas a raíz pública, con prefijo de despliegue cuando corresponda. 
 | Salida                                          | Posición y contenido del complemento                                                                                          |
 | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | llms.txt                                        | Entrada raíz. notes global antes de directorios, links como sección extra. Puede contener contexto sin documentos exportables |
-| `<语言>/llms.txt`                               | Índice del idioma con complemento resuelto y enlaces existentes bajo Articles/Fragments/About                                 |
-| `<语言>/llms-full.txt`                          | Colectánea integral del idioma, con contexto/enlaces antes del contenido                                                      |
+| `<locale>/llms.txt`                             | Índice del idioma con complemento resuelto y enlaces existentes bajo Articles/Fragments/About                                 |
+| `<locale>/llms-full.txt`                        | Colectánea integral del idioma, con contexto/enlaces antes del contenido                                                      |
 | index.md de entrada u otro Markdown equivalente | Separador, marcador de contexto y complemento tras el cuerpo, distinguido del texto del autor                                 |
-| `<语言>/about/index.md`                         | Biografía/contacto públicos y panel IA estático accesible, con complemento final; no toda configuración de herramientas       |
-| `<语言>/fragments/index.md`                     | Páginas reunidas con enlaces ID estables y complemento, sin duplicar colectánea por página                                    |
+| `<locale>/about/index.md`                       | Biografía/contacto públicos y panel IA estático accesible, con complemento final; no toda configuración de herramientas       |
+| `<locale>/fragments/index.md`                   | Páginas reunidas con enlaces ID estables y complemento, sin duplicar colectánea por página                                    |
 
 Markdown individual sigue HTML compilado: index.html → index.md. Salidas Astro personalizadas pueden diferir: no inventes rutas ni sobrescribas generados. Las páginas exportadas reciben enlaces de descubrimiento a Markdown e índices.
 

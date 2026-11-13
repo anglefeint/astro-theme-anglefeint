@@ -4,7 +4,7 @@ title: 'ユーザーガイド5：ページと機能を自分好みに変える'
 subtitle: '変更したい場所から探す：ホーム、About、Decoder、ソーシャルリンク、フッター、音楽、ページ分割。'
 description: '小さな設定変更でページと機能を調整し、実際の既定値、適用範囲、統合方法、ローカル確認手順を説明します。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -47,7 +47,7 @@ theme: {
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+    en: { messages: { home: { transmission: 'Leave a small trace here.' } } },
   },
 },
 ```
@@ -60,21 +60,21 @@ About の Oracle 入口は独立したシーンプレビューで、ホームの
 
 ## 2. About を自分の紹介にする
 
-簡体中国語の例なら `/zh/about/` で内容を確認できます。本文と連絡先は言語別設定で変更でき、テーマのページテンプレートの編集は不要です。
+日本語の例なら `/ja/about/` で内容を確認できます。本文と連絡先は言語別設定で変更でき、テーマのページテンプレートの編集は不要です。
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       about: {
         metaLine: '$ profile | building and learning',
         sections: {
-          who: '我是小林，喜欢开发与写作。',
-          what: '这里记录我的项目和学习笔记。',
-          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
-          now: '最近在整理个人博客。',
-          contactLead: '欢迎联系我。',
-          signature: '> 谢谢你来这里。',
+          who: '私は林です。開発と執筆が好きです。',
+          what: 'プロジェクトと学習ノートをここに記録します。',
+          ethos: ['好奇心を忘れずに。', 'アイデアを使えるものにします。'],
+          now: '最近は個人ブログを整えています。',
+          contactLead: 'お気軽にご連絡ください。',
+          signature: '> お越しいただきありがとうございます。',
         },
         contact: {
           email: 'you@example.com',
@@ -89,7 +89,7 @@ i18n: {
 
 例の名前と URL を変更します。`metaLine` は個人パネル上の状態文、`who`・`what`・`ethos`・`now` は自己紹介・活動・理念・近況、`contactLead` は連絡案内、`signature` は署名です。`ethos` は文字列配列で、新配列は全項目を置き換えます。
 
-段落と署名はプレーンテキストです。文字列内の `\n` は改行、`\n\n` は空行になります。Markdown や HTML は解析せず、`<br>` は使わないでください。この例は簡体中国語だけを変えます。他言語は自分で用意し、自動翻訳は行いません。欠けた項目はその言語のフォールバック規則で補います。
+段落と署名はプレーンテキストです。文字列内の `\n` は改行、`\n\n` は空行になります。Markdown や HTML は解析せず、`<br>` は使わないでください。この例は日本語だけを変えます。他言語は自分で用意し、自動翻訳は行いません。欠けた項目はその言語のフォールバック規則で補います。
 
 About のウィンドウ操作では閉じる・最小化・全画面にでき、状態をブラウザーに保存します。AI 出力やダウンロード進捗はテーマの演出で、文面を書いても実際の AI に接続しません。デコードツールはブラウザー内の入力を処理します。
 
@@ -99,24 +99,24 @@ About のウィンドウ操作では閉じる・最小化・全画面にでき�
 
 ## 3. Decoder と資料カードを調整する
 
-Decoder Lab は簡体中国語の例なら `/zh/decoder/` で、既定で有効です。サイファーパンクとデジタル自由の先駆者への敬意を表し、ローカル処理と P2P のイメージで、個人が道具とデータを掌握する理念を示します。
+Decoder Lab は日本語の例なら `/ja/decoder/` で、既定で有効です。サイファーパンクとデジタル自由の先駆者への敬意を表し、ローカル処理と P2P のイメージで、個人が道具とデータを掌握する理念を示します。
 
 テキストのデコード、対応するトークン呼び出しの説明、アドレス形式の検査を行い、RPC、ウォレット接続、API Key は不要です。残高照会、取引実行、所有者の証明は行わず、calldata の入力は実コントラクト動作の検証ではありません。
 
 `theme.enableDecoderPage: false` は Decoder とテーマ提供の入口を独立して無効にします。About の無効化と Decoder は互いに独立です。独自リンクは自分で管理してください。
 
-敬意を示す文面と資料カードは言語別です。簡体中国語の一覧を置き換える例です。
+敬意を示す文面と資料カードは言語別です。日本語の一覧を置き換える例です。
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
         decoderPage: {
           readings: {
-            tribute: '思想与代码，让隐私和自由更进一步。',
+            tribute: '思想とコードで、プライバシーと自由を一歩先へ。',
             links: [
-              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+              { title: '私の参考資料', href: 'https://example.com/', author: '著者名', year: '2026' },
             ],
           },
         },
@@ -140,7 +140,7 @@ i18n: {
 social: {
   links: [
     { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
-    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+    { href: 'https://example.com/community', label: '私のコミュニティ', iconSrc: '/icons/community.svg' },
   ],
 },
 ```
@@ -154,11 +154,11 @@ social: {
 ### フッターのクレジット、説明、追加リンク
 
 ```ts
-site: { tagline: '保持好奇，持续记录。' },
+site: { tagline: '好奇心を持ち、記録を続ける。' },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+    links: [{ label: 'プロジェクトのソースコード', href: 'https://github.com/yourname/your-project' }],
   },
 },
 ```
@@ -179,7 +179,7 @@ theme: {
 theme: {
   music: {
     enabled: true,
-    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+    tracks: [{ title: '私の一曲', artist: '著者', src: '/music/my-song.mp3' }],
   },
 },
 ```

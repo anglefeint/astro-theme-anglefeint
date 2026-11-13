@@ -175,7 +175,7 @@ For base pagination styling, merge `theme: { pagination: { style: { enabled: fal
 
 <a id="archive-messages"></a>
 
-The full prefix is `i18n.locales.<语言>.messages.blog`. Each field is an optional `string` override, conditionally visible when its heading, description or control is used. Defaults resolve through built-in locale messages and fallback. Only Simplified Chinese and English are shown; other languages have their own built-in values.
+The full prefix is `i18n.locales.<locale>.messages.blog`. Each field is an optional `string` override, conditionally visible when its heading, description or control is used. Defaults resolve through built-in locale messages and fallback. Only Simplified Chinese and English are shown; other languages have their own built-in values.
 
 | Field                | Simplified Chinese / English defaults                                                                            | Purpose and limits                                                                                                                                 |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -187,13 +187,13 @@ The full prefix is `i18n.locales.<语言>.messages.blog`. Each field is an optio
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         blog: {
-          title: '文章归档',
-          pageTitle: '文章归档 - 第',
-          archiveDescription: '项目、阅读与学习笔记。',
-          pageDescription: '文章归档分页',
+          title: 'Article archive',
+          pageTitle: 'Article archive — page',
+          archiveDescription: 'Projects, reading and study notes.',
+          pageDescription: 'Article archive pages',
         },
       },
     },
@@ -219,15 +219,15 @@ Tag lists and Fragments share these messages. Blog routes provide extra English 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         blog: {
-          previous: '前一页',
-          next: '后一页',
-          paginationAria: '文章分页',
-          jumpTo: '前往第几页',
-          jumpInputLabel: '目标页码',
-          jumpGo: '前往',
+          previous: 'Previous page',
+          next: 'Next page',
+          paginationAria: 'Article pages',
+          jumpTo: 'Go to page',
+          jumpInputLabel: 'Target page number',
+          jumpGo: 'Go',
         },
       },
     },
@@ -239,7 +239,7 @@ i18n: {
 
 <a id="tag-messages"></a>
 
-These also use `i18n.locales.<语言>.messages.blog`, optional string overrides and ordinary interface-message fallback. Their areas must exist for them to appear:
+These also use `i18n.locales.<locale>.messages.blog`, optional string overrides and ordinary interface-message fallback. Their areas must exist for them to appear:
 
 | Field         | Simplified Chinese / English defaults | Purpose and limits                                                                                     |
 | ------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -251,13 +251,13 @@ These also use `i18n.locales.<语言>.messages.blog`, optional string overrides 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         blog: {
-          tags: '按标签浏览',
-          allPosts: '返回全部文章',
-          noTags: '暂时没有可浏览的标签。',
-          taggedPosts: '篇文章',
+          tags: 'Browse by tag',
+          allPosts: 'Back to all articles',
+          noTags: 'There are no tags to browse yet.',
+          taggedPosts: 'articles',
         },
       },
     },

@@ -56,13 +56,14 @@
 需要 **Node.js 22.12.0 或更新版本**，模板基于 **Astro 7**。在準備存放部落格的目錄執行：
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
 
-打開終端機輸出的網址。已有專案只需在原目錄執行 `npm install`、`npm run dev`，不用重新建立部落格。停止服務按 Ctrl+C；後續指令在專案根目錄執行，可停止 dev 後執行，或另開終端機。
+建立精靈詢問是否安裝相依套件時，請選 Yes；只有主動略過安裝時，才需要在啟動前執行 `npm install`。`--no-ai` 略過額外產生的通用 AI 助手指引檔；主題自己的協作指引已包含在 starter 中。
+
+打開終端機輸出的網址。已有專案只需在原目錄執行 `npm run dev`，不用重新建立部落格。尚未安裝或相依套件變更時，才需要執行 `npm install`。停止服務按 Ctrl+C；後續指令在專案根目錄執行，可停止 dev 後執行，或另開終端機。
 
 新專案也可使用 `pnpm install`、`pnpm dev`；一個專案保持使用同一種套件管理工具。下文以 npm 為例，自動升級工具目前僅支援 npm 專案。
 
@@ -78,9 +79,9 @@ npm run dev
 
 ```ts
 site: {
-  title: '我的博客',
+  title: '我的部落格',
   author: '你的名字',
-  description: '记录项目、阅读和生活。',
+  description: '記錄專案、閱讀和生活。',
   url: 'https://your-domain.example',
 },
 ```
@@ -105,16 +106,16 @@ npm run new-post -- my-first-post
 
 未指定 `--locales` 或 `ANGLEFEINT_LOCALES` 時，讀取專案中全部已啟用的語言，為每種語言生成同名文章範本。初始設定啟用九種語言，因此會建立九份檔案；如果你已調整語言開關，就按調整後的啟用語言生成。它不會自動翻譯內文，已有檔案不會被覆寫。
 
-檔案位於 `src/content/blog/<语言>/my-first-post.md`，訪問路徑為 `/<语言>/blog/my-first-post/`，列表為 `/<语言>/blog/`。例如英文檔案是 `src/content/blog/en/my-first-post.md`，中文檔案是 `src/content/blog/zh/my-first-post.md`。打開自己需要的檔案，修改標題、描述和內文，不需要手動建立路由。一個最小內容範例：
+檔案位於 `src/content/blog/<語言>/my-first-post.md`，訪問路徑為 `/<語言>/blog/my-first-post/`，列表為 `/<語言>/blog/`。例如英文檔案是 `src/content/blog/en/my-first-post.md`，中文檔案是 `src/content/blog/zh/my-first-post.md`。打開自己需要的檔案，修改標題、描述和內文，不需要手動建立路由。一個最小內容範例：
 
 ```md
 ---
 title: '我的第一篇文章'
-description: '记录这次开始写博客的想法。'
+description: '記錄這次開始寫部落格的想法。'
 pubDate: '2026-11-13'
 ---
 
-这里开始写正文。
+在這裡開始撰寫內文。
 ```
 
 上面只展示必需欄位，生成檔案已有的封面和其他選用欄位可繼續保留。一般文章名使用小寫英文字母、數字和連字號，如 `my-first-post`。
@@ -122,13 +123,13 @@ pubDate: '2026-11-13'
 如果只想建立指定語言的檔案，再使用 `--locales`。下面是選用用法，不必逐條執行：
 
 ```bash
-# 只生成英文
+# 只產生英文
 npm run new-post -- my-first-post --locales en
 
-# 只生成中文
+# 只產生中文
 npm run new-post -- my-first-post --locales zh
 
-# 生成指定的多种语言
+# 產生指定的多種語言
 npm run new-post -- my-first-post --locales en,zh
 ```
 
@@ -161,18 +162,18 @@ npm run new-fragment
 只想生成指定語言時，再選擇相應參數：
 
 ```bash
-# 只生成中文
+# 只產生中文
 npm run new-fragment -- --locales zh
 
-# 生成指定的多种语言
+# 產生指定的多種語言
 npm run new-fragment -- --locales en,zh
 ```
 
 每次執行都會新建一條；上面是不同用法，依需求選擇，不必逐條執行。CLI 語言選擇不自動修改網站語言開關。
 
-檔案生成在 `src/content/fragments/<语言>/`，檔案名類似 `2026-11-13-aB3dE6gH.md`，終端機會印出實際路徑。編輯該檔案內文即可，保留生成的八位字母數字 ID；同次生成的譯文共享 ID 和發佈時間。繼續修改同一條內容時不要再次執行建立指令。
+檔案生成在 `src/content/fragments/<語言>/`，檔案名類似 `2026-11-13-aB3dE6gH.md`，終端機會印出實際路徑。編輯該檔案內文即可，保留生成的八位字母數字 ID；同次生成的譯文共享 ID 和發佈時間。繼續修改同一條內容時不要再次執行建立指令。
 
-列表地址為 `/<语言>/fragments/`，例如英文 `/en/fragments/`、中文 `/zh/fragments/`；對應語言首頁有碎片時顯示頭像預覽入口。穩定分享地址使用 `/<语言>/fragments/#ID`，不要把頁碼當成內容身分；改 ID 會影響連結和評論關聯。碎片評論預設關閉。
+列表地址為 `/<語言>/fragments/`，例如英文 `/en/fragments/`、中文 `/zh/fragments/`；對應語言首頁有碎片時顯示頭像預覽入口。穩定分享地址使用 `/<語言>/fragments/#ID`，不要把頁碼當成內容身分；改 ID 會影響連結和評論關聯。碎片評論預設關閉。
 
 操作教學：[發佈一條碎片](https://demo.anglefeint.com/zh-hant/blog/starter-guide-5-fragments/)。欄位參考：[Fragments](https://demo.anglefeint.com/zh-hant/blog/config-fragments/)。
 
@@ -184,7 +185,7 @@ npm run new-fragment -- --locales en,zh
 npm run new-page -- projects
 ```
 
-生成 `src/pages/[lang]/projects.astro`，預設使用 `base` 主題。打開這個檔案修改內容，然後訪問 `/<语言>/projects/`，例如 `/en/projects/`；一個檔案為所有啟用語言生成頁面，不會自動翻譯內容，也不會自動添加導覽入口。
+生成 `src/pages/[lang]/projects.astro`，預設使用 `base` 主題。打開這個檔案修改內容，然後訪問 `/<語言>/projects/`，例如 `/en/projects/`；一個檔案為所有啟用語言生成頁面，不會自動翻譯內容，也不會自動添加導覽入口。
 
 需要指定視覺風格時可添加 `--theme`，選用 `base`、`matrix`、`cyber`、`hacker`、`ai`；例如 `npm run new-page -- portfolio --theme cyber` 建立另一個 Cyberpunk 頁面。
 
@@ -200,7 +201,7 @@ npm run new-page -- projects/labs --theme hacker
 
 ## 6. 準備圖片並保留生成檔案
 
-文章內文使用一般 Markdown 圖片；例如把 `photo.jpg` 放在文章旁邊，寫 `![图片描述](./photo.jpg)`。封面在 frontmatter 中設定 `heroImage: ./cover.jpg`，先放好對應檔案；public 圖片網址不帶 public 前綴。
+文章內文使用一般 Markdown 圖片；例如把 `photo.jpg` 放在文章旁邊，寫 `![圖片描述](./photo.jpg)`。封面在 frontmatter 中設定 `heroImage: ./cover.jpg`，先放好對應檔案；public 圖片網址不帶 public 前綴。
 
 封面和支援處理的碎片本機圖片需要持久化的響應式檔案。在本機明確準備，或只檢查目前產物：
 
@@ -209,9 +210,9 @@ npx @anglefeint/astro-theme prepare-covers
 npx @anglefeint/astro-theme prepare-covers --check
 ```
 
-本機 dev 和本機 doctor 會準備缺少或過期的衍生圖片；build 和 CI doctor 只檢查，不在部署端重新生成。原圖以及整個 `src/assets/blog/covers/`（包含 `manifest.json`、`generated/`）都要提交到 Git。出現 missing／stale／modified 提示時，先在本機準備並提交，再重新建置。
+一般 dev、build 和 doctor（包含 CI）會自動補齊缺少、過期或損壞的衍生圖片，並重用正確的既有檔案。原圖缺失、無效圖片或不安全路徑仍會報錯。明確執行的 `prepare-covers --check` 與設定同步只驗證、不修復。將原圖及整個 `src/assets/blog/covers/` 提交到 Git 可以重用產物，不依賴部署平台保留圖片快取。 **版本說明：** build 與 CI doctor 的自動圖片準備從 0.36.2 起支援；使用 0.36.1 時，請先透過 dev 或 `prepare-covers` 準備圖片。
 
-這個指令不代表所有一般文章內文圖片都已壓縮；具體支援范圍、圖片路徑和分享圖片規則見[圖片教學](https://demo.anglefeint.com/zh-hant/blog/starter-guide-images/)。
+這個指令不代表所有一般文章內文圖片都已壓縮；具體支援範圍、圖片路徑和分享圖片規則見[圖片教學](https://demo.anglefeint.com/zh-hant/blog/starter-guide-images/)。
 
 <a id="reference"></a>
 

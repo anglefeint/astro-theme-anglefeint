@@ -20,16 +20,16 @@ site is an object whose fields may all be omitted from partial input. Every row 
 
 | Full path          | Type            | Theme default                                                                           | Purpose, limits and example                                                                                                                                                                                                                      |
 | ------------------ | --------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `site.title`       | string          | `"My Blog"`                                                                             | Header brand, footer copyright name, RSS title, structured-data site name, and site information on some pages/generated share images. Not the homepage heading. No universal empty-string fallback. Example `"我的博客"`.                        |
-| `site.description` | string          | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | One source of global and machine-readable descriptions. Homepage prefers messages.siteDescription; About/lists have their own sources. Does not replace every page description. Example `"记录项目、阅读和生活。"`.                              |
+| `site.title`       | string          | `"My Blog"`                                                                             | Header brand, footer copyright name, RSS title, structured-data site name, and site information on some pages/generated share images. Not the homepage heading. No universal empty-string fallback. Example `"My blog"`.                         |
+| `site.description` | string          | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | One source of global and machine-readable descriptions. Homepage prefers messages.siteDescription; About/lists have their own sources. Does not replace every page description. Example `"Projects, reading and everyday life."`.                |
 | `site.url`         | string          | `"https://example.com"`                                                                 | Public absolute site address for Astro site, canonical, RSS, sitemap and public exports. Use a real HTTP(S) address, not an article URL. Does not buy domains, configure DNS/certificates or publish code. Example `"https://blog.example.com"`. |
-| `site.author`      | string          | `"Your Name"`                                                                           | Default author and structured data, overridable per article. Footer copyright uses site.title, not author. About body/email do not update automatically. Example `"小林"`.                                                                       |
-| `site.tagline`     | string          | `""`                                                                                    | Additional footer phrase, trimmed on rendering. Empty text is hidden. Exact trimmed legacy default Built with Astro. is also hidden to avoid duplicate attribution. Example `"保持好奇，持续构建。"`.                                            |
+| `site.author`      | string          | `"Your Name"`                                                                           | Default author and structured data, overridable per article. Footer copyright uses site.title, not author. About body/email do not update automatically. Example `"Alex"`.                                                                       |
+| `site.tagline`     | string          | `""`                                                                                    | Additional footer phrase, trimmed on rendering. Empty text is hidden. Exact trimmed legacy default Built with Astro. is also hidden to avoid duplicate attribution. Example `"Stay curious and keep building."`.                                 |
 | `site.ogImage`     | optional string | `""`                                                                                    | Global share image when no higher-priority page/article image exists. Blank values use the bundled image. A local public path or HTTPS URL, not a homepage avatar or bulk hero-image replacement. Example `"/images/share.webp"`.                |
 
-site.title differs from `i18n.locales.<语言>.site.homeTitle`: the former is global identity, the latter only a localized visible homepage heading. The latter finds a nonempty value through the locale chain, finally using the global name. See [homepage title](/en/blog/config-home/#home-title). messages.siteTitle currently controls neither standard identity nor homepage headings; do not expect branding to change through it.
+site.title differs from `i18n.locales.<locale>.site.homeTitle`: the former is global identity, the latter only a localized visible homepage heading. The latter finds a nonempty value through the locale chain, finally using the global name. See [homepage title](/en/blog/config-home/#home-title). messages.siteTitle currently controls neither standard identity nor homepage headings; do not expect branding to change through it.
 
-site.description is not the visible homepage introduction either. That uses `i18n.locales.<语言>.site.hero`; homepage metadata also has messages.siteDescription. See [homepage precedence](/en/blog/config-home/#site-fallbacks). Global identity changes do not rewrite an existing About profile.
+site.description is not the visible homepage introduction either. That uses `i18n.locales.<locale>.site.hero`; homepage metadata also has messages.siteDescription. See [homepage precedence](/en/blog/config-home/#site-fallbacks). Global identity changes do not rewrite an existing About profile.
 
 ### Share-image priority and paths
 
@@ -45,13 +45,13 @@ site.ogImage takes strings, not Astro image-import objects. Article frontmatter.
 
 These are environment variables, not additional site.config fields. All are strings; unset values use the corresponding site field. Nullish coalescing does not treat empty strings as unset.
 
-| Environment variable    | Overrides        | Example                                  |
-| ----------------------- | ---------------- | ---------------------------------------- |
-| PUBLIC_SITE_TITLE       | site.title       | PUBLIC_SITE_TITLE=我的博客               |
-| PUBLIC_SITE_DESCRIPTION | site.description | PUBLIC_SITE_DESCRIPTION=项目与学习笔记   |
-| PUBLIC_SITE_AUTHOR      | site.author      | PUBLIC_SITE_AUTHOR=小林                  |
-| PUBLIC_SITE_TAGLINE     | site.tagline     | PUBLIC_SITE_TAGLINE=保持好奇             |
-| PUBLIC_SITE_URL         | site.url         | PUBLIC_SITE_URL=https://blog.example.com |
+| Environment variable    | Overrides        | Example                                          |
+| ----------------------- | ---------------- | ------------------------------------------------ |
+| PUBLIC_SITE_TITLE       | site.title       | PUBLIC_SITE_TITLE=My Blog                        |
+| PUBLIC_SITE_DESCRIPTION | site.description | PUBLIC_SITE_DESCRIPTION=Projects and study notes |
+| PUBLIC_SITE_AUTHOR      | site.author      | PUBLIC_SITE_AUTHOR=Alex                          |
+| PUBLIC_SITE_TAGLINE     | site.tagline     | PUBLIC_SITE_TAGLINE=Stay curious                 |
+| PUBLIC_SITE_URL         | site.url         | PUBLIC_SITE_URL=https://blog.example.com         |
 
 Integration reads PUBLIC_SITE_URL using Vite dotenv modes for dev/build and --mode, keeping Astro site and public URLs aligned. Existing process environment wins over dotenv. Do not update only site.url while forgetting a deployment-platform PUBLIC_SITE_URL. Empty strings may clear text or invalidate the URL; they do not restore defaults.
 
@@ -84,17 +84,17 @@ For languages/URLs, see [language boundaries](/en/blog/config-languages/#content
 
 ### Seven header/footer messages
 
-The full prefix is `i18n.locales.<语言>.messages`. All are optional strings using built-in locale messages and fallback. Only Simplified Chinese / English defaults are shown. All are conditional on their navigation/attribution area existing. Values render as text, not Markdown or arbitrary HTML.
+The full prefix is `i18n.locales.<locale>.messages`. All are optional strings using built-in locale messages and fallback. Only Simplified Chinese / English defaults are shown. All are conditional on their navigation/attribution area existing. Values render as text, not Markdown or arbitrary HTML.
 
-| Relative field     | Simplified Chinese / English defaults | Purpose and limits                                                            | Example value |
-| ------------------ | ------------------------------------- | ----------------------------------------------------------------------------- | ------------- |
-| `nav.home`         | 首页 / Home                           | Home navigation text; does not change the route.                              | `"首页"`      |
-| `nav.blog`         | 博客 / Blog                           | Blog entry text; does not change the route.                                   | `"文章"`      |
-| `nav.about`        | 关于 / About                          | About entry text, also used to reopen the body window.                        | `"关于我"`    |
-| `nav.status`       | system: online / system: online       | Static header status text; does not monitor networks, APIs or service health. | `"系统在线"`  |
-| `nav.statusAria`   | 系统状态 / System status              | Accessible name of the status area, not a monitoring switch.                  | `"站点状态"`  |
-| `footer.theme`     | 主题： / Theme by                     | Theme attribution prefix; Anglefeint link text and destination are fixed.     | `"主题来自"`  |
-| `footer.builtWith` | 构建工具： / Built with               | Astro attribution prefix; Astro link text and destination are fixed.          | `"使用"`      |
+| Relative field     | Simplified Chinese / English defaults | Purpose and limits                                                            | Example value     |
+| ------------------ | ------------------------------------- | ----------------------------------------------------------------------------- | ----------------- |
+| `nav.home`         | 首页 / Home                           | Home navigation text; does not change the route.                              | `"Home"`          |
+| `nav.blog`         | 博客 / Blog                           | Blog entry text; does not change the route.                                   | `"Articles"`      |
+| `nav.about`        | 关于 / About                          | About entry text, also used to reopen the body window.                        | `"About me"`      |
+| `nav.status`       | system: online / system: online       | Static header status text; does not monitor networks, APIs or service health. | `"System online"` |
+| `nav.statusAria`   | 系统状态 / System status              | Accessible name of the status area, not a monitoring switch.                  | `"Site status"`   |
+| `footer.theme`     | 主题： / Theme by                     | Theme attribution prefix; Anglefeint link text and destination are fixed.     | `"Theme by"`      |
+| `footer.builtWith` | 构建工具： / Built with               | Astro attribution prefix; Astro link text and destination are fixed.          | `"Built with"`    |
 
 messages.langLabel names the language control; options use meta.label. See [language messages](/en/blog/config-languages/#common-messages). Contact and Fragments reuse module messages rather than new messages.nav fields.
 
@@ -152,12 +152,12 @@ With valid iconSrc, icon does not participate in selection. Icon size/spacing ar
 
 ## theme.footer: footer links and attribution
 
-| Full path                  | Type / default                         | Status, purpose and limits                                                                                                                                                                    | Example value                                             |
-| -------------------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| theme.footer.showCredits   | boolean / true                         | Active: shows linked theme/Astro attribution without removing copyright, socials, tagline or other links. Also affects generated article share-image attribution, not supplied custom images. | false                                                     |
-| theme.footer.links         | { label: string; href: string }[] / [] | Active: custom footer links in array order; whole-array replacement. Does not change the header. Layouts may append Decoder, so [] does not guarantee no footer links.                        | [{ label: '项目', href: 'https://example.com/project/' }] |
-| theme.footer.links[].label | required string / none                 | Conditional: visible plain-text label; not retrieved from the destination.                                                                                                                    | '项目'                                                    |
-| theme.footer.links[].href  | required string / none                 | Conditional: destination passed unchanged, without social-icon-style validation or automatic base prefix. Supply correct internal paths. Navigates in the same tab by default.                | 'https://example.com/project/'                            |
+| Full path                  | Type / default                         | Status, purpose and limits                                                                                                                                                                    | Example value                                                |
+| -------------------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| theme.footer.showCredits   | boolean / true                         | Active: shows linked theme/Astro attribution without removing copyright, socials, tagline or other links. Also affects generated article share-image attribution, not supplied custom images. | false                                                        |
+| theme.footer.links         | { label: string; href: string }[] / [] | Active: custom footer links in array order; whole-array replacement. Does not change the header. Layouts may append Decoder, so [] does not guarantee no footer links.                        | [{ label: 'Project', href: 'https://example.com/project/' }] |
+| theme.footer.links[].label | required string / none                 | Conditional: visible plain-text label; not retrieved from the destination.                                                                                                                    | 'Project'                                                    |
+| theme.footer.links[].href  | required string / none                 | Conditional: destination passed unchanged, without social-icon-style validation or automatic base prefix. Supply correct internal paths. Navigates in the same tab by default.                | 'https://example.com/project/'                               |
 
 Custom links precede layout-appended links and are not deduplicated. Enabled Decoder adds a full-tool link to the public frame using messages.decoderPage.fullTool. Disable the standalone feature if unnecessary; clearing footer.links does not remove it.
 
@@ -171,37 +171,37 @@ Keep personal information already configured and merge only required fields:
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录项目、阅读和生活。',
+  title: 'Alex’s blog',
+  description: 'Projects, reading and everyday life.',
   url: 'https://blog.example.com',
-  author: '小林',
-  tagline: '保持好奇，持续构建。',
+  author: 'Alex',
+  tagline: 'Stay curious and keep building.',
 },
 social: {
   links: [
     { label: 'GitHub', href: 'https://github.com/yourname', icon: 'github' },
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: 'Project home', href: 'https://example.com/project/' },
   ],
 },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目', href: 'https://example.com/project/' }],
+    links: [{ label: 'Project', href: 'https://example.com/project/' }],
   },
 },
 ```
 
 Replace example accounts, domains and links with your own; the theme does not validate them online. Prepare public files before configuring custom social iconSrc or site.ogImage.
 
-To change only Chinese navigation and attribution prefixes:
+To change only English navigation and attribution prefixes:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
-        nav: { home: '首页', blog: '文章', about: '关于我' },
-        footer: { theme: '主题来自', builtWith: '使用' },
+        nav: { home: 'Home', blog: 'Articles', about: 'About me' },
+        footer: { theme: 'Theme by', builtWith: 'Built with' },
       },
     },
   },
@@ -212,9 +212,9 @@ i18n: {
 
 ## Currently unused: messages.siteTitle
 
-Full path: `i18n.locales.<语言>.messages.siteTitle`. An optional string override, with both Simplified Chinese / English built-in defaults 'Angle Feint'. Standard homepage headings and global identity currently do not read it; status: currently unused. For example, siteTitle: '我的博客' does not rename these areas.
+Full path: `i18n.locales.<locale>.messages.siteTitle`. An optional string override, with both Simplified Chinese / English built-in defaults 'Angle Feint'. Standard homepage headings and global identity currently do not read it; status: currently unused. For example, siteTitle: 'My blog' does not rename these areas.
 
-Use `i18n.locales.<语言>.site.homeTitle` for homepage headings and top-level site.title for the public brand. See [homepage title](/en/blog/config-home/#home-title) and [site identity](#identity). This retained field is unnecessary for renaming.
+Use `i18n.locales.<locale>.site.homeTitle` for homepage headings and top-level site.title for the public brand. See [homepage title](/en/blog/config-home/#home-title) and [site identity](#identity). This retained field is unnecessary for renaming.
 
 <a id="boundaries"></a>
 

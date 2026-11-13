@@ -44,16 +44,18 @@ Wähle Hosting mit Domain-Stamm, statischen Verzeichnis-index.html und echten Un
 
 Veröffentliche dein eigenes Blogprojekt und dessen Inhaltsbranch, nicht die Demo des Theme-Wartungsrepositorys als persönlichen Blog. Quellen brauchen mindestens Konfiguration, Inhalte, Abhängigkeitslisten und Ressourcen.
 
-Bereite nach neuen oder ersetzten Titelbildern und Fragment-Bildern lokal in dev oder doctor die Varianten vor und committe:
+Normale Aufrufe von dev, build und doctor bereiten neue oder ersetzte Titel- und Fragment-Bilder automatisch vor. Committe diese Quelldateien:
 
 - Artikel, Fragments, eigene Seiten und `src/site.config.ts`.
 - Referenzierte Originale, public-Bilder, Symbole und tatsächlich benötigte Musik.
-- Das ganze `src/assets/blog/covers/` mit manifest.json, generated/ und verwendeten originals/.
+- Verwendete Originale unter `src/assets/blog/covers/originals/`. Manifest und generated-Dateien im Git werden zur Wiederverwendung empfohlen; fehlende Varianten werden automatisch erzeugt.
 - `package.json`, `package-lock.json` sowie vorhandene Astro- und Hosting-Konfiguration.
 
 Originale können neben Artikeln oder in public liegen und müssen dort ebenfalls committet werden, nicht nur originals. Details erklärt [Bilder hinzufügen](/de/blog/starter-guide-images/).
 
-**Der normale Deployment-Build prüft und kopiert persistente Varianten, erzeugt sie aber nicht.** Ebenso doctor in CI. Fehlende, veraltete oder veränderte Dateien lassen den Build scheitern. Bereite lokal vor, committe und veröffentliche erneut, ohne auf einen erhaltenen Hosting-Bildcache zu bauen.
+Normale Aufrufe von dev, build und doctor, auch in CI, verwenden korrekte Bildvarianten wieder und ergänzen oder reparieren fehlende, veraltete oder veränderte Dateien automatisch. Committe Inhalte und referenzierte Originalbilder. Das Committen von `src/assets/blog/covers/manifest.json` und `generated/` wird zur Wiederverwendung empfohlen, ist aber keine Voraussetzung für die automatische Vorbereitung. Fehlende Originale, unsichere Pfade und ungültige Eingaben führen weiterhin zu Fehlern. Dies setzt keinen erhaltenen Bildcache der Hosting-Plattform voraus.
+
+**Versionshinweis:** Die automatische Bildvorbereitung bei normalen Builds und doctor in CI erfordert mindestens 0.36.2. Führe mit 0.36.1 zuerst dev oder `prepare-covers` aus, um Bildvarianten vorzubereiten. Explizites `prepare-covers --check` und Konfigurations-Sync bleiben schreibgeschützt.
 
 Git-basierte Deployments brauchen weder node_modules noch `.astro` oder dist im Commit. Die Plattform installiert und baut selbst. Lade keine lokalen Abhängigkeitsordner als Website hoch. Nicht eingecheckte Umgebungswerte musst du auf der Plattform setzen. PUBLIC_-Werte sind öffentliche Website-Angaben und ungeeignet für geheime Zugangsdaten.
 
@@ -70,13 +72,13 @@ npm run preview
 
 Die Befehle haben unterschiedliche Aufgaben:
 
-| Befehl            | Aufgabe                                                                                                      |
-| ----------------- | ------------------------------------------------------------------------------------------------------------ |
-| `npm run dev`     | Lokale Entwicklung mit Bildvorbereitung, ohne fertigen Volltextindex                                         |
-| `npm run doctor`  | Lokal Bilder vorbereiten, Astro prüfen und bauen; bei aktivem About auch dessen Laufzeitkonfiguration prüfen |
-| `npm run check`   | Ruft im aktuellen Starter ebenfalls doctor auf; nicht direkt hintereinander nötig                            |
-| `npm run build`   | Baut die Website und validiert persistente Bilder, ohne die lokale doctor-Nachgenerierung                    |
-| `npm run preview` | Liefert vorhandenes dist aus, ohne Neubau oder Veröffentlichung                                              |
+| Befehl            | Aufgabe                                                                                                             |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`     | Lokale Entwicklung mit Bildvorbereitung, ohne fertigen Volltextindex                                                |
+| `npm run doctor`  | Bilder vorbereiten (auch in CI), Astro prüfen und bauen; bei aktivem About auch dessen Laufzeitkonfiguration prüfen |
+| `npm run check`   | Ruft im aktuellen Starter ebenfalls doctor auf; nicht direkt hintereinander nötig                                   |
+| `npm run build`   | Bereitet Bildvarianten vor oder verwendet sie wieder und baut die Website                                           |
+| `npm run preview` | Liefert vorhandenes dist aus, ohne Neubau oder Veröffentlichung                                                     |
 
 Behebe Fehler vor Deployment und verwende kein Rest-dist. Nach erfolgreichem doctor ist der Build vorhanden; check und build musst du nicht unmittelbar wiederholen. Ctrl+C beendet preview.
 
@@ -97,7 +99,7 @@ Verbinde dein Repository und konfiguriere:
 | Build-Befehl  | `npm run build`                                                                 |
 | Ausgabeordner | `dist` relativ zum Projektstamm                                                 |
 
-Installiert die Plattform automatisch, füge keine zweite Installation hinzu. Verlangt sie ein vollständiges Skript, installiere vor build. Wiederhole nicht doctor, check und build und verstecke fehlende Commits nicht durch Bildgenerierung auf der Plattform.
+Installiert die Plattform automatisch, füge keine zweite Installation hinzu. Verlangt sie ein vollständiges Skript, installiere vor build. Wiederhole nicht doctor, check und build. Automatische Varianten können fehlende Originale aus nicht erstellten Commits nicht wiederherstellen.
 
 Framework-Preset, Branch und Installationsschritte richten sich nach der Plattform. Wähle statische Ausgabe; npm run dev und npm run preview sind keine Produktionsstartbefehle.
 
@@ -153,14 +155,14 @@ Normales Veröffentlichen braucht dies nicht. Für Website-Hintergrund oder zus�
 
 ```ts
 aiReadableContent: {
-  notes: '本站记录个人学习过程，内容可能持续修订。',
-  links: [{ label: '项目主页', href: 'https://example.com/project' }],
+  notes: 'Diese Website dokumentiert meinen Lernprozess. Inhalte können überarbeitet werden.',
+  links: [{ label: 'Projektseite', href: 'https://example.com/project' }],
 },
 ```
 
 notes unterstützt Markdown; links braucht label und href je Eintrag. Verwende öffentliche HTTP(S)-Ziele; relative Angaben einschließlich Wurzelpfaden werden gegen die Website-Adresse aufgelöst. Es ist öffentliche Ergänzung, kein Ersatz des Artikeltexts und keine Privatsphäre-Einschränkung.
 
-Sprachwerte stehen in `i18n.locales.<代码>.aiReadableContent`. Für eigene chinesische Notizen ohne Zusatzlinks:
+Sprachwerte stehen in `i18n.locales.<Sprachcode>.aiReadableContent`. Für eigene chinesische Notizen ohne Zusatzlinks:
 
 ```ts
 i18n: {
@@ -197,17 +199,17 @@ Prüfe nach neuem Deployment unter der öffentlichen Adresse die GA4-Echtzeitber
 
 ## 9. Deployment-Fehler und falsche Online-Ergebnisse
 
-| Symptom                              | Zuerst prüfen                                                                                |
-| ------------------------------------ | -------------------------------------------------------------------------------------------- |
-| npm ci scheitert                     | Node-/Paketanforderungen und eingecheckte, passende package-lock                             |
-| Bilder missing/stale/modified        | Lokal Originale, Manifest und generated vorbereiten und committen, Validierung nicht umgehen |
-| Build erfolgreich, Seite 404         | Ausgabeordner, Branch, Stamm und index-Unterstützung; nicht angepasster Unterpfad?           |
-| Startseite geht, Artikel-Reload 404  | Echte statische Unterpfade, nur Startseite bereitgestellt oder falscher SPA-Fallback?        |
-| Stile, Bilder oder Suche fehlen      | Gesamtes dist mit Ressourcenordnern bereitgestellt, keine Pfadumschreibung?                  |
-| canonical/RSS zeigt Beispieldomain   | site.url, PUBLIC_SITE_URL, Modus-Umgebung und neuer Build/Deployment                         |
-| Online trotz Änderungen unverändert  | Richtiges Projekt, Branch und neuester Commit statt nur lokaler Änderung?                    |
-| Gelöschter Artikel bleibt erreichbar | Alte Deployment-Dateien oder Caches; vollständiges Ersetzen und Hosting-Cache prüfen         |
-| Keine GA4-Daten                      | Echte G-ID, Produktionsbuild, nichtlokale Adresse und nicht blockiertes Skript?              |
+| Symptom                              | Zuerst prüfen                                                                                          |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| npm ci scheitert                     | Node-/Paketanforderungen und eingecheckte, passende package-lock                                       |
+| Bilder missing/stale/modified        | build repariert Varianten; bei Fehlern committete Originale, sichere Pfade und gültige Eingaben prüfen |
+| Build erfolgreich, Seite 404         | Ausgabeordner, Branch, Stamm und index-Unterstützung; nicht angepasster Unterpfad?                     |
+| Startseite geht, Artikel-Reload 404  | Echte statische Unterpfade, nur Startseite bereitgestellt oder falscher SPA-Fallback?                  |
+| Stile, Bilder oder Suche fehlen      | Gesamtes dist mit Ressourcenordnern bereitgestellt, keine Pfadumschreibung?                            |
+| canonical/RSS zeigt Beispieldomain   | site.url, PUBLIC_SITE_URL, Modus-Umgebung und neuer Build/Deployment                                   |
+| Online trotz Änderungen unverändert  | Richtiges Projekt, Branch und neuester Commit statt nur lokaler Änderung?                              |
+| Gelöschter Artikel bleibt erreichbar | Alte Deployment-Dateien oder Caches; vollständiges Ersetzen und Hosting-Cache prüfen                   |
+| Keine GA4-Daten                      | Echte G-ID, Produktionsbuild, nichtlokale Adresse und nicht blockiertes Skript?                        |
 
 Der tägliche Ablauf bleibt „lokal bearbeiten und vorbereiten → prüfen und Vorschau → Quellen committen → bauen und bereitstellen“. Upgrades erklärt das [Installationstutorial](/de/blog/starter-guide-1-configure-your-site/), Sprachpfade [Teil 7](/de/blog/starter-guide-languages/).
 

@@ -279,7 +279,7 @@ export async function prepareCovers({
   }
   if (failures.length)
     throw new Error(
-      `[covers] Missing, stale or modified image derivatives (${failures.length}):\n${failures.slice(0, 12).join('\n')}\nRun npx @anglefeint/astro-theme prepare-covers locally, then commit src/assets/blog/covers/ before building. Deployment never regenerates covers.`
+      `[covers] Missing, stale or modified image derivatives (${failures.length}):\n${failures.slice(0, 12).join('\n')}\nRun npx @anglefeint/astro-theme prepare-covers locally, or run normal dev/build/doctor to prepare them. Commit originals and src/assets/blog/covers/ to reuse prepared assets across checkouts.`
     );
   const manifest = { schema: 1, recipe: COVER_RECIPE, recipeHash, sources: records };
   if (!check && inventory.sources.size && JSON.stringify(old) !== JSON.stringify(manifest)) {

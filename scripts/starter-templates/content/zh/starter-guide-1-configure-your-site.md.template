@@ -45,11 +45,12 @@ npm --version
 在你打算存放项目的目录中创建博客。下面的命令会新建 `my-blog` 文件夹，不会自动安装依赖：
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+创建向导询问是否安装依赖时选择 Yes。若主动跳过安装，先在项目目录运行 `npm install`，再启动 dev；已安装则不必重复执行。`--no-ai` 只跳过向导额外生成的通用 AI 助手指引，starter 自带的主题指引仍保留。
 
 你可以把 `my-blog` 换成其他目录名，同时修改 `cd` 后的名称。打开终端显示的本地网址；不要假定端口一定相同，端口被占用时可能变化。开发服务保持运行，按 `Ctrl+C` 停止。
 
@@ -178,7 +179,7 @@ npm run preview
 
 `preview` 打开的是 `dist/` 中已经构建的静态网站，访问终端给出的网址即可；它不会把博客发布到互联网。文章搜索需要在构建后的预览中验证，`dev` 没有实时全文搜索。按 `Ctrl+C` 停止预览。
 
-以后发布时，托管平台的构建命令是 `npm run build`，输出目录为 `dist`，需要部署其中全部文件。新增或更换本地图片后，先在本地运行 dev 或 doctor，提交原图和生成的整个 `src/assets/blog/covers/` 目录；部署构建及 CI doctor 只校验这些响应式文件，缺失或过期会失败，不在平台上补生成。修改内容或配置后，需要重新构建并部署。
+以后发布时，托管平台的构建命令是 `npm run build`，输出目录为 `dist`，需要部署其中全部文件。新增或更换本地图片后，正常 dev、build 或 doctor（含 CI）会准备响应式文件，复用有效文件并自动补齐缺失或过期的派生图。原图必须提交，建议连同整个 `src/assets/blog/covers/` 提交以便复用；原图缺失、无法解码或路径越界仍报错。此自动 build／CI 准备行为需要主题 0.36.2 或更新版本；0.36.1 需先运行 dev 或 prepare-covers。修改内容或配置后，需要重新构建并部署。
 
 ## 已有项目如何升级
 

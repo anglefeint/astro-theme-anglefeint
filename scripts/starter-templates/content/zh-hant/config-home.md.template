@@ -4,19 +4,19 @@ title: '設定字典：首頁'
 subtitle: '查詢首頁標題、介紹、最新文章、提示文字、寬屏終端機和點選穿越的實際設定。'
 description: '首頁設定欄位的型別、主題預設值、生效範圍、限制和可合併範例，並說明共享設定和目前沒有提供的開關。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 [返回設定字典總入口](/zh-hant/blog/config-reference/)。本篇說明實際首頁使用的欄位，不改變主題程式碼，也不把展示站個人設定當成預設值。
 
-下面 `<语言>` 換成專案實際啟用的語言代碼。範例使用 zh；它只修改中文設定，不會自動改變英文或啟用一種語言。所有片段都合併到 `src/site.config.ts` 現有的 defineThemeConfig 物件中，已有 theme、i18n 或 site 時保留其中其他欄位。
+下面 `<locale>` 換成專案實際啟用的語言代碼。範例使用 zh-hant；它只修改繁體中文設定，不會自動改變英文或啟用一種語言。所有片段都合併到 `src/site.config.ts` 現有的 defineThemeConfig 物件中，已有 theme、i18n 或 site 時保留其中其他欄位。
 
 ## 1. 首頁大標題、介紹和中繼描述
 
 <a id="home-title"></a>
 
-### `i18n.locales.<语言>.site.homeTitle`
+### `i18n.locales.<locale>.site.homeTitle`
 
 - **型別**：選用 `string`。
 - **主題預設值**：未設定。各內建語言預設沒有單獨的 homeTitle，最終使用全站名稱（預設 My Blog）。
@@ -25,7 +25,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 <a id="home-hero"></a>
 
-### `i18n.locales.<语言>.site.hero`
+### `i18n.locales.<locale>.site.hero`
 
 - **型別**：選用 `string`。
 - **主題預設值**：內建語言各有介紹；簡體中文為“在这里写一段站点简介，并告诉读者你将发布什么类型的内容。”，英文為“Write a short introduction for your site and what readers can expect from your posts.”。其他語言使用各自內建值。
@@ -34,7 +34,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 <a id="home-description"></a>
 
-### `i18n.locales.<语言>.messages.siteDescription`
+### `i18n.locales.<locale>.messages.siteDescription`
 
 - **型別**：選用覆寫，值為 `string`。
 - **主題預設值**：內建目前語言文字；簡體中文為“电影感网页界面与 AI 时代工程实践文章。”，英文為“Cinematic web interfaces and AI-era engineering essays.”。
@@ -46,12 +46,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       site: {
-        homeTitle: '我的数字花园',
-        hero: '记录开发、阅读和生活。',
+        homeTitle: '我的數字花園',
+        hero: '記錄開發、閱讀和生活。',
       },
-      messages: { siteDescription: '个人项目与学习笔记。' },
+      messages: { siteDescription: '個人專案與學習筆記。' },
     },
   },
 },
@@ -109,7 +109,7 @@ theme: {
 
 <a id="home-messages"></a>
 
-以下均位於 `i18n.locales.<语言>.messages.home`，是選用的 `string` 覆寫，一般欄位按介面文字回退規則解析。這裡列簡體中文與英文內建預設值，其他內建語言有自己的文字。
+以下均位於 `i18n.locales.<locale>.messages.home`，是選用的 `string` 覆寫，一般欄位按介面文字回退規則解析。這裡列簡體中文與英文內建預設值，其他內建語言有自己的文字。
 
 | 完整路徑末段 | 簡體中文預設 / 英文預設                                         | 作用與限制                                                               |
 | ------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------ |
@@ -123,13 +123,13 @@ theme: {
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       messages: {
         home: {
           latest: '最近更新',
           viewAll: '全部文章',
-          noPosts: '这里还没有文章。',
-          openDoor: '打开走廊预览',
+          noPosts: '這里還沒有文章。',
+          openDoor: '打開走廊預覽',
         },
       },
     },
@@ -139,7 +139,7 @@ i18n: {
 
 <a id="home-transmission"></a>
 
-### `i18n.locales.<语言>.messages.home.transmission`
+### `i18n.locales.<locale>.messages.home.transmission`
 
 - **型別**：選用的 `string` 覆寫。
 - **主題預設值**：`'Knock, knock.'`，包括中文在內，沒有個人覆寫時共用這一句。
@@ -151,16 +151,16 @@ i18n: {
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '这里留下一点线索。' } } },
+    en: { messages: { home: { transmission: 'Leave a small trace here.' } } },
   },
 },
 ```
 
-在 zh 的相同位置填寫則只覆寫中文。修改文字不會查詢真實網路信號，也不改變鑰匙孔開啟走廊的行為。
+在 zh-hant 的相同位置填寫則只覆寫繁體中文。修改文字不會查詢真實網路信號，也不改變鑰匙孔開啟走廊的行為。
 
 <a id="message-hero"></a>
 
-### `i18n.locales.<语言>.messages.home.hero`
+### `i18n.locales.<locale>.messages.home.hero`
 
 - **型別**：選用的 `string` 覆寫。
 - **主題預設值**：內建目前語言介紹，簡體中文和英文分別與上面的 site.hero 預設句相同。
@@ -170,7 +170,7 @@ i18n: {
 ```ts
 i18n: {
   locales: {
-    zh: { messages: { home: { hero: '仅在没有可用 site.hero 时使用的介绍。' } } },
+    'zh-hant': { messages: { home: { hero: '僅在沒有可用 site.hero 時使用的介紹。' } } },
   },
 },
 ```
@@ -200,12 +200,12 @@ theme: { effects: { enableHomePassage: true } },
 
 這些欄位不屬於首頁獨占功能；這裡保留首頁使用關系，完整定義在主字典中查閱。
 
-| 完整路徑                                       | 首頁使用關系                                                         | 主說明                                                        |
-| ---------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------- |
-| `theme.fragments.enabled`                      | 目前語言有碎片時顯示頭像入口，同時影響完整碎片列表；預覽固定最多三條 | [Fragments 開關](/zh-hant/blog/config-fragments/#enabled)     |
-| `i18n.locales.<语言>.messages.blog.allPosts`   | 最新文章數量的提示和歸檔入口的無障礙名稱                             | [列表共享文字](/zh-hant/blog/config-blog-list/#tag-messages)  |
-| `i18n.locales.<语言>.messages.fragments.title` | 頭像入口的無障礙名稱，不是在頭像旁顯示標題                           | [碎片文字](/zh-hant/blog/config-fragments/#fragment-messages) |
-| `i18n.locales.<语言>.messages.fragments.close` | 首頁預覽關閉按鈕的無障礙名稱，不改變按鈕圖形                         | [碎片文字](/zh-hant/blog/config-fragments/#fragment-messages) |
+| 完整路徑                                         | 首頁使用關系                                                         | 主說明                                                        |
+| ------------------------------------------------ | -------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `theme.fragments.enabled`                        | 目前語言有碎片時顯示頭像入口，同時影響完整碎片列表；預覽固定最多三條 | [Fragments 開關](/zh-hant/blog/config-fragments/#enabled)     |
+| `i18n.locales.<locale>.messages.blog.allPosts`   | 最新文章數量的提示和歸檔入口的無障礙名稱                             | [列表共享文字](/zh-hant/blog/config-blog-list/#tag-messages)  |
+| `i18n.locales.<locale>.messages.fragments.title` | 頭像入口的無障礙名稱，不是在頭像旁顯示標題                           | [碎片文字](/zh-hant/blog/config-fragments/#fragment-messages) |
+| `i18n.locales.<locale>.messages.fragments.close` | 首頁預覽關閉按鈕的無障礙名稱，不改變按鈕圖形                         | [碎片文字](/zh-hant/blog/config-fragments/#fragment-messages) |
 
 開啟後沒有頭像，先檢查目前語言是否確有碎片，不要為了顯示頭像複製已有碎片 ID。圖片、程式碼和限高規則見[Fragments 字典](/zh-hant/blog/config-fragments/#preview-and-links)，發佈步驟見[發佈一條碎片](/zh-hant/blog/starter-guide-5-fragments/)。
 

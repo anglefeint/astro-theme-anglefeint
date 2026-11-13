@@ -4,7 +4,7 @@ title: 'ユーザーガイド7：より多くの言語の読者に届ける'
 subtitle: '言語とホーム URL を選び、ローカライズした文面と記事・Fragments の翻訳を追加します。'
 description: '言語の有効・無効、既定言語、ホームのルート、フォールバック、新言語、記事と Fragments の翻訳の対応を実際の設定で説明します。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
 

@@ -4,7 +4,7 @@ title: 'Guía 5: ajustar páginas y funciones a tu gusto'
 subtitle: 'Personalizar el blog sin cambiar sus plantillas'
 description: 'Ajusta inicio, About, Decoder, música, redes, pie, paginación y páginas personalizadas.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -47,7 +47,7 @@ Por defecto es `Knock, knock.`. Configura primero inglés como texto compartido 
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+    es: { messages: { home: { transmission: 'Anota tus ideas y deja algunas pistas.' } } },
   },
 },
 ```
@@ -60,21 +60,21 @@ Consulta las definiciones completas en el [diccionario de inicio](/es/blog/confi
 
 ## 2. Sustituir About por tu presentación
 
-Abre `/zh/about/` para el ejemplo chino. Cuerpo y contacto se configuran por idioma, sin editar plantillas de página del tema:
+Abre `/es/about/` para el ejemplo en español. Cuerpo y contacto se configuran por idioma, sin editar plantillas de página del tema:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       about: {
         metaLine: '$ profile | building and learning',
         sections: {
-          who: '我是小林，喜欢开发与写作。',
-          what: '这里记录我的项目和学习笔记。',
-          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
-          now: '最近在整理个人博客。',
-          contactLead: '欢迎联系我。',
-          signature: '> 谢谢你来这里。',
+          who: 'Soy Lin y me gusta desarrollar y escribir.',
+          what: 'Aquí registro mis proyectos y lo que aprendo.',
+          ethos: ['Mantén la curiosidad.', 'Convertir ideas en herramientas útiles.'],
+          now: 'Estoy organizando mi blog personal.',
+          contactLead: 'Ponte en contacto conmigo.',
+          signature: '> Gracias por pasar por aquí.',
         },
         contact: {
           email: 'you@example.com',
@@ -89,7 +89,7 @@ i18n: {
 
 Sustituye nombre y direcciones. `metaLine` es el estado superior del panel. `who`, `what`, `ethos` y `now` contienen biografía, trabajo, principios y actividad actual. `contactLead` presenta el contacto; `signature` es la firma. `ethos` es un array de strings y sustituye todos los elementos anteriores.
 
-Párrafos y firma son texto plano. `\n` crea salto y `\n\n` una línea vacía. No se interpreta Markdown/HTML; no uses `<br>`. El ejemplo solo cambia chino simplificado. Los otros idiomas necesitan sus textos; no se traducen automáticamente. Los campos ausentes usan las reglas de respaldo del idioma.
+Párrafos y firma son texto plano. `\n` crea salto y `\n\n` una línea vacía. No se interpreta Markdown/HTML; no uses `<br>`. El ejemplo solo cambia español. Los otros idiomas necesitan sus textos; no se traducen automáticamente. Los campos ausentes usan las reglas de respaldo del idioma.
 
 Los controles de ventana cierran, minimizan o amplían el panel y guardan estado local en el navegador. La salida IA y el progreso de descarga son interacciones del tema, no conexiones a un servicio activadas por introducir texto. Las herramientas Decoder procesan localmente en el navegador.
 
@@ -99,24 +99,24 @@ Consulta más campos en [About](/es/blog/config-about/#about-content) y los coma
 
 ## 3. Ajustar Decoder y las tarjetas de lectura
 
-Decoder Lab está activo por defecto en `/zh/decoder/` para el ejemplo chino. Su estética homenajea a cypherpunks y pioneros de libertad digital; el procesamiento local y las imágenes P2P expresan control personal de herramientas y datos.
+Decoder Lab está activo por defecto en `/es/decoder/` para el ejemplo en español. Su estética homenajea a cypherpunks y pioneros de libertad digital; el procesamiento local y las imágenes P2P expresan control personal de herramientas y datos.
 
 Decodifica texto, interpreta llamadas de tokens admitidas y comprueba formatos de dirección sin RPC, wallet ni API key. No consulta saldos, ejecuta transacciones ni prueba propiedad. Introducir calldata no verifica el comportamiento real de un contrato.
 
 `enableDecoderPage: false` en `theme` desactiva independientemente la página y los enlaces del tema. Desactivar About no desactiva Decoder, ni viceversa. Mantén tú los enlaces personalizados.
 
-Homenaje y tarjetas se configuran por idioma. Por ejemplo, sustituye la lista china:
+Homenaje y tarjetas se configuran por idioma. Por ejemplo, sustituye la lista en español:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       messages: {
         decoderPage: {
           readings: {
-            tribute: '思想与代码，让隐私和自由更进一步。',
+            tribute: 'Las ideas y el código impulsan la privacidad y la libertad.',
             links: [
-              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+              { title: 'Mis lecturas', href: 'https://example.com/', author: 'Nombre del autor', year: '2026' },
             ],
           },
         },
@@ -140,7 +140,7 @@ Consulta tipos, portadas integradas y valores en [Decoder](/es/blog/config-decod
 social: {
   links: [
     { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
-    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+    { href: 'https://example.com/community', label: 'Mi comunidad', iconSrc: '/icons/community.svg' },
   ],
 },
 ```
@@ -154,11 +154,11 @@ Los enlaces sociales de cabecera se ocultan en móvil; los del pie permanecen. `
 ### Créditos, texto y enlaces adicionales del pie
 
 ```ts
-site: { tagline: '保持好奇，持续记录。' },
+site: { tagline: 'Mantén la curiosidad y sigue escribiendo.' },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+    links: [{ label: 'Código fuente del proyecto', href: 'https://github.com/yourname/your-project' }],
   },
 },
 ```
@@ -179,7 +179,7 @@ Añade audio a `public/music/my-song.mp3` y combina:
 theme: {
   music: {
     enabled: true,
-    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+    tracks: [{ title: 'Una canción mía', artist: 'Autor', src: '/music/my-song.mp3' }],
   },
 },
 ```
@@ -246,7 +246,7 @@ Para presentar proyectos por separado, ejecuta en la raíz:
 npm run new-page -- projects
 ```
 
-Crea `src/pages/[lang]/projects.astro` con layout `base` predeterminado y genera `/<语言代码>/projects/` para idiomas activos, por ejemplo `/en/projects/` o `/zh/projects/`. Edita el cuerpo de ese archivo Astro. No traduce ni añade navegación de cabecera. Enlázalo desde el cuerpo o pie.
+Crea `src/pages/[lang]/projects.astro` con layout `base` predeterminado y genera `/<locale>/projects/` para idiomas activos, por ejemplo `/en/projects/` o `/zh/projects/`. Edita el cuerpo de ese archivo Astro. No traduce ni añade navegación de cabecera. Enlázalo desde el cuerpo o pie.
 
 Añade `--theme` para una atmósfera concreta. Por ejemplo, `npm run new-page -- portfolio --theme cyber` crea otra página Cyberpunk. Las opciones son `base`, `ai`, `cyber`, `hacker` y `matrix`. Selecciona el layout nuevo, no cambia globalmente el tema. Los slugs admiten minúsculas, números, guiones y rutas anidadas como `projects/labs`. Evita rutas estándar reservadas. Si existe archivo da error: no ejecutes cinco comandos de tema para la misma ruta consecutivamente.
 

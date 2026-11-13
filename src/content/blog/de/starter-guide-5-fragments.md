@@ -34,7 +34,7 @@ theme: {
 | `theme.fragments.pageSize`         | Standard `20`; Einträge pro Seite, Ganzzahl von 1 bis 100, unabhängig von der Blog-Seitengröße                     |
 | `theme.fragments.comments.enabled` | Standard `false`; aktiviert den Kommentar-Dialog, benötigt außerdem die später beschriebene Giscus-Konfiguration   |
 
-Starte lokal `npm run dev` und öffne `/<语言代码>/fragments/` unter der Terminal-Adresse, etwa `/en/fragments/` oder `/zh/fragments/`. Die Sprache muss im Projekt aktiv sein. Ohne Inhalte erscheint eine leere Liste, ohne manuell angelegte Seitendatei. Deaktivierte Fragments erzeugen weder Liste noch Startseiteneinstieg, löschen aber keine Markdown-Dateien.
+Starte lokal `npm run dev` und öffne `/<Sprachcode>/fragments/` unter der Terminal-Adresse, etwa `/en/fragments/` oder `/zh/fragments/`. Die Sprache muss im Projekt aktiv sein. Ohne Inhalte erscheint eine leere Liste, ohne manuell angelegte Seitendatei. Deaktivierte Fragments erzeugen weder Liste noch Startseiteneinstieg, löschen aber keine Markdown-Dateien.
 
 ## 2. Ein Fragment nach dem Standardablauf erstellen
 
@@ -44,7 +44,7 @@ Führe im Projektstamm aus:
 npm run new-fragment
 ```
 
-Ohne `--locales` oder `ANGLEFEINT_LOCALES` erzeugt der Befehl Gerüste desselben Fragments für alle aktiven Sprachen, anfangs neun. Sie liegen in `src/content/fragments/<语言代码>/` und teilen bei einem Aufruf ID und Veröffentlichungszeit, werden aber nicht übersetzt. Das Terminal nennt die tatsächlichen Pfade. Ein Dateiname wie `2026-11-13-q8Lm3XzP.md` enthält UTC-Datum und Zufalls-ID. Öffne deine erzeugte Datei, statt diesen Beispielnamen manuell anzulegen.
+Ohne `--locales` oder `ANGLEFEINT_LOCALES` erzeugt der Befehl Gerüste desselben Fragments für alle aktiven Sprachen, anfangs neun. Sie liegen in `src/content/fragments/<Sprachcode>/` und teilen bei einem Aufruf ID und Veröffentlichungszeit, werden aber nicht übersetzt. Das Terminal nennt die tatsächlichen Pfade. Ein Dateiname wie `2026-11-13-q8Lm3XzP.md` enthält UTC-Datum und Zufalls-ID. Öffne deine erzeugte Datei, statt diesen Beispielnamen manuell anzulegen.
 
 Für nur Chinesisch verwende alternativ `npm run new-fragment -- --locales zh`, für mehrere Sprachen `--locales en,zh`. Wähle eine passende Variante, führe nicht alle aus. Die Befehle aktivieren keine Sprachen. Entferne unfertige fremdsprachige Gerüste vor der Veröffentlichung aus dem Fragment-Verzeichnis.
 
@@ -68,7 +68,7 @@ id: 'q8Lm3XzP'
 pubDate: '2026-11-13T09:00:00+08:00'
 ---
 
-今天把一个困扰很久的问题解决了，记下这个小进展。
+Heute habe ich ein Problem gelöst, das mich lange beschäftigt hat. Ein kleiner Fortschritt, den ich festhalten möchte.
 ```
 
 Fragments unterstützen derzeit drei frontmatter-Felder:
@@ -79,7 +79,7 @@ Fragments unterstützen derzeit drei frontmatter-Felder:
 | `pubDate` | Pflicht, parsebares Veröffentlichungsdatum. Behalte vorzugsweise den erzeugten ISO-Zeitstempel oder verwende Zeit und Zeitzone                          |
 | `title`   | Optionaler String als Kartenüberschrift; auch ohne Titel lässt sich veröffentlichen                                                                     |
 
-Ergänze für einen Titel etwa `title: '一个小进展'` im selben frontmatter. Ein Fragment braucht kein `description` und hat kein Artikel-`heroImage`. Bilder gehören in den Text.
+Ergänze für einen Titel etwa `title: 'Ein kleiner Fortschritt'` im selben frontmatter. Ein Fragment braucht kein `description` und hat kein Artikel-`heroImage`. Bilder gehören in den Text.
 
 Die Liste sortiert nach `pubDate` absteigend und bei gleicher Zeit nach ID, nicht Dateinamen. Angezeigt wird UTC, möglicherweise abweichend von deiner lokalen Zeit. Nur Text oder Dateiname zu ändern ändert weder Kommentar- noch Freigabeidentität. Datumsänderungen beeinflussen Reihenfolge und Seite.
 
@@ -92,10 +92,10 @@ Gesammelt werden nur `.md`-Dateien unter `src/content/fragments/`, keine `.mdx`.
 Normale Markdown-Absätze, Links, Listen und Zitate funktionieren. Ein Bild etwa:
 
 ```md
-![这次进展的截图](/images/fragments/progress.png)
+![Screenshot dieses Fortschritts](/images/fragments/progress.png)
 ```
 
-Lege zuerst die Datei unter `public/images/fragments/progress.png` ab. Alternativ lege `photo.png` neben das Fragment und verwende `![图片说明](./photo.png)`. Weitere Formen, Größen und Git-Anforderungen erklärt [Bilder hinzufügen](/de/blog/starter-guide-images/).
+Lege zuerst die Datei unter `public/images/fragments/progress.png` ab. Alternativ lege `photo.png` neben das Fragment und verwende `![Bildbeschreibung](./photo.png)`. Weitere Formen, Größen und Git-Anforderungen erklärt [Bilder hinzufügen](/de/blog/starter-guide-images/).
 
 Code behält Markdown-Zäune und Einrückung:
 
@@ -111,7 +111,9 @@ Codeblöcke zeigen Inhalt, führen JavaScript aber nicht aus. Artikel-Kopierknö
 
 Bei global aktivierter Mathematik funktionieren `$x_1$` inline und eigenständige Formeln zwischen zwei `$$`-Zeilen. Sie werden beim Build gerendert; ungültige Formeln können Kompilierung oder Build scheitern lassen. `theme.math.enabled` deaktiviert diese Verarbeitung. Die Syntax erklärt [Den ersten Beitrag schreiben](/de/blog/starter-guide-2-languages-and-routing/).
 
-Lokales dev oder doctor bereitet unterstützte responsive Fragment-Bilder vor. Committe Fragment-Markdown, Originale und das gesamte `src/assets/blog/covers/`. Deployment-Build und CI doctor prüfen nur, statt auf der Plattform zu generieren. Vergiss keine Bilddateien.
+Normale Aufrufe von dev, build und doctor, auch in CI, verwenden korrekte Bildvarianten wieder und ergänzen oder reparieren fehlende, veraltete oder veränderte Dateien automatisch. Committe Inhalte und referenzierte Originalbilder. Das Committen von `src/assets/blog/covers/manifest.json` und `generated/` wird zur Wiederverwendung empfohlen, ist aber keine Voraussetzung für die automatische Vorbereitung. Fehlende Originale, unsichere Pfade und ungültige Eingaben führen weiterhin zu Fehlern. Vergiss keine referenzierten Originalbilder.
+
+**Versionshinweis:** Die automatische Bildvorbereitung bei normalen Builds und doctor in CI erfordert mindestens 0.36.2. Führe mit 0.36.1 zuerst dev oder `prepare-covers` aus, um Bildvarianten vorzubereiten. Explizites `prepare-covers --check` und Konfigurations-Sync bleiben schreibgeschützt.
 
 ## 5. Startseitenvorschau und Seiteneinteilung
 

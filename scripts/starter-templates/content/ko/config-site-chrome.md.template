@@ -4,7 +4,7 @@ title: '설정 사전: 사이트 이름, 도메인, 공용 내비게이션, 소�
 subtitle: '사이트 정체성, 환경 덮어쓰기, 고정 내비게이션과 공용 링크입니다.'
 description: '실제 코드로 site, social, footer, 내비게이션 문구의 타입, 기본값, 제한, 환경 덮어쓰기, 호환·미적용 설정을 조회합니다.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-01.webp'
 ---
 
@@ -18,18 +18,18 @@ heroImage: '../../../assets/blog/default-covers/matrix-01.webp'
 
 site는 객체이며 부분 설정에서는 모든 필드를 생략할 수 있습니다. 아래는 모두 조건부 적용으로 실제 페이지에서 읽을 때 사용하며 환경·페이지의 구체적 인수가 우선할 수 있습니다.
 
-| 전체 경로          | 타입              | 테마 기본값                                                                             | 역할·제한·예시                                                                                                                                                                         |
-| ------------------ | ----------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `site.title`       | string            | `"My Blog"`                                                                             | 헤더 브랜드, 푸터 저작권, RSS, 구조화 데이터, 일부 페이지·자동 공유 이미지의 사이트 이름입니다. 홈 대제목과는 다르며 통합 빈 문자열 대체는 없습니다. 예시 `"我的博客"`.                |
-| `site.description` | string            | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | 전역 설명·기계 읽기 인덱스 출처 중 하나입니다. 홈은 messages.siteDescription이 우선이며 About·목록은 자체 설명이 있어 모든 페이지를 바꾸지 않습니다. 예시 `"记录项目、阅读和生活。"`.  |
-| `site.url`         | string            | `"https://example.com"`                                                                 | Astro site, canonical, RSS, sitemap, 공개 내보내기의 HTTP(S) 절대 주소입니다. 글 URL은 안 됩니다. 도메인 구매·DNS·인증서·게시를 수행하지 않습니다. 예시 `"https://blog.example.com"`.  |
-| `site.author`      | string            | `"Your Name"`                                                                           | 기본 작성자·구조화 데이터입니다. 글 author가 덮어쓸 수 있습니다. 저작권은 site.title이며 About·메일도 자동 변경되지 않습니다. 예시 `"小林"`.                                           |
-| `site.tagline`     | string            | `""`                                                                                    | 푸터 추가 문구이며 trim 후 비면 숨깁니다. 옛 기본 Built with Astro.도 크레딧 중복 방지로 숨깁니다. 예시 `"保持好奇，持续构建。"`.                                                      |
-| `site.ogImage`     | string，생략 가능 | `""`                                                                                    | 페이지·글 우선 이미지가 없을 때 전역 공유 이미지입니다. 공백은 내장 이미지를 쓰며 로컬 public·HTTPS를 지원합니다. 홈 아바타·글 표지 일괄 교체는 아닙니다. 예시 `"/images/share.webp"`. |
+| 전체 경로          | 타입              | 테마 기본값                                                                             | 역할·제한·예시                                                                                                                                                                                     |
+| ------------------ | ----------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `site.title`       | string            | `"My Blog"`                                                                             | 헤더 브랜드, 푸터 저작권, RSS, 구조화 데이터, 일부 페이지·자동 공유 이미지의 사이트 이름입니다. 홈 대제목과는 다르며 통합 빈 문자열 대체는 없습니다. 예시 `"내 블로그"`.                           |
+| `site.description` | string            | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | 전역 설명·기계 읽기 인덱스 출처 중 하나입니다. 홈은 messages.siteDescription이 우선이며 About·목록은 자체 설명이 있어 모든 페이지를 바꾸지 않습니다. 예시 `"프로젝트, 독서와 일상을 기록합니다."`. |
+| `site.url`         | string            | `"https://example.com"`                                                                 | Astro site, canonical, RSS, sitemap, 공개 내보내기의 HTTP(S) 절대 주소입니다. 글 URL은 안 됩니다. 도메인 구매·DNS·인증서·게시를 수행하지 않습니다. 예시 `"https://blog.example.com"`.              |
+| `site.author`      | string            | `"Your Name"`                                                                           | 기본 작성자·구조화 데이터입니다. 글 author가 덮어쓸 수 있습니다. 저작권은 site.title이며 About·메일도 자동 변경되지 않습니다. 예시 `"민수"`.                                                       |
+| `site.tagline`     | string            | `""`                                                                                    | 푸터 추가 문구이며 trim 후 비면 숨깁니다. 옛 기본 Built with Astro.도 크레딧 중복 방지로 숨깁니다. 예시 `"호기심을 품고 꾸준히 만듭니다."`.                                                        |
+| `site.ogImage`     | string，생략 가능 | `""`                                                                                    | 페이지·글 우선 이미지가 없을 때 전역 공유 이미지입니다. 공백은 내장 이미지를 쓰며 로컬 public·HTTPS를 지원합니다. 홈 아바타·글 표지 일괄 교체는 아닙니다. 예시 `"/images/share.webp"`.             |
 
-site.title은 전역 이름, `i18n.locales.<语言>.site.homeTitle`은 해당 언어 홈 대제목입니다. 후자는 비어 있지 않은 언어 대체값을 찾고 최종적으로 사이트 이름을 씁니다. [홈 제목](/ko/blog/config-home/#home-title)을 참고하세요. messages.siteTitle은 현재 표준 정체성·대제목에 사용하지 않습니다.
+site.title은 전역 이름, `i18n.locales.<locale>.site.homeTitle`은 해당 언어 홈 대제목입니다. 후자는 비어 있지 않은 언어 대체값을 찾고 최종적으로 사이트 이름을 씁니다. [홈 제목](/ko/blog/config-home/#home-title)을 참고하세요. messages.siteTitle은 현재 표준 정체성·대제목에 사용하지 않습니다.
 
-site.description도 보이는 홈 소개가 아닙니다. 소개는 `i18n.locales.<语言>.site.hero`, 메타 설명에는 messages.siteDescription도 있습니다. [홈 사전](/ko/blog/config-home/#site-fallbacks)을 참고하세요. 정체성을 바꿔도 이미 쓴 About을 자동 변경하지 않습니다.
+site.description도 보이는 홈 소개가 아닙니다. 소개는 `i18n.locales.<locale>.site.hero`, 메타 설명에는 messages.siteDescription도 있습니다. [홈 사전](/ko/blog/config-home/#site-fallbacks)을 참고하세요. 정체성을 바꿔도 이미 쓴 About을 자동 변경하지 않습니다.
 
 ### 공유 이미지 우선순위와 경로
 
@@ -45,13 +45,13 @@ site.ogImage에는 문자열을 쓰고 Astro image import 객체를 바로 넣�
 
 site.config 필드가 아닌 현재 읽는 환경변수입니다. 모두 string이며 없으면 site 필드를 씁니다. null 병합을 쓰므로 빈 문자열은 미설정이 아닙니다.
 
-| 환경변수                | 우선 덮어쓰기    | 예시                                     |
-| ----------------------- | ---------------- | ---------------------------------------- |
-| PUBLIC_SITE_TITLE       | site.title       | PUBLIC_SITE_TITLE=我的博客               |
-| PUBLIC_SITE_DESCRIPTION | site.description | PUBLIC_SITE_DESCRIPTION=项目与学习笔记   |
-| PUBLIC_SITE_AUTHOR      | site.author      | PUBLIC_SITE_AUTHOR=小林                  |
-| PUBLIC_SITE_TAGLINE     | site.tagline     | PUBLIC_SITE_TAGLINE=保持好奇             |
-| PUBLIC_SITE_URL         | site.url         | PUBLIC_SITE_URL=https://blog.example.com |
+| 환경변수                | 우선 덮어쓰기    | 예시                                         |
+| ----------------------- | ---------------- | -------------------------------------------- |
+| PUBLIC_SITE_TITLE       | site.title       | PUBLIC_SITE_TITLE=내 블로그                  |
+| PUBLIC_SITE_DESCRIPTION | site.description | PUBLIC_SITE_DESCRIPTION=프로젝트와 학습 노트 |
+| PUBLIC_SITE_AUTHOR      | site.author      | PUBLIC_SITE_AUTHOR=민수                      |
+| PUBLIC_SITE_TAGLINE     | site.tagline     | PUBLIC_SITE_TAGLINE=호기심을 잃지 않기       |
+| PUBLIC_SITE_URL         | site.url         | PUBLIC_SITE_URL=https://blog.example.com     |
 
 통합은 dev/build·--mode에 맞는 Vite dotenv 모드로 PUBLIC_SITE_URL을 읽어 Astro site와 공개 주소를 맞춥니다. 기존 프로세스 환경이 dotenv보다 우선합니다. 호스팅의 PUBLIC_SITE_URL을 잊고 site.url만 바꾸지 마세요. 빈 문자열은 문구를 지우거나 URL을 무효화하며 기본값 복구가 아닙니다.
 
@@ -84,17 +84,17 @@ Frontier 제목·이름은 고정이며 하위 항목이 모두 없으면 렌더
 
 ### 헤더·푸터 문구 일곱 개
 
-전체 접두사는 `i18n.locales.<语言>.messages`이며 선택적 string입니다. 내장 언어·대체값을 쓰고 표에는 중국어 간체 / 영어와 중국어 간체 예시만 나열합니다. 해당 영역에서 조건부 적용하며 일반 텍스트이고 Markdown·임의 HTML은 해석하지 않습니다.
+전체 접두사는 `i18n.locales.<locale>.messages`이며 선택적 string입니다. 내장 언어·대체값을 쓰고 표에는 중국어 간체 / 영어 기본값과 한국어 예시를 나열합니다. 해당 영역에서 조건부 적용하며 일반 텍스트이고 Markdown·임의 HTML은 해석하지 않습니다.
 
-| 상대 필드          | 중국어 간체 / 영어 기본값       | 역할·제한                                                        | 중국어 간체 예시 값 |
-| ------------------ | ------------------------------- | ---------------------------------------------------------------- | ------------------- |
-| `nav.home`         | 首页 / Home                     | 홈 메뉴 문구이며 라우트는 안 바꿉니다.                           | `"首页"`            |
-| `nav.blog`         | 博客 / Blog                     | Blog 입구 문구이며 라우트는 안 바꿉니다.                         | `"文章"`            |
-| `nav.about`        | 关于 / About                    | About 메뉴와 본문 창 다시 열기 입구에도 씁니다.                  | `"关于我"`          |
-| `nav.status`       | system: online / system: online | 정적 헤더 상태이며 네트워크·API·서비스 건강을 검사하지 않습니다. | `"系统在线"`        |
-| `nav.statusAria`   | 系统状态 / System status        | 상태 영역 접근 가능한 이름이며 서비스 검사 스위치가 아닙니다.    | `"站点状态"`        |
-| `footer.theme`     | 主题： / Theme by               | 테마 크레딧 접두사이며 Anglefeint 링크 문구·목적지는 고정입니다. | `"主题来自"`        |
-| `footer.builtWith` | 构建工具： / Built with         | Astro 크레딧 접두사이며 링크 문구·목적지는 고정입니다.           | `"使用"`            |
+| 상대 필드          | 중국어 간체 / 영어 기본값       | 역할·제한                                                        | 한국어 예시 값    |
+| ------------------ | ------------------------------- | ---------------------------------------------------------------- | ----------------- |
+| `nav.home`         | 首页 / Home                     | 홈 메뉴 문구이며 라우트는 안 바꿉니다.                           | `"홈"`            |
+| `nav.blog`         | 博客 / Blog                     | Blog 입구 문구이며 라우트는 안 바꿉니다.                         | `"글"`            |
+| `nav.about`        | 关于 / About                    | About 메뉴와 본문 창 다시 열기 입구에도 씁니다.                  | `"내 소개"`       |
+| `nav.status`       | system: online / system: online | 정적 헤더 상태이며 네트워크·API·서비스 건강을 검사하지 않습니다. | `"시스템 온라인"` |
+| `nav.statusAria`   | 系统状态 / System status        | 상태 영역 접근 가능한 이름이며 서비스 검사 스위치가 아닙니다.    | `"사이트 상태"`   |
+| `footer.theme`     | 主题： / Theme by               | 테마 크레딧 접두사이며 Anglefeint 링크 문구·목적지는 고정입니다. | `"테마 제작"`     |
+| `footer.builtWith` | 构建工具： / Built with         | Astro 크레딧 접두사이며 링크 문구·목적지는 고정입니다.           | `"사용 기술"`     |
 
 messages.langLabel은 언어 컨트롤, meta.label은 옵션 이름입니다. [언어 문구](/ko/blog/config-languages/#common-messages)를 참고하세요. Contact·Fragments는 각 모듈 문구이며 messages.nav에 임의 필드를 만들지 마세요.
 
@@ -152,12 +152,12 @@ public/icons/community.svg는 iconSrc: '/icons/community.svg'입니다. 실제 p
 
 ## theme.footer: 링크와 크레딧
 
-| 전체 경로                  | 타입 / 기본값                          | 상태·역할·제한                                                                                                                                        | 예시 값                                                   |
-| -------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| theme.footer.showCredits   | boolean / true                         | 적용: 테마·Astro 링크 크레딧입니다. 저작권·소셜·짧은 문구·기타 링크는 남깁니다. 자동 공유 이미지 크레딧에도 참여하나 사용자 이미지는 바꾸지 않습니다. | false                                                     |
-| theme.footer.links         | { label: string; href: string }[] / [] | 적용: 배열순 사용자 링크이며 전체 대체, 헤더에는 영향 없습니다. 레이아웃이 Decoder를 추가할 수 있어 []도 링크 없음 보장은 아닙니다.                   | [{ label: '项目', href: 'https://example.com/project/' }] |
-| theme.footer.links[].label | string, 필수 / 없음                    | 조건부: 일반 텍스트 가시 이름이며 목표 제목을 자동 취득하지 않습니다.                                                                                 | '项目'                                                    |
-| theme.footer.links[].href  | string, 필수 / 없음                    | 조건부: 원값 주소입니다. 아이콘 같은 경로 검증·base 자동 추가는 없으므로 올바르게 쓰세요. 기본은 현재 탭입니다.                                       | 'https://example.com/project/'                            |
+| 전체 경로                  | 타입 / 기본값                          | 상태·역할·제한                                                                                                                                        | 예시 값                                                       |
+| -------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| theme.footer.showCredits   | boolean / true                         | 적용: 테마·Astro 링크 크레딧입니다. 저작권·소셜·짧은 문구·기타 링크는 남깁니다. 자동 공유 이미지 크레딧에도 참여하나 사용자 이미지는 바꾸지 않습니다. | false                                                         |
+| theme.footer.links         | { label: string; href: string }[] / [] | 적용: 배열순 사용자 링크이며 전체 대체, 헤더에는 영향 없습니다. 레이아웃이 Decoder를 추가할 수 있어 []도 링크 없음 보장은 아닙니다.                   | [{ label: '프로젝트', href: 'https://example.com/project/' }] |
+| theme.footer.links[].label | string, 필수 / 없음                    | 조건부: 일반 텍스트 가시 이름이며 목표 제목을 자동 취득하지 않습니다.                                                                                 | '프로젝트'                                                    |
+| theme.footer.links[].href  | string, 필수 / 없음                    | 조건부: 원값 주소입니다. 아이콘 같은 경로 검증·base 자동 추가는 없으므로 올바르게 쓰세요. 기본은 현재 탭입니다.                                       | 'https://example.com/project/'                                |
 
 사용자 링크 뒤 레이아웃 추가 링크가 나오며 중복 제거는 없습니다. Decoder 활성 시 전체 도구 링크를 messages.decoderPage.fullTool로 추가합니다. 불필요하면 기능 스위치로 끄세요. footer.links를 비워 제거할 수 없습니다.
 
@@ -171,37 +171,37 @@ public/icons/community.svg는 iconSrc: '/icons/community.svg'입니다. 실제 p
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录项目、阅读和生活。',
+  title: '민수의 블로그',
+  description: '프로젝트, 독서와 일상을 기록합니다.',
   url: 'https://blog.example.com',
-  author: '小林',
-  tagline: '保持好奇，持续构建。',
+  author: '민수',
+  tagline: '호기심을 품고 꾸준히 만듭니다.',
 },
 social: {
   links: [
     { label: 'GitHub', href: 'https://github.com/yourname', icon: 'github' },
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: '프로젝트 홈페이지', href: 'https://example.com/project/' },
   ],
 },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目', href: 'https://example.com/project/' }],
+    links: [{ label: '프로젝트', href: 'https://example.com/project/' }],
   },
 },
 ```
 
 계정·도메인·링크를 내 것으로 바꾸세요. 테마는 온라인 검증하지 않습니다. 아이콘·전역 공유 이미지는 먼저 public 파일을 넣고 iconSrc·site.ogImage를 쓰세요.
 
-중국어 간체 내비게이션·크레딧 접두사만 바꾸는 예시입니다.
+한국어 내비게이션·크레딧 접두사만 바꾸는 예시입니다.
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ko: {
       messages: {
-        nav: { home: '首页', blog: '文章', about: '关于我' },
-        footer: { theme: '主题来自', builtWith: '使用' },
+        nav: { home: '홈', blog: '글', about: '내 소개' },
+        footer: { theme: '테마 제작', builtWith: '사용 기술' },
       },
     },
   },
@@ -212,9 +212,9 @@ i18n: {
 
 ## 현재 미사용: messages.siteTitle
 
-전체는 `i18n.locales.<语言>.messages.siteTitle`, 선택적 string이며 중국어 간체·영어 내장 기본 모두 'Angle Feint'입니다. 현재 표준 홈 대제목·공용 사이트 정체성은 읽지 않으므로 “현재 미사용”입니다. siteTitle: '我的博客'도 이름을 바꾸지 않습니다.
+전체는 `i18n.locales.<locale>.messages.siteTitle`, 선택적 string이며 중국어 간체·영어 내장 기본 모두 'Angle Feint'입니다. 현재 표준 홈 대제목·공용 사이트 정체성은 읽지 않으므로 “현재 미사용”입니다. siteTitle: '내 블로그'도 이름을 바꾸지 않습니다.
 
-홈은 `i18n.locales.<语言>.site.homeTitle`, 브랜드는 최상위 site.title입니다. [홈 제목](/ko/blog/config-home/#home-title)과 [사이트 정체성](#identity)을 참고하세요. 이름 변경을 위해 이 보존 필드를 채울 필요는 없습니다.
+홈은 `i18n.locales.<locale>.site.homeTitle`, 브랜드는 최상위 site.title입니다. [홈 제목](/ko/blog/config-home/#home-title)과 [사이트 정체성](#identity)을 참고하세요. 이름 변경을 위해 이 보존 필드를 채울 필요는 없습니다.
 
 <a id="boundaries"></a>
 

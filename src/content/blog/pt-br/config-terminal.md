@@ -4,7 +4,7 @@ title: 'Referência de configuração: avisos do terminal e leitor somente leitu
 subtitle: 'Os dezesseis textos do terminal virtual de About, seus marcadores e limites de configuração.'
 description: 'Tipos, padrões reais, marcadores, fallback de valores vazios e estado dos textos do terminal, incluindo readerTitle sem uso atual.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
 
@@ -16,26 +16,26 @@ Nas páginas padrão, About contém o terminal virtual interativo. Estes campos 
 
 ## Os dezesseis campos de messages.terminal
 
-O prefixo completo é `i18n.locales.<语言>.messages.terminal`. Todos são substituições string opcionais, usando as mensagens internas do idioma atual e seu fallback comum por padrão. A tabela mostra apenas os valores reais em chinês simplificado/inglês; exemplos representam o valor do campo. About precisa estar habilitado, o terminal deve inicializar e o comando ou modo correspondente precisa ser acionado.
+O prefixo completo é `i18n.locales.<locale>.messages.terminal`. Todos são substituições string opcionais, usando as mensagens internas do idioma atual e seu fallback comum por padrão. A tabela mostra apenas os valores reais em chinês simplificado/inglês; exemplos representam o valor do campo. About precisa estar habilitado, o terminal deve inicializar e o comando ou modo correspondente precisa ser acionado.
 
-| Campo           | Padrão em chinês simplificado / inglês                                                                                              | Estado, efeito e limites                                                                                                     | Valor de exemplo                       |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `commandInput`  | 终端命令 / Terminal command                                                                                                         | Condicional: nome acessível da entrada, sem alterar o caminho do prompt nem o título visível.                                | `"终端输入"`                           |
-| `hint`          | 输入 help 开始探索。Tab 补全唯一路径，↑/↓ 查看历史命令。 / Type help to explore. Tab completes a unique path; ↑/↓ recalls commands. | Condicional: aviso inicial de About; a inicialização também executa pwd virtual. Vazio limpa o aviso, sem fechar o terminal. | `"输入 help 查看命令。"`               |
-| `help`          | 只读虚拟文件，不会在服务器执行命令。 / Read-only virtual files. No commands run on a server.                                        | Condicional: explicação exibida por help, seguida da ajuda fixa de comandos. Vazio não oculta toda a lista.                  | `"只读浏览公开文章，不运行系统命令。"` |
-| `syntax`        | 引号或转义未结束。 / Unclosed quote or escape.                                                                                      | Condicional: aspas ou escape não concluídos. Vazio usa a chave syntax.                                                       | `"引号或转义未结束。"`                 |
-| `usage`         | 用法：{value} / Usage: {value}                                                                                                      | Condicional: quantidade incorreta de argumentos; {value} recebe o uso do comando. Vazio usa a chave usage.                   | `"用法：{value}"`                      |
-| `unknown`       | 不支持此命令：{value} / Command not supported: {value}                                                                              | Condicional: comando não suportado; {value} é seu nome. Trocar o texto não adiciona comandos.                                | `"不支持命令：{value}"`                |
-| `notFound`      | 文件或目录不存在：{value} / No such file or directory: {value}                                                                      | Condicional: arquivo/diretório virtual ausente; {value} é o caminho, não um status HTTP remoto.                              | `"未找到：{value}"`                    |
-| `notDirectory`  | 不是目录：{value} / Not a directory: {value}                                                                                        | Condicional: destino de cd não é diretório; {value} é o caminho.                                                             | `"不是目录：{value}"`                  |
-| `isDirectory`   | 这是目录：{value} / Is a directory: {value}                                                                                         | Condicional: destino de cat/vi/vim/view não é arquivo; {value} é o caminho.                                                  | `"目标不是文件：{value}"`              |
-| `failed`        | 无法读取：{value} / Unable to read: {value}                                                                                         | Condicional: falha genérica de leitura; {value} é o caminho, sem anexar detalhes brutos do erro.                             | `"读取失败：{value}"`                  |
-| `tooLarge`      | 文件超过阅读大小限制：{value} / File exceeds the reading limit: {value}                                                             | Condicional: arquivo excede o limite de leitura; {value} é o caminho. Muda só a mensagem, não o limite.                      | `"文件过大：{value}"`                  |
-| `empty`         | （空目录） / (empty directory)                                                                                                      | Condicional: ls sem entradas; não é uma mensagem para conteúdo vazio de um arquivo.                                          | `"目录为空。"`                         |
-| `loading`       | 正在读取… / Loading…                                                                                                                | Condicional: aviso na posição de entrada do Canvas enquanto um comando aguarda. Vazio usa ..., sem mudar o carregamento.     | `"正在读取…"`                          |
-| `readerTitle`   | 文章阅读器 / Article reader                                                                                                         | Sem uso atual: tipo e texto interno permanecem, mas o leitor usa title ou path do arquivo. Não muda seu título.              | `"文章阅读器"`                         |
-| `readerHint`    | 只读 · 输入 :q 并回车退出 · Esc 关闭 / Read only · :q + Enter to exit · Esc to close                                                | Condicional: instrução do leitor somente leitura; vazio usa :q. O texto não altera atalhos nem comandos de saída.            | `"只读 · :q 回车退出 · Esc 关闭"`      |
-| `readerCommand` | 阅读器命令 / Reader command                                                                                                         | Condicional: nome acessível da entrada do leitor; vazio usa o nome da entrada original do terminal.                          | `"阅读器命令输入"`                     |
+| Campo           | Padrão em chinês simplificado / inglês                                                                                              | Estado, efeito e limites                                                                                                     | Valor de exemplo                                                                          |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `commandInput`  | 终端命令 / Terminal command                                                                                                         | Condicional: nome acessível da entrada, sem alterar o caminho do prompt nem o título visível.                                | `"Entrada do terminal"`                                                                   |
+| `hint`          | 输入 help 开始探索。Tab 补全唯一路径，↑/↓ 查看历史命令。 / Type help to explore. Tab completes a unique path; ↑/↓ recalls commands. | Condicional: aviso inicial de About; a inicialização também executa pwd virtual. Vazio limpa o aviso, sem fechar o terminal. | `"Digite help para ver os comandos."`                                                     |
+| `help`          | 只读虚拟文件，不会在服务器执行命令。 / Read-only virtual files. No commands run on a server.                                        | Condicional: explicação exibida por help, seguida da ajuda fixa de comandos. Vazio não oculta toda a lista.                  | `"Consulte artigos públicos em modo de leitura; comandos do sistema não são executados."` |
+| `syntax`        | 引号或转义未结束。 / Unclosed quote or escape.                                                                                      | Condicional: aspas ou escape não concluídos. Vazio usa a chave syntax.                                                       | `"Aspas ou escape não foram fechados."`                                                   |
+| `usage`         | 用法：{value} / Usage: {value}                                                                                                      | Condicional: quantidade incorreta de argumentos; {value} recebe o uso do comando. Vazio usa a chave usage.                   | `"Uso: {value}"`                                                                          |
+| `unknown`       | 不支持此命令：{value} / Command not supported: {value}                                                                              | Condicional: comando não suportado; {value} é seu nome. Trocar o texto não adiciona comandos.                                | `"Comando incompatível: {value}"`                                                         |
+| `notFound`      | 文件或目录不存在：{value} / No such file or directory: {value}                                                                      | Condicional: arquivo/diretório virtual ausente; {value} é o caminho, não um status HTTP remoto.                              | `"Não encontrado: {value}"`                                                               |
+| `notDirectory`  | 不是目录：{value} / Not a directory: {value}                                                                                        | Condicional: destino de cd não é diretório; {value} é o caminho.                                                             | `"Não é um diretório: {value}"`                                                           |
+| `isDirectory`   | 这是目录：{value} / Is a directory: {value}                                                                                         | Condicional: destino de cat/vi/vim/view não é arquivo; {value} é o caminho.                                                  | `"O destino não é um arquivo: {value}"`                                                   |
+| `failed`        | 无法读取：{value} / Unable to read: {value}                                                                                         | Condicional: falha genérica de leitura; {value} é o caminho, sem anexar detalhes brutos do erro.                             | `"Não foi possível ler: {value}"`                                                         |
+| `tooLarge`      | 文件超过阅读大小限制：{value} / File exceeds the reading limit: {value}                                                             | Condicional: arquivo excede o limite de leitura; {value} é o caminho. Muda só a mensagem, não o limite.                      | `"Arquivo muito grande: {value}"`                                                         |
+| `empty`         | （空目录） / (empty directory)                                                                                                      | Condicional: ls sem entradas; não é uma mensagem para conteúdo vazio de um arquivo.                                          | `"O diretório está vazio."`                                                               |
+| `loading`       | 正在读取… / Loading…                                                                                                                | Condicional: aviso na posição de entrada do Canvas enquanto um comando aguarda. Vazio usa ..., sem mudar o carregamento.     | `"Lendo…"`                                                                                |
+| `readerTitle`   | 文章阅读器 / Article reader                                                                                                         | Sem uso atual: tipo e texto interno permanecem, mas o leitor usa title ou path do arquivo. Não muda seu título.              | `"Leitor de artigos"`                                                                     |
+| `readerHint`    | 只读 · 输入 :q 并回车退出 · Esc 关闭 / Read only · :q + Enter to exit · Esc to close                                                | Condicional: instrução do leitor somente leitura; vazio usa :q. O texto não altera atalhos nem comandos de saída.            | `"Somente leitura · :q e Enter para sair · Esc para fechar"`                              |
+| `readerCommand` | 阅读器命令 / Reader command                                                                                                         | Condicional: nome acessível da entrada do leitor; vazio usa o nome da entrada original do terminal.                          | `"Entrada de comandos do leitor"`                                                         |
 
 <a id="placeholders"></a>
 
@@ -49,25 +49,25 @@ readerTitle não é usado atualmente. Mesmo com uma string padrão no pacote de 
 
 <a id="example"></a>
 
-## Exemplo mesclável em chinês simplificado
+## Exemplo mesclável em português brasileiro
 
-Mescle no defineThemeConfig({...}) existente em src/site.config.ts. Preserve outras opções e não crie outro i18n. Alterar apenas chinês não muda os demais idiomas; veja [fallback de idiomas](/pt-br/blog/config-languages/#fallback).
+Mescle no defineThemeConfig({...}) existente em src/site.config.ts. Preserve outras opções e não crie outro i18n. Alterar apenas português brasileiro não muda os demais idiomas; veja [fallback de idiomas](/pt-br/blog/config-languages/#fallback).
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       messages: {
         terminal: {
-          commandInput: '终端输入',
-          hint: '输入 help 查看命令。',
-          help: '只读浏览公开文章，不运行系统命令。',
-          usage: '用法：{value}',
-          notFound: '未找到：{value}',
-          failed: '读取失败：{value}',
-          tooLarge: '文件过大：{value}',
-          readerHint: '只读 · :q 回车退出 · Esc 关闭',
-          readerCommand: '阅读器命令输入',
+          commandInput: 'Entrada do terminal',
+          hint: 'Digite help para ver os comandos.',
+          help: 'Consulte artigos públicos em modo de leitura; comandos do sistema não são executados.',
+          usage: 'Uso: {value}',
+          notFound: 'Não encontrado: {value}',
+          failed: 'Não foi possível ler: {value}',
+          tooLarge: 'Arquivo muito grande: {value}',
+          readerHint: 'Somente leitura · :q e Enter para sair · Esc para fechar',
+          readerCommand: 'Entrada de comandos do leitor',
         },
       },
     },
@@ -79,12 +79,12 @@ i18n: {
 
 ## Que outras configurações o terminal usa?
 
-| Configuração                            | Efeito no terminal                                                                                                        | Referência principal                                                   |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| theme.enableAboutPage                   | boolean, padrão true; desligar remove About padrão e, portanto, seu terminal.                                             | [Opção About](/pt-br/blog/config-about/#page-enabled)                  |
-| `i18n.locales.<语言>.about.scriptsPath` | string, padrão /root/bash/scripts; prefixo virtual e diretório inicial, não um caminho de disco do servidor.              | [Ferramentas About](/pt-br/blog/config-about/#tool-fields)             |
-| `i18n.locales.<语言>.about.sections`    | A apresentação pública participa do about.md virtual; não são mensagens de erro do terminal.                              | [Corpo de About](/pt-br/blog/config-about/#body-fields)                |
-| Artigos do idioma atual                 | Entram automaticamente no diretório virtual; JSON de artigo é lido sob demanda, sem registrar cada artigo em site.config. | [Escrever artigos](/pt-br/blog/starter-guide-2-languages-and-routing/) |
+| Configuração                              | Efeito no terminal                                                                                                        | Referência principal                                                   |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| theme.enableAboutPage                     | boolean, padrão true; desligar remove About padrão e, portanto, seu terminal.                                             | [Opção About](/pt-br/blog/config-about/#page-enabled)                  |
+| `i18n.locales.<locale>.about.scriptsPath` | string, padrão /root/bash/scripts; prefixo virtual e diretório inicial, não um caminho de disco do servidor.              | [Ferramentas About](/pt-br/blog/config-about/#tool-fields)             |
+| `i18n.locales.<locale>.about.sections`    | A apresentação pública participa do about.md virtual; não são mensagens de erro do terminal.                              | [Corpo de About](/pt-br/blog/config-about/#body-fields)                |
+| Artigos do idioma atual                   | Entram automaticamente no diretório virtual; JSON de artigo é lido sob demanda, sem registrar cada artigo em site.config. | [Escrever artigos](/pt-br/blog/starter-guide-2-languages-and-routing/) |
 
 sidebar.allScripts e modals.allScripts.title de About alteram só a entrada da ferramenta e o popup de diretório, sem renomear comandos. effects.backgroundLines não substitui o aviso inicial na sessão interativa atual; seu uso de fallback está em [efeitos de About](/pt-br/blog/config-about/#effect-fields).
 

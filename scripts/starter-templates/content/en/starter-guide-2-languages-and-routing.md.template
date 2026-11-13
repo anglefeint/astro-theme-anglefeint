@@ -24,9 +24,9 @@ npm run new-post -- my-first-post
 
 If you ran this in the first tutorial, open the existing file and continue writing. Existing files are skipped, not overwritten.
 
-Without `--locales` or `ANGLEFEINT_LOCALES`, the command creates `src/content/blog/<语言代码>/my-first-post.md` for every enabled language. The initial configuration enables nine languages and therefore creates nine skeletons; changed language switches determine the current selection. It does not translate the body.
+Without `--locales` or `ANGLEFEINT_LOCALES`, the command creates `src/content/blog/<locale>/my-first-post.md` for every enabled language. The initial configuration enables nine languages and therefore creates nine skeletons; changed language switches determine the current selection. It does not translate the body.
 
-Choose the language file you want to edit. Its address is `/<语言代码>/blog/my-first-post/`, and its list is `/<语言代码>/blog/`. For example, English uses `/en/blog/my-first-post/` and Chinese `/zh/blog/my-first-post/`, provided the corresponding language is enabled. No manual route is needed.
+Choose the language file you want to edit. Its address is `/<locale>/blog/my-first-post/`, and its list is `/<locale>/blog/`. For example, English uses `/en/blog/my-first-post/` and Chinese `/zh/blog/my-first-post/`, provided the corresponding language is enabled. No manual route is needed.
 
 `my-first-post` is the post slug. Use lowercase letters, numbers and hyphens, such as `learning-astro-1`; spaces, underscores and `/` are invalid. Renaming the file changes its URL without automatically redirecting the old address.
 
@@ -37,10 +37,10 @@ The command supplies a title, description, current UTC date and placeholder body
 These are optional alternatives to the default command. Select zh for Chinese only, or en,zh for English and Chinese. You do not need to run every example:
 
 ```bash
-# 只创建中文
+# Create Chinese only
 npm run new-post -- my-first-post --locales zh
 
-# 创建英文和中文
+# Create English and Chinese
 npm run new-post -- my-first-post --locales en,zh
 ```
 
@@ -54,24 +54,24 @@ Open the generated file. YAML frontmatter is the section between the first two `
 
 ```md
 ---
-title: '我的第一篇文章'
-description: '记录我用 Anglefeint 搭建博客的过程。'
+title: 'My first post'
+description: 'How I set up my blog with Anglefeint.'
 pubDate: '2026-11-13'
-tags: ['astro', '笔记']
+tags: ['astro', 'notes']
 ---
 
-这是我的第一篇文章。我准备在这里记录学习过程和遇到的问题。
+This is my first post. I will write about what I learn and the problems I encounter.
 
-## 为什么开始写博客
+## Why I started this blog
 
-写下自己的想法，也给以后的自己留下线索。
+Write down ideas and leave useful clues for my future self.
 
-### 先从一个小问题开始
+### Start with a small problem
 
-今天先记录安装和发布过程。
+Today I will document installation and deployment.
 ```
 
-Replace the date with the actual publication date. `title`, `description` and `pubDate` are required; `tags` is optional. The page already displays the title, so the body usually starts at `##` instead of repeating `# 我的第一篇文章`.
+Replace the date with the actual publication date. `title`, `description` and `pubDate` are required; `tags` is optional. The page already displays the title, so the body usually starts at `##` instead of repeating `# My first post`.
 
 - `title` supplies the article title, list title and associated metadata.
 - `description` supplies the introduction and page metadata. Without an explicit `context`, it also appears as the context line below the title.
@@ -87,14 +87,14 @@ Use quoted `YYYY-MM-DD` dates. For an exact time, use ISO with a timezone, such 
 Leave an empty line between paragraphs. Common Markdown syntax includes:
 
 ```md
-这是一段正文，可以使用 **加粗**、_强调_ 和 `行内代码`。
+A paragraph can include **bold text**, _emphasis_ and `inline code`.
 
-- 第一个要点
-- 第二个要点
+- First point
+- Second point
 
-[链接文字](https://example.com/)
+[Link text](https://example.com/)
 
-> 这是一段引用。
+> This is a quotation.
 ```
 
 Using `##` and `###` creates a table of contents automatically. It appears to the right on wide screens and before the body on narrow screens. Without level-two or level-three headings, it is hidden. Deeper headings may appear in the body but are not included in this contents list.
@@ -109,7 +109,7 @@ Omitting `toc` inherits `theme.toc.enabled` from `src/site.config.ts`, which def
 
 ### Organize posts with tags
 
-Set `tags: ['astro', '笔记']` in frontmatter to generate tag links and the current language's tag archive without manual routes. For the enabled Chinese language, visit `/zh/tags/`.
+Set `tags: ['astro', 'notes']` in frontmatter to generate tag links and the current language's tag archive without manual routes. For the enabled Chinese language, visit `/zh/tags/`.
 
 Tags are case-sensitive: `Astro` and `astro` are different. Outer whitespace is trimmed, and duplicates within one post count once. Use generated links: Chinese and special characters have stable encoding, so do not guess paths. Renaming a tag changes its link.
 
@@ -131,7 +131,7 @@ Article code blocks receive a copy button automatically, preserving line breaks 
 Mathematics is enabled by default without another plugin installation. Use `$...$` inline, or put a display formula between separate `$$` lines:
 
 ```md
-保存量为 $C_{saved}$。
+The saved amount is $C_{saved}$.
 
 $$
 \frac{a}{b} = x_1 + x_2
@@ -153,9 +153,9 @@ Use `.md` for ordinary writing. Use `.mdx` when importing and rendering componen
 Body images can sit beside the article or in `public/images/`. Add the actual file before referencing it:
 
 ```md
-![照片内容的描述](./photo.jpg)
+![Describe what is in the photo](./photo.jpg)
 
-![照片内容的描述](/images/photo.jpg)
+![Describe what is in the photo](/images/photo.jpg)
 ```
 
 The first path is relative to the article file. The second maps to `public/images/photo.jpg`, omitting `public` from the URL. The description becomes alternative text.
@@ -164,11 +164,13 @@ To change the cover, place `cover.jpg` beside the article and set `heroImage: ./
 
 Ordinary body images open a larger preview when clicked or focused and activated with Enter/Space. Close it with Esc, the close button or backdrop. Covers and images inside links/buttons are excluded. The preview uses the image source already selected by the browser; it does not fetch a higher-resolution original or offer gallery navigation.
 
-After adding or replacing a cover, local dev or doctor prepares responsive files. Commit the original and all of `src/assets/blog/covers/`, including manifest.json and generated/. Deployment builds and CI doctor only validate these files, failing for missing, stale or modified output rather than encoding on the server. Persistent derivatives cover article covers and fragment-local images; ordinary article body images retain the existing Markdown/MDX image pipeline.
+Normal dev, build and doctor runs, including CI, reuse correct responsive files and automatically prepare missing, stale or modified derivatives. Commit the original images and content. Committing `src/assets/blog/covers/manifest.json` and `generated/` allows reuse across checkouts, but these generated files are not a prerequisite for automatic preparation. Missing originals, unsafe paths and invalid image inputs still fail validation.
+
+**Version note:** Automatic image preparation during normal builds and CI doctor runs requires 0.36.2 or later. With 0.36.1, first run dev or `prepare-covers` to prepare derivatives. Explicit `prepare-covers --check` and configuration sync remain read-only. Persistent derivatives cover article covers and fragment-local images; ordinary article body images retain the existing Markdown/MDX image pipeline.
 
 ## 6. Preview locally and prepare to publish
 
-Run `npm run dev` and open `/<语言代码>/blog/my-first-post/`, such as English `/en/blog/my-first-post/` or Chinese `/zh/blog/my-first-post/`, below the printed terminal address. Check the title, date, body, contents, tags and images. For new translations, check language-switch destinations too.
+Run `npm run dev` and open `/<locale>/blog/my-first-post/`, such as English `/en/blog/my-first-post/` or Chinese `/zh/blog/my-first-post/`, below the printed terminal address. Check the title, date, body, contents, tags and images. For new translations, check language-switch destinations too.
 
 Stop dev before publication, then run:
 
@@ -214,7 +216,7 @@ Posts without `ogImage` receive a 1200×630 sharing image containing title, auth
 | `aiModel`           | Author-supplied model label in the title status area and OUTPUT.   |
 | `aiMode`, `aiState` | Author-supplied mode and state text in the title status area.      |
 
-Without overrides, counts are estimated from the body source: Han characters, kana and Hangul count individually; other text is mainly split on whitespace. Default tokens are `round(max(自动字词数, 1) × 1.3)`, an estimate rather than a real model tokenizer. Overriding `wordCount` does not recalculate tokens; set both separately if necessary.
+Without overrides, counts are estimated from the body source: Han characters, kana and Hangul count individually; other text is mainly split on whitespace. Default tokens are `round(max(automaticWordCount, 1) × 1.3)`, an estimate rather than a real model tokenizer. Overriding `wordCount` does not recalculate tokens; set both separately if necessary.
 
 Some Markdown is stripped, but this is not a complete count of visible prose: formulas and MDX source can affect it. Values of 1,000 or more display with one decimal and `k`. Model, mode and state only display text; they do not connect AI services, verify authorship or execute tasks.
 

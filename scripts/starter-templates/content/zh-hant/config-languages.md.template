@@ -4,7 +4,7 @@ title: '設定字典：語言啟停、地址、介面翻譯和回退'
 subtitle: '語言登記、預設語言、頁面地址與不同內容的回退規則。'
 description: '以實際程式碼說明 i18n 欄位的型別、預設值、啟停規則、首頁前綴、介面翻譯、回退鏈及內容和 SEO 邊界。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
 
@@ -16,11 +16,11 @@ heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 
 ## i18n.defaultLocale 與 i18n.locales
 
-| 完整路徑              | 型別 / 主題預設值                                             | 狀態、作用與限制                                                                                                                                              | 範例                                                       |
-| --------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| i18n.defaultLocale    | string / 'en'                                                 | 生效：决定根首页采用或跳转到的语言、必要回退和默认语言链接。空字符串在归一化时回退 en；不会自动从浏览器语言判断。默认语言始终启用，不能靠 enabled: false 关闭 | i18n: { defaultLocale: 'zh' }                              |
-| i18n.locales          | Record<string, LocaleConfig> / 下表九種內建語言               | 生效：鍵是實際語言代碼，決定目錄和網址；物件遞歸合併，省略某內建語言不會刪除它。新增語言沒有自動翻譯包，需要補自己的文字與內容                                | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
-| `i18n.locales.<语言>` | LocaleConfig，可部分覆寫 / 內建語言已有設定，新代碼無原有設定 | 生效：包含 meta、site、messages、about、aiReadableContent。省略欄位使用合併及回退規則；不能用空物件清除已有語言                                               | locales: { zh: { meta: { enabled: false } } }              |
+| 完整路徑                | 型別 / 主題預設值                                             | 狀態、作用與限制                                                                                                                                            | 範例                                                       |
+| ----------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| i18n.defaultLocale      | string / 'en'                                                 | 生效：決定根首頁採用或跳轉到的語言、必要回退和預設語言連結。空字串在正規化時回退 en；不會自動從瀏覽器語言判斷。預設語言始終啟用，不能靠 enabled: false 關閉 | i18n: { defaultLocale: 'zh' }                              |
+| i18n.locales            | Record<string, LocaleConfig> / 下表九種內建語言               | 生效：鍵是實際語言代碼，決定目錄和網址；物件遞歸合併，省略某內建語言不會刪除它。新增語言沒有自動翻譯包，需要補自己的文字與內容                              | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
+| `i18n.locales.<locale>` | LocaleConfig，可部分覆寫 / 內建語言已有設定，新代碼無原有設定 | 生效：包含 meta、site、messages、about、aiReadableContent。省略欄位使用合併及回退規則；不能用空物件清除已有語言                                             | locales: { zh: { meta: { enabled: false } } }              |
 
 語言鍵不等於選單名稱或 hreflang。實作不會自動把 EN 轉成 en，或將 zh-CN 目錄變成 zh；建議目錄、設定和生成指令統一使用小寫代碼，例如 zh、en、pt-br、zh-hant。內容專案產生工具接受兩至三位字母、可帶一個連字號分段的代碼；執行時語言正規化不是完整的語言代碼或路徑合法性驗證器，不要填寫路徑或任意標點。
 
@@ -44,7 +44,7 @@ heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 
 <a id="meta"></a>
 
-## `i18n.locales.<语言>.meta`：五個中繼資料欄位
+## `i18n.locales.<locale>.meta`：五個中繼資料欄位
 
 以下相對欄位均位於 meta 內；對內建語言的具體預設值見上表。新增語言省略欄位時的正規化規則列在下表。設定輸入支援部分覆寫，型別說明不表示所有欄位每次都必須重寫。
 
@@ -78,21 +78,21 @@ hreflang 和 ogLocale 是不同欄位，不要用它們替代語言鍵。填寫�
 | /en/about/        | 英文 About（功能開啟時） | 英文 About（功能開啟時） |
 | /zh/              | 中文首頁（語言開啟時）   | 中文首頁（語言開啟時）   |
 
-根首頁與語言首頁之間使用 meta refresh 的靜態跳轉頁，帶 canonical 和 noindex；不是執行時根據訪客位置選擇語言，也不是主題設定的一條伺服器 301。內部語言路徑工具通常仍生成 `/<代码>/.../`；是否轉到根首頁由具體入口處理。
+根首頁與語言首頁之間使用 meta refresh 的靜態跳轉頁，帶 canonical 和 noindex；不是執行時根據訪客位置選擇語言，也不是主題設定的一條伺服器 301。內部語言路徑工具通常仍生成 `/<locale>/.../`；是否轉到根首頁由具體入口處理。
 
 <a id="overrides"></a>
 
 ## site、messages、about：覆寫放在哪裡？
 
-完整前綴為 `i18n.locales.<语言>`。物件欄位遞歸合併；陣列整體替換；undefined 不覆寫原值。空字串、false 和空陣列保留，由各欄位定義含義。
+完整前綴為 `i18n.locales.<locale>`。物件欄位遞歸合併；陣列整體替換；undefined 不覆寫原值。空字串、false 和空陣列保留，由各欄位定義含義。
 
 | 相對路徑       | 型別 / 預設值                                                            | 作用、限制與範例                                                                                                              | 逐欄位說明                                              |
 | -------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| site           | { homeTitle?: string; hero?: string } / 內建各語言的首頁設定             | 只承載語言相關首頁內容，不取代頂層 site 身分設定；如 site: { homeTitle: '我的博客' }                                          | [首頁字典](/zh-hant/blog/config-home/#site-fallbacks)   |
+| site           | { homeTitle?: string; hero?: string } / 內建各語言的首頁設定             | 只承載語言相關首頁內容，不取代頂層 site 身分設定；如 site: { homeTitle: '我的部落格' }                                        | [首頁字典](/zh-hant/blog/config-home/#site-fallbacks)   |
 | site.homeTitle | string，可省略 / 未設定                                                  | 按目前語言和直接回退語言依次找 trim 後非空標題，最終用全站 SITE_TITLE；例值 '我的博客'。空字串不能阻止繼續回退                | [首頁大標題](/zh-hant/blog/config-home/#home-title)     |
-| site.hero      | string，可省略 / 內建各語言介紹；新語言未設定                            | 按回退鏈找第一個已定義值；空字串主動清空，不繼續查回退語言；未找到時首頁還有 messages.home.hero 備用。例值 '记录项目与生活。' | [首頁介紹](/zh-hant/blog/config-home/#home-hero)        |
-| messages       | DeepPartial<Messages> / 語言設定覆寫項通常未設定，執行時疊加內建語言文字 | 用於按鈕、狀態、中繼描述等；如 messages: { nav: { home: '主页' } }。只改文字，不新增對應功能或翻譯內容                        | [字典總入口](/zh-hant/blog/config-reference/)           |
-| about          | DeepPartial<AboutConfig> / 內建各語言 About 設定                         | 從基礎 About 開始按鏈遞歸合併；如 about: { sections: { who: '我是一名开发者。' } }。不從 Markdown 檔案自動讀取內文            | [About 字典](/zh-hant/blog/config-about/#about-content) |
+| site.hero      | string，可省略 / 內建各語言介紹；新語言未設定                            | 按回退鏈找第一個已定義值；空字串主動清空，不繼續查回退語言；未找到時首頁還有 messages.home.hero 備用。例值 '記錄專案與生活。' | [首頁介紹](/zh-hant/blog/config-home/#home-hero)        |
+| messages       | DeepPartial<Messages> / 語言設定覆寫項通常未設定，執行時疊加內建語言文字 | 用於按鈕、狀態、中繼描述等；如 messages: { nav: { home: '首頁' } }。只改文字，不新增對應功能或翻譯內容                        | [字典總入口](/zh-hant/blog/config-reference/)           |
+| about          | DeepPartial<AboutConfig> / 內建各語言 About 設定                         | 從基礎 About 開始按鏈遞歸合併；如 about: { sections: { who: '我是一名開發者。' } }。不從 Markdown 檔案自動讀取內文            | [About 字典](/zh-hant/blog/config-about/#about-content) |
 
 內建各語言 hero 的精確預設值如下；預設設定不提供 homeTitle：
 
@@ -102,7 +102,7 @@ hreflang 和 ogLocale 是不同欄位，不要用它們替代語言鍵。填寫�
 | `ja`      | このサイトの紹介文と、読者がどんな記事を期待できるかを書いてください。                     |
 | `ko`      | 사이트 소개와 방문자가 어떤 글을 기대할 수 있는지 간단히 작성하세요.                       |
 | `es`      | Escribe una breve presentación del sitio y qué tipo de contenido encontrarán tus lectores. |
-| `zh`      | 在這裡寫一段網站簡介，並告訴讀者你將發佈什麼型別的內容。                                   |
+| `zh`      | 在这里写一段站点简介，并告诉读者你将发布什么类型的内容。                                   |
 | `pt-br`   | Apresente seu site e conte o que os leitores encontrarão nos seus artigos.                 |
 | `de`      | Stelle deine Website kurz vor und beschreibe, was Leser in deinen Beiträgen erwartet.      |
 | `ru`      | Кратко представьте свой сайт и расскажите, какие статьи здесь найдут читатели.             |
@@ -119,7 +119,7 @@ hreflang 和 ogLocale 是不同欄位，不要用它們替代語言鍵。填寫�
 3. 非預設語言如果沒包含預設語言，末尾追加。若已明確包含，則保留它在陣列中的原位置，不會再挪到最後。
 4. 一般 messages 從內建英文起步，按有效鏈的倒序，為每個語言先合併內建包，再合併該語言個人覆寫。因此目前語言的內建翻譯也可能覆寫回退語言的個人文字。
 
-例如 en 的 nav.home 改成 'Start'，不会让内置 zh 的“首页”自动变成 'Start'。要改中文，直接覆寫 zh.messages.nav.home。新增沒有內建包的語言，則可從回退語言補介面文字，但不會自動得到完整的該語言譯文。
+例如 en 的 nav.home 改成 'Start'，不會讓內建 zh 的簡體中文預設「首页」自動變成 'Start'。要改中文，直接覆寫 zh.messages.nav.home。新增沒有內建包的語言，則可從回退語言補介面文字，但不會自動得到完整的該語言譯文。
 
 不同內容不共用同一種回退算法：
 
@@ -139,12 +139,12 @@ hreflang 和 ogLocale 是不同欄位，不要用它們替代語言鍵。填寫�
 
 ## 語言選擇器和共用文字
 
-這些是 `i18n.locales.<语言>.messages` 下的欄位，均為 string，可省略，按一般文字鏈解析。在地化 siteTitle 目前不改變標準網站身分，其型別、預設值與未使用狀態統一見[網站字典](/zh-hant/blog/config-site-chrome/#legacy-site-title)。
+這些是 `i18n.locales.<locale>.messages` 下的欄位，均為 string，可省略，按一般文字鏈解析。在地化 siteTitle 目前不改變標準網站身分，其型別、預設值與未使用狀態統一見[網站字典](/zh-hant/blog/config-site-chrome/#legacy-site-title)。
 
 | 相對欄位        | 簡體中文 / 英文預設值                                                                            | 狀態、作用與限制                                                                    | 範例值                 |
 | --------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- | ---------------------- |
-| langLabel       | 语言 / Language                                                                                  | 生效：公共語言選擇器的提示和無障礙文字，不是每種語言的選項名。選項名使用 meta.label | '选择语言'             |
-| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | 條件生效：首頁中繼描述，不是可見介紹或所有頁面通用描述；其余頁有自己的描述來源      | '我的项目与学习笔记。' |
+| langLabel       | 语言 / Language                                                                                  | 生效：公共語言選擇器的提示和無障礙文字，不是每種語言的選項名。選項名使用 meta.label | '選擇語言'             |
+| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | 條件生效：首頁中繼描述，不是可見介紹或所有頁面通用描述；其余頁有自己的描述來源      | '我的專案與學習筆記。' |
 
 功能模組內部文字請進入已有字典；沒有消費位置的欄位不會因為出現在型別裡就生效。評論 iframe 的語言還受 theme.comments.lang 影響，預設固定英文；詳見[評論字典](/zh-hant/blog/config-comments/#appearance)。
 
@@ -152,7 +152,7 @@ hreflang 和 ogLocale 是不同欄位，不要用它們替代語言鍵。填寫�
 
 ## aiReadableContent：語言級公開補充的特殊回退
 
-語言級補充位於 `i18n.locales.<语言>.aiReadableContent`，只按 notes / links 各自覆寫頂層值，不走 meta.fallback。省略欄位繼承全域值；空 notes 或空 links 陣列主動清空；物件 {} 本身不清空全域內容。
+語言級補充位於 `i18n.locales.<locale>.aiReadableContent`，只按 notes / links 各自覆寫頂層值，不走 meta.fallback。省略欄位繼承全域值；空 notes 或空 links 陣列主動清空；物件 {} 本身不清空全域內容。
 
 欄位型別、預設值、驗證和完整範例統一見[AI 閱讀補充字典](/zh-hant/blog/config-analytics-ai/#locale-supplement)。它不是頁面翻譯或 About 內文；所有補充均公開。連結相對網站發佈根解析，單個 / 開頭會跳過部署 base，具體對照見[連結解析說明](/zh-hant/blog/config-analytics-ai/#supplement)。
 

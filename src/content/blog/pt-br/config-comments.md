@@ -4,7 +4,7 @@ title: 'Referência de configuração: Giscus e discussões compartilhadas'
 subtitle: 'Comentários de publicações, traduções e fragments'
 description: 'Conexão, mapeamento, padrões, limites e compartilhamento de discussões Giscus entre idiomas.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -185,16 +185,16 @@ Fragments com o mesmo ID compartilham `fragment/<ID>` entre idiomas, por regra s
 
 ## Textos de comentários na própria página
 
-Campos string opcionais em `i18n.locales.<语言>.messages`, com textos integrados do idioma atual e fallback. Coloque os exemplos no objeto correspondente. Alteram só os rótulos externos, não os botões dentro do iframe Giscus. A tabela mostra padrões em chinês simplificado / inglês.
+Campos string opcionais em `i18n.locales.<locale>.messages`, com textos integrados do idioma atual e fallback. Coloque os exemplos no objeto correspondente. Alteram só os rótulos externos, não os botões dentro do iframe Giscus. A tabela mostra padrões em chinês simplificado / inglês.
 
-| Campo relativo       | Padrão em chinês simplificado / inglês                                                                                    | Estado, efeito e limites                                                                     | Exemplo              |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------- |
-| `blog.comments`      | 评论 / Comments                                                                                                           | Condicional: nome acessível da área de comentários da publicação; não é outro título visível | `"文章讨论"`         |
-| `fragments.comments` | 评论 / Comments                                                                                                           | Condicional: botão de comentários e título da janela de fragments                            | `"参与讨论"`         |
-| `fragments.close`    | 关闭 / Close                                                                                                              | Condicional: fechar janela; também nome acessível para fechar fragments na página inicial    | `"关闭窗口"`         |
-| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | Condicional: carregamento de comentários dos fragments                                       | `"正在加载讨论…"`    |
-| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | Condicional: falha de comentários dos fragments                                              | `"讨论暂时不可用。"` |
-| `fragments.retry`    | 重试 / Retry                                                                                                              | Condicional: botão de nova tentativa nos fragments                                           | `"重新加载"`         |
+| Campo relativo       | Padrão em chinês simplificado / inglês                                                                                    | Estado, efeito e limites                                                                     | Exemplo                                            |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `blog.comments`      | 评论 / Comments                                                                                                           | Condicional: nome acessível da área de comentários da publicação; não é outro título visível | `"Discussão do artigo"`                            |
+| `fragments.comments` | 评论 / Comments                                                                                                           | Condicional: botão de comentários e título da janela de fragments                            | `"Participar da discussão"`                        |
+| `fragments.close`    | 关闭 / Close                                                                                                              | Condicional: fechar janela; também nome acessível para fechar fragments na página inicial    | `"Fechar janela"`                                  |
+| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | Condicional: carregamento de comentários dos fragments                                       | `"Carregando discussão…"`                          |
+| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | Condicional: falha de comentários dos fragments                                              | `"A discussão está temporariamente indisponível."` |
+| `fragments.retry`    | 重试 / Retry                                                                                                              | Condicional: botão de nova tentativa nos fragments                                           | `"Recarregar"`                                     |
 
 Veja outros textos no [dicionário de publicações](/pt-br/blog/config-article/#article-messages) e no [dicionário Fragments](/pt-br/blog/config-fragments/#fragment-messages). Esses campos não definem o idioma interno do iframe, controlado por lang acima.
 

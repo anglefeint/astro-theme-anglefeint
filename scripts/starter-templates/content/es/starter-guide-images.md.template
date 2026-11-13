@@ -50,13 +50,13 @@ Conserva el original. Los WebP generados son derivados de visualización, no cop
 En el Markdown, inserta:
 
 ```md
-![这张照片里有什么](./photo.jpg)
+![Descripción de lo que aparece en la foto](./photo.jpg)
 ```
 
 `./photo.jpg` es relativo al archivo de entrada; en el ejemplo de directorios corresponde al archivo vecino. Para un archivo público, usa:
 
 ```md
-![这张照片里有什么](/images/shared-photo.jpg)
+![Descripción de lo que aparece en la foto](/images/shared-photo.jpg)
 ```
 
 Corresponde a `public/images/shared-photo.jpg`, sin `public` en la URL. El texto entre corchetes es alternativo: describe la imagen en vez de poner solo «imagen».
@@ -94,15 +94,15 @@ Con `theme.fragments.enabled: false`, dev, build y prepare-covers/doctor omiten 
 Pon el original en `public/images/fragments/my-photo.png` y escribe esto en el cuerpo de un fragment existente:
 
 ```md
-![这条碎片的配图说明](/images/fragments/my-photo.png)
+![Descripción de la imagen de esta nota](/images/fragments/my-photo.png)
 ```
 
-También puedes poner `photo.png` junto al fragment y usar `![配图说明](./photo.png)`. Añadir un archivo a public no inicia un escaneo universal de imágenes: debe estar referenciado por un fragment real.
+También puedes poner `photo.png` junto al fragment y usar `![Descripción de la imagen](./photo.png)`. Añadir un archivo a public no inicia un escaneo universal de imágenes: debe estar referenciado por un fragment real.
 
 Se admiten imágenes de referencia:
 
 ```md
-![配图说明][photo]
+![Descripción de la imagen][photo]
 
 [photo]: /images/fragments/my-photo.png
 ```
@@ -110,7 +110,7 @@ Se admiten imágenes de referencia:
 Usa HTML para dimensiones manuales:
 
 ```html
-<img src="/images/fragments/my-photo.png" alt="配图说明" width="640" height="360" />
+<img src="/images/fragments/my-photo.png" alt="Descripción de la imagen" width="640" height="360" />
 ```
 
 Estas dimensiones son ejemplos; utiliza la proporción real. Las imágenes locales admitidas reciben width/height ausentes. Se conservan las dimensiones existentes; si solo hay una, se calcula la otra con la proporción de origen. No se corrigen dimensiones existentes incorrectas.
@@ -125,7 +125,7 @@ Tras referenciar por primera vez una imagen o sustituir su original, inicia el d
 npm run dev
 ```
 
-dev prepara archivos ausentes u obsoletos y responde a cambios de originales y referencias pertinentes. `npm run doctor` local también los prepara antes de verificar y compilar. Para prepararlos sin iniciar páginas ni comprobaciones completas, detén dev y ejecuta:
+dev prepara archivos ausentes u obsoletos y responde a cambios de originales y referencias pertinentes. build y doctor, también en CI, usan el mismo preparador y reparan selectivamente los derivados necesarios. Para prepararlos sin iniciar páginas ni comprobaciones completas, detén dev y ejecuta:
 
 ```bash
 npx @anglefeint/astro-theme prepare-covers
@@ -155,9 +155,9 @@ Los archivos preparados se organizan así:
 
 ```text
 src/assets/blog/covers/
-  originals/      # 如果使用这个原图目录
-  manifest.json  # 来源、尺寸、规则与输出哈希
-  generated/     # 持久响应式文件
+  originals/      # si usas este directorio de originales
+  manifest.json  # orígenes, dimensiones, reglas y hashes de salida
+  generated/     # archivos adaptativos persistentes
 ```
 
 Guarda conjuntamente:
@@ -169,7 +169,9 @@ Guarda también los originales de public o junto a entradas, no solo originals/.
 
 Detén dev antes de publicar y ejecuta `npm run doctor` local. Después usa `npm run preview` para revisar la compilación. doctor ya compila: no repitas inmediatamente. El alojamiento sigue usando `npm run build`, salida `dist` y todos sus archivos.
 
-**Las compilaciones de despliegue validan y copian los derivados preparados sin generar los ausentes.** doctor en CI también solo valida. Si faltan, están obsoletos o modificados, falla: prepara localmente, guarda en Git y vuelve a desplegar. Este flujo persistente no depende de que el alojamiento conserve la caché de imágenes Astro.
+**Build y doctor preparan los derivados necesarios, también en CI.** Reutilizan los válidos y regeneran los ausentes, obsoletos o dañados; no necesitan que el alojamiento conserve cachés. Un original inexistente, una ruta que escape del proyecto o una imagen ilegible siguen causando un error. Guarda originales y, para reutilizar los resultados, también manifiesto y derivados.
+
+**Nota de versión:** La preparación automática de imágenes durante build y doctor en CI requiere 0.36.2 o posterior. Con 0.36.1, ejecuta primero dev o `prepare-covers` para preparar los derivados. `prepare-covers --check` y la sincronización de configuración siguen siendo comprobaciones de solo lectura.
 
 Los derivados usados se copian a `_blog-covers/` en la salida. No subas solo HTML ni omitas ese directorio. Los generados antiguos sin uso no se borran automáticamente; revisa referencias antes de limpiar y no elimines originales necesarios.
 

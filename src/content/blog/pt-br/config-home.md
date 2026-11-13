@@ -4,19 +4,19 @@ title: 'Referência de configuração: página inicial'
 subtitle: 'Consulte título, apresentação, recentes, avisos, terminal de telas largas e passagem ao navegar.'
 description: 'Tipos, padrões reais, alcance, limites e exemplos dos campos iniciais, incluindo opções compartilhadas e controles ainda não disponíveis.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 [Voltar ao índice da referência](/pt-br/blog/config-reference/). Este artigo descreve os campos realmente usados na página inicial, sem alterar o tema nem tratar configurações pessoais do demo como padrões.
 
-Substitua `<语言>` por um código habilitado no projeto. Os exemplos usam zh e só alteram chinês simplificado; não mudam inglês nem habilitam idiomas automaticamente. Mescle os trechos no defineThemeConfig existente de `src/site.config.ts` e preserve os demais campos de theme, i18n e site.
+Substitua `<locale>` por um código habilitado no projeto. Os exemplos usam pt-br e só alteram português brasileiro; não mudam inglês nem habilitam idiomas automaticamente. Mescle os trechos no defineThemeConfig existente de `src/site.config.ts` e preserve os demais campos de theme, i18n e site.
 
 ## 1. Título principal, apresentação e metadescrição
 
 <a id="home-title"></a>
 
-### `i18n.locales.<语言>.site.homeTitle`
+### `i18n.locales.<locale>.site.homeTitle`
 
 - **Tipo:** `string` opcional.
 - **Padrão do tema:** não definido. Idiomas internos não têm homeTitle específico; usam o nome global, My Blog por padrão.
@@ -25,7 +25,7 @@ Substitua `<语言>` por um código habilitado no projeto. Os exemplos usam zh e
 
 <a id="home-hero"></a>
 
-### `i18n.locales.<语言>.site.hero`
+### `i18n.locales.<locale>.site.hero`
 
 - **Tipo:** `string` opcional.
 - **Padrão do tema:** cada idioma interno tem sua apresentação. Em chinês simplificado: “在这里写一段站点简介，并告诉读者你将发布什么类型的内容。”; em inglês: “Write a short introduction for your site and what readers can expect from your posts.”. Outros idiomas usam seus valores internos.
@@ -34,7 +34,7 @@ Substitua `<语言>` por um código habilitado no projeto. Os exemplos usam zh e
 
 <a id="home-description"></a>
 
-### `i18n.locales.<语言>.messages.siteDescription`
+### `i18n.locales.<locale>.messages.siteDescription`
 
 - **Tipo:** substituição opcional `string`.
 - **Padrão do tema:** texto interno do idioma atual. Chinês simplificado: “电影感网页界面与 AI 时代工程实践文章。”; inglês: “Cinematic web interfaces and AI-era engineering essays.”.
@@ -46,12 +46,12 @@ Os três campos têm funções distintas e podem ser configurados juntos:
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       site: {
-        homeTitle: '我的数字花园',
-        hero: '记录开发、阅读和生活。',
+        homeTitle: 'Meu jardim digital',
+        hero: 'Anotações sobre desenvolvimento, leituras e vida cotidiana.',
       },
-      messages: { siteDescription: '个人项目与学习笔记。' },
+      messages: { siteDescription: 'Projetos e anotações pessoais.' },
     },
   },
 },
@@ -109,7 +109,7 @@ Desligar as duas primeiras opções remove seus componentes de texto inicial. N�
 
 <a id="home-messages"></a>
 
-Os campos ficam em `i18n.locales.<语言>.messages.home` e são substituições opcionais `string`. Campos comuns seguem o fallback de interface. A tabela lista padrões reais em chinês simplificado e inglês; outros idiomas internos têm seus textos.
+Os campos ficam em `i18n.locales.<locale>.messages.home` e são substituições opcionais `string`. Campos comuns seguem o fallback de interface. A tabela lista padrões reais em chinês simplificado e inglês; outros idiomas internos têm seus textos.
 
 | Campo final do caminho | Padrão em chinês simplificado / inglês                          | Efeito e limites                                                                                                        |
 | ---------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -123,13 +123,13 @@ São condicionais: a região correspondente precisa existir. Strings vazias limp
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       messages: {
         home: {
-          latest: '最近更新',
-          viewAll: '全部文章',
-          noPosts: '这里还没有文章。',
-          openDoor: '打开走廊预览',
+          latest: 'Artigos recentes',
+          viewAll: 'Todos os artigos',
+          noPosts: 'Ainda não há artigos.',
+          openDoor: 'Abrir prévia do corredor',
         },
       },
     },
@@ -139,28 +139,28 @@ i18n: {
 
 <a id="home-transmission"></a>
 
-### `i18n.locales.<语言>.messages.home.transmission`
+### `i18n.locales.<locale>.messages.home.transmission`
 
 - **Tipo:** substituição opcional `string`.
 - **Padrão do tema:** `'Knock, knock.'`, compartilhado sem personalização inclusive pelo chinês.
 - **Efeito:** texto selecionável e rolável no terminal de telas largas.
 - **Estado e limites:** condicional. O terminal aparece a partir de 1440px de largura. A ordem própria é configuração pessoal atual → pessoal inglesa → frase padrão, não a cadeia completa de mensagens. `''` limpa o texto, sem ocultar o terminal ou desligar o corredor.
 
-Por exemplo, para uma mensagem compartilhada pelos idiomas sem substituição própria:
+Por exemplo, para uma mensagem em português brasileiro:
 
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '这里留下一点线索。' } } },
+    'pt-br': { messages: { home: { transmission: 'Deixe uma pequena pista aqui.' } } },
   },
 },
 ```
 
-Preencher o mesmo campo em zh altera apenas chinês. Trocar o texto não consulta sinal de rede real nem muda a fechadura que abre o corredor.
+Preencher o mesmo campo em pt-br altera apenas português brasileiro. Trocar o texto não consulta sinal de rede real nem muda a fechadura que abre o corredor.
 
 <a id="message-hero"></a>
 
-### `i18n.locales.<语言>.messages.home.hero`
+### `i18n.locales.<locale>.messages.home.hero`
 
 - **Tipo:** substituição opcional `string`.
 - **Padrão do tema:** apresentação interna do idioma, com os mesmos valores de site.hero mostrados acima para chinês e inglês.
@@ -170,7 +170,7 @@ Preencher o mesmo campo em zh altera apenas chinês. Trocar o texto não consult
 ```ts
 i18n: {
   locales: {
-    zh: { messages: { home: { hero: '仅在没有可用 site.hero 时使用的介绍。' } } },
+    'pt-br': { messages: { home: { hero: 'Apresentação usada quando site.hero não tem um valor disponível.' } } },
   },
 },
 ```
@@ -200,12 +200,12 @@ Quando desligado, os links navegam diretamente. Essa opção booleana não confi
 
 Estes campos não são exclusivos do início. A tabela explica a relação; suas definições completas ficam nos módulos principais.
 
-| Caminho completo                               | Uso na página inicial                                                                                         | Referência principal                                                         |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `theme.fragments.enabled`                      | Mostra o avatar se há Fragments no idioma atual e também controla a lista completa; no máximo três na prévia. | [Opção Fragments](/pt-br/blog/config-fragments/#enabled)                     |
-| `i18n.locales.<语言>.messages.blog.allPosts`   | Descrição acessível da contagem de recentes e do link do arquivo.                                             | [Textos compartilhados da lista](/pt-br/blog/config-blog-list/#tag-messages) |
-| `i18n.locales.<语言>.messages.fragments.title` | Nome acessível do avatar, sem título ao lado dele.                                                            | [Textos de Fragments](/pt-br/blog/config-fragments/#fragment-messages)       |
-| `i18n.locales.<语言>.messages.fragments.close` | Nome acessível do botão de fechar a prévia, sem mudar o ícone.                                                | [Textos de Fragments](/pt-br/blog/config-fragments/#fragment-messages)       |
+| Caminho completo                                 | Uso na página inicial                                                                                         | Referência principal                                                         |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `theme.fragments.enabled`                        | Mostra o avatar se há Fragments no idioma atual e também controla a lista completa; no máximo três na prévia. | [Opção Fragments](/pt-br/blog/config-fragments/#enabled)                     |
+| `i18n.locales.<locale>.messages.blog.allPosts`   | Descrição acessível da contagem de recentes e do link do arquivo.                                             | [Textos compartilhados da lista](/pt-br/blog/config-blog-list/#tag-messages) |
+| `i18n.locales.<locale>.messages.fragments.title` | Nome acessível do avatar, sem título ao lado dele.                                                            | [Textos de Fragments](/pt-br/blog/config-fragments/#fragment-messages)       |
+| `i18n.locales.<locale>.messages.fragments.close` | Nome acessível do botão de fechar a prévia, sem mudar o ícone.                                                | [Textos de Fragments](/pt-br/blog/config-fragments/#fragment-messages)       |
 
 Se habilitou sem aparecer avatar, confira conteúdo no idioma atual. Não copie IDs existentes só para mostrar o avatar. Imagens, código e alturas estão na [referência de Fragments](/pt-br/blog/config-fragments/#preview-and-links), e a publicação em [publicar um Fragment](/pt-br/blog/starter-guide-5-fragments/).
 

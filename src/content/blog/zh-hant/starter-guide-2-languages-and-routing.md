@@ -4,7 +4,7 @@ title: '使用指南 2：寫第一篇文章'
 subtitle: '建立文章、填寫標題和日期、寫內文，再用目錄、標籤、程式碼和公式組織內容。'
 description: '從按預設流程建立文章到本機預覽，說明目前支援的文章欄位、Markdown 與 MDX、目錄、標籤、搜尋和統計。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -24,9 +24,9 @@ npm run new-post -- my-first-post
 
 如果你在第一篇已經執行過這條指令，直接打開已有檔案繼續寫。同名檔案會跳過，不會覆寫你的內容。
 
-未指定 `--locales` 或 `ANGLEFEINT_LOCALES` 時，指令為專案全部已啟用語言建立 `src/content/blog/<语言代码>/my-first-post.md`。初始設定啟用九種語言，因此會建立九份範本；調整過語言開關時，按目前啟用列表生成。它不會自動翻譯內文。
+未指定 `--locales` 或 `ANGLEFEINT_LOCALES` 時，指令為專案全部已啟用語言建立 `src/content/blog/<locale>/my-first-post.md`。初始設定啟用九種語言，因此會建立九份範本；調整過語言開關時，按目前啟用列表生成。它不會自動翻譯內文。
 
-選擇自己要編輯的語言檔案，對應網址是 `/<语言代码>/blog/my-first-post/`，列表是 `/<语言代码>/blog/`。例如預設英文首頁下的文章為 `/en/blog/my-first-post/`，中文為 `/zh/blog/my-first-post/`，各語言需啟用。無需手動建立路由。
+選擇自己要編輯的語言檔案，對應網址是 `/<locale>/blog/my-first-post/`，列表是 `/<locale>/blog/`。例如預設英文首頁下的文章為 `/en/blog/my-first-post/`，中文為 `/zh/blog/my-first-post/`，各語言需啟用。無需手動建立路由。
 
 `my-first-post` 是文章的 slug，只使用小寫英文字母、數字和連字號，例如 `learning-astro-1`；不能包含空格、底線或 `/`。更改文章檔案名會改變網址，不會自動為舊連結建立重新導向。
 
@@ -37,10 +37,10 @@ npm run new-post -- my-first-post
 以下是預設指令的選用用法。只建立中文時指定 zh，建立英文和中文時指定 en,zh；不必把這些範例逐條執行：
 
 ```bash
-# 只创建中文
+# 只創建中文
 npm run new-post -- my-first-post --locales zh
 
-# 创建英文和中文
+# 創建英文和中文
 npm run new-post -- my-first-post --locales en,zh
 ```
 
@@ -55,20 +55,20 @@ npm run new-post -- my-first-post --locales en,zh
 ```md
 ---
 title: '我的第一篇文章'
-description: '记录我用 Anglefeint 搭建博客的过程。'
+description: '記錄我用 Anglefeint 搭建部落格的過程。'
 pubDate: '2026-11-13'
-tags: ['astro', '笔记']
+tags: ['astro', '筆記']
 ---
 
-这是我的第一篇文章。我准备在这里记录学习过程和遇到的问题。
+這是我的第一篇文章。我準備在這里記錄學習過程和遇到的問題。
 
-## 为什么开始写博客
+## 為什么開始寫部落格
 
-写下自己的想法，也给以后的自己留下线索。
+寫下自己的想法，也給以后的自己留下線索。
 
-### 先从一个小问题开始
+### 先從一個小問題開始
 
-今天先记录安装和发布过程。
+今天先記錄安裝和發布過程。
 ```
 
 將日期改成真實發佈日期。`title`、`description`、`pubDate` 是必填欄位；`tags` 可省略。標題已由文章頁顯示，內文通常從 `##` 開始，不必再寫一遍 `# 我的第一篇文章`。
@@ -87,14 +87,14 @@ tags: ['astro', '笔记']
 一般段落之間留一個空行。常用 Markdown 寫法如下：
 
 ```md
-这是一段正文，可以使用 **加粗**、_强调_ 和 `行内代码`。
+這是一段正文，可以使用 **加粗**、_強調_ 和 `行內程式碼`。
 
-- 第一个要点
-- 第二个要点
+- 第一個要點
+- 第二個要點
 
-[链接文字](https://example.com/)
+[連結文字](https://example.com/)
 
-> 这是一段引用。
+> 這是一段引用。
 ```
 
 正常使用 `##` 和 `###` 後，文章會自動生成目錄。寬屏目錄在內文右側，窄屏在內文前方；沒有二級或三級標題時不顯示。四級及更深標題仍可用於內文，但不進入這個目錄。
@@ -109,7 +109,7 @@ toc: false
 
 ### 用標籤整理文章
 
-在 frontmatter 填寫 `tags: ['astro', '笔记']`，即可自動生成標籤入口和目前語言的標籤列表，無需手動添加路由。啟用標籤時可瀏覽 `/zh/tags/` 檢視。
+在 frontmatter 填寫 `tags: ['astro', '筆記']`，即可自動生成標籤入口和目前語言的標籤列表，無需手動添加路由。啟用標籤時可瀏覽 `/zh/tags/` 檢視。
 
 標籤區分大小寫：`Astro` 和 `astro` 是兩個標籤。首尾空白會去掉，同一篇的重複標籤只計一次。直接使用頁面生成的標籤連結，中文和特殊字元有穩定編碼，不要手動猜路徑。重新命名標籤會改變對應連結。
 
@@ -131,7 +131,7 @@ console.log(message);
 數學公式預設開啟，無需另外安裝插件。行內用 `$...$`，獨立公式寫在兩行 `$$` 之間：
 
 ```md
-保存量为 $C_{saved}$。
+保存量為 $C_{saved}$。
 
 $$
 \frac{a}{b} = x_1 + x_2
@@ -153,9 +153,9 @@ $$
 內文圖片可以使用文章旁邊的檔案，也可以引用 `public/images/` 中的檔案。先放入實際圖片，再寫對應路徑：
 
 ```md
-![照片内容的描述](./photo.jpg)
+![照片內容的描述](./photo.jpg)
 
-![照片内容的描述](/images/photo.jpg)
+![照片內容的描述](/images/photo.jpg)
 ```
 
 第一種相對於文章檔案；第二種對應 `public/images/photo.jpg`，網址不含 `public`。描述文字用於圖片的替代文字。
@@ -164,11 +164,11 @@ $$
 
 一般內文圖片可點選，或聚焦後按 Enter／空格放大；Esc、關閉按鈕或蒙版可收起。封面以及連結、按鈕內部的圖片不參與該預覽。預覽使用瀏覽器已選中的圖片來源，不會另外請求更高清的原圖，也不提供相冊切換。
 
-新增或更換封面後，本機 dev 或 doctor 會準備回應式檔案。提交原圖和整個 `src/assets/blog/covers/`（包含 manifest.json 和 generated/）；部署建置與 CI doctor 只驗證，缺少、過期或被修改時失敗，不在部署端重新編碼。此處的持久衍生規則用於封面及碎片本機圖片，一般文章內文圖片仍走原有 Markdown/MDX 圖片處理。
+新增或更換封面後，本機 dev 或 doctor 會準備回應式檔案。提交原圖和整個 `src/assets/blog/covers/`（包含 manifest.json 和 generated/）；一般 dev、build 和 doctor（包含 CI）會自動補齊缺少、過期或損壞的衍生圖片，並重用正確的既有檔案。原圖缺失、無效圖片或不安全路徑仍會報錯。明確執行的 `prepare-covers --check` 與設定同步只驗證、不修復。將原圖及整個 `src/assets/blog/covers/` 提交到 Git 可以重用產物，不依賴部署平台保留圖片快取。 build 新行為的版本範圍見[圖片教學](/zh-hant/blog/starter-guide-images/)。此處的持久衍生規則用於封面及碎片本機圖片，一般文章內文圖片仍走原有 Markdown/MDX 圖片處理。
 
 ## 6. 在本機預覽，再準備發佈
 
-執行 `npm run dev`，打開終端機地址下的 `/<语言代码>/blog/my-first-post/`；例如英文 `/en/blog/my-first-post/`、中文 `/zh/blog/my-first-post/`。確認標題、日期、內文、目錄、標籤和圖片符合預期；新增譯文時也檢查語言切換是否進入正確頁面。
+執行 `npm run dev`，打開終端機地址下的 `/<locale>/blog/my-first-post/`；例如英文 `/en/blog/my-first-post/`、中文 `/zh/blog/my-first-post/`。確認標題、日期、內文、目錄、標籤和圖片符合預期；新增譯文時也檢查語言切換是否進入正確頁面。
 
 發佈前停止開發服務，執行：
 
@@ -214,7 +214,7 @@ doctor 包含檢查和建置，成功後無需立即再跑 check 或 build。pre
 | `aiModel`           | 顯示你填寫的模型標籤，出現在標題狀態區和 OUTPUT 中 |
 | `aiMode`、`aiState` | 在標題狀態區顯示你填寫的模式、狀態文字             |
 
-不填寫統計欄位時，主題從內文來源文字估算字詞數：CJK 漢字、假名及韓文字元逐個計數，其余主要按空白分詞。預設 tokens 為 `round(max(自动字词数, 1) × 1.3)`，不是實際模型分詞器結果。只覆寫 `wordCount` 不會重新計算 tokens，需要時分別填寫。
+不填寫統計欄位時，主題從內文來源文字估算字詞數：CJK 漢字、假名及韓文字元逐個計數，其余主要按空白分詞。預設 tokens 為 `round(max(自動字詞數, 1) × 1.3)`，不是實際模型分詞器結果。只覆寫 `wordCount` 不會重新計算 tokens，需要時分別填寫。
 
 統計會剔除部分 Markdown 內容，但不是完整的可見文字統計，公式與 MDX 原始碼可能影響結果。數字達到 1,000 時以一位小數的 `k` 顯示。模型、模式和狀態欄位只顯示文字，不會連線 AI 服務、驗證文章來源或執行任務。
 

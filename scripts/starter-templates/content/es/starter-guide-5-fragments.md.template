@@ -4,7 +4,7 @@ title: 'Guía 4: publicar un fragment'
 subtitle: 'Notas breves con imágenes, código e identidad estable'
 description: 'Activa Fragments, crea contenido, comparte enlaces estables y configura comentarios opcionales.'
 pubDate: '2026-11-11'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -34,7 +34,7 @@ theme: {
 | `theme.fragments.pageSize`         | `20`; fragments por página, entero 1–100, independiente de la paginación del blog.                                   |
 | `theme.fragments.comments.enabled` | `false`; activa diálogos de comentarios, que también requieren los datos de repositorio Giscus de abajo.             |
 
-Ejecuta `npm run dev` local y abre `/<语言代码>/fragments/`, por ejemplo `/en/fragments/` o `/zh/fragments/`, bajo la dirección mostrada. El idioma debe estar activo. Una lista vacía es válida sin crear un archivo de página manual. Desactivar Fragments elimina su lista generada y entrada de inicio sin borrar Markdown.
+Ejecuta `npm run dev` local y abre `/<locale>/fragments/`, por ejemplo `/en/fragments/` o `/zh/fragments/`, bajo la dirección mostrada. El idioma debe estar activo. Una lista vacía es válida sin crear un archivo de página manual. Desactivar Fragments elimina su lista generada y entrada de inicio sin borrar Markdown.
 
 ## 2. Crear fragments con el flujo predeterminado
 
@@ -44,7 +44,7 @@ Desde la raíz, ejecuta:
 npm run new-fragment
 ```
 
-Sin `--locales` ni `ANGLEFEINT_LOCALES`, crea las estructuras de un fragment en todos los idiomas activos: nueve archivos inicialmente. Están en `src/content/fragments/<语言代码>/` y comparten ID y hora de publicación por ejecución, sin traducirse. La terminal muestra las rutas reales. Los nombres se parecen a `2026-11-13-q8Lm3XzP.md`, con fecha UTC e ID aleatorio. Abre el archivo generado en vez de recrear ese nombre de ejemplo.
+Sin `--locales` ni `ANGLEFEINT_LOCALES`, crea las estructuras de un fragment en todos los idiomas activos: nueve archivos inicialmente. Están en `src/content/fragments/<locale>/` y comparten ID y hora de publicación por ejecución, sin traducirse. La terminal muestra las rutas reales. Los nombres se parecen a `2026-11-13-q8Lm3XzP.md`, con fecha UTC e ID aleatorio. Abre el archivo generado en vez de recrear ese nombre de ejemplo.
 
 Para chino únicamente, puedes usar `npm run new-fragment -- --locales zh`; para varios idiomas, `--locales en,zh`. Elige una alternativa, no todas. Esos argumentos no activan idiomas. Antes de publicar, mueve las estructuras sin terminar fuera del directorio de fragments.
 
@@ -68,7 +68,7 @@ id: 'q8Lm3XzP'
 pubDate: '2026-11-13T09:00:00+08:00'
 ---
 
-今天把一个困扰很久的问题解决了，记下这个小进展。
+Hoy resolví un problema que llevaba tiempo pendiente; anoto este pequeño avance.
 ```
 
 Actualmente se admiten tres campos:
@@ -79,7 +79,7 @@ Actualmente se admiten tres campos:
 | `pubDate` | Fecha interpretable obligatoria. Prefiere la marca ISO generada o indica hora y zona.                                            |
 | `title`   | String opcional mostrado como título de tarjeta; puede omitirse.                                                                 |
 
-Para añadir título, pon `title: '一个小进展'` en ese frontmatter. Fragments no exige `description` de artículos ni ofrece `heroImage` de portada; añade las imágenes al cuerpo.
+Para añadir título, pon `title: 'Un pequeño avance'` en ese frontmatter. Fragments no exige `description` de artículos ni ofrece `heroImage` de portada; añade las imágenes al cuerpo.
 
 Se ordena por `pubDate` descendente y después ID cuando coincide la hora, no por nombre. Las horas se muestran en UTC y pueden diferir de tu zona. Editar cuerpo o nombre no cambia la identidad de enlaces/comentarios; editar fecha cambia posición y paginación.
 
@@ -92,10 +92,10 @@ Solo se recoge `.md` bajo `src/content/fragments/`, no `.mdx`. No hay filtro de 
 Usa párrafos, enlaces, listas y citas Markdown normales. Por ejemplo:
 
 ```md
-![这次进展的截图](/images/fragments/progress.png)
+![Captura de este avance](/images/fragments/progress.png)
 ```
 
-Añade primero `public/images/fragments/progress.png`. También puedes poner `photo.png` junto al fragment y referenciar `![图片说明](./photo.png)`. Consulta sintaxis, dimensiones y requisitos de Git en [añadir imágenes](/es/blog/starter-guide-images/).
+Añade primero `public/images/fragments/progress.png`. También puedes poner `photo.png` junto al fragment y referenciar `![Descripción de la imagen](./photo.png)`. Consulta sintaxis, dimensiones y requisitos de Git en [añadir imágenes](/es/blog/starter-guide-images/).
 
 Conserva cercas e indentación del código:
 
@@ -111,7 +111,9 @@ Los bloques muestran contenido sin ejecutar JavaScript. No supongas que los cont
 
 Con matemáticas globales activas, se admite `$x_1$` en línea y fórmulas entre líneas `$$`. El renderizado de compilación falla si son inválidas. `theme.math.enabled` desactiva el procesamiento globalmente. Consulta la sintaxis en [escribir entradas](/es/blog/starter-guide-2-languages-and-routing/).
 
-dev o doctor local prepara derivados de imágenes compatibles. Guarda Markdown, originales y todo `src/assets/blog/covers/`. Compilaciones de despliegue y doctor en CI validan sin generar ausentes. No guardes el cuerpo omitiendo sus imágenes.
+dev, build y doctor (incluido CI) preparan selectivamente los derivados compatibles y reutilizan los válidos. Guarda Markdown y originales; conservar también `src/assets/blog/covers/` permite reutilizarlos. No publiques el cuerpo sin sus imágenes.
+
+**Nota de versión:** La preparación automática de imágenes durante build y doctor en CI requiere 0.36.2 o posterior. Con 0.36.1, ejecuta primero dev o `prepare-covers` para preparar los derivados. `prepare-covers --check` y la sincronización de configuración siguen siendo comprobaciones de solo lectura.
 
 ## 5. Vista de inicio y paginación
 

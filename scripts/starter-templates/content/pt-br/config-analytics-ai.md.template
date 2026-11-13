@@ -4,9 +4,11 @@ title: 'Referência de configuração: GA4 e complementos de leitura por IA'
 subtitle: 'Estatísticas e informações públicas para leitura por máquinas'
 description: 'Tipos, padrões, validação, herança e limites de analytics e aiReadableContent.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/ai-02.webp'
 ---
+
+As expressões chinesas nos exemplos de `locales.zh` são intencionais: mostram como personalizar o conteúdo em chinês sem alterar os outros idiomas. Os valores padrão em chinês/inglês nas tabelas são citações do tema, não traduções pendentes.
 
 Para publicar pela primeira vez, leia o [guia de implantação](/pt-br/blog/starter-guide-deployment/), que apresenta a obtenção do ID de estatísticas e o uso dos textos públicos. Veja o arquivo de configuração em [instalação e informações do site](/pt-br/blog/starter-guide-1-configure-your-site/) e outros módulos no [índice de configuração](/pt-br/blog/config-reference/).
 
@@ -60,12 +62,12 @@ Adaptadores personalizados antigos sem o ramo ANALYTICS são tratados como não 
 
 Objeto MachineReadableSupplement opcional, não definido por padrão no tema. Omiti-lo ainda gera arquivos para máquinas, apenas sem essas informações extras. Informar {} não desativa as exportações.
 
-| Caminho completo                | Tipo / padrão                                                           | Estado, efeito e limites                                                                                                                                                          | Exemplo                                                       |
-| ------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| aiReadableContent.notes         | string, opcional / não definido; saída vazia                            | Condicional: acrescenta informações do site em Markdown ao texto público. String vazia ou só espaços omite a seção. Não substitui o corpo nem é uma instrução privada para uma IA | '本站内容是个人学习笔记，可能持续修订。'                      |
-| aiReadableContent.links         | { label: string; href: string }[], opcional / não definido; lista vazia | Condicional: links públicos adicionais; substitui o array inteiro, [] limpa. Sem limite público de quantidade; não busca o conteúdo dos destinos                                  | [{ label: '项目主页', href: 'https://example.com/project/' }] |
-| aiReadableContent.links[].label | string, obrigatório / nenhum                                            | Condicional: nome não vazio após trim; converte quebras de linha em espaços e escapa barras invertidas e colchetes. Não obtém automaticamente o título do destino                 | '项目主页'                                                    |
-| aiReadableContent.links[].href  | string, obrigatório / nenhum                                            | Condicional: não vazio, resolvido contra a raiz pública. Só HTTP(S), sem usuário ou senha. Valores inválidos causam erro; não verifica se o destino existe ou está acessível      | 'https://example.com/project/'                                |
+| Caminho completo                | Tipo / padrão                                                           | Estado, efeito e limites                                                                                                                                                          | Exemplo                                                                 |
+| ------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| aiReadableContent.notes         | string, opcional / não definido; saída vazia                            | Condicional: acrescenta informações do site em Markdown ao texto público. String vazia ou só espaços omite a seção. Não substitui o corpo nem é uma instrução privada para uma IA | 'Este site reúne anotações pessoais de estudo que podem ser revisadas.' |
+| aiReadableContent.links         | { label: string; href: string }[], opcional / não definido; lista vazia | Condicional: links públicos adicionais; substitui o array inteiro, [] limpa. Sem limite público de quantidade; não busca o conteúdo dos destinos                                  | [{ label: 'Página do projeto', href: 'https://example.com/project/' }]  |
+| aiReadableContent.links[].label | string, obrigatório / nenhum                                            | Condicional: nome não vazio após trim; converte quebras de linha em espaços e escapa barras invertidas e colchetes. Não obtém automaticamente o título do destino                 | 'Página do projeto'                                                     |
+| aiReadableContent.links[].href  | string, obrigatório / nenhum                                            | Condicional: não vazio, resolvido contra a raiz pública. Só HTTP(S), sem usuário ou senha. Valores inválidos causam erro; não verifica se o destino existe ou está acessível      | 'https://example.com/project/'                                          |
 
 notes e links não têm configuração geral de limite de caracteres; devem respeitar os tipos. Tipos errados, nomes de links vazios, protocolos não web ou URLs com credenciais podem impedir a compilação. O tema não executa comandos do complemento nem chama modelos para gerar estas notas.
 
@@ -87,9 +89,9 @@ Em implantação num subcaminho, um / inicial resolve a partir da raiz do domín
 
 ```ts
 aiReadableContent: {
-  notes: '本站内容是个人学习笔记，可能持续修订。详情见[文章列表](zh/blog/)。',
+  notes: 'Este site reúne anotações pessoais de estudo que podem ser revisadas. Consulte a [lista de artigos](pt-br/blog/).',
   links: [
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: 'Página do projeto', href: 'https://example.com/project/' },
   ],
 },
 ```
@@ -98,14 +100,14 @@ aiReadableContent: {
 
 ## Substituir aiReadableContent por idioma
 
-O prefixo completo é `i18n.locales.<语言>.aiReadableContent`, também MachineReadableSupplement opcional e não definido por padrão. Os campos têm o mesmo efeito dos globais, mas herdam cada valor global quando omitidos:
+O prefixo completo é `i18n.locales.<locale>.aiReadableContent`, também MachineReadableSupplement opcional e não definido por padrão. Os campos têm o mesmo efeito dos globais, mas herdam cada valor global quando omitidos:
 
-| Campo relativo | Tipo / padrão                                                    | Efeito e limites                                                                                                            | Exemplo              |
-| -------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| notes          | string, opcional / herda notes global                            | Condicional: complemento público do idioma. String vazia ou só espaços limpa explicitamente, sem fallback para outro idioma | '中文内容持续更新。' |
-| links          | { label: string; href: string }[], opcional / herda links global | Condicional: substitui todo o array; [] limpa explicitamente, sem acrescentar à lista global                                | []                   |
-| links[].label  | string, obrigatório / nenhum                                     | Obrigatório em itens personalizados; mesmas regras globais de validação e escape                                            | '中文文章'           |
-| links[].href   | string, obrigatório / nenhum                                     | Obrigatório em itens personalizados; continua resolvendo contra a raiz pública, não a pasta do idioma                       | 'zh/blog/'           |
+| Campo relativo | Tipo / padrão                                                    | Efeito e limites                                                                                                            | Exemplo                                            |
+| -------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| notes          | string, opcional / herda notes global                            | Condicional: complemento público do idioma. String vazia ou só espaços limpa explicitamente, sem fallback para outro idioma | 'O conteúdo em chinês é atualizado continuamente.' |
+| links          | { label: string; href: string }[], opcional / herda links global | Condicional: substitui todo o array; [] limpa explicitamente, sem acrescentar à lista global                                | []                                                 |
+| links[].label  | string, obrigatório / nenhum                                     | Obrigatório em itens personalizados; mesmas regras globais de validação e escape                                            | 'Artigos em chinês'                                |
+| links[].href   | string, obrigatório / nenhum                                     | Obrigatório em itens personalizados; continua resolvendo contra a raiz pública, não a pasta do idioma                       | 'zh/blog/'                                         |
 
 Por exemplo, altere apenas as notas em chinês e oculte os links adicionais desse idioma:
 
@@ -135,11 +137,11 @@ Os caminhos abaixo são relativos à raiz pública; acrescente o prefixo de impl
 | Arquivo gerado                        | Posição e conteúdo do complemento                                                                                                                                |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | llms.txt                              | Entrada raiz; notes global antes do diretório de idiomas, links como seção adicional. Pode conter o complemento global mesmo sem conteúdo exportável             |
-| `<语言>/llms.txt`                     | Entrada do idioma; aplica suas substituições de notas e links e organiza documentos existentes em Articles / Fragments / About                                   |
-| `<语言>/llms-full.txt`                | Coletânea pública integral do idioma; notas e links antes dos corpos dos documentos                                                                              |
+| `<locale>/llms.txt`                   | Entrada do idioma; aplica suas substituições de notas e links e organiza documentos existentes em Articles / Fragments / About                                   |
+| `<locale>/llms-full.txt`              | Coletânea pública integral do idioma; notas e links antes dos corpos dos documentos                                                                              |
 | Markdown da publicação, como index.md | Acrescenta separador, marcador de complemento do site e notas válidas após o corpo, sem misturar ao texto do autor                                               |
-| `<语言>/about/index.md`               | Apresentação e contato públicos do About e painéis estáticos de IA acessíveis; acrescenta o complemento ao fim, sem exportar toda a configuração das ferramentas |
-| `<语言>/fragments/index.md`           | Conteúdo público dos fragments paginados reunidos, com links de ID estável; complemento ao fim, sem duplicar a coletânea integral por página                     |
+| `<locale>/about/index.md`             | Apresentação e contato públicos do About e painéis estáticos de IA acessíveis; acrescenta o complemento ao fim, sem exportar toda a configuração das ferramentas |
+| `<locale>/fragments/index.md`         | Conteúdo público dos fragments paginados reunidos, com links de ID estável; complemento ao fim, sem duplicar a coletânea integral por página                     |
 
 O caminho real do Markdown individual deriva da posição do HTML compilado: index.html corresponde a index.md. Saídas Astro personalizadas podem diferir; não invente caminhos nem sobrescreva os arquivos gerados. As páginas exportadas também recebem links de descoberta para o Markdown e o índice do idioma.
 

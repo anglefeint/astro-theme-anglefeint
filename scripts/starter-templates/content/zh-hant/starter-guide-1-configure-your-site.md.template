@@ -42,12 +42,11 @@ node --version
 npm --version
 ```
 
-在你打算存放專案的目錄中建立部落格。下面的指令會新建 `my-blog` 資料夾，不會自動安裝相依：
+在你打算存放專案的目錄中建立部落格。下面的指令會建立 `my-blog` 資料夾。建立精靈詢問是否安裝相依套件時，請選 Yes；只有主動略過安裝時，才需要在啟動前執行 `npm install`。`--no-ai` 略過額外產生的通用 AI 指引檔案，主題自己的指引已隨 starter 提供：
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
 
@@ -63,11 +62,11 @@ npm run dev
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录开发、阅读和生活。',
+  title: '小林的部落格',
+  description: '記錄開發、閱讀和生活。',
   url: 'https://example.com',
   author: '小林',
-  tagline: '保持好奇，持续记录。',
+  tagline: '保持好奇，持續記錄。',
 },
 ```
 
@@ -147,7 +146,7 @@ social: {
 
 ## 4. 用自己的文章替換範例
 
-文章位於 `src/content/blog/<语言代码>/`。 starter 中的 `welcome-to-anglefeint.md`、`starter-guide-*.md` 和 `config-*.md` 都是一般部落格文章，分別用於歡迎範例、八篇教學和設定字典。備份或提交到 Git 後，可以按語言保留或刪除不需要的內容；只刪歡迎文章與教學，不會同時刪掉字典。不要刪除仍被其他內容引用的圖片。
+文章位於 `src/content/blog/<locale>/`。 starter 中的 `welcome-to-anglefeint.md`、`starter-guide-*.md` 和 `config-*.md` 都是一般部落格文章，分別用於歡迎範例、八篇教學和設定字典。備份或提交到 Git 後，可以按語言保留或刪除不需要的內容；只刪歡迎文章與教學，不會同時刪掉字典。不要刪除仍被其他內容引用的圖片。
 
 按預設流程建立文章：
 
@@ -157,7 +156,7 @@ npm run new-post -- my-first-post
 
 沒有指定 `--locales` 或 `ANGLEFEINT_LOCALES` 時，指令會為專案全部已啟用語言生成同名範本；初始設定會生成九份。它不會自動翻譯，同名檔案已存在時會跳過，不覆寫已有內容。
 
-打開 `src/content/blog/<语言代码>/my-first-post.md`，填寫標題、簡介和內文；對應網址是 `/<语言代码>/blog/my-first-post/`。例如英文檔案在 en 目錄、網址為 `/en/blog/my-first-post/`，中文對應 zh 目錄和 `/zh/blog/my-first-post/`。發佈前把未完成、不準備公開的範本移出內容目錄，不能把它們當作自動隱藏的草稿。
+打開 `src/content/blog/<locale>/my-first-post.md`，填寫標題、簡介和內文；對應網址是 `/<locale>/blog/my-first-post/`。例如英文檔案在 en 目錄、網址為 `/en/blog/my-first-post/`，中文對應 zh 目錄和 `/zh/blog/my-first-post/`。發佈前把未完成、不準備公開的範本移出內容目錄，不能把它們當作自動隱藏的草稿。
 
 如果只想建立某種語言，可以改用 `npm run new-post -- my-first-post --locales zh`；指定多種語言可用 `--locales en,zh`。這些是選用用法，不必重複執行全部範例；`--locales` 本身不會啟用語言。
 
@@ -178,7 +177,7 @@ npm run preview
 
 `preview` 打開的是 `dist/` 中已經建置的靜態網站，瀏覽終端機給出的網址即可；它不會把部落格發佈到互聯網。文章搜尋需要在建置後的預覽中驗證，`dev` 沒有實時全文搜尋。按 `Ctrl+C` 停止預覽。
 
-以後發佈時，託管平臺的建置指令是 `npm run build`，輸出目錄為 `dist`，需要部署其中全部檔案。新增或更換本機圖片後，先在本機執行 dev 或 doctor，提交原圖和生成的整個 `src/assets/blog/covers/` 目錄；部署建置及 CI doctor 只驗證這些回應式檔案，缺少或過期會失敗，不在平臺上補生成。修改內容或設定後，需要重新建置並部署。
+以後發佈時，託管平臺的建置指令是 `npm run build`，輸出目錄為 `dist`，需要部署其中全部檔案。新增或更換本機圖片後，先在本機執行 dev 或 doctor，提交原圖和生成的整個 `src/assets/blog/covers/` 目錄；一般 dev、build 和 doctor（包含 CI）會自動補齊缺少、過期或損壞的衍生圖片，並重用正確的既有檔案。原圖缺失、無效圖片或不安全路徑仍會報錯。明確執行的 `prepare-covers --check` 與設定同步只驗證、不修復。將原圖及整個 `src/assets/blog/covers/` 提交到 Git 可以重用產物，不依賴部署平台保留圖片快取。 **版本說明：** build 與 CI doctor 的自動圖片準備從 0.36.2 起支援；使用 0.36.1 時，請先透過 dev 或 `prepare-covers` 準備圖片。修改內容或設定後，需要重新建置並部署。
 
 ## 已有專案如何升級
 

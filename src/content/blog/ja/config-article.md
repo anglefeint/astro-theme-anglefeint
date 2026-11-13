@@ -59,31 +59,31 @@ theme: { toc: { enabled: false } },
 
 ### 内容とメタ情報
 
-| 項目          | 型と既定動作                                       | 役割・制約・例                                                                                     |
-| ------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `title`       | 必須 string、既定なし                              | 記事名とメタ情報でサイト名ではない。例 `title: '我的笔记'`。                                       |
-| `description` | 必須 string、既定なし                              | メタ説明。context 未指定なら見出し下にも使用。本文ではない。例 `description: '一次调试的记录。'`。 |
-| `pubDate`     | 必須の解析可能日付、既定なし                       | 公開日・並び順・メタ。詳細は UTC 日付、未来でも隠れない。例 `pubDate: '2026-11-13'`。              |
-| `updatedDate` | 任意日付、未指定                                   | 更新表示と sitemap に優先。pubDate の順序は変えない。例 `updatedDate: '2026-11-14'`。              |
-| `author`      | 任意 string、未指定・空白はサイト著者              | 著者ページは自動作成しない。例 `author: '另一位作者'`。                                            |
-| `subtitle`    | 任意 string、未指定                                | 副題。context と完全一致なら重複しない。例 `subtitle: '从现象到定位'`。                            |
-| `context`     | 任意 string、未指定なら description                | 見出し下の文脈。空で行だけを消しメタは残す。例 `context: '解决一个具体问题。'`。                   |
-| `tags`        | 任意 string 配列、未指定ならタグなし               | 表示は全体スイッチにも従う。例 `tags: ['astro', '笔记']`。                                         |
-| `heroImage`   | 任意ローカル画像パス、未指定ならカバーなし         | 外部 URL・public URL は同規則で使えない。実画像を置き `heroImage: ./cover.jpg`。                   |
-| `ogImage`     | 任意ローカル画像・public パス・HTTPS、未指定は補完 | 本文カバーは変えない。実画像を置き `ogImage: /images/share.png`。                                  |
-| `toc`         | 任意 boolean、全体目次を継承                       | true は全体停止を上書き可だが見出しなしなら出さない。例 `toc: false`。                             |
-| `search`      | 任意 boolean、既定 true                            | false はサイト内検索だけを除外し、一覧・RSS・sitemap・AI 出力は残す。例 `search: false`。          |
+| 項目          | 型と既定動作                                       | 役割・制約・例                                                                                         |
+| ------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `title`       | 必須 string、既定なし                              | 記事名とメタ情報でサイト名ではない。例 `title: '私のノート'`。                                         |
+| `description` | 必須 string、既定なし                              | メタ説明。context 未指定なら見出し下にも使用。本文ではない。例 `description: 'デバッグの記録です。'`。 |
+| `pubDate`     | 必須の解析可能日付、既定なし                       | 公開日・並び順・メタ。詳細は UTC 日付、未来でも隠れない。例 `pubDate: '2026-11-13'`。                  |
+| `updatedDate` | 任意日付、未指定                                   | 更新表示と sitemap に優先。pubDate の順序は変えない。例 `updatedDate: '2026-11-14'`。                  |
+| `author`      | 任意 string、未指定・空白はサイト著者              | 著者ページは自動作成しない。例 `author: '別の著者'`。                                                  |
+| `subtitle`    | 任意 string、未指定                                | 副題。context と完全一致なら重複しない。例 `subtitle: '現象から原因の特定まで'`。                      |
+| `context`     | 任意 string、未指定なら description                | 見出し下の文脈。空で行だけを消しメタは残す。例 `context: '具体的な問題を解決します。'`。               |
+| `tags`        | 任意 string 配列、未指定ならタグなし               | 表示は全体スイッチにも従う。例 `tags: ['astro', 'メモ']`。                                             |
+| `heroImage`   | 任意ローカル画像パス、未指定ならカバーなし         | 外部 URL・public URL は同規則で使えない。実画像を置き `heroImage: ./cover.jpg`。                       |
+| `ogImage`     | 任意ローカル画像・public パス・HTTPS、未指定は補完 | 本文カバーは変えない。実画像を置き `ogImage: /images/share.png`。                                      |
+| `toc`         | 任意 boolean、全体目次を継承                       | true は全体停止を上書き可だが見出しなしなら出さない。例 `toc: false`。                                 |
+| `search`      | 任意 boolean、既定 true                            | false はサイト内検索だけを除外し、一覧・RSS・sitemap・AI 出力は残す。例 `search: false`。              |
 
 まず必須項目だけを書き、必要なら追加できます。
 
 ```yaml
 ---
-title: '我的笔记'
-description: '一次调试的记录。'
+title: '私のノート'
+description: 'デバッグの記録です。'
 pubDate: '2026-11-13'
-subtitle: '从现象到定位'
-context: '解决一个具体问题。'
-tags: ['astro', '笔记']
+subtitle: '現象から原因の特定まで'
+context: '具体的な問題を解決します。'
+tags: ['astro', 'メモ']
 toc: true
 search: true
 ---
@@ -95,20 +95,20 @@ draft、予約公開、記事別 comments・Red Queen・math はありません�
 
 ### OUTPUT の統計と状態文字
 
-| 項目         | 型と既定動作                                     | 役割・制約・例                                                                |
-| ------------ | ------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `wordCount`  | 任意非負整数、本文ソースから計算                 | 独立上書き。例 `wordCount: 800` は tokenCount を変えない。                    |
-| `tokenCount` | 任意非負整数、既定 round(max(自動語数, 1) × 1.3) | モデルの tokenizer・実使用量ではない推定。例 `tokenCount: 1040`。             |
-| `aiModel`    | 任意 string、未指定はラベルなし                  | 見出し状態と OUTPUT。実モデルは検証しない。例 `aiModel: '作者填写的模型名'`。 |
-| `aiMode`     | 任意 string、未指定はラベルなし                  | モード文だけで実行しない。例 `aiMode: 'notes'`。                              |
-| `aiState`    | 任意 string、未指定はラベルなし                  | 状態文だけで健康を検査しない。例 `aiState: 'edited'`。                        |
+| 項目         | 型と既定動作                                     | 役割・制約・例                                                                      |
+| ------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| `wordCount`  | 任意非負整数、本文ソースから計算                 | 独立上書き。例 `wordCount: 800` は tokenCount を変えない。                          |
+| `tokenCount` | 任意非負整数、既定 round(max(自動語数, 1) × 1.3) | モデルの tokenizer・実使用量ではない推定。例 `tokenCount: 1040`。                   |
+| `aiModel`    | 任意 string、未指定はラベルなし                  | 見出し状態と OUTPUT。実モデルは検証しない。例 `aiModel: '著者が記入するモデル名'`。 |
+| `aiMode`     | 任意 string、未指定はラベルなし                  | モード文だけで実行しない。例 `aiMode: 'notes'`。                                    |
+| `aiState`    | 任意 string、未指定はラベルなし                  | 状態文だけで健康を検査しない。例 `aiState: 'edited'`。                              |
 
 自動統計は一部 Markdown・コード・リンクを除外し、CJK 漢字・仮名・韓国語は文字単位、他は主に空白区切りです。数式・MDX も影響します。wordCount だけで tokens は再計算しません。1000以上は小数1桁 k 表示で、元値は変えません。
 
 ```yaml
 wordCount: 800
 tokenCount: 1040
-aiModel: '作者填写的模型名'
+aiModel: '著者が記入するモデル名'
 aiMode: 'notes'
 aiState: 'edited'
 ```
@@ -131,44 +131,44 @@ aiState: 'edited'
 
 <a id="article-messages"></a>
 
-接頭辞は `i18n.locales.<语言>.messages.blog`、任意 string、通常の言語補完です。表は簡体中国語／英語の実既定値。例は blog 内の1メンバーで frontmatter ではありません。
+接頭辞は `i18n.locales.<locale>.messages.blog`、任意 string、通常の言語補完です。表は簡体中国語／英語の実既定値。例は blog 内の1メンバーで frontmatter ではありません。
 
 対応領域がある場合だけ有効です。空文字はラベルだけを消して機能を隠さず、アクセシブル名は消さないでください。未使用項目には表示効果がありません。
 
-| 項目                 | 簡体中国語既定 / 英語既定            | 役割と制約                                            | 状態           | メンバー例                        |
-| -------------------- | ------------------------------------ | ----------------------------------------------------- | -------------- | --------------------------------- |
-| `rqBadge`            | 监视器信号 / monitor feed            | Red Queen 有効時のバッジ。実監視ではない。            | 条件付きで有効 | `rqBadge: "监视器信号"`           |
-| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed | 再生ボタン名。素材・再生方法は変えない。              | 条件付きで有効 | `rqReplayAria: "重放监视器信号"`  |
-| `backToTop`          | 返回顶部 / Back to top               | トップへ戻る名前。表示はスクロール次第。              | 条件付きで有効 | `backToTop: "返回顶部"`           |
-| `toastP10`           | 语境解析 10% / context parsed 10%    | 初期読書進捗で AI 要求進捗ではない。                  | 条件付きで有効 | `toastP10: "语境解析 10%"`        |
-| `toastP30`           | 语境解析 30% / context parsed 30%    | 読書進捗で意味解析結果ではない。                      | 条件付きで有効 | `toastP30: "语境解析 30%"`        |
-| `toastP60`           | 推理稳定 60% / inference stable 60%  | 読書進捗でモデル推論ではない。                        | 条件付きで有効 | `toastP60: "推理稳定 60%"`        |
-| `toastDone`          | 输出完成 / output finalized          | 読了案内で生成・検証完了の証明ではない。              | 条件付きで有効 | `toastDone: "输出完成"`           |
-| `metaPublished`      | 发布 / published                     | 公開日前のラベル。日付は変えない。                    | 条件付きで有効 | `metaPublished: "发布"`           |
-| `metaAuthor`         | 作者 / by                            | 著者のラベル。値は変えない。                          | 条件付きで有効 | `metaAuthor: "作者"`              |
-| `metaUpdated`        | 更新 / updated                       | updatedDate がある場合のラベル。                      | 条件付きで有効 | `metaUpdated: "更新"`             |
-| `systemStatusAria`   | 模型状态 / Model status              | 状態項目が1つ以上ある場合の領域名。                   | 条件付きで有効 | `systemStatusAria: "模型状态"`    |
-| `systemModelLabel`   | 模型 / model                         | aiModel のラベル。OUTPUT でも使用。                   | 条件付きで有効 | `systemModelLabel: "模型"`        |
-| `systemModeLabel`    | 模式 / mode                          | aiMode のラベル。                                     | 条件付きで有効 | `systemModeLabel: "模式"`         |
-| `systemStateLabel`   | 状态 / state                         | aiState のラベル。                                    | 条件付きで有効 | `systemStateLabel: "状态"`        |
-| `promptContextLabel` | 语境 / Context                       | 非空 context の前ラベル。                             | 条件付きで有効 | `promptContextLabel: "语境"`      |
-| `heroMonitor`        | 神经监视器 / neural monitor          | heroImage がある場合のモニター文字。                  | 条件付きで有効 | `heroMonitor: "神经监视器"`       |
-| `heroSignalSync`     | 信号同步中 / signal sync active      | 静的信号装飾で同期状態は照会しない。                  | 条件付きで有効 | `heroSignalSync: "信号同步中"`    |
-| `heroModelOnline`    | 模型在线 / model online              | 静的モデル装飾でサービスは照会しない。                | 条件付きで有効 | `heroModelOnline: "模型在线"`     |
-| `toc`                | 文章目录 / On this page              | 有効かつ見出しがある目次の名前。                      | 条件付きで有効 | `toc: "文章目录"`                 |
-| `responseOutput`     | 输出 / Output                        | OUTPUT 見出しで本文は変えない。                       | 条件付きで有効 | `responseOutput: "输出"`          |
-| `statsWords`         | 词 / words                           | 語数ラベル。値は変えない。                            | 条件付きで有効 | `statsWords: "词"`                |
-| `statsTokens`        | 令牌 / tokens                        | tokens ラベル。推定は変えない。                       | 条件付きで有効 | `statsTokens: "令牌"`             |
-| `copySectionLink`    | 复制本节链接 / Copy section link     | 本文 h2/h3 リンクのコピー名。アンカー算法は変えない。 | 条件付きで有効 | `copySectionLink: "复制本节链接"` |
-| `regenerate`         | 重播扫描 / Replay scan               | スキャン再生文字。視覚効果だけ。                      | 条件付きで有効 | `regenerate: "重播扫描"`          |
-| `relatedAria`        | 相关文章 / Related posts             | 他記事がある場合の領域名。                            | 条件付きで有効 | `relatedAria: "相关文章"`         |
-| `related`            | 相关文章 / Related                   | 関連記事見出し。算法は変えない。                      | 条件付きで有効 | `related: "相关文章"`             |
-| `backToBlogAria`     | 返回博客 / Back to blog              | 戻るナビのアクセシブル名。                            | 条件付きで有効 | `backToBlogAria: "返回博客"`      |
-| `backToBlog`         | 返回博客 / Back to blog              | 戻るリンク文。行先は変えない。                        | 条件付きで有効 | `backToBlog: "返回博客"`          |
-| `comments`           | 评论 / Comments                      | 有効コメント領域の名前。                              | 条件付きで有効 | `comments: "评论"`                |
-| `metaReadMinutes`    | 分钟阅读 / min read                  | 現在未使用。読了時間は復帰しない。                    | 現在未使用     | `metaReadMinutes: "分钟阅读"`     |
-| `latencyLabel`       | 延迟估计 / latency est               | 現在未使用。遅延は復帰しない。                        | 現在未使用     | `latencyLabel: "延迟估计"`        |
-| `confidenceLabel`    | 置信度 / confidence                  | 現在未使用。信頼度は復帰しない。                      | 現在未使用     | `confidenceLabel: "置信度"`       |
+| 項目                 | 簡体中国語既定 / 英語既定            | 役割と制約                                            | 状態           | メンバー例                                  |
+| -------------------- | ------------------------------------ | ----------------------------------------------------- | -------------- | ------------------------------------------- |
+| `rqBadge`            | 监视器信号 / monitor feed            | Red Queen 有効時のバッジ。実監視ではない。            | 条件付きで有効 | `rqBadge: "モニター信号"`                   |
+| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed | 再生ボタン名。素材・再生方法は変えない。              | 条件付きで有効 | `rqReplayAria: "モニター信号を再生"`        |
+| `backToTop`          | 返回顶部 / Back to top               | トップへ戻る名前。表示はスクロール次第。              | 条件付きで有効 | `backToTop: "先頭に戻る"`                   |
+| `toastP10`           | 语境解析 10% / context parsed 10%    | 初期読書進捗で AI 要求進捗ではない。                  | 条件付きで有効 | `toastP10: "文脈を解析 10%"`                |
+| `toastP30`           | 语境解析 30% / context parsed 30%    | 読書進捗で意味解析結果ではない。                      | 条件付きで有効 | `toastP30: "文脈を解析 30%"`                |
+| `toastP60`           | 推理稳定 60% / inference stable 60%  | 読書進捗でモデル推論ではない。                        | 条件付きで有効 | `toastP60: "推論が安定 60%"`                |
+| `toastDone`          | 输出完成 / output finalized          | 読了案内で生成・検証完了の証明ではない。              | 条件付きで有効 | `toastDone: "出力完了"`                     |
+| `metaPublished`      | 发布 / published                     | 公開日前のラベル。日付は変えない。                    | 条件付きで有効 | `metaPublished: "公開"`                     |
+| `metaAuthor`         | 作者 / by                            | 著者のラベル。値は変えない。                          | 条件付きで有効 | `metaAuthor: "著者"`                        |
+| `metaUpdated`        | 更新 / updated                       | updatedDate がある場合のラベル。                      | 条件付きで有効 | `metaUpdated: "更新"`                       |
+| `systemStatusAria`   | 模型状态 / Model status              | 状態項目が1つ以上ある場合の領域名。                   | 条件付きで有効 | `systemStatusAria: "モデルの状態"`          |
+| `systemModelLabel`   | 模型 / model                         | aiModel のラベル。OUTPUT でも使用。                   | 条件付きで有効 | `systemModelLabel: "モデル"`                |
+| `systemModeLabel`    | 模式 / mode                          | aiMode のラベル。                                     | 条件付きで有効 | `systemModeLabel: "モード"`                 |
+| `systemStateLabel`   | 状态 / state                         | aiState のラベル。                                    | 条件付きで有効 | `systemStateLabel: "状態"`                  |
+| `promptContextLabel` | 语境 / Context                       | 非空 context の前ラベル。                             | 条件付きで有効 | `promptContextLabel: "文脈"`                |
+| `heroMonitor`        | 神经监视器 / neural monitor          | heroImage がある場合のモニター文字。                  | 条件付きで有効 | `heroMonitor: "ニューラルモニター"`         |
+| `heroSignalSync`     | 信号同步中 / signal sync active      | 静的信号装飾で同期状態は照会しない。                  | 条件付きで有効 | `heroSignalSync: "信号を同期中"`            |
+| `heroModelOnline`    | 模型在线 / model online              | 静的モデル装飾でサービスは照会しない。                | 条件付きで有効 | `heroModelOnline: "モデルはオンライン"`     |
+| `toc`                | 文章目录 / On this page              | 有効かつ見出しがある目次の名前。                      | 条件付きで有効 | `toc: "記事一覧"`                           |
+| `responseOutput`     | 输出 / Output                        | OUTPUT 見出しで本文は変えない。                       | 条件付きで有効 | `responseOutput: "出力"`                    |
+| `statsWords`         | 词 / words                           | 語数ラベル。値は変えない。                            | 条件付きで有効 | `statsWords: "語"`                          |
+| `statsTokens`        | 令牌 / tokens                        | tokens ラベル。推定は変えない。                       | 条件付きで有効 | `statsTokens: "トークン"`                   |
+| `copySectionLink`    | 复制本节链接 / Copy section link     | 本文 h2/h3 リンクのコピー名。アンカー算法は変えない。 | 条件付きで有効 | `copySectionLink: "この節のリンクをコピー"` |
+| `regenerate`         | 重播扫描 / Replay scan               | スキャン再生文字。視覚効果だけ。                      | 条件付きで有効 | `regenerate: "スキャンを再生"`              |
+| `relatedAria`        | 相关文章 / Related posts             | 他記事がある場合の領域名。                            | 条件付きで有効 | `relatedAria: "関連記事"`                   |
+| `related`            | 相关文章 / Related                   | 関連記事見出し。算法は変えない。                      | 条件付きで有効 | `related: "関連記事"`                       |
+| `backToBlogAria`     | 返回博客 / Back to blog              | 戻るナビのアクセシブル名。                            | 条件付きで有効 | `backToBlogAria: "ブログに戻る"`            |
+| `backToBlog`         | 返回博客 / Back to blog              | 戻るリンク文。行先は変えない。                        | 条件付きで有効 | `backToBlog: "ブログに戻る"`                |
+| `comments`           | 评论 / Comments                      | 有効コメント領域の名前。                              | 条件付きで有効 | `comments: "コメント"`                      |
+| `metaReadMinutes`    | 分钟阅读 / min read                  | 現在未使用。読了時間は復帰しない。                    | 現在未使用     | `metaReadMinutes: "分で読めます"`           |
+| `latencyLabel`       | 延迟估计 / latency est               | 現在未使用。遅延は復帰しない。                        | 現在未使用     | `latencyLabel: "推定待ち時間"`              |
+| `confidenceLabel`    | 置信度 / confidence                  | 現在未使用。信頼度は復帰しない。                      | 現在未使用     | `confidenceLabel: "信頼度"`                 |
 
 状態・カバー・スクロール案内は主に雰囲気の演出で、AI オンライン、ネット同期、正確性の測定ではありません。regenerate はスキャン効果だけで記事を書き直したり AI を要求したりしません。
 
@@ -177,14 +177,14 @@ OUTPUT と章リンクコピーの文面を変える例です。
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
         blog: {
-          responseOutput: '正文',
-          statsWords: '字词',
-          statsTokens: '估算 tokens',
-          copySectionLink: '复制这一节的网址',
-          regenerate: '重播扫描效果',
+          responseOutput: '本文',
+          statsWords: '文字・単語',
+          statsTokens: '推定 tokens',
+          copySectionLink: 'この節の URL をコピー',
+          regenerate: 'スキャン演出を再生',
         },
       },
     },
@@ -198,23 +198,23 @@ i18n: {
 
 ### コードコピーと画像プレビュー
 
-接頭辞は `i18n.locales.<语言>.messages`。すべて任意 string・条件付きで、コピー権限・画像ソース・機能スイッチは変えません。
+接頭辞は `i18n.locales.<locale>.messages`。すべて任意 string・条件付きで、コピー権限・画像ソース・機能スイッチは変えません。
 
-| パス末尾             | 簡体中国語既定 / 英語既定                                           | 役割と制約                                             | メンバー例                                           |
-| -------------------- | ------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- |
-| `codeCopy.copy`      | 复制代码 / Copy code                                                | コピー文字で内容は変えない。                           | `codeCopy: { copy: "复制代码" }`                     |
-| `codeCopy.copied`    | 已复制 / Copied                                                     | コード・章リンクの成功案内。                           | `codeCopy: { copied: "已复制" }`                     |
-| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | コード・章リンク失敗。クリップボード権限は付与しない。 | `codeCopy: { failed: "复制失败，请手动选择代码。" }` |
-| `imagePreview.open`  | 查看大图 / View image                                               | 画像入口とダイアログのアクセシブル名。                 | `imagePreview: { open: "查看大图" }`                 |
-| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | 閉じる名前で画像ソースは変えない。                     | `imagePreview: { close: "关闭图片预览" }`            |
+| パス末尾             | 簡体中国語既定 / 英語既定                                           | 役割と制約                                             | メンバー例                                                                         |
+| -------------------- | ------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| `codeCopy.copy`      | 复制代码 / Copy code                                                | コピー文字で内容は変えない。                           | `codeCopy: { copy: "コードをコピー" }`                                             |
+| `codeCopy.copied`    | 已复制 / Copied                                                     | コード・章リンクの成功案内。                           | `codeCopy: { copied: "コピーしました" }`                                           |
+| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | コード・章リンク失敗。クリップボード権限は付与しない。 | `codeCopy: { failed: "コピーできませんでした。コードを手動で選択してください。" }` |
+| `imagePreview.open`  | 查看大图 / View image                                               | 画像入口とダイアログのアクセシブル名。                 | `imagePreview: { open: "画像を拡大" }`                                             |
+| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | 閉じる名前で画像ソースは変えない。                     | `imagePreview: { close: "画像プレビューを閉じる" }`                                |
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
-        codeCopy: { copy: '复制内容', copied: '复制好了', failed: '无法复制，请手动选择。' },
-        imagePreview: { open: '放大这张图片', close: '收起图片' },
+        codeCopy: { copy: '内容をコピー', copied: 'コピーしました', failed: 'コピーできませんでした。手動で選択してください。' },
+        imagePreview: { open: 'この画像を拡大', close: '画像を閉じる' },
       },
     },
   },

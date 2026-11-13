@@ -58,7 +58,7 @@ if (args === 'run build' && process.env.DOCTOR_BUILD_FAIL) process.exit(7);
   }
 });
 
-test('local doctor prepares persistent covers for older starters; CI doctor never repairs missing variants', async () => {
+test('local and CI doctor prepare persistent covers; explicit check stays read-only', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'anglefeint-doctor-covers-'));
   try {
     await mkdir(path.join(root, 'src/assets/blog/default-covers'), { recursive: true });
@@ -96,14 +96,26 @@ test('local doctor prepares persistent covers for older starters; CI doctor neve
     await rm(image);
     await writeFile(path.join(root, 'calls'), '');
     await assert.rejects(
-      exec(process.execPath, [cli, 'doctor'], {
+      exec(process.execPath, [cli, 'prepare-covers', '--check'], {
         cwd: root,
-        env: { ...process.env, CI: 'true', npm_execpath: npmCli },
+        env: { ...process.env, CI: 'true' },
       }),
       /Missing, stale or modified/
     );
     await assert.rejects(readFile(image), { code: 'ENOENT' });
-    assert.equal(await readFile(path.join(root, 'calls'), 'utf8'), '');
+    await exec(process.execPath, [cli, 'doctor'], {
+      cwd: root,
+      env: { ...process.env, CI: 'true', npm_execpath: npmCli },
+    });
+    assert.ok((await readFile(image)).length > 0);
+    assert.equal(
+      await readFile(path.join(root, 'calls'), 'utf8'),
+      'exec -- astro check\nrun build\n'
+    );
+    await exec(process.execPath, [cli, 'prepare-covers', '--check'], {
+      cwd: root,
+      env: { ...process.env, CI: 'true' },
+    });
   } finally {
     assert.equal(path.dirname(root), tmpdir());
     await rm(root, { recursive: true, force: true });

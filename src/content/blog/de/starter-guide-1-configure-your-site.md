@@ -42,14 +42,15 @@ node --version
 npm --version
 ```
 
-Erstelle den Blog im gewünschten übergeordneten Verzeichnis. Dieser Befehl legt `my-blog` an, installiert aber noch keine Abhängigkeiten:
+Erstelle den Blog im gewünschten übergeordneten Verzeichnis. Folge dem Einrichtungsassistenten und wähle **Yes**, wenn er die Installation der Abhängigkeiten anbietet:
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+Wenn du die Installation bewusst überspringst, führe vor `npm run dev` selbst `npm install` aus. `--no-ai` überspringt zusätzliche allgemeine KI-Agenten-Dateien; der Starter enthält eigene Theme-Hinweise.
 
 Du kannst `my-blog` durch einen anderen Ordnernamen ersetzen; passe auch `cd` an. Öffne die im Terminal angezeigte lokale URL. Der Port kann sich ändern, wenn er bereits belegt ist. Der Entwicklungsserver läuft weiter, bis du ihn mit `Ctrl+C` stoppst.
 
@@ -63,11 +64,11 @@ Das installierte Projekt enthält bereits `src/site.config.ts`. Bearbeite diese 
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录开发、阅读和生活。',
+  title: 'Alex’ Blog',
+  description: 'Entwicklung, Lektüre und Alltag.',
   url: 'https://example.com',
-  author: '小林',
-  tagline: '保持好奇，持续记录。',
+  author: 'Alex',
+  tagline: 'Bleib neugierig und schreibe weiter.',
 },
 ```
 
@@ -147,7 +148,7 @@ Typen, Vorgaben und URL-Zusammenhänge stehen im [Sprachenverzeichnis](/de/blog/
 
 ## 4. Beispiele durch eigene Beiträge ersetzen
 
-Beiträge liegen unter `src/content/blog/<语言代码>/`. `welcome-to-anglefeint.md`, `starter-guide-*.md` und `config-*.md` sind normale Starter-Beiträge: Willkommensbeispiel, acht Anleitungen und Konfigurationslexikon. Nach Backup oder Git-Commit kannst du Inhalte je Sprache behalten oder entfernen. Das Löschen von Willkommen und Anleitungen entfernt das Lexikon nicht. Lösche keine weiterhin referenzierten Bilder.
+Beiträge liegen unter `src/content/blog/<Sprachcode>/`. `welcome-to-anglefeint.md`, `starter-guide-*.md` und `config-*.md` sind normale Starter-Beiträge: Willkommensbeispiel, acht Anleitungen und Konfigurationslexikon. Nach Backup oder Git-Commit kannst du Inhalte je Sprache behalten oder entfernen. Das Löschen von Willkommen und Anleitungen entfernt das Lexikon nicht. Lösche keine weiterhin referenzierten Bilder.
 
 Erstelle einen Beitrag im Standardablauf:
 
@@ -157,7 +158,7 @@ npm run new-post -- my-first-post
 
 Ohne `--locales` oder `ANGLEFEINT_LOCALES` erzeugt der Befehl gleichnamige Gerüste für alle aktivierten Sprachen; die Anfangskonfiguration ergibt neun Dateien. Er übersetzt nicht automatisch. Vorhandene gleichnamige Dateien werden übersprungen, nicht überschrieben.
 
-Öffne `src/content/blog/<语言代码>/my-first-post.md` und fülle Titel, Beschreibung und Text aus. Die URL lautet `/<语言代码>/blog/my-first-post/`. Die englische Datei im Ordner en hat etwa `/en/blog/my-first-post/`, die chinesische im Ordner zh `/zh/blog/my-first-post/`. Entferne unfertige, nicht zur Veröffentlichung bestimmte Gerüste vor dem Deployment aus dem Inhaltsverzeichnis. Sie sind keine automatisch versteckten Entwürfe.
+Öffne `src/content/blog/<Sprachcode>/my-first-post.md` und fülle Titel, Beschreibung und Text aus. Die URL lautet `/<Sprachcode>/blog/my-first-post/`. Die englische Datei im Ordner en hat etwa `/en/blog/my-first-post/`, die chinesische im Ordner zh `/zh/blog/my-first-post/`. Entferne unfertige, nicht zur Veröffentlichung bestimmte Gerüste vor dem Deployment aus dem Inhaltsverzeichnis. Sie sind keine automatisch versteckten Entwürfe.
 
 Für nur eine Sprache kannst du `npm run new-post -- my-first-post --locales zh` verwenden; für mehrere `--locales en,zh`. Das sind optionale Varianten, die du nicht alle ausführen musst. `--locales` aktiviert selbst keine Sprache.
 
@@ -178,7 +179,9 @@ Der lokale `doctor` bereitet fehlende oder veraltete responsive Bilder vor, füh
 
 `preview` zeigt die bereits gebaute statische Website aus `dist/` unter der angezeigten Terminal-URL. Es veröffentlicht nichts im Internet. Die Artikelsuche prüfst du in dieser Build-Vorschau; `dev` hat keine laufend aktualisierte Volltextsuche. `Ctrl+C` beendet die Vorschau.
 
-Die Hosting-Build-Anweisung lautet später `npm run build`, das Ausgabeverzeichnis `dist`. Stelle alle Dateien darin bereit. Nach neuen oder ersetzten lokalen Bildern starte zunächst lokal dev oder doctor und committe Originale sowie das gesamte `src/assets/blog/covers/`. Deployment-Build und CI doctor validieren diese Dateien nur und scheitern bei fehlenden oder veralteten Varianten, statt sie auf der Plattform zu erzeugen. Nach Änderungen an Inhalt oder Konfiguration musst du neu bauen und bereitstellen.
+Die Hosting-Build-Anweisung lautet später `npm run build`, das Ausgabeverzeichnis `dist`. Stelle dessen gesamten Inhalt bereit. Normale Aufrufe von dev, build und doctor, auch in CI, verwenden korrekte Bildvarianten wieder und ergänzen oder reparieren fehlende, veraltete oder veränderte Dateien automatisch. Committe Inhalte und referenzierte Originalbilder. Das Committen von `src/assets/blog/covers/manifest.json` und `generated/` wird zur Wiederverwendung empfohlen, ist aber keine Voraussetzung für die automatische Vorbereitung. Fehlende Originale, unsichere Pfade und ungültige Eingaben führen weiterhin zu Fehlern. Nach Inhalts- oder Konfigurationsänderungen musst du neu bauen und bereitstellen.
+
+**Versionshinweis:** Die automatische Bildvorbereitung bei normalen Builds und doctor in CI erfordert mindestens 0.36.2. Führe mit 0.36.1 zuerst dev oder `prepare-covers` aus, um Bildvarianten vorzubereiten. Explizites `prepare-covers --check` und Konfigurations-Sync bleiben schreibgeschützt.
 
 ## Ein vorhandenes Projekt aktualisieren
 

@@ -16,7 +16,7 @@ Configure the repository once, then choose whether translated articles share dis
 
 ## 1. Prepare a GitHub repository and category
 
-Open the [Giscus configuration page in Simplified Chinese](https://giscus.app/zh-CN), then:
+Open the [Giscus configuration page](https://giscus.app/), then:
 
 1. Choose your public GitHub repository, either the blog repository or a separate comments repository.
 2. Enable Discussions.
@@ -34,7 +34,7 @@ Giscus generates a script. The theme only needs its field values:
 
 Do not use example IDs, repository URLs or your username as actual IDs. The category need not be Announcements; use the selected name and matching ID. No Giscus npm package, GitHub token or password is required.
 
-Comments depend on external Giscus/GitHub connectivity. Posting requires GitHub authorization, and visitors can also participate directly in the GitHub Discussion. The theme does not provide anonymous commenting. See [Giscus documentation](https://giscus.app/zh-CN) for service behavior.
+Comments depend on external Giscus/GitHub connectivity. Posting requires GitHub authorization, and visitors can also participate directly in the GitHub Discussion. The theme does not provide anonymous commenting. See [Giscus documentation](https://giscus.app/) for service behavior.
 
 ## 2. Enable ordinary article comments
 
@@ -105,7 +105,7 @@ To share a discussion between Chinese and English translations while keeping dif
 ```ts
 theme: {
   comments: {
-    // 保留 enabled: true 和自己的 repo、repoId、category、categoryId。
+    // Keep enabled: true and your own repo, repoId, category and categoryId.
     shareAcrossLocales: true,
     mapping: 'specific',
     term: '',

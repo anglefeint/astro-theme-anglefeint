@@ -38,350 +38,350 @@ heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 
 ## 전체 설정 경로로 찾기
 
-현재 공개 설정 타입에 따라 미사용 필드를 포함한 경로 인덱스를 제공합니다. 누르면 주 설명으로 이동하며 페이지별 사용 차이는 각 모듈에서 상호 참조합니다. `<语言>`는 자리표시자이며 zh, en 같은 실제 코드로 바꾸세요. 글 frontmatter는 별도로 다루며 site.config 경로와 섞지 않습니다.
+현재 공개 설정 타입에 따라 미사용 필드를 포함한 경로 인덱스를 제공합니다. 누르면 주 설명으로 이동하며 페이지별 사용 차이는 각 모듈에서 상호 참조합니다. `<locale>`는 자리표시자이며 zh, en 같은 실제 코드로 바꾸세요. 글 frontmatter는 별도로 다루며 site.config 경로와 섞지 않습니다.
 
-| 전체 경로                                                           | 조회 위치                                                                  |
-| ------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| `i18n.locales.<语言>.site.homeTitle`                                | [홈 대제목](/ko/blog/config-home/#home-title)                              |
-| `i18n.locales.<语言>.site.hero`                                     | [홈 가시 소개](/ko/blog/config-home/#home-hero)                            |
-| `i18n.locales.<语言>.messages.siteDescription`                      | [홈 메타 설명](/ko/blog/config-home/#home-description)                     |
-| `theme.homeLatestCount`                                             | [최신 글 수](/ko/blog/config-home/#latest-count)                           |
-| `theme.home.showInitialize`                                         | [시작 안내 스위치](/ko/blog/config-home/#startup-switches)                 |
-| `theme.home.showFollow`                                             | [시작 안내 스위치](/ko/blog/config-home/#startup-switches)                 |
-| `theme.home.showTrace`                                              | [시작 안내 스위치](/ko/blog/config-home/#startup-switches)                 |
-| `theme.effects.enableHomePassage`                                   | [클릭 이동 효과](/ko/blog/config-home/#home-passage)                       |
-| `i18n.locales.<语言>.messages.home.latest`                          | [홈 UI 문구](/ko/blog/config-home/#home-messages)                          |
-| `i18n.locales.<语言>.messages.home.viewAll`                         | [홈 UI 문구](/ko/blog/config-home/#home-messages)                          |
-| `i18n.locales.<语言>.messages.home.noPosts`                         | [홈 UI 문구](/ko/blog/config-home/#home-messages)                          |
-| `i18n.locales.<语言>.messages.home.openDoor`                        | [홈 UI 문구](/ko/blog/config-home/#home-messages)                          |
-| `i18n.locales.<语言>.messages.home.transmission`                    | [와이드스크린 터미널 문구](/ko/blog/config-home/#home-transmission)        |
-| `i18n.locales.<语言>.messages.home.hero`                            | [소개 대체 문구](/ko/blog/config-home/#message-hero)                       |
-| `theme.fragments.enabled`                                           | [Fragments 전체 스위치](/ko/blog/config-fragments/#enabled)                |
-| `i18n.locales.<语言>.messages.blog.allPosts`                        | [글·태그 공유 입구](/ko/blog/config-blog-list/#tag-messages)               |
-| `i18n.locales.<语言>.messages.fragments.title`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.close`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.siteTitle`                            | [현재 미사용 제목 필드](/ko/blog/config-site-chrome/#legacy-site-title)    |
-| `theme.blogPageSize`                                                | [페이지당 글 수](/ko/blog/config-blog-list/#page-size)                     |
-| `theme.tags.enabled`                                                | [태그 스위치](/ko/blog/config-blog-list/#tags-enabled)                     |
-| `theme.pagination.windowSize`                                       | [페이지 번호 창](/ko/blog/config-blog-list/#pagination-window)             |
-| `theme.pagination.showJumpThreshold`                                | [페이지 이동 임계값](/ko/blog/config-blog-list/#jump-threshold)            |
-| `theme.pagination.jump.enabled`                                     | [페이지 이동 스위치](/ko/blog/config-blog-list/#jump-enabled)              |
-| `theme.pagination.jump.enterToGo`                                   | [Enter 페이지 이동](/ko/blog/config-blog-list/#jump-enter)                 |
-| `theme.pagination.style.enabled`                                    | [페이지 나누기 스타일 스위치](/ko/blog/config-blog-list/#style-enabled)    |
-| `theme.pagination.style.mode`                                       | [변형 전략](/ko/blog/config-blog-list/#style-mode)                         |
-| `theme.pagination.style.variants`                                   | [변형 개수](/ko/blog/config-blog-list/#style-variants)                     |
-| `theme.pagination.style.fixedVariant`                               | [고정 변형](/ko/blog/config-blog-list/#style-fixed)                        |
-| `i18n.locales.<语言>.messages.blog.title`                           | [목록 제목·설명](/ko/blog/config-blog-list/#archive-messages)              |
-| `i18n.locales.<语言>.messages.blog.pageTitle`                       | [목록 제목·설명](/ko/blog/config-blog-list/#archive-messages)              |
-| `i18n.locales.<语言>.messages.blog.archiveDescription`              | [목록 제목·설명](/ko/blog/config-blog-list/#archive-messages)              |
-| `i18n.locales.<语言>.messages.blog.pageDescription`                 | [목록 제목·설명](/ko/blog/config-blog-list/#archive-messages)              |
-| `i18n.locales.<语言>.messages.blog.previous`                        | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
-| `i18n.locales.<语言>.messages.blog.next`                            | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
-| `i18n.locales.<语言>.messages.blog.paginationAria`                  | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
-| `i18n.locales.<语言>.messages.blog.jumpTo`                          | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
-| `i18n.locales.<语言>.messages.blog.jumpInputLabel`                  | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
-| `i18n.locales.<语言>.messages.blog.jumpGo`                          | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
-| `i18n.locales.<语言>.messages.blog.tags`                            | [태그 문구](/ko/blog/config-blog-list/#tag-messages)                       |
-| `i18n.locales.<语言>.messages.blog.noTags`                          | [태그 문구](/ko/blog/config-blog-list/#tag-messages)                       |
-| `i18n.locales.<语言>.messages.blog.taggedPosts`                     | [태그 문구](/ko/blog/config-blog-list/#tag-messages)                       |
-| `theme.toc.enabled`                                                 | [글 기능 스위치](/ko/blog/config-article/#feature-switches)                |
-| `theme.math.enabled`                                                | [글 기능 스위치](/ko/blog/config-article/#feature-switches)                |
-| `theme.effects.enableRedQueen`                                      | [글 기능 스위치](/ko/blog/config-article/#feature-switches)                |
-| `theme.search.enabled`                                              | [사이트 검색 스위치](/ko/blog/config-search/#enabled)                      |
-| `theme.socialImage.enabled`                                         | [글 기능 스위치](/ko/blog/config-article/#feature-switches)                |
-| `site.author`                                                       | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
-| `site.ogImage`                                                      | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
-| `theme.enableAboutPage`                                             | [About 페이지 스위치](/ko/blog/config-about/#page-enabled)                 |
-| `theme.footer.showCredits`                                          | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#footer)                 |
-| `theme.comments.enabled`                                            | [Giscus 댓글 설정](/ko/blog/config-comments/#controls)                     |
-| `i18n.locales.<语言>.messages.blog.rqBadge`                         | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.rqReplayAria`                    | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.backToTop`                       | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.toastP10`                        | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.toastP30`                        | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.toastP60`                        | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.toastDone`                       | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.metaPublished`                   | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.metaAuthor`                      | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.metaUpdated`                     | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.systemStatusAria`                | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.systemModelLabel`                | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.systemModeLabel`                 | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.systemStateLabel`                | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.promptContextLabel`              | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.heroMonitor`                     | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.heroSignalSync`                  | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.heroModelOnline`                 | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.toc`                             | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.responseOutput`                  | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.statsWords`                      | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.statsTokens`                     | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.copySectionLink`                 | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.regenerate`                      | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.relatedAria`                     | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.related`                         | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.backToBlogAria`                  | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.backToBlog`                      | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.comments`                        | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
-| `i18n.locales.<语言>.messages.blog.metaReadMinutes`                 | [글 UI 문구(현재 미사용)](/ko/blog/config-article/#article-messages)       |
-| `i18n.locales.<语言>.messages.blog.latencyLabel`                    | [글 UI 문구(현재 미사용)](/ko/blog/config-article/#article-messages)       |
-| `i18n.locales.<语言>.messages.blog.confidenceLabel`                 | [글 UI 문구(현재 미사용)](/ko/blog/config-article/#article-messages)       |
-| `i18n.locales.<语言>.messages.codeCopy.copy`                        | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
-| `i18n.locales.<语言>.messages.codeCopy.copied`                      | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
-| `i18n.locales.<语言>.messages.codeCopy.failed`                      | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
-| `i18n.locales.<语言>.messages.imagePreview.open`                    | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
-| `i18n.locales.<语言>.messages.imagePreview.close`                   | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
-| `theme.fragments.pageSize`                                          | [페이지당 Fragment 수](/ko/blog/config-fragments/#page-size)               |
-| `theme.fragments.comments.enabled`                                  | [Fragment 댓글](/ko/blog/config-fragments/#comments-enabled)               |
-| `i18n.locales.<语言>.messages.fragments.description`                | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.empty`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.comments`                   | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.previous`                   | [Fragment 문구(현재 미사용)](/ko/blog/config-fragments/#fragment-messages) |
-| `i18n.locales.<语言>.messages.fragments.next`                       | [Fragment 문구(현재 미사용)](/ko/blog/config-fragments/#fragment-messages) |
-| `i18n.locales.<语言>.messages.fragments.loading`                    | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.error`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.retry`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.copyLink`                   | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.linkCopied`                 | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.copyLinkFailed`             | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.notFound`                   | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `i18n.locales.<语言>.messages.fragments.indexError`                 | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
-| `theme.comments.repo`                                               | [Giscus 댓글 설정](/ko/blog/config-comments/#connection)                   |
-| `theme.comments.repoId`                                             | [Giscus 댓글 설정](/ko/blog/config-comments/#connection)                   |
-| `theme.comments.category`                                           | [Giscus 댓글 설정](/ko/blog/config-comments/#connection)                   |
-| `theme.comments.categoryId`                                         | [Giscus 댓글 설정](/ko/blog/config-comments/#connection)                   |
-| `i18n.locales.<语言>.about.metaLine`                                | [About 본문](/ko/blog/config-about/#body-fields)                           |
-| `i18n.locales.<语言>.about.sections.who`                            | [About 본문](/ko/blog/config-about/#body-fields)                           |
-| `i18n.locales.<语言>.about.sections.what`                           | [About 본문](/ko/blog/config-about/#body-fields)                           |
-| `i18n.locales.<语言>.about.sections.ethos`                          | [About 본문](/ko/blog/config-about/#body-fields)                           |
-| `i18n.locales.<语言>.about.sections.now`                            | [About 본문](/ko/blog/config-about/#body-fields)                           |
-| `i18n.locales.<语言>.about.sections.contactLead`                    | [About 본문](/ko/blog/config-about/#body-fields)                           |
-| `i18n.locales.<语言>.about.sections.signature`                      | [About 본문](/ko/blog/config-about/#body-fields)                           |
-| `i18n.locales.<语言>.about.contact.email`                           | [About 연락처](/ko/blog/config-about/#contact-fields)                      |
-| `i18n.locales.<语言>.about.contact.githubUrl`                       | [About 연락처](/ko/blog/config-about/#contact-fields)                      |
-| `i18n.locales.<语言>.about.contact.githubLabel`                     | [About 연락처](/ko/blog/config-about/#contact-fields)                      |
-| `i18n.locales.<语言>.about.sidebar.dlData`                          | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
-| `i18n.locales.<语言>.about.sidebar.ai`                              | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
-| `i18n.locales.<语言>.about.sidebar.decryptor`                       | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
-| `i18n.locales.<语言>.about.sidebar.help`                            | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
-| `i18n.locales.<语言>.about.sidebar.allScripts`                      | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
-| `i18n.locales.<语言>.about.scriptsPath`                             | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
-| `i18n.locales.<语言>.about.labels.modalOutput`                      | [About 공통 문구(적용 상태 확인)](/ko/blog/config-about/#label-fields)     |
-| `i18n.locales.<语言>.about.labels.modalClose`                       | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
-| `i18n.locales.<语言>.about.labels.responseOutput`                   | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
-| `i18n.locales.<语言>.about.labels.contactEmailLead`                 | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
-| `i18n.locales.<语言>.about.labels.contactConnectLead`               | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
-| `i18n.locales.<语言>.about.labels.backToTop`                        | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
-| `i18n.locales.<语言>.about.labels.quickAccess`                      | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
-| `i18n.locales.<语言>.about.labels.contactEmailLabel`                | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
-| `i18n.locales.<语言>.about.modals.dlData.title`                     | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.dlData.subtitle`                  | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.ai.title`                         | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.ai.lines`                         | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.decryptor.title`                  | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.decryptor.header`                 | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
-| `i18n.locales.<语言>.about.modals.decryptor.keysLabel`              | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
-| `i18n.locales.<语言>.about.modals.decryptor.currentPassphraseLabel` | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
-| `i18n.locales.<语言>.about.modals.decryptor.masterKeyLabel`         | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
-| `i18n.locales.<语言>.about.modals.decryptor.transientKeyLabel`      | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
-| `i18n.locales.<语言>.about.modals.help.title`                       | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.help.statsLabel`                  | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.help.typedPrefix`                 | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.help.typedSuffix`                 | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.modals.allScripts.title`                 | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
-| `i18n.locales.<语言>.about.effects.backgroundLines`                 | [About 효과(적용 상태 확인)](/ko/blog/config-about/#effect-fields)         |
-| `i18n.locales.<语言>.about.effects.scrollToasts.p30`                | [About 효과](/ko/blog/config-about/#effect-fields)                         |
-| `i18n.locales.<语言>.about.effects.scrollToasts.p60`                | [About 효과](/ko/blog/config-about/#effect-fields)                         |
-| `i18n.locales.<语言>.about.effects.scrollToasts.p90`                | [About 효과](/ko/blog/config-about/#effect-fields)                         |
-| `i18n.locales.<语言>.messages.about.title`                          | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.about.description`                    | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.about.who`                            | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.about.what`                           | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.about.ethos`                          | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.about.now`                            | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.about.contact`                        | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.about.regenerate`                     | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.windowControls.collapse`              | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.windowControls.expand`                | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.windowControls.restore`               | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.windowControls.fullscreen`            | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.scriptFolders.copyTitle`              | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.scriptFolders.copied`                 | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `i18n.locales.<语言>.messages.scriptFolders.failed`                 | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
-| `theme.enableDecoderPage`                                           | [Decoder 페이지 스위치](/ko/blog/config-decoder/#page-enabled)             |
-| `i18n.locales.<语言>.messages.nav.about`                            | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
-| `i18n.locales.<语言>.messages.decoder.input`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.placeholder`                  | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.format`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.auto`                         | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.decode`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.clear`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.copy`                         | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.reuse`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.supported`                    | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.html`                         | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.unicode`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.jwtWarning`                   | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.copied`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.copyFailed`                   | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.output`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.local`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.ready`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.running`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.done`                         | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.empty`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.tooLong`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.invalid`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.binary`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.unknown`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.ambiguous`                    | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoder.example`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.description`              | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.fullTool`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.task`                     | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.textTask`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.callTask`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.addressTask`              | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.addressHint`              | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.chain`                    | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.decimals`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.precisionHint`            | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.network`                  | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.history`                  | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.back`                     | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.export`                   | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.limits`                   | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.callNotice`               | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.addressNotice`            | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.unsupported`              | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.checksum`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.length`                   | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.wrongNetwork`             | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.stepLimit`                | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.budget`                   | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.addressParse`             | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.addressCheck`             | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.addressResult`            | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.callParse`                | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.rawOnly`                  | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.amountResult`             | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.inputHint`                | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.loadFailed`               | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.tribute`         | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links`           | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].title`   | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].href`    | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].author`  | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].year`    | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].cover`   | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
-| `theme.music.enabled`                                               | [음악 플레이어 설정](/ko/blog/config-music/#enabled)                       |
-| `theme.music.tracks`                                                | [음악 플레이어 설정](/ko/blog/config-music/#tracks)                        |
-| `theme.music.tracks[].title`                                        | [음악 플레이어 설정](/ko/blog/config-music/#track-fields)                  |
-| `theme.music.tracks[].artist`                                       | [음악 플레이어 설정](/ko/blog/config-music/#track-fields)                  |
-| `theme.music.tracks[].src`                                          | [음악 플레이어 설정](/ko/blog/config-music/#track-fields)                  |
-| `i18n.locales.<语言>.messages.music.label`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.play`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.pause`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.prev`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.next`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.open`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.close`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.progress`                       | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.volume`                         | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.queue`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.mute`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.unmute`                         | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.idle`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.loading`                        | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.playing`                        | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.paused`                         | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.blocked`                        | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.error`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `i18n.locales.<语言>.messages.music.noScript`                       | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
-| `theme.comments.shareAcrossLocales`                                 | [Giscus 댓글 설정](/ko/blog/config-comments/#sharing)                      |
-| `theme.comments.mapping`                                            | [Giscus 댓글 설정](/ko/blog/config-comments/#mapping)                      |
-| `theme.comments.term`                                               | [Giscus 댓글 설정](/ko/blog/config-comments/#mapping)                      |
-| `theme.comments.number`                                             | [Giscus 댓글 설정](/ko/blog/config-comments/#mapping)                      |
-| `theme.comments.strict`                                             | [Giscus 댓글 설정](/ko/blog/config-comments/#mapping)                      |
-| `theme.comments.reactionsEnabled`                                   | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
-| `theme.comments.emitMetadata`                                       | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
-| `theme.comments.inputPosition`                                      | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
-| `theme.comments.theme`                                              | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
-| `theme.comments.lang`                                               | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
-| `theme.comments.loading`                                            | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
-| `theme.comments.crossorigin`                                        | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
-| `i18n.defaultLocale`                                                | [언어·대체값 설정](/ko/blog/config-languages/#registry)                    |
-| `i18n.locales`                                                      | [언어·대체값 설정](/ko/blog/config-languages/#registry)                    |
-| `i18n.locales.<语言>`                                               | [언어·대체값 설정](/ko/blog/config-languages/#registry)                    |
-| `i18n.routing.defaultLocalePrefix`                                  | [언어·대체값 설정](/ko/blog/config-languages/#routing)                     |
-| `i18n.locales.<语言>.meta`                                          | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
-| `i18n.locales.<语言>.meta.label`                                    | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
-| `i18n.locales.<语言>.meta.hreflang`                                 | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
-| `i18n.locales.<语言>.meta.ogLocale`                                 | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
-| `i18n.locales.<语言>.meta.enabled`                                  | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
-| `i18n.locales.<语言>.meta.fallback`                                 | [언어·대체값 설정](/ko/blog/config-languages/#fallback)                    |
-| `i18n.locales.<语言>.site`                                          | [언어·대체값 설정](/ko/blog/config-languages/#overrides)                   |
-| `i18n.locales.<语言>.messages`                                      | [언어·대체값 설정](/ko/blog/config-languages/#overrides)                   |
-| `i18n.locales.<语言>.about`                                         | [언어·대체값 설정](/ko/blog/config-languages/#overrides)                   |
-| `i18n.locales.<语言>.messages.langLabel`                            | [언어·대체값 설정](/ko/blog/config-languages/#common-messages)             |
-| `i18n.locales.<语言>.aiReadableContent`                             | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
-| `i18n.locales.<语言>.aiReadableContent.notes`                       | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
-| `i18n.locales.<语言>.aiReadableContent.links`                       | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
-| `i18n.locales.<语言>.aiReadableContent.links[].label`               | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
-| `i18n.locales.<语言>.aiReadableContent.links[].href`                | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
-| `i18n.locales.<语言>.messages.search.label`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.close`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.placeholder`                   | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.hint`                          | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.loading`                       | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.empty`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.error`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.retry`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.more`                          | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.results`                       | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `i18n.locales.<语言>.messages.search.dev`                           | [검색 문구](/ko/blog/config-search/#messages)                              |
-| `analytics`                                                         | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#analytics)                |
-| `analytics.googleAnalyticsId`                                       | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#analytics)                |
-| `aiReadableContent`                                                 | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
-| `aiReadableContent.notes`                                           | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
-| `aiReadableContent.links`                                           | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
-| `aiReadableContent.links[].label`                                   | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
-| `aiReadableContent.links[].href`                                    | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
-| `site.title`                                                        | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
-| `site.description`                                                  | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
-| `site.url`                                                          | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
-| `site.tagline`                                                      | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
-| `social.links`                                                      | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social)                 |
-| `social.links[].href`                                               | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
-| `social.links[].label`                                              | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
-| `social.links[].rel`                                                | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
-| `social.links[].icon`                                               | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
-| `social.links[].iconSrc`                                            | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
-| `theme.footer.links`                                                | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#footer)                 |
-| `theme.footer.links[].label`                                        | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#footer)                 |
-| `theme.footer.links[].href`                                         | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#footer)                 |
-| `i18n.locales.<语言>.messages.nav.home`                             | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
-| `i18n.locales.<语言>.messages.nav.blog`                             | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
-| `i18n.locales.<语言>.messages.nav.status`                           | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
-| `i18n.locales.<语言>.messages.nav.statusAria`                       | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
-| `i18n.locales.<语言>.messages.footer.theme`                         | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
-| `i18n.locales.<语言>.messages.footer.builtWith`                     | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
-| `i18n.locales.<语言>.messages.terminal.commandInput`                | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.hint`                        | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.help`                        | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.syntax`                      | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.usage`                       | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.unknown`                     | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.notFound`                    | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.notDirectory`                | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.isDirectory`                 | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.failed`                      | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.tooLarge`                    | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.empty`                       | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.loading`                     | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.readerTitle`                 | [터미널 문구(현재 미사용)](/ko/blog/config-terminal/#messages)             |
-| `i18n.locales.<语言>.messages.terminal.readerHint`                  | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
-| `i18n.locales.<语言>.messages.terminal.readerCommand`               | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| 전체 경로                                                             | 조회 위치                                                                  |
+| --------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `i18n.locales.<locale>.site.homeTitle`                                | [홈 대제목](/ko/blog/config-home/#home-title)                              |
+| `i18n.locales.<locale>.site.hero`                                     | [홈 가시 소개](/ko/blog/config-home/#home-hero)                            |
+| `i18n.locales.<locale>.messages.siteDescription`                      | [홈 메타 설명](/ko/blog/config-home/#home-description)                     |
+| `theme.homeLatestCount`                                               | [최신 글 수](/ko/blog/config-home/#latest-count)                           |
+| `theme.home.showInitialize`                                           | [시작 안내 스위치](/ko/blog/config-home/#startup-switches)                 |
+| `theme.home.showFollow`                                               | [시작 안내 스위치](/ko/blog/config-home/#startup-switches)                 |
+| `theme.home.showTrace`                                                | [시작 안내 스위치](/ko/blog/config-home/#startup-switches)                 |
+| `theme.effects.enableHomePassage`                                     | [클릭 이동 효과](/ko/blog/config-home/#home-passage)                       |
+| `i18n.locales.<locale>.messages.home.latest`                          | [홈 UI 문구](/ko/blog/config-home/#home-messages)                          |
+| `i18n.locales.<locale>.messages.home.viewAll`                         | [홈 UI 문구](/ko/blog/config-home/#home-messages)                          |
+| `i18n.locales.<locale>.messages.home.noPosts`                         | [홈 UI 문구](/ko/blog/config-home/#home-messages)                          |
+| `i18n.locales.<locale>.messages.home.openDoor`                        | [홈 UI 문구](/ko/blog/config-home/#home-messages)                          |
+| `i18n.locales.<locale>.messages.home.transmission`                    | [와이드스크린 터미널 문구](/ko/blog/config-home/#home-transmission)        |
+| `i18n.locales.<locale>.messages.home.hero`                            | [소개 대체 문구](/ko/blog/config-home/#message-hero)                       |
+| `theme.fragments.enabled`                                             | [Fragments 전체 스위치](/ko/blog/config-fragments/#enabled)                |
+| `i18n.locales.<locale>.messages.blog.allPosts`                        | [글·태그 공유 입구](/ko/blog/config-blog-list/#tag-messages)               |
+| `i18n.locales.<locale>.messages.fragments.title`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.close`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.siteTitle`                            | [현재 미사용 제목 필드](/ko/blog/config-site-chrome/#legacy-site-title)    |
+| `theme.blogPageSize`                                                  | [페이지당 글 수](/ko/blog/config-blog-list/#page-size)                     |
+| `theme.tags.enabled`                                                  | [태그 스위치](/ko/blog/config-blog-list/#tags-enabled)                     |
+| `theme.pagination.windowSize`                                         | [페이지 번호 창](/ko/blog/config-blog-list/#pagination-window)             |
+| `theme.pagination.showJumpThreshold`                                  | [페이지 이동 임계값](/ko/blog/config-blog-list/#jump-threshold)            |
+| `theme.pagination.jump.enabled`                                       | [페이지 이동 스위치](/ko/blog/config-blog-list/#jump-enabled)              |
+| `theme.pagination.jump.enterToGo`                                     | [Enter 페이지 이동](/ko/blog/config-blog-list/#jump-enter)                 |
+| `theme.pagination.style.enabled`                                      | [페이지 나누기 스타일 스위치](/ko/blog/config-blog-list/#style-enabled)    |
+| `theme.pagination.style.mode`                                         | [변형 전략](/ko/blog/config-blog-list/#style-mode)                         |
+| `theme.pagination.style.variants`                                     | [변형 개수](/ko/blog/config-blog-list/#style-variants)                     |
+| `theme.pagination.style.fixedVariant`                                 | [고정 변형](/ko/blog/config-blog-list/#style-fixed)                        |
+| `i18n.locales.<locale>.messages.blog.title`                           | [목록 제목·설명](/ko/blog/config-blog-list/#archive-messages)              |
+| `i18n.locales.<locale>.messages.blog.pageTitle`                       | [목록 제목·설명](/ko/blog/config-blog-list/#archive-messages)              |
+| `i18n.locales.<locale>.messages.blog.archiveDescription`              | [목록 제목·설명](/ko/blog/config-blog-list/#archive-messages)              |
+| `i18n.locales.<locale>.messages.blog.pageDescription`                 | [목록 제목·설명](/ko/blog/config-blog-list/#archive-messages)              |
+| `i18n.locales.<locale>.messages.blog.previous`                        | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
+| `i18n.locales.<locale>.messages.blog.next`                            | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
+| `i18n.locales.<locale>.messages.blog.paginationAria`                  | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
+| `i18n.locales.<locale>.messages.blog.jumpTo`                          | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
+| `i18n.locales.<locale>.messages.blog.jumpInputLabel`                  | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
+| `i18n.locales.<locale>.messages.blog.jumpGo`                          | [페이지 나누기 문구](/ko/blog/config-blog-list/#pagination-messages)       |
+| `i18n.locales.<locale>.messages.blog.tags`                            | [태그 문구](/ko/blog/config-blog-list/#tag-messages)                       |
+| `i18n.locales.<locale>.messages.blog.noTags`                          | [태그 문구](/ko/blog/config-blog-list/#tag-messages)                       |
+| `i18n.locales.<locale>.messages.blog.taggedPosts`                     | [태그 문구](/ko/blog/config-blog-list/#tag-messages)                       |
+| `theme.toc.enabled`                                                   | [글 기능 스위치](/ko/blog/config-article/#feature-switches)                |
+| `theme.math.enabled`                                                  | [글 기능 스위치](/ko/blog/config-article/#feature-switches)                |
+| `theme.effects.enableRedQueen`                                        | [글 기능 스위치](/ko/blog/config-article/#feature-switches)                |
+| `theme.search.enabled`                                                | [사이트 검색 스위치](/ko/blog/config-search/#enabled)                      |
+| `theme.socialImage.enabled`                                           | [글 기능 스위치](/ko/blog/config-article/#feature-switches)                |
+| `site.author`                                                         | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
+| `site.ogImage`                                                        | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
+| `theme.enableAboutPage`                                               | [About 페이지 스위치](/ko/blog/config-about/#page-enabled)                 |
+| `theme.footer.showCredits`                                            | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#footer)                 |
+| `theme.comments.enabled`                                              | [Giscus 댓글 설정](/ko/blog/config-comments/#controls)                     |
+| `i18n.locales.<locale>.messages.blog.rqBadge`                         | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.rqReplayAria`                    | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.backToTop`                       | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.toastP10`                        | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.toastP30`                        | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.toastP60`                        | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.toastDone`                       | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.metaPublished`                   | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.metaAuthor`                      | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.metaUpdated`                     | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.systemStatusAria`                | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.systemModelLabel`                | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.systemModeLabel`                 | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.systemStateLabel`                | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.promptContextLabel`              | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.heroMonitor`                     | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.heroSignalSync`                  | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.heroModelOnline`                 | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.toc`                             | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.responseOutput`                  | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.statsWords`                      | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.statsTokens`                     | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.copySectionLink`                 | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.regenerate`                      | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.relatedAria`                     | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.related`                         | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.backToBlogAria`                  | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.backToBlog`                      | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.comments`                        | [글 UI 문구](/ko/blog/config-article/#article-messages)                    |
+| `i18n.locales.<locale>.messages.blog.metaReadMinutes`                 | [글 UI 문구(현재 미사용)](/ko/blog/config-article/#article-messages)       |
+| `i18n.locales.<locale>.messages.blog.latencyLabel`                    | [글 UI 문구(현재 미사용)](/ko/blog/config-article/#article-messages)       |
+| `i18n.locales.<locale>.messages.blog.confidenceLabel`                 | [글 UI 문구(현재 미사용)](/ko/blog/config-article/#article-messages)       |
+| `i18n.locales.<locale>.messages.codeCopy.copy`                        | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
+| `i18n.locales.<locale>.messages.codeCopy.copied`                      | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
+| `i18n.locales.<locale>.messages.codeCopy.failed`                      | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
+| `i18n.locales.<locale>.messages.imagePreview.open`                    | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
+| `i18n.locales.<locale>.messages.imagePreview.close`                   | [읽기 상호작용 문구](/ko/blog/config-article/#interaction-messages)        |
+| `theme.fragments.pageSize`                                            | [페이지당 Fragment 수](/ko/blog/config-fragments/#page-size)               |
+| `theme.fragments.comments.enabled`                                    | [Fragment 댓글](/ko/blog/config-fragments/#comments-enabled)               |
+| `i18n.locales.<locale>.messages.fragments.description`                | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.empty`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.comments`                   | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.previous`                   | [Fragment 문구(현재 미사용)](/ko/blog/config-fragments/#fragment-messages) |
+| `i18n.locales.<locale>.messages.fragments.next`                       | [Fragment 문구(현재 미사용)](/ko/blog/config-fragments/#fragment-messages) |
+| `i18n.locales.<locale>.messages.fragments.loading`                    | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.error`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.retry`                      | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.copyLink`                   | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.linkCopied`                 | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.copyLinkFailed`             | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.notFound`                   | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `i18n.locales.<locale>.messages.fragments.indexError`                 | [Fragment UI 문구](/ko/blog/config-fragments/#fragment-messages)           |
+| `theme.comments.repo`                                                 | [Giscus 댓글 설정](/ko/blog/config-comments/#connection)                   |
+| `theme.comments.repoId`                                               | [Giscus 댓글 설정](/ko/blog/config-comments/#connection)                   |
+| `theme.comments.category`                                             | [Giscus 댓글 설정](/ko/blog/config-comments/#connection)                   |
+| `theme.comments.categoryId`                                           | [Giscus 댓글 설정](/ko/blog/config-comments/#connection)                   |
+| `i18n.locales.<locale>.about.metaLine`                                | [About 본문](/ko/blog/config-about/#body-fields)                           |
+| `i18n.locales.<locale>.about.sections.who`                            | [About 본문](/ko/blog/config-about/#body-fields)                           |
+| `i18n.locales.<locale>.about.sections.what`                           | [About 본문](/ko/blog/config-about/#body-fields)                           |
+| `i18n.locales.<locale>.about.sections.ethos`                          | [About 본문](/ko/blog/config-about/#body-fields)                           |
+| `i18n.locales.<locale>.about.sections.now`                            | [About 본문](/ko/blog/config-about/#body-fields)                           |
+| `i18n.locales.<locale>.about.sections.contactLead`                    | [About 본문](/ko/blog/config-about/#body-fields)                           |
+| `i18n.locales.<locale>.about.sections.signature`                      | [About 본문](/ko/blog/config-about/#body-fields)                           |
+| `i18n.locales.<locale>.about.contact.email`                           | [About 연락처](/ko/blog/config-about/#contact-fields)                      |
+| `i18n.locales.<locale>.about.contact.githubUrl`                       | [About 연락처](/ko/blog/config-about/#contact-fields)                      |
+| `i18n.locales.<locale>.about.contact.githubLabel`                     | [About 연락처](/ko/blog/config-about/#contact-fields)                      |
+| `i18n.locales.<locale>.about.sidebar.dlData`                          | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
+| `i18n.locales.<locale>.about.sidebar.ai`                              | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
+| `i18n.locales.<locale>.about.sidebar.decryptor`                       | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
+| `i18n.locales.<locale>.about.sidebar.help`                            | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
+| `i18n.locales.<locale>.about.sidebar.allScripts`                      | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
+| `i18n.locales.<locale>.about.scriptsPath`                             | [About 도구 입구](/ko/blog/config-about/#tool-fields)                      |
+| `i18n.locales.<locale>.about.labels.modalOutput`                      | [About 공통 문구(적용 상태 확인)](/ko/blog/config-about/#label-fields)     |
+| `i18n.locales.<locale>.about.labels.modalClose`                       | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
+| `i18n.locales.<locale>.about.labels.responseOutput`                   | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
+| `i18n.locales.<locale>.about.labels.contactEmailLead`                 | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
+| `i18n.locales.<locale>.about.labels.contactConnectLead`               | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
+| `i18n.locales.<locale>.about.labels.backToTop`                        | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
+| `i18n.locales.<locale>.about.labels.quickAccess`                      | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
+| `i18n.locales.<locale>.about.labels.contactEmailLabel`                | [About 공통 문구](/ko/blog/config-about/#label-fields)                     |
+| `i18n.locales.<locale>.about.modals.dlData.title`                     | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.dlData.subtitle`                  | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.ai.title`                         | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.ai.lines`                         | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.decryptor.title`                  | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.decryptor.header`                 | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
+| `i18n.locales.<locale>.about.modals.decryptor.keysLabel`              | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
+| `i18n.locales.<locale>.about.modals.decryptor.currentPassphraseLabel` | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
+| `i18n.locales.<locale>.about.modals.decryptor.masterKeyLabel`         | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
+| `i18n.locales.<locale>.about.modals.decryptor.transientKeyLabel`      | [About 도구 팝업(적용 상태 확인)](/ko/blog/config-about/#modal-fields)     |
+| `i18n.locales.<locale>.about.modals.help.title`                       | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.help.statsLabel`                  | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.help.typedPrefix`                 | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.help.typedSuffix`                 | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.modals.allScripts.title`                 | [About 도구 팝업](/ko/blog/config-about/#modal-fields)                     |
+| `i18n.locales.<locale>.about.effects.backgroundLines`                 | [About 효과(적용 상태 확인)](/ko/blog/config-about/#effect-fields)         |
+| `i18n.locales.<locale>.about.effects.scrollToasts.p30`                | [About 효과](/ko/blog/config-about/#effect-fields)                         |
+| `i18n.locales.<locale>.about.effects.scrollToasts.p60`                | [About 효과](/ko/blog/config-about/#effect-fields)                         |
+| `i18n.locales.<locale>.about.effects.scrollToasts.p90`                | [About 효과](/ko/blog/config-about/#effect-fields)                         |
+| `i18n.locales.<locale>.messages.about.title`                          | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.about.description`                    | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.about.who`                            | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.about.what`                           | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.about.ethos`                          | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.about.now`                            | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.about.contact`                        | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.about.regenerate`                     | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.windowControls.collapse`              | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.windowControls.expand`                | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.windowControls.restore`               | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.windowControls.fullscreen`            | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.scriptFolders.copyTitle`              | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.scriptFolders.copied`                 | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `i18n.locales.<locale>.messages.scriptFolders.failed`                 | [About·공유 컨트롤 문구](/ko/blog/config-about/#about-messages)            |
+| `theme.enableDecoderPage`                                             | [Decoder 페이지 스위치](/ko/blog/config-decoder/#page-enabled)             |
+| `i18n.locales.<locale>.messages.nav.about`                            | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
+| `i18n.locales.<locale>.messages.decoder.input`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.placeholder`                  | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.format`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.auto`                         | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.decode`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.clear`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.copy`                         | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.reuse`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.supported`                    | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.html`                         | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.unicode`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.jwtWarning`                   | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.copied`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.copyFailed`                   | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.output`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.local`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.ready`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.running`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.done`                         | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.empty`                        | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.tooLong`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.invalid`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.binary`                       | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.unknown`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.ambiguous`                    | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoder.example`                      | [Decoder 문구](/ko/blog/config-decoder/#text-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.description`              | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.fullTool`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.task`                     | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.textTask`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.callTask`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.addressTask`              | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.addressHint`              | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.chain`                    | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.decimals`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.precisionHint`            | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.network`                  | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.history`                  | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.back`                     | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.export`                   | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.limits`                   | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.callNotice`               | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.addressNotice`            | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.unsupported`              | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.checksum`                 | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.length`                   | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.wrongNetwork`             | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.stepLimit`                | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.budget`                   | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.addressParse`             | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.addressCheck`             | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.addressResult`            | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.callParse`                | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.rawOnly`                  | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.amountResult`             | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.inputHint`                | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.loadFailed`               | [Decoder 문구](/ko/blog/config-decoder/#page-messages)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.tribute`         | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links`           | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].title`   | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].href`    | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].author`  | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].year`    | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].cover`   | [Decoder 읽기 영역](/ko/blog/config-decoder/#readings)                     |
+| `theme.music.enabled`                                                 | [음악 플레이어 설정](/ko/blog/config-music/#enabled)                       |
+| `theme.music.tracks`                                                  | [음악 플레이어 설정](/ko/blog/config-music/#tracks)                        |
+| `theme.music.tracks[].title`                                          | [음악 플레이어 설정](/ko/blog/config-music/#track-fields)                  |
+| `theme.music.tracks[].artist`                                         | [음악 플레이어 설정](/ko/blog/config-music/#track-fields)                  |
+| `theme.music.tracks[].src`                                            | [음악 플레이어 설정](/ko/blog/config-music/#track-fields)                  |
+| `i18n.locales.<locale>.messages.music.label`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.play`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.pause`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.prev`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.next`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.open`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.close`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.progress`                       | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.volume`                         | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.queue`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.mute`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.unmute`                         | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.idle`                           | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.loading`                        | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.playing`                        | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.paused`                         | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.blocked`                        | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.error`                          | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `i18n.locales.<locale>.messages.music.noScript`                       | [음악 플레이어 문구](/ko/blog/config-music/#music-messages)                |
+| `theme.comments.shareAcrossLocales`                                   | [Giscus 댓글 설정](/ko/blog/config-comments/#sharing)                      |
+| `theme.comments.mapping`                                              | [Giscus 댓글 설정](/ko/blog/config-comments/#mapping)                      |
+| `theme.comments.term`                                                 | [Giscus 댓글 설정](/ko/blog/config-comments/#mapping)                      |
+| `theme.comments.number`                                               | [Giscus 댓글 설정](/ko/blog/config-comments/#mapping)                      |
+| `theme.comments.strict`                                               | [Giscus 댓글 설정](/ko/blog/config-comments/#mapping)                      |
+| `theme.comments.reactionsEnabled`                                     | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
+| `theme.comments.emitMetadata`                                         | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
+| `theme.comments.inputPosition`                                        | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
+| `theme.comments.theme`                                                | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
+| `theme.comments.lang`                                                 | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
+| `theme.comments.loading`                                              | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
+| `theme.comments.crossorigin`                                          | [Giscus 댓글 설정](/ko/blog/config-comments/#appearance)                   |
+| `i18n.defaultLocale`                                                  | [언어·대체값 설정](/ko/blog/config-languages/#registry)                    |
+| `i18n.locales`                                                        | [언어·대체값 설정](/ko/blog/config-languages/#registry)                    |
+| `i18n.locales.<locale>`                                               | [언어·대체값 설정](/ko/blog/config-languages/#registry)                    |
+| `i18n.routing.defaultLocalePrefix`                                    | [언어·대체값 설정](/ko/blog/config-languages/#routing)                     |
+| `i18n.locales.<locale>.meta`                                          | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
+| `i18n.locales.<locale>.meta.label`                                    | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
+| `i18n.locales.<locale>.meta.hreflang`                                 | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
+| `i18n.locales.<locale>.meta.ogLocale`                                 | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
+| `i18n.locales.<locale>.meta.enabled`                                  | [언어·대체값 설정](/ko/blog/config-languages/#meta)                        |
+| `i18n.locales.<locale>.meta.fallback`                                 | [언어·대체값 설정](/ko/blog/config-languages/#fallback)                    |
+| `i18n.locales.<locale>.site`                                          | [언어·대체값 설정](/ko/blog/config-languages/#overrides)                   |
+| `i18n.locales.<locale>.messages`                                      | [언어·대체값 설정](/ko/blog/config-languages/#overrides)                   |
+| `i18n.locales.<locale>.about`                                         | [언어·대체값 설정](/ko/blog/config-languages/#overrides)                   |
+| `i18n.locales.<locale>.messages.langLabel`                            | [언어·대체값 설정](/ko/blog/config-languages/#common-messages)             |
+| `i18n.locales.<locale>.aiReadableContent`                             | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
+| `i18n.locales.<locale>.aiReadableContent.notes`                       | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
+| `i18n.locales.<locale>.aiReadableContent.links`                       | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
+| `i18n.locales.<locale>.aiReadableContent.links[].label`               | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
+| `i18n.locales.<locale>.aiReadableContent.links[].href`                | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#locale-supplement)        |
+| `i18n.locales.<locale>.messages.search.label`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.close`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.placeholder`                   | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.hint`                          | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.loading`                       | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.empty`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.error`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.retry`                         | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.more`                          | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.results`                       | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `i18n.locales.<locale>.messages.search.dev`                           | [검색 문구](/ko/blog/config-search/#messages)                              |
+| `analytics`                                                           | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#analytics)                |
+| `analytics.googleAnalyticsId`                                         | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#analytics)                |
+| `aiReadableContent`                                                   | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
+| `aiReadableContent.notes`                                             | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
+| `aiReadableContent.links`                                             | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
+| `aiReadableContent.links[].label`                                     | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
+| `aiReadableContent.links[].href`                                      | [GA4·AI 읽기 보충](/ko/blog/config-analytics-ai/#supplement)               |
+| `site.title`                                                          | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
+| `site.description`                                                    | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
+| `site.url`                                                            | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
+| `site.tagline`                                                        | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#identity)               |
+| `social.links`                                                        | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social)                 |
+| `social.links[].href`                                                 | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
+| `social.links[].label`                                                | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
+| `social.links[].rel`                                                  | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
+| `social.links[].icon`                                                 | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
+| `social.links[].iconSrc`                                              | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#social-fields)          |
+| `theme.footer.links`                                                  | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#footer)                 |
+| `theme.footer.links[].label`                                          | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#footer)                 |
+| `theme.footer.links[].href`                                           | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#footer)                 |
+| `i18n.locales.<locale>.messages.nav.home`                             | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
+| `i18n.locales.<locale>.messages.nav.blog`                             | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
+| `i18n.locales.<locale>.messages.nav.status`                           | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
+| `i18n.locales.<locale>.messages.nav.statusAria`                       | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
+| `i18n.locales.<locale>.messages.footer.theme`                         | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
+| `i18n.locales.<locale>.messages.footer.builtWith`                     | [사이트·공용 UI 설정](/ko/blog/config-site-chrome/#chrome-messages)        |
+| `i18n.locales.<locale>.messages.terminal.commandInput`                | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.hint`                        | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.help`                        | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.syntax`                      | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.usage`                       | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.unknown`                     | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.notFound`                    | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.notDirectory`                | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.isDirectory`                 | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.failed`                      | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.tooLarge`                    | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.empty`                       | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.loading`                     | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.readerTitle`                 | [터미널 문구(현재 미사용)](/ko/blog/config-terminal/#messages)             |
+| `i18n.locales.<locale>.messages.terminal.readerHint`                  | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
+| `i18n.locales.<locale>.messages.terminal.readerCommand`               | [터미널 문구](/ko/blog/config-terminal/#messages)                          |
 
 ## 글 필드와 사이트 설정은 따로 찾기
 

@@ -4,7 +4,7 @@ title: '設定リファレンス：Giscus コメントと翻訳間の議論共�
 subtitle: '記事・Fragments の独立スイッチ、議論の対応、言語と共有規則。'
 description: '全 Giscus 公開設定の既定値、型、検証条件、記事翻訳の共有、Fragments の上書き規則を実装で確認します。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -185,16 +185,16 @@ theme: {
 
 ## 外側ページのコメント文面
 
-`i18n.locales.<语言>.messages` の任意 string で、現在言語と補完を使います。例は対応オブジェクトに入れます。外ラベルだけを変え iframe 内のボタンは変えません。表は簡体中国語／英語の実既定値です。
+`i18n.locales.<locale>.messages` の任意 string で、現在言語と補完を使います。例は対応オブジェクトに入れます。外ラベルだけを変え iframe 内のボタンは変えません。表は簡体中国語／英語の実既定値です。
 
-| 相対項目             | 簡体中国語 / 英語既定値                                                                                                   | 状態・役割・制約                                             | 例                   |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | -------------------- |
-| `blog.comments`      | 评论 / Comments                                                                                                           | 条件付き：記事領域のアクセシブル名。追加可視見出しではない。 | `"文章讨论"`         |
-| `fragments.comments` | 评论 / Comments                                                                                                           | 条件付き：Fragments ボタンとダイアログ名。                   | `"参与讨论"`         |
-| `fragments.close`    | 关闭 / Close                                                                                                              | 条件付き：ダイアログを閉じる。ホーム閉じる名前も使用。       | `"关闭窗口"`         |
-| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | 条件付き：Fragments ロード状態。                             | `"正在加载讨论…"`    |
-| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | 条件付き：Fragments 読込失敗。                               | `"讨论暂时不可用。"` |
-| `fragments.retry`    | 重试 / Retry                                                                                                              | 条件付き：Fragments 再試行ボタン。                           | `"重新加载"`         |
+| 相対項目             | 簡体中国語 / 英語既定値                                                                                                   | 状態・役割・制約                                             | 例                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------ |
+| `blog.comments`      | 评论 / Comments                                                                                                           | 条件付き：記事領域のアクセシブル名。追加可視見出しではない。 | `"記事のディスカッション"`                 |
+| `fragments.comments` | 评论 / Comments                                                                                                           | 条件付き：Fragments ボタンとダイアログ名。                   | `"ディスカッションに参加"`                 |
+| `fragments.close`    | 关闭 / Close                                                                                                              | 条件付き：ダイアログを閉じる。ホーム閉じる名前も使用。       | `"ウィンドウを閉じる"`                     |
+| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | 条件付き：Fragments ロード状態。                             | `"ディスカッションを読み込み中…"`          |
+| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | 条件付き：Fragments 読込失敗。                               | `"ディスカッションを現在利用できません。"` |
+| `fragments.retry`    | 重试 / Retry                                                                                                              | 条件付き：Fragments 再試行ボタン。                           | `"再読み込み"`                             |
 
 他文面は[記事](/ja/blog/config-article/#article-messages)と[Fragments](/ja/blog/config-fragments/#fragment-messages)へ。iframe 内の言語はこれらでなく前述 lang です。
 

@@ -30,7 +30,7 @@ Globaler Schalter, nicht pro Startseite oder Sprache. Standardseiten mit öffent
 - **Typ / Standard:** MusicTrack[] / []. Die drei Eintragsfelder folgen unten.
 - **Status und Wirkung:** bedingt bei aktivierter Musik. Array-Reihenfolge bestimmt Liste und Wechsel, ohne öffentliche Höchstanzahl.
 - **Grenzen:** Aktiv muss es ein Array sein. Leer ist gültig, deaktiviert aber den effektiven Player. Neue Arrays ersetzen vollständig statt alte Listen oder Vorgaben zu erweitern. Erhalte weiter benötigte Einträge.
-- **Beispielwert:** [{ title: '我的一首歌', artist: '作者', src: '`/music/my-song.mp3`' }].
+- **Beispielwert:** [{ title: 'Ein Lied von mir', artist: 'Autor', src: '`/music/my-song.mp3`' }].
 
 Titel, Künstler und Adresse liegen global hier, nicht in i18n. Sprachwechsel wechseln nicht automatisch die Liste. Playlist-Objekte oder Freigabelinks anderer Plattformen sind kein Ersatz für dieses Array.
 
@@ -42,8 +42,8 @@ Präfix: `theme.music.tracks[]`. „Keiner“ bedeutet keine automatisch ergänz
 
 | Feld   | Typ / Standard                                       | Status, Wirkung und Grenzen                                                                                                                                                   | Beispiel             |
 | ------ | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| title  | string, Pflicht / keiner                             | Bedingt: Name im Hauptbereich, eingeklappten Titel und Playlist. Nichtleerer String; Rand-Leerraum wird entfernt. Leere Titel sind Fehler, kein Dateiname-/Metadaten-Fallback | '我的一首歌'         |
-| artist | string, optional / nicht gesetzt, normalisiert zu '' | Bedingt: Künstlertext im Hauptbereich und in der Liste. Wenn gesetzt string; trimmt Rand-Leerraum. Kein Website-Autor oder Audio-Metadaten-Fallback                           | '作者'               |
+| title  | string, Pflicht / keiner                             | Bedingt: Name im Hauptbereich, eingeklappten Titel und Playlist. Nichtleerer String; Rand-Leerraum wird entfernt. Leere Titel sind Fehler, kein Dateiname-/Metadaten-Fallback | 'Ein Lied von mir'   |
+| artist | string, optional / nicht gesetzt, normalisiert zu '' | Bedingt: Künstlertext im Hauptbereich und in der Liste. Wenn gesetzt string; trimmt Rand-Leerraum. Kein Website-Autor oder Audio-Metadaten-Fallback                           | 'Autor'              |
 | src    | string, Pflicht / keiner                             | Bedingt: Audioquelle mit einzelnem / oder kleinem https://, ohne Leerraum oder Backslash. HTTPS muss URL-parsebar sein; Existenz und Audioinhalt werden nicht geprüft         | '/music/my-song.mp3' |
 
 title und artist sind Klartext ohne Markdown/HTML. Es gibt keine öffentlichen Felder für Cover, Lyrics, Dauer, Album, eigene ID oder Spurlautstärke.
@@ -70,8 +70,8 @@ theme: {
     enabled: true,
     tracks: [
       {
-        title: '我的一首歌',
-        artist: '作者',
+        title: 'Ein Lied von mir',
+        artist: 'Autor',
         src: '/music/my-song.mp3',
       },
     ],
@@ -85,42 +85,42 @@ Zum Abschalten reicht `enabled: false`; die Liste muss nicht leer werden. Die En
 
 ## messages.music: neunzehn Oberflächen- und zugängliche Texte
 
-Präfix: `i18n.locales.<语言>.messages.music.`. Alle sind optionale **string** mit integrierter aktueller Sprache und Fallback-Kette. Die Tabelle zeigt vereinfachtes Chinesisch/Englisch, die Beispielspalte Feldwerte. Voraussetzung sind gerenderter Player und entsprechender Zustand. Leer überschreibt Text, verbirgt keine Funktion und kann zugängliche Namen entfernen.
+Präfix: `i18n.locales.<Sprachcode>.messages.music.`. Alle sind optionale **string** mit integrierter aktueller Sprache und Fallback-Kette. Die Tabelle zeigt vereinfachtes Chinesisch/Englisch, die Beispielspalte Feldwerte. Voraussetzung sind gerenderter Player und entsprechender Zustand. Leer überschreibt Text, verbirgt keine Funktion und kann zugängliche Namen entfernen.
 
-| Feld       | Standard vereinfachtes Chinesisch / Englisch                                                                    | Wirkung und Grenzen                                                          | Beispiel                               |
-| ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | -------------------------------------- |
-| `label`    | 音乐播放器 / Music player                                                                                       | Zugänglicher Name des aside, nicht AUDIO CHANNEL oben                        | `"音乐播放器"`                         |
-| `play`     | 播放 / Play                                                                                                     | Zugänglicher Abspielname; sichtbar bleibt PLAY                               | `"播放"`                               |
-| `pause`    | 暂停 / Pause                                                                                                    | Zugänglicher Name während Spielen/Laden; sichtbar PAUSE                      | `"暂停"`                               |
-| `prev`     | 上一首 / Previous                                                                                               | Zugänglicher Vorherige-Spur-Name; sichtbar PREV                              | `"上一首"`                             |
-| `next`     | 下一首 / Next                                                                                                   | Zugänglicher Nächste-Spur-Name; sichtbar NEXT                                | `"下一首"`                             |
-| `open`     | 展开播放器 / Open player                                                                                        | Zugänglicher Aufklappname; sichtbar OPEN                                     | `"展开播放器"`                         |
-| `close`    | 收起播放器 / Collapse player                                                                                    | Zugänglicher Einklappname; sichtbar MIN. Einklappen pausiert nicht           | `"收起播放器"`                         |
-| `progress` | 播放进度 / Progress                                                                                             | Zugänglicher Fortschrittsreglername; ändert keine Position oder Sprungspanne | `"播放进度"`                           |
-| `volume`   | 音量 / Volume                                                                                                   | Zugänglicher Lautstärkereglername; setzt keine Startlautstärke. Sichtbar LVL | `"音量"`                               |
-| `queue`    | 歌单 / Playlist                                                                                                 | Zugänglicher Playlist-Knopf; QUEUE, SHOW/HIDE sind fest                      | `"展开或收起歌单"`                     |
-| `mute`     | 静音 / Mute                                                                                                     | Zugänglicher Stummschaltname bei Ton; sichtbar MUTE                          | `"静音"`                               |
-| `unmute`   | 取消静音 / Unmute                                                                                               | Zugänglicher Wiederherstellungsname bei Lautstärke null; sichtbar UNMUTE     | `"恢复音量"`                           |
-| `idle`     | 就绪 / Ready                                                                                                    | SIGNAL-Text anfangs oder nach Spurwechsel                                    | `"等待播放"`                           |
-| `loading`  | 加载中 / Loading                                                                                                | SIGNAL während Download oder Warten                                          | `"正在加载歌曲"`                       |
-| `playing`  | 播放中 / Playing                                                                                                | SIGNAL während Wiedergabe                                                    | `"正在播放"`                           |
-| `paused`   | 已暂停 / Paused                                                                                                 | SIGNAL während Pause                                                         | `"已暂停"`                             |
-| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | Hinweis bei verweigerter Wiedergabe; Text hebt die Sperre nicht auf          | `"请点击播放以继续。"`                 |
-| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | Audioanfrage-/Wiedergabefehler und fehlgeschlagenes Mount-Modul              | `"歌曲未能加载，请重试。"`             |
-| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | noscript-Hinweis ohne native Ersatz-Audiosteuerung                           | `"启用 JavaScript 后可以使用播放器。"` |
+| Feld       | Standard vereinfachtes Chinesisch / Englisch                                                                    | Wirkung und Grenzen                                                          | Beispiel                                                          |
+| ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `label`    | 音乐播放器 / Music player                                                                                       | Zugänglicher Name des aside, nicht AUDIO CHANNEL oben                        | `"Musikplayer"`                                                   |
+| `play`     | 播放 / Play                                                                                                     | Zugänglicher Abspielname; sichtbar bleibt PLAY                               | `"Abspielen"`                                                     |
+| `pause`    | 暂停 / Pause                                                                                                    | Zugänglicher Name während Spielen/Laden; sichtbar PAUSE                      | `"Pausieren"`                                                     |
+| `prev`     | 上一首 / Previous                                                                                               | Zugänglicher Vorherige-Spur-Name; sichtbar PREV                              | `"Zurück"`                                                        |
+| `next`     | 下一首 / Next                                                                                                   | Zugänglicher Nächste-Spur-Name; sichtbar NEXT                                | `"Weiter"`                                                        |
+| `open`     | 展开播放器 / Open player                                                                                        | Zugänglicher Aufklappname; sichtbar OPEN                                     | `"Player öffnen"`                                                 |
+| `close`    | 收起播放器 / Collapse player                                                                                    | Zugänglicher Einklappname; sichtbar MIN. Einklappen pausiert nicht           | `"Player einklappen"`                                             |
+| `progress` | 播放进度 / Progress                                                                                             | Zugänglicher Fortschrittsreglername; ändert keine Position oder Sprungspanne | `"Fortschritt"`                                                   |
+| `volume`   | 音量 / Volume                                                                                                   | Zugänglicher Lautstärkereglername; setzt keine Startlautstärke. Sichtbar LVL | `"Lautstärke"`                                                    |
+| `queue`    | 歌单 / Playlist                                                                                                 | Zugänglicher Playlist-Knopf; QUEUE, SHOW/HIDE sind fest                      | `"Wiedergabeliste öffnen oder schließen"`                         |
+| `mute`     | 静音 / Mute                                                                                                     | Zugänglicher Stummschaltname bei Ton; sichtbar MUTE                          | `"Stummschalten"`                                                 |
+| `unmute`   | 取消静音 / Unmute                                                                                               | Zugänglicher Wiederherstellungsname bei Lautstärke null; sichtbar UNMUTE     | `"Lautstärke wiederherstellen"`                                   |
+| `idle`     | 就绪 / Ready                                                                                                    | SIGNAL-Text anfangs oder nach Spurwechsel                                    | `"Warten auf Wiedergabe"`                                         |
+| `loading`  | 加载中 / Loading                                                                                                | SIGNAL während Download oder Warten                                          | `"Lied wird geladen"`                                             |
+| `playing`  | 播放中 / Playing                                                                                                | SIGNAL während Wiedergabe                                                    | `"Wiedergabe läuft"`                                              |
+| `paused`   | 已暂停 / Paused                                                                                                 | SIGNAL während Pause                                                         | `"Pausiert"`                                                      |
+| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | Hinweis bei verweigerter Wiedergabe; Text hebt die Sperre nicht auf          | `"Zum Fortfahren auf Wiedergabe klicken."`                        |
+| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | Audioanfrage-/Wiedergabefehler und fehlgeschlagenes Mount-Modul              | `"Das Lied konnte nicht geladen werden. Bitte erneut versuchen."` |
+| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | noscript-Hinweis ohne native Ersatz-Audiosteuerung                           | `"JavaScript aktivieren, um den Player zu verwenden."`            |
 
 Das ist keine Ersetzung sämtlicher sichtbarer Terminal-UI-Texte. PLAY/PAUSE, PREV/NEXT, OPEN/MIN, MUTE/UNMUTE, QUEUE, SHOW/HIDE, TRACKS, LVL, AUDIO CHANNEL, STATE, SIGNAL und STANDBY sind implementierungsfest. Felder ändern zugängliche Namen oder sichtbare SIGNAL-Zustände. Englische Knopftexte beweisen nicht, dass ein Feld unwirksam ist.
 
-Nur chinesische Lade- und Fehlerhinweise überschreiben:
+Nur deutsche Lade- und Fehlerhinweise überschreiben:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         music: {
-          loading: '正在加载歌曲',
-          error: '歌曲未能加载，请重试。',
+          loading: 'Lied wird geladen',
+          error: 'Das Lied konnte nicht geladen werden. Bitte erneut versuchen.',
         },
       },
     },

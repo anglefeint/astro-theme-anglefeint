@@ -47,7 +47,7 @@ Das Terminal zeigt standardmäßig `Knock, knock.`. Du kannst zunächst den engl
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+    de: { messages: { home: { transmission: 'Gedanken festhalten und kleine Hinweise hinterlassen.' } } },
   },
 },
 ```
@@ -65,16 +65,16 @@ Unter `/zh/about/` findest du die aktuellen Inhalte. Texte und Kontaktangaben we
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       about: {
         metaLine: '$ profile | building and learning',
         sections: {
-          who: '我是小林，喜欢开发与写作。',
-          what: '这里记录我的项目和学习笔记。',
-          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
-          now: '最近在整理个人博客。',
-          contactLead: '欢迎联系我。',
-          signature: '> 谢谢你来这里。',
+          who: 'Ich bin Alex und entwickle und schreibe gern.',
+          what: 'Hier sammle ich meine Projekte und Lernnotizen.',
+          ethos: ['Bleib neugierig.', 'Ideen in nützliche Dinge verwandeln.'],
+          now: 'Ich überarbeite gerade meinen Blog.',
+          contactLead: 'Melde dich gern bei mir.',
+          signature: '> Danke für deinen Besuch.',
         },
         contact: {
           email: 'you@example.com',
@@ -105,18 +105,18 @@ Die Werkzeuge dekodieren Text, erklären unterstützte Token-Aufrufe und prüfen
 
 `enableDecoderPage: false` in `theme` deaktiviert Decoder und dessen Theme-Einstiege unabhängig. About und Decoder deaktivieren sich nicht gegenseitig. Eigene Links pflegst du selbst.
 
-Würdigung und Lesekarten sind sprachabhängig, etwa für eine neue chinesische Liste:
+Würdigung und Lesekarten sind sprachabhängig, etwa für eine neue deutsche Liste:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         decoderPage: {
           readings: {
-            tribute: '思想与代码，让隐私和自由更进一步。',
+            tribute: 'Ideen und Code bringen Privatsphäre und Freiheit voran.',
             links: [
-              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+              { title: 'Meine Leseliste', href: 'https://example.com/', author: 'Name des Autors', year: '2026' },
             ],
           },
         },
@@ -140,7 +140,7 @@ Typen, integrierte Titelbilder und Standardlisten stehen im [Decoder-Verzeichnis
 social: {
   links: [
     { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
-    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+    { href: 'https://example.com/community', label: 'Meine Community', iconSrc: '/icons/community.svg' },
   ],
 },
 ```
@@ -154,11 +154,11 @@ Auf Mobilbreiten verschwindet die obere Gruppe, die Fußzeile bleibt. `links: []
 ### Nennung, Erklärung und zusätzliche Links
 
 ```ts
-site: { tagline: '保持好奇，持续记录。' },
+site: { tagline: 'Bleib neugierig und schreibe weiter.' },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+    links: [{ label: 'Quellcode des Projekts', href: 'https://github.com/yourname/your-project' }],
   },
 },
 ```
@@ -179,7 +179,7 @@ Lege deine Audiodatei unter `public/music/my-song.mp3` ab und vereinige:
 theme: {
   music: {
     enabled: true,
-    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+    tracks: [{ title: 'Ein Lied von mir', artist: 'Autor', src: '/music/my-song.mp3' }],
   },
 },
 ```
@@ -246,7 +246,7 @@ Für eine separate Projektseite führe im Stamm aus:
 npm run new-page -- projects
 ```
 
-Der Befehl erzeugt `src/pages/[lang]/projects.astro` mit `base`-Layout und Routen `/<语言代码>/projects/` für aktive Sprachen, etwa `/en/projects/` oder `/zh/projects/`. Bearbeite den Inhalt der Astro-Datei. Sie wird nicht übersetzt und nicht automatisch in die obere Navigation aufgenommen. Verlinke sie aus Text oder Fußzeile.
+Der Befehl erzeugt `src/pages/[lang]/projects.astro` mit `base`-Layout und Routen `/<Sprachcode>/projects/` für aktive Sprachen, etwa `/en/projects/` oder `/zh/projects/`. Bearbeite den Inhalt der Astro-Datei. Sie wird nicht übersetzt und nicht automatisch in die obere Navigation aufgenommen. Verlinke sie aus Text oder Fußzeile.
 
 Für einen bestimmten Stil verwende `--theme`, etwa `npm run new-page -- portfolio --theme cyber` für eine weitere Cyberpunk-Seite. Erlaubt sind `base`, `ai`, `cyber`, `hacker` und `matrix`. Sie wählen das Layout dieser Seite und wechseln nicht global die vier Atmosphären. Slugs erlauben englische Kleinbuchstaben, Zahlen, Bindestriche und verschachtelte Pfade wie `projects/labs`. Vermeide Standardrouten des Pakets. Existierende Dateien sind Fehler; führe nicht alle fünf Theme-Befehle für denselben Pfad aus.
 

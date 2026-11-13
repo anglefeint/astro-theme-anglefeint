@@ -20,7 +20,9 @@ export default function blogCovers({ mathEnabled = true, fragmentsEnabled = fals
           srcDir: fileURLToPath(config.srcDir),
           publicDir: config.publicDir ? fileURLToPath(config.publicDir) : undefined,
           base: config.base,
-          check: command !== 'dev',
+          // Normal development and builds prepare project-owned assets. Config
+          // sync remains read-only; the explicit prepare-covers --check does too.
+          check: !['dev', 'build'].includes(command),
           fragmentsEnabled,
         });
         data = coverData(state, config.base);

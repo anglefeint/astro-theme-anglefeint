@@ -4,7 +4,7 @@ title: 'Referencia de configuración: búsqueda y descubrimiento'
 subtitle: 'Índice de artículos y otras entradas de contenido'
 description: 'Tipos, valores, textos, idiomas y límites de la búsqueda interna y el descubrimiento de contenido.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -27,9 +27,9 @@ La búsqueda recupera artículos de índices compilados. Recientes de inicio, et
 
 ## search individual: no es campo site.config
 
-| Ubicación                                                   | Tipo / predeterminado                                    | Estado, función y límites                                                                                                             | Ejemplo       |
-| ----------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| frontmatter.search de `src/content/blog/<语言>/某篇文章.md` | boolean opcional / sin definir en schema; true en layout | Condicional: raíz de índice con búsqueda global activa. False no elimina listas, recomendaciones, RSS, exportaciones ni URLs públicas | search: false |
+| Ubicación                                                        | Tipo / predeterminado                                    | Estado, función y límites                                                                                                             | Ejemplo       |
+| ---------------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| frontmatter.search de `src/content/blog/<locale>/una-entrada.md` | boolean opcional / sin definir en schema; true en layout | Condicional: raíz de índice con búsqueda global activa. False no elimina listas, recomendaciones, RSS, exportaciones ni URLs públicas | search: false |
 
 Para excluir un artículo, añade al frontmatter:
 
@@ -51,25 +51,27 @@ About, Fragments, Decoder, inicio y listas no tienen raíz de indexación de art
 
 ## messages.search: once textos
 
-Prefijo `i18n.locales.<语言>.messages.search.`. Strings opcionales con textos integrados/respaldo. Abajo chino simplificado / inglés y valores de ejemplo. Condicionales a entrada/interfaz/estado correspondiente.
+Prefijo `i18n.locales.<locale>.messages.search.`. Strings opcionales con textos integrados/respaldo. Abajo chino simplificado / inglés y valores de ejemplo. Condicionales a entrada/interfaz/estado correspondiente.
 
-| Campo         | Predeterminado chino simplificado / inglés                                                                                           | Función, límites y marcadores                                                                            | Ejemplo                             |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| `label`       | 搜索 / Search                                                                                                                        | Nombre accesible/tooltip y título del diálogo, no consulta                                               | `"搜索文章"`                        |
-| `close`       | 关闭搜索 / Close search                                                                                                              | Nombre accesible/tooltip de cerrar; esc/icono fijos                                                      | `"关闭搜索"`                        |
-| `placeholder` | 搜索文章… / Search articles…                                                                                                         | Placeholder y etiqueta accesible; no rellena consulta                                                    | `"输入文章关键词"`                  |
-| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | Aviso de producción antes de consulta                                                                    | `"搜索当前语言的文章。"`            |
-| `loading`     | 正在搜索… / Searching…                                                                                                               | Estado buscando/preparando, no ajuste de tiempo/carga                                                    | `"正在查找…"`                       |
-| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | Sin resultados; también puede aparecer sin índice del idioma                                             | `"没有找到相关文章。"`              |
-| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | Fallo de manifiesto, módulo o detalles, no error de compilación                                          | `"搜索暂时不可用，请重试。"`        |
-| `retry`       | 重试 / Retry                                                                                                                         | Reintenta cargar motor, no recompila índice en navegador                                                 | `"重新加载"`                        |
-| `more`        | 加载更多 / Load more                                                                                                                 | Carga lote adicional sin cambiar tamaño                                                                  | `"更多结果"`                        |
-| `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | Total encontrado. Conserva literal {count}; sustituye primera aparición. No es número de tarjetas vistas | `"共找到 {count} 篇文章"`           |
-| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | Aviso dev sin búsqueda real; editarlo no genera índices                                                  | `"请构建后在 preview 中测试搜索。"` |
+| Campo         | Predeterminado chino simplificado / inglés                                                                                           | Función, límites y marcadores                                                                            | Ejemplo                                        |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `label`       | 搜索 / Search                                                                                                                        | Nombre accesible/tooltip y título del diálogo, no consulta                                               | `"Buscar entradas"`                            |
+| `close`       | 关闭搜索 / Close search                                                                                                              | Nombre accesible/tooltip de cerrar; esc/icono fijos                                                      | `"Cerrar búsqueda"`                            |
+| `placeholder` | 搜索文章… / Search articles…                                                                                                         | Placeholder y etiqueta accesible; no rellena consulta                                                    | `"Introduce palabras clave"`                   |
+| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | Aviso de producción antes de consulta                                                                    | `"Busca entradas en el idioma actual."`        |
+| `loading`     | 正在搜索… / Searching…                                                                                                               | Estado buscando/preparando, no ajuste de tiempo/carga                                                    | `"Buscando…"`                                  |
+| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | Sin resultados; también puede aparecer sin índice del idioma                                             | `"No se encontraron entradas relacionadas."`   |
+| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | Fallo de manifiesto, módulo o detalles, no error de compilación                                          | `"La búsqueda no está disponible; reintenta."` |
+| `retry`       | 重试 / Retry                                                                                                                         | Reintenta cargar motor, no recompila índice en navegador                                                 | `"Volver a cargar"`                            |
+| `more`        | 加载更多 / Load more                                                                                                                 | Carga lote adicional sin cambiar tamaño                                                                  | `"Más resultados"`                             |
+| `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | Total encontrado. Conserva literal {count}; sustituye primera aparición. No es número de tarjetas vistas | `"Se encontraron {count} entradas"`            |
+| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | Aviso dev sin búsqueda real; editarlo no genera índices                                                  | `"Compila y prueba la búsqueda en preview."`   |
 
 Se muestran como texto, no HTML ejecutable. Vacío sustituye etiquetas sin ocultar controles y puede perjudicar nombres accesibles. {count} no se añade automáticamente a results personalizado; consérvalo una vez.
 
 ### Ejemplo para combinar
+
+Este ejemplo personaliza el idioma español (`es`). Las tablas de valores predeterminados conservan sus citas originales en chino e inglés.
 
 Combina en defineThemeConfig({...}) de src/site.config.ts, conserva imports/exports/ajustes sin duplicar theme/i18n:
 
@@ -77,13 +79,13 @@ Combina en defineThemeConfig({...}) de src/site.config.ts, conserva imports/expo
 theme: { search: { enabled: true } },
 i18n: {
   locales: {
-    zh: {
+    es: {
       messages: {
         search: {
-          label: '搜索文章',
-          placeholder: '输入文章关键词',
-          results: '共找到 {count} 篇文章',
-          empty: '没有找到相关文章。',
+          label: 'Buscar entradas',
+          placeholder: 'Introduce palabras clave',
+          results: 'Se encontraron {count} entradas',
+          empty: 'No se encontraron entradas relacionadas.',
         },
       },
     },
@@ -127,14 +129,14 @@ Sin artículos indexables se genera manifiesto vacío reconocible para resultado
 
 Reutilizan campos/valores de sus módulos, sin crear configuración de búsqueda:
 
-| Ruta o ubicación                                | Tipo / predeterminado            | Función, límites y ejemplo                                                                           | Referencia                                                      |
-| ----------------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| theme.homeLatestCount                           | number / 3                       | Recientes de inicio, p. ej. theme: { homeLatestCount: 5 }; no lote de búsqueda ni relacionados       | [Cantidad de inicio](/es/blog/config-home/#latest-count)        |
-| theme.blogPageSize                              | number / 10                      | Por página blog/etiquetas, p. ej. theme: { blogPageSize: 8 }; no resultados                          | [Paginación](/es/blog/config-blog-list/#page-size)              |
-| theme.tags.enabled                              | boolean / true                   | Etiquetas y páginas, p. ej. theme: { tags: { enabled: false } }; no borra tags ni desactiva búsqueda | [Control etiquetas](/es/blog/config-blog-list/#tags-enabled)    |
-| frontmatter.tags de artículo                    | string[] opcional / sin definir  | Archivos/etiquetas, p. ej. ['Astro', '随笔']; no relevancia ni lista permitida de búsqueda           | [Campos de artículo](/es/blog/config-article/#frontmatter)      |
-| `i18n.locales.<语言>.messages.blog.related`     | string / textos integrados abajo | Título de relacionados, solo texto; ejemplo '继续阅读'                                               | [Textos de artículo](/es/blog/config-article/#article-messages) |
-| `i18n.locales.<语言>.messages.blog.relatedAria` | string / textos integrados abajo | Nombre accesible de relacionados; ejemplo '其他文章'                                                 | [Textos de artículo](/es/blog/config-article/#article-messages) |
+| Ruta o ubicación                                  | Tipo / predeterminado            | Función, límites y ejemplo                                                                           | Referencia                                                      |
+| ------------------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| theme.homeLatestCount                             | number / 3                       | Recientes de inicio, p. ej. theme: { homeLatestCount: 5 }; no lote de búsqueda ni relacionados       | [Cantidad de inicio](/es/blog/config-home/#latest-count)        |
+| theme.blogPageSize                                | number / 10                      | Por página blog/etiquetas, p. ej. theme: { blogPageSize: 8 }; no resultados                          | [Paginación](/es/blog/config-blog-list/#page-size)              |
+| theme.tags.enabled                                | boolean / true                   | Etiquetas y páginas, p. ej. theme: { tags: { enabled: false } }; no borra tags ni desactiva búsqueda | [Control etiquetas](/es/blog/config-blog-list/#tags-enabled)    |
+| frontmatter.tags de artículo                      | string[] opcional / sin definir  | Archivos/etiquetas, p. ej. ['Astro', 'Notas']; no relevancia ni lista permitida de búsqueda          | [Campos de artículo](/es/blog/config-article/#frontmatter)      |
+| `i18n.locales.<locale>.messages.blog.related`     | string / textos integrados abajo | Título de relacionados, solo texto; ejemplo 'Seguir leyendo'                                         | [Textos de artículo](/es/blog/config-article/#article-messages) |
+| `i18n.locales.<locale>.messages.blog.relatedAria` | string / textos integrados abajo | Nombre accesible de relacionados; ejemplo 'Otros artículos'                                          | [Textos de artículo](/es/blog/config-article/#article-messages) |
 
 Relacionados son los tres más recientes del idioma, excluyendo el actual; no similitud de tags/contenido/canonicalTopic. Sin relatedCount, control propio ni lista manual site.config. Sin otros artículos desaparece zona. search: false aún puede recomendarse.
 
@@ -149,7 +151,7 @@ Relacionados son los tres más recientes del idioma, excluyendo el actual; no si
 
 | Entrada                     | Conducta y relación actual                                                                                                                                                                                                                 |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `/<语言>/rss.xml`           | Feed de resúmenes por idioma activo. Título usa nombre global; descripción messages.blog.archiveDescription. Ítems usan title, description, pubDate y URL. search: false no excluye. No es texto completo; sin control RSS en theme.search |
+| `/<locale>/rss.xml`         | Feed de resúmenes por idioma activo. Título usa nombre global; descripción messages.blog.archiveDescription. Ítems usan title, description, pubDate y URL. search: false no excluye. No es texto completo; sin control RSS en theme.search |
 | Metadatos y buscadores      | Independiente de búsqueda interna. search: false no añade noindex, desactiva sitemap ni controla rastreo externo                                                                                                                           |
 | Texto público para máquinas | Artículos/About/Fragments tienen exportación aparte de Pagefind. Consulta [contexto de idioma](/es/blog/config-languages/#ai-context). search: false no es filtro privado                                                                  |
 

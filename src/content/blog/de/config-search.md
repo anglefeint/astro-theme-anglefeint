@@ -27,9 +27,9 @@ Einziges öffentliches Blattfeld von theme.search. Keine Dienstadresse, API key,
 
 ## search pro Beitrag: kein site.config-Feld
 
-| Ort                                                         | Typ / Standard                                                            | Status, Wirkung und Grenzen                                                                                                                      | Beispiel      |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- |
-| frontmatter.search in `src/content/blog/<语言>/某篇文章.md` | boolean, optional / im Schema nicht gesetzt, Artikellayout verwendet true | Bedingt bei global aktiver Suche: Indexwurzel dieses Artikels. false ändert weder Liste, Empfehlungen, RSS, Maschinenexport noch öffentliche URL | search: false |
+| Ort                                                               | Typ / Standard                                                            | Status, Wirkung und Grenzen                                                                                                                      | Beispiel      |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- |
+| frontmatter.search in `src/content/blog/<Sprachcode>/某篇文章.md` | boolean, optional / im Schema nicht gesetzt, Artikellayout verwendet true | Bedingt bei global aktiver Suche: Indexwurzel dieses Artikels. false ändert weder Liste, Empfehlungen, RSS, Maschinenexport noch öffentliche URL | search: false |
 
 Zum Ausschließen nur dieses Artikels ergänze im bestehenden frontmatter:
 
@@ -51,21 +51,21 @@ Standard-About, Fragments, Decoder, Startseite und Listen haben keine Artikelind
 
 ## messages.search: elf Suchtexte
 
-Präfix `i18n.locales.<语言>.messages.search.`. Alle optionale string mit integrierter aktueller Sprache und Fallback-Kette. Die Tabelle zeigt vereinfachtes Chinesisch/Englisch und Feldwerte als Beispiele. Alle wirken bedingt bei vorhandenem Einstieg und entsprechendem UI-Zustand.
+Präfix `i18n.locales.<Sprachcode>.messages.search.`. Alle optionale string mit integrierter aktueller Sprache und Fallback-Kette. Die Tabelle zeigt vereinfachtes Chinesisch/Englisch und Feldwerte als Beispiele. Alle wirken bedingt bei vorhandenem Einstieg und entsprechendem UI-Zustand.
 
-| Feld          | Standard vereinfachtes Chinesisch / Englisch                                                                                         | Wirkung, Grenzen und Platzhalter                                                                     | Beispiel                            |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| `label`       | 搜索 / Search                                                                                                                        | Zugänglicher Einstiegsname, Tooltip und Dialogtitel, kein Suchbegriff                                | `"搜索文章"`                        |
-| `close`       | 关闭搜索 / Close search                                                                                                              | Zugänglicher Schließname und Tooltip; sichtbares esc und Symbol sind fest                            | `"关闭搜索"`                        |
-| `placeholder` | 搜索文章… / Search articles…                                                                                                         | Eingabeplatzhalter und zugängliches Label, keine vorgefüllte Anfrage                                 | `"输入文章关键词"`                  |
-| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | Produktionshinweis ohne Anfrage                                                                      | `"搜索当前语言的文章。"`            |
-| `loading`     | 正在搜索… / Searching…                                                                                                               | Suche oder Vorbereitung, ohne andere Verzögerung oder Ladestrategie                                  | `"正在查找…"`                       |
-| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | Keine Treffer, auch bei fehlendem Index der aktuellen Sprache möglich                                | `"没有找到相关文章。"`              |
-| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | Manifest-, Modul- oder Ergebnisladefehler, nicht Index-Build-Fehler                                  | `"搜索暂时不可用，请重试。"`        |
-| `retry`       | 重试 / Retry                                                                                                                         | Lädt Suchmaschine erneut, baut keinen Browserindex                                                   | `"重新加载"`                        |
-| `more`        | 加载更多 / Load more                                                                                                                 | Weitere Ergebnisse, keine andere Batchgröße                                                          | `"更多结果"`                        |
-| `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | Gesamtzahl gefundener Ergebnisse, nicht gezeigte Karten. Erste wörtliche {count}-Stelle wird ersetzt | `"共找到 {count} 篇文章"`           |
-| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | dev-Hinweis ohne echte Suche. Andere Texte erzeugen keinen Index                                     | `"请构建后在 preview 中测试搜索。"` |
+| Feld          | Standard vereinfachtes Chinesisch / Englisch                                                                                         | Wirkung, Grenzen und Platzhalter                                                                     | Beispiel                                            |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| `label`       | 搜索 / Search                                                                                                                        | Zugänglicher Einstiegsname, Tooltip und Dialogtitel, kein Suchbegriff                                | `"Artikel suchen"`                                  |
+| `close`       | 关闭搜索 / Close search                                                                                                              | Zugänglicher Schließname und Tooltip; sichtbares esc und Symbol sind fest                            | `"Suche schließen"`                                 |
+| `placeholder` | 搜索文章… / Search articles…                                                                                                         | Eingabeplatzhalter und zugängliches Label, keine vorgefüllte Anfrage                                 | `"Suchbegriffe für Artikel eingeben"`               |
+| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | Produktionshinweis ohne Anfrage                                                                      | `"Artikel in der aktuellen Sprache durchsuchen."`   |
+| `loading`     | 正在搜索… / Searching…                                                                                                               | Suche oder Vorbereitung, ohne andere Verzögerung oder Ladestrategie                                  | `"Wird gesucht…"`                                   |
+| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | Keine Treffer, auch bei fehlendem Index der aktuellen Sprache möglich                                | `"Keine passenden Artikel gefunden."`               |
+| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | Manifest-, Modul- oder Ergebnisladefehler, nicht Index-Build-Fehler                                  | `"Suche nicht verfügbar. Bitte erneut versuchen."`  |
+| `retry`       | 重试 / Retry                                                                                                                         | Lädt Suchmaschine erneut, baut keinen Browserindex                                                   | `"Neu laden"`                                       |
+| `more`        | 加载更多 / Load more                                                                                                                 | Weitere Ergebnisse, keine andere Batchgröße                                                          | `"Weitere Ergebnisse"`                              |
+| `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | Gesamtzahl gefundener Ergebnisse, nicht gezeigte Karten. Erste wörtliche {count}-Stelle wird ersetzt | `"{count} Artikel gefunden"`                        |
+| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | dev-Hinweis ohne echte Suche. Andere Texte erzeugen keinen Index                                     | `"Zuerst bauen, dann die Suche in preview testen."` |
 
 Klartext ohne HTML-Ausführung. Leer überschreibt Text, verbirgt keine Knöpfe und kann zugängliche Namen entfernen. results hängt {count} nicht automatisch an deine Formulierung an. Erhalte eine Stelle für die Zahl.
 
@@ -77,13 +77,13 @@ Vereinige mit bestehendem defineThemeConfig({...}) in src/site.config.ts, erhalt
 theme: { search: { enabled: true } },
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         search: {
-          label: '搜索文章',
-          placeholder: '输入文章关键词',
-          results: '共找到 {count} 篇文章',
-          empty: '没有找到相关文章。',
+          label: 'Artikel suchen',
+          placeholder: 'Suchbegriffe für Artikel eingeben',
+          results: '{count} Artikel gefunden',
+          empty: 'Keine passenden Artikel gefunden.',
         },
       },
     },
@@ -127,14 +127,14 @@ Ohne indexierbare Artikel entsteht trotzdem ein gültiges leeres Sprachmanifest,
 
 Die Felder und Vorgaben gehören weiter ihren ursprünglichen Modulen. Hier entsteht keine zweite Suchkonfiguration.
 
-| Pfad oder Ort                                   | Typ / Standard                                          | Wirkung, Grenzen und Beispiel                                                                                               | Details                                                   |
-| ----------------------------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| theme.homeLatestCount                           | number / 3                                              | Neueste Startseitenartikel, etwa theme: { homeLatestCount: 5 }; keine Suchbatch- oder Empfehlungsanzahl                     | [Startseite](/de/blog/config-home/#latest-count)          |
-| theme.blogPageSize                              | number / 10                                             | Blog-/Tagartikel je Seite, etwa theme: { blogPageSize: 8 }; keine Suchergebnisanzahl                                        | [Listen](/de/blog/config-blog-list/#page-size)            |
-| theme.tags.enabled                              | boolean / true                                          | Tags und Standardtagseiten, etwa theme: { tags: { enabled: false } }; löscht keine tags und deaktiviert keine Volltextsuche | [Tags](/de/blog/config-blog-list/#tags-enabled)           |
-| frontmatter.tags im Artikel                     | string[], optional / nicht gesetzt                      | Tagarchiv und Anzeige, etwa ['Astro', '随笔']; keine Empfehlungsrelevanz oder Such-Whitelist                                | [Artikelfelder](/de/blog/config-article/#frontmatter)     |
-| `i18n.locales.<语言>.messages.blog.related`     | string / integrierte Sprache, Chinesisch/Englisch unten | Titel unter dem Artikel, nur Text, etwa '继续阅读'                                                                          | [Artikeltexte](/de/blog/config-article/#article-messages) |
-| `i18n.locales.<语言>.messages.blog.relatedAria` | string / integrierte Sprache, Chinesisch/Englisch unten | Zugänglicher Bereichsname, etwa '其他文章'                                                                                  | [Artikeltexte](/de/blog/config-article/#article-messages) |
+| Pfad oder Ort                                         | Typ / Standard                                          | Wirkung, Grenzen und Beispiel                                                                                               | Details                                                   |
+| ----------------------------------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| theme.homeLatestCount                                 | number / 3                                              | Neueste Startseitenartikel, etwa theme: { homeLatestCount: 5 }; keine Suchbatch- oder Empfehlungsanzahl                     | [Startseite](/de/blog/config-home/#latest-count)          |
+| theme.blogPageSize                                    | number / 10                                             | Blog-/Tagartikel je Seite, etwa theme: { blogPageSize: 8 }; keine Suchergebnisanzahl                                        | [Listen](/de/blog/config-blog-list/#page-size)            |
+| theme.tags.enabled                                    | boolean / true                                          | Tags und Standardtagseiten, etwa theme: { tags: { enabled: false } }; löscht keine tags und deaktiviert keine Volltextsuche | [Tags](/de/blog/config-blog-list/#tags-enabled)           |
+| frontmatter.tags im Artikel                           | string[], optional / nicht gesetzt                      | Tagarchiv und Anzeige, etwa ['Astro', 'Notizen']; keine Empfehlungsrelevanz oder Such-Whitelist                             | [Artikelfelder](/de/blog/config-article/#frontmatter)     |
+| `i18n.locales.<Sprachcode>.messages.blog.related`     | string / integrierte Sprache, Chinesisch/Englisch unten | Titel unter dem Artikel, nur Text, etwa 'Weiterlesen'                                                                       | [Artikeltexte](/de/blog/config-article/#article-messages) |
+| `i18n.locales.<Sprachcode>.messages.blog.relatedAria` | string / integrierte Sprache, Chinesisch/Englisch unten | Zugänglicher Bereichsname, etwa 'Weitere Artikel'                                                                           | [Artikeltexte](/de/blog/config-article/#article-messages) |
 
 Empfehlungen sind die neuesten drei anderen Artikel derselben Sprache, nicht anhand gemeinsamer Tags, canonicalTopic oder Textähnlichkeit. Kein relatedCount, separater Schalter oder manuelle Liste in site.config. Ohne andere Artikel fehlt der Bereich. search: false kann weiterhin empfohlen werden.
 
@@ -149,7 +149,7 @@ Empfehlungen sind die neuesten drei anderen Artikel derselben Sprache, nicht anh
 
 | Einstieg                    | Verhalten und Konfigurationsbezug                                                                                                                                                                                                                                                |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/<语言>/rss.xml`           | Zusammenfassungsfeed jeder aktiven Sprache. Website-Name als Titel, messages.blog.archiveDescription als Beschreibung. Artikelwerte title, description, pubDate und öffentlicher Pfad; search: false schließt nicht aus. Kein Volltext-RSS und kein RSS-Schalter in theme.search |
+| `/<Sprachcode>/rss.xml`     | Zusammenfassungsfeed jeder aktiven Sprache. Website-Name als Titel, messages.blog.archiveDescription als Beschreibung. Artikelwerte title, description, pubDate und öffentlicher Pfad; search: false schließt nicht aus. Kein Volltext-RSS und kein RSS-Schalter in theme.search |
 | Metadaten und Suchmaschinen | Unabhängige Ausgabe. search: false setzt kein noindex und deaktiviert keine Sitemap, steuert keine Internetcrawler                                                                                                                                                               |
 | Öffentliche Maschinentexte  | Eigene Exporte für Artikel, About und Fragments, unabhängig von Pagefind. Sprachergänzungen im [Sprachenverzeichnis](/de/blog/config-languages/#ai-context). search: false ist kein Privatsphärenfilter                                                                          |
 

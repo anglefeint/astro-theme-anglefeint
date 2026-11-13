@@ -42,12 +42,11 @@ node --version
 npm --version
 ```
 
-프로젝트를 둘 디렉터리에서 블로그를 만드세요. 다음 명령은 `my-blog` 폴더를 만들며 의존성을 자동으로 설치하지는 않습니다.
+프로젝트를 둘 디렉터리에서 블로그를 만드세요. 다음 명령은 `my-blog` 폴더를 만듭니다. 생성 마법사에서 의존성 설치에 Yes를 선택하세요. 직접 건너뛴 경우에만 실행 전에 `npm install`을 수행하세요. `--no-ai`는 일반 AI 안내 파일의 추가 생성을 건너뜁니다. 테마 자체의 안내는 starter에 포함됩니다.
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
 
@@ -63,11 +62,11 @@ npm run dev
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录开发、阅读和生活。',
+  title: '민수의 블로그',
+  description: '개발, 독서와 일상을 기록합니다.',
   url: 'https://example.com',
-  author: '小林',
-  tagline: '保持好奇，持续记录。',
+  author: '민수',
+  tagline: '호기심을 품고 꾸준히 기록합니다.',
 },
 ```
 
@@ -178,7 +177,7 @@ npm run preview
 
 `preview`는 `dist/`에 이미 빌드된 정적 사이트를 엽니다. 터미널에 나온 주소로 접속하면 되며 인터넷에 블로그를 게시하지는 않습니다. 글 검색은 빌드 뒤 미리보기에서 확인해야 하며 `dev`는 실시간 전문 검색을 제공하지 않습니다. `Ctrl+C`로 미리보기를 멈춥니다.
 
-나중에 배포할 때 호스팅 플랫폼의 빌드 명령은 `npm run build`, 출력 디렉터리는 `dist`이며 안의 모든 파일을 배포해야 합니다. 로컬 이미지를 추가하거나 바꾸면 먼저 로컬에서 dev나 doctor를 실행하고 원본과 생성된 `src/assets/blog/covers/` 디렉터리 전체를 커밋하세요. 배포 빌드와 CI doctor는 이 반응형 파일을 검사만 하며 없거나 오래되면 실패합니다. 플랫폼에서 추가 생성하지 않습니다. 콘텐츠나 설정을 수정하면 다시 빌드하고 배포해야 합니다.
+나중에 배포할 때 호스팅 플랫폼의 빌드 명령은 `npm run build`, 출력 디렉터리는 `dist`이며 안의 모든 파일을 배포해야 합니다. 로컬 이미지를 추가하거나 바꾸면 먼저 로컬에서 dev나 doctor를 실행하고 원본과 생성된 `src/assets/blog/covers/` 디렉터리 전체를 커밋하세요. 일반 build와 doctor는 CI에서도 누락되거나 오래되거나 손상된 파생 이미지를 자동 준비하고 올바른 기존 파일은 재사용합니다. 원본 누락과 잘못된 경로는 오류입니다. 명시적 `prepare-covers --check`와 설정 동기화는 읽기 전용입니다. 이 build 자동 준비는 0.36.2부터 지원합니다. npm 0.36.1에서는 dev 또는 `prepare-covers`로 먼저 준비하세요. [이미지 가이드](/ko/blog/starter-guide-images/)에서 자세히 설명합니다. 콘텐츠나 설정을 수정하면 다시 빌드하고 배포해야 합니다.
 
 ## 기존 프로젝트 업그레이드
 

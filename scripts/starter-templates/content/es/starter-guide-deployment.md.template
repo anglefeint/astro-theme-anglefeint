@@ -4,9 +4,11 @@ title: 'Guía 8: publicar el blog en tu dominio'
 subtitle: 'Compilación estática, alojamiento y dominio público'
 description: 'Verifica el blog, despliega todos los recursos y configura dominio, estadísticas y contexto público para IA.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/ai-01.webp'
 ---
+
+Las cadenas chinas de los ejemplos bajo `locales.zh` son intencionales: ilustran cómo personalizar el contenido chino sin cambiar los demás idiomas. Los valores predeterminados chino/inglés de las tablas son citas del tema, no traducciones pendientes.
 
 Esta es la parte 8 de 8. [Consulta el orden completo](/es/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Busca campos de configuración](/es/blog/config-reference/).
 
@@ -53,7 +55,9 @@ Tras añadir/sustituir portadas locales o imágenes de fragments, prepara deriva
 
 Los originales también pueden estar junto a entradas o en public; guarda esos directorios. Consulta la preparación en [imágenes](/es/blog/starter-guide-images/).
 
-**Las compilaciones normales de despliegue validan y copian derivados sin generar sustitutos.** doctor en CI solo valida. Ausentes, obsoletos o modificados causan fallo. Prepara y guarda localmente antes de desplegar; no dependas de cachés del alojamiento.
+**Build y doctor preparan los derivados necesarios, también en CI.** Reutilizan los válidos y regeneran los ausentes, obsoletos o dañados; no necesitan que el alojamiento conserve cachés. Un original inexistente, una ruta que escape del proyecto o una imagen ilegible siguen causando un error. Guarda originales y, para reutilizar los resultados, también manifiesto y derivados.
+
+**Nota de versión:** La preparación automática de imágenes durante build y doctor en CI requiere 0.36.2 o posterior. Con 0.36.1, ejecuta primero dev o `prepare-covers` para preparar los derivados. `prepare-covers --check` y la sincronización de configuración siguen siendo comprobaciones de solo lectura.
 
 Con Git no necesitas guardar node_modules, `.astro` ni dist: la plataforma instala y compila. No subas dependencias locales como web estática. Si no guardas archivos de entorno, configura las variables necesarias en la plataforma. PUBLIC_ es información pública, no lugar para secretos.
 
@@ -153,14 +157,14 @@ Publicar normalmente no exige ajustes extra. Para explicar el sitio o enlazar re
 
 ```ts
 aiReadableContent: {
-  notes: '本站记录个人学习过程，内容可能持续修订。',
-  links: [{ label: '项目主页', href: 'https://example.com/project' }],
+  notes: 'Este sitio recoge mi aprendizaje personal y su contenido puede revisarse.',
+  links: [{ label: 'Página del proyecto', href: 'https://example.com/project' }],
 },
 ```
 
 notes admite Markdown; links requiere label y href. Usa URLs HTTP(S) públicas. Los destinos relativos, incluidas rutas raíz, se resuelven contra la dirección del sitio. Es contexto público, no sustituto de cuerpo ni restricción de privacidad.
 
-Usa `i18n.locales.<代码>.aiReadableContent` por idioma. Por ejemplo, notas chinas sin enlaces adicionales:
+Usa `i18n.locales.<locale>.aiReadableContent` por idioma. Por ejemplo, notas chinas sin enlaces adicionales:
 
 ```ts
 i18n: {

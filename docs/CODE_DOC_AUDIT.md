@@ -12,6 +12,16 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-14 Default installation, automatic build images and localized examples
+
+按用户确认修正三类契约。九语 README 与安装教程恢复创建向导默认安装，只在读者主动跳过时补装；不改变默认语言、CLI 参数语义或预览图。图片 integration 的 dev/build 与 CLI doctor（含 CI）共用既有准备器，复用有效资源、补齐缺失/过期/损坏的衍生文件；显式 prepare-covers --check 和配置同步保留只读校验。原图丢失/非法、路径越界、清单非法和输出冲突仍阻断，不引入新配置或平台缓存依赖。
+
+八篇教程与十四篇字典按语言逐篇修正通用配置、frontmatter、正文、注释、alt 和表格示例。明确演示 locales.zh、中文语言切换和中英真实默认值的内容保留，并用对应语言解释；配置路径、命令、URL、显式锚点和默认流程保持原语义。九语模板与 demo 源文同步，README 链接对应语言。PACKAGING_WORKFLOW 增加此翻译边界，防止把代码块整体排除在翻译审查之外。
+
+责任说明同步 BLOG_COVER_ASSETS、ARCHITECTURE、TEMPLATE_ACCEPTANCE、MAINTAINER_WORKFLOW、主题包 README、UPGRADING 与 Unreleased changelog。自动 build/CI 补图明确标为尚未发布，不回写 0.36.1 或历史发布事实。选择图片准备/CLI、示例语法和安装流程、starter 一致性与静态分发检查，另做类型检查和一次主工程构建。没有浏览器/截图、全量套件或线上验收，不提交、推送、改版本或发布。
+
+最终 19 项选定测试通过，文案收尾后重新验证其中 6 项教程/starter 测试。九语 198 篇教程/字典与模板一致，576 个 TypeScript 示例可解析，207 份文档中的 6,126 个本地文章链接（含锚点）有效，九份 README 预览图数量不变。starter 静态检查覆盖 273 个分发文件；111 份维护文档元数据、定点 ESLint、全仓格式与 diff 空白检查通过。类型检查 0 errors/0 warnings、2 条既有 hints；一次主工程构建生成 471 页。文档建议器 metadata errors 0，广域命中按上述职责处理，不改写无关视觉系统或历史记录。
+
 ## 2026-11-14 Release preparation, early static checks and isolated starter worktrees
 
 按 0.36.1 阶段日志定位瓶颈后，仅调整维护工具。`release:flow prepare` 集中检查本地版本/lock/changelog/版本说明、收集含重命名的 NUL 分隔改动范围、运行虚拟 starter 静态检查和文档建议，并输出忽略目录中的 scope/message/结构化计划；不改版本、暂存、联网发布或授予批准。source 在耗时检查前再次执行新鲜的静态分发检查，同一调用显式选择该项不会重复执行。

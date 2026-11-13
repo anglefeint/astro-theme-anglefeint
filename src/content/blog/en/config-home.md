@@ -10,13 +10,13 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 [Back to the reference index](/en/blog/config-reference/). This documents fields actually used by the homepage, without changing theme code or treating the demo's personal settings as defaults.
 
-Replace `<语言>` with an enabled language code. Examples use zh, affecting Chinese only without changing English or enabling a language. Merge fragments into the existing defineThemeConfig object in `src/site.config.ts`, preserving other theme, i18n and site fields.
+Replace `<locale>` with an enabled language code. Examples use en, affecting English only without changing other languages or enabling a language. Merge fragments into the existing defineThemeConfig object in `src/site.config.ts`, preserving other theme, i18n and site fields.
 
 ## 1. Homepage title, introduction and metadata description
 
 <a id="home-title"></a>
 
-### `i18n.locales.<语言>.site.homeTitle`
+### `i18n.locales.<locale>.site.homeTitle`
 
 - **Type:** optional `string`.
 - **Theme default:** unset. Built-in languages have no separate homeTitle and ultimately use the site name, default My Blog.
@@ -25,7 +25,7 @@ Replace `<语言>` with an enabled language code. Examples use zh, affecting Chi
 
 <a id="home-hero"></a>
 
-### `i18n.locales.<语言>.site.hero`
+### `i18n.locales.<locale>.site.hero`
 
 - **Type:** optional `string`.
 - **Theme default:** a built-in introduction per language. Simplified Chinese: “在这里写一段站点简介，并告诉读者你将发布什么类型的内容。” English: “Write a short introduction for your site and what readers can expect from your posts.” Others have their own values.
@@ -34,7 +34,7 @@ Replace `<语言>` with an enabled language code. Examples use zh, affecting Chi
 
 <a id="home-description"></a>
 
-### `i18n.locales.<语言>.messages.siteDescription`
+### `i18n.locales.<locale>.messages.siteDescription`
 
 - **Type:** optional `string` override.
 - **Theme default:** resolved built-in language text. Simplified Chinese: “电影感网页界面与 AI 时代工程实践文章。” English: “Cinematic web interfaces and AI-era engineering essays.”
@@ -46,12 +46,12 @@ The three fields can be configured together but remain independent:
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       site: {
-        homeTitle: '我的数字花园',
-        hero: '记录开发、阅读和生活。',
+        homeTitle: 'My digital garden',
+        hero: 'Development, reading and everyday life.',
       },
-      messages: { siteDescription: '个人项目与学习笔记。' },
+      messages: { siteDescription: 'Personal projects and study notes.' },
     },
   },
 },
@@ -109,7 +109,7 @@ Disabling both first switches removes their startup-text component. No site.conf
 
 <a id="home-messages"></a>
 
-These optional `string` overrides live under `i18n.locales.<语言>.messages.home`. Ordinary fields use message fallback. Listed defaults are Simplified Chinese / English; other built-in languages have their own text.
+These optional `string` overrides live under `i18n.locales.<locale>.messages.home`. Ordinary fields use message fallback. Listed defaults are Simplified Chinese / English; other built-in languages have their own text.
 
 | Final path segment | Simplified Chinese default / English default                    | Purpose and limits                                                                                        |
 | ------------------ | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -123,13 +123,13 @@ These are conditional on their areas existing. Empty strings clear text, not con
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         home: {
-          latest: '最近更新',
-          viewAll: '全部文章',
-          noPosts: '这里还没有文章。',
-          openDoor: '打开走廊预览',
+          latest: 'Latest updates',
+          viewAll: 'All articles',
+          noPosts: 'There are no articles here yet.',
+          openDoor: 'Open the corridor preview',
         },
       },
     },
@@ -139,7 +139,7 @@ i18n: {
 
 <a id="home-transmission"></a>
 
-### `i18n.locales.<语言>.messages.home.transmission`
+### `i18n.locales.<locale>.messages.home.transmission`
 
 - **Type:** optional `string` override.
 - **Theme default:** `'Knock, knock.'` shared by languages, including Chinese, without personal overrides.
@@ -151,7 +151,7 @@ For shared text used by languages without their own override:
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '这里留下一点线索。' } } },
+    en: { messages: { home: { transmission: 'Leave a small clue here.' } } },
   },
 },
 ```
@@ -160,7 +160,7 @@ Setting the same field in zh overrides Chinese only. Text changes neither measur
 
 <a id="message-hero"></a>
 
-### `i18n.locales.<语言>.messages.home.hero`
+### `i18n.locales.<locale>.messages.home.hero`
 
 - **Type:** optional `string` override.
 - **Theme default:** built-in language introduction; Simplified Chinese/English match site.hero above.
@@ -170,7 +170,7 @@ Setting the same field in zh overrides Chinese only. Text changes neither measur
 ```ts
 i18n: {
   locales: {
-    zh: { messages: { home: { hero: '仅在没有可用 site.hero 时使用的介绍。' } } },
+    en: { messages: { home: { hero: 'An introduction used only when site.hero is unavailable.' } } },
   },
 },
 ```
@@ -200,12 +200,12 @@ With the switch off, these links navigate directly. It exposes no duration, scen
 
 These fields are not homepage-only. This table documents homepage usage; their main modules define them fully.
 
-| Full path                                      | Homepage relationship                                                                                   | Main reference                                                    |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `theme.fragments.enabled`                      | Shows the avatar if that language has fragments; also controls the full list. Preview maximum is three. | [Fragments switch](/en/blog/config-fragments/#enabled)            |
-| `i18n.locales.<语言>.messages.blog.allPosts`   | Latest-post count tooltip and archive accessible name.                                                  | [Shared list text](/en/blog/config-blog-list/#tag-messages)       |
-| `i18n.locales.<语言>.messages.fragments.title` | Avatar accessible name, not text beside it.                                                             | [Fragment messages](/en/blog/config-fragments/#fragment-messages) |
-| `i18n.locales.<语言>.messages.fragments.close` | Homepage preview close accessible name, not button shape.                                               | [Fragment messages](/en/blog/config-fragments/#fragment-messages) |
+| Full path                                        | Homepage relationship                                                                                   | Main reference                                                    |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `theme.fragments.enabled`                        | Shows the avatar if that language has fragments; also controls the full list. Preview maximum is three. | [Fragments switch](/en/blog/config-fragments/#enabled)            |
+| `i18n.locales.<locale>.messages.blog.allPosts`   | Latest-post count tooltip and archive accessible name.                                                  | [Shared list text](/en/blog/config-blog-list/#tag-messages)       |
+| `i18n.locales.<locale>.messages.fragments.title` | Avatar accessible name, not text beside it.                                                             | [Fragment messages](/en/blog/config-fragments/#fragment-messages) |
+| `i18n.locales.<locale>.messages.fragments.close` | Homepage preview close accessible name, not button shape.                                               | [Fragment messages](/en/blog/config-fragments/#fragment-messages) |
 
 If enabled but missing, check current-language fragments. Do not copy existing IDs to force the avatar to appear. See [preview image/code limits](/en/blog/config-fragments/#preview-and-links) and [publishing fragments](/en/blog/starter-guide-5-fragments/).
 

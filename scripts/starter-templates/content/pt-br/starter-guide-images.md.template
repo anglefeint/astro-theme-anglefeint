@@ -50,13 +50,13 @@ Mantenha o original. O WebP gerado para exibição é um derivado, não um backu
 Abra o Markdown do artigo e insira no local desejado:
 
 ```md
-![这张照片里有什么](./photo.jpg)
+![Descrição do que aparece na foto](./photo.jpg)
 ```
 
 `./photo.jpg` é relativo ao arquivo do artigo. Na organização acima, aponta para `photo.jpg` na mesma pasta. Para arquivos de public:
 
 ```md
-![这张照片里有什么](/images/shared-photo.jpg)
+![Descrição do que aparece na foto](/images/shared-photo.jpg)
 ```
 
 Esse caminho corresponde a `public/images/shared-photo.jpg` e omite `public` na URL. O texto entre colchetes é a descrição alternativa: descreva o conteúdo real, em vez de escrever apenas “imagem”.
@@ -94,15 +94,15 @@ Com `theme.fragments.enabled: false`, dev, build e prepare-covers/doctor ignoram
 Coloque o original em `public/images/fragments/my-photo.png` e escreva no corpo do Fragment existente:
 
 ```md
-![这条碎片的配图说明](/images/fragments/my-photo.png)
+![Descrição da imagem desta nota](/images/fragments/my-photo.png)
 ```
 
-Você também pode colocar `photo.png` junto do Fragment e usar `![配图说明](./photo.png)`. Apenas copiar uma imagem para public não inicia uma varredura geral de biblioteca: ela precisa ser referenciada em um Fragment real.
+Você também pode colocar `photo.png` junto do Fragment e usar `![Descrição da imagem](./photo.png)`. Apenas copiar uma imagem para public não inicia uma varredura geral de biblioteca: ela precisa ser referenciada em um Fragment real.
 
 Imagens por referência também funcionam:
 
 ```md
-![配图说明][photo]
+![Descrição da imagem][photo]
 
 [photo]: /images/fragments/my-photo.png
 ```
@@ -110,7 +110,7 @@ Imagens por referência também funcionam:
 Para tamanhos manuais, use HTML:
 
 ```html
-<img src="/images/fragments/my-photo.png" alt="配图说明" width="640" height="360" />
+<img src="/images/fragments/my-photo.png" alt="Descrição da imagem" width="640" height="360" />
 ```
 
 As dimensões são exemplos; preencha valores de acordo com a proporção real. Imagens locais suportadas recebem dimensões ausentes automaticamente. Dimensões já preenchidas são mantidas; se houver apenas uma, a outra é calculada pela proporção original. Valores existentes incorretos não são corrigidos.
@@ -125,7 +125,7 @@ Depois de referenciar ou trocar um original, inicie o servidor local na raiz do 
 npm run dev
 ```
 
-dev prepara arquivos ausentes ou desatualizados e acompanha alterações nas fontes e referências. O `npm run doctor` local também prepara antes de verificar e construir. Se quiser apenas preparar imagens sem iniciar páginas nem a verificação completa, pare dev e execute:
+Dev, build e doctor, inclusive em CI, reutilizam derivados válidos e preparam os ausentes, desatualizados ou danificados. Dev também acompanha alterações nas fontes e referências. Se quiser apenas preparar imagens sem iniciar páginas nem a verificação completa, pare dev e execute:
 
 ```bash
 npx @anglefeint/astro-theme prepare-covers
@@ -155,9 +155,9 @@ Depois da preparação, os arquivos ficam em:
 
 ```text
 src/assets/blog/covers/
-  originals/      # 如果使用这个原图目录
-  manifest.json  # 来源、尺寸、规则与输出哈希
-  generated/     # 持久响应式文件
+  originals/      # se você usar este diretório de originais
+  manifest.json  # origens, dimensões, regras e hashes de saída
+  generated/     # arquivos responsivos persistentes
 ```
 
 Faça commit em conjunto de:
@@ -169,7 +169,9 @@ Se o original estiver em public ou junto do artigo, inclua também esse arquivo,
 
 Antes de publicar, pare dev e execute `npm run doctor` localmente; após o sucesso, `npm run preview` mostra o build. doctor já constrói, sem necessidade de build imediato adicional. A hospedagem continua usando `npm run build` e `dist`, publicando todos os arquivos de saída.
 
-**O build de publicação só valida e copia os arquivos responsivos já preparados; não gera ausentes na hospedagem.** doctor em CI também só valida. Arquivos ausentes, desatualizados ou alterados causam falha. Volte ao ambiente local, prepare, faça commit e publique novamente. Esse fluxo persistente não depende de a plataforma preservar o cache de imagens do Astro.
+**Dev, build e doctor, inclusive em CI, preparam automaticamente os derivados utilizados:** reutilizam os válidos e geram os ausentes, desatualizados ou danificados. Guardar os derivados no Git permite reutilizá-los sem depender do cache da plataforma. Originais ausentes, ilegíveis ou fora dos caminhos permitidos continuam causando erros.
+
+**Requer 0.36.2 ou posterior:** Dev, build e doctor (inclusive em CI) reutilizam derivados válidos e geram os ausentes, desatualizados ou danificados. Na versão 0.36.1, prepare as imagens primeiro com dev ou `prepare-covers` antes de build/CI. `prepare-covers --check` e a sincronização da configuração continuam sendo verificações somente de leitura.
 
 Derivados usados no build são copiados para `_blog-covers/`. Não publique só HTML nem deixe esse diretório de fora. Arquivos antigos ou sem uso em generated não são apagados automaticamente. Antes de limpar, confira as referências e não apague originais ainda necessários.
 
@@ -216,16 +218,16 @@ As imagens automáticas ficam em `dist/_social/`. Plataformas leem os metadados 
 
 ## 8. Como investigar problemas de imagens
 
-| Sintoma                                       | O que conferir primeiro                                                                                                               |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Imagem não aparece                            | Existência do arquivo, maiúsculas/minúsculas e caminho relativo ao Markdown atual; URLs public não levam `public`.                    |
-| Preparação da capa falha                      | `heroImage` precisa apontar para arquivo local do projeto, sem confundir com URL externa ou public; veja o erro completo no terminal. |
-| Aviso missing/stale/modified derivatives      | Pare dev, execute prepare-covers local, faça commit do original, manifesto e generated e reconstrua.                                  |
-| Imagem em public sem tamanhos gerados         | Verifique se um Fragment a referencia; imagens public comuns do corpo de artigos ficam fora dessa varredura.                          |
-| GIF ou SVG continua grande                    | Animações e vetores preservam o original; o comando não converte para vídeo nem comprime animações.                                   |
-| Imagem remota de Fragment lenta ou com saltos | Links externos não são convertidos nem têm dimensões inferidas; otimize na origem e preencha largura e altura corretas.               |
-| Imagem local funciona, publicada não          | Originais e generated precisam estar no Git; publique todo dist e confira reescritas de caminhos.                                     |
-| Prévia de compartilhamento antiga             | Verifique novo build/publicação, prioridade da imagem do artigo e cache da plataforma.                                                |
+| Sintoma                                       | O que conferir primeiro                                                                                                                    |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Imagem não aparece                            | Existência do arquivo, maiúsculas/minúsculas e caminho relativo ao Markdown atual; URLs public não levam `public`.                         |
+| Preparação da capa falha                      | `heroImage` precisa apontar para arquivo local do projeto, sem confundir com URL externa ou public; veja o erro completo no terminal.      |
+| Aviso missing/stale/modified derivatives      | Execute dev, build ou doctor para regenerar os derivados; use prepare-covers para preparação explícita. Confira os originais se persistir. |
+| Imagem em public sem tamanhos gerados         | Verifique se um Fragment a referencia; imagens public comuns do corpo de artigos ficam fora dessa varredura.                               |
+| GIF ou SVG continua grande                    | Animações e vetores preservam o original; o comando não converte para vídeo nem comprime animações.                                        |
+| Imagem remota de Fragment lenta ou com saltos | Links externos não são convertidos nem têm dimensões inferidas; otimize na origem e preencha largura e altura corretas.                    |
+| Imagem local funciona, publicada não          | Versione os originais; os derivados podem ser regenerados. Publique todo dist e confira reescritas de caminhos.                            |
+| Prévia de compartilhamento antiga             | Verifique novo build/publicação, prioridade da imagem do artigo e cache da plataforma.                                                     |
 
 Se personalizar srcDir, publicDir ou fontes com base no Astro, prepare usando dev com essas configurações. O comando prepare-covers independente usa os diretórios padrão. Suporte parcial a base no processamento de imagens não equivale a suporte integral a qualquer subdiretório de publicação.
 

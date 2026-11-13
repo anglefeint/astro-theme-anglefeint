@@ -44,16 +44,18 @@ Choose hosting that serves a root website, static directory index.html files and
 
 Deploy your own blog project and the branch holding your actual content, rather than treating the theme maintainer demo as a personal blog. Include project configuration, content, dependency manifests and resources.
 
-After adding/replacing local covers or fragment images, prepare responsive files using local dev/doctor, then commit:
+After adding or replacing local covers or fragment images, normal dev, build and doctor prepare responsive files automatically. Commit these source files:
 
 - Articles, fragments, custom pages and `src/site.config.ts`.
 - Referenced originals, public images, icons and required music/resources.
-- All `src/assets/blog/covers/`, including manifest.json, generated/ and used originals/.
+- Used originals in `src/assets/blog/covers/originals/`. Keeping manifest.json and generated/ in Git is recommended for reuse; missing derivatives are generated automatically.
 - `package.json`, `package-lock.json` and original Astro/hosting configuration.
 
 Originals may also live beside articles or in public; commit those locations too. See [images](/en/blog/starter-guide-images/) for preparation details.
 
-**Ordinary deployment builds validate and copy persistent images without generating replacements.** CI doctor also only validates. Missing, stale or modified files cause failure. Prepare and commit locally before redeployment rather than relying on host image caches.
+Normal dev, build and doctor runs, including CI, reuse correct responsive files and automatically prepare missing, stale or modified derivatives. Commit the original images and content. Committing `src/assets/blog/covers/manifest.json` and `generated/` allows reuse across checkouts, but these generated files are not a prerequisite for automatic preparation. Missing originals, unsafe paths and invalid image inputs still fail validation. This does not depend on deployment-platform image caches. Explicit `prepare-covers --check` and configuration sync remain read-only.
+
+**Version note:** Automatic image preparation during normal builds and CI doctor runs requires 0.36.2 or later. With 0.36.1, first run dev or `prepare-covers` to prepare derivatives. Explicit `prepare-covers --check` and configuration sync remain read-only.
 
 Git-based deployment does not require committing node_modules, `.astro` or dist; the platform installs dependencies and builds output. Do not upload local dependencies as a static website. If environment files are not committed, configure necessary variables on the platform. PUBLIC_ values are public site information, not a place for secrets.
 
@@ -70,13 +72,13 @@ Open preview's printed address. Check home, posts, images, language menu and art
 
 The commands have different responsibilities:
 
-| Command           | Responsibility                                                                                     |
-| ----------------- | -------------------------------------------------------------------------------------------------- |
-| `npm run dev`     | Local development and related image preparation; no built full-text index.                         |
-| `npm run doctor`  | Local image preparation, Astro checks and build; About runtime configuration checked when enabled. |
-| `npm run check`   | Calls the same doctor in the current starter; do not run both consecutively.                       |
-| `npm run build`   | Builds the site, validating persistent images without doctor's local generation step.              |
-| `npm run preview` | Serves existing dist without building or publishing.                                               |
+| Command           | Responsibility                                                                                              |
+| ----------------- | ----------------------------------------------------------------------------------------------------------- |
+| `npm run dev`     | Local development and related image preparation; no built full-text index.                                  |
+| `npm run doctor`  | Image preparation (including CI), Astro checks and build; About runtime configuration checked when enabled. |
+| `npm run check`   | Calls the same doctor in the current starter; do not run both consecutively.                                |
+| `npm run build`   | Prepares/reuses responsive images and builds the site.                                                      |
+| `npm run preview` | Serves existing dist without building or publishing.                                                        |
 
 Fix any error before deployment. Do not publish leftover dist after failure. doctor already produces a build, so immediately repeating check/build is unnecessary. Stop preview with Ctrl+C.
 
@@ -97,7 +99,7 @@ Connect your repository and configure:
 | Build command    | `npm run build`                                                                             |
 | Output directory | `dist`, relative to project root.                                                           |
 
-If hosting already installs dependencies, do not add a duplicate install command. If a full script is required, install before build. Do not stack doctor, check and build or add server-side image generation to conceal missing commits.
+If hosting already installs dependencies, do not add a duplicate install command. If a full script is required, install before build. Do not stack doctor, check and build. Automatic derivative preparation cannot recover originals omitted from Git.
 
 Use the platform's actual framework preset, branch and installation controls. Choose static output. npm run dev and npm run preview are not production startup commands.
 
@@ -153,14 +155,14 @@ Normal publication needs no extra configuration. To explain the site or link res
 
 ```ts
 aiReadableContent: {
-  notes: '本站记录个人学习过程，内容可能持续修订。',
-  links: [{ label: '项目主页', href: 'https://example.com/project' }],
+  notes: 'This site records my learning and may be revised.',
+  links: [{ label: 'Project home', href: 'https://example.com/project' }],
 },
 ```
 
 notes accepts Markdown; links require label and href. Use public HTTP(S) URLs. Relative targets, including root paths, resolve against the site address. This is public site context, not replacement article text or an article privacy restriction.
 
-Use `i18n.locales.<代码>.aiReadableContent` for language overrides. For example, provide Chinese notes without extra links:
+Use `i18n.locales.<locale>.aiReadableContent` for language overrides. For example, provide Chinese notes without extra links:
 
 ```ts
 i18n: {
@@ -197,17 +199,17 @@ After redeployment, visit the public address and check GA4 realtime reports. Scr
 
 ## 9. Troubleshoot deployment
 
-| Symptom                                    | Check first                                                                                  |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| npm ci fails                               | Node/dependency requirements and a committed package-lock consistent with package.json.      |
-| Image missing/stale/modified               | Prepare locally, commit originals/manifest/generated, and do not bypass platform validation. |
-| Build succeeds but pages return 404        | Output directory, branch, root/index support and unsupported subpath deployment.             |
-| Home works but article refresh returns 404 | Real static subpaths, full output publication and accidental SPA fallbacks.                  |
-| Missing styles, images or search           | Full dist deployment, resource directories and path rewriting.                               |
-| Canonical/RSS still uses example domain    | site.url, PUBLIC_SITE_URL, dotenv mode and a new build/deployment.                           |
-| Configuration changes not live             | Correct project/branch/latest commit, not only local edits.                                  |
-| Deleted post remains reachable             | Stale output/cache; check full replacement and hosting caches.                               |
-| No GA4 data                                | Real G- ID, production build, nonlocal address and script blocking.                          |
+| Symptom                                    | Check first                                                                                    |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| npm ci fails                               | Node/dependency requirements and a committed package-lock consistent with package.json.        |
+| Image missing/stale/modified               | Build repairs derivatives; check committed originals, safe paths and valid inputs if it fails. |
+| Build succeeds but pages return 404        | Output directory, branch, root/index support and unsupported subpath deployment.               |
+| Home works but article refresh returns 404 | Real static subpaths, full output publication and accidental SPA fallbacks.                    |
+| Missing styles, images or search           | Full dist deployment, resource directories and path rewriting.                                 |
+| Canonical/RSS still uses example domain    | site.url, PUBLIC_SITE_URL, dotenv mode and a new build/deployment.                             |
+| Configuration changes not live             | Correct project/branch/latest commit, not only local edits.                                    |
+| Deleted post remains reachable             | Stale output/cache; check full replacement and hosting caches.                                 |
+| No GA4 data                                | Real G- ID, production build, nonlocal address and script blocking.                            |
 
 For routine updates: edit/prepare locally → check/preview → commit sources → build/deploy. See [installation](/en/blog/starter-guide-1-configure-your-site/) for upgrades and [languages](/en/blog/starter-guide-languages/) for language paths.
 

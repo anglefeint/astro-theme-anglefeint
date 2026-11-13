@@ -4,7 +4,7 @@ title: 'ユーザーガイド6：読者がコメントできるようにする'
 subtitle: 'Giscus を接続し、記事と Fragments のコメントを有効にして、多言語版で議論を共有するか選びます。'
 description: 'Giscus の準備、テーマ設定、記事と議論の対応、多言語共有、Fragments の違い、設定・読み込みの問題を説明します。'
 pubDate: '2026-11-10'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -105,7 +105,7 @@ Giscus がこれらで議論を探し、テーマはローカルのコメント 
 ```ts
 theme: {
   comments: {
-    // 保留 enabled: true 和自己的 repo、repoId、category、categoryId。
+    // enabled: true と自分の repo、repoId、category、categoryId を残します。
     shareAcrossLocales: true,
     mapping: 'specific',
     term: '',

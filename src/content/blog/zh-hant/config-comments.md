@@ -4,7 +4,7 @@ title: '設定字典：Giscus 評論和多語言討論共享'
 subtitle: '文章與碎片的獨立開關、討論映射、語言和共享規則。'
 description: '依實際程式碼查閱全部 Giscus 公共設定，說明預設值、型別、驗證條件、文章譯文共享和碎片評論覆寫規則。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -27,7 +27,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 下表欄位的完整前綴均為 theme.comments.，例如 repo 的完整路徑是 theme.comments.repo。所有欄位在輸入的部分設定中均可省略，由主題預設值補齊。字串標志必須保留引號，不能寫成 true/false 或數字。
 
-這些欄位都是條件生效：文章評論需要啟用並滿足輸出條件；碎片僅使用其中一部分，其余會覆寫或忽略。沒有通用的“空字符串恢复默认”規則，具體見每行。除明確驗證的映射約束外，型別正確和非空不等於 Giscus 遠端設定正確。
+這些欄位都是條件生效：文章評論需要啟用並滿足輸出條件；碎片僅使用其中一部分，其余會覆寫或忽略。沒有通用的「空字串恢復預設」規則，具體見每行。除明確驗證的映射約束外，型別正確和非空不等於 Giscus 遠端設定正確。
 
 <a id="connection"></a>
 
@@ -71,7 +71,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 - **型別 / 預設值：** boolean，可省略 / false。
 - **狀態與作用：** 條件生效；文章評論開啟後，讓相同完整 slug 的不同語言版本綁定同一個討論。不同 slug 保持分開。
-- **限制：** 要求 mapping 為 'specific'，term 和 number 在 trim 後均为空，strict 为字符串 '1'；不滿足會報設定錯誤，不能只打開布林開關。關閉文章評論時跳過這組啟用約束，但碎片仍有自己的連線檢查。
+- **限制：** 要求 mapping 為 'specific'，term 和 number 在 trim 後均為空，strict 為字串 '1'；不滿足會報設定錯誤，不能只打開布林開關。關閉文章評論時跳過這組啟用約束，但碎片仍有自己的連線檢查。
 - **範例：** 下方共享設定片段。它不會翻譯評論、合併舊討論或改變碎片綁定方式。
 
 | 文章檔案                             | 共享模式實際 term |
@@ -102,7 +102,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 strict 為 '1' 時，Giscus 使用討論內文中的標題哈希做嚴格匹配，不是主題在本機比較兩個標題。早期已有討論可能需要補充匹配標記；參見[Giscus 嚴格匹配說明](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#data-strict)。啟用共享或更改映射不會自動遷移、合併、刪除舊討論；舊評論可能仍在 GitHub，但不出現在新綁定下。遷移前先確定現有討論與新 term 的對應關系。
 
-非共享時，specific + 一個固定 term 會讓所有使用該設定的文章尋找同一討論；number 也會全站指向同一編號。它們不是“每篇文章自动分配一个 ID”。與目前映射無關的 term/number 不發送給 Giscus；主題仍會對這兩個設定值執行 trim，因此不要用 null 或數字替代字串。
+非共享時，specific + 一個固定 term 會讓所有使用該設定的文章尋找同一討論；number 也會全站指向同一編號。它們不是「每篇文章自動分配一個 ID」。與目前映射無關的 term/number 不發送給 Giscus；主題仍會對這兩個設定值執行 trim，因此不要用 null 或數字替代字串。
 
 <a id="examples"></a>
 
@@ -145,7 +145,7 @@ theme: {
 },
 ```
 
-預設 lang 實際為 'en'，不是“跟随页面”；上面明確用空字串啟用頁面語言映射。zh 轉為 zh-CN、zh-hant 轉為 zh-TW、pt-br 轉為 pt，其他程式碼直接傳入。語言是否被 Giscus 支援由服務決定；更改語言只改介面，不改變討論身分或翻譯已發評論。theme.comments 是全站設定，不在 i18n.locales 內分別複製。
+預設 lang 實際為 'en'，不是「跟隨頁面」；上面明確用空字串啟用頁面語言映射。zh 轉為 zh-CN、zh-hant 轉為 zh-TW、pt-br 轉為 pt，其他程式碼直接傳入。語言是否被 Giscus 支援由服務決定；更改語言只改介面，不改變討論身分或翻譯已發評論。theme.comments 是全站設定，不在 i18n.locales 內分別複製。
 
 theme 字串直接傳給 Giscus，常用例值是 'dark' 或 'light'；可用主題以及自訂 CSS 網址由 Giscus 負責，不會改變外層 AI 面板。需要自訂時查[官方主題說明](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#data-theme)，主題套件不會驗證自訂 CSS 的內容和無障礙功能。
 
@@ -185,16 +185,16 @@ theme: {
 
 ## 頁面自身的評論文字
 
-這些是 `i18n.locales.<语言>.messages` 下的 string 欄位，均可省略，預設使用目前語言內建文字與回退鏈。範例值寫到對應物件；只改變外層標籤，不替換 Giscus iframe 內部按鈕。表中僅列中文 / 英文預設值。
+這些是 `i18n.locales.<locale>.messages` 下的 string 欄位，均可省略，預設使用目前語言內建文字與回退鏈。範例值寫到對應物件；只改變外層標籤，不替換 Giscus iframe 內部按鈕。表中僅列中文 / 英文預設值。
 
 | 相對欄位             | 簡體中文 / 英文預設值                                                                                                     | 狀態、作用與限制                                           | 範例值               |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------- |
-| `blog.comments`      | 评论 / Comments                                                                                                           | 條件生效：文章評論區域的無障礙名稱，不是可見的額外標題     | `"文章讨论"`         |
-| `fragments.comments` | 评论 / Comments                                                                                                           | 條件生效：碎片評論按鈕與彈窗標題                           | `"参与讨论"`         |
-| `fragments.close`    | 关闭 / Close                                                                                                              | 條件生效：彈窗關閉按鈕；也用於首頁碎片視窗關閉的無障礙名稱 | `"关闭窗口"`         |
-| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | 條件生效：碎片評論載入狀態                                 | `"正在加载讨论…"`    |
-| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | 條件生效：碎片評論失敗提示                                 | `"讨论暂时不可用。"` |
-| `fragments.retry`    | 重试 / Retry                                                                                                              | 條件生效：碎片評論失敗後的重試按鈕                         | `"重新加载"`         |
+| `blog.comments`      | 评论 / Comments                                                                                                           | 條件生效：文章評論區域的無障礙名稱，不是可見的額外標題     | `"文章討論"`         |
+| `fragments.comments` | 评论 / Comments                                                                                                           | 條件生效：碎片評論按鈕與彈窗標題                           | `"參與討論"`         |
+| `fragments.close`    | 关闭 / Close                                                                                                              | 條件生效：彈窗關閉按鈕；也用於首頁碎片視窗關閉的無障礙名稱 | `"關閉窗口"`         |
+| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | 條件生效：碎片評論載入狀態                                 | `"正在載入討論…"`    |
+| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | 條件生效：碎片評論失敗提示                                 | `"討論暫時不可用。"` |
+| `fragments.retry`    | 重试 / Retry                                                                                                              | 條件生效：碎片評論失敗後的重試按鈕                         | `"重新載入"`         |
 
 文章和碎片其他文字分別見[文章字典](/zh-hant/blog/config-article/#article-messages)和[Fragments 字典](/zh-hant/blog/config-fragments/#fragment-messages)。這些欄位不決定 iframe 內部語言，後者使用前文的 lang 規則。
 

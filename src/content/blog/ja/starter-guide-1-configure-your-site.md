@@ -42,12 +42,11 @@ node --version
 npm --version
 ```
 
-プロジェクトを置きたいディレクトリでブログを作成します。次のコマンドは `my-blog` フォルダーを作成しますが、依存関係は自動インストールしません。
+プロジェクトを置きたいディレクトリでブログを作成します。次のコマンドは `my-blog` フォルダーを作成します。作成ウィザードでは依存関係のインストールに Yes を選んでください。自分で省略した場合だけ、起動前に `npm install` を実行します。`--no-ai` は汎用 AI 指示ファイルの追加作成を省略します。テーマ独自の指示は starter に含まれます。
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
 
@@ -63,11 +62,11 @@ npm run dev
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录开发、阅读和生活。',
+  title: '林のブログ',
+  description: '開発、読書、日々のことを記録します。',
   url: 'https://example.com',
-  author: '小林',
-  tagline: '保持好奇，持续记录。',
+  author: '林',
+  tagline: '好奇心を持ち、記録を続ける。',
 },
 ```
 
@@ -178,7 +177,7 @@ npm run preview
 
 `preview` はビルド済みの `dist/` 内の静的サイトを開きます。ターミナルに表示された URL にアクセスしてください。インターネットへの公開は行いません。記事検索はビルド後のプレビューで確認する必要があり、`dev` にリアルタイム全文検索はありません。`Ctrl+C` でプレビューを停止します。
 
-公開時のホスティングサービスのビルドコマンドは `npm run build`、出力先は `dist` で、その全ファイルを配備します。ローカル画像の追加・変更後は、dev または doctor をローカルで実行し、元画像と生成された `src/assets/blog/covers/` 全体をコミットしてください。配備ビルドと CI の doctor はレスポンシブ画像を検証するだけで、不足・期限切れなら失敗し、プラットフォーム側では補完しません。内容や設定を変更したら再ビルドと再配備が必要です。
+公開時のホスティングサービスのビルドコマンドは `npm run build`、出力先は `dist` で、その全ファイルを配備します。ローカル画像の追加・変更後は、dev または doctor をローカルで実行し、元画像と生成された `src/assets/blog/covers/` 全体をコミットしてください。通常の build と doctor は、CI でも有効な画像ソースから不足・期限切れ・破損した派生画像だけを補い、正しい既存ファイルは再利用します。元画像の欠落や不正なパスはエラーになります。設定同期と明示的な `prepare-covers --check` は読み取り専用の検証です。build／CI doctor の自動準備は 0.36.2 以降で利用できます。npm 0.36.1 では dev または `prepare-covers` で先に準備します。詳細は[画像ガイド](/ja/blog/starter-guide-images/)を参照してください。内容や設定を変更したら再ビルドと再配備が必要です。
 
 ## 既存プロジェクトの更新
 

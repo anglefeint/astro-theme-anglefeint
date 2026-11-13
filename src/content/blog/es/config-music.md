@@ -4,7 +4,7 @@ title: 'Referencia de configuración: reproductor de música'
 subtitle: 'Lista global, textos y límites de reproducción'
 description: 'Tipos, valores, validación, carga y restauración del reproductor de música.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -30,7 +30,7 @@ Es global, no por inicio/idioma. Las páginas estándar comparten lista; las per
 - **Tipo / predeterminado:** MusicTrack[] / []. Cada elemento tiene los tres campos de abajo.
 - **Estado y función:** condicional a música activa; orden y cambios siguen el array. Sin límite público de cantidad.
 - **Límites:** debe ser array al estar activo. Vacío es válido pero normaliza el reproductor a apagado. Sustituye, no añade a listas previas; conserva todas las pistas deseadas.
-- **Ejemplo:** [{ title: '我的一首歌', artist: '作者', src: '`/music/my-song.mp3`' }].
+- **Ejemplo:** [{ title: 'Una canción mía', artist: 'Autor', src: '`/music/my-song.mp3`' }].
 
 Títulos/artistas/URLs son globales, no messages localizados. Cambiar idioma no cambia lista. Objetos de listas de terceros o URLs de compartir no sustituyen este array.
 
@@ -42,8 +42,8 @@ Prefijo completo: `theme.music.tracks[]`. «Ninguno» indica que no se suministr
 
 | Campo  | Tipo / predeterminado                           | Estado, función y límites                                                                                                                                       | Ejemplo              |
 | ------ | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| title  | string obligatoria / ninguno                    | Condicional: nombre en vista principal, plegada y lista. No vacío tras recortar. Un nombre en blanco falla; no usa nombre de archivo ni metadatos               | '我的一首歌'         |
-| artist | string opcional / sin definir, normalizada a '' | Condicional: artista en vista principal/lista. Debe ser string si existe y se recorta. Vacío no usa autor del sitio ni metadatos                                | '作者'               |
+| title  | string obligatoria / ninguno                    | Condicional: nombre en vista principal, plegada y lista. No vacío tras recortar. Un nombre en blanco falla; no usa nombre de archivo ni metadatos               | 'Una canción mía'    |
+| artist | string opcional / sin definir, normalizada a '' | Condicional: artista en vista principal/lista. Debe ser string si existe y se recorta. Vacío no usa autor del sitio ni metadatos                                | 'Autor'              |
 | src    | string obligatoria / ninguno                    | Condicional: empieza por un solo / o https:// en minúsculas, sin espacios ni barras invertidas. HTTPS debe ser URL válida. No comprueba existencia ni contenido | '/music/my-song.mp3' |
 
 title/artist son texto, sin Markdown/HTML. No hay campos públicos de portada, letra, duración, álbum, ID ni volumen por pista.
@@ -70,8 +70,8 @@ theme: {
     enabled: true,
     tracks: [
       {
-        title: '我的一首歌',
-        artist: '作者',
+        title: 'Una canción mía',
+        artist: 'Autor',
         src: '/music/my-song.mp3',
       },
     ],
@@ -85,42 +85,42 @@ theme: {
 
 ## messages.music: diecinueve textos de interfaz y accesibilidad
 
-Prefijo completo: `i18n.locales.<语言>.messages.music.`. Todos son **string** opcionales con textos integrados/respaldo. La tabla muestra chino simplificado / inglés y ejemplos. Necesitan reproductor renderizado y estado/control correspondiente. Vacío sustituye texto sin ocultar función y puede quitar nombres accesibles útiles.
+Prefijo completo: `i18n.locales.<locale>.messages.music.`. Todos son **string** opcionales con textos integrados/respaldo. La tabla muestra chino simplificado / inglés y ejemplos. Necesitan reproductor renderizado y estado/control correspondiente. Vacío sustituye texto sin ocultar función y puede quitar nombres accesibles útiles.
 
-| Campo      | Predeterminado chino simplificado / inglés                                                                      | Función y límites                                                      | Ejemplo                                |
-| ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------- |
-| `label`    | 音乐播放器 / Music player                                                                                       | Nombre accesible del aside, no texto visible AUDIO CHANNEL             | `"音乐播放器"`                         |
-| `play`     | 播放 / Play                                                                                                     | Nombre accesible de reproducir; texto visible PLAY                     | `"播放"`                               |
-| `pause`    | 暂停 / Pause                                                                                                    | Nombre accesible de pausa/carga; visible PAUSE                         | `"暂停"`                               |
-| `prev`     | 上一首 / Previous                                                                                               | Nombre accesible de anterior; visible PREV                             | `"上一首"`                             |
-| `next`     | 下一首 / Next                                                                                                   | Nombre accesible de siguiente; visible NEXT                            | `"下一首"`                             |
-| `open`     | 展开播放器 / Open player                                                                                        | Nombre accesible de abrir plegado; visible OPEN                        | `"展开播放器"`                         |
-| `close`    | 收起播放器 / Collapse player                                                                                    | Nombre accesible de plegar; visible MIN. No pausa                      | `"收起播放器"`                         |
-| `progress` | 播放进度 / Progress                                                                                             | Nombre accesible de progreso; no cambia rango de búsqueda              | `"播放进度"`                           |
-| `volume`   | 音量 / Volume                                                                                                   | Nombre accesible de volumen; no fija volumen inicial. Visible LVL      | `"音量"`                               |
-| `queue`    | 歌单 / Playlist                                                                                                 | Nombre accesible de lista; QUEUE y SHOW/HIDE son fijos                 | `"展开或收起歌单"`                     |
-| `mute`     | 静音 / Mute                                                                                                     | Nombre accesible para silenciar; visible MUTE                          | `"静音"`                               |
-| `unmute`   | 取消静音 / Unmute                                                                                               | Nombre accesible para restaurar desde cero; visible UNMUTE             | `"恢复音量"`                           |
-| `idle`     | 就绪 / Ready                                                                                                    | Estado SIGNAL inicial y al cambiar pista                               | `"等待播放"`                           |
-| `loading`  | 加载中 / Loading                                                                                                | Estado SIGNAL durante descarga/espera                                  | `"正在加载歌曲"`                       |
-| `playing`  | 播放中 / Playing                                                                                                | Estado SIGNAL al reproducir                                            | `"正在播放"`                           |
-| `paused`   | 已暂停 / Paused                                                                                                 | Estado SIGNAL en pausa                                                 | `"已暂停"`                             |
-| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | Rechazo de permiso del navegador; cambiar texto no elimina restricción | `"请点击播放以继续。"`                 |
-| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | Fallo de solicitud/reproducción o montaje del módulo                   | `"歌曲未能加载，请重试。"`             |
-| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | Aviso noscript; no hay controles nativos alternativos                  | `"启用 JavaScript 后可以使用播放器。"` |
+| Campo      | Predeterminado chino simplificado / inglés                                                                      | Función y límites                                                      | Ejemplo                                         |
+| ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------- |
+| `label`    | 音乐播放器 / Music player                                                                                       | Nombre accesible del aside, no texto visible AUDIO CHANNEL             | `"Reproductor de música"`                       |
+| `play`     | 播放 / Play                                                                                                     | Nombre accesible de reproducir; texto visible PLAY                     | `"Reproducir"`                                  |
+| `pause`    | 暂停 / Pause                                                                                                    | Nombre accesible de pausa/carga; visible PAUSE                         | `"Pausar"`                                      |
+| `prev`     | 上一首 / Previous                                                                                               | Nombre accesible de anterior; visible PREV                             | `"Pista anterior"`                              |
+| `next`     | 下一首 / Next                                                                                                   | Nombre accesible de siguiente; visible NEXT                            | `"Pista siguiente"`                             |
+| `open`     | 展开播放器 / Open player                                                                                        | Nombre accesible de abrir plegado; visible OPEN                        | `"Abrir reproductor"`                           |
+| `close`    | 收起播放器 / Collapse player                                                                                    | Nombre accesible de plegar; visible MIN. No pausa                      | `"Contraer reproductor"`                        |
+| `progress` | 播放进度 / Progress                                                                                             | Nombre accesible de progreso; no cambia rango de búsqueda              | `"Progreso de reproducción"`                    |
+| `volume`   | 音量 / Volume                                                                                                   | Nombre accesible de volumen; no fija volumen inicial. Visible LVL      | `"Volumen"`                                     |
+| `queue`    | 歌单 / Playlist                                                                                                 | Nombre accesible de lista; QUEUE y SHOW/HIDE son fijos                 | `"Abrir o cerrar la lista"`                     |
+| `mute`     | 静音 / Mute                                                                                                     | Nombre accesible para silenciar; visible MUTE                          | `"Silenciar"`                                   |
+| `unmute`   | 取消静音 / Unmute                                                                                               | Nombre accesible para restaurar desde cero; visible UNMUTE             | `"Activar sonido"`                              |
+| `idle`     | 就绪 / Ready                                                                                                    | Estado SIGNAL inicial y al cambiar pista                               | `"Esperando reproducción"`                      |
+| `loading`  | 加载中 / Loading                                                                                                | Estado SIGNAL durante descarga/espera                                  | `"Cargando canción"`                            |
+| `playing`  | 播放中 / Playing                                                                                                | Estado SIGNAL al reproducir                                            | `"Reproduciendo"`                               |
+| `paused`   | 已暂停 / Paused                                                                                                 | Estado SIGNAL en pausa                                                 | `"En pausa"`                                    |
+| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | Rechazo de permiso del navegador; cambiar texto no elimina restricción | `"Pulsa reproducir para continuar."`            |
+| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | Fallo de solicitud/reproducción o montaje del módulo                   | `"No se pudo cargar la canción; reintenta."`    |
+| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | Aviso noscript; no hay controles nativos alternativos                  | `"Activa JavaScript para usar el reproductor."` |
 
 No sustituyen todas las etiquetas visibles. PLAY/PAUSE, PREV/NEXT, OPEN/MIN, MUTE/UNMUTE, QUEUE, SHOW/HIDE, TRACKS, LVL, AUDIO CHANNEL, STATE, SIGNAL y STANDBY son textos/códigos fijos. Los campos configurables aportan nombres accesibles o estados SIGNAL visibles. Que el botón siga en inglés no significa que su nombre accesible no se use.
 
-Por ejemplo, cambia solo carga/error chinos:
+Por ejemplo, cambia solo carga/error en español:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       messages: {
         music: {
-          loading: '正在加载歌曲',
-          error: '歌曲未能加载，请重试。',
+          loading: 'Cargando canción',
+          error: 'No se pudo cargar la canción; reintenta.',
         },
       },
     },

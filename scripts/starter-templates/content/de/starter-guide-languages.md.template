@@ -110,7 +110,7 @@ i18n: {
 - `messages.siteDescription` ist die Metabeschreibung, nicht die sichtbare Einführung. Nur oberstes `site.description` zu ändern ersetzt nicht zwingend die integrierte Startseitenbeschreibung.
 - `messages.nav` ändert Beschriftungen, keine Routen oder Artikel.
 
-Ebenso ändert `i18n.locales.<代码>.about` die About-Inhalte, und Module unter `messages` ändern ihre Oberflächentexte. Globale Funktionsschalter gelten weiterhin für About, Decoder und andere Seiten. Übersetzungen aktivieren sie nicht automatisch. Beispiele zeigt [Seiten und Funktionen anpassen](/de/blog/starter-guide-3-comments-about-and-theme-toggles/).
+Ebenso ändert `i18n.locales.<Sprachcode>.about` die About-Inhalte, und Module unter `messages` ändern ihre Oberflächentexte. Globale Funktionsschalter gelten weiterhin für About, Decoder und andere Seiten. Übersetzungen aktivieren sie nicht automatisch. Beispiele zeigt [Seiten und Funktionen anpassen](/de/blog/starter-guide-3-comments-about-and-theme-toggles/).
 
 Sprachmetadaten und Startseitenadressen stehen im [Sprachenverzeichnis](/de/blog/config-languages/#registry); die drei Startseitentexte im [Startseitenverzeichnis](/de/blog/config-home/#home-title).
 
@@ -215,7 +215,7 @@ npm run doctor
 npm run preview
 ```
 
-doctor enthält Prüfungen und Build. Danach brauchst du nicht direkt check oder build. Prüfe in preview die Suche jeder Sprache; der Index mischt nicht alle Sprachen. RSS liegt für jede aktive Sprache unter `/<代码>/rss.xml` und enthält nur deren Artikel.
+doctor enthält Prüfungen und Build. Danach brauchst du nicht direkt check oder build. Prüfe in preview die Suche jeder Sprache; der Index mischt nicht alle Sprachen. RSS liegt für jede aktive Sprache unter `/<Sprachcode>/rss.xml` und enthält nur deren Artikel.
 
 Prüfe die Domain und veröffentliche das vollständige `dist/` erneut. Aktivierung, Standardadresse und Inhalte erfordern einen neuen Build. Lokale Konfigurationsänderungen ändern keine Online-Seite. Bereinige alte Deployment-Dateien; Deaktivierung erzeugt keine automatischen Weiterleitungen alter URLs.
 

@@ -13,6 +13,11 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.36.2] - 2026-11-14
+
+- Prepare persistent responsive images during normal builds and doctor in local/CI environments, reusing valid assets and repairing missing/stale/corrupted derivatives. Preserve explicit read-only checks, path/source/output safeguards and original media.
+- Use the default create-astro installation flow in README/tutorials, avoid duplicate dependency installation, and correct localized tutorial/reference examples while retaining intentional Chinese configuration/default references. Synchronize distribution templates. See the [0.36.2 delivery record](docs/releases/0.36.2.md) for compatibility, validation and publication status.
+
 ## Maintenance - 2026-11-14 (no npm release)
 
 - Collect release scope, version/docs readiness, virtual starter links, documentation suggestions and structured handoff files in `release:flow prepare`; never infer authorization, stage source or cache check results.

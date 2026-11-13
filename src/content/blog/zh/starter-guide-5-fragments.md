@@ -8,6 +8,8 @@ updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
+**版本说明：** 正常 build／CI doctor 自动补齐图片需要主题 0.36.2 或更新版本；0.36.1 需先运行 dev 或 prepare-covers。显式 `prepare-covers --check` 保持只读。
+
 本篇是入门教程的第 4 / 8 篇。[查看完整教程顺序](/zh/blog/starter-guide-1-configure-your-site/#tutorial-order) · [按字段查配置字典](/zh/blog/config-reference/)。
 
 想记录一句想法、一张图片或一段代码，不必为它写一篇完整文章。Fragments 将这些内容按时间放在独立列表里，也会在首页提供最近内容的预览入口。
@@ -111,7 +113,7 @@ const progress = {
 
 全站数学开启时，碎片同样支持 `$x_1$` 行内公式和两行 `$$` 之间的独立公式。它们在构建时渲染，错误公式会导致编译或构建失败；关闭 `theme.math.enabled` 会关闭数学处理。公式写法可参见[写第一篇文章](/zh/blog/starter-guide-2-languages-and-routing/)。
 
-本地 dev 或 doctor 会准备受支持的碎片图片响应式文件。提交碎片 Markdown、原图及整个 `src/assets/blog/covers/`；部署构建和 CI doctor 只校验，不会在平台上补生成。不要只提交正文、漏掉图片文件。
+正常 dev、build 和 doctor（含 CI）会为受支持的碎片图片准备响应式文件，复用有效文件并自动补齐缺失、过期或损坏的派生文件。必须保留并提交碎片 Markdown 和原图；建议连同整个 `src/assets/blog/covers/` 提交，方便后续复用。显式 `prepare-covers --check` 仍只校验，不补生成。
 
 ## 5. 首页预览和列表分页
 

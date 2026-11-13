@@ -154,7 +154,7 @@ test('SVG and animated assets stay original; EXIF orientation is applied to rast
   assert.equal(metadata.height, 250);
 });
 
-test('build hook rejects absent derivatives without creating files; prepared files copy byte-for-byte', async (t) => {
+test('normal build prepares missing derivatives, reuses valid assets and copies exact bytes', async (t) => {
   const f = await fixture(t);
   const integration = blogCovers();
   const config = {
@@ -163,13 +163,12 @@ test('build hook rejects absent derivatives without creating files; prepared fil
     base: '/notes/',
   };
   const setup = { config, command: 'build', updateConfig() {}, logger: { info() {} } };
-  await assert.rejects(
-    integration.hooks['astro:config:setup'](setup),
-    /Deployment never regenerates/
-  );
-  await assert.rejects(readFile(f.manifest), { code: 'ENOENT' });
-  const prepared = await prepareCovers(f);
   await integration.hooks['astro:config:setup'](setup);
+  const prepared = await prepareCovers({ ...f, check: true });
+  const sample = path.join(prepared.generated, coverFiles(prepared)[0].file);
+  const before = (await stat(sample)).mtimeMs;
+  await integration.hooks['astro:config:setup'](setup);
+  assert.equal((await stat(sample)).mtimeMs, before, 'valid build assets are not re-encoded');
   const output = path.join(f.root, 'dist');
   await mkdir(output);
   await integration.hooks['astro:build:done']({ dir: pathToFileURL(output + '/') });
@@ -183,6 +182,53 @@ test('build hook rejects absent derivatives without creating files; prepared fil
     integration.hooks['astro:build:done']({ dir: pathToFileURL(output + '/') }),
     /Refusing to overwrite/
   );
+});
+
+test('build repairs corrupt and stale derivatives; sync validates without writing', async (t) => {
+  const f = await fixture(t);
+  const config = {
+    root: pathToFileURL(f.root + '/'),
+    srcDir: pathToFileURL(path.join(f.root, 'src') + '/'),
+    base: '/',
+  };
+  const setup = (command) => ({ config, command, updateConfig() {}, logger: { info() {} } });
+  await assert.rejects(blogCovers().hooks['astro:config:setup'](setup('sync')), /Missing, stale/);
+  await assert.rejects(readFile(f.manifest), { code: 'ENOENT' });
+  const build = () => blogCovers().hooks['astro:config:setup'](setup('build'));
+  await build();
+  const original = await readFile(f.original);
+  let prepared = await prepareCovers({ ...f, check: true });
+  const sample = path.join(prepared.generated, coverFiles(prepared)[0].file);
+  await writeFile(sample, 'corrupt');
+  await assert.rejects(blogCovers().hooks['astro:config:setup'](setup('sync')), /modified/);
+  assert.equal(await readFile(sample, 'utf8'), 'corrupt');
+  await build();
+  await prepareCovers({ ...f, check: true });
+  assert.deepEqual(await readFile(f.original), original);
+  const oldUrl = coverFiles(prepared)[0].file;
+  await sharp({ create: { width: 700, height: 300, channels: 3, background: '#ff257b' } })
+    .png()
+    .toFile(f.original);
+  await build();
+  prepared = await prepareCovers({ ...f, check: true });
+  assert.notEqual(coverFiles(prepared)[0].file, oldUrl);
+  const manifest = JSON.parse(await readFile(f.manifest, 'utf8'));
+  manifest.recipeHash = 'old-profile';
+  await writeFile(f.manifest, JSON.stringify(manifest));
+  await build();
+  await prepareCovers({ ...f, check: true });
+  await rm(f.original);
+  await assert.rejects(
+    build(),
+    /ENOENT/,
+    'normal build must not conceal a missing source with old derivatives'
+  );
+  await writeFile(f.original, 'invalid image data');
+  await assert.rejects(build(), /unsupported image format/i);
+  await writeFile(f.original, original);
+  await writeFile(f.manifest, '{');
+  await assert.rejects(build(), /Invalid manifest/);
+  assert.equal(await readFile(f.manifest, 'utf8'), '{', 'invalid manifests are not overwritten');
 });
 
 test('development watches originals, refreshes the virtual manifest and disposes its listener', async (t) => {

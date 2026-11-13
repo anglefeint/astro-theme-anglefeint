@@ -30,7 +30,7 @@ This is a global switch, not per-homepage/per-language. Standard shared-layout p
 - **Type / default:** MusicTrack[] / []. Three fields per entry appear below.
 - **Status and purpose:** conditional on music being enabled; list and track changes follow array order. No public count limit.
 - **Limits:** must be an array while enabled. Empty is valid but normalizes the effective player to off. Arrays replace rather than append to defaults/old playlists. Retain every wanted track when adding entries.
-- **Example value:** [{ title: '我的一首歌', artist: '作者', src: '`/music/my-song.mp3`' }].
+- **Example value:** [{ title: 'A song of mine', artist: 'Author', src: '`/music/my-song.mp3`' }].
 
 Titles/artists/URLs belong to this global array, not localized messages. Switching page language does not change playlists. Third-party playlist objects/sharing URLs are not substitutes for this array.
 
@@ -42,8 +42,8 @@ Full prefix: `theme.music.tracks[]`. “None” means no automatically supplied 
 
 | Field  | Type / default                            | Status, purpose and limits                                                                                                                                                           | Example value        |
 | ------ | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
-| title  | string, required / none                   | Conditional: song name in main, collapsed and playlist views. Must be nonempty; trimmed. Blank names fail rather than using filename/audio metadata.                                 | '我的一首歌'         |
-| artist | optional string / unset, normalized to '' | Conditional: artist in main view/playlist. Must be string if supplied; trimmed. Empty does not use site author or audio metadata.                                                    | '作者'               |
+| title  | string, required / none                   | Conditional: song name in main, collapsed and playlist views. Must be nonempty; trimmed. Blank names fail rather than using filename/audio metadata.                                 | 'A song of mine'     |
+| artist | optional string / unset, normalized to '' | Conditional: artist in main view/playlist. Must be string if supplied; trimmed. Empty does not use site author or audio metadata.                                                    | 'Author'             |
 | src    | string, required / none                   | Conditional: source must begin with a single / or lowercase https:// and contain no whitespace/backslashes. HTTPS must parse as a URL. File existence/audio content are not checked. | '/music/my-song.mp3' |
 
 title/artist render as text without Markdown/HTML. There are no public cover, lyrics, duration, album, track-ID or per-track-volume fields.
@@ -70,8 +70,8 @@ theme: {
     enabled: true,
     tracks: [
       {
-        title: '我的一首歌',
-        artist: '作者',
+        title: 'A song of mine',
+        artist: 'Author',
         src: '/music/my-song.mp3',
       },
     ],
@@ -85,42 +85,42 @@ Set `enabled: false` to stop the player without deleting tracks. Development con
 
 ## messages.music: nineteen interface/accessibility messages
 
-Full prefix: `i18n.locales.<语言>.messages.music.`. Each is an optional **string** using built-in language text/fallback. The table lists Simplified Chinese / English defaults and sample values. Effects require a rendered player and the relevant state/control. Empty text overrides messages rather than hiding functionality, and may remove useful accessible names.
+Full prefix: `i18n.locales.<locale>.messages.music.`. Each is an optional **string** using built-in language text/fallback. The table lists Simplified Chinese / English defaults and sample values. Effects require a rendered player and the relevant state/control. Empty text overrides messages rather than hiding functionality, and may remove useful accessible names.
 
-| Field      | Simplified Chinese / English default                                                                            | Purpose and limits                                                                | Example value                          |
-| ---------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | -------------------------------------- |
-| `label`    | 音乐播放器 / Music player                                                                                       | Player aside accessible name, not visible AUDIO CHANNEL text.                     | `"音乐播放器"`                         |
-| `play`     | 播放 / Play                                                                                                     | Play-button accessible name; visible label remains PLAY.                          | `"播放"`                               |
-| `pause`    | 暂停 / Pause                                                                                                    | Pause/loading accessible name; visible label PAUSE.                               | `"暂停"`                               |
-| `prev`     | 上一首 / Previous                                                                                               | Previous-button accessible name; visible PREV.                                    | `"上一首"`                             |
-| `next`     | 下一首 / Next                                                                                                   | Next-button accessible name; visible NEXT.                                        | `"下一首"`                             |
-| `open`     | 展开播放器 / Open player                                                                                        | Collapsed open-button accessible name; visible OPEN.                              | `"展开播放器"`                         |
-| `close`    | 收起播放器 / Collapse player                                                                                    | Expanded collapse-button accessible name; visible MIN. Collapsing does not pause. | `"收起播放器"`                         |
-| `progress` | 播放进度 / Progress                                                                                             | Progress-slider accessible name; does not change seeking range.                   | `"播放进度"`                           |
-| `volume`   | 音量 / Volume                                                                                                   | Volume-slider accessible name; does not set initial volume. Visible label LVL.    | `"音量"`                               |
-| `queue`    | 歌单 / Playlist                                                                                                 | Playlist-toggle accessible name; QUEUE and SHOW/HIDE stay fixed.                  | `"展开或收起歌单"`                     |
-| `mute`     | 静音 / Mute                                                                                                     | Unmuted-state mute accessible name; visible MUTE.                                 | `"静音"`                               |
-| `unmute`   | 取消静音 / Unmute                                                                                               | Zero-volume restore accessible name; visible UNMUTE.                              | `"恢复音量"`                           |
-| `idle`     | 就绪 / Ready                                                                                                    | SIGNAL status at initialization/track changes.                                    | `"等待播放"`                           |
-| `loading`  | 加载中 / Loading                                                                                                | SIGNAL status while downloading/waiting.                                          | `"正在加载歌曲"`                       |
-| `playing`  | 播放中 / Playing                                                                                                | SIGNAL status during playback.                                                    | `"正在播放"`                           |
-| `paused`   | 已暂停 / Paused                                                                                                 | SIGNAL status when paused.                                                        | `"已暂停"`                             |
-| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | Browser playback-permission rejection; editing cannot remove the restriction.     | `"请点击播放以继续。"`                 |
-| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | Audio request/playback or player-module mounting failure.                         | `"歌曲未能加载，请重试。"`             |
-| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | noscript notice without JavaScript; no alternative native audio controls.         | `"启用 JavaScript 后可以使用播放器。"` |
+| Field      | Simplified Chinese / English default                                                                            | Purpose and limits                                                                | Example value                            |
+| ---------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ---------------------------------------- |
+| `label`    | 音乐播放器 / Music player                                                                                       | Player aside accessible name, not visible AUDIO CHANNEL text.                     | `"Music player"`                         |
+| `play`     | 播放 / Play                                                                                                     | Play-button accessible name; visible label remains PLAY.                          | `"Play"`                                 |
+| `pause`    | 暂停 / Pause                                                                                                    | Pause/loading accessible name; visible label PAUSE.                               | `"Pause"`                                |
+| `prev`     | 上一首 / Previous                                                                                               | Previous-button accessible name; visible PREV.                                    | `"Previous"`                             |
+| `next`     | 下一首 / Next                                                                                                   | Next-button accessible name; visible NEXT.                                        | `"Next"`                                 |
+| `open`     | 展开播放器 / Open player                                                                                        | Collapsed open-button accessible name; visible OPEN.                              | `"Open player"`                          |
+| `close`    | 收起播放器 / Collapse player                                                                                    | Expanded collapse-button accessible name; visible MIN. Collapsing does not pause. | `"Collapse player"`                      |
+| `progress` | 播放进度 / Progress                                                                                             | Progress-slider accessible name; does not change seeking range.                   | `"Progress"`                             |
+| `volume`   | 音量 / Volume                                                                                                   | Volume-slider accessible name; does not set initial volume. Visible label LVL.    | `"Volume"`                               |
+| `queue`    | 歌单 / Playlist                                                                                                 | Playlist-toggle accessible name; QUEUE and SHOW/HIDE stay fixed.                  | `"Expand or collapse playlist"`          |
+| `mute`     | 静音 / Mute                                                                                                     | Unmuted-state mute accessible name; visible MUTE.                                 | `"Mute"`                                 |
+| `unmute`   | 取消静音 / Unmute                                                                                               | Zero-volume restore accessible name; visible UNMUTE.                              | `"Restore volume"`                       |
+| `idle`     | 就绪 / Ready                                                                                                    | SIGNAL status at initialization/track changes.                                    | `"Waiting to play"`                      |
+| `loading`  | 加载中 / Loading                                                                                                | SIGNAL status while downloading/waiting.                                          | `"Loading the song"`                     |
+| `playing`  | 播放中 / Playing                                                                                                | SIGNAL status during playback.                                                    | `"Playing"`                              |
+| `paused`   | 已暂停 / Paused                                                                                                 | SIGNAL status when paused.                                                        | `"Paused"`                               |
+| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | Browser playback-permission rejection; editing cannot remove the restriction.     | `"Press play to continue."`              |
+| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | Audio request/playback or player-module mounting failure.                         | `"The song could not load. Try again."`  |
+| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | noscript notice without JavaScript; no alternative native audio controls.         | `"Enable JavaScript to use the player."` |
 
 These are not replacements for every visible terminal-UI label. PLAY/PAUSE, PREV/NEXT, OPEN/MIN, MUTE/UNMUTE, QUEUE, SHOW/HIDE, TRACKS, LVL, AUDIO CHANNEL, STATE, SIGNAL and STANDBY are fixed implementation labels/codes. Configurable fields supply accessible names or visible SIGNAL statuses. A button remaining English does not mean its accessible-name field is unused.
 
-For example, override only Chinese loading/error messages:
+For example, override only English loading/error messages:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         music: {
-          loading: '正在加载歌曲',
-          error: '歌曲未能加载，请重试。',
+          loading: 'Loading the song',
+          error: 'The song could not load. Try again.',
         },
       },
     },

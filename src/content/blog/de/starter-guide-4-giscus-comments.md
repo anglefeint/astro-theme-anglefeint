@@ -16,7 +16,7 @@ Richte zuerst ein Repository ein und entscheide danach über gemeinsame Diskussi
 
 ## 1. GitHub-Repository und Kategorie vorbereiten
 
-Öffne die [Giscus-Konfigurationsseite](https://giscus.app/zh-CN) und folge den Schritten:
+Öffne die [Giscus-Konfigurationsseite](https://giscus.app/de) und folge den Schritten:
 
 1. Wähle ein eigenes öffentliches GitHub-Repository. Es kann der Blog selbst oder ein separates Kommentar-Repository sein.
 2. Aktiviere Discussions im Repository.
@@ -34,7 +34,7 @@ Die Seite erzeugt ein Skript. Das Theme benötigt nur dessen Feldwerte:
 
 Beispiel-IDs, Repository-URLs und Benutzername sind keine echten IDs. Die Kategorie muss nicht Announcements heißen; verwende deine Auswahl und passende ID. Ein Giscus-npm-Paket, GitHub-Token oder Passwort ist nicht erforderlich.
 
-Kommentare sind ein externer Dienst. Die Seite muss Giscus und GitHub erreichen können. Besucher brauchen zum Kommentieren GitHub-Autorisierung und können auch direkt in der GitHub Discussion teilnehmen. Das Theme bietet keine anonymen Kommentare. Das Verhalten des Dienstes erklärt [Giscus offiziell](https://giscus.app/zh-CN).
+Kommentare sind ein externer Dienst. Die Seite muss Giscus und GitHub erreichen können. Besucher brauchen zum Kommentieren GitHub-Autorisierung und können auch direkt in der GitHub Discussion teilnehmen. Das Theme bietet keine anonymen Kommentare. Das Verhalten des Dienstes erklärt [Giscus offiziell](https://giscus.app/de).
 
 ## 2. Zunächst Artikelkommentare aktivieren
 
@@ -105,7 +105,7 @@ Für eine gemeinsame Diskussion chinesischer und englischer Übersetzungen bei g
 ```ts
 theme: {
   comments: {
-    // 保留 enabled: true 和自己的 repo、repoId、category、categoryId。
+    // enabled: true und eigene Werte für repo, repoId, category und categoryId beibehalten.
     shareAcrossLocales: true,
     mapping: 'specific',
     term: '',

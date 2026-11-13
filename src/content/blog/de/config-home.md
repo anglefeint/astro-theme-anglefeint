@@ -10,13 +10,13 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 [Zurück zum Konfigurationsverzeichnis](/de/blog/config-reference/). Dieser Artikel beschreibt tatsächlich verwendete Startseitenfelder. Er ändert keinen Theme-Code und behandelt persönliche Demo-Werte nicht als Vorgaben.
 
-Ersetze `<语言>` durch einen aktiven Projektcode. Die Beispiele verwenden zh und ändern nur Chinesisch, nicht automatisch Englisch oder Sprachaktivierungen. Vereinige alle Ausschnitte mit dem bestehenden defineThemeConfig in `src/site.config.ts` und erhalte weitere Felder in theme, i18n und site.
+Ersetze `<Sprachcode>` durch einen aktiven Projektcode. Die Beispiele verwenden de und ändern nur Deutsch, nicht die anderen Sprachen oder deren Aktivierung. Vereinige alle Ausschnitte mit dem bestehenden defineThemeConfig in `src/site.config.ts` und erhalte weitere Felder in theme, i18n und site.
 
 ## 1. Großer Titel, Einführung und Metabeschreibung
 
 <a id="home-title"></a>
 
-### `i18n.locales.<语言>.site.homeTitle`
+### `i18n.locales.<Sprachcode>.site.homeTitle`
 
 - **Typ:** optionaler `string`.
 - **Theme-Standard:** nicht gesetzt. Integrierte Sprachen haben keinen eigenen homeTitle und verwenden zuletzt den globalen Namen, standardmäßig My Blog.
@@ -25,7 +25,7 @@ Ersetze `<语言>` durch einen aktiven Projektcode. Die Beispiele verwenden zh u
 
 <a id="home-hero"></a>
 
-### `i18n.locales.<语言>.site.hero`
+### `i18n.locales.<Sprachcode>.site.hero`
 
 - **Typ:** optionaler `string`.
 - **Theme-Standard:** integrierte Einführung pro Sprache; vereinfachtes Chinesisch „在这里写一段站点简介，并告诉读者你将发布什么类型的内容。“, Englisch „Write a short introduction for your site and what readers can expect from your posts.“. Andere Sprachen haben eigene Vorgaben.
@@ -34,7 +34,7 @@ Ersetze `<语言>` durch einen aktiven Projektcode. Die Beispiele verwenden zh u
 
 <a id="home-description"></a>
 
-### `i18n.locales.<语言>.messages.siteDescription`
+### `i18n.locales.<Sprachcode>.messages.siteDescription`
 
 - **Typ:** optionale `string`-Überschreibung.
 - **Theme-Standard:** integrierter Sprachtext; vereinfachtes Chinesisch „电影感网页界面与 AI 时代工程实践文章。“, Englisch „Cinematic web interfaces and AI-era engineering essays.“.
@@ -46,12 +46,12 @@ Die drei Felder sind unabhängig gemeinsam konfigurierbar:
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       site: {
-        homeTitle: '我的数字花园',
-        hero: '记录开发、阅读和生活。',
+        homeTitle: 'Mein digitaler Garten',
+        hero: 'Entwicklung, Lektüre und Alltag.',
       },
-      messages: { siteDescription: '个人项目与学习笔记。' },
+      messages: { siteDescription: 'Persönliche Projekte und Lernnotizen.' },
     },
   },
 },
@@ -109,7 +109,7 @@ Sind beide ersten Werte aus, entfällt die zugehörige Starttextkomponente. site
 
 <a id="home-messages"></a>
 
-Alle liegen unter `i18n.locales.<语言>.messages.home` und sind optionale `string`-Überschreibungen. Normale Felder folgen der Oberflächen-Fallback-Regel. Hier stehen integrierte Vorgaben für vereinfachtes Chinesisch und Englisch; andere integrierte Sprachen haben eigene.
+Alle liegen unter `i18n.locales.<Sprachcode>.messages.home` und sind optionale `string`-Überschreibungen. Normale Felder folgen der Oberflächen-Fallback-Regel. Hier stehen integrierte Vorgaben für vereinfachtes Chinesisch und Englisch; andere integrierte Sprachen haben eigene.
 
 | Letztes Pfadsegment | Standard vereinfachtes Chinesisch / Englisch                    | Wirkung und Grenzen                                                                                                  |
 | ------------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -123,13 +123,13 @@ Die Felder wirken nur, wenn der Bereich vorhanden ist. Ein leerer String leert T
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         home: {
-          latest: '最近更新',
-          viewAll: '全部文章',
-          noPosts: '这里还没有文章。',
-          openDoor: '打开走廊预览',
+          latest: 'Neueste Beiträge',
+          viewAll: 'Alle Artikel',
+          noPosts: 'Hier gibt es noch keine Artikel.',
+          openDoor: 'Korridorvorschau öffnen',
         },
       },
     },
@@ -139,7 +139,7 @@ i18n: {
 
 <a id="home-transmission"></a>
 
-### `i18n.locales.<语言>.messages.home.transmission`
+### `i18n.locales.<Sprachcode>.messages.home.transmission`
 
 - **Typ:** optionale `string`-Überschreibung.
 - **Theme-Standard:** `'Knock, knock.'`, ohne eigene Werte auch für Chinesisch.
@@ -151,7 +151,7 @@ Für gemeinsamen Text aller Sprachen ohne eigene Überschreibung:
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '这里留下一点线索。' } } },
+    de: { messages: { home: { transmission: 'Hinterlasse hier einen kleinen Hinweis.' } } },
   },
 },
 ```
@@ -160,7 +160,7 @@ Die gleiche Stelle unter zh überschreibt nur Chinesisch. Textänderungen messen
 
 <a id="message-hero"></a>
 
-### `i18n.locales.<语言>.messages.home.hero`
+### `i18n.locales.<Sprachcode>.messages.home.hero`
 
 - **Typ:** optionale `string`-Überschreibung.
 - **Theme-Standard:** integrierte Spracheinführung, für Chinesisch und Englisch dieselben Sätze wie site.hero oben.
@@ -170,7 +170,7 @@ Die gleiche Stelle unter zh überschreibt nur Chinesisch. Textänderungen messen
 ```ts
 i18n: {
   locales: {
-    zh: { messages: { home: { hero: '仅在没有可用 site.hero 时使用的介绍。' } } },
+    de: { messages: { home: { hero: 'Einleitung, die nur ohne verfügbares site.hero verwendet wird.' } } },
   },
 },
 ```
@@ -200,12 +200,12 @@ Deaktiviert navigieren Links direkt. Der Schalter bietet keine Dauer-, Farb- ode
 
 Dies sind keine exklusiven Startseitenfunktionen. Hier steht nur ihr Bezug, vollständige Definitionen im Hauptverzeichnis.
 
-| Vollständiger Pfad                             | Startseitenbezug                                                                                        | Hauptbeschreibung                                                 |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `theme.fragments.enabled`                      | Avatar bei Fragment-Inhalten der aktuellen Sprache und vollständige Liste; Vorschau fest höchstens drei | [Fragments](/de/blog/config-fragments/#enabled)                   |
-| `i18n.locales.<语言>.messages.blog.allPosts`   | Artikelzählung und zugänglicher Archivname                                                              | [Gemeinsame Listentexte](/de/blog/config-blog-list/#tag-messages) |
-| `i18n.locales.<语言>.messages.fragments.title` | Zugänglicher Avatarname, keine Überschrift daneben                                                      | [Fragment-Texte](/de/blog/config-fragments/#fragment-messages)    |
-| `i18n.locales.<语言>.messages.fragments.close` | Zugänglicher Name des Vorschau-Schließknopfs, keine Symboländerung                                      | [Fragment-Texte](/de/blog/config-fragments/#fragment-messages)    |
+| Vollständiger Pfad                                   | Startseitenbezug                                                                                        | Hauptbeschreibung                                                 |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `theme.fragments.enabled`                            | Avatar bei Fragment-Inhalten der aktuellen Sprache und vollständige Liste; Vorschau fest höchstens drei | [Fragments](/de/blog/config-fragments/#enabled)                   |
+| `i18n.locales.<Sprachcode>.messages.blog.allPosts`   | Artikelzählung und zugänglicher Archivname                                                              | [Gemeinsame Listentexte](/de/blog/config-blog-list/#tag-messages) |
+| `i18n.locales.<Sprachcode>.messages.fragments.title` | Zugänglicher Avatarname, keine Überschrift daneben                                                      | [Fragment-Texte](/de/blog/config-fragments/#fragment-messages)    |
+| `i18n.locales.<Sprachcode>.messages.fragments.close` | Zugänglicher Name des Vorschau-Schließknopfs, keine Symboländerung                                      | [Fragment-Texte](/de/blog/config-fragments/#fragment-messages)    |
 
 Fehlt nach Aktivierung der Avatar, prüfe Inhalte der aktuellen Sprache. Kopiere keine IDs nur für die Anzeige. Bilder, Code und Höhenbegrenzung erklärt das [Fragment-Verzeichnis](/de/blog/config-fragments/#preview-and-links), Veröffentlichung [Teil 4](/de/blog/starter-guide-5-fragments/).
 

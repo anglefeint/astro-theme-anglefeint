@@ -175,7 +175,7 @@ Para estilo básico, combina `theme: { pagination: { style: { enabled: false } }
 
 <a id="archive-messages"></a>
 
-Prefijo completo `i18n.locales.<语言>.messages.blog`. Cada campo es sustitución `string` opcional, visible según uso de título/aviso/control. Se resuelve con textos integrados/respaldo. Solo se muestran chino simplificado e inglés; otros tienen sus valores.
+Prefijo completo `i18n.locales.<locale>.messages.blog`. Cada campo es sustitución `string` opcional, visible según uso de título/aviso/control. Se resuelve con textos integrados/respaldo. Solo se muestran chino simplificado e inglés; otros tienen sus valores.
 
 | Campo                | Predeterminado chino simplificado / inglés                                                                       | Función y límites                                                                                                          |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
@@ -187,13 +187,13 @@ Prefijo completo `i18n.locales.<语言>.messages.blog`. Cada campo es sustituci�
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       messages: {
         blog: {
-          title: '文章归档',
-          pageTitle: '文章归档 - 第',
-          archiveDescription: '项目、阅读与学习笔记。',
-          pageDescription: '文章归档分页',
+          title: 'Archivo de entradas',
+          pageTitle: 'Archivo de entradas — página',
+          archiveDescription: 'Proyectos, lecturas y apuntes de aprendizaje.',
+          pageDescription: 'Página del archivo de entradas',
         },
       },
     },
@@ -219,15 +219,15 @@ Etiquetas y Fragments los comparten. Blog añade respaldo inglés para jumpTo/ju
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       messages: {
         blog: {
-          previous: '前一页',
-          next: '后一页',
-          paginationAria: '文章分页',
-          jumpTo: '前往第几页',
-          jumpInputLabel: '目标页码',
-          jumpGo: '前往',
+          previous: 'Página anterior',
+          next: 'Página siguiente',
+          paginationAria: 'Paginación de entradas',
+          jumpTo: 'Ir a la página',
+          jumpInputLabel: 'Número de página',
+          jumpGo: 'Ir',
         },
       },
     },
@@ -239,7 +239,7 @@ i18n: {
 
 <a id="tag-messages"></a>
 
-También usan `i18n.locales.<语言>.messages.blog`, strings opcionales y respaldo normal. Sus zonas deben existir:
+También usan `i18n.locales.<locale>.messages.blog`, strings opcionales y respaldo normal. Sus zonas deben existir:
 
 | Campo         | Predeterminado chino simplificado / inglés | Función y límites                                                                     |
 | ------------- | ------------------------------------------ | ------------------------------------------------------------------------------------- |
@@ -251,13 +251,13 @@ También usan `i18n.locales.<语言>.messages.blog`, strings opcionales y respal
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       messages: {
         blog: {
-          tags: '按标签浏览',
-          allPosts: '返回全部文章',
-          noTags: '暂时没有可浏览的标签。',
-          taggedPosts: '篇文章',
+          tags: 'Explorar por etiquetas',
+          allPosts: 'Volver a todas las entradas',
+          noTags: 'Todavía no hay etiquetas para explorar.',
+          taggedPosts: 'entradas',
         },
       },
     },

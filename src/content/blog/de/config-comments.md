@@ -185,16 +185,16 @@ Mehrsprachige gleiche IDs teilen `fragment/<ID>` unabhängig vom Artikel-Slug-Te
 
 ## Kommentartexte außerhalb des iframes
 
-Optionale string unter `i18n.locales.<语言>.messages` mit integrierter Sprache und Fallback. Beispiele in das jeweilige Objekt. Nur äußere Labels ändern sich, nicht Giscus-interne Knöpfe. Die Tabelle zeigt vereinfachtes Chinesisch/Englisch.
+Optionale string unter `i18n.locales.<Sprachcode>.messages` mit integrierter Sprache und Fallback. Beispiele in das jeweilige Objekt. Nur äußere Labels ändern sich, nicht Giscus-interne Knöpfe. Die Tabelle zeigt vereinfachtes Chinesisch/Englisch.
 
-| Relatives Feld       | Standard vereinfachtes Chinesisch / Englisch                                                                              | Status, Wirkung und Grenzen                                                 | Beispiel             |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------- |
-| `blog.comments`      | 评论 / Comments                                                                                                           | Bedingt: zugänglicher Artikelbereichsname, keine sichtbare Extraüberschrift | `"文章讨论"`         |
-| `fragments.comments` | 评论 / Comments                                                                                                           | Bedingt: Fragment-Knopf und Dialogtitel                                     | `"参与讨论"`         |
-| `fragments.close`    | 关闭 / Close                                                                                                              | Bedingt: Dialog-Schließen und zugänglicher Startseitenfenstername           | `"关闭窗口"`         |
-| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | Bedingt: Fragment-Kommentarzustand                                          | `"正在加载讨论…"`    |
-| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | Bedingt: Fragment-Kommentarfehler                                           | `"讨论暂时不可用。"` |
-| `fragments.retry`    | 重试 / Retry                                                                                                              | Bedingt: Wiederholknopf nach Fehler                                         | `"重新加载"`         |
+| Relatives Feld       | Standard vereinfachtes Chinesisch / Englisch                                                                              | Status, Wirkung und Grenzen                                                 | Beispiel                                              |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `blog.comments`      | 评论 / Comments                                                                                                           | Bedingt: zugänglicher Artikelbereichsname, keine sichtbare Extraüberschrift | `"Artikeldiskussion"`                                 |
+| `fragments.comments` | 评论 / Comments                                                                                                           | Bedingt: Fragment-Knopf und Dialogtitel                                     | `"An der Diskussion teilnehmen"`                      |
+| `fragments.close`    | 关闭 / Close                                                                                                              | Bedingt: Dialog-Schließen und zugänglicher Startseitenfenstername           | `"Fenster schließen"`                                 |
+| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | Bedingt: Fragment-Kommentarzustand                                          | `"Diskussion wird geladen…"`                          |
+| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | Bedingt: Fragment-Kommentarfehler                                           | `"Die Diskussion ist vorübergehend nicht verfügbar."` |
+| `fragments.retry`    | 重试 / Retry                                                                                                              | Bedingt: Wiederholknopf nach Fehler                                         | `"Neu laden"`                                         |
 
 Andere Texte unter [Artikel](/de/blog/config-article/#article-messages) und [Fragments](/de/blog/config-fragments/#fragment-messages). Diese Felder bestimmen nicht die iframe-Sprache; dafür gilt lang oben.
 

@@ -60,12 +60,12 @@ The public component treats old custom adapters without ANALYTICS as unconfigure
 
 An optional MachineReadableSupplement object, unset by default. Machine-readable output is still generated when omitted, simply without this extra context. {} does not disable exports.
 
-| Full path                       | Type / default                                                        | Status, purpose and limits                                                                                                                                  | Example value                                                 |
-| ------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| aiReadableContent.notes         | optional string / unset, empty output                                 | Conditional: adds public Markdown site context. Empty/whitespace omits this part. Neither article-body replacement nor private AI instructions.             | '本站内容是个人学习笔记，可能持续修订。'                      |
-| aiReadableContent.links         | optional { label: string; href: string }[] / unset, empty output list | Conditional: public extra links. Array replaces; [] clears. No public item limit or automatic target-content fetching.                                      | [{ label: '项目主页', href: 'https://example.com/project/' }] |
-| aiReadableContent.links[].label | string, required / none                                               | Conditional: nonempty after trimming. Output folds newlines to spaces and escapes backslashes/brackets. No automatic target-title fetching.                 | '项目主页'                                                    |
-| aiReadableContent.links[].href  | string, required / none                                               | Conditional: nonempty, resolved against the public root URL, HTTP(S) only without credentials. Invalid values fail; existence/reachability is not verified. | 'https://example.com/project/'                                |
+| Full path                       | Type / default                                                        | Status, purpose and limits                                                                                                                                  | Example value                                                     |
+| ------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| aiReadableContent.notes         | optional string / unset, empty output                                 | Conditional: adds public Markdown site context. Empty/whitespace omits this part. Neither article-body replacement nor private AI instructions.             | 'These are personal study notes and may be revised.'              |
+| aiReadableContent.links         | optional { label: string; href: string }[] / unset, empty output list | Conditional: public extra links. Array replaces; [] clears. No public item limit or automatic target-content fetching.                                      | [{ label: 'Project home', href: 'https://example.com/project/' }] |
+| aiReadableContent.links[].label | string, required / none                                               | Conditional: nonempty after trimming. Output folds newlines to spaces and escapes backslashes/brackets. No automatic target-title fetching.                 | 'Project home'                                                    |
+| aiReadableContent.links[].href  | string, required / none                                               | Conditional: nonempty, resolved against the public root URL, HTTP(S) only without credentials. Invalid values fail; existence/reachability is not verified. | 'https://example.com/project/'                                    |
 
 notes/links have no general character-length setting and must use the expected types. Wrong types, blank labels, non-web protocols or credential-bearing URLs may stop builds. The theme neither executes embedded commands nor calls models to generate context.
 
@@ -87,9 +87,9 @@ A single leading / resolves from the domain root, not automatically keeping /pro
 
 ```ts
 aiReadableContent: {
-  notes: '本站内容是个人学习笔记，可能持续修订。详情见[文章列表](zh/blog/)。',
+  notes: 'These are personal study notes and may be revised. See the [article list](en/blog/).',
   links: [
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: 'Project home', href: 'https://example.com/project/' },
   ],
 },
 ```
@@ -98,7 +98,7 @@ aiReadableContent: {
 
 ## Language-specific aiReadableContent
 
-Full prefix: `i18n.locales.<语言>.aiReadableContent`, also optional and unset by default. Fields have the global semantics, inheriting individually when omitted:
+Full prefix: `i18n.locales.<locale>.aiReadableContent`, also optional and unset by default. Fields have the global semantics, inheriting individually when omitted:
 
 | Relative field | Type / default                                                     | Purpose and limits                                                                                        | Example value        |
 | -------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- | -------------------- |
@@ -135,11 +135,11 @@ Paths are relative to the public root, with deployment prefixes when applicable.
 | Output                                  | Supplement position and contents                                                                                                                        |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | llms.txt                                | Root entry. Global notes precede language directories; links form an extra-links section. Can contain global context even without exportable documents. |
-| `<语言>/llms.txt`                       | Language index using its resolved supplement and linking existing documents under Articles/Fragments/About.                                             |
-| `<语言>/llms-full.txt`                  | Language full-text bundle, with context/links before document contents.                                                                                 |
+| `<locale>/llms.txt`                     | Language index using its resolved supplement and linking existing documents under Articles/Fragments/About.                                             |
+| `<locale>/llms-full.txt`                | Language full-text bundle, with context/links before document contents.                                                                                 |
 | Article index.md or equivalent Markdown | Separator, site-context marker and effective supplement appended after the original body, distinct from authored text.                                  |
-| `<语言>/about/index.md`                 | Public About biography/contact and reachable static AI panel, with the same appended supplement; not all tool runtime configuration.                    |
-| `<语言>/fragments/index.md`             | Combined fragment pages with stable ID links and appended supplement, not duplicate full-text bundles for each page.                                    |
+| `<locale>/about/index.md`               | Public About biography/contact and reachable static AI panel, with the same appended supplement; not all tool runtime configuration.                    |
+| `<locale>/fragments/index.md`           | Combined fragment pages with stable ID links and appended supplement, not duplicate full-text bundles for each page.                                    |
 
 Individual Markdown paths follow built HTML: index.html becomes index.md. Custom Astro output styles may differ, so do not invent paths and overwrite generated files. Exported pages also receive discovery links to Markdown and language indexes.
 

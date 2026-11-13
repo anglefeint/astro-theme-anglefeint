@@ -175,7 +175,7 @@ Nur Basisstil: `theme: { pagination: { style: { enabled: false } } }`. Wähle di
 
 <a id="archive-messages"></a>
 
-Präfix `i18n.locales.<语言>.messages.blog`. Alle sind optionale `string`-Überschreibungen und bedingt bei entsprechender Überschrift, Beschreibung oder Steuerung. Vorgaben werden aus Sprachtexten und Fallbacks aufgelöst. Die Tabelle zeigt vereinfachtes Chinesisch und Englisch; andere Sprachen haben eigene Werte.
+Präfix `i18n.locales.<Sprachcode>.messages.blog`. Alle sind optionale `string`-Überschreibungen und bedingt bei entsprechender Überschrift, Beschreibung oder Steuerung. Vorgaben werden aus Sprachtexten und Fallbacks aufgelöst. Die Tabelle zeigt vereinfachtes Chinesisch und Englisch; andere Sprachen haben eigene Werte.
 
 | Feld                 | Standard vereinfachtes Chinesisch / Englisch                                                                     | Wirkung und Grenzen                                                                                                           |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -187,13 +187,13 @@ Präfix `i18n.locales.<语言>.messages.blog`. Alle sind optionale `string`-Übe
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         blog: {
-          title: '文章归档',
-          pageTitle: '文章归档 - 第',
-          archiveDescription: '项目、阅读与学习笔记。',
-          pageDescription: '文章归档分页',
+          title: 'Artikelarchiv',
+          pageTitle: 'Artikelarchiv – Seite',
+          archiveDescription: 'Projekte, Lektüre und Lernnotizen.',
+          pageDescription: 'Seiten des Artikelarchivs',
         },
       },
     },
@@ -219,15 +219,15 @@ Die Felder gelten auch für Tags und Fragments. Blog-Routen haben zusätzliche e
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         blog: {
-          previous: '前一页',
-          next: '后一页',
-          paginationAria: '文章分页',
-          jumpTo: '前往第几页',
-          jumpInputLabel: '目标页码',
-          jumpGo: '前往',
+          previous: 'Vorherige Seite',
+          next: 'Nächste Seite',
+          paginationAria: 'Artikelseiten',
+          jumpTo: 'Zur Seite springen',
+          jumpInputLabel: 'Zielseitennummer',
+          jumpGo: 'Los',
         },
       },
     },
@@ -239,7 +239,7 @@ i18n: {
 
 <a id="tag-messages"></a>
 
-Weiterhin `i18n.locales.<语言>.messages.blog` mit optionalen string-Überschreibungen und normalen Fallbacks. Wirkung setzt den jeweiligen Bereich voraus:
+Weiterhin `i18n.locales.<Sprachcode>.messages.blog` mit optionalen string-Überschreibungen und normalen Fallbacks. Wirkung setzt den jeweiligen Bereich voraus:
 
 | Feld          | Standard vereinfachtes Chinesisch / Englisch | Wirkung und Grenzen                                                                                    |
 | ------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -251,13 +251,13 @@ Weiterhin `i18n.locales.<语言>.messages.blog` mit optionalen string-Überschre
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         blog: {
-          tags: '按标签浏览',
-          allPosts: '返回全部文章',
-          noTags: '暂时没有可浏览的标签。',
-          taggedPosts: '篇文章',
+          tags: 'Nach Tags durchsuchen',
+          allPosts: 'Zurück zu allen Artikeln',
+          noTags: 'Noch keine Tags vorhanden.',
+          taggedPosts: 'Artikel',
         },
       },
     },

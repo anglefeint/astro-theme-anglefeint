@@ -4,9 +4,11 @@ title: 'Guia 8: publicar o blog no seu domínio'
 subtitle: 'Confirme o endereço público, prepare imagens e verifique o build antes de publicar arquivos estáticos e conectar o domínio.'
 description: 'Publicação estática, domínio e variáveis, arquivos de build e imagens, busca e exportações públicas, além do GA4 opcional.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/ai-01.webp'
 ---
+
+As expressões chinesas nos exemplos de `locales.zh` são intencionais: mostram como personalizar o conteúdo em chinês sem alterar os outros idiomas. Os valores padrão em chinês/inglês nas tabelas são citações do tema, não traduções pendentes.
 
 Esta é a parte 8 de 8 do guia inicial. [Veja a ordem completa](/pt-br/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Consulte a referência por campo](/pt-br/blog/config-reference/).
 
@@ -53,7 +55,9 @@ Após adicionar ou trocar capas locais e imagens de Fragments, prepare os respon
 
 Originais podem ficar junto do artigo ou em public, não apenas originals. Inclua esses arquivos também. A preparação é explicada em [adicionar imagens a artigos e Fragments](/pt-br/blog/starter-guide-images/).
 
-**O build comum na hospedagem só valida e copia as imagens responsivas persistentes; não gera ausentes.** doctor em CI também só valida. Arquivos faltando, antigos ou modificados interrompem o build. Prepare e faça commit localmente antes de publicar de novo, sem depender do cache da plataforma.
+**O build comum na hospedagem prepara as imagens responsivas utilizadas**, assim como dev e doctor, inclusive em CI. Os derivados válidos são reutilizados; os ausentes, desatualizados ou danificados são gerados. Preservar os derivados no Git permite reutilizá-los sem depender do cache da plataforma. Originais ausentes ou inválidos continuam interrompendo a preparação.
+
+**Requer 0.36.2 ou posterior:** Dev, build e doctor (inclusive em CI) reutilizam derivados válidos e geram os ausentes, desatualizados ou danificados. Na versão 0.36.1, prepare as imagens primeiro com dev ou `prepare-covers` antes de build/CI. `prepare-covers --check` e a sincronização da configuração continuam sendo verificações somente de leitura.
 
 Em publicação por Git, não versione node_modules, `.astro` nem dist: a plataforma instala e constrói. Não envie dependências locais como site estático. Se arquivos de ambiente não estiverem no repositório, configure as variáveis necessárias na plataforma. Variáveis PUBLIC_ são para dados públicos, não segredos.
 
@@ -75,7 +79,7 @@ Cada comando tem uma função:
 | `npm run dev`     | Desenvolvimento local, com preparação de imagens aplicáveis, sem índice de busca do build.                     |
 | `npm run doctor`  | Prepara imagens localmente, verifica Astro e constrói; com About ativo, verifica sua configuração de execução. |
 | `npm run check`   | No starter atual chama o mesmo doctor; não precisa executá-los em sequência.                                   |
-| `npm run build`   | Constrói e só valida imagens persistentes, sem a preparação local do doctor.                                   |
+| `npm run build`   | Prepara ou reutiliza os derivados utilizados e constrói o site.                                                |
 | `npm run preview` | Serve o dist existente, sem reconstruir nem publicar.                                                          |
 
 Corrija qualquer falha antes de publicar, sem usar dist remanescente. Depois do doctor bem-sucedido, o build já existe: não repita check e build imediatamente. Pare preview com Ctrl+C.
@@ -153,14 +157,14 @@ Uma publicação comum não exige essa opção. Para contextualizar o site ou ap
 
 ```ts
 aiReadableContent: {
-  notes: '本站记录个人学习过程，内容可能持续修订。',
-  links: [{ label: '项目主页', href: 'https://example.com/project' }],
+  notes: 'Este site registra meus estudos pessoais e pode ser revisado.',
+  links: [{ label: 'Página do projeto', href: 'https://example.com/project' }],
 },
 ```
 
 notes aceita Markdown e cada item de links tem label e href. Use endereços HTTP(S) públicos; caminhos relativos e de raiz são resolvidos pelo endereço do site. É informação pública complementar, sem substituir o corpo nem criar restrição de privacidade para artigos.
 
-Para sobrescrever por idioma, use `i18n.locales.<代码>.aiReadableContent`. Por exemplo, texto próprio em chinês sem links adicionais:
+Para sobrescrever por idioma, use `i18n.locales.<locale>.aiReadableContent`. Por exemplo, texto próprio em chinês sem links adicionais:
 
 ```ts
 i18n: {
@@ -197,17 +201,17 @@ Depois de publicar, acesse o domínio real e confira o relatório em tempo real 
 
 ## 9. Quando a publicação falha ou o site aparece errado
 
-| Sintoma                                 | O que conferir primeiro                                                                              |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| npm ci falha                            | Requisitos de Node/dependências e package-lock versionado e compatível com package.json.             |
-| Imagens missing/stale/modified          | Prepare localmente e versione originais, manifesto e generated, sem pular a validação na plataforma. |
-| Build passa, mas página dá 404          | Pasta publicada, ramo, raiz e index de diretórios; possível subcaminho não adaptado.                 |
-| Início abre, artigo recarregado dá 404  | Caminhos estáticos reais, publicação só do início ou fallback SPA indevido.                          |
-| Sem estilos, imagens ou busca           | Todo dist publicado, subdiretórios completos e ausência de reescritas incorretas.                    |
-| canonical/RSS mantém domínio de exemplo | site.url, PUBLIC_SITE_URL, variáveis do modo e novo build/publicação.                                |
-| Mudança de configuração não aparece     | Projeto, ramo e commit realmente publicados, não só arquivos locais alterados.                       |
-| Link de artigo apagado continua abrindo | Arquivos ou cache antigos; use substituição completa e confira o cache da hospedagem.                |
-| GA4 sem dados                           | ID G- real, build de produção, endereço não local e bloqueadores.                                    |
+| Sintoma                                 | O que conferir primeiro                                                                                                |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| npm ci falha                            | Requisitos de Node/dependências e package-lock versionado e compatível com package.json.                               |
+| Imagens missing/stale/modified          | Dev, build ou doctor regenera os derivados. Preserve os originais; investigue caminhos e arquivos ilegíveis se falhar. |
+| Build passa, mas página dá 404          | Pasta publicada, ramo, raiz e index de diretórios; possível subcaminho não adaptado.                                   |
+| Início abre, artigo recarregado dá 404  | Caminhos estáticos reais, publicação só do início ou fallback SPA indevido.                                            |
+| Sem estilos, imagens ou busca           | Todo dist publicado, subdiretórios completos e ausência de reescritas incorretas.                                      |
+| canonical/RSS mantém domínio de exemplo | site.url, PUBLIC_SITE_URL, variáveis do modo e novo build/publicação.                                                  |
+| Mudança de configuração não aparece     | Projeto, ramo e commit realmente publicados, não só arquivos locais alterados.                                         |
+| Link de artigo apagado continua abrindo | Arquivos ou cache antigos; use substituição completa e confira o cache da hospedagem.                                  |
+| GA4 sem dados                           | ID G- real, build de produção, endereço não local e bloqueadores.                                                      |
 
 Para atualizar conteúdo, siga “editar e preparar localmente → verificar no preview → fazer commit das fontes → construir e publicar”. A atualização do tema está no [guia de instalação](/pt-br/blog/starter-guide-1-configure-your-site/) e as rotas no [guia de idiomas](/pt-br/blog/starter-guide-languages/).
 

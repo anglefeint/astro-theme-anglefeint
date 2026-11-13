@@ -4,7 +4,7 @@ title: '使用指南 7：讓更多語言的讀者使用部落格'
 subtitle: '選擇語言、調整首頁地址、填寫在地化文字，再為文章和碎片補上譯文。'
 description: '依實際設定解釋語言啟停、預設語言、首頁路由、回退行為、新語言整合及文章和碎片的多語言關聯。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
 
@@ -110,7 +110,7 @@ i18n: {
 - `messages.siteDescription` 是首頁中繼描述，不是可見介紹；只改頂層 `site.description` 不一定替換內建首頁描述。
 - `messages.nav` 修改對應介面入口的文字，不改變路由或文章內容。
 
-同樣，`i18n.locales.<代码>.about` 修改該語言的 About 內容，`messages` 下各模組修改對應介面文字。About 和 Decoder 等頁面仍受全站功能開關控制，不會因為寫了譯文就自動開啟。具體內容範例見[頁面與功能自訂](/zh-hant/blog/starter-guide-3-comments-about-and-theme-toggles/)。
+同樣，`i18n.locales.<locale>.about` 修改該語言的 About 內容，`messages` 下各模組修改對應介面文字。About 和 Decoder 等頁面仍受全站功能開關控制，不會因為寫了譯文就自動開啟。具體內容範例見[頁面與功能自訂](/zh-hant/blog/starter-guide-3-comments-about-and-theme-toggles/)。
 
 語言中繼資料和預設首頁地址可查[語言字典](/zh-hant/blog/config-languages/#registry)；首頁三種文字的區別見[首頁字典](/zh-hant/blog/config-home/#home-title)。
 
@@ -215,7 +215,7 @@ npm run doctor
 npm run preview
 ```
 
-doctor 包含檢查和建置，成功後不必立即再執行 check 或 build。用建置後的 preview 驗證各語言文章搜尋；索引搜尋目前語言，不會把全部語言混在一起。每種已啟用語言的 RSS 位於 `/<代码>/rss.xml`，只包含相應語言的文章。
+doctor 包含檢查和建置，成功後不必立即再執行 check 或 build。用建置後的 preview 驗證各語言文章搜尋；索引搜尋目前語言，不會把全部語言混在一起。每種已啟用語言的 RSS 位於 `/<locale>/rss.xml`，只包含相應語言的文章。
 
 確認網站網域正確後，重新部署整個 `dist/`。語言啟停、預設地址和內容變化都需要重新建置；僅修改本機設定不會改變線上頁面。重新部署要注意清理舊產物，關閉語言不是為舊網址自動建立重新導向。
 

@@ -38,350 +38,350 @@ heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 
 ## 按完整設定路徑查找
 
-下面按目前公開設定型別提供路徑索引，包括目前未使用的欄位。點選進入主要說明位置；跨頁面的用法差異在對應模組交叉引用。`<语言>` 是佔位，換成 zh、en 等實際程式碼。文章 frontmatter 另列，不混入 site.config 路徑。
+下面按目前公開設定型別提供路徑索引，包括目前未使用的欄位。點選進入主要說明位置；跨頁面的用法差異在對應模組交叉引用。`<locale>` 是佔位，換成 zh、en 等實際程式碼。文章 frontmatter 另列，不混入 site.config 路徑。
 
-| 完整路徑                                                            | 查閱位置                                                                     |
-| ------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `i18n.locales.<语言>.site.homeTitle`                                | [首頁大標題](/zh-hant/blog/config-home/#home-title)                          |
-| `i18n.locales.<语言>.site.hero`                                     | [首頁可見介紹](/zh-hant/blog/config-home/#home-hero)                         |
-| `i18n.locales.<语言>.messages.siteDescription`                      | [首頁中繼描述](/zh-hant/blog/config-home/#home-description)                  |
-| `theme.homeLatestCount`                                             | [最新文章數量](/zh-hant/blog/config-home/#latest-count)                      |
-| `theme.home.showInitialize`                                         | [啟動提示開關](/zh-hant/blog/config-home/#startup-switches)                  |
-| `theme.home.showFollow`                                             | [啟動提示開關](/zh-hant/blog/config-home/#startup-switches)                  |
-| `theme.home.showTrace`                                              | [啟動提示開關](/zh-hant/blog/config-home/#startup-switches)                  |
-| `theme.effects.enableHomePassage`                                   | [點選穿越](/zh-hant/blog/config-home/#home-passage)                          |
-| `i18n.locales.<语言>.messages.home.latest`                          | [首頁介面文字](/zh-hant/blog/config-home/#home-messages)                     |
-| `i18n.locales.<语言>.messages.home.viewAll`                         | [首頁介面文字](/zh-hant/blog/config-home/#home-messages)                     |
-| `i18n.locales.<语言>.messages.home.noPosts`                         | [首頁介面文字](/zh-hant/blog/config-home/#home-messages)                     |
-| `i18n.locales.<语言>.messages.home.openDoor`                        | [首頁介面文字](/zh-hant/blog/config-home/#home-messages)                     |
-| `i18n.locales.<语言>.messages.home.transmission`                    | [寬屏終端機文字](/zh-hant/blog/config-home/#home-transmission)               |
-| `i18n.locales.<语言>.messages.home.hero`                            | [介紹的備用文字](/zh-hant/blog/config-home/#message-hero)                    |
-| `theme.fragments.enabled`                                           | [碎片總開關](/zh-hant/blog/config-fragments/#enabled)                        |
-| `i18n.locales.<语言>.messages.blog.allPosts`                        | [文章與標籤共享入口](/zh-hant/blog/config-blog-list/#tag-messages)           |
-| `i18n.locales.<语言>.messages.fragments.title`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.close`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.siteTitle`                            | [目前未使用的標題欄位](/zh-hant/blog/config-site-chrome/#legacy-site-title)  |
-| `theme.blogPageSize`                                                | [每頁文章數](/zh-hant/blog/config-blog-list/#page-size)                      |
-| `theme.tags.enabled`                                                | [標籤開關](/zh-hant/blog/config-blog-list/#tags-enabled)                     |
-| `theme.pagination.windowSize`                                       | [頁碼視窗](/zh-hant/blog/config-blog-list/#pagination-window)                |
-| `theme.pagination.showJumpThreshold`                                | [跳頁臨界值](/zh-hant/blog/config-blog-list/#jump-threshold)                 |
-| `theme.pagination.jump.enabled`                                     | [跳頁開關](/zh-hant/blog/config-blog-list/#jump-enabled)                     |
-| `theme.pagination.jump.enterToGo`                                   | [Enter跳頁](/zh-hant/blog/config-blog-list/#jump-enter)                      |
-| `theme.pagination.style.enabled`                                    | [分頁樣式開關](/zh-hant/blog/config-blog-list/#style-enabled)                |
-| `theme.pagination.style.mode`                                       | [變體策略](/zh-hant/blog/config-blog-list/#style-mode)                       |
-| `theme.pagination.style.variants`                                   | [變體數量](/zh-hant/blog/config-blog-list/#style-variants)                   |
-| `theme.pagination.style.fixedVariant`                               | [固定變體](/zh-hant/blog/config-blog-list/#style-fixed)                      |
-| `i18n.locales.<语言>.messages.blog.title`                           | [列表標題與描述](/zh-hant/blog/config-blog-list/#archive-messages)           |
-| `i18n.locales.<语言>.messages.blog.pageTitle`                       | [列表標題與描述](/zh-hant/blog/config-blog-list/#archive-messages)           |
-| `i18n.locales.<语言>.messages.blog.archiveDescription`              | [列表標題與描述](/zh-hant/blog/config-blog-list/#archive-messages)           |
-| `i18n.locales.<语言>.messages.blog.pageDescription`                 | [列表標題與描述](/zh-hant/blog/config-blog-list/#archive-messages)           |
-| `i18n.locales.<语言>.messages.blog.previous`                        | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
-| `i18n.locales.<语言>.messages.blog.next`                            | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
-| `i18n.locales.<语言>.messages.blog.paginationAria`                  | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
-| `i18n.locales.<语言>.messages.blog.jumpTo`                          | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
-| `i18n.locales.<语言>.messages.blog.jumpInputLabel`                  | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
-| `i18n.locales.<语言>.messages.blog.jumpGo`                          | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
-| `i18n.locales.<语言>.messages.blog.tags`                            | [標籤文字](/zh-hant/blog/config-blog-list/#tag-messages)                     |
-| `i18n.locales.<语言>.messages.blog.noTags`                          | [標籤文字](/zh-hant/blog/config-blog-list/#tag-messages)                     |
-| `i18n.locales.<语言>.messages.blog.taggedPosts`                     | [標籤文字](/zh-hant/blog/config-blog-list/#tag-messages)                     |
-| `theme.toc.enabled`                                                 | [文章功能開關](/zh-hant/blog/config-article/#feature-switches)               |
-| `theme.math.enabled`                                                | [文章功能開關](/zh-hant/blog/config-article/#feature-switches)               |
-| `theme.effects.enableRedQueen`                                      | [文章功能開關](/zh-hant/blog/config-article/#feature-switches)               |
-| `theme.search.enabled`                                              | [站內搜尋開關](/zh-hant/blog/config-search/#enabled)                         |
-| `theme.socialImage.enabled`                                         | [文章功能開關](/zh-hant/blog/config-article/#feature-switches)               |
-| `site.author`                                                       | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
-| `site.ogImage`                                                      | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
-| `theme.enableAboutPage`                                             | [About 頁面開關](/zh-hant/blog/config-about/#page-enabled)                   |
-| `theme.footer.showCredits`                                          | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#footer)               |
-| `theme.comments.enabled`                                            | [Giscus 評論設定](/zh-hant/blog/config-comments/#controls)                   |
-| `i18n.locales.<语言>.messages.blog.rqBadge`                         | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.rqReplayAria`                    | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.backToTop`                       | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.toastP10`                        | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.toastP30`                        | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.toastP60`                        | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.toastDone`                       | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.metaPublished`                   | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.metaAuthor`                      | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.metaUpdated`                     | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.systemStatusAria`                | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.systemModelLabel`                | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.systemModeLabel`                 | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.systemStateLabel`                | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.promptContextLabel`              | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.heroMonitor`                     | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.heroSignalSync`                  | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.heroModelOnline`                 | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.toc`                             | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.responseOutput`                  | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.statsWords`                      | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.statsTokens`                     | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.copySectionLink`                 | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.regenerate`                      | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.relatedAria`                     | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.related`                         | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.backToBlogAria`                  | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.backToBlog`                      | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.comments`                        | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
-| `i18n.locales.<语言>.messages.blog.metaReadMinutes`                 | [文章介面文字（目前未使用）](/zh-hant/blog/config-article/#article-messages) |
-| `i18n.locales.<语言>.messages.blog.latencyLabel`                    | [文章介面文字（目前未使用）](/zh-hant/blog/config-article/#article-messages) |
-| `i18n.locales.<语言>.messages.blog.confidenceLabel`                 | [文章介面文字（目前未使用）](/zh-hant/blog/config-article/#article-messages) |
-| `i18n.locales.<语言>.messages.codeCopy.copy`                        | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
-| `i18n.locales.<语言>.messages.codeCopy.copied`                      | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
-| `i18n.locales.<语言>.messages.codeCopy.failed`                      | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
-| `i18n.locales.<语言>.messages.imagePreview.open`                    | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
-| `i18n.locales.<语言>.messages.imagePreview.close`                   | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
-| `theme.fragments.pageSize`                                          | [碎片每頁條數](/zh-hant/blog/config-fragments/#page-size)                    |
-| `theme.fragments.comments.enabled`                                  | [碎片評論](/zh-hant/blog/config-fragments/#comments-enabled)                 |
-| `i18n.locales.<语言>.messages.fragments.description`                | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.empty`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.comments`                   | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.previous`                   | [碎片文字（目前未使用）](/zh-hant/blog/config-fragments/#fragment-messages)  |
-| `i18n.locales.<语言>.messages.fragments.next`                       | [碎片文字（目前未使用）](/zh-hant/blog/config-fragments/#fragment-messages)  |
-| `i18n.locales.<语言>.messages.fragments.loading`                    | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.error`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.retry`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.copyLink`                   | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.linkCopied`                 | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.copyLinkFailed`             | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.notFound`                   | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `i18n.locales.<语言>.messages.fragments.indexError`                 | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
-| `theme.comments.repo`                                               | [Giscus 評論設定](/zh-hant/blog/config-comments/#connection)                 |
-| `theme.comments.repoId`                                             | [Giscus 評論設定](/zh-hant/blog/config-comments/#connection)                 |
-| `theme.comments.category`                                           | [Giscus 評論設定](/zh-hant/blog/config-comments/#connection)                 |
-| `theme.comments.categoryId`                                         | [Giscus 評論設定](/zh-hant/blog/config-comments/#connection)                 |
-| `i18n.locales.<语言>.about.metaLine`                                | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
-| `i18n.locales.<语言>.about.sections.who`                            | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
-| `i18n.locales.<语言>.about.sections.what`                           | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
-| `i18n.locales.<语言>.about.sections.ethos`                          | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
-| `i18n.locales.<语言>.about.sections.now`                            | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
-| `i18n.locales.<语言>.about.sections.contactLead`                    | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
-| `i18n.locales.<语言>.about.sections.signature`                      | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
-| `i18n.locales.<语言>.about.contact.email`                           | [About 聯絡](/zh-hant/blog/config-about/#contact-fields)                     |
-| `i18n.locales.<语言>.about.contact.githubUrl`                       | [About 聯絡](/zh-hant/blog/config-about/#contact-fields)                     |
-| `i18n.locales.<语言>.about.contact.githubLabel`                     | [About 聯絡](/zh-hant/blog/config-about/#contact-fields)                     |
-| `i18n.locales.<语言>.about.sidebar.dlData`                          | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
-| `i18n.locales.<语言>.about.sidebar.ai`                              | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
-| `i18n.locales.<语言>.about.sidebar.decryptor`                       | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
-| `i18n.locales.<语言>.about.sidebar.help`                            | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
-| `i18n.locales.<语言>.about.sidebar.allScripts`                      | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
-| `i18n.locales.<语言>.about.scriptsPath`                             | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
-| `i18n.locales.<语言>.about.labels.modalOutput`                      | [About 通用文字（注意生效狀態）](/zh-hant/blog/config-about/#label-fields)   |
-| `i18n.locales.<语言>.about.labels.modalClose`                       | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
-| `i18n.locales.<语言>.about.labels.responseOutput`                   | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
-| `i18n.locales.<语言>.about.labels.contactEmailLead`                 | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
-| `i18n.locales.<语言>.about.labels.contactConnectLead`               | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
-| `i18n.locales.<语言>.about.labels.backToTop`                        | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
-| `i18n.locales.<语言>.about.labels.quickAccess`                      | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
-| `i18n.locales.<语言>.about.labels.contactEmailLabel`                | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
-| `i18n.locales.<语言>.about.modals.dlData.title`                     | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.dlData.subtitle`                  | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.ai.title`                         | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.ai.lines`                         | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.decryptor.title`                  | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.decryptor.header`                 | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
-| `i18n.locales.<语言>.about.modals.decryptor.keysLabel`              | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
-| `i18n.locales.<语言>.about.modals.decryptor.currentPassphraseLabel` | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
-| `i18n.locales.<语言>.about.modals.decryptor.masterKeyLabel`         | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
-| `i18n.locales.<语言>.about.modals.decryptor.transientKeyLabel`      | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
-| `i18n.locales.<语言>.about.modals.help.title`                       | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.help.statsLabel`                  | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.help.typedPrefix`                 | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.help.typedSuffix`                 | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.modals.allScripts.title`                 | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
-| `i18n.locales.<语言>.about.effects.backgroundLines`                 | [About 效果（注意生效狀態）](/zh-hant/blog/config-about/#effect-fields)      |
-| `i18n.locales.<语言>.about.effects.scrollToasts.p30`                | [About 效果](/zh-hant/blog/config-about/#effect-fields)                      |
-| `i18n.locales.<语言>.about.effects.scrollToasts.p60`                | [About 效果](/zh-hant/blog/config-about/#effect-fields)                      |
-| `i18n.locales.<语言>.about.effects.scrollToasts.p90`                | [About 效果](/zh-hant/blog/config-about/#effect-fields)                      |
-| `i18n.locales.<语言>.messages.about.title`                          | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.about.description`                    | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.about.who`                            | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.about.what`                           | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.about.ethos`                          | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.about.now`                            | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.about.contact`                        | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.about.regenerate`                     | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.windowControls.collapse`              | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.windowControls.expand`                | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.windowControls.restore`               | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.windowControls.fullscreen`            | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.scriptFolders.copyTitle`              | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.scriptFolders.copied`                 | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `i18n.locales.<语言>.messages.scriptFolders.failed`                 | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
-| `theme.enableDecoderPage`                                           | [Decoder 頁面開關](/zh-hant/blog/config-decoder/#page-enabled)               |
-| `i18n.locales.<语言>.messages.nav.about`                            | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
-| `i18n.locales.<语言>.messages.decoder.input`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.placeholder`                  | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.format`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.auto`                         | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.decode`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.clear`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.copy`                         | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.reuse`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.supported`                    | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.html`                         | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.unicode`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.jwtWarning`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.copied`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.copyFailed`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.output`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.local`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.ready`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.running`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.done`                         | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.empty`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.tooLong`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.invalid`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.binary`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.unknown`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.ambiguous`                    | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoder.example`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.description`              | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.fullTool`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.task`                     | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.textTask`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.callTask`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.addressTask`              | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.addressHint`              | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.chain`                    | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.decimals`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.precisionHint`            | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.network`                  | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.history`                  | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.back`                     | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.export`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.limits`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.callNotice`               | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.addressNotice`            | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.unsupported`              | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.checksum`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.length`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.wrongNetwork`             | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.stepLimit`                | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.budget`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.addressParse`             | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.addressCheck`             | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.addressResult`            | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.callParse`                | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.rawOnly`                  | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.amountResult`             | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.inputHint`                | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.loadFailed`               | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
-| `i18n.locales.<语言>.messages.decoderPage.readings.tribute`         | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links`           | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].title`   | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].href`    | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].author`  | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].year`    | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
-| `i18n.locales.<语言>.messages.decoderPage.readings.links[].cover`   | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
-| `theme.music.enabled`                                               | [音樂播放器設定](/zh-hant/blog/config-music/#enabled)                        |
-| `theme.music.tracks`                                                | [音樂播放器設定](/zh-hant/blog/config-music/#tracks)                         |
-| `theme.music.tracks[].title`                                        | [音樂播放器設定](/zh-hant/blog/config-music/#track-fields)                   |
-| `theme.music.tracks[].artist`                                       | [音樂播放器設定](/zh-hant/blog/config-music/#track-fields)                   |
-| `theme.music.tracks[].src`                                          | [音樂播放器設定](/zh-hant/blog/config-music/#track-fields)                   |
-| `i18n.locales.<语言>.messages.music.label`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.play`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.pause`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.prev`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.next`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.open`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.close`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.progress`                       | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.volume`                         | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.queue`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.mute`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.unmute`                         | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.idle`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.loading`                        | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.playing`                        | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.paused`                         | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.blocked`                        | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.error`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `i18n.locales.<语言>.messages.music.noScript`                       | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
-| `theme.comments.shareAcrossLocales`                                 | [Giscus 評論設定](/zh-hant/blog/config-comments/#sharing)                    |
-| `theme.comments.mapping`                                            | [Giscus 評論設定](/zh-hant/blog/config-comments/#mapping)                    |
-| `theme.comments.term`                                               | [Giscus 評論設定](/zh-hant/blog/config-comments/#mapping)                    |
-| `theme.comments.number`                                             | [Giscus 評論設定](/zh-hant/blog/config-comments/#mapping)                    |
-| `theme.comments.strict`                                             | [Giscus 評論設定](/zh-hant/blog/config-comments/#mapping)                    |
-| `theme.comments.reactionsEnabled`                                   | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
-| `theme.comments.emitMetadata`                                       | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
-| `theme.comments.inputPosition`                                      | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
-| `theme.comments.theme`                                              | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
-| `theme.comments.lang`                                               | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
-| `theme.comments.loading`                                            | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
-| `theme.comments.crossorigin`                                        | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
-| `i18n.defaultLocale`                                                | [語言與回退設定](/zh-hant/blog/config-languages/#registry)                   |
-| `i18n.locales`                                                      | [語言與回退設定](/zh-hant/blog/config-languages/#registry)                   |
-| `i18n.locales.<语言>`                                               | [語言與回退設定](/zh-hant/blog/config-languages/#registry)                   |
-| `i18n.routing.defaultLocalePrefix`                                  | [語言與回退設定](/zh-hant/blog/config-languages/#routing)                    |
-| `i18n.locales.<语言>.meta`                                          | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
-| `i18n.locales.<语言>.meta.label`                                    | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
-| `i18n.locales.<语言>.meta.hreflang`                                 | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
-| `i18n.locales.<语言>.meta.ogLocale`                                 | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
-| `i18n.locales.<语言>.meta.enabled`                                  | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
-| `i18n.locales.<语言>.meta.fallback`                                 | [語言與回退設定](/zh-hant/blog/config-languages/#fallback)                   |
-| `i18n.locales.<语言>.site`                                          | [語言與回退設定](/zh-hant/blog/config-languages/#overrides)                  |
-| `i18n.locales.<语言>.messages`                                      | [語言與回退設定](/zh-hant/blog/config-languages/#overrides)                  |
-| `i18n.locales.<语言>.about`                                         | [語言與回退設定](/zh-hant/blog/config-languages/#overrides)                  |
-| `i18n.locales.<语言>.messages.langLabel`                            | [語言與回退設定](/zh-hant/blog/config-languages/#common-messages)            |
-| `i18n.locales.<语言>.aiReadableContent`                             | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
-| `i18n.locales.<语言>.aiReadableContent.notes`                       | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
-| `i18n.locales.<语言>.aiReadableContent.links`                       | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
-| `i18n.locales.<语言>.aiReadableContent.links[].label`               | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
-| `i18n.locales.<语言>.aiReadableContent.links[].href`                | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
-| `i18n.locales.<语言>.messages.search.label`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.close`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.placeholder`                   | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.hint`                          | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.loading`                       | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.empty`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.error`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.retry`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.more`                          | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.results`                       | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `i18n.locales.<语言>.messages.search.dev`                           | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
-| `analytics`                                                         | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#analytics)           |
-| `analytics.googleAnalyticsId`                                       | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#analytics)           |
-| `aiReadableContent`                                                 | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
-| `aiReadableContent.notes`                                           | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
-| `aiReadableContent.links`                                           | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
-| `aiReadableContent.links[].label`                                   | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
-| `aiReadableContent.links[].href`                                    | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
-| `site.title`                                                        | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
-| `site.description`                                                  | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
-| `site.url`                                                          | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
-| `site.tagline`                                                      | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
-| `social.links`                                                      | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social)               |
-| `social.links[].href`                                               | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
-| `social.links[].label`                                              | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
-| `social.links[].rel`                                                | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
-| `social.links[].icon`                                               | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
-| `social.links[].iconSrc`                                            | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
-| `theme.footer.links`                                                | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#footer)               |
-| `theme.footer.links[].label`                                        | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#footer)               |
-| `theme.footer.links[].href`                                         | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#footer)               |
-| `i18n.locales.<语言>.messages.nav.home`                             | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
-| `i18n.locales.<语言>.messages.nav.blog`                             | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
-| `i18n.locales.<语言>.messages.nav.status`                           | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
-| `i18n.locales.<语言>.messages.nav.statusAria`                       | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
-| `i18n.locales.<语言>.messages.footer.theme`                         | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
-| `i18n.locales.<语言>.messages.footer.builtWith`                     | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
-| `i18n.locales.<语言>.messages.terminal.commandInput`                | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.hint`                        | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.help`                        | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.syntax`                      | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.usage`                       | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.unknown`                     | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.notFound`                    | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.notDirectory`                | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.isDirectory`                 | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.failed`                      | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.tooLarge`                    | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.empty`                       | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.loading`                     | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.readerTitle`                 | [終端機文字（目前未使用）](/zh-hant/blog/config-terminal/#messages)          |
-| `i18n.locales.<语言>.messages.terminal.readerHint`                  | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
-| `i18n.locales.<语言>.messages.terminal.readerCommand`               | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| 完整路徑                                                              | 查閱位置                                                                     |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `i18n.locales.<locale>.site.homeTitle`                                | [首頁大標題](/zh-hant/blog/config-home/#home-title)                          |
+| `i18n.locales.<locale>.site.hero`                                     | [首頁可見介紹](/zh-hant/blog/config-home/#home-hero)                         |
+| `i18n.locales.<locale>.messages.siteDescription`                      | [首頁中繼描述](/zh-hant/blog/config-home/#home-description)                  |
+| `theme.homeLatestCount`                                               | [最新文章數量](/zh-hant/blog/config-home/#latest-count)                      |
+| `theme.home.showInitialize`                                           | [啟動提示開關](/zh-hant/blog/config-home/#startup-switches)                  |
+| `theme.home.showFollow`                                               | [啟動提示開關](/zh-hant/blog/config-home/#startup-switches)                  |
+| `theme.home.showTrace`                                                | [啟動提示開關](/zh-hant/blog/config-home/#startup-switches)                  |
+| `theme.effects.enableHomePassage`                                     | [點選穿越](/zh-hant/blog/config-home/#home-passage)                          |
+| `i18n.locales.<locale>.messages.home.latest`                          | [首頁介面文字](/zh-hant/blog/config-home/#home-messages)                     |
+| `i18n.locales.<locale>.messages.home.viewAll`                         | [首頁介面文字](/zh-hant/blog/config-home/#home-messages)                     |
+| `i18n.locales.<locale>.messages.home.noPosts`                         | [首頁介面文字](/zh-hant/blog/config-home/#home-messages)                     |
+| `i18n.locales.<locale>.messages.home.openDoor`                        | [首頁介面文字](/zh-hant/blog/config-home/#home-messages)                     |
+| `i18n.locales.<locale>.messages.home.transmission`                    | [寬屏終端機文字](/zh-hant/blog/config-home/#home-transmission)               |
+| `i18n.locales.<locale>.messages.home.hero`                            | [介紹的備用文字](/zh-hant/blog/config-home/#message-hero)                    |
+| `theme.fragments.enabled`                                             | [碎片總開關](/zh-hant/blog/config-fragments/#enabled)                        |
+| `i18n.locales.<locale>.messages.blog.allPosts`                        | [文章與標籤共享入口](/zh-hant/blog/config-blog-list/#tag-messages)           |
+| `i18n.locales.<locale>.messages.fragments.title`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.close`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.siteTitle`                            | [目前未使用的標題欄位](/zh-hant/blog/config-site-chrome/#legacy-site-title)  |
+| `theme.blogPageSize`                                                  | [每頁文章數](/zh-hant/blog/config-blog-list/#page-size)                      |
+| `theme.tags.enabled`                                                  | [標籤開關](/zh-hant/blog/config-blog-list/#tags-enabled)                     |
+| `theme.pagination.windowSize`                                         | [頁碼視窗](/zh-hant/blog/config-blog-list/#pagination-window)                |
+| `theme.pagination.showJumpThreshold`                                  | [跳頁臨界值](/zh-hant/blog/config-blog-list/#jump-threshold)                 |
+| `theme.pagination.jump.enabled`                                       | [跳頁開關](/zh-hant/blog/config-blog-list/#jump-enabled)                     |
+| `theme.pagination.jump.enterToGo`                                     | [Enter跳頁](/zh-hant/blog/config-blog-list/#jump-enter)                      |
+| `theme.pagination.style.enabled`                                      | [分頁樣式開關](/zh-hant/blog/config-blog-list/#style-enabled)                |
+| `theme.pagination.style.mode`                                         | [變體策略](/zh-hant/blog/config-blog-list/#style-mode)                       |
+| `theme.pagination.style.variants`                                     | [變體數量](/zh-hant/blog/config-blog-list/#style-variants)                   |
+| `theme.pagination.style.fixedVariant`                                 | [固定變體](/zh-hant/blog/config-blog-list/#style-fixed)                      |
+| `i18n.locales.<locale>.messages.blog.title`                           | [列表標題與描述](/zh-hant/blog/config-blog-list/#archive-messages)           |
+| `i18n.locales.<locale>.messages.blog.pageTitle`                       | [列表標題與描述](/zh-hant/blog/config-blog-list/#archive-messages)           |
+| `i18n.locales.<locale>.messages.blog.archiveDescription`              | [列表標題與描述](/zh-hant/blog/config-blog-list/#archive-messages)           |
+| `i18n.locales.<locale>.messages.blog.pageDescription`                 | [列表標題與描述](/zh-hant/blog/config-blog-list/#archive-messages)           |
+| `i18n.locales.<locale>.messages.blog.previous`                        | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
+| `i18n.locales.<locale>.messages.blog.next`                            | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
+| `i18n.locales.<locale>.messages.blog.paginationAria`                  | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
+| `i18n.locales.<locale>.messages.blog.jumpTo`                          | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
+| `i18n.locales.<locale>.messages.blog.jumpInputLabel`                  | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
+| `i18n.locales.<locale>.messages.blog.jumpGo`                          | [分頁文字](/zh-hant/blog/config-blog-list/#pagination-messages)              |
+| `i18n.locales.<locale>.messages.blog.tags`                            | [標籤文字](/zh-hant/blog/config-blog-list/#tag-messages)                     |
+| `i18n.locales.<locale>.messages.blog.noTags`                          | [標籤文字](/zh-hant/blog/config-blog-list/#tag-messages)                     |
+| `i18n.locales.<locale>.messages.blog.taggedPosts`                     | [標籤文字](/zh-hant/blog/config-blog-list/#tag-messages)                     |
+| `theme.toc.enabled`                                                   | [文章功能開關](/zh-hant/blog/config-article/#feature-switches)               |
+| `theme.math.enabled`                                                  | [文章功能開關](/zh-hant/blog/config-article/#feature-switches)               |
+| `theme.effects.enableRedQueen`                                        | [文章功能開關](/zh-hant/blog/config-article/#feature-switches)               |
+| `theme.search.enabled`                                                | [站內搜尋開關](/zh-hant/blog/config-search/#enabled)                         |
+| `theme.socialImage.enabled`                                           | [文章功能開關](/zh-hant/blog/config-article/#feature-switches)               |
+| `site.author`                                                         | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
+| `site.ogImage`                                                        | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
+| `theme.enableAboutPage`                                               | [About 頁面開關](/zh-hant/blog/config-about/#page-enabled)                   |
+| `theme.footer.showCredits`                                            | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#footer)               |
+| `theme.comments.enabled`                                              | [Giscus 評論設定](/zh-hant/blog/config-comments/#controls)                   |
+| `i18n.locales.<locale>.messages.blog.rqBadge`                         | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.rqReplayAria`                    | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.backToTop`                       | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.toastP10`                        | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.toastP30`                        | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.toastP60`                        | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.toastDone`                       | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.metaPublished`                   | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.metaAuthor`                      | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.metaUpdated`                     | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.systemStatusAria`                | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.systemModelLabel`                | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.systemModeLabel`                 | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.systemStateLabel`                | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.promptContextLabel`              | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.heroMonitor`                     | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.heroSignalSync`                  | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.heroModelOnline`                 | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.toc`                             | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.responseOutput`                  | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.statsWords`                      | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.statsTokens`                     | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.copySectionLink`                 | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.regenerate`                      | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.relatedAria`                     | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.related`                         | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.backToBlogAria`                  | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.backToBlog`                      | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.comments`                        | [文章介面文字](/zh-hant/blog/config-article/#article-messages)               |
+| `i18n.locales.<locale>.messages.blog.metaReadMinutes`                 | [文章介面文字（目前未使用）](/zh-hant/blog/config-article/#article-messages) |
+| `i18n.locales.<locale>.messages.blog.latencyLabel`                    | [文章介面文字（目前未使用）](/zh-hant/blog/config-article/#article-messages) |
+| `i18n.locales.<locale>.messages.blog.confidenceLabel`                 | [文章介面文字（目前未使用）](/zh-hant/blog/config-article/#article-messages) |
+| `i18n.locales.<locale>.messages.codeCopy.copy`                        | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
+| `i18n.locales.<locale>.messages.codeCopy.copied`                      | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
+| `i18n.locales.<locale>.messages.codeCopy.failed`                      | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
+| `i18n.locales.<locale>.messages.imagePreview.open`                    | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
+| `i18n.locales.<locale>.messages.imagePreview.close`                   | [閱讀互動文字](/zh-hant/blog/config-article/#interaction-messages)           |
+| `theme.fragments.pageSize`                                            | [碎片每頁條數](/zh-hant/blog/config-fragments/#page-size)                    |
+| `theme.fragments.comments.enabled`                                    | [碎片評論](/zh-hant/blog/config-fragments/#comments-enabled)                 |
+| `i18n.locales.<locale>.messages.fragments.description`                | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.empty`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.comments`                   | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.previous`                   | [碎片文字（目前未使用）](/zh-hant/blog/config-fragments/#fragment-messages)  |
+| `i18n.locales.<locale>.messages.fragments.next`                       | [碎片文字（目前未使用）](/zh-hant/blog/config-fragments/#fragment-messages)  |
+| `i18n.locales.<locale>.messages.fragments.loading`                    | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.error`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.retry`                      | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.copyLink`                   | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.linkCopied`                 | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.copyLinkFailed`             | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.notFound`                   | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `i18n.locales.<locale>.messages.fragments.indexError`                 | [碎片介面文字](/zh-hant/blog/config-fragments/#fragment-messages)            |
+| `theme.comments.repo`                                                 | [Giscus 評論設定](/zh-hant/blog/config-comments/#connection)                 |
+| `theme.comments.repoId`                                               | [Giscus 評論設定](/zh-hant/blog/config-comments/#connection)                 |
+| `theme.comments.category`                                             | [Giscus 評論設定](/zh-hant/blog/config-comments/#connection)                 |
+| `theme.comments.categoryId`                                           | [Giscus 評論設定](/zh-hant/blog/config-comments/#connection)                 |
+| `i18n.locales.<locale>.about.metaLine`                                | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
+| `i18n.locales.<locale>.about.sections.who`                            | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
+| `i18n.locales.<locale>.about.sections.what`                           | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
+| `i18n.locales.<locale>.about.sections.ethos`                          | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
+| `i18n.locales.<locale>.about.sections.now`                            | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
+| `i18n.locales.<locale>.about.sections.contactLead`                    | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
+| `i18n.locales.<locale>.about.sections.signature`                      | [About 內文](/zh-hant/blog/config-about/#body-fields)                        |
+| `i18n.locales.<locale>.about.contact.email`                           | [About 聯絡](/zh-hant/blog/config-about/#contact-fields)                     |
+| `i18n.locales.<locale>.about.contact.githubUrl`                       | [About 聯絡](/zh-hant/blog/config-about/#contact-fields)                     |
+| `i18n.locales.<locale>.about.contact.githubLabel`                     | [About 聯絡](/zh-hant/blog/config-about/#contact-fields)                     |
+| `i18n.locales.<locale>.about.sidebar.dlData`                          | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
+| `i18n.locales.<locale>.about.sidebar.ai`                              | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
+| `i18n.locales.<locale>.about.sidebar.decryptor`                       | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
+| `i18n.locales.<locale>.about.sidebar.help`                            | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
+| `i18n.locales.<locale>.about.sidebar.allScripts`                      | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
+| `i18n.locales.<locale>.about.scriptsPath`                             | [About 工具入口](/zh-hant/blog/config-about/#tool-fields)                    |
+| `i18n.locales.<locale>.about.labels.modalOutput`                      | [About 通用文字（注意生效狀態）](/zh-hant/blog/config-about/#label-fields)   |
+| `i18n.locales.<locale>.about.labels.modalClose`                       | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
+| `i18n.locales.<locale>.about.labels.responseOutput`                   | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
+| `i18n.locales.<locale>.about.labels.contactEmailLead`                 | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
+| `i18n.locales.<locale>.about.labels.contactConnectLead`               | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
+| `i18n.locales.<locale>.about.labels.backToTop`                        | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
+| `i18n.locales.<locale>.about.labels.quickAccess`                      | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
+| `i18n.locales.<locale>.about.labels.contactEmailLabel`                | [About 通用文字](/zh-hant/blog/config-about/#label-fields)                   |
+| `i18n.locales.<locale>.about.modals.dlData.title`                     | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.dlData.subtitle`                  | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.ai.title`                         | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.ai.lines`                         | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.decryptor.title`                  | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.decryptor.header`                 | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
+| `i18n.locales.<locale>.about.modals.decryptor.keysLabel`              | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
+| `i18n.locales.<locale>.about.modals.decryptor.currentPassphraseLabel` | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
+| `i18n.locales.<locale>.about.modals.decryptor.masterKeyLabel`         | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
+| `i18n.locales.<locale>.about.modals.decryptor.transientKeyLabel`      | [About 工具彈窗（注意生效狀態）](/zh-hant/blog/config-about/#modal-fields)   |
+| `i18n.locales.<locale>.about.modals.help.title`                       | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.help.statsLabel`                  | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.help.typedPrefix`                 | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.help.typedSuffix`                 | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.modals.allScripts.title`                 | [About 工具彈窗](/zh-hant/blog/config-about/#modal-fields)                   |
+| `i18n.locales.<locale>.about.effects.backgroundLines`                 | [About 效果（注意生效狀態）](/zh-hant/blog/config-about/#effect-fields)      |
+| `i18n.locales.<locale>.about.effects.scrollToasts.p30`                | [About 效果](/zh-hant/blog/config-about/#effect-fields)                      |
+| `i18n.locales.<locale>.about.effects.scrollToasts.p60`                | [About 效果](/zh-hant/blog/config-about/#effect-fields)                      |
+| `i18n.locales.<locale>.about.effects.scrollToasts.p90`                | [About 效果](/zh-hant/blog/config-about/#effect-fields)                      |
+| `i18n.locales.<locale>.messages.about.title`                          | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.about.description`                    | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.about.who`                            | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.about.what`                           | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.about.ethos`                          | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.about.now`                            | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.about.contact`                        | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.about.regenerate`                     | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.windowControls.collapse`              | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.windowControls.expand`                | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.windowControls.restore`               | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.windowControls.fullscreen`            | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.scriptFolders.copyTitle`              | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.scriptFolders.copied`                 | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `i18n.locales.<locale>.messages.scriptFolders.failed`                 | [About 及共用控制項文字](/zh-hant/blog/config-about/#about-messages)         |
+| `theme.enableDecoderPage`                                             | [Decoder 頁面開關](/zh-hant/blog/config-decoder/#page-enabled)               |
+| `i18n.locales.<locale>.messages.nav.about`                            | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
+| `i18n.locales.<locale>.messages.decoder.input`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.placeholder`                  | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.format`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.auto`                         | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.decode`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.clear`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.copy`                         | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.reuse`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.supported`                    | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.html`                         | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.unicode`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.jwtWarning`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.copied`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.copyFailed`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.output`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.local`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.ready`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.running`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.done`                         | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.empty`                        | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.tooLong`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.invalid`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.binary`                       | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.unknown`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.ambiguous`                    | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoder.example`                      | [Decoder 文字](/zh-hant/blog/config-decoder/#text-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.description`              | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.fullTool`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.task`                     | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.textTask`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.callTask`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.addressTask`              | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.addressHint`              | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.chain`                    | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.decimals`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.precisionHint`            | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.network`                  | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.history`                  | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.back`                     | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.export`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.limits`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.callNotice`               | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.addressNotice`            | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.unsupported`              | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.checksum`                 | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.length`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.wrongNetwork`             | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.stepLimit`                | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.budget`                   | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.addressParse`             | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.addressCheck`             | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.addressResult`            | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.callParse`                | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.rawOnly`                  | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.amountResult`             | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.inputHint`                | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.loadFailed`               | [Decoder 文字](/zh-hant/blog/config-decoder/#page-messages)                  |
+| `i18n.locales.<locale>.messages.decoderPage.readings.tribute`         | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links`           | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].title`   | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].href`    | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].author`  | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].year`    | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
+| `i18n.locales.<locale>.messages.decoderPage.readings.links[].cover`   | [Decoder 閱讀區](/zh-hant/blog/config-decoder/#readings)                     |
+| `theme.music.enabled`                                                 | [音樂播放器設定](/zh-hant/blog/config-music/#enabled)                        |
+| `theme.music.tracks`                                                  | [音樂播放器設定](/zh-hant/blog/config-music/#tracks)                         |
+| `theme.music.tracks[].title`                                          | [音樂播放器設定](/zh-hant/blog/config-music/#track-fields)                   |
+| `theme.music.tracks[].artist`                                         | [音樂播放器設定](/zh-hant/blog/config-music/#track-fields)                   |
+| `theme.music.tracks[].src`                                            | [音樂播放器設定](/zh-hant/blog/config-music/#track-fields)                   |
+| `i18n.locales.<locale>.messages.music.label`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.play`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.pause`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.prev`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.next`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.open`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.close`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.progress`                       | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.volume`                         | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.queue`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.mute`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.unmute`                         | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.idle`                           | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.loading`                        | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.playing`                        | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.paused`                         | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.blocked`                        | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.error`                          | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `i18n.locales.<locale>.messages.music.noScript`                       | [音樂播放器文字](/zh-hant/blog/config-music/#music-messages)                 |
+| `theme.comments.shareAcrossLocales`                                   | [Giscus 評論設定](/zh-hant/blog/config-comments/#sharing)                    |
+| `theme.comments.mapping`                                              | [Giscus 評論設定](/zh-hant/blog/config-comments/#mapping)                    |
+| `theme.comments.term`                                                 | [Giscus 評論設定](/zh-hant/blog/config-comments/#mapping)                    |
+| `theme.comments.number`                                               | [Giscus 評論設定](/zh-hant/blog/config-comments/#mapping)                    |
+| `theme.comments.strict`                                               | [Giscus 評論設定](/zh-hant/blog/config-comments/#mapping)                    |
+| `theme.comments.reactionsEnabled`                                     | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
+| `theme.comments.emitMetadata`                                         | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
+| `theme.comments.inputPosition`                                        | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
+| `theme.comments.theme`                                                | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
+| `theme.comments.lang`                                                 | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
+| `theme.comments.loading`                                              | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
+| `theme.comments.crossorigin`                                          | [Giscus 評論設定](/zh-hant/blog/config-comments/#appearance)                 |
+| `i18n.defaultLocale`                                                  | [語言與回退設定](/zh-hant/blog/config-languages/#registry)                   |
+| `i18n.locales`                                                        | [語言與回退設定](/zh-hant/blog/config-languages/#registry)                   |
+| `i18n.locales.<locale>`                                               | [語言與回退設定](/zh-hant/blog/config-languages/#registry)                   |
+| `i18n.routing.defaultLocalePrefix`                                    | [語言與回退設定](/zh-hant/blog/config-languages/#routing)                    |
+| `i18n.locales.<locale>.meta`                                          | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
+| `i18n.locales.<locale>.meta.label`                                    | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
+| `i18n.locales.<locale>.meta.hreflang`                                 | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
+| `i18n.locales.<locale>.meta.ogLocale`                                 | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
+| `i18n.locales.<locale>.meta.enabled`                                  | [語言與回退設定](/zh-hant/blog/config-languages/#meta)                       |
+| `i18n.locales.<locale>.meta.fallback`                                 | [語言與回退設定](/zh-hant/blog/config-languages/#fallback)                   |
+| `i18n.locales.<locale>.site`                                          | [語言與回退設定](/zh-hant/blog/config-languages/#overrides)                  |
+| `i18n.locales.<locale>.messages`                                      | [語言與回退設定](/zh-hant/blog/config-languages/#overrides)                  |
+| `i18n.locales.<locale>.about`                                         | [語言與回退設定](/zh-hant/blog/config-languages/#overrides)                  |
+| `i18n.locales.<locale>.messages.langLabel`                            | [語言與回退設定](/zh-hant/blog/config-languages/#common-messages)            |
+| `i18n.locales.<locale>.aiReadableContent`                             | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
+| `i18n.locales.<locale>.aiReadableContent.notes`                       | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
+| `i18n.locales.<locale>.aiReadableContent.links`                       | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
+| `i18n.locales.<locale>.aiReadableContent.links[].label`               | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
+| `i18n.locales.<locale>.aiReadableContent.links[].href`                | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#locale-supplement)   |
+| `i18n.locales.<locale>.messages.search.label`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.close`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.placeholder`                   | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.hint`                          | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.loading`                       | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.empty`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.error`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.retry`                         | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.more`                          | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.results`                       | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `i18n.locales.<locale>.messages.search.dev`                           | [搜尋文字](/zh-hant/blog/config-search/#messages)                            |
+| `analytics`                                                           | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#analytics)           |
+| `analytics.googleAnalyticsId`                                         | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#analytics)           |
+| `aiReadableContent`                                                   | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
+| `aiReadableContent.notes`                                             | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
+| `aiReadableContent.links`                                             | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
+| `aiReadableContent.links[].label`                                     | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
+| `aiReadableContent.links[].href`                                      | [GA4 與 AI 閱讀補充](/zh-hant/blog/config-analytics-ai/#supplement)          |
+| `site.title`                                                          | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
+| `site.description`                                                    | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
+| `site.url`                                                            | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
+| `site.tagline`                                                        | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#identity)             |
+| `social.links`                                                        | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social)               |
+| `social.links[].href`                                                 | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
+| `social.links[].label`                                                | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
+| `social.links[].rel`                                                  | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
+| `social.links[].icon`                                                 | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
+| `social.links[].iconSrc`                                              | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#social-fields)        |
+| `theme.footer.links`                                                  | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#footer)               |
+| `theme.footer.links[].label`                                          | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#footer)               |
+| `theme.footer.links[].href`                                           | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#footer)               |
+| `i18n.locales.<locale>.messages.nav.home`                             | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
+| `i18n.locales.<locale>.messages.nav.blog`                             | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
+| `i18n.locales.<locale>.messages.nav.status`                           | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
+| `i18n.locales.<locale>.messages.nav.statusAria`                       | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
+| `i18n.locales.<locale>.messages.footer.theme`                         | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
+| `i18n.locales.<locale>.messages.footer.builtWith`                     | [網站與公共介面設定](/zh-hant/blog/config-site-chrome/#chrome-messages)      |
+| `i18n.locales.<locale>.messages.terminal.commandInput`                | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.hint`                        | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.help`                        | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.syntax`                      | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.usage`                       | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.unknown`                     | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.notFound`                    | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.notDirectory`                | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.isDirectory`                 | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.failed`                      | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.tooLarge`                    | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.empty`                       | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.loading`                     | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.readerTitle`                 | [終端機文字（目前未使用）](/zh-hant/blog/config-terminal/#messages)          |
+| `i18n.locales.<locale>.messages.terminal.readerHint`                  | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
+| `i18n.locales.<locale>.messages.terminal.readerCommand`               | [終端機文字](/zh-hant/blog/config-terminal/#messages)                        |
 
 ## 文章欄位與網站設定分開查
 
@@ -404,13 +404,13 @@ heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 
 主題預設值來自包內預設設定或內建文字；starter 可以覆寫它，demo 又有自己的個人設定。不要把展示站的作者、標題和歌單當作所有新部落格的預設值。
 
-語言欄位的預設值隨語言和回退鏈變化。字典會注明“未设置”“内置当前语言文案”或具體值；只給中文／英文例子時會標明範圍，不冒充所有語言的固定預設值。
+語言欄位的預設值隨語言和回退鏈變化。字典會注明「未設定」「目前語言的內建文字」或具體值；只給中文／英文例子時會標明範圍，不冒充所有語言的固定預設值。
 
 ## 設定寫在哪裡，怎麼合併？
 
 範例中的設定片段合併到 `src/site.config.ts` 現有的 `defineThemeConfig({...})` 中；保留 import、export 和其他個人設定，不要在同一物件重複建立 theme 或 i18n。
 
-物件遞歸合併，省略欄位繼續使用預設設定；陣列整體替換；undefined 覆寫會被跳過。空字串、空陣列和 false 的含義由欄位決定，不能統一理解成“恢复默认”。例如首頁 hero 的空字串是主動清空，homeTitle 的空白則繼續回退。
+物件遞歸合併，省略欄位繼續使用預設設定；陣列整體替換；undefined 覆寫會被跳過。空字串、空陣列和 false 的含義由欄位決定，不能統一理解成「恢復預設」。例如首頁 hero 的空字串是主動清空，homeTitle 的空白則繼續回退。
 
 修改後先在 dev 中檢視對應頁面；環境覆寫變化需要重啟開發服務。正式網站要重新建置和部署，單獨保存本機設定不會修改線上頁面。
 

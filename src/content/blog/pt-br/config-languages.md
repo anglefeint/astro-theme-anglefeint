@@ -4,9 +4,11 @@ title: 'Referência de configuração: idiomas, endereços e fallback'
 subtitle: 'Registro de idiomas, traduções da interface e resolução'
 description: 'Tipos, padrões e limites de i18n, idiomas ativos, endereços, metadados e cadeia de fallback.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
+
+As expressões chinesas nos exemplos de `locales.zh` são intencionais: mostram como personalizar o conteúdo em chinês sem alterar os outros idiomas. Os valores padrão em chinês/inglês nas tabelas são citações do tema, não traduções pendentes.
 
 Para ativar idiomas ou publicar traduções passo a passo, veja o [tutorial multilíngue](/pt-br/blog/starter-guide-languages/). O arquivo de configuração está em [instalação e informações do site](/pt-br/blog/starter-guide-1-configure-your-site/). Outros módulos estão no [índice de configuração](/pt-br/blog/config-reference/).
 
@@ -16,11 +18,11 @@ Este artigo cobre registro, endereços e resolução i18n, sem repetir todos os 
 
 ## i18n.defaultLocale e i18n.locales
 
-| Caminho completo      | Tipo / padrão do tema                                                                                           | Estado, efeito e limites                                                                                                                                                                                        | Exemplo                                                    |
-| --------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| i18n.defaultLocale    | string / 'en'                                                                                                   | Ativo: define o idioma usado ou destino da raiz inicial, fallback necessário e links padrão. String vazia normaliza para en. Não detecta navegador; o idioma padrão fica sempre ativo, mesmo com enabled: false | i18n: { defaultLocale: 'zh' }                              |
-| i18n.locales          | Record<string, LocaleConfig> / nove idiomas integrados abaixo                                                   | Ativo: chaves são códigos reais que definem pastas e URLs. Mescla recursivamente; omitir um idioma integrado não o remove. Idiomas novos precisam de textos e conteúdo próprios                                 | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
-| `i18n.locales.<语言>` | LocaleConfig, substituição parcial / configuração existente para idiomas integrados; nenhuma para códigos novos | Ativo: inclui meta, site, messages, about e aiReadableContent. Campos omitidos seguem mescla/fallback; objeto vazio não apaga idioma existente                                                                  | locales: { zh: { meta: { enabled: false } } }              |
+| Caminho completo        | Tipo / padrão do tema                                                                                           | Estado, efeito e limites                                                                                                                                                                                        | Exemplo                                                    |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| i18n.defaultLocale      | string / 'en'                                                                                                   | Ativo: define o idioma usado ou destino da raiz inicial, fallback necessário e links padrão. String vazia normaliza para en. Não detecta navegador; o idioma padrão fica sempre ativo, mesmo com enabled: false | i18n: { defaultLocale: 'zh' }                              |
+| i18n.locales            | Record<string, LocaleConfig> / nove idiomas integrados abaixo                                                   | Ativo: chaves são códigos reais que definem pastas e URLs. Mescla recursivamente; omitir um idioma integrado não o remove. Idiomas novos precisam de textos e conteúdo próprios                                 | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
+| `i18n.locales.<locale>` | LocaleConfig, substituição parcial / configuração existente para idiomas integrados; nenhuma para códigos novos | Ativo: inclui meta, site, messages, about e aiReadableContent. Campos omitidos seguem mescla/fallback; objeto vazio não apaga idioma existente                                                                  | locales: { zh: { meta: { enabled: false } } }              |
 
 A chave de idioma não é o nome do menu nem hreflang. A implementação não converte EN em en ou a pasta zh-CN em zh. Use códigos minúsculos coerentes nas pastas, configuração e comandos, como zh, en, pt-br e zh-hant. O scaffolding aceita duas ou três letras e um segmento opcional separado por hífen. A normalização do runtime não é um validador completo de código ou caminho; não informe caminhos ou pontuação arbitrária.
 
@@ -44,7 +46,7 @@ Sem substituições, os nove idiomas estão ativos. en é padrão sem fallback; 
 
 <a id="meta"></a>
 
-## `i18n.locales.<语言>.meta`: cinco campos de metadados
+## `i18n.locales.<locale>.meta`: cinco campos de metadados
 
 Os campos relativos abaixo ficam em meta. Veja padrões específicos dos idiomas integrados acima e normalização ao omitir em idiomas novos abaixo. A entrada aceita substituições parciais; os tipos não exigem reescrever tudo sempre.
 
@@ -78,21 +80,21 @@ Com defaultLocale en:
 | /en/about/        | About em inglês, se ativo               | About em inglês, se ativo               |
 | /zh/              | Página inicial chinesa, se idioma ativo | Página inicial chinesa, se idioma ativo |
 
-O redirecionamento entre raiz e página inicial do idioma é HTML estático com meta refresh, canonical e noindex. Não escolhe idioma pela localização nem é um 301 de servidor configurado pelo tema. Ferramentas internas normalmente ainda geram `/<代码>/.../`; cada entrada decide se leva à raiz.
+O redirecionamento entre raiz e página inicial do idioma é HTML estático com meta refresh, canonical e noindex. Não escolhe idioma pela localização nem é um 301 de servidor configurado pelo tema. Ferramentas internas normalmente ainda geram `/<locale>/.../`; cada entrada decide se leva à raiz.
 
 <a id="overrides"></a>
 
 ## site, messages e about: onde colocar substituições?
 
-Prefixo: `i18n.locales.<语言>`. Objetos mesclam recursivamente, arrays substituem tudo e undefined não sobrescreve. String vazia, false e arrays vazios são preservados conforme cada campo.
+Prefixo: `i18n.locales.<locale>`. Objetos mesclam recursivamente, arrays substituem tudo e undefined não sobrescreve. String vazia, false e arrays vazios são preservados conforme cada campo.
 
-| Caminho relativo | Tipo / padrão                                                                                         | Efeito, limites e exemplo                                                                                                                                                 | Detalhes por campo                                         |
-| ---------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| site             | { homeTitle?: string; hero?: string } / configuração inicial integrada de cada idioma                 | Só conteúdo inicial do idioma; não substitui a identidade site global. Exemplo site: { homeTitle: '我的博客' }                                                            | [Página inicial](/pt-br/blog/config-home/#site-fallbacks)  |
-| site.homeTitle   | string, opcional / não definido                                                                       | Procura título com trim não vazio no idioma atual e fallbacks diretos, depois SITE_TITLE global. Exemplo '我的博客'. Vazio não impede fallback                            | [Título inicial](/pt-br/blog/config-home/#home-title)      |
-| site.hero        | string, opcional / apresentação integrada por idioma; não definido em idioma novo                     | Primeiro valor definido na cadeia. String vazia limpa explicitamente e interrompe fallback. Sem valor, há messages.home.hero como alternativa. Exemplo '记录项目与生活。' | [Apresentação inicial](/pt-br/blog/config-home/#home-hero) |
-| messages         | DeepPartial<Messages> / substituições normalmente não definidas; runtime acrescenta textos integrados | Textos de botões, estados e metadescrições; exemplo messages: { nav: { home: '主页' } }. Não cria recursos nem traduz conteúdo                                            | [Índice de configuração](/pt-br/blog/config-reference/)    |
-| about            | DeepPartial<AboutConfig> / configuração About integrada de cada idioma                                | Parte do About base e mescla recursivamente pela cadeia. Exemplo about: { sections: { who: '我是一名开发者。' } }. Não lê corpo Markdown automaticamente                  | [About](/pt-br/blog/config-about/#about-content)           |
+| Caminho relativo | Tipo / padrão                                                                                         | Efeito, limites e exemplo                                                                                                                                                           | Detalhes por campo                                         |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| site             | { homeTitle?: string; hero?: string } / configuração inicial integrada de cada idioma                 | Só conteúdo inicial do idioma; não substitui a identidade site global. Exemplo site: { homeTitle: 'Meu blog' }                                                                      | [Página inicial](/pt-br/blog/config-home/#site-fallbacks)  |
+| site.homeTitle   | string, opcional / não definido                                                                       | Procura título com trim não vazio no idioma atual e fallbacks diretos, depois SITE_TITLE global. Exemplo 'Meu blog'. Vazio não impede fallback                                      | [Título inicial](/pt-br/blog/config-home/#home-title)      |
+| site.hero        | string, opcional / apresentação integrada por idioma; não definido em idioma novo                     | Primeiro valor definido na cadeia. String vazia limpa explicitamente e interrompe fallback. Sem valor, há messages.home.hero como alternativa. Exemplo 'Projetos e vida cotidiana.' | [Apresentação inicial](/pt-br/blog/config-home/#home-hero) |
+| messages         | DeepPartial<Messages> / substituições normalmente não definidas; runtime acrescenta textos integrados | Textos de botões, estados e metadescrições; exemplo messages: { nav: { home: 'Início' } }. Não cria recursos nem traduz conteúdo                                                    | [Índice de configuração](/pt-br/blog/config-reference/)    |
+| about            | DeepPartial<AboutConfig> / configuração About integrada de cada idioma                                | Parte do About base e mescla recursivamente pela cadeia. Exemplo about: { sections: { who: 'Sou desenvolvedor.' } }. Não lê corpo Markdown automaticamente                          | [About](/pt-br/blog/config-about/#about-content)           |
 
 Padrões exatos de hero por idioma abaixo. A configuração padrão não fornece homeTitle:
 
@@ -139,12 +141,12 @@ Fallback não acrescenta publicações inglesas à lista chinesa, gera arquivos 
 
 ## Seletor de idiomas e textos compartilhados
 
-São campos string opcionais em `i18n.locales.<语言>.messages`, resolvidos pela cadeia comum. siteTitle localizado não muda a identidade padrão; tipo, padrão e estado não usado estão no [dicionário do site](/pt-br/blog/config-site-chrome/#legacy-site-title).
+São campos string opcionais em `i18n.locales.<locale>.messages`, resolvidos pela cadeia comum. siteTitle localizado não muda a identidade padrão; tipo, padrão e estado não usado estão no [dicionário do site](/pt-br/blog/config-site-chrome/#legacy-site-title).
 
-| Campo relativo  | Padrão em chinês simplificado / inglês                                                           | Estado, efeito e limites                                                                                                | Exemplo                |
-| --------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| langLabel       | 语言 / Language                                                                                  | Ativo: dica e nome acessível do seletor público, não o nome de cada opção, que usa meta.label                           | '选择语言'             |
-| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | Condicional: metadescrição inicial, não apresentação visível ou descrição universal. Outras páginas têm fontes próprias | '我的项目与学习笔记。' |
+| Campo relativo  | Padrão em chinês simplificado / inglês                                                           | Estado, efeito e limites                                                                                                | Exemplo                                       |
+| --------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| langLabel       | 语言 / Language                                                                                  | Ativo: dica e nome acessível do seletor público, não o nome de cada opção, que usa meta.label                           | 'Selecionar idioma'                           |
+| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | Condicional: metadescrição inicial, não apresentação visível ou descrição universal. Outras páginas têm fontes próprias | 'Meus projetos e minhas anotações de estudo.' |
 
 Consulte textos internos de funções nos respectivos dicionários. Um campo no tipo sem consumo não produz efeito. O idioma do iframe de comentários também depende de theme.comments.lang, fixo em inglês por padrão. Veja [comentários](/pt-br/blog/config-comments/#appearance).
 
@@ -152,7 +154,7 @@ Consulte textos internos de funções nos respectivos dicionários. Um campo no 
 
 ## aiReadableContent: fallback especial do complemento público por idioma
 
-`i18n.locales.<语言>.aiReadableContent` substitui notes / links globais por campo, sem meta.fallback. Omitir herda o global; notes vazio ou links [] limpa explicitamente. O objeto {} não apaga o complemento global.
+`i18n.locales.<locale>.aiReadableContent` substitui notes / links globais por campo, sem meta.fallback. Omitir herda o global; notes vazio ou links [] limpa explicitamente. O objeto {} não apaga o complemento global.
 
 Tipos, padrões, validação e exemplo completo estão em [complementos de leitura por IA](/pt-br/blog/config-analytics-ai/#locale-supplement). Não é tradução da página nem corpo do About; todo complemento é público. Links são relativos à raiz de publicação, e / inicial ignora o base. Compare na [resolução de links](/pt-br/blog/config-analytics-ai/#supplement).
 

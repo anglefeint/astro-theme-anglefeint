@@ -56,11 +56,12 @@ Für Theme-Entwicklung beginne bei [AGENTS.md](https://github.com/anglefeint/ast
 Erforderlich ist **Node.js ab 22.12.0**; die Vorlage basiert auf **Astro 7**. Führe im übergeordneten Zielordner aus:
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+Wähle im Einrichtungsassistenten **Yes**, wenn er die Installation der Abhängigkeiten anbietet. Nur wenn du diesen Schritt bewusst überspringst, führe vor `npm run dev` selbst `npm install` aus. `--no-ai` überspringt das zusätzliche Erstellen allgemeiner KI-Agenten-Anweisungen. Die eigenen Hinweise des Themes sind im Starter enthalten.
 
 Öffne die Terminal-URL. Bestehende Projekte benötigen im bisherigen Ordner nur `npm install` und `npm run dev`, keine Neuerstellung. Ctrl+C stoppt den Server. Weitere Befehle laufen im Projektstamm, nach Stoppen von dev oder in einem zweiten Terminal.
 
@@ -78,9 +79,9 @@ Ergänze folgendes `site` innerhalb des bestehenden `defineThemeConfig({ ... })`
 
 ```ts
 site: {
-  title: '我的博客',
-  author: '你的名字',
-  description: '记录项目、阅读和生活。',
+  title: 'Mein Blog',
+  author: 'Dein Name',
+  description: 'Projekte, Bücher und Alltag.',
   url: 'https://your-domain.example',
 },
 ```
@@ -105,16 +106,16 @@ npm run new-post -- my-first-post
 
 Ohne `--locales` oder `ANGLEFEINT_LOCALES` verwendet der Befehl alle aktiven Projektsprachen und erzeugt gleichnamige Gerüste. Anfangs neun Dateien, nach Sprachänderungen entsprechend der aktiven Liste. Kein automatisches Übersetzen, kein Überschreiben vorhandener Dateien.
 
-Dateien liegen unter `src/content/blog/<语言>/my-first-post.md`, URLs unter `/<语言>/blog/my-first-post/` und Listen unter `/<语言>/blog/`. Englisch etwa `src/content/blog/en/my-first-post.md`, Chinesisch `src/content/blog/zh/my-first-post.md`. Öffne die gewünschte Datei, ändere Titel, Beschreibung und Text. Routen entstehen automatisch. Minimales Beispiel:
+Dateien liegen unter `src/content/blog/<locale>/my-first-post.md`, URLs unter `/<locale>/blog/my-first-post/` und Listen unter `/<locale>/blog/`. Englisch etwa `src/content/blog/en/my-first-post.md`, Chinesisch `src/content/blog/zh/my-first-post.md`. Öffne die gewünschte Datei, ändere Titel, Beschreibung und Text. Routen entstehen automatisch. Minimales Beispiel:
 
 ```md
 ---
-title: '我的第一篇文章'
-description: '记录这次开始写博客的想法。'
+title: 'Mein erster Beitrag'
+description: 'Gedanken zum Start dieses Blogs.'
 pubDate: '2026-11-13'
 ---
 
-这里开始写正文。
+Hier beginnt dein Text.
 ```
 
 Das zeigt nur Pflichtfelder; bestehende Titelbilder und optionale Werte dürfen bleiben. Gewöhnliche Slugs bestehen aus Kleinbuchstaben, Zahlen und Bindestrichen, etwa `my-first-post`.
@@ -122,13 +123,13 @@ Das zeigt nur Pflichtfelder; bestehende Titelbilder und optionale Werte dürfen 
 Für bestimmte Dateien verwende optional `--locales`. Führe nicht jedes Beispiel aus:
 
 ```bash
-# 只生成英文
+# Nur Englisch erzeugen
 npm run new-post -- my-first-post --locales en
 
-# 只生成中文
+# Nur Chinesisch erzeugen
 npm run new-post -- my-first-post --locales zh
 
-# 生成指定的多种语言
+# Ausgewählte Sprachen erzeugen
 npm run new-post -- my-first-post --locales en,zh
 ```
 
@@ -161,18 +162,18 @@ npm run new-fragment
 Für gewählte Sprachen verwende passende Parameter:
 
 ```bash
-# 只生成中文
+# Nur Chinesisch erzeugen
 npm run new-fragment -- --locales zh
 
-# 生成指定的多种语言
+# Ausgewählte Sprachen erzeugen
 npm run new-fragment -- --locales en,zh
 ```
 
 Jeder Aufruf erzeugt einen neuen Eintrag. Wähle eine Variante statt alle auszuführen. CLI-Sprachwahl ändert keine Sprachschalter.
 
-Dateien liegen in `src/content/fragments/<语言>/`, etwa `2026-11-13-aB3dE6gH.md`; tatsächliche Pfade stehen im Terminal. Bearbeite den Text und erhalte die erzeugte achtstellige alphanumerische ID. Übersetzungen desselben Aufrufs teilen ID und Zeit. Für weitere Änderungen nicht erneut erstellen.
+Dateien liegen in `src/content/fragments/<locale>/`, etwa `2026-11-13-aB3dE6gH.md`; tatsächliche Pfade stehen im Terminal. Bearbeite den Text und erhalte die erzeugte achtstellige alphanumerische ID. Übersetzungen desselben Aufrufs teilen ID und Zeit. Für weitere Änderungen nicht erneut erstellen.
 
-Listen liegen unter `/<语言>/fragments/`, etwa `/en/fragments/` oder `/zh/fragments/`. Startseiten mit Fragmenten zeigen den Avatar. Teile stabil `/<语言>/fragments/#ID` statt Seitenzahlen als Identität. ID-Änderungen betreffen Links und Kommentare. Kommentare bleiben standardmäßig aus.
+Listen liegen unter `/<locale>/fragments/`, etwa `/en/fragments/` oder `/zh/fragments/`. Startseiten mit Fragmenten zeigen den Avatar. Teile stabil `/<locale>/fragments/#ID` statt Seitenzahlen als Identität. ID-Änderungen betreffen Links und Kommentare. Kommentare bleiben standardmäßig aus.
 
 Anleitung: [Ein Fragment veröffentlichen](https://demo.anglefeint.com/de/blog/starter-guide-5-fragments/). Referenz: [Fragments](https://demo.anglefeint.com/de/blog/config-fragments/).
 
@@ -184,7 +185,7 @@ Artikel nutzen `new-post`, separate Projekt- oder Portfolio-Seiten `new-page`:
 npm run new-page -- projects
 ```
 
-Erzeugt `src/pages/[lang]/projects.astro` mit `base`-Theme. Bearbeite die Datei und öffne `/<语言>/projects/`, etwa `/en/projects/`. Eine Quelle erzeugt alle aktiven Sprachseiten, übersetzt aber nichts und ergänzt keine Navigation.
+Erzeugt `src/pages/[lang]/projects.astro` mit `base`-Theme. Bearbeite die Datei und öffne `/<locale>/projects/`, etwa `/en/projects/`. Eine Quelle erzeugt alle aktiven Sprachseiten, übersetzt aber nichts und ergänzt keine Navigation.
 
 Für einen Stil nutze `--theme` mit `base`, `matrix`, `cyber`, `hacker` oder `ai`. Etwa `npm run new-page -- portfolio --theme cyber` erzeugt eine weitere Cyberpunk-Seite.
 
@@ -200,7 +201,7 @@ Details: [Seiten anpassen](https://demo.anglefeint.com/de/blog/starter-guide-3-c
 
 ## 6. Bilder vorbereiten und Varianten erhalten
 
-Textbilder verwenden normales Markdown. Lege etwa `photo.jpg` neben den Beitrag und schreibe `![图片描述](./photo.jpg)`. Ein Titelbild setzt frontmatter `heroImage: ./cover.jpg` mit vorhandener Datei. public-URLs enthalten kein public-Präfix.
+Textbilder verwenden normales Markdown. Lege etwa `photo.jpg` neben den Beitrag und schreibe `![Bildbeschreibung](./photo.jpg)`. Ein Titelbild setzt frontmatter `heroImage: ./cover.jpg` mit vorhandener Datei. public-URLs enthalten kein public-Präfix.
 
 Titelbilder und unterstützte lokale Fragment-Bilder brauchen persistente responsive Dateien. Bereite sie lokal ausdrücklich vor oder prüfe vorhandene Ausgaben:
 
@@ -209,7 +210,9 @@ npx @anglefeint/astro-theme prepare-covers
 npx @anglefeint/astro-theme prepare-covers --check
 ```
 
-Lokales dev und doctor erzeugen fehlende/veraltete Varianten; build und CI doctor prüfen nur und generieren nicht beim Deployment. Committe Originale und das vollständige `src/assets/blog/covers/` mit `manifest.json` und `generated/`. Bei missing/stale/modified zuerst lokal vorbereiten, committen und neu bauen.
+Normale Aufrufe von dev, build und doctor, auch in CI, verwenden korrekte Bildvarianten wieder und ergänzen oder reparieren fehlende, veraltete oder veränderte Dateien automatisch. Committe Inhalte und referenzierte Originalbilder. Das Committen von `src/assets/blog/covers/manifest.json` und `generated/` wird zur Wiederverwendung empfohlen, ist aber keine Voraussetzung für die automatische Vorbereitung. Fehlende Originale, unsichere Pfade und ungültige Eingaben führen weiterhin zu Fehlern. Die explizite Vorbereitung ist optional; `--check` prüft vorhandene Dateien ohne Reparatur.
+
+**Versionshinweis:** Die automatische Bildvorbereitung bei normalen Builds und doctor in CI erfordert mindestens 0.36.2. Führe mit 0.36.1 zuerst dev oder `prepare-covers` aus, um Bildvarianten vorzubereiten. Explizites `prepare-covers --check` und Konfigurations-Sync bleiben schreibgeschützt.
 
 Nicht alle gewöhnlichen Artikelbilder sind dadurch komprimiert. Umfang, Pfade und Freigabebilder erklärt das [Bildertutorial](https://demo.anglefeint.com/de/blog/starter-guide-images/).
 

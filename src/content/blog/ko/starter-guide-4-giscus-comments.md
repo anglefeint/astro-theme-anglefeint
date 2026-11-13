@@ -4,7 +4,7 @@ title: '사용 가이드 6: 독자에게 댓글 받기'
 subtitle: 'Giscus를 연결해 글이나 Fragment 댓글을 켜고 다국어 버전의 토론 공유 여부를 선택합니다.'
 description: 'Giscus 준비, 테마 설정, 글 토론 매핑, 다국어 공유, Fragment 댓글의 차이와 자주 발생하는 설정·로드 문제를 설명합니다.'
 pubDate: '2026-11-10'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -105,7 +105,7 @@ doctor는 검사와 빌드를 포함하므로 성공 직후 build를 반복할 �
 ```ts
 theme: {
   comments: {
-    // 保留 enabled: true 和自己的 repo、repoId、category、categoryId。
+    // enabled: true와 자신의 repo, repoId, category, categoryId를 유지하세요.
     shareAcrossLocales: true,
     mapping: 'specific',
     term: '',

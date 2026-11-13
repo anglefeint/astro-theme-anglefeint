@@ -24,9 +24,9 @@ npm run new-post -- my-first-post
 
 Wenn du diesen Befehl schon in Teil 1 ausgeführt hast, öffne die vorhandenen Dateien. Gleichnamige Dateien werden übersprungen, dein Inhalt nicht überschrieben.
 
-Ohne `--locales` oder `ANGLEFEINT_LOCALES` entsteht für jede aktivierte Sprache `src/content/blog/<语言代码>/my-first-post.md`. Anfangs sind neun Sprachen aktiv, daher entstehen neun Gerüste. Nach Änderungen der Sprachschalter gilt die aktuelle Aktivierungsliste. Der Text wird nicht automatisch übersetzt.
+Ohne `--locales` oder `ANGLEFEINT_LOCALES` entsteht für jede aktivierte Sprache `src/content/blog/<Sprachcode>/my-first-post.md`. Anfangs sind neun Sprachen aktiv, daher entstehen neun Gerüste. Nach Änderungen der Sprachschalter gilt die aktuelle Aktivierungsliste. Der Text wird nicht automatisch übersetzt.
 
-Bearbeite die gewünschte Sprachdatei. Ihr Pfad ist `/<语言代码>/blog/my-first-post/`, die Liste `/<语言代码>/blog/`. Der englische Beitrag unter der Standardstartseite liegt etwa unter `/en/blog/my-first-post/`, der chinesische unter `/zh/blog/my-first-post/`. Die jeweilige Sprache muss aktiv sein. Routen musst du nicht selbst anlegen.
+Bearbeite die gewünschte Sprachdatei. Ihr Pfad ist `/<Sprachcode>/blog/my-first-post/`, die Liste `/<Sprachcode>/blog/`. Der englische Beitrag unter der Standardstartseite liegt etwa unter `/en/blog/my-first-post/`, der chinesische unter `/zh/blog/my-first-post/`. Die jeweilige Sprache muss aktiv sein. Routen musst du nicht selbst anlegen.
 
 `my-first-post` ist der Slug. Verwende nur englische Kleinbuchstaben, Zahlen und Bindestriche, etwa `learning-astro-1`, keine Leerzeichen, Unterstriche oder `/`. Umbenennen der Datei ändert die URL; eine Weiterleitung für alte Links entsteht nicht automatisch.
 
@@ -37,10 +37,10 @@ Der Befehl setzt Titel, Beschreibung, das aktuelle UTC-Datum und Platzhaltertext
 Die folgenden Befehle sind optionale Varianten. zh erstellt nur Chinesisch, en,zh Englisch und Chinesisch. Du musst nicht alle Beispiele ausführen:
 
 ```bash
-# 只创建中文
+# Nur Chinesisch erstellen
 npm run new-post -- my-first-post --locales zh
 
-# 创建英文和中文
+# Englisch und Chinesisch erstellen
 npm run new-post -- my-first-post --locales en,zh
 ```
 
@@ -54,24 +54,24 @@ Der Befehl erstellt nur Dateien; er übersetzt und aktiviert keine Sprache. Übe
 
 ```md
 ---
-title: '我的第一篇文章'
-description: '记录我用 Anglefeint 搭建博客的过程。'
+title: 'Mein erster Artikel'
+description: 'Wie ich meinen Blog mit Anglefeint eingerichtet habe.'
 pubDate: '2026-11-13'
-tags: ['astro', '笔记']
+tags: ['astro', 'Notizen']
 ---
 
-这是我的第一篇文章。我准备在这里记录学习过程和遇到的问题。
+Dies ist mein erster Artikel. Hier möchte ich festhalten, was ich lerne und welche Probleme mir begegnen.
 
-## 为什么开始写博客
+## Warum ich diesen Blog starte
 
-写下自己的想法，也给以后的自己留下线索。
+Gedanken aufschreiben und Hinweise für mein zukünftiges Ich hinterlassen.
 
-### 先从一个小问题开始
+### Mit einem kleinen Problem anfangen
 
-今天先记录安装和发布过程。
+Heute dokumentiere ich Installation und Veröffentlichung.
 ```
 
-Setze das tatsächliche Veröffentlichungsdatum. `title`, `description` und `pubDate` sind Pflicht, `tags` optional. Die Seite zeigt den Titel bereits an; beginne den Text normalerweise mit `##` und wiederhole ihn nicht als `# 我的第一篇文章`.
+Setze das tatsächliche Veröffentlichungsdatum. `title`, `description` und `pubDate` sind Pflicht, `tags` optional. Die Seite zeigt den Titel bereits an; beginne den Text normalerweise mit `##` und wiederhole ihn nicht als `# Mein erster Artikel`.
 
 - `title` dient als Beitragstitel, Listentitel und für zugehörige Metadaten.
 - `description` ist die Kurzbeschreibung und Metabeschreibung. Ohne eigenes `context` erscheint sie auch in der Kontextzeile unter dem Titel.
@@ -87,14 +87,14 @@ Verwende vorzugsweise ein in Anführungszeichen gesetztes `YYYY-MM-DD`. Für gen
 Trenne normale Absätze durch eine Leerzeile. Häufige Markdown-Elemente:
 
 ```md
-这是一段正文，可以使用 **加粗**、_强调_ 和 `行内代码`。
+Ein Absatz kann **Fettschrift**, _Hervorhebungen_ und `Inline-Code` enthalten.
 
-- 第一个要点
-- 第二个要点
+- Erster Punkt
+- Zweiter Punkt
 
-[链接文字](https://example.com/)
+[Linktext](https://example.com/)
 
-> 这是一段引用。
+> Dies ist ein Zitat.
 ```
 
 Mit `##` und `###` entsteht automatisch ein Inhaltsverzeichnis. Auf breiten Bildschirmen steht es rechts, auf schmalen vor dem Text. Ohne Überschriften zweiter oder dritter Ebene bleibt es verborgen. Tiefere Überschriften sind im Text erlaubt, erscheinen aber nicht darin.
@@ -109,7 +109,7 @@ Ohne `toc` gilt `theme.toc.enabled` aus `src/site.config.ts`, standardmäßig ak
 
 ### Beiträge mit Tags ordnen
 
-`tags: ['astro', '笔记']` im frontmatter erzeugt Tag-Einträge und die Tagliste der aktuellen Sprache ohne manuelle Routen. Bei aktivierten Tags ist etwa `/zh/tags/` erreichbar.
+`tags: ['astro', 'Notizen']` im frontmatter erzeugt Tag-Einträge und die Tagliste der aktuellen Sprache ohne manuelle Routen. Bei aktivierten Tags ist etwa `/zh/tags/` erreichbar.
 
 Tags unterscheiden Groß- und Kleinschreibung: `Astro` und `astro` sind verschieden. Rand-Leerraum wird entfernt und doppelte Tags eines Beitrags zählen nur einmal. Verwende die erzeugten Links; chinesische und besondere Zeichen werden stabil kodiert. Errate die Pfade nicht selbst. Das Umbenennen eines Tags ändert seinen Link.
 
@@ -131,7 +131,7 @@ Codeblöcke im Beitrag erhalten automatisch einen Kopierknopf, der Zeilenumbrüc
 Mathematik ist standardmäßig ohne weitere Plugins aktiv. Inline steht sie in `$...$`, eigenständige Formeln zwischen zwei Zeilen mit `$$`:
 
 ```md
-保存量为 $C_{saved}$。
+Die eingesparte Menge beträgt $C_{saved}$.
 
 $$
 \frac{a}{b} = x_1 + x_2
@@ -153,9 +153,9 @@ Für normale Beiträge reicht `.md`. Wenn du Komponenten importieren und einbett
 Bilder im Text können neben der Beitragsdatei oder unter `public/images/` liegen. Lege zuerst die Datei ab und verwende dann den passenden Pfad:
 
 ```md
-![照片内容的描述](./photo.jpg)
+![Beschreibung des Fotoinhalts](./photo.jpg)
 
-![照片内容的描述](/images/photo.jpg)
+![Beschreibung des Fotoinhalts](/images/photo.jpg)
 ```
 
 Der erste Pfad ist relativ zum Beitrag, der zweite entspricht `public/images/photo.jpg`; `public` steht nicht in der URL. Die Beschreibung ist der Alternativtext.
@@ -164,11 +164,13 @@ Für ein anderes Titelbild kannst du `cover.jpg` neben den Artikel legen und `he
 
 Normale Textbilder lassen sich per Klick oder mit Fokus und Enter/Leertaste vergrößern. Esc, Schließen oder Hintergrund schließen die Ansicht. Titelbilder und Bilder in Links oder Knöpfen nehmen nicht teil. Die Vorschau verwendet die bereits gewählte Browser-Quelle, lädt kein höher aufgelöstes Original und bietet keinen Galerie-Wechsel.
 
-Nach neuen oder ersetzten Titelbildern bereiten lokales dev oder doctor responsive Dateien vor. Committe Originale und das vollständige `src/assets/blog/covers/` einschließlich manifest.json und generated/. Deployment-Build und CI doctor validieren nur und scheitern bei fehlenden, veralteten oder veränderten Dateien, statt dort neu zu kodieren. Diese persistenten Varianten gelten für Titelbilder und lokale Fragment-Bilder; normale Beitragsbilder nutzen weiterhin die bisherige Markdown-/MDX-Verarbeitung.
+Normale Aufrufe von dev, build und doctor, auch in CI, verwenden korrekte Bildvarianten wieder und ergänzen oder reparieren fehlende, veraltete oder veränderte Dateien automatisch. Committe Inhalte und referenzierte Originalbilder. Das Committen von `src/assets/blog/covers/manifest.json` und `generated/` wird zur Wiederverwendung empfohlen, ist aber keine Voraussetzung für die automatische Vorbereitung. Fehlende Originale, unsichere Pfade und ungültige Eingaben führen weiterhin zu Fehlern. Persistente Varianten gelten für Titelbilder und lokale Fragment-Bilder; normale Beitragsbilder nutzen weiterhin die Markdown-/MDX-Verarbeitung.
+
+**Versionshinweis:** Die automatische Bildvorbereitung bei normalen Builds und doctor in CI erfordert mindestens 0.36.2. Führe mit 0.36.1 zuerst dev oder `prepare-covers` aus, um Bildvarianten vorzubereiten. Explizites `prepare-covers --check` und Konfigurations-Sync bleiben schreibgeschützt.
 
 ## 6. Lokal prüfen und Veröffentlichung vorbereiten
 
-Starte `npm run dev` und öffne unter der Terminal-URL `/<语言代码>/blog/my-first-post/`, etwa englisch `/en/blog/my-first-post/` oder chinesisch `/zh/blog/my-first-post/`. Prüfe Titel, Datum, Text, Inhaltsverzeichnis, Tags und Bilder. Prüfe bei Übersetzungen auch das Ziel des Sprachwechsels.
+Starte `npm run dev` und öffne unter der Terminal-URL `/<Sprachcode>/blog/my-first-post/`, etwa englisch `/en/blog/my-first-post/` oder chinesisch `/zh/blog/my-first-post/`. Prüfe Titel, Datum, Text, Inhaltsverzeichnis, Tags und Bilder. Prüfe bei Übersetzungen auch das Ziel des Sprachwechsels.
 
 Stoppe vor der Veröffentlichung den Entwicklungsserver und führe aus:
 
@@ -214,7 +216,7 @@ Ohne `ogImage` erzeugt der Build standardmäßig ein 1200×630-Freigabebild aus 
 | `aiModel`           | Zeigt deine Modellbezeichnung im Titelstatus und OUTPUT                 |
 | `aiMode`、`aiState` | Zeigen deine Modus- und Statustexte im Titelstatus                      |
 
-Ohne Angaben schätzt das Theme aus dem Quelltext: CJK-Ideogramme, Kana und koreanische Zeichen einzeln, sonst hauptsächlich durch Leerraum getrennte Wörter. Standard-Tokens sind `round(max(自动字词数, 1) × 1.3)`, kein tatsächlicher Modell-Tokenizer. Nur `wordCount` zu überschreiben berechnet Tokens nicht neu; setze bei Bedarf beide.
+Ohne Angaben schätzt das Theme aus dem Quelltext: CJK-Ideogramme, Kana und koreanische Zeichen einzeln, sonst hauptsächlich durch Leerraum getrennte Wörter. Standard-Tokens sind `round(max(automatischeWortzahl, 1) × 1.3)`, kein tatsächlicher Modell-Tokenizer. Nur `wordCount` zu überschreiben berechnet Tokens nicht neu; setze bei Bedarf beide.
 
 Ein Teil des Markdown wird entfernt, doch es ist keine vollständige Zählung sichtbaren Texts. Formeln und MDX-Quellcode können das Ergebnis beeinflussen. Ab 1.000 werden Zahlen mit einer Dezimalstelle und `k` gezeigt. Modell, Modus und Status sind reine Texte und verbinden keine KI, prüfen keine Herkunft und führen keine Aufgaben aus.
 

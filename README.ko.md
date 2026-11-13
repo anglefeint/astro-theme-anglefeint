@@ -56,13 +56,14 @@ Cursor, Codex, Claude Code가 현재 프로젝트의 `AGENTS.md`에 따라 사�
 **Node.js 22.12.0 이상**이 필요하며 템플릿은 **Astro 7** 기반입니다. 블로그를 둘 디렉터리에서 실행하세요.
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
 
-터미널에 출력된 주소를 여세요. 기존 프로젝트는 원래 디렉터리에서 `npm install`, `npm run dev`만 실행하면 되며 다시 만들 필요는 없습니다. Ctrl+C로 멈추세요. 이후 명령은 루트에서 실행하며 dev를 멈추거나 다른 터미널을 사용하세요.
+생성 마법사에서 의존성 설치에 Yes를 선택하세요. 직접 건너뛴 경우에만 실행 전에 `npm install`을 수행하세요. `--no-ai`는 일반 AI 에이전트 안내 파일의 추가 생성을 건너뜁니다. 테마 자체의 AI 협업 안내는 starter에 포함됩니다.
+
+터미널에 출력된 주소를 여세요. 기존 프로젝트는 원래 디렉터리에서 `npm run dev`로 다시 실행하며, 의존성을 설치하지 않았거나 변경했을 때만 `npm install`이 필요합니다. Ctrl+C로 멈추세요. 이후 명령은 루트에서 실행하며 dev를 멈추거나 다른 터미널을 사용하세요.
 
 새 프로젝트는 `pnpm install`, `pnpm dev`도 가능합니다. 한 프로젝트에서는 같은 패키지 관리자를 유지하세요. 아래는 npm 기준이며 자동 업그레이드는 현재 npm만 지원합니다.
 
@@ -78,9 +79,9 @@ npm run dev
 
 ```ts
 site: {
-  title: '我的博客',
-  author: '你的名字',
-  description: '记录项目、阅读和生活。',
+  title: '내 블로그',
+  author: '작성자 이름',
+  description: '프로젝트, 독서와 일상을 기록합니다.',
   url: 'https://your-domain.example',
 },
 ```
@@ -109,12 +110,12 @@ npm run new-post -- my-first-post
 
 ```md
 ---
-title: '我的第一篇文章'
-description: '记录这次开始写博客的想法。'
+title: '첫 번째 글'
+description: '블로그를 시작하며 떠오른 생각을 기록합니다.'
 pubDate: '2026-11-13'
 ---
 
-这里开始写正文。
+여기에서 본문을 작성하세요.
 ```
 
 필수만 보여 줍니다. 생성 파일의 표지·선택 필드는 유지해도 됩니다. 일반 글 이름은 `my-first-post`처럼 소문자 영문·숫자·하이픈입니다.
@@ -122,13 +123,13 @@ pubDate: '2026-11-13'
 특정 언어만 만들 때 `--locales`를 쓰세요. 선택적 사용법이므로 모두 실행할 필요는 없습니다.
 
 ```bash
-# 只生成英文
+# 영어 파일만 생성
 npm run new-post -- my-first-post --locales en
 
-# 只生成中文
+# 중국어 파일만 생성
 npm run new-post -- my-first-post --locales zh
 
-# 生成指定的多种语言
+# 지정한 여러 언어 생성
 npm run new-post -- my-first-post --locales en,zh
 ```
 
@@ -161,10 +162,10 @@ npm run new-fragment
 특정 언어만 원하면 매개변수를 선택하세요.
 
 ```bash
-# 只生成中文
+# 중국어 파일만 생성
 npm run new-fragment -- --locales zh
 
-# 生成指定的多种语言
+# 지정한 여러 언어 생성
 npm run new-fragment -- --locales en,zh
 ```
 
@@ -209,7 +210,7 @@ npx @anglefeint/astro-theme prepare-covers
 npx @anglefeint/astro-theme prepare-covers --check
 ```
 
-로컬 dev·doctor는 없거나 오래된 파생 파일을 준비하고 build·CI doctor는 검사만 하며 배포 측에서 생성하지 않습니다. 원본과 `src/assets/blog/covers/` 전체(`manifest.json`, `generated/` 포함)를 Git에 커밋하세요. missing／stale／modified는 로컬 준비·커밋 뒤 재빌드합니다.
+일반 dev·build·doctor는 CI에서도 누락되거나 오래되거나 손상된 파생 이미지를 필요에 따라 생성하며 올바른 기존 파일은 재사용합니다. 원본 누락, 잘못된 이미지와 안전하지 않은 경로는 오류입니다. 명시적 `prepare-covers --check`와 설정 동기화는 읽기 전용 검사입니다. 원본과 `src/assets/blog/covers/` 전체를 Git에 저장하면 재사용할 수 있어 배포 플랫폼의 이미지 캐시에 의존하지 않습니다. build와 CI doctor의 자동 이미지 준비는 0.36.2부터 지원합니다. 0.36.1에서는 dev 또는 `prepare-covers`로 먼저 준비하세요.
 
 모든 일반 본문 이미지가 압축되었다는 뜻은 아닙니다. 범위·경로·공유 규칙은 [이미지 가이드](https://demo.anglefeint.com/ko/blog/starter-guide-images/)에 있습니다.
 

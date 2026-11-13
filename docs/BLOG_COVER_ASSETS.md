@@ -1,7 +1,7 @@
 ---
 doc_id: blog_cover_assets
 doc_role: reference
-doc_purpose: Persistent blog covers and Fragment images, local preparation and deployment validation.
+doc_purpose: Persistent blog covers and Fragment images, automatic build preparation and explicit read-only validation.
 doc_scope: [architecture, visual-system, starter-sync, validation]
 update_triggers: [architecture-change, script-change, visual-change, package-change]
 source_of_truth: true
@@ -21,7 +21,9 @@ depends_on:
 
 # Persistent content image assets
 
-This describes the 0.36.0 source; see the [delivery record](releases/0.36.0.md) for actual publication status. It is not included in 0.35.0. No new site-config fields or dependency are added. Blog List, tag archives sharing `BlogCards`, the article's main cover, and local Fragment images use the same persistent store. Homepage avatar GIFs, article-body images, related-card images and unrelated media keep their existing processing.
+The persistent image format was introduced in 0.36.0; see the [delivery record](releases/0.36.0.md) for actual publication status. It is not included in 0.35.0. No new site-config fields or dependency are added. Blog List, tag archives sharing `BlogCards`, the article's main cover, and local Fragment images use the same persistent store. Homepage avatar GIFs, article-body images, related-card images and unrelated media keep their existing processing.
+
+Normal build/CI doctor preparation requires 0.36.2 or later; see the [delivery record](releases/0.36.2.md). It is not included in 0.36.1. The explicit `prepare-covers --check` and config-sync paths remain read-only. No new setting, dependency or directory is required.
 
 ## User-owned inputs and persisted outputs
 
@@ -34,9 +36,9 @@ src/assets/blog/covers/
   manifest.json   # source hashes, recipe and output dimensions/hashes
 ```
 
-Run `npx @anglefeint/astro-theme prepare-covers` locally; `--check` validates without writing. Dev startup and changes to originals/article references prepare missing or stale variants automatically. Local `doctor` also prepares before retaining its existing Astro check/build/About assertions, so a supported local upgrade from an older package can create the initial assets. With a truthy `CI` other than `false`/`0`, doctor only validates. Plain `astro build`/`npm run build` and config sync always validate; they never resize/encode a cover. Commit the original files and the entire generated folder/manifest before deployment. Missing, changed or corrupted assets fail with a preparation command instead of silently regenerating on the host.
+Normal dev, `astro build`/`npm run build` and doctor use the same preparation engine, including CI. Valid source/recipe/output hashes reuse existing bytes; missing, stale or corrupted derivatives are regenerated before rendering. Doctor retains its existing Astro check/build/About assertions. `npx @anglefeint/astro-theme prepare-covers` prepares without a server/build; its explicit `--check` and config sync validate without writing. Originals must be present and committed. Committing the generated folder/manifest is recommended for reuse, but missing derivatives no longer prevent a normal build. There is no automatic Git commit and no deployment-cache requirement. Missing originals, invalid image data, escaping paths, malformed manifests and conflicting output bytes still fail.
 
-The CLI follows the standard `src/` and `public/` project layout; the integration uses Astro's configured root/srcDir/publicDir/base. Projects with custom source/public directories or base-prefixed source references should prepare via the configured dev server. Do not add a second image configuration to site-config or generate replacement originals under public.
+The CLI follows the standard `src/` and `public/` project layout; the integration uses Astro's configured root/srcDir/publicDir/base. Projects with custom source/public directories or base-prefixed source references should prepare via the configured dev server or normal build. Do not add a second image configuration to site-config or generate replacement originals under public.
 
 ## Recipe, validity and lifecycle
 
@@ -44,7 +46,7 @@ The initial recipe generates widths 400/640/800/960/1200 plus a capped source wi
 
 Names include a sanitized basename, source-path hash, original-content hash, recipe hash and width. Identical basenames in different directories cannot collide; content or recipe changes get different URLs. The manifest records SHA-256 of each output. Normal preparation reads hashes and reuses valid variants without touching bytes/mtime; it regenerates only missing/corrupted variants, or the affected source's variants after source/recipe changes. A check never repairs files and does not need the Astro cache. Unreferenced/older generated files are not automatically deleted, and checks ignore obsolete entries not needed by current sources. Remove unused generated files deliberately rather than deleting user-owned source directories automatically.
 
-Output writes are atomic within the project; linked output/source paths cannot escape the project. CI/build validates source checksums, the recipe signature, expected widths and output hashes without running the encoder. The build copies referenced pre-generated bytes unchanged to `dist/_blog-covers/`; conflicting output bytes fail rather than overwrite custom files. Deployment uses ordinary static assets, not an image server or deployment cache. Dev serves this same namespace, debounces/serializes preparation and disposes the watcher on server shutdown.
+Output writes are atomic within the project; linked output/source paths cannot escape the project. All preparation validates source checksums, the recipe signature, expected widths and output hashes, encoding only derivatives needing repair. Config sync and explicit --check never run the encoder. After preparation, the build copies referenced bytes unchanged to `dist/_blog-covers/`; conflicting output bytes fail rather than overwrite custom files. Deployment uses ordinary static assets, not an image server or deployment cache. Dev serves this same namespace, debounces/serializes preparation and disposes the watcher on server shutdown.
 
 ## Rendering and priority
 
@@ -60,7 +62,7 @@ The existing `theme.fragments.enabled` switch gates Fragment discovery in the As
 
 Keep existing Fragment Markdown image links, reference-style images and raw HTML `img` links. A root path such as `/images/fragments/photo.png` reads `public/images/fragments/photo.png`; a relative path reads from the Markdown file's directory. Public originals stay in place. Remote/data URLs are not downloaded by preparation; SVG and animation keep their original formats. Do not infer references from fenced/inline code or frontmatter. Missing supported local image files fail preparation clearly; linked sources cannot escape the project.
 
-The existing `prepare-covers` command now prepares these images too. Dev watches referenced public images as well as content/source assets; local doctor prepares, and build/config sync/CI doctor only validate. Commit Fragment originals plus the same `src/assets/blog/covers/manifest.json` and generated files. The directory name is retained for compatibility; a separate Fragment derivative folder or new setup step is not required. Only currently referenced variants deploy, including images referenced exclusively by Fragments.
+The existing `prepare-covers` command now prepares these images too. Dev watches referenced public images as well as content/source assets; normal dev/build/doctor (including CI) prepare, while config sync and explicit --check only validate. Commit Fragment originals plus the same `src/assets/blog/covers/manifest.json` and generated files. The directory name is retained for compatibility; a separate Fragment derivative folder or new setup step is not required. Only currently referenced variants deploy, including images referenced exclusively by Fragments.
 
 The documented Satteri MDAST plugin replaces supported local image nodes with stable source markers before Astro's image conversion. Feed and Home render those markers using current manifest data and remove them from delivered HTML. This keeps image-only edits fresh without embedding stale hashed URLs in cached Markdown output. Final `img` elements receive srcset/sizes, async decoding and missing width/height; explicit author dimensions remain, with the missing counterpart calculated from the source ratio. The first image of each feed page is eager/high, remaining feed images and homepage thumbnails are lazy. Homepage thumbnails reuse the generated candidates with their own smaller sizes hint. Remote images retain their source and author dimensions; relative vector/animated Markdown images retain Astro's existing path handling.
 

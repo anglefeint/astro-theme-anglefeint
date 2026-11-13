@@ -61,14 +61,14 @@ theme: { toc: { enabled: false } },
 
 | 欄位          | 型別與預設行為                                       | 作用、限制與範例                                                                                        |
 | ------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `title`       | 必填 string，無預設                                  | 文章標題及相關中繼資訊，不是全站名稱；例 `title: '我的笔记'`                                            |
-| `description` | 必填 string，無預設                                  | 頁面中繼描述，context 未設定時也用作標題下的上下文；不是整篇內文；例 `description: '一次调试的记录。'`  |
-| `pubDate`     | 必填可解析日期，無預設                               | 發佈時間、列表排序及發佈中繼資訊；詳情以 UTC 日期顯示，未來日期不會隱藏文章；例 `pubDate: '2026-11-13'` |
+| `title`       | 必填 string，無預設                                  | 文章標題及相關中繼資訊，不是全站名稱；例 `title: '我的筆記'`                                            |
+| `description` | 必填 string，無預設                                  | 頁面中繼描述，context 未設定時也用作標題下的上下文；不是整篇內文；例 `description: '一次調試的記錄。'`  |
+| `pubDate`     | 必填可解析日期，無預設                               | 發布時間、列表排序及發布中繼資訊；詳情以 UTC 日期顯示，未來日期不會隱藏文章；例 `pubDate: '2026-11-13'` |
 | `updatedDate` | 選用日期，未設定                                     | 顯示更新日期，sitemap 優先使用它；不代替 pubDate 排序；例 `updatedDate: '2026-11-14'`                   |
 | `author`      | 選用 string，省略或空白使用網站作者                  | 不自動建立作者頁；例 `author: '另一位作者'`                                                             |
-| `subtitle`    | 選用 string，未設定                                  | 顯示副標題；與上下文完全相同時不重複顯示；例 `subtitle: '从现象到定位'`                                 |
-| `context`     | 選用 string，省略使用 description                    | 標題下上下文文字；空字串隱藏這行，但不清空中繼描述；例 `context: '解决一个具体问题。'`                  |
-| `tags`        | 選用 string 陣列，未設定時無標籤條目                 | 連結顯示還受全站標籤開關控制；例 `tags: ['astro', '笔记']`                                              |
+| `subtitle`    | 選用 string，未設定                                  | 顯示副標題；與上下文完全相同時不重複顯示；例 `subtitle: '從現象到定位'`                                 |
+| `context`     | 選用 string，省略使用 description                    | 標題下上下文文字；空字串隱藏這行，但不清空中繼描述；例 `context: '解決一個具體問題。'`                  |
+| `tags`        | 選用 string 陣列，未設定時無標籤條目                 | 連結顯示還受全站標籤開關控制；例 `tags: ['astro', '筆記']`                                              |
 | `heroImage`   | 選用本機圖片路徑，未設定時無封面區                   | 不能直接用遠程 URL 或把 public 網址當作同一規則；例 `heroImage: ./cover.jpg`，先放入檔案                |
 | `ogImage`     | 選用本機圖片／public 路徑／HTTPS，省略走分享圖片回退 | 不改變內文封面；例 `ogImage: /images/share.png`，先放入檔案                                             |
 | `toc`         | 選用 boolean，繼承全站目錄設定                       | true 可覆寫全站目錄關閉，但沒有標題仍不顯示；例 `toc: false`                                            |
@@ -78,12 +78,12 @@ theme: { toc: { enabled: false } },
 
 ```yaml
 ---
-title: '我的笔记'
-description: '一次调试的记录。'
+title: '我的筆記'
+description: '一次調試的記錄。'
 pubDate: '2026-11-13'
-subtitle: '从现象到定位'
-context: '解决一个具体问题。'
-tags: ['astro', '笔记']
+subtitle: '從現象到定位'
+context: '解決一個具體問題。'
+tags: ['astro', '筆記']
 toc: true
 search: true
 ---
@@ -99,7 +99,7 @@ search: true
 | ------------ | -------------------------------------------------- | --------------------------------------------------------------------------- |
 | `wordCount`  | 選用非負整數，預設從內文來源文字計算               | 獨立覆寫字詞數；例 `wordCount: 800`，不改變 tokenCount                      |
 | `tokenCount` | 選用非負整數，預設 round(max(自動字詞數, 1) × 1.3) | 估算而非模型分詞器或實際用量；例 `tokenCount: 1040`                         |
-| `aiModel`    | 選用 string，未設定時無此標籤                      | 顯示在標題狀態區及 OUTPUT，不驗證真實模型；例 `aiModel: '作者填写的模型名'` |
+| `aiModel`    | 選用 string，未設定時無此標籤                      | 顯示在標題狀態區及 OUTPUT，不驗證真實模型；例 `aiModel: '作者填寫的模型名'` |
 | `aiMode`     | 選用 string，未設定時無此標籤                      | 僅顯示模式文字，不執行任務；例 `aiMode: 'notes'`                            |
 | `aiState`    | 選用 string，未設定時無此標籤                      | 僅顯示狀態文字，不查詢服務健康狀態；例 `aiState: 'edited'`                  |
 
@@ -108,7 +108,7 @@ search: true
 ```yaml
 wordCount: 800
 tokenCount: 1040
-aiModel: '作者填写的模型名'
+aiModel: '作者填寫的模型名'
 aiMode: 'notes'
 aiState: 'edited'
 ```
@@ -131,43 +131,43 @@ aiState: 'edited'
 
 <a id="article-messages"></a>
 
-下面前綴為 `i18n.locales.<语言>.messages.blog`。欄位型別均為選用 string 覆寫，按一般語言文字規則解析；下表列中文／英文內建預設值。範例列是放入對應 blog 物件的單個成員，不是 frontmatter。
+下面前綴為 `i18n.locales.<locale>.messages.blog`。欄位型別均為選用 string 覆寫，按一般語言文字規則解析；下表列中文／英文內建預設值。範例列是放入對應 blog 物件的單個成員，不是 frontmatter。
 
 所有有效文字均為條件生效，要求對應區域實際出現。空字串可能清空標籤但不會隱藏整個功能；無障礙名稱不應清空。標記為目前未使用的欄位則沒有頁面效果。
 
 | 欄位                 | 簡體中文預設 / 英文預設              | 作用與限制                                          | 狀態       | 成員範例                          |
 | -------------------- | ------------------------------------ | --------------------------------------------------- | ---------- | --------------------------------- |
-| `rqBadge`            | 监视器信号 / monitor feed            | 監視器徽標；僅 Red Queen 開啟時出現，不代表真實監測 | 條件生效   | `rqBadge: "监视器信号"`           |
-| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed | 監視器重播按鈕名稱；不修改素材或播放策略            | 條件生效   | `rqReplayAria: "重放监视器信号"`  |
-| `backToTop`          | 返回顶部 / Back to top               | 返回頂部按鈕名稱；按鈕顯示受滾動狀態影響            | 條件生效   | `backToTop: "返回顶部"`           |
-| `toastP10`           | 语境解析 10% / context parsed 10%    | 閱讀進度早期提示，不是 AI 請求進度                  | 條件生效   | `toastP10: "语境解析 10%"`        |
-| `toastP30`           | 语境解析 30% / context parsed 30%    | 閱讀進度提示，不是語義解析結果                      | 條件生效   | `toastP30: "语境解析 30%"`        |
-| `toastP60`           | 推理稳定 60% / inference stable 60%  | 閱讀進度提示，不是模型推理狀態                      | 條件生效   | `toastP60: "推理稳定 60%"`        |
-| `toastDone`          | 输出完成 / output finalized          | 閱讀完成階段提示，不證明生成或驗證完成              | 條件生效   | `toastDone: "输出完成"`           |
-| `metaPublished`      | 发布 / published                     | 發佈時間前的標籤，不修改日期                        | 條件生效   | `metaPublished: "发布"`           |
+| `rqBadge`            | 监视器信号 / monitor feed            | 監視器徽標；僅 Red Queen 開啟時出現，不代表真實監測 | 條件生效   | `rqBadge: "監視器信號"`           |
+| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed | 監視器重播按鈕名稱；不修改素材或播放策略            | 條件生效   | `rqReplayAria: "重放監視器信號"`  |
+| `backToTop`          | 返回顶部 / Back to top               | 返回頂部按鈕名稱；按鈕顯示受滾動狀態影響            | 條件生效   | `backToTop: "回到頂端"`           |
+| `toastP10`           | 语境解析 10% / context parsed 10%    | 閱讀進度早期提示，不是 AI 請求進度                  | 條件生效   | `toastP10: "語境解析 10%"`        |
+| `toastP30`           | 语境解析 30% / context parsed 30%    | 閱讀進度提示，不是語義解析結果                      | 條件生效   | `toastP30: "語境解析 30%"`        |
+| `toastP60`           | 推理稳定 60% / inference stable 60%  | 閱讀進度提示，不是模型推理狀態                      | 條件生效   | `toastP60: "推理穩定 60%"`        |
+| `toastDone`          | 输出完成 / output finalized          | 閱讀完成階段提示，不證明生成或驗證完成              | 條件生效   | `toastDone: "輸出完成"`           |
+| `metaPublished`      | 发布 / published                     | 發佈時間前的標籤，不修改日期                        | 條件生效   | `metaPublished: "發布"`           |
 | `metaAuthor`         | 作者 / by                            | 作者前的標籤，不改變作者值                          | 條件生效   | `metaAuthor: "作者"`              |
 | `metaUpdated`        | 更新 / updated                       | 更新日期前的標籤，只有提供 updatedDate 才顯示       | 條件生效   | `metaUpdated: "更新"`             |
-| `systemStatusAria`   | 模型状态 / Model status              | 標題狀態區無障礙名稱，需要至少一個狀態欄位          | 條件生效   | `systemStatusAria: "模型状态"`    |
+| `systemStatusAria`   | 模型状态 / Model status              | 標題狀態區無障礙名稱，需要至少一個狀態欄位          | 條件生效   | `systemStatusAria: "模型狀態"`    |
 | `systemModelLabel`   | 模型 / model                         | 模型標籤，aiModel 存在時使用，也用於 OUTPUT         | 條件生效   | `systemModelLabel: "模型"`        |
 | `systemModeLabel`    | 模式 / mode                          | 模式標籤，需要 aiMode                               | 條件生效   | `systemModeLabel: "模式"`         |
-| `systemStateLabel`   | 状态 / state                         | 狀態標籤，需要 aiState                              | 條件生效   | `systemStateLabel: "状态"`        |
-| `promptContextLabel` | 语境 / Context                       | 上下文前的標籤，需要有非空上下文                    | 條件生效   | `promptContextLabel: "语境"`      |
-| `heroMonitor`        | 神经监视器 / neural monitor          | 封面監視器文字，需要 heroImage                      | 條件生效   | `heroMonitor: "神经监视器"`       |
-| `heroSignalSync`     | 信号同步中 / signal sync active      | 封面信號標記，靜態裝飾文字，不查詢同步狀態          | 條件生效   | `heroSignalSync: "信号同步中"`    |
-| `heroModelOnline`    | 模型在线 / model online              | 封面模型標記，靜態裝飾文字，不查詢服務              | 條件生效   | `heroModelOnline: "模型在线"`     |
-| `toc`                | 文章目录 / On this page              | 目錄名稱，需要目錄啟用且有可用標題                  | 條件生效   | `toc: "文章目录"`                 |
-| `responseOutput`     | 输出 / Output                        | 內文 OUTPUT 欄名稱，不控制內文內容                  | 條件生效   | `responseOutput: "输出"`          |
-| `statsWords`         | 词 / words                           | 字詞數標籤，不修改統計值                            | 條件生效   | `statsWords: "词"`                |
+| `systemStateLabel`   | 状态 / state                         | 狀態標籤，需要 aiState                              | 條件生效   | `systemStateLabel: "狀態"`        |
+| `promptContextLabel` | 语境 / Context                       | 上下文前的標籤，需要有非空上下文                    | 條件生效   | `promptContextLabel: "語境"`      |
+| `heroMonitor`        | 神经监视器 / neural monitor          | 封面監視器文字，需要 heroImage                      | 條件生效   | `heroMonitor: "神經監視器"`       |
+| `heroSignalSync`     | 信号同步中 / signal sync active      | 封面信號標記，靜態裝飾文字，不查詢同步狀態          | 條件生效   | `heroSignalSync: "信號同步中"`    |
+| `heroModelOnline`    | 模型在线 / model online              | 封面模型標記，靜態裝飾文字，不查詢服務              | 條件生效   | `heroModelOnline: "模型在線"`     |
+| `toc`                | 文章目录 / On this page              | 目錄名稱，需要目錄啟用且有可用標題                  | 條件生效   | `toc: "文章目錄"`                 |
+| `responseOutput`     | 输出 / Output                        | 內文 OUTPUT 欄名稱，不控制內文內容                  | 條件生效   | `responseOutput: "輸出"`          |
+| `statsWords`         | 词 / words                           | 字詞數標籤，不修改統計值                            | 條件生效   | `statsWords: "詞"`                |
 | `statsTokens`        | 令牌 / tokens                        | tokens 標籤，不修改估算                             | 條件生效   | `statsTokens: "令牌"`             |
-| `copySectionLink`    | 复制本节链接 / Copy section link     | 內文 h2／h3 章節連結複製名稱，不改變錨點算法        | 條件生效   | `copySectionLink: "复制本节链接"` |
-| `regenerate`         | 重播扫描 / Replay scan               | 重播掃描按鈕文字，僅觸發視覺效果                    | 條件生效   | `regenerate: "重播扫描"`          |
-| `relatedAria`        | 相关文章 / Related posts             | 相關文章區域的無障礙名稱，需要有其他文章            | 條件生效   | `relatedAria: "相关文章"`         |
-| `related`            | 相关文章 / Related                   | 相關文章區標題，不控制推薦算法                      | 條件生效   | `related: "相关文章"`             |
-| `backToBlogAria`     | 返回博客 / Back to blog              | 返回部落格導覽的無障礙名稱                          | 條件生效   | `backToBlogAria: "返回博客"`      |
-| `backToBlog`         | 返回博客 / Back to blog              | 返回部落格連結的可見文字，不改變連結目標            | 條件生效   | `backToBlog: "返回博客"`          |
-| `comments`           | 评论 / Comments                      | 評論區域無障礙名稱，需要文章評論設定有效            | 條件生效   | `comments: "评论"`                |
-| `metaReadMinutes`    | 分钟阅读 / min read                  | 目前未使用；改此文字不會還原閱讀時長                | 目前未使用 | `metaReadMinutes: "分钟阅读"`     |
-| `latencyLabel`       | 延迟估计 / latency est               | 目前未使用；改此文字不會還原延遲                    | 目前未使用 | `latencyLabel: "延迟估计"`        |
+| `copySectionLink`    | 复制本节链接 / Copy section link     | 內文 h2／h3 章節連結複製名稱，不改變錨點算法        | 條件生效   | `copySectionLink: "復制本節連結"` |
+| `regenerate`         | 重播扫描 / Replay scan               | 重播掃描按鈕文字，僅觸發視覺效果                    | 條件生效   | `regenerate: "重播掃描"`          |
+| `relatedAria`        | 相关文章 / Related posts             | 相關文章區域的無障礙名稱，需要有其他文章            | 條件生效   | `relatedAria: "相關文章"`         |
+| `related`            | 相关文章 / Related                   | 相關文章區標題，不控制推薦算法                      | 條件生效   | `related: "相關文章"`             |
+| `backToBlogAria`     | 返回博客 / Back to blog              | 返回部落格導覽的無障礙名稱                          | 條件生效   | `backToBlogAria: "返回部落格"`    |
+| `backToBlog`         | 返回博客 / Back to blog              | 返回部落格連結的可見文字，不改變連結目標            | 條件生效   | `backToBlog: "返回部落格"`        |
+| `comments`           | 评论 / Comments                      | 評論區域無障礙名稱，需要文章評論設定有效            | 條件生效   | `comments: "評論"`                |
+| `metaReadMinutes`    | 分钟阅读 / min read                  | 目前未使用；改此文字不會還原閱讀時長                | 目前未使用 | `metaReadMinutes: "分鐘閱讀"`     |
+| `latencyLabel`       | 延迟估计 / latency est               | 目前未使用；改此文字不會還原延遲                    | 目前未使用 | `latencyLabel: "延遲估計"`        |
 | `confidenceLabel`    | 置信度 / confidence                  | 目前未使用；改此文字不會還原置信度                  | 目前未使用 | `confidenceLabel: "置信度"`       |
 
 這些狀態、封面標記和滾動提示主要表達介面氛圍，不能當作真實 AI 模型在線、網路同步或準確率檢測結果。regenerate 對應的按鈕只重播掃描視覺效果，不改寫文章、不請求 AI 服務。
@@ -177,14 +177,14 @@ aiState: 'edited'
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       messages: {
         blog: {
           responseOutput: '正文',
-          statsWords: '字词',
+          statsWords: '字詞',
           statsTokens: '估算 tokens',
-          copySectionLink: '复制这一节的网址',
-          regenerate: '重播扫描效果',
+          copySectionLink: '復制這一節的網址',
+          regenerate: '重播掃描效果',
         },
       },
     },
@@ -198,23 +198,23 @@ i18n: {
 
 ### 程式碼複製與圖片預覽的文字
 
-前綴改為 `i18n.locales.<语言>.messages`，以下每項也都是選用 string 覆寫和條件生效；不會改變複製權限、圖片來源或添加功能開關。
+前綴改為 `i18n.locales.<locale>.messages`，以下每項也都是選用 string 覆寫和條件生效；不會改變複製權限、圖片來源或添加功能開關。
 
-| 路徑末段             | 簡體中文預設 / 英文預設                                             | 作用與限制                                     | 成員範例                                             |
-| -------------------- | ------------------------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------- |
-| `codeCopy.copy`      | 复制代码 / Copy code                                                | 程式碼塊複製按鈕文字，不修改被複製內容         | `codeCopy: { copy: "复制代码" }`                     |
-| `codeCopy.copied`    | 已复制 / Copied                                                     | 程式碼及章節連結複製成功提示                   | `codeCopy: { copied: "已复制" }`                     |
-| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | 程式碼及章節連結複製失敗提示，不授予剪貼板權限 | `codeCopy: { failed: "复制失败，请手动选择代码。" }` |
-| `imagePreview.open`  | 查看大图 / View image                                               | 圖片預覽入口和彈窗的無障礙名稱                 | `imagePreview: { open: "查看大图" }`                 |
-| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | 關閉圖片預覽按鈕名稱，不修改圖片來源           | `imagePreview: { close: "关闭图片预览" }`            |
+| 路徑末段             | 簡體中文預設 / 英文預設                                             | 作用與限制                                     | 成員範例                                               |
+| -------------------- | ------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------ |
+| `codeCopy.copy`      | 复制代码 / Copy code                                                | 程式碼塊複製按鈕文字，不修改被複製內容         | `codeCopy: { copy: "復制程式碼" }`                     |
+| `codeCopy.copied`    | 已复制 / Copied                                                     | 程式碼及章節連結複製成功提示                   | `codeCopy: { copied: "已復制" }`                       |
+| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | 程式碼及章節連結複製失敗提示，不授予剪貼板權限 | `codeCopy: { failed: "復制失敗，請手動選擇程式碼。" }` |
+| `imagePreview.open`  | 查看大图 / View image                                               | 圖片預覽入口和彈窗的無障礙名稱                 | `imagePreview: { open: "查看大圖" }`                   |
+| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | 關閉圖片預覽按鈕名稱，不修改圖片來源           | `imagePreview: { close: "關閉圖片預覽" }`              |
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       messages: {
-        codeCopy: { copy: '复制内容', copied: '复制好了', failed: '无法复制，请手动选择。' },
-        imagePreview: { open: '放大这张图片', close: '收起图片' },
+        codeCopy: { copy: '復制內容', copied: '復制好了', failed: '無法復制，請手動選擇。' },
+        imagePreview: { open: '放大這張圖片', close: '收起圖片' },
       },
     },
   },

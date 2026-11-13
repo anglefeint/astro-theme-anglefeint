@@ -59,31 +59,31 @@ These are all 22 article frontmatter fields, not new site.config keys. Types sta
 
 ### Content and metadata
 
-| Field         | Type and default behavior                                             | Purpose, limits and example                                                                                                                       |
-| ------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`       | required string, no default                                           | Article title and metadata, not the global name. Example `title: '我的笔记'`.                                                                     |
-| `description` | required string, no default                                           | Page meta description, also title-area context when context is unset. Not the full body. Example `description: '一次调试的记录。'`.               |
-| `pubDate`     | required parseable date, no default                                   | Publication time, list sorting and publishing metadata. Detail dates use UTC; future dates do not hide articles. Example `pubDate: '2026-11-13'`. |
-| `updatedDate` | optional date, unset                                                  | Displays update date and takes priority in sitemap. Does not replace pubDate sorting. Example `updatedDate: '2026-11-14'`.                        |
-| `author`      | optional string; omitted/blank uses site author                       | Does not create an author page. Example `author: '另一位作者'`.                                                                                   |
-| `subtitle`    | optional string, unset                                                | Visible subtitle, omitted when identical to context. Example `subtitle: '从现象到定位'`.                                                          |
-| `context`     | optional string; omitted uses description                             | Context below title. Empty strings hide that line without clearing meta description. Example `context: '解决一个具体问题。'`.                     |
-| `tags`        | optional string array; no entries when unset                          | Link display also depends on global tags. Example `tags: ['astro', '笔记']`.                                                                      |
-| `heroImage`   | optional local image path; no cover when unset                        | Remote URLs/public URLs do not follow this rule. Example `heroImage: ./cover.jpg`; prepare the file first.                                        |
-| `ogImage`     | optional local image/public path/HTTPS; omitted uses sharing fallback | Does not change body cover. Example `ogImage: /images/share.png`; prepare the file first.                                                         |
-| `toc`         | optional boolean; inherits global contents setting                    | true overrides global false, but still needs headings. Example `toc: false`.                                                                      |
-| `search`      | optional boolean; default true                                        | false excludes site search without hiding articles, RSS, sitemap or AI exports. Example `search: false`.                                          |
+| Field         | Type and default behavior                                             | Purpose, limits and example                                                                                                                        |
+| ------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`       | required string, no default                                           | Article title and metadata, not the global name. Example `title: 'My notes'`.                                                                      |
+| `description` | required string, no default                                           | Page meta description, also title-area context when context is unset. Not the full body. Example `description: 'Notes from a debugging session.'`. |
+| `pubDate`     | required parseable date, no default                                   | Publication time, list sorting and publishing metadata. Detail dates use UTC; future dates do not hide articles. Example `pubDate: '2026-11-13'`.  |
+| `updatedDate` | optional date, unset                                                  | Displays update date and takes priority in sitemap. Does not replace pubDate sorting. Example `updatedDate: '2026-11-14'`.                         |
+| `author`      | optional string; omitted/blank uses site author                       | Does not create an author page. Example `author: 'Guest author'`.                                                                                  |
+| `subtitle`    | optional string, unset                                                | Visible subtitle, omitted when identical to context. Example `subtitle: 'From symptoms to the cause'`.                                             |
+| `context`     | optional string; omitted uses description                             | Context below title. Empty strings hide that line without clearing meta description. Example `context: 'Solving a specific problem.'`.             |
+| `tags`        | optional string array; no entries when unset                          | Link display also depends on global tags. Example `tags: ['astro', 'notes']`.                                                                      |
+| `heroImage`   | optional local image path; no cover when unset                        | Remote URLs/public URLs do not follow this rule. Example `heroImage: ./cover.jpg`; prepare the file first.                                         |
+| `ogImage`     | optional local image/public path/HTTPS; omitted uses sharing fallback | Does not change body cover. Example `ogImage: /images/share.png`; prepare the file first.                                                          |
+| `toc`         | optional boolean; inherits global contents setting                    | true overrides global false, but still needs headings. Example `toc: false`.                                                                       |
+| `search`      | optional boolean; default true                                        | false excludes site search without hiding articles, RSS, sitemap or AI exports. Example `search: false`.                                           |
 
 Begin with required fields, adding others as needed:
 
 ```yaml
 ---
-title: '我的笔记'
-description: '一次调试的记录。'
+title: 'My notes'
+description: 'Notes from a debugging session.'
 pubDate: '2026-11-13'
-subtitle: '从现象到定位'
-context: '解决一个具体问题。'
-tags: ['astro', '笔记']
+subtitle: 'From symptoms to the cause'
+context: 'Solving a specific problem.'
+tags: ['astro', 'notes']
 toc: true
 search: true
 ---
@@ -95,20 +95,20 @@ There is no draft, scheduled publication, per-article comments, Red Queen or mat
 
 ### OUTPUT statistics and status text
 
-| Field        | Type and default behavior                                                       | Purpose, limits and example                                                                          |
-| ------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `wordCount`  | optional nonnegative integer; calculated from body source                       | Independent word-count override. Example `wordCount: 800`; does not change tokenCount.               |
-| `tokenCount` | optional nonnegative integer; default round(max(automatic word count, 1) × 1.3) | Estimate, not model tokenization or actual usage. Example `tokenCount: 1040`.                        |
-| `aiModel`    | optional string; no label when unset                                            | Shown in title status and OUTPUT, without model verification. Example `aiModel: '作者填写的模型名'`. |
-| `aiMode`     | optional string; no label when unset                                            | Mode label only; does not execute tasks. Example `aiMode: 'notes'`.                                  |
-| `aiState`    | optional string; no label when unset                                            | Status label only, without health checks. Example `aiState: 'edited'`.                               |
+| Field        | Type and default behavior                                                       | Purpose, limits and example                                                                                    |
+| ------------ | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `wordCount`  | optional nonnegative integer; calculated from body source                       | Independent word-count override. Example `wordCount: 800`; does not change tokenCount.                         |
+| `tokenCount` | optional nonnegative integer; default round(max(automatic word count, 1) × 1.3) | Estimate, not model tokenization or actual usage. Example `tokenCount: 1040`.                                  |
+| `aiModel`    | optional string; no label when unset                                            | Shown in title status and OUTPUT, without model verification. Example `aiModel: 'Author-supplied model name'`. |
+| `aiMode`     | optional string; no label when unset                                            | Mode label only; does not execute tasks. Example `aiMode: 'notes'`.                                            |
+| `aiState`    | optional string; no label when unset                                            | Status label only, without health checks. Example `aiState: 'edited'`.                                         |
 
 Automatic counts strip some Markdown, code and links. CJK ideographs, kana and Korean count by character; other text mostly by whitespace-delimited words. Math and MDX source can affect estimates. Setting only wordCount does not recalculate tokenCount. Values from 1,000 display with one decimal and k, without changing raw values.
 
 ```yaml
 wordCount: 800
 tokenCount: 1040
-aiModel: '作者填写的模型名'
+aiModel: 'Author-supplied model name'
 aiMode: 'notes'
 aiState: 'edited'
 ```
@@ -131,44 +131,44 @@ Put Markdown reference links directly in the body if readers should see sources.
 
 <a id="article-messages"></a>
 
-Prefix: `i18n.locales.<语言>.messages.blog`. Every field is an optional string override using ordinary locale resolution. The table shows Simplified Chinese / English built-in defaults. Examples are individual blog-object members, not frontmatter.
+Prefix: `i18n.locales.<locale>.messages.blog`. Every field is an optional string override using ordinary locale resolution. The table shows Simplified Chinese / English built-in defaults. Examples are individual blog-object members, not frontmatter.
 
 Active messages are conditional on their area appearing. Empty strings may clear a label without disabling functionality; retain accessible names. Currently unused fields have no page effect.
 
-| Field                | Simplified Chinese / English defaults | Purpose and limits                                                        | Status           | Member example                    |
-| -------------------- | ------------------------------------- | ------------------------------------------------------------------------- | ---------------- | --------------------------------- |
-| `rqBadge`            | 监视器信号 / monitor feed             | Monitor badge; requires Red Queen and does not represent real monitoring. | Conditional      | `rqBadge: "监视器信号"`           |
-| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed  | Monitor replay accessible name; does not change assets/playback strategy. | Conditional      | `rqReplayAria: "重放监视器信号"`  |
-| `backToTop`          | 返回顶部 / Back to top                | Back-to-top accessible name; visibility depends on scroll state.          | Conditional      | `backToTop: "返回顶部"`           |
-| `toastP10`           | 语境解析 10% / context parsed 10%     | Early reading-progress toast, not AI request progress.                    | Conditional      | `toastP10: "语境解析 10%"`        |
-| `toastP30`           | 语境解析 30% / context parsed 30%     | Reading-progress toast, not semantic parsing results.                     | Conditional      | `toastP30: "语境解析 30%"`        |
-| `toastP60`           | 推理稳定 60% / inference stable 60%   | Reading-progress toast, not model inference state.                        | Conditional      | `toastP60: "推理稳定 60%"`        |
-| `toastDone`          | 输出完成 / output finalized           | End-of-reading toast, not proof of generation/validation.                 | Conditional      | `toastDone: "输出完成"`           |
-| `metaPublished`      | 发布 / published                      | Publication-date label, without changing the date.                        | Conditional      | `metaPublished: "发布"`           |
-| `metaAuthor`         | 作者 / by                             | Author label, without changing its value.                                 | Conditional      | `metaAuthor: "作者"`              |
-| `metaUpdated`        | 更新 / updated                        | Update-date label; requires updatedDate.                                  | Conditional      | `metaUpdated: "更新"`             |
-| `systemStatusAria`   | 模型状态 / Model status               | Accessible name of title status; needs at least one status field.         | Conditional      | `systemStatusAria: "模型状态"`    |
-| `systemModelLabel`   | 模型 / model                          | Model label when aiModel exists, also used in OUTPUT.                     | Conditional      | `systemModelLabel: "模型"`        |
-| `systemModeLabel`    | 模式 / mode                           | Mode label; needs aiMode.                                                 | Conditional      | `systemModeLabel: "模式"`         |
-| `systemStateLabel`   | 状态 / state                          | State label; needs aiState.                                               | Conditional      | `systemStateLabel: "状态"`        |
-| `promptContextLabel` | 语境 / Context                        | Context label; needs nonempty context.                                    | Conditional      | `promptContextLabel: "语境"`      |
-| `heroMonitor`        | 神经监视器 / neural monitor           | Cover monitor text; needs heroImage.                                      | Conditional      | `heroMonitor: "神经监视器"`       |
-| `heroSignalSync`     | 信号同步中 / signal sync active       | Static decorative cover signal text, without synchronization checks.      | Conditional      | `heroSignalSync: "信号同步中"`    |
-| `heroModelOnline`    | 模型在线 / model online               | Static decorative cover model text, without service checks.               | Conditional      | `heroModelOnline: "模型在线"`     |
-| `toc`                | 文章目录 / On this page               | Contents name; requires enabled contents and usable headings.             | Conditional      | `toc: "文章目录"`                 |
-| `responseOutput`     | 输出 / Output                         | Body OUTPUT bar name; does not control content.                           | Conditional      | `responseOutput: "输出"`          |
-| `statsWords`         | 词 / words                            | Word-count label, without changing values.                                | Conditional      | `statsWords: "词"`                |
-| `statsTokens`        | 令牌 / tokens                         | Token label, without changing estimates.                                  | Conditional      | `statsTokens: "令牌"`             |
-| `copySectionLink`    | 复制本节链接 / Copy section link      | Body h2/h3 section-link-copy accessible name, without changing anchors.   | Conditional      | `copySectionLink: "复制本节链接"` |
-| `regenerate`         | 重播扫描 / Replay scan                | Scan replay text; visual effect only.                                     | Conditional      | `regenerate: "重播扫描"`          |
-| `relatedAria`        | 相关文章 / Related posts              | Related-region accessible name; requires other articles.                  | Conditional      | `relatedAria: "相关文章"`         |
-| `related`            | 相关文章 / Related                    | Related heading, without changing recommendation logic.                   | Conditional      | `related: "相关文章"`             |
-| `backToBlogAria`     | 返回博客 / Back to blog               | Accessible name for back-to-blog navigation.                              | Conditional      | `backToBlogAria: "返回博客"`      |
-| `backToBlog`         | 返回博客 / Back to blog               | Visible back-to-blog text, without changing its target.                   | Conditional      | `backToBlog: "返回博客"`          |
-| `comments`           | 评论 / Comments                       | Comments-region accessible name; requires valid article comments.         | Conditional      | `comments: "评论"`                |
-| `metaReadMinutes`    | 分钟阅读 / min read                   | Currently unused; changing this does not restore reading time.            | Currently unused | `metaReadMinutes: "分钟阅读"`     |
-| `latencyLabel`       | 延迟估计 / latency est                | Currently unused; changing this does not restore latency.                 | Currently unused | `latencyLabel: "延迟估计"`        |
-| `confidenceLabel`    | 置信度 / confidence                   | Currently unused; changing this does not restore confidence.              | Currently unused | `confidenceLabel: "置信度"`       |
+| Field                | Simplified Chinese / English defaults | Purpose and limits                                                        | Status           | Member example                         |
+| -------------------- | ------------------------------------- | ------------------------------------------------------------------------- | ---------------- | -------------------------------------- |
+| `rqBadge`            | 监视器信号 / monitor feed             | Monitor badge; requires Red Queen and does not represent real monitoring. | Conditional      | `rqBadge: "monitor feed"`              |
+| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed  | Monitor replay accessible name; does not change assets/playback strategy. | Conditional      | `rqReplayAria: "Replay monitor feed"`  |
+| `backToTop`          | 返回顶部 / Back to top                | Back-to-top accessible name; visibility depends on scroll state.          | Conditional      | `backToTop: "Back to top"`             |
+| `toastP10`           | 语境解析 10% / context parsed 10%     | Early reading-progress toast, not AI request progress.                    | Conditional      | `toastP10: "context parsed 10%"`       |
+| `toastP30`           | 语境解析 30% / context parsed 30%     | Reading-progress toast, not semantic parsing results.                     | Conditional      | `toastP30: "context parsed 30%"`       |
+| `toastP60`           | 推理稳定 60% / inference stable 60%   | Reading-progress toast, not model inference state.                        | Conditional      | `toastP60: "inference stable 60%"`     |
+| `toastDone`          | 输出完成 / output finalized           | End-of-reading toast, not proof of generation/validation.                 | Conditional      | `toastDone: "output finalized"`        |
+| `metaPublished`      | 发布 / published                      | Publication-date label, without changing the date.                        | Conditional      | `metaPublished: "published"`           |
+| `metaAuthor`         | 作者 / by                             | Author label, without changing its value.                                 | Conditional      | `metaAuthor: "by"`                     |
+| `metaUpdated`        | 更新 / updated                        | Update-date label; requires updatedDate.                                  | Conditional      | `metaUpdated: "updated"`               |
+| `systemStatusAria`   | 模型状态 / Model status               | Accessible name of title status; needs at least one status field.         | Conditional      | `systemStatusAria: "Model status"`     |
+| `systemModelLabel`   | 模型 / model                          | Model label when aiModel exists, also used in OUTPUT.                     | Conditional      | `systemModelLabel: "model"`            |
+| `systemModeLabel`    | 模式 / mode                           | Mode label; needs aiMode.                                                 | Conditional      | `systemModeLabel: "mode"`              |
+| `systemStateLabel`   | 状态 / state                          | State label; needs aiState.                                               | Conditional      | `systemStateLabel: "state"`            |
+| `promptContextLabel` | 语境 / Context                        | Context label; needs nonempty context.                                    | Conditional      | `promptContextLabel: "Context"`        |
+| `heroMonitor`        | 神经监视器 / neural monitor           | Cover monitor text; needs heroImage.                                      | Conditional      | `heroMonitor: "neural monitor"`        |
+| `heroSignalSync`     | 信号同步中 / signal sync active       | Static decorative cover signal text, without synchronization checks.      | Conditional      | `heroSignalSync: "signal sync active"` |
+| `heroModelOnline`    | 模型在线 / model online               | Static decorative cover model text, without service checks.               | Conditional      | `heroModelOnline: "model online"`      |
+| `toc`                | 文章目录 / On this page               | Contents name; requires enabled contents and usable headings.             | Conditional      | `toc: "On this page"`                  |
+| `responseOutput`     | 输出 / Output                         | Body OUTPUT bar name; does not control content.                           | Conditional      | `responseOutput: "Output"`             |
+| `statsWords`         | 词 / words                            | Word-count label, without changing values.                                | Conditional      | `statsWords: "words"`                  |
+| `statsTokens`        | 令牌 / tokens                         | Token label, without changing estimates.                                  | Conditional      | `statsTokens: "tokens"`                |
+| `copySectionLink`    | 复制本节链接 / Copy section link      | Body h2/h3 section-link-copy accessible name, without changing anchors.   | Conditional      | `copySectionLink: "Copy section link"` |
+| `regenerate`         | 重播扫描 / Replay scan                | Scan replay text; visual effect only.                                     | Conditional      | `regenerate: "Replay scan"`            |
+| `relatedAria`        | 相关文章 / Related posts              | Related-region accessible name; requires other articles.                  | Conditional      | `relatedAria: "Related"`               |
+| `related`            | 相关文章 / Related                    | Related heading, without changing recommendation logic.                   | Conditional      | `related: "Related"`                   |
+| `backToBlogAria`     | 返回博客 / Back to blog               | Accessible name for back-to-blog navigation.                              | Conditional      | `backToBlogAria: "Back to blog"`       |
+| `backToBlog`         | 返回博客 / Back to blog               | Visible back-to-blog text, without changing its target.                   | Conditional      | `backToBlog: "Back to blog"`           |
+| `comments`           | 评论 / Comments                       | Comments-region accessible name; requires valid article comments.         | Conditional      | `comments: "Comments"`                 |
+| `metaReadMinutes`    | 分钟阅读 / min read                   | Currently unused; changing this does not restore reading time.            | Currently unused | `metaReadMinutes: "min read"`          |
+| `latencyLabel`       | 延迟估计 / latency est                | Currently unused; changing this does not restore latency.                 | Currently unused | `latencyLabel: "latency est"`          |
+| `confidenceLabel`    | 置信度 / confidence                   | Currently unused; changing this does not restore confidence.              | Currently unused | `confidenceLabel: "confidence"`        |
 
 Status labels, cover markers and scroll toasts mainly express atmosphere; they do not measure live model health, network synchronization or accuracy. regenerate only replays a visual scan, without rewriting articles or requesting AI.
 
@@ -177,14 +177,14 @@ For example, change OUTPUT and section-copy labels:
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         blog: {
-          responseOutput: '正文',
-          statsWords: '字词',
-          statsTokens: '估算 tokens',
-          copySectionLink: '复制这一节的网址',
-          regenerate: '重播扫描效果',
+          responseOutput: 'Article body',
+          statsWords: 'Words',
+          statsTokens: 'Estimated tokens',
+          copySectionLink: 'Copy this section URL',
+          regenerate: 'Replay the scan effect',
         },
       },
     },
@@ -198,23 +198,23 @@ Back-to-blog still targets the current-language list. Related articles are the l
 
 ### Code-copy and image-preview text
 
-Prefix: `i18n.locales.<语言>.messages`. Each field is also an optional, conditional string override. It changes neither copy permissions nor image sources and adds no feature switch.
+Prefix: `i18n.locales.<locale>.messages`. Each field is also an optional, conditional string override. It changes neither copy permissions nor image sources and adds no feature switch.
 
-| Path suffix          | Simplified Chinese / English defaults                               | Purpose and limits                                                            | Member example                                       |
-| -------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------- |
-| `codeCopy.copy`      | 复制代码 / Copy code                                                | Code-copy button text; does not change copied content.                        | `codeCopy: { copy: "复制代码" }`                     |
-| `codeCopy.copied`    | 已复制 / Copied                                                     | Code and section-link copy success text.                                      | `codeCopy: { copied: "已复制" }`                     |
-| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | Code and section-link copy failure text; does not grant clipboard permission. | `codeCopy: { failed: "复制失败，请手动选择代码。" }` |
-| `imagePreview.open`  | 查看大图 / View image                                               | Accessible name of image-preview entry/dialog.                                | `imagePreview: { open: "查看大图" }`                 |
-| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | Image-preview close accessible name; does not change image source.            | `imagePreview: { close: "关闭图片预览" }`            |
+| Path suffix          | Simplified Chinese / English defaults                               | Purpose and limits                                                            | Member example                                                   |
+| -------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `codeCopy.copy`      | 复制代码 / Copy code                                                | Code-copy button text; does not change copied content.                        | `codeCopy: { copy: "Copy code" }`                                |
+| `codeCopy.copied`    | 已复制 / Copied                                                     | Code and section-link copy success text.                                      | `codeCopy: { copied: "Copied" }`                                 |
+| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | Code and section-link copy failure text; does not grant clipboard permission. | `codeCopy: { failed: "Copy failed. Select the code manually." }` |
+| `imagePreview.open`  | 查看大图 / View image                                               | Accessible name of image-preview entry/dialog.                                | `imagePreview: { open: "View image" }`                           |
+| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | Image-preview close accessible name; does not change image source.            | `imagePreview: { close: "Close image preview" }`                 |
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
-        codeCopy: { copy: '复制内容', copied: '复制好了', failed: '无法复制，请手动选择。' },
-        imagePreview: { open: '放大这张图片', close: '收起图片' },
+        codeCopy: { copy: 'Copy content', copied: 'Copied', failed: 'Copy failed. Select the text manually.' },
+        imagePreview: { open: 'Enlarge this image', close: 'Close image' },
       },
     },
   },

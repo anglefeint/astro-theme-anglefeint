@@ -34,7 +34,7 @@ theme: {
 | `theme.fragments.pageSize`         | `20`; fragments per list page, an integer from 1–100, independent of blog page size.                                 |
 | `theme.fragments.comments.enabled` | `false`; enables fragment comment dialogs, also requiring the Giscus repository fields below.                        |
 
-Run local `npm run dev` and open `/<语言代码>/fragments/`, for example `/en/fragments/` or `/zh/fragments/`, under the printed address. The language must be enabled. An empty list is valid without a manually created page file. Disabling Fragments removes its generated list and homepage entry without deleting Markdown.
+Run local `npm run dev` and open `/<locale>/fragments/`, for example `/en/fragments/` or `/zh/fragments/`, under the printed address. The language must be enabled. An empty list is valid without a manually created page file. Disabling Fragments removes its generated list and homepage entry without deleting Markdown.
 
 ## 2. Create fragments using the default workflow
 
@@ -44,7 +44,7 @@ From the project root, run:
 npm run new-fragment
 ```
 
-Without `--locales` or `ANGLEFEINT_LOCALES`, the command creates skeletons of one fragment in all enabled languages: nine files initially. They live under `src/content/fragments/<语言代码>/`, sharing one ID and publication time per invocation, without automatic translation. The terminal prints actual paths. Names resemble `2026-11-13-q8Lm3XzP.md`, containing a UTC date and random ID. Open the generated file rather than manually recreating this example filename.
+Without `--locales` or `ANGLEFEINT_LOCALES`, the command creates skeletons of one fragment in all enabled languages: nine files initially. They live under `src/content/fragments/<locale>/`, sharing one ID and publication time per invocation, without automatic translation. The terminal prints actual paths. Names resemble `2026-11-13-q8Lm3XzP.md`, containing a UTC date and random ID. Open the generated file rather than manually recreating this example filename.
 
 For Chinese only, optionally use `npm run new-fragment -- --locales zh`; use `--locales en,zh` for selected languages. Choose one alternative, not every example. These arguments do not enable languages. Before publication, move unfinished language skeletons outside the fragment content directory.
 
@@ -68,7 +68,7 @@ id: 'q8Lm3XzP'
 pubDate: '2026-11-13T09:00:00+08:00'
 ---
 
-今天把一个困扰很久的问题解决了，记下这个小进展。
+Today I solved a problem that had bothered me for a while. A small step worth recording.
 ```
 
 Fragments currently support three frontmatter fields:
@@ -79,7 +79,7 @@ Fragments currently support three frontmatter fields:
 | `pubDate` | Required, parseable publication date. Prefer the generated ISO timestamp, or specify a time and timezone.         |
 | `title`   | Optional string displayed as the list card title; omission is valid.                                              |
 
-To add a title, put `title: '一个小进展'` in the same frontmatter. Fragments do not require the article `description` or provide article-cover `heroImage`; add images to the body.
+To add a title, put `title: 'A small milestone'` in the same frontmatter. Fragments do not require the article `description` or provide article-cover `heroImage`; add images to the body.
 
 Lists sort by `pubDate`, newest first, then ID for equal times, not filename. Displayed times use UTC and may differ from the entered local timezone. Editing the body or filename does not change sharing/comment identity; editing the date changes position and pagination.
 
@@ -92,10 +92,10 @@ Only `.md` under `src/content/fragments/` is collected, not `.mdx`. There is no 
 Use ordinary Markdown paragraphs, links, lists and quotations. For example:
 
 ```md
-![这次进展的截图](/images/fragments/progress.png)
+![Screenshot of this progress](/images/fragments/progress.png)
 ```
 
-First add `public/images/fragments/progress.png`. Alternatively put `photo.png` beside the fragment and reference `![图片说明](./photo.png)`. More syntax, sizing and Git requirements are in [adding images](/en/blog/starter-guide-images/).
+First add `public/images/fragments/progress.png`. Alternatively put `photo.png` beside the fragment and reference `![Image description](./photo.png)`. More syntax, sizing and Git requirements are in [adding images](/en/blog/starter-guide-images/).
 
 Retain fences and indentation for code:
 
@@ -111,7 +111,9 @@ Code blocks display content without executing JavaScript. Do not assume article 
 
 With global mathematics enabled, fragments support inline `$x_1$` and display formulas between separate `$$` lines. Build-time rendering fails on invalid formulas. `theme.math.enabled` disables mathematical processing globally. See [writing posts](/en/blog/starter-guide-2-languages-and-routing/) for syntax.
 
-Local dev or doctor prepares supported fragment image derivatives. Commit fragment Markdown, originals and all `src/assets/blog/covers/`. Deployment builds and CI doctor validate without generating missing files. Do not commit the body while omitting its images.
+Normal dev, build and doctor runs, including CI, reuse correct responsive files and automatically prepare missing, stale or modified derivatives. Commit the original images and content. Committing `src/assets/blog/covers/manifest.json` and `generated/` allows reuse across checkouts, but these generated files are not a prerequisite for automatic preparation. Missing originals, unsafe paths and invalid image inputs still fail validation. Do not commit the body while omitting its source images.
+
+**Version note:** Automatic image preparation during normal builds and CI doctor runs requires 0.36.2 or later. With 0.36.1, first run dev or `prepare-covers` to prepare derivatives. Explicit `prepare-covers --check` and configuration sync remain read-only.
 
 ## 5. Homepage preview and pagination
 
@@ -199,7 +201,7 @@ Fragments are not included in article full-text search or article RSS. Building 
 - Missing avatar: confirm that the current language has fragments. Content in another language does not fill it.
 - Creation fails on old files: check existing frontmatter ID formats; creation reads Markdown IDs to detect collisions.
 - Duplicate-ID build error: check for duplicate files within one language; translations belong in another language directory.
-- Image build failure: prepare and commit originals, manifest and derivatives as described in the [image tutorial](/en/blog/starter-guide-images/).
+- Image build failure: check that referenced originals exist, are committed and use safe, supported paths. Build repairs derivatives automatically; explicit `prepare-covers --check` only reports problems. See the [image tutorial](/en/blog/starter-guide-images/).
 - Comment failure: check real repository IDs, application access, category, network and blocking. Do not repeatedly change fragment IDs.
 
 For upgrades, see [the first tutorial](/en/blog/starter-guide-1-configure-your-site/).

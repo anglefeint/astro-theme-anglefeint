@@ -4,7 +4,7 @@ title: '設定字典：網站名稱、網域、公共導覽、社交和頁尾'
 subtitle: '全站身分、環境覆寫、固定導覽與公共連結。'
 description: '以實際程式碼查閱 site、social、footer 和導覽文字，列出型別、預設值、限制、環境覆寫以及相容和未生效設定。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-01.webp'
 ---
 
@@ -21,15 +21,15 @@ site 是物件，所有欄位都可在部分設定中省略。表中的狀態均
 | 完整路徑           | 型別           | 主題預設值                                                                              | 作用、限制與例值                                                                                                                                                                               |
 | ------------------ | -------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `site.title`       | string         | `"My Blog"`                                                                             | 頁頭品牌名、頁尾版權名稱、RSS 標題、結構化資料中的網站名稱，以及部分頁面和自動分享圖片的網站資訊；不等於首頁大標題。沒有統一的空字串回退；例值 `"我的博客"`                                    |
-| `site.description` | string         | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | 全站描述與機器閱讀索引描述的來源之一；首頁優先用 messages.siteDescription，About、列表等有各自描述，不會逐頁全部替換；例值 `"记录项目、阅读和生活。"`                                          |
+| `site.description` | string         | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | 全站描述與機器閱讀索引描述的來源之一；首頁優先用 messages.siteDescription，About、列表等有各自描述，不會逐頁全部替換；例值 `"記錄專案、閱讀和生活。"`                                          |
 | `site.url`         | string         | `"https://example.com"`                                                                 | 網站公開絕對地址，用於 Astro site、canonical、RSS、sitemap 和公開導出地址。填寫真實 HTTP(S) 地址，不使用某篇文章 URL；不負責購買網域、DNS、證書或發佈程式碼；例值 `"https://blog.example.com"` |
 | `site.author`      | string         | `"Your Name"`                                                                           | 預設作者與結構化資料；文章 author 可單獨覆寫。頁尾版權使用 site.title，不使用 author；About 內文和郵箱也不會自動隨它改變；例值 `"小林"`                                                        |
-| `site.tagline`     | string         | `""`                                                                                    | 頁尾附加短句，呈現時 trim；空值不顯示。trim 後恰為舊預設 Built with Astro. 時也隱藏，以避免與連結署名重複；例值 `"保持好奇，持续构建。"`                                                       |
+| `site.tagline`     | string         | `""`                                                                                    | 頁尾附加短句，呈現時 trim；空值不顯示。trim 後恰為舊預設 Built with Astro. 時也隱藏，以避免與連結署名重複；例值 `"保持好奇，持續建構。"`                                                       |
 | `site.ogImage`     | string，可省略 | `""`                                                                                    | 沒有頁面或文章優先圖片時使用的全站分享圖片。空白使用主題自帶分享圖片；本機 public 路徑或 HTTPS URL，不是首頁頭像或文章封面批量替換；例值 `"/images/share.webp"`                                |
 
-site.title 與 `i18n.locales.<语言>.site.homeTitle` 的角色不同：前者是全站名稱，後者只改對應語言首頁的可見大標題。後者按語言鏈找非空值，最後才回到全站名稱；見[首頁標題](/zh-hant/blog/config-home/#home-title)。messages.siteTitle 目前不用於標準全站身分或首頁大標題，不要填寫它期待品牌名稱變化。
+site.title 與 `i18n.locales.<locale>.site.homeTitle` 的角色不同：前者是全站名稱，後者只改對應語言首頁的可見大標題。後者按語言鏈找非空值，最後才回到全站名稱；見[首頁標題](/zh-hant/blog/config-home/#home-title)。messages.siteTitle 目前不用於標準全站身分或首頁大標題，不要填寫它期待品牌名稱變化。
 
-site.description 也不等於首頁可見介紹；可見介紹使用 `i18n.locales.<语言>.site.hero`，首頁中繼描述還有 messages.siteDescription。具體優先級見[首頁字典](/zh-hant/blog/config-home/#site-fallbacks)。改全站身分不會自動修改 About 裡已經填寫的個人介紹。
+site.description 也不等於首頁可見介紹；可見介紹使用 `i18n.locales.<locale>.site.hero`，首頁中繼描述還有 messages.siteDescription。具體優先級見[首頁字典](/zh-hant/blog/config-home/#site-fallbacks)。改全站身分不會自動修改 About 裡已經填寫的個人介紹。
 
 ### 分享圖片的優先級與路徑
 
@@ -43,7 +43,7 @@ site.ogImage 是字串欄位，不直接填寫 Astro image import 物件；文�
 
 ## 環境覆寫與網域生效順序
 
-以下不是新的 site.config 欄位，而是主題目前讀取的環境變數。值均為 string；沒有設定時使用相應 site 欄位。讀取使用空值合併，不會把空字串自動當成“未设置”。
+以下不是新的 site.config 欄位，而是主題目前讀取的環境變數。值均為 string；沒有設定時使用相應 site 欄位。讀取使用空值合併，不會把空字串自動當成「未設定」。
 
 | 環境變數                | 優先覆寫         | 範例                                     |
 | ----------------------- | ---------------- | ---------------------------------------- |
@@ -84,16 +84,16 @@ Frontier 的標題和名稱由組件固定，所有子項都沒有時才不呈�
 
 ### 頁頭與頁尾的七項文字
 
-完整前綴為 `i18n.locales.<语言>.messages`，欄位均為可省略 string。預設取內建目前語言文字和回退鏈；下表只列中文 / 英文。狀態均為條件生效：對應導覽或署名區域存在時使用。文字按文字呈現，不解析 Markdown 或任意 HTML。
+完整前綴為 `i18n.locales.<locale>.messages`，欄位均為可省略 string。預設取內建目前語言文字和回退鏈；下表只列中文 / 英文。狀態均為條件生效：對應導覽或署名區域存在時使用。文字按文字呈現，不解析 Markdown 或任意 HTML。
 
 | 相對欄位           | 簡體中文 / 英文預設值           | 作用與限制                                         | 範例值       |
 | ------------------ | ------------------------------- | -------------------------------------------------- | ------------ |
-| `nav.home`         | 首页 / Home                     | 首頁導覽文字，不改路由                             | `"首页"`     |
+| `nav.home`         | 首页 / Home                     | 首頁導覽文字，不改路由                             | `"首頁"`     |
 | `nav.blog`         | 博客 / Blog                     | Blog 入口文字，不改路由                            | `"文章"`     |
-| `nav.about`        | 关于 / About                    | About 導覽文字，也被內文視窗重新打開入口使用       | `"关于我"`   |
-| `nav.status`       | system: online / system: online | 頁頭狀態文字，靜態顯示，不檢測網路、API 或服務健康 | `"系统在线"` |
-| `nav.statusAria`   | 系统状态 / System status        | 狀態區域無障礙名稱，不是服務檢測開關               | `"站点状态"` |
-| `footer.theme`     | 主题： / Theme by               | 主題署名前綴；Anglefeint 連結文字及目標固定        | `"主题来自"` |
+| `nav.about`        | 关于 / About                    | About 導覽文字，也被內文視窗重新打開入口使用       | `"關于我"`   |
+| `nav.status`       | system: online / system: online | 頁頭狀態文字，靜態顯示，不檢測網路、API 或服務健康 | `"系統在線"` |
+| `nav.statusAria`   | 系统状态 / System status        | 狀態區域無障礙名稱，不是服務檢測開關               | `"站點狀態"` |
+| `footer.theme`     | 主题： / Theme by               | 主題署名前綴；Anglefeint 連結文字及目標固定        | `"主題來自"` |
 | `footer.builtWith` | 构建工具： / Built with         | Astro 署名前綴；Astro 連結文字及目標固定           | `"使用"`     |
 
 messages.langLabel 用於語言控制項，選項名用 meta.label，見[語言文字](/zh-hant/blog/config-languages/#common-messages)。Contact、Fragments 等引用各模組文字，不在 messages.nav 中另造欄位。
@@ -155,8 +155,8 @@ line
 | 完整路徑                   | 型別 / 預設值                          | 狀態、作用與限制                                                                                                                      | 範例值                                                    |
 | -------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
 | theme.footer.showCredits   | boolean / true                         | 生效：是否顯示主題與 Astro 的連結署名；不刪除版權、社交、短句或其他連結。也參與目前自動文章分享圖片的署名參數，不改變已提供的自訂圖片 | false                                                     |
-| theme.footer.links         | { label: string; href: string }[] / [] | 生效：按陣列順序顯示自訂頁尾連結，陣列整體替換；不改變公共頁頭。布局還可能追加 Decoder 連結，因此 [] 不保證頁尾沒有連結               | [{ label: '项目', href: 'https://example.com/project/' }] |
-| theme.footer.links[].label | string，必填 / 無                      | 條件生效：連結可見名稱，按文字輸出，不自動從目標頁獲取                                                                                | '项目'                                                    |
+| theme.footer.links         | { label: string; href: string }[] / [] | 生效：按陣列順序顯示自訂頁尾連結，陣列整體替換；不改變公共頁頭。布局還可能追加 Decoder 連結，因此 [] 不保證頁尾沒有連結               | [{ label: '專案', href: 'https://example.com/project/' }] |
+| theme.footer.links[].label | string，必填 / 無                      | 條件生效：連結可見名稱，按文字輸出，不自動從目標頁獲取                                                                                | '專案'                                                    |
 | theme.footer.links[].href  | string，必填 / 無                      | 條件生效：原樣連結地址；目前沒有與社交自訂圖片同樣的路徑驗證或自動 base 前綴，站內地址需自己填寫正確。預設在目前標籤頁導覽            | 'https://example.com/project/'                            |
 
 主題會把自訂連結放在布局追加連結之前，不去重；Decoder 開啟時公共框架自動追加指向完整工具頁的連結，標籤用 messages.decoderPage.fullTool。若不需要獨立 Decoder 應改對應功能開關，不是靠清空 footer.links 移除它。
@@ -171,37 +171,37 @@ line
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录项目、阅读和生活。',
+  title: '小林的部落格',
+  description: '記錄專案、閱讀和生活。',
   url: 'https://blog.example.com',
   author: '小林',
-  tagline: '保持好奇，持续构建。',
+  tagline: '保持好奇，持續構建。',
 },
 social: {
   links: [
     { label: 'GitHub', href: 'https://github.com/yourname', icon: 'github' },
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: '專案主頁', href: 'https://example.com/project/' },
   ],
 },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目', href: 'https://example.com/project/' }],
+    links: [{ label: '專案', href: 'https://example.com/project/' }],
   },
 },
 ```
 
 範例帳號、網域和連結必須替換為自己的；主題不聯網驗證它們。需要自訂社交圖標或全站分享圖片時，先準備對應 public 檔案，再填寫 iconSrc 或 site.ogImage。
 
-只改中文導覽與署名前綴可以合併：
+只改繁體中文導覽與署名前綴可以合併：
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       messages: {
-        nav: { home: '首页', blog: '文章', about: '关于我' },
-        footer: { theme: '主题来自', builtWith: '使用' },
+        nav: { home: '首頁', blog: '文章', about: '關于我' },
+        footer: { theme: '主題來自', builtWith: '使用' },
       },
     },
   },
@@ -212,9 +212,9 @@ i18n: {
 
 ## 目前未使用：messages.siteTitle
 
-完整路徑是 `i18n.locales.<语言>.messages.siteTitle`。型別為可省略的 string 覆寫；中文 / 英文內建預設值均為 'Angle Feint'。当前标准首页大标题和公共站点身份均不读取它，状态为“当前未使用”；例如填 siteTitle: '我的部落格' 不會改變這些名稱。
+完整路徑是 `i18n.locales.<locale>.messages.siteTitle`。型別為可省略的 string 覆寫；中文 / 英文內建預設值均為 'Angle Feint'。目前標準首頁大標題和公共網站身分均不讀取它，狀態為「目前未使用」；例如填 siteTitle: '我的部落格' 不會改變這些名稱。
 
-首頁大標題使用 `i18n.locales.<语言>.site.homeTitle`，公共品牌名稱使用頂層 site.title；兩者具體作用分別見[首頁標題](/zh-hant/blog/config-home/#home-title)和[網站身分](#identity)。無需為了改名填寫這個保留欄位。
+首頁大標題使用 `i18n.locales.<locale>.site.homeTitle`，公共品牌名稱使用頂層 site.title；兩者具體作用分別見[首頁標題](/zh-hant/blog/config-home/#home-title)和[網站身分](#identity)。無需為了改名填寫這個保留欄位。
 
 <a id="boundaries"></a>
 

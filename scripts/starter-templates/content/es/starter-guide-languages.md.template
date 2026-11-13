@@ -4,9 +4,11 @@ title: 'Guía 7: ofrecer el blog en más idiomas'
 subtitle: 'Idiomas activos, direcciones, textos y traducciones'
 description: 'Elige idiomas y direcciones y añade traducciones conservando el flujo predeterminado.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
+
+Las cadenas chinas de los ejemplos bajo `locales.zh` son intencionales: ilustran cómo personalizar el contenido chino sin cambiar los demás idiomas. Los valores predeterminados chino/inglés de las tablas son citas del tema, no traducciones pendientes.
 
 Esta es la parte 7 de 8. [Consulta el orden completo](/es/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Busca campos de configuración](/es/blog/config-reference/).
 
@@ -110,7 +112,7 @@ i18n: {
 - `messages.siteDescription` son metadatos de inicio, no la presentación. Cambiar solo `site.description` superior puede no sustituir la descripción integrada.
 - `messages.nav` cambia etiquetas sin cambiar rutas ni artículos.
 
-Asimismo, `i18n.locales.<代码>.about` cambia About localizado y los módulos `messages` sus textos de interfaz. About y Decoder siguen necesitando sus controles globales; traducir no activa páginas. Consulta ejemplos en [personalizar páginas y funciones](/es/blog/starter-guide-3-comments-about-and-theme-toggles/).
+Asimismo, `i18n.locales.<locale>.about` cambia About localizado y los módulos `messages` sus textos de interfaz. About y Decoder siguen necesitando sus controles globales; traducir no activa páginas. Consulta ejemplos en [personalizar páginas y funciones](/es/blog/starter-guide-3-comments-about-and-theme-toggles/).
 
 Consulta metadatos/direcciones en [idiomas](/es/blog/config-languages/#registry) y los tres textos diferentes de inicio en [campos de inicio](/es/blog/config-home/#home-title).
 
@@ -215,7 +217,7 @@ npm run doctor
 npm run preview
 ```
 
-doctor comprueba y compila; no repitas check/build inmediatamente. Comprueba la búsqueda de cada idioma en preview compilado: busca solo el idioma actual, no una colección multilingüe combinada. El `/<代码>/rss.xml` de cada idioma activo solo tiene sus entradas.
+doctor comprueba y compila; no repitas check/build inmediatamente. Comprueba la búsqueda de cada idioma en preview compilado: busca solo el idioma actual, no una colección multilingüe combinada. El `/<locale>/rss.xml` de cada idioma activo solo tiene sus entradas.
 
 Confirma dominio y despliega todo `dist/`. Controles de idioma, direcciones y contenido necesitan recompilar; editar localmente no actualiza producción. Retira salidas antiguas: desactivar idiomas no genera redirecciones para URLs viejas.
 

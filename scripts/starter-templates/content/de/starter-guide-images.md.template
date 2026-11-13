@@ -26,7 +26,7 @@ Dieser Artikel verwendet die Standardordner `src/` und `public/` des Starters. U
 Ein Bild für nur einen Beitrag kann neben dessen Datei liegen:
 
 ```text
-src/content/blog/zh/
+src/content/blog/de/
   my-first-post.md
   photo.jpg
   cover.jpg
@@ -50,13 +50,13 @@ Erhalte die Originale. Die später erzeugten WebP-Dateien sind Anzeigevarianten,
 Füge an der gewünschten Stelle in Markdown ein:
 
 ```md
-![这张照片里有什么](./photo.jpg)
+![Beschreibung des Fotoinhalts](./photo.jpg)
 ```
 
 `./photo.jpg` ist relativ zur aktuellen Beitragsdatei und verweist im obigen Beispiel auf die Datei daneben. Für public-Dateien schreibe:
 
 ```md
-![这张照片里有什么](/images/shared-photo.jpg)
+![Beschreibung des Fotoinhalts](/images/shared-photo.jpg)
 ```
 
 Das entspricht `public/images/shared-photo.jpg`. `public` gehört nicht in die URL. Der Text in eckigen Klammern ist der Alternativtext. Beschreibe den tatsächlichen Inhalt statt nur „Bild“ zu schreiben.
@@ -75,7 +75,7 @@ heroImage: ./cover.jpg
 
 `heroImage` ist optional und muss bei Verwendung auf eine lokale Bilddatei im Projekt zeigen, nicht auf eine HTTPS-URL. `/images/cover.jpg` ist hier keine public-URL-Schreibweise; die Regeln unterscheiden sich von Textbildern.
 
-Für zentrale Verwaltung neuer Titelbilder kannst du `src/assets/blog/covers/originals/` verwenden. Liegt der Artikel unter `src/content/blog/zh/my-first-post.md` und das Original unter `src/assets/blog/covers/originals/my-cover.jpg`, schreibe:
+Für zentrale Verwaltung neuer Titelbilder kannst du `src/assets/blog/covers/originals/` verwenden. Liegt der Artikel unter `src/content/blog/de/my-first-post.md` und das Original unter `src/assets/blog/covers/originals/my-cover.jpg`, schreibe:
 
 ```yaml
 heroImage: ../../../assets/blog/covers/originals/my-cover.jpg
@@ -94,15 +94,15 @@ Bei `theme.fragments.enabled: false` überspringen dev, build und prepare-covers
 Lege das Original unter `public/images/fragments/my-photo.png` ab und schreibe im vorhandenen Fragment:
 
 ```md
-![这条碎片的配图说明](/images/fragments/my-photo.png)
+![Beschreibung des Bildes zu diesem Fragment](/images/fragments/my-photo.png)
 ```
 
-Alternativ lege `photo.png` daneben und verwende `![配图说明](./photo.png)`. Nur das Ablegen eines Bilds in public startet keinen allgemeinen Bildbibliothek-Scan; es muss tatsächlich in einem Fragment referenziert sein.
+Alternativ lege `photo.png` daneben und verwende `![Bildbeschreibung](./photo.png)`. Nur das Ablegen eines Bilds in public startet keinen allgemeinen Bildbibliothek-Scan; es muss tatsächlich in einem Fragment referenziert sein.
 
 Referenzbilder werden ebenfalls unterstützt:
 
 ```md
-![配图说明][photo]
+![Bildbeschreibung][photo]
 
 [photo]: /images/fragments/my-photo.png
 ```
@@ -110,7 +110,7 @@ Referenzbilder werden ebenfalls unterstützt:
 Für manuelle Maße kannst du HTML nutzen:
 
 ```html
-<img src="/images/fragments/my-photo.png" alt="配图说明" width="640" height="360" />
+<img src="/images/fragments/my-photo.png" alt="Bildbeschreibung" width="640" height="360" />
 ```
 
 Die Maße sind Beispiele. Setze das tatsächliche Seitenverhältnis. Bei unterstützten lokalen Bildern ergänzt der Prozess fehlende Breite und Höhe. Vorhandene Maße bleiben bestehen; fehlt nur eine Dimension, wird sie aus dem Originalverhältnis berechnet. Falsche vorhandene Maße werden nicht automatisch korrigiert.
@@ -125,7 +125,7 @@ Nach der ersten Bildreferenz oder dem Ersetzen eines Originals starte im Projekt
 npm run dev
 ```
 
-dev bereitet fehlende oder veraltete Dateien vor. Änderungen relevanter Quellen und Referenzen lösen Aktualisierungen aus. Lokales `npm run doctor` bereitet ebenfalls zuerst vor, prüft und baut dann. Wenn du nur Bilder vorbereiten willst, stoppe dev und führe aus:
+Normale Aufrufe von `npm run dev`, `npm run build` und `npm run doctor`, auch in CI, bereiten fehlende, veraltete oder veränderte Varianten automatisch vor. dev reagiert außerdem auf Änderungen relevanter Quellen und Referenzen. Wenn du nur Bilder vorbereiten willst, stoppe dev und führe aus:
 
 ```bash
 npx @anglefeint/astro-theme prepare-covers
@@ -155,21 +155,20 @@ Nach Vorbereitung liegen die Dateien hier:
 
 ```text
 src/assets/blog/covers/
-  originals/      # 如果使用这个原图目录
-  manifest.json  # 来源、尺寸、规则与输出哈希
-  generated/     # 持久响应式文件
+  originals/      # Falls dieses Verzeichnis für Originale verwendet wird
+  manifest.json  # Quelle, Abmessungen, Verarbeitungsregeln und Ausgabe-Hashes
+  generated/     # Persistente responsive Dateien
 ```
 
-Committe gemeinsam:
-
-1. Artikel- oder Fragment-Markdown und neue oder ersetzte Originalbilder.
-2. Das gesamte `src/assets/blog/covers/` mit Manifest und generierten Dateien.
+Committe Artikel- oder Fragment-Markdown und neue oder ersetzte Originalbilder. Manifest und generated-Dateien im Git erleichtern die Wiederverwendung; fehlende Varianten erzeugt build automatisch. Die automatische Vorbereitung erstellt keine Git-Commits.
 
 Originale in public oder neben Artikeln musst du ebenfalls dort committen, nicht nur originals. Auch Fragment-Varianten liegen im Ordner blog/covers.
 
 Stoppe vor Veröffentlichung dev und führe lokal `npm run doctor` aus. Danach kannst du mit `npm run preview` den Build ansehen. doctor enthält den Build bereits; ein sofortiger weiterer build ist unnötig. Die Hosting-Plattform verwendet weiterhin `npm run build` und das Ausgabeverzeichnis `dist`; veröffentliche dessen gesamten Inhalt.
 
-**Deployment-Builds prüfen und kopieren vorbereitete responsive Dateien, erzeugen sie aber nicht neu.** Dasselbe gilt für doctor in CI. Fehlende, veraltete oder veränderte Varianten führen zu Fehlern. Bereite sie lokal vor, committe und veröffentliche erneut. Dieser persistente Bildablauf hängt nicht von einem erhaltenen Astro-Bildcache der Plattform ab.
+Normale Aufrufe von dev, build und doctor, auch in CI, verwenden korrekte Bildvarianten wieder und ergänzen oder reparieren fehlende, veraltete oder veränderte Dateien automatisch. Committe Inhalte und referenzierte Originalbilder. Das Committen von `src/assets/blog/covers/manifest.json` und `generated/` wird zur Wiederverwendung empfohlen, ist aber keine Voraussetzung für die automatische Vorbereitung. Fehlende Originale, unsichere Pfade und ungültige Eingaben führen weiterhin zu Fehlern. Dies setzt keinen erhaltenen Bildcache der Hosting-Plattform voraus.
+
+**Versionshinweis:** Die automatische Bildvorbereitung bei normalen Builds und doctor in CI erfordert mindestens 0.36.2. Führe mit 0.36.1 zuerst dev oder `prepare-covers` aus, um Bildvarianten vorzubereiten. Explizites `prepare-covers --check` und Konfigurations-Sync bleiben schreibgeschützt.
 
 Verwendete Varianten werden nach `_blog-covers/` im Build kopiert. Lade nicht nur HTML hoch und lasse diesen Ordner nicht aus. Alte ungenutzte generated-Dateien werden nicht automatisch entfernt. Prüfe Referenzen vor einer Bereinigung und lösche keine benötigten Originale.
 
@@ -216,16 +215,16 @@ Automatische Bilder liegen unter `dist/_social/`. Plattformen lesen die Metadate
 
 ## 8. Probleme systematisch prüfen
 
-| Symptom                                              | Zuerst prüfen                                                                                                          |
-| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Bild fehlt                                           | Existenz, Großschreibung und relativen Pfad ab aktueller Markdown-Datei; kein `public` in public-URLs                  |
-| Titelbildvorbereitung scheitert                      | Ist `heroImage` eine lokale Projektdatei statt externer oder public-URL? Vollständiger Fehler im Terminal              |
-| missing/stale/modified derivatives                   | dev stoppen, lokal prepare-covers ausführen, Originale, Manifest und generated committen, neu bauen                    |
-| Bild in public erzeugt keine Größen                  | Wird es tatsächlich im Fragment referenziert? Normale public-Bilder im Beitragstext gehören nicht zu diesem Scan       |
-| GIF oder SVG bleibt groß                             | Mehrbild- und Vektordateien bleiben im Original; der Befehl konvertiert keine Videos und komprimiert keine Animationen |
-| Externes Fragment-Bild langsam oder mit Layoutsprung | Keine lokale Konvertierung oder automatische Ermittlung externer Maße; Quelle optimieren und korrekte Maße setzen      |
-| Lokal vorhanden, veröffentlicht fehlend              | Sind Originale und generated committet, das gesamte dist bereitgestellt und Ressourcenpfade unverändert?               |
-| Freigabebild veraltet                                | Neu gebaut und veröffentlicht? Hat ein Artikelbild Vorrang vor dem Website-Standard? Plattform-Cache?                  |
+| Symptom                                              | Zuerst prüfen                                                                                                            |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Bild fehlt                                           | Existenz, Großschreibung und relativen Pfad ab aktueller Markdown-Datei; kein `public` in public-URLs                    |
+| Titelbildvorbereitung scheitert                      | Ist `heroImage` eine lokale Projektdatei statt externer oder public-URL? Vollständiger Fehler im Terminal                |
+| missing/stale/modified derivatives                   | build oder prepare-covers repariert Varianten automatisch; --check bleibt schreibgeschützt. Bei Fehlern Originale prüfen |
+| Bild in public erzeugt keine Größen                  | Wird es tatsächlich im Fragment referenziert? Normale public-Bilder im Beitragstext gehören nicht zu diesem Scan         |
+| GIF oder SVG bleibt groß                             | Mehrbild- und Vektordateien bleiben im Original; der Befehl konvertiert keine Videos und komprimiert keine Animationen   |
+| Externes Fragment-Bild langsam oder mit Layoutsprung | Keine lokale Konvertierung oder automatische Ermittlung externer Maße; Quelle optimieren und korrekte Maße setzen        |
+| Lokal vorhanden, veröffentlicht fehlend              | Sind Originale committet, der Build erfolgreich, das gesamte dist bereitgestellt und Ressourcenpfade unverändert?        |
+| Freigabebild veraltet                                | Neu gebaut und veröffentlicht? Hat ein Artikelbild Vorrang vor dem Website-Standard? Plattform-Cache?                    |
 
 Bei eigenen Astro srcDir-/publicDir-Einstellungen oder Quellpfaden mit base verwende die dev-Vorbereitung dieses Projekts. Der eigenständige prepare-covers-Befehl verwendet Standardordner. Teilweise base-Unterstützung bei Bildern bedeutet nicht, dass das gesamte Theme beliebige Unterverzeichnis-Deployments unterstützt.
 

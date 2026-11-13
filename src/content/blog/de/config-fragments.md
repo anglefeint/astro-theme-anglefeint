@@ -19,7 +19,7 @@ Vorgaben beziehen sich auf das Theme-Paket, nicht die Demo. Vereinige Ausschnitt
 | Liste und Startseiteneinstieg aktivieren    | `theme.fragments.enabled`                                            |
 | Einträge je vollständiger Listenseite       | `theme.fragments.pageSize`                                           |
 | Eigene Fragment-Kommentare                  | `theme.fragments.comments.enabled`; Verbindung über `theme.comments` |
-| Titel, Beschreibung, Hinweise und Schließen | `i18n.locales.<语言>.messages.fragments`                             |
+| Titel, Beschreibung, Hinweise und Schließen | `i18n.locales.<Sprachcode>.messages.fragments`                       |
 | Seitennummern und Springen                  | `theme.pagination` und Texte in `messages.blog`                      |
 | ID, Zeit und Titel eines Eintrags           | Markdown-frontmatter, nicht site.config                              |
 | Startseitenanzahl, Vorschauhöhe und Avatar  | Derzeit keine öffentlichen Felder                                    |
@@ -29,11 +29,11 @@ Vorgaben beziehen sich auf das Theme-Paket, nicht die Demo. Vereinige Ausschnitt
 ## theme.fragments.enabled: Fragments aktivieren
 
 - **Typ / Standard:** boolean / `false`.
-- **Status / Wirkung:** wirksam. Lädt `src/content/fragments/<语言>/**/*.md` und erzeugt Listen und Positionsindizes aktiver Sprachen. Die Startseite zeigt den Einstieg bei Inhalten dieser Sprache.
+- **Status / Wirkung:** wirksam. Lädt `src/content/fragments/<Sprachcode>/**/*.md` und erzeugt Listen und Positionsindizes aktiver Sprachen. Die Startseite zeigt den Einstieg bei Inhalten dieser Sprache.
 - **Grenzen:** Deaktiviert lädt es die Sammlung nicht und erzeugt keine Listenrouten; Dateien bleiben erhalten. Aktiv ohne Inhalte erscheint ein Leerzustand, aber kein Startseiteneinstieg. Nur `.md`, kein `.mdx`.
 - **Beispiel:** `theme: { fragments: { enabled: true } }`.
 
-Die erste Seite ist `/<语言>/fragments/`, danach etwa `/<语言>/fragments/2/`, nicht `/1/`. Die Sprache muss aktiv sein, siehe [Sprachentutorial](/de/blog/starter-guide-languages/).
+Die erste Seite ist `/<Sprachcode>/fragments/`, danach etwa `/<Sprachcode>/fragments/2/`, nicht `/1/`. Die Sprache muss aktiv sein, siehe [Sprachentutorial](/de/blog/starter-guide-languages/).
 
 Bei `theme.fragments.enabled: false` überspringen dev, build und prepare-covers/doctor Bildverweise im Fragments-Inhalt. Nur über diese Verweise aufgenommene Bilder benötigen dann keine Originale oder Ableitungen. Artikel-Cover-Verweise und die Pools `src/assets/blog/default-covers/` und `src/assets/blog/covers/originals/` werden weiterhin vorbereitet und geprüft, auch bei ausschließlich für Fragments verwendeten Bildern. Dateien bleiben erhalten; erneutes Aktivieren setzt die Fragments-Verarbeitung fort.
 
@@ -73,7 +73,7 @@ theme: {
 
 Nur Fragment-Kommentare dürfen Artikel false lassen, brauchen aber repo, repoId, category und categoryId. Typen, Vorgaben und Validierung stehen unter [Giscus-Verbindung](/de/blog/config-comments/#connection), ein vollständiges Beispiel unter [nur Fragment-Kommentare](/de/blog/config-comments/#fragment-overrides). Lokale Prüfungen beweisen keine Remote-Rechte oder echten IDs.
 
-Fragmente binden mit `fragment/<稳定ID>`. Gleiche IDs mehrerer Sprachen teilen Diskussionen. Artikel-mapping, term, number und shareAcrossLocales gelten nicht. Fest sind specific, strict `'1'` und emitMetadata `'1'`. Die Sprache folgt der Seite statt `theme.comments.lang`. Gleichzeitig aktive Artikel führen ihre eigenen Prüfungen weiterhin aus.
+Fragmente binden mit `fragment/<stabileID>`. Gleiche IDs mehrerer Sprachen teilen Diskussionen. Artikel-mapping, term, number und shareAcrossLocales gelten nicht. Fest sind specific, strict `'1'` und emitMetadata `'1'`. Die Sprache folgt der Seite statt `theme.comments.lang`. Gleichzeitig aktive Artikel führen ihre eigenen Prüfungen weiterhin aus.
 
 Farbschema, Reaktionen und Eingabeposition bleiben gemeinsame Giscus-Werte, siehe Kommentartutorial. Erst der erste Klick fügt das Skript ein. Festes loading eager meint sofort nach Klick, nicht im ersten Seitenbild. Schließen erhält das iframe; Eintragswechsel wechseln die Diskussion. Nach etwa 15 Sekunden ohne gültige Antwort erscheint Fehler/Wiederholen. Es gibt kein öffentliches Timeout-Feld.
 
@@ -81,36 +81,36 @@ Farbschema, Reaktionen und Eingabeposition bleiben gemeinsame Giscus-Werte, sieh
 
 ## Fragment-Texte: messages.fragments
 
-Präfix: `i18n.locales.<语言>.messages.fragments`. Jedes Feld ist **string** und ändert nur Text. Vorgaben kommen aus aktueller integrierter Sprache und Fallbacks. Die Tabelle zeigt nur vereinfachtes Chinesisch/Englisch. Weglassen erhält Vorgaben, leer überschreibt ausdrücklich und entfernt nicht unbedingt den Knopf. Beispiele gehören in fragments.
+Präfix: `i18n.locales.<Sprachcode>.messages.fragments`. Jedes Feld ist **string** und ändert nur Text. Vorgaben kommen aus aktueller integrierter Sprache und Fallbacks. Die Tabelle zeigt nur vereinfachtes Chinesisch/Englisch. Weglassen erhält Vorgaben, leer überschreibt ausdrücklich und entfernt nicht unbedingt den Knopf. Beispiele gehören in fragments.
 
-| Feld             | Standard vereinfachtes Chinesisch / Englisch                                                                              | Status, Wirkung und Grenzen                                                                              | Beispiel                                |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| `title`          | 碎片 / Fragments                                                                                                          | Bedingt: Listenüberschrift, Teil des Seitentitels und zugänglicher Startseiteneinstieg, kein Einzeltitel | `title: '随手记'`                       |
-| `description`    | 沿途记录的几句话。 / Brief thoughts, kept along the way.                                                                  | Bedingt: sichtbare Listeneinführung und Metabeschreibung, nicht im Startseitenfenster                    | `description: '记录工作与生活的小事。'` |
-| `empty`          | 还没有碎片。 / No fragments yet.                                                                                          | Bedingt: Hinweis bei leerer vollständiger Liste; erzwingt keinen Startseiteneinstieg                     | `empty: '稍后再来看看。'`               |
-| `comments`       | 评论 / Comments                                                                                                           | Bedingt: Knopftext bei aktiven Kommentaren                                                               | `comments: '参与讨论'`                  |
-| `close`          | 关闭 / Close                                                                                                              | Bedingt: Dialog-Schließtext und zugänglicher Schließname im Startseitenfenster                           | `close: '关闭窗口'`                     |
-| `previous`       | 上一页 / Previous                                                                                                         | **Derzeit ungenutzt**: Typ akzeptiert, echte Seitennavigation nutzt messages.blog.previous               | `previous: '上一页'`                    |
-| `next`           | 下一页 / Next                                                                                                             | **Derzeit ungenutzt**: echte Navigation nutzt messages.blog.next                                         | `next: '下一页'`                        |
-| `loading`        | 正在加载评论… / Loading comments…                                                                                         | Bedingt: Kommentar-Ladezustand                                                                           | `loading: '正在连接讨论…'`              |
-| `error`          | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | Bedingt: Kommentar-Ladefehler, kein Positionsindexfehler                                                 | `error: '讨论暂时不可用，请重试。'`     |
-| `retry`          | 重试 / Retry                                                                                                              | Bedingt: Wiederholen nach Kommentarfehler                                                                | `retry: '重新连接'`                     |
-| `copyLink`       | 复制碎片链接 / Copy fragment link                                                                                         | Bedingt: Titel und zugänglicher Name des vom Skript aktivierten Freigabeknopfs                           | `copyLink: '复制本条链接'`              |
-| `linkCopied`     | 链接已复制 / Link copied                                                                                                  | Bedingt: Kopiererfolg                                                                                    | `linkCopied: '已复制'`                  |
-| `copyLinkFailed` | 未能自动复制，请复制下方链接。 / Unable to copy automatically. Copy the link below.                                       | Bedingt: Hinweis zum manuellen Kopieren nach Zwischenablagefehler                                        | `copyLinkFailed: '请手动复制此链接。'`  |
-| `notFound`       | 找不到这条碎片，它可能已被移除。 / Fragment not found. It may have been removed.                                          | Bedingt: stabile ID nicht gefunden, kein allgemeiner 404-Text                                            | `notFound: '这条记录已不存在。'`        |
-| `indexError`     | 暂时无法定位这条碎片，请刷新页面后重试。 / Unable to locate this fragment. Refresh the page and try again.                | Bedingt: Anfrage oder Validierung des Positionsindex gescheitert                                         | `indexError: '定位失败，请刷新重试。'`  |
+| Feld             | Standard vereinfachtes Chinesisch / Englisch                                                                              | Status, Wirkung und Grenzen                                                                              | Beispiel                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `title`          | 碎片 / Fragments                                                                                                          | Bedingt: Listenüberschrift, Teil des Seitentitels und zugänglicher Startseiteneinstieg, kein Einzeltitel | `title: 'Kurze Notizen'`                                                       |
+| `description`    | 沿途记录的几句话。 / Brief thoughts, kept along the way.                                                                  | Bedingt: sichtbare Listeneinführung und Metabeschreibung, nicht im Startseitenfenster                    | `description: 'Kleine Notizen zu Arbeit und Alltag.'`                          |
+| `empty`          | 还没有碎片。 / No fragments yet.                                                                                          | Bedingt: Hinweis bei leerer vollständiger Liste; erzwingt keinen Startseiteneinstieg                     | `empty: 'Schau später wieder vorbei.'`                                         |
+| `comments`       | 评论 / Comments                                                                                                           | Bedingt: Knopftext bei aktiven Kommentaren                                                               | `comments: 'An der Diskussion teilnehmen'`                                     |
+| `close`          | 关闭 / Close                                                                                                              | Bedingt: Dialog-Schließtext und zugänglicher Schließname im Startseitenfenster                           | `close: 'Fenster schließen'`                                                   |
+| `previous`       | 上一页 / Previous                                                                                                         | **Derzeit ungenutzt**: Typ akzeptiert, echte Seitennavigation nutzt messages.blog.previous               | `previous: 'Zurück'`                                                           |
+| `next`           | 下一页 / Next                                                                                                             | **Derzeit ungenutzt**: echte Navigation nutzt messages.blog.next                                         | `next: 'Weiter'`                                                               |
+| `loading`        | 正在加载评论… / Loading comments…                                                                                         | Bedingt: Kommentar-Ladezustand                                                                           | `loading: 'Verbindung zur Diskussion wird hergestellt…'`                       |
+| `error`          | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | Bedingt: Kommentar-Ladefehler, kein Positionsindexfehler                                                 | `error: 'Diskussion nicht verfügbar. Bitte erneut versuchen.'`                 |
+| `retry`          | 重试 / Retry                                                                                                              | Bedingt: Wiederholen nach Kommentarfehler                                                                | `retry: 'Erneut verbinden'`                                                    |
+| `copyLink`       | 复制碎片链接 / Copy fragment link                                                                                         | Bedingt: Titel und zugänglicher Name des vom Skript aktivierten Freigabeknopfs                           | `copyLink: 'Link zu diesem Fragment kopieren'`                                 |
+| `linkCopied`     | 链接已复制 / Link copied                                                                                                  | Bedingt: Kopiererfolg                                                                                    | `linkCopied: 'Kopiert'`                                                        |
+| `copyLinkFailed` | 未能自动复制，请复制下方链接。 / Unable to copy automatically. Copy the link below.                                       | Bedingt: Hinweis zum manuellen Kopieren nach Zwischenablagefehler                                        | `copyLinkFailed: 'Bitte diesen Link manuell kopieren.'`                        |
+| `notFound`       | 找不到这条碎片，它可能已被移除。 / Fragment not found. It may have been removed.                                          | Bedingt: stabile ID nicht gefunden, kein allgemeiner 404-Text                                            | `notFound: 'Dieses Fragment ist nicht mehr vorhanden.'`                        |
+| `indexError`     | 暂时无法定位这条碎片，请刷新页面后重试。 / Unable to locate this fragment. Refresh the page and try again.                | Bedingt: Anfrage oder Validierung des Positionsindex gescheitert                                         | `indexError: 'Fragment nicht gefunden. Bitte neu laden und erneut versuchen.'` |
 
-Nur chinesischen Titel und Beschreibung überschreiben:
+Nur deutschen Titel und Beschreibung überschreiben:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         fragments: {
-          title: '随手记',
-          description: '记录工作与生活的小事。',
+          title: 'Kurze Notizen',
+          description: 'Kleine Notizen zu Arbeit und Alltag.',
         },
       },
     },
@@ -122,13 +122,13 @@ i18n: {
 
 ## Weitere gemeinsame Einstellungen
 
-| Pfad                                                                                                         | Standard und Wirkung                                                  | Grenzen, Beispiel und Beschreibung                                                                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `theme.pagination.*`                                                                                         | Acht gemeinsame Blog-List-Felder mit denselben Vorgaben               | Erst bei mehreren Seiten; etwa `theme: { pagination: { windowSize: 5 } }`. Typen, Bereiche und Beispiele unter [Seiteneinteilung](/de/blog/config-blog-list/#pagination-window) und Folgeabschnitten |
-| `i18n.locales.<语言>.messages.blog.previous`、`next`、`paginationAria`、`jumpTo`、`jumpInputLabel`、`jumpGo` | string, integrierte Sprache für sichtbare und zugängliche Seitentexte | Etwa `previous: '上一页'`; [Seitentexte](/de/blog/config-blog-list/#pagination-messages), nicht gleichnamige fragments-Felder ändern                                                                 |
-| `i18n.locales.<语言>.messages.blog.backToTop`                                                                | string, integrierte Sprache                                           | Nach-oben-Knopf der Liste, etwa `backToTop: '回到顶部'`; [Artikeltexte](/de/blog/config-article/#article-messages)                                                                                   |
-| `i18n.locales.<语言>.messages.home.viewAll`                                                                  | string, integrierte Sprache                                           | Zugänglicher Archivlink unten kombiniert den Fragment-Titel; etwa `viewAll: '查看全部'`, [Startseitentexte](/de/blog/config-home/#home-messages)                                                     |
-| `theme.math.enabled`                                                                                         | boolean / `true`                                                      | Die aktuelle Listenseite bestimmt benötigte Math-Stile; etwa `theme: { math: { enabled: false } }`, [Mathematik](/de/blog/config-article/#feature-switches)                                          |
+| Pfad                                                                                                               | Standard und Wirkung                                                  | Grenzen, Beispiel und Beschreibung                                                                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `theme.pagination.*`                                                                                               | Acht gemeinsame Blog-List-Felder mit denselben Vorgaben               | Erst bei mehreren Seiten; etwa `theme: { pagination: { windowSize: 5 } }`. Typen, Bereiche und Beispiele unter [Seiteneinteilung](/de/blog/config-blog-list/#pagination-window) und Folgeabschnitten |
+| `i18n.locales.<Sprachcode>.messages.blog.previous`、`next`、`paginationAria`、`jumpTo`、`jumpInputLabel`、`jumpGo` | string, integrierte Sprache für sichtbare und zugängliche Seitentexte | Etwa `previous: 'Zurück'`; [Seitentexte](/de/blog/config-blog-list/#pagination-messages), nicht gleichnamige fragments-Felder ändern                                                                 |
+| `i18n.locales.<Sprachcode>.messages.blog.backToTop`                                                                | string, integrierte Sprache                                           | Nach-oben-Knopf der Liste, etwa `backToTop: 'Nach oben'`; [Artikeltexte](/de/blog/config-article/#article-messages)                                                                                  |
+| `i18n.locales.<Sprachcode>.messages.home.viewAll`                                                                  | string, integrierte Sprache                                           | Zugänglicher Archivlink unten kombiniert den Fragment-Titel; etwa `viewAll: 'Alle anzeigen'`, [Startseitentexte](/de/blog/config-home/#home-messages)                                                |
+| `theme.math.enabled`                                                                                               | boolean / `true`                                                      | Die aktuelle Listenseite bestimmt benötigte Math-Stile; etwa `theme: { math: { enabled: false } }`, [Mathematik](/de/blog/config-article/#feature-switches)                                          |
 
 Alle gemeinsamen `theme.comments`-Parameter stehen im [Giscus-Verzeichnis](/de/blog/config-comments/). Die Verbindungsfelder und Abweichungen hier machen Artikel-Mapping nicht zu Fragment-Konfiguration. `theme.toc.enabled`, OUTPUT, Red Queen und andere Artikelfunktionen steuern die Liste nicht. Fragments haben auch keinen Cards/List-Wechsel.
 
@@ -136,22 +136,22 @@ Alle gemeinsamen `theme.comments`-Parameter stehen im [Giscus-Verzeichnis](/de/b
 
 ## Drei frontmatter-Felder pro Fragment
 
-Sie gehören in Markdown unter `src/content/fragments/<语言>/`, **nicht in site.config**. Das öffentliche Schema umfasst genau diese drei, keine zusätzlichen Kompatibilitätsfelder.
+Sie gehören in Markdown unter `src/content/fragments/<Sprachcode>/`, **nicht in site.config**. Das öffentliche Schema umfasst genau diese drei, keine zusätzlichen Kompatibilitätsfelder.
 
 | Feld      | Typ / Standard                                       | Wirkung, Status und Grenzen                                                                                                           | Beispiel                              |
 | --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | `id`      | string / keiner, Pflicht                             | Wirksam. Genau acht ASCII-Buchstaben/Ziffern, pro Sprache einmalig. Links und Kommentare hängen daran; nach Veröffentlichung erhalten | `id: 'aB3dE6gH'`                      |
 | `pubDate` | Zu Date konvertierbarer Datumswert / keiner, Pflicht | Wirksam. Parsebares Datum für Sortierung, UTC-Anzeige. ISO mit Zeitzone vermeidet Mehrdeutigkeit                                      | `pubDate: '2026-11-13T08:00:00.000Z'` |
-| `title`   | string, optional / nicht gesetzt                     | Bedingt. Karten- und Vorschautitel; auch ohne veröffentlichbar. Kein automatischer Dateiname als Titel                                | `title: '今天的小发现'`               |
+| `title`   | string, optional / nicht gesetzt                     | Bedingt. Karten- und Vorschautitel; auch ohne veröffentlichbar. Kein automatischer Dateiname als Titel                                | `title: 'Eine kleine Entdeckung'`     |
 
 ```md
 ---
 id: 'aB3dE6gH'
 pubDate: '2026-11-13T08:00:00.000Z'
-title: '今天的小发现'
+title: 'Eine kleine Entdeckung'
 ---
 
-这里写正文。图片和代码直接放在 Markdown 正文中。
+Schreibe hier den Text. Bilder und Code gehören direkt in den Markdown-Inhalt.
 ```
 
 `npm run new-fragment -- --locales zh,en` erzeugt Dateien mit gemeinsamer neuer ID und aktueller Zeit. Jeder Aufruf erzeugt eine neue ID. Für Übersetzungen bestehender Fragments erhalte die ursprüngliche Identität. Verschiedene Sprachen dürfen dieselbe ID haben, innerhalb einer Sprache sind Duplikate Fehler. Dateinamen dürfen sich ändern, IDs nicht mit Namen oder Seite. Alte Formate migrieren nicht automatisch; Änderungen verschieben Kommentarzuordnung und Freigabeadresse.
@@ -167,8 +167,8 @@ Diese Regeln kommen aus der Implementierung, ohne weitere öffentliche Felder:
 - **Startseitenanzahl:** Neueste drei der aktuellen Sprache, bei weniger tatsächliche Anzahl. Unten steht ein Archivlink „angezeigt / Gesamtzahl dieser Sprache“. Andere Sprachen füllen nicht auf.
 - **Zusammenfassung:** Aus gerendertem Inhalt: Text, erstes geeignetes HTTP(S)-Bild, erster Codeblock. Höchstens 180 Unicode-Codepunkte Text, acht Zeilen und 800 Codepunkte Code, danach Auslassungszeichen. Vorschaukarten schneiden Überhang ab; vollständige Inhalte bleiben in der Liste. Titel erscheint separat. Kein vollständiges Markdown und keine previewCount-/previewHeight-Felder.
 - **Bilder:** Unterstützte lokale Dateien erhalten Maße und srcset aus dem Manifest. Externe oder nicht unterstützte Bilder sind nicht garantiert optimiert. Erstes Bild jeder vollständigen Listenseite eager/high, weitere lazy, alle asynchron dekodiert. Originale und Vorbereitung erklärt das [Bildertutorial](/de/blog/starter-guide-images/). Ein Fragment-heroImage ist nicht nötig.
-- **Stabile Links:** `/<语言>/fragments/#<ID>`. Das Skript sucht die aktuelle Seite im Index und wechselt nötigenfalls. Neue Inhalte und pageSize-Änderungen behalten ID-Ortung, Löschungen und ID-Änderungen nicht. Ohne JavaScript bleiben normale Seiten bedienbar, nicht automatische Cross-Page-Ortung und Kopierknopf.
+- **Stabile Links:** `/<Sprachcode>/fragments/#<ID>`. Das Skript sucht die aktuelle Seite im Index und wechselt nötigenfalls. Neue Inhalte und pageSize-Änderungen behalten ID-Ortung, Löschungen und ID-Änderungen nicht. Ohne JavaScript bleiben normale Seiten bedienbar, nicht automatische Cross-Page-Ortung und Kopierknopf.
 - **Sprachwechsel:** Führt zur Fragment-Startseite der Zielsprache, nicht garantiert zur gleichen ID.
-- **Öffentliche Inhalte:** Markdown-Sammelausgabe unter `/<语言>/fragments/index.md`. Kein Schalter für Suche oder Artikel-RSS. Keine sensiblen Informationen veröffentlichen.
+- **Öffentliche Inhalte:** Markdown-Sammelausgabe unter `/<Sprachcode>/fragments/index.md`. Kein Schalter für Suche oder Artikel-RSS. Keine sensiblen Informationen veröffentlichen.
 
 Avatar, Hover-Animationen, Fensterrahmen und Code-Vorschauhöhe sind derzeit keine site.config-Felder. Dieses Verzeichnis bietet keine erfundenen Optionen. Weitere Module im [Gesamtverzeichnis](/de/blog/config-reference/).

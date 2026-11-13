@@ -4,19 +4,19 @@ title: '설정 사전: 홈'
 subtitle: '홈 제목, 소개, 최신 글, 안내 문구, 와이드스크린 터미널, 클릭 이동 효과의 실제 설정을 조회합니다.'
 description: '홈 필드의 타입, 테마 기본값, 적용 범위, 제한, 병합 가능한 예시와 공유 설정, 현재 제공하지 않는 스위치를 설명합니다.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 [설정 사전 시작 페이지로 돌아가기](/ko/blog/config-reference/). 실제 홈이 사용하는 필드를 설명합니다. 테마 코드를 바꾸거나 데모의 개인 설정을 기본값으로 간주하지 않습니다.
 
-아래 `<语言>`는 프로젝트의 실제 활성 언어 코드로 바꾸세요. 예시는 zh이며 중국어 간체 설정만 바꿉니다. 영어를 자동 변경하거나 언어를 활성화하지 않습니다. 모든 조각은 `src/site.config.ts`의 기존 defineThemeConfig 객체에 합치고 theme, i18n, site가 있다면 다른 필드를 유지하세요.
+아래 `<locale>`는 프로젝트의 실제 활성 언어 코드로 바꾸세요. 예시는 ko이며 한국어 설정만 바꿉니다. 영어를 자동 변경하거나 언어를 활성화하지 않습니다. 모든 조각은 `src/site.config.ts`의 기존 defineThemeConfig 객체에 합치고 theme, i18n, site가 있다면 다른 필드를 유지하세요.
 
 ## 1. 홈 대제목, 소개, 메타 설명
 
 <a id="home-title"></a>
 
-### `i18n.locales.<语言>.site.homeTitle`
+### `i18n.locales.<locale>.site.homeTitle`
 
 - **타입**: 선택적 `string`.
 - **테마 기본값**: 미설정입니다. 내장 언어에는 별도 homeTitle이 없으며 최종적으로 사이트 이름(기본 My Blog)을 씁니다.
@@ -25,7 +25,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 <a id="home-hero"></a>
 
-### `i18n.locales.<语言>.site.hero`
+### `i18n.locales.<locale>.site.hero`
 
 - **타입**: 선택적 `string`.
 - **테마 기본값**: 내장 언어별 소개가 있습니다. 중국어 간체 기본값은 “在这里写一段站点简介，并告诉读者你将发布什么类型的内容。”이며 영어 기본값은 “Write a short introduction for your site and what readers can expect from your posts.”입니다. 다른 언어는 각 내장값을 사용합니다.
@@ -34,7 +34,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 <a id="home-description"></a>
 
-### `i18n.locales.<语言>.messages.siteDescription`
+### `i18n.locales.<locale>.messages.siteDescription`
 
 - **타입**: 선택적 덮어쓰기이며 값은 `string`.
 - **테마 기본값**: 현재 언어의 내장 문구입니다. 중국어 간체 기본값은 “电影感网页界面与 AI 时代工程实践文章。”이며 영어 기본값은 “Cinematic web interfaces and AI-era engineering essays.”입니다.
@@ -46,12 +46,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ko: {
       site: {
-        homeTitle: '我的数字花园',
-        hero: '记录开发、阅读和生活。',
+        homeTitle: '나의 디지털 정원',
+        hero: '개발, 독서와 일상을 기록합니다.',
       },
-      messages: { siteDescription: '个人项目与学习笔记。' },
+      messages: { siteDescription: '개인 프로젝트와 학습 노트.' },
     },
   },
 },
@@ -109,7 +109,7 @@ theme: {
 
 <a id="home-messages"></a>
 
-모두 `i18n.locales.<语言>.messages.home`의 선택적 `string` 덮어쓰기이며 일반 필드는 UI 대체 규칙을 따릅니다. 아래는 중국어 간체와 영어의 내장 기본값이며 다른 언어는 각 문구가 있습니다.
+모두 `i18n.locales.<locale>.messages.home`의 선택적 `string` 덮어쓰기이며 일반 필드는 UI 대체 규칙을 따릅니다. 아래는 중국어 간체와 영어의 내장 기본값이며 다른 언어는 각 문구가 있습니다.
 
 | 전체 경로의 마지막 부분 | 중국어 간체 기본값 / 영어 기본값                                | 역할과 제한                                                                                      |
 | ----------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -123,13 +123,13 @@ theme: {
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ko: {
       messages: {
         home: {
-          latest: '最近更新',
-          viewAll: '全部文章',
-          noPosts: '这里还没有文章。',
-          openDoor: '打开走廊预览',
+          latest: '최근 업데이트',
+          viewAll: '모든 글',
+          noPosts: '아직 글이 없습니다.',
+          openDoor: '복도 미리보기 열기',
         },
       },
     },
@@ -139,7 +139,7 @@ i18n: {
 
 <a id="home-transmission"></a>
 
-### `i18n.locales.<语言>.messages.home.transmission`
+### `i18n.locales.<locale>.messages.home.transmission`
 
 - **타입**: 선택적 `string` 덮어쓰기.
 - **테마 기본값**: `'Knock, knock.'`. 중국어 간체를 포함해 개인 덮어쓰기가 없으면 공유합니다.
@@ -151,16 +151,16 @@ i18n: {
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '这里留下一点线索。' } } },
+    en: { messages: { home: { transmission: 'Leave a small trace here.' } } },
   },
 },
 ```
 
-zh의 같은 위치에 쓰면 중국어 간체만 덮어씁니다. 문구 수정은 실제 네트워크 신호를 조회하거나 열쇠구멍의 복도 열기를 바꾸지 않습니다.
+ko의 같은 위치에 쓰면 한국어만 덮어씁니다. 문구 수정은 실제 네트워크 신호를 조회하거나 열쇠구멍의 복도 열기를 바꾸지 않습니다.
 
 <a id="message-hero"></a>
 
-### `i18n.locales.<语言>.messages.home.hero`
+### `i18n.locales.<locale>.messages.home.hero`
 
 - **타입**: 선택적 `string` 덮어쓰기.
 - **테마 기본값**: 현재 언어 내장 소개이며 중국어 간체·영어는 위 site.hero 기본 문장과 같습니다.
@@ -170,7 +170,7 @@ zh의 같은 위치에 쓰면 중국어 간체만 덮어씁니다. 문구 수정
 ```ts
 i18n: {
   locales: {
-    zh: { messages: { home: { hero: '仅在没有可用 site.hero 时使用的介绍。' } } },
+    ko: { messages: { home: { hero: '사용 가능한 site.hero가 없을 때만 쓰는 소개입니다.' } } },
   },
 },
 ```
@@ -200,12 +200,12 @@ theme: { effects: { enableHomePassage: true } },
 
 홈 전용은 아닙니다. 여기서는 사용 관계만 설명하며 전체 정의는 주 사전에서 봅니다.
 
-| 전체 경로                                      | 홈 사용 관계                                                                                           | 주 설명                                                       |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| `theme.fragments.enabled`                      | 현재 언어에 내용이 있을 때 아바타 입구를 표시하며 전체 목록도 제어합니다. 미리보기는 최대 세 개입니다. | [Fragments 스위치](/ko/blog/config-fragments/#enabled)        |
-| `i18n.locales.<语言>.messages.blog.allPosts`   | 최신 글 개수 안내와 보관함 입구의 접근 가능한 이름                                                     | [목록 공유 문구](/ko/blog/config-blog-list/#tag-messages)     |
-| `i18n.locales.<语言>.messages.fragments.title` | 아바타 입구의 접근 가능한 이름이며 옆의 표시 제목은 아닙니다.                                          | [Fragment 문구](/ko/blog/config-fragments/#fragment-messages) |
-| `i18n.locales.<语言>.messages.fragments.close` | 미리보기 닫기 버튼의 접근 가능한 이름이며 그림은 바꾸지 않습니다.                                      | [Fragment 문구](/ko/blog/config-fragments/#fragment-messages) |
+| 전체 경로                                        | 홈 사용 관계                                                                                           | 주 설명                                                       |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| `theme.fragments.enabled`                        | 현재 언어에 내용이 있을 때 아바타 입구를 표시하며 전체 목록도 제어합니다. 미리보기는 최대 세 개입니다. | [Fragments 스위치](/ko/blog/config-fragments/#enabled)        |
+| `i18n.locales.<locale>.messages.blog.allPosts`   | 최신 글 개수 안내와 보관함 입구의 접근 가능한 이름                                                     | [목록 공유 문구](/ko/blog/config-blog-list/#tag-messages)     |
+| `i18n.locales.<locale>.messages.fragments.title` | 아바타 입구의 접근 가능한 이름이며 옆의 표시 제목은 아닙니다.                                          | [Fragment 문구](/ko/blog/config-fragments/#fragment-messages) |
+| `i18n.locales.<locale>.messages.fragments.close` | 미리보기 닫기 버튼의 접근 가능한 이름이며 그림은 바꾸지 않습니다.                                      | [Fragment 문구](/ko/blog/config-fragments/#fragment-messages) |
 
 켜도 아바타가 없다면 현재 언어의 Fragment부터 확인하세요. 표시를 위해 ID를 복제하지 마세요. 이미지·코드·높이 규칙은 [Fragments 사전](/ko/blog/config-fragments/#preview-and-links), 게시 절차는 [Fragment 게시하기](/ko/blog/starter-guide-5-fragments/)를 참고하세요.
 

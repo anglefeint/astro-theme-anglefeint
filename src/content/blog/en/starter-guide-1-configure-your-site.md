@@ -42,14 +42,15 @@ node --version
 npm --version
 ```
 
-Create the blog in the directory where you want to keep projects. This creates `my-blog` without installing dependencies automatically:
+Create the blog in the directory where you want to keep projects. Follow the setup wizard and choose **Yes** when asked to install dependencies:
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+If you deliberately skip dependency installation, run `npm install` before `npm run dev`. `--no-ai` skips the wizard’s generic AI-agent files; the starter already supplies theme-specific guidance.
 
 You may replace `my-blog` with another directory name; update the `cd` command too. Open the local address printed by the terminal. Do not assume the port is fixed: an occupied port may cause it to change. Keep the development server running, and press `Ctrl+C` to stop it.
 
@@ -63,11 +64,11 @@ The installed project already includes `src/site.config.ts`. Edit that file; do 
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录开发、阅读和生活。',
+  title: 'Alex’s blog',
+  description: 'Development, reading and everyday life.',
   url: 'https://example.com',
-  author: '小林',
-  tagline: '保持好奇，持续记录。',
+  author: 'Alex',
+  tagline: 'Stay curious and keep writing.',
 },
 ```
 
@@ -157,7 +158,7 @@ npm run new-post -- my-first-post
 
 Without `--locales` or `ANGLEFEINT_LOCALES`, the command creates matching skeletons for every enabled language: nine files with the initial configuration. It does not translate content. Existing files are skipped rather than overwritten.
 
-Open `src/content/blog/<语言代码>/my-first-post.md` and edit the title, description and body. Its address is `/<语言代码>/blog/my-first-post/`. For example, the English file is in en and uses `/en/blog/my-first-post/`; Chinese uses zh and `/zh/blog/my-first-post/`. Before publication, move unfinished skeletons you do not want public outside the content directory; they are not automatically hidden drafts.
+Open `src/content/blog/<locale>/my-first-post.md` and edit the title, description and body. Its address is `/<locale>/blog/my-first-post/`. For example, the English file is in en and uses `/en/blog/my-first-post/`; Chinese uses zh and `/zh/blog/my-first-post/`. Before publication, move unfinished skeletons you do not want public outside the content directory; they are not automatically hidden drafts.
 
 To create only one language, optionally use `npm run new-post -- my-first-post --locales zh`; use `--locales en,zh` for selected languages. Choose the form you need rather than running all examples. `--locales` itself does not enable a language.
 
@@ -178,7 +179,9 @@ Local `doctor` prepares missing or stale responsive images, runs Astro checks an
 
 `preview` serves the built static website in `dist/`; open its printed address. It does not publish the blog online. Test article search in this built preview because `dev` has no live full-text search. Stop preview with `Ctrl+C`.
 
-For deployment, use `npm run build` and output directory `dist`, and deploy every generated file. After adding or replacing local images, run local dev or doctor and commit the originals and the entire generated `src/assets/blog/covers/` directory. Deployment builds and CI doctor validate these responsive files without generating missing ones; absent or stale files cause failure. Content or configuration changes require rebuilding and redeploying.
+For deployment, use `npm run build` and output directory `dist`, and deploy every generated file. Normal dev, build and doctor runs, including CI, reuse correct responsive files and repair missing, stale or modified derivatives. Commit referenced originals and content; keeping the manifest and generated files in Git is recommended for reuse. Missing originals, unsafe paths and invalid inputs still cause failure. Content or configuration changes require rebuilding and redeploying.
+
+**Version note:** Automatic image preparation during normal builds and CI doctor runs requires 0.36.2 or later. With 0.36.1, first run dev or `prepare-covers` to prepare derivatives. Explicit `prepare-covers --check` and configuration sync remain read-only.
 
 ## Upgrade an existing project
 

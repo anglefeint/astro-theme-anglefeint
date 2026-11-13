@@ -4,7 +4,7 @@ title: '使用指南 5：把頁面和功能調整成自己喜歡的樣子'
 subtitle: '按想修改的頁面查找：首頁、About、Decoder、社交連結、頁尾、音樂和分頁。'
 description: '通過小範圍設定調整頁面內容和功能，說明實際預設值、生效範圍、合併方式與本機驗證步驟。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -47,7 +47,7 @@ theme: {
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+    en: { messages: { home: { transmission: 'Leave a small trace here.' } } },
   },
 },
 ```
@@ -60,21 +60,21 @@ About 的 Oracle 入口獨立使用場景預覽，不受首頁文章穿越開關
 
 ## 2. 把 About 換成自己的介紹
 
-打開 `/zh/about/` 可以看到目前內容。內文和聯絡方式按語言設定，無需修改主題頁面模板：
+打開 `/zh-hant/about/` 可以看到目前內容。內文和聯絡方式按語言設定，無需修改主題頁面模板：
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       about: {
         metaLine: '$ profile | building and learning',
         sections: {
-          who: '我是小林，喜欢开发与写作。',
-          what: '这里记录我的项目和学习笔记。',
-          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
-          now: '最近在整理个人博客。',
-          contactLead: '欢迎联系我。',
-          signature: '> 谢谢你来这里。',
+          who: '我是小林，喜歡開發與寫作。',
+          what: '這里記錄我的專案和學習筆記。',
+          ethos: ['保持好奇。', '把想法變成可以使用的東西。'],
+          now: '最近在整理個人部落格。',
+          contactLead: '歡迎聯系我。',
+          signature: '> 謝謝你來這里。',
         },
         contact: {
           email: 'you@example.com',
@@ -89,7 +89,7 @@ i18n: {
 
 替換範例姓名和地址。`metaLine` 是個人面板頂部狀態文字；`who`、`what`、`ethos`、`now` 分別填寫自我介紹、所做的事、理念和近況；`contactLead` 是聯絡引導，`signature` 是簽名。`ethos` 是字串陣列，提供新陣列會整體替換原條目。
 
-內文段落和簽名是純文字：字串中的 `\n` 換行，`\n\n` 留空行；不解析 Markdown 或 HTML，不要用 `<br>` 換行。這個範例只修改簡體中文；其他語言需要自己的文字，不會自動翻譯。缺少欄位會根據該語言的設定回退規則補齊。
+內文段落和簽名是純文字：字串中的 `\n` 換行，`\n\n` 留空行；不解析 Markdown 或 HTML，不要用 `<br>` 換行。這個範例只修改繁體中文；其他語言需要自己的文字，不會自動翻譯。缺少欄位會根據該語言的設定回退規則補齊。
 
 About 的視窗控制項可以關閉、最小化或全屏面板，並在瀏覽器本機記錄狀態。頁面工具中的 AI 輸出和下載進度是主題互動顯示，不會因為填寫了文字就連線真實 AI 服務；解碼工具處理的是瀏覽器本機輸入。
 
@@ -99,24 +99,24 @@ About 的視窗控制項可以關閉、最小化或全屏面板，並在瀏覽�
 
 ## 3. 調整 Decoder 頁面和閱讀卡片
 
-Decoder Lab 位於 `/zh/decoder/`，預設開啟。它的視覺致敬密碼朋克與數位自由的先行者；本機處理和點對點網路意象呼應個人掌握工具與資料的理念。
+Decoder Lab 位於 `/zh-hant/decoder/`，預設開啟。它的視覺致敬密碼朋克與數位自由的先行者；本機處理和點對點網路意象呼應個人掌握工具與資料的理念。
 
 工具提供文字解碼、支援的代幣呼叫解釋和地址格式檢查，不需要 RPC、錢包連線或 API Key。它不查詢余額、執行交易或證明地址歸屬；輸入 calldata 也不等於驗證了合約真實行為。
 
 在 `theme` 中設定 `enableDecoderPage: false` 可以獨立關閉 Decoder 頁面和主題提供的相關入口；關閉 About 不等於關閉 Decoder，反過來也一樣。自訂連結仍需自己維護。
 
-閱讀區的致敬文字和卡片按語言設定，例如替換中文列表：
+閱讀區的致敬文字和卡片按語言設定，例如替換繁體中文列表：
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       messages: {
         decoderPage: {
           readings: {
-            tribute: '思想与代码，让隐私和自由更进一步。',
+            tribute: '思想與程式碼，讓隱私和自由更進一步。',
             links: [
-              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+              { title: '我的閱讀資料', href: 'https://example.com/', author: '作者名', year: '2026' },
             ],
           },
         },
@@ -140,7 +140,7 @@ i18n: {
 social: {
   links: [
     { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
-    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+    { href: 'https://example.com/community', label: '我的社區', iconSrc: '/icons/community.svg' },
   ],
 },
 ```
@@ -154,11 +154,11 @@ social: {
 ### 頁尾署名、說明和額外連結
 
 ```ts
-site: { tagline: '保持好奇，持续记录。' },
+site: { tagline: '保持好奇，持續記錄。' },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+    links: [{ label: '專案源碼', href: 'https://github.com/yourname/your-project' }],
   },
 },
 ```
@@ -246,7 +246,7 @@ theme: {
 npm run new-page -- projects
 ```
 
-指令建立 `src/pages/[lang]/projects.astro`，預設使用 `base` 布局，通過目前啟用語言生成 `/<语言代码>/projects/`，例如 `/en/projects/` 或 `/zh/projects/`。編輯這個 Astro 檔案填寫內文；它不會自動翻譯內容，也不會自動增加頂部導覽欄目。可以在內文或頁尾 links 中提供入口。
+指令建立 `src/pages/[lang]/projects.astro`，預設使用 `base` 布局，通過目前啟用語言生成 `/<locale>/projects/`，例如 `/en/projects/` 或 `/zh/projects/`。編輯這個 Astro 檔案填寫內文；它不會自動翻譯內容，也不會自動增加頂部導覽欄目。可以在內文或頁尾 links 中提供入口。
 
 需要指定風格時再使用 `--theme`，例如 `npm run new-page -- portfolio --theme cyber` 建立另一個 Cyberpunk 頁面。選用值是 `base`、`ai`、`cyber`、`hacker`、`matrix`，控制這個新頁面使用的布局，不會切換全站的四種氛圍。slug 使用小寫英文字母、數字和連字號，可用 `projects/labs` 這樣的嵌套路徑。不要與包提供的標準頁面路徑衝突；同名檔案已經存在時會報錯，不要把同一路徑的五種主題指令連續執行。
 

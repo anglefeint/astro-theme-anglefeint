@@ -10,6 +10,10 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.36.2: automatic image preparation during normal builds
+
+Automatic build/CI preparation requires 0.36.2 or later; see the [delivery record](docs/releases/0.36.2.md) for publication status. Version 0.36.1 still needs prior dev or prepare-covers preparation. Normal dev/build/doctor, including CI, prepare missing/stale/corrupted image derivatives and reuse valid files; config sync and explicit `prepare-covers --check` stay read-only. Commit originals; committing manifest/generated assets remains recommended for reuse rather than required for normal build success. Missing/invalid originals, path escapes and output conflicts still fail. No field, dependency, directory or project-schema migration is added. Personal content is not overwritten.
+
 ## 0.36.1: runtime fixes and refreshed publishing guides
 
 See the [0.36.1 delivery record](docs/releases/0.36.1.md) for publication status. Supported npm schema-1 projects keep the existing `npx @anglefeint/astro-theme@latest upgrade` flow, then rebuild and deploy. No dependency, config field or project-schema migration is added. Existing `theme.blogPageSize` must be a positive safe integer; the default remains 10. Author/share-image normalization, disabled Fragment image-reference isolation, bounded Red Queen decoding, preview-load retries, live reduced-motion response and build-scoped article indexing are package fixes. Cover-source pools and article cover references are still processed when Fragments is disabled.

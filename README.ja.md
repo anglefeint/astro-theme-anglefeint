@@ -56,11 +56,12 @@ Cursor、Codex、Claude Code にプロジェクトの `AGENTS.md` に従って�
 **Node.js 22.12.0 以降**が必要で、**Astro 7** ベースです。ブログを置くディレクトリで実行します。
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+作成ウィザードでは依存関係のインストールに Yes を選びます。自分で省略した場合だけ、起動前に `npm install` を実行してください。`--no-ai` は汎用 AI 指示ファイルの追加作成を省略します。テーマ独自の指示は starter に含まれます。
 
 表示された URL を開きます。既存ブログは元ディレクトリで `npm install`、`npm run dev` を実行し、再作成しません。停止は Ctrl+C です。以降はプロジェクトルートで dev を止めるか別ターミナルを開いて実行します。
 
@@ -78,9 +79,9 @@ npm run dev
 
 ```ts
 site: {
-  title: '我的博客',
-  author: '你的名字',
-  description: '记录项目、阅读和生活。',
+  title: '私のブログ',
+  author: 'あなたの名前',
+  description: 'プロジェクト、読書、日々の記録。',
   url: 'https://your-domain.example',
 },
 ```
@@ -109,12 +110,12 @@ npm run new-post -- my-first-post
 
 ```md
 ---
-title: '我的第一篇文章'
-description: '记录这次开始写博客的想法。'
+title: '最初の記事'
+description: 'ブログを始めたときの思いを記録します。'
 pubDate: '2026-11-13'
 ---
 
-这里开始写正文。
+ここから本文を書きます。
 ```
 
 上は必須項目だけで、生成済みカバーなどの任意項目は残せます。通常の slug は `my-first-post` のように英小文字・数字・ハイフンを使います。
@@ -209,7 +210,7 @@ npx @anglefeint/astro-theme prepare-covers
 npx @anglefeint/astro-theme prepare-covers --check
 ```
 
-ローカル dev・doctor は不足・期限切れを補いますが、build・CI doctor は検証のみで配備側は生成しません。原画像と `src/assets/blog/covers/` 全体（manifest.json、generated/）を Git にコミットします。missing／stale／modified はローカル準備・コミット後に再ビルドしてください。
+0.36.2 以降では dev・build・doctor（CI を含む）が不足・期限切れ・破損した派生画像を必要に応じて補い、正しい既存ファイルは再利用します。原画像の欠落や不正なパスはエラーです。明示的な `prepare-covers --check` と設定同期は読み取り専用です。原画像と `src/assets/blog/covers/` 全体（manifest.json、generated/）を Git に保存すれば再利用でき、配備先のキャッシュは不要です。build／CI doctor の自動準備は 0.36.2 以降で利用できます。0.36.1 では dev または `prepare-covers` で先に準備してください。
 
 通常記事の全本文画像が圧縮された意味ではありません。対象範囲、パス、共有画像は[画像ガイド](https://demo.anglefeint.com/ja/blog/starter-guide-images/)へ。
 

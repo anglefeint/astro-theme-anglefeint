@@ -34,9 +34,9 @@ async function main() {
     if (args.length) throw new Error('doctor takes no arguments.');
     await inspectIntegrationProject(process.cwd());
     const { prepareProjectCovers } = await import('./covers/project.mjs');
-    // Local doctor/upgrade prepares project-owned derivatives; CI remains validation-only.
-    const ci = Boolean(process.env.CI && !['false', '0'].includes(process.env.CI.toLowerCase()));
-    await prepareProjectCovers({ check: ci });
+    // Local and CI doctor use the same preparation policy as normal builds.
+    // Explicit prepare-covers --check remains the read-only validation entry.
+    await prepareProjectCovers();
     process.stdout.write(await npmCommand(['exec', '--', 'astro', 'check'], process.cwd()));
     process.stdout.write(await npmCommand(['run', 'build'], process.cwd()));
     // Source validation is shipped with the package, not copied into the starter.

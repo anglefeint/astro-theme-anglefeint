@@ -4,7 +4,7 @@ title: 'Guia 5: ajustar páginas e recursos ao seu gosto'
 subtitle: 'Encontre a área que deseja alterar: início, About, Decoder, redes sociais, rodapé, música e paginação.'
 description: 'Ajustes pontuais de conteúdo e recursos, com padrões reais, alcance, mesclagem e verificação local.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -42,12 +42,12 @@ Esses campos não desligam a chuva de código inteira nem trocam as cores globai
 
 ### Alterar o texto do terminal de telas largas
 
-O padrão é `Knock, knock.`. Você pode definir primeiro uma configuração em inglês para os idiomas sem substituição própria:
+O padrão é `Knock, knock.`. Para personalizar o texto em português brasileiro, configure esse idioma:
 
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+    'pt-br': { messages: { home: { transmission: 'Registre ideias e deixe algumas pistas.' } } },
   },
 },
 ```
@@ -60,21 +60,21 @@ Consulte as definições completas desses campos na [referência da página inic
 
 ## 2. Colocar sua apresentação em About
 
-Abra `/zh/about/` para ver o exemplo em chinês. Corpo e contatos são configurados por idioma, sem editar o template da página:
+Abra `/pt-br/about/` para ver o exemplo em português brasileiro. Corpo e contatos são configurados por idioma, sem editar o template da página:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       about: {
         metaLine: '$ profile | building and learning',
         sections: {
-          who: '我是小林，喜欢开发与写作。',
-          what: '这里记录我的项目和学习笔记。',
-          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
-          now: '最近在整理个人博客。',
-          contactLead: '欢迎联系我。',
-          signature: '> 谢谢你来这里。',
+          who: 'Sou Lin e gosto de desenvolver e escrever.',
+          what: 'Aqui registro meus projetos e o que aprendo.',
+          ethos: ['Mantenha a curiosidade.', 'Transformar ideias em ferramentas úteis.'],
+          now: 'Estou organizando meu blog pessoal.',
+          contactLead: 'Entre em contato comigo.',
+          signature: '> Obrigado por passar por aqui.',
         },
         contact: {
           email: 'you@example.com',
@@ -89,7 +89,7 @@ i18n: {
 
 Substitua nome e endereços. `metaLine` é o estado no topo do painel. `who`, `what`, `ethos` e `now` representam apresentação, atividades, princípios e momento atual; `contactLead` introduz o contato e `signature` é a assinatura. `ethos` é um array de strings: um array novo substitui todos os itens antigos.
 
-Parágrafos e assinatura são texto simples: `\n` quebra a linha e `\n\n` deixa uma linha vazia. Não interpretam Markdown nem HTML; não use `<br>`. O exemplo altera apenas chinês simplificado. Outros idiomas precisam de textos próprios, sem tradução automática. Campos ausentes seguem as regras de fallback daquele idioma.
+Parágrafos e assinatura são texto simples: `\n` quebra a linha e `\n\n` deixa uma linha vazia. Não interpretam Markdown nem HTML; não use `<br>`. O exemplo altera apenas português brasileiro. Outros idiomas precisam de textos próprios, sem tradução automática. Campos ausentes seguem as regras de fallback daquele idioma.
 
 Os controles de janela permitem fechar, minimizar ou colocar o painel em tela cheia, guardando o estado localmente no navegador. A saída AI e o progresso de download são demonstrações do tema, sem conectar um serviço de IA ao preencher textos. O decodificador processa a entrada localmente no navegador.
 
@@ -99,24 +99,24 @@ Outros campos estão na [referência de About](/pt-br/blog/config-about/#about-c
 
 ## 3. Ajustar Decoder e os cards de leitura
 
-Decoder Lab fica em `/zh/decoder/` no exemplo e vem habilitado. Sua estética homenageia pioneiros cypherpunk e da liberdade digital. O processamento local e a imagem de redes ponto a ponto remetem à autonomia sobre ferramentas e dados.
+Decoder Lab fica em `/pt-br/decoder/` no exemplo e vem habilitado. Sua estética homenageia pioneiros cypherpunk e da liberdade digital. O processamento local e a imagem de redes ponto a ponto remetem à autonomia sobre ferramentas e dados.
 
 Ele decodifica texto, interpreta chamadas de tokens suportadas e verifica formatos de endereço, sem RPC, conexão de carteira ou API Key. Não consulta saldo, executa transações nem comprova propriedade; inserir calldata não verifica o comportamento real de um contrato.
 
 `enableDecoderPage: false` em `theme` desliga a página e suas entradas fornecidas pelo tema. Desabilitar About não desliga Decoder nem o contrário. Links personalizados continuam sob sua responsabilidade.
 
-Textos de homenagem e cards são definidos por idioma. Por exemplo, para substituir a lista em chinês:
+Textos de homenagem e cards são definidos por idioma. Por exemplo, para substituir a lista em português brasileiro:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       messages: {
         decoderPage: {
           readings: {
-            tribute: '思想与代码，让隐私和自由更进一步。',
+            tribute: 'Ideias e código levam a privacidade e a liberdade adiante.',
             links: [
-              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+              { title: 'Minhas leituras', href: 'https://example.com/', author: 'Nome do autor', year: '2026' },
             ],
           },
         },
@@ -140,7 +140,7 @@ As contas ficam em `social.links`, compartilhadas pelo topo e rodapé na ordem d
 social: {
   links: [
     { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
-    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+    { href: 'https://example.com/community', label: 'Minha comunidade', iconSrc: '/icons/community.svg' },
   ],
 },
 ```
@@ -154,11 +154,11 @@ No celular, as redes do topo ficam ocultas, mas as do rodapé permanecem. `links
 ### Créditos, texto e links adicionais do rodapé
 
 ```ts
-site: { tagline: '保持好奇，持续记录。' },
+site: { tagline: 'Mantenha a curiosidade e continue escrevendo.' },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+    links: [{ label: 'Código-fonte do projeto', href: 'https://github.com/yourname/your-project' }],
   },
 },
 ```
@@ -179,7 +179,7 @@ Coloque primeiro seu áudio em `public/music/my-song.mp3` e mescle:
 theme: {
   music: {
     enabled: true,
-    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+    tracks: [{ title: 'Uma música minha', artist: 'Autor', src: '/music/my-song.mp3' }],
   },
 },
 ```
@@ -246,7 +246,7 @@ Para apresentar projetos separadamente, execute na raiz:
 npm run new-page -- projects
 ```
 
-O comando cria `src/pages/[lang]/projects.astro`, com layout `base` por padrão, e gera `/<语言代码>/projects/` para os idiomas ativos, como `/en/projects/` ou `/zh/projects/`. Edite o arquivo Astro para preencher o corpo. Ele não traduz nem acrescenta uma entrada ao menu automaticamente. Ofereça um link no conteúdo ou em links do rodapé.
+O comando cria `src/pages/[lang]/projects.astro`, com layout `base` por padrão, e gera `/<locale>/projects/` para os idiomas ativos, como `/en/projects/` ou `/zh/projects/`. Edite o arquivo Astro para preencher o corpo. Ele não traduz nem acrescenta uma entrada ao menu automaticamente. Ofereça um link no conteúdo ou em links do rodapé.
 
 Use `--theme` quando quiser um estilo específico. Por exemplo, `npm run new-page -- portfolio --theme cyber` cria outra página Cyberpunk. As opções `base`, `ai`, `cyber`, `hacker` e `matrix` alteram o layout daquela página, não as quatro atmosferas globais. Use letras inglesas minúsculas, números e hífens no slug; caminhos aninhados como `projects/labs` são aceitos. Evite rotas padrão do pacote. Arquivos existentes geram erro: não execute as cinco variantes de tema para o mesmo caminho.
 

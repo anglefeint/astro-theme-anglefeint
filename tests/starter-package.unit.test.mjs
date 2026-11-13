@@ -41,10 +41,10 @@ test('distributed tutorial overrides use the current integration guidance', asyn
       await readFile(new URL('../' + destination, import.meta.url), 'utf8'),
       `${destination} must match its starter template`
     );
-    // The integration's upgrade introduction is already published. Later
-    // sections may accurately distinguish a new CLI change awaiting release.
-    const upgradeIntroduction = body.split('```')[0];
-    assert.doesNotMatch(upgradeIntroduction, /not published yet|尚未发布|未公開です/);
+    // The 0.27 integration/upgrader is already published. New behavior (such
+    // as build-time image preparation) may correctly carry an unreleased note
+    // in the introduction, so do not reject all version notes before a fence.
+    assert.doesNotMatch(body, /0\.27\.0[^\n]*(?:not published yet|尚未发布|未公開です)/);
     assert.doesNotMatch(body, /UPGRADING\.md#unreleased-/);
     tutorials++;
   }

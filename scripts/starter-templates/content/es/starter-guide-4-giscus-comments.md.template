@@ -4,7 +4,7 @@ title: 'Guía 6: permitir comentarios de lectores'
 subtitle: 'Giscus, discusiones y traducciones'
 description: 'Configura Giscus para entradas y fragments y elige cómo compartir discusiones entre idiomas.'
 pubDate: '2026-11-10'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -105,7 +105,7 @@ Para compartir entre chino e inglés conservando separadas entradas distintas, m
 ```ts
 theme: {
   comments: {
-    // 保留 enabled: true 和自己的 repo、repoId、category、categoryId。
+    // Conserva enabled: true y tus valores de repo, repoId, category y categoryId.
     shareAcrossLocales: true,
     mapping: 'specific',
     term: '',

@@ -175,7 +175,7 @@ theme: {
 
 <a id="archive-messages"></a>
 
-接頭辞は `i18n.locales.<语言>.messages.blog`、任意 string 上書き、対応する見出し・説明・控件がある場合に有効です。内蔵言語と補完で解決し、表は簡体中国語／英語の実値、他言語は固有値です。
+接頭辞は `i18n.locales.<locale>.messages.blog`、任意 string 上書き、対応する見出し・説明・控件がある場合に有効です。内蔵言語と補完で解決し、表は簡体中国語／英語の実値、他言語は固有値です。
 
 | 項目                 | 簡体中国語既定 / 英語既定                                                                                        | 役割と制約                                                                                   |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -187,13 +187,13 @@ theme: {
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
         blog: {
-          title: '文章归档',
-          pageTitle: '文章归档 - 第',
-          archiveDescription: '项目、阅读与学习笔记。',
-          pageDescription: '文章归档分页',
+          title: '記事アーカイブ',
+          pageTitle: '記事アーカイブ - ページ',
+          archiveDescription: 'プロジェクト、読書、学習ノート。',
+          pageDescription: '記事アーカイブのページ',
         },
       },
     },
@@ -219,15 +219,15 @@ i18n: {
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
         blog: {
-          previous: '前一页',
-          next: '后一页',
-          paginationAria: '文章分页',
-          jumpTo: '前往第几页',
-          jumpInputLabel: '目标页码',
-          jumpGo: '前往',
+          previous: '前のページ',
+          next: '次のページ',
+          paginationAria: '記事のページ送り',
+          jumpTo: '移動するページ',
+          jumpInputLabel: '移動先のページ番号',
+          jumpGo: '移動',
         },
       },
     },
@@ -239,7 +239,7 @@ i18n: {
 
 <a id="tag-messages"></a>
 
-同じ `i18n.locales.<语言>.messages.blog` の任意 string で通常補完を使い、該当領域がある場合に有効です。
+同じ `i18n.locales.<locale>.messages.blog` の任意 string で通常補完を使い、該当領域がある場合に有効です。
 
 | 項目          | 簡体中国語既定 / 英語既定 | 役割と制約                                                       |
 | ------------- | ------------------------- | ---------------------------------------------------------------- |
@@ -251,13 +251,13 @@ i18n: {
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
         blog: {
-          tags: '按标签浏览',
-          allPosts: '返回全部文章',
-          noTags: '暂时没有可浏览的标签。',
-          taggedPosts: '篇文章',
+          tags: 'タグで探す',
+          allPosts: 'すべての記事に戻る',
+          noTags: 'まだ閲覧できるタグがありません。',
+          taggedPosts: '件の記事',
         },
       },
     },

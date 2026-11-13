@@ -110,7 +110,7 @@ i18n: {
 - `messages.siteDescription` is homepage metadata, not the visible introduction. Top-level `site.description` alone may not replace the built-in homepage description.
 - `messages.nav` changes entry labels without changing routes or article content.
 
-Likewise, `i18n.locales.<代码>.about` changes localized About content; modules under `messages` change their UI text. About and Decoder still require their global feature switches; adding translations does not enable pages. See [page and feature customization](/en/blog/starter-guide-3-comments-about-and-theme-toggles/) for examples.
+Likewise, `i18n.locales.<locale>.about` changes localized About content; modules under `messages` change their UI text. About and Decoder still require their global feature switches; adding translations does not enable pages. See [page and feature customization](/en/blog/starter-guide-3-comments-about-and-theme-toggles/) for examples.
 
 See the [language reference](/en/blog/config-languages/#registry) for metadata/default addresses, and [homepage fields](/en/blog/config-home/#home-title) for the three different homepage texts.
 
@@ -215,7 +215,7 @@ npm run doctor
 npm run preview
 ```
 
-doctor includes checking and building; do not immediately repeat check/build. Verify each language's article search in built preview: indexes search the current language, not a merged multilingual collection. Every enabled language's `/<代码>/rss.xml` contains only its own articles.
+doctor includes checking and building; do not immediately repeat check/build. Verify each language's article search in built preview: indexes search the current language, not a merged multilingual collection. Every enabled language's `/<locale>/rss.xml` contains only its own articles.
 
 Confirm the public domain, then redeploy all of `dist/`. Language switches, default addresses and content changes require rebuilding; local configuration edits do not update production. Remove stale deployment output: disabling languages does not create redirects for old URLs.
 

@@ -16,26 +16,26 @@ The standard site's interactive virtual terminal is hosted by About. These field
 
 ## The sixteen messages.terminal fields
 
-Full prefix: `i18n.locales.<语言>.messages.terminal`. Every field is an optional string override, defaulting to built-in language text and the ordinary fallback chain. The table lists Simplified Chinese / English defaults and sample field values. Effects require enabled About, initialized terminal and the corresponding command result/reader mode.
+Full prefix: `i18n.locales.<locale>.messages.terminal`. Every field is an optional string override, defaulting to built-in language text and the ordinary fallback chain. The table lists Simplified Chinese / English defaults and sample field values. Effects require enabled About, initialized terminal and the corresponding command result/reader mode.
 
-| Field           | Simplified Chinese / English default                                                                                                | Status, purpose and limits                                                                                                       | Example value                          |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `commandInput`  | 终端命令 / Terminal command                                                                                                         | Conditional: accessible name of the command input; neither the prompt path nor visible panel title.                              | `"终端输入"`                           |
-| `hint`          | 输入 help 开始探索。Tab 补全唯一路径，↑/↓ 查看历史命令。 / Type help to explore. Tab completes a unique path; ↑/↓ recalls commands. | Conditional: initialization hint. Startup also runs virtual pwd. Empty text clears the hint without disabling the terminal.      | `"输入 help 查看命令。"`               |
-| `help`          | 只读虚拟文件，不会在服务器执行命令。 / Read-only virtual files. No commands run on a server.                                        | Conditional: explanatory line in help; fixed command help follows. Empty text does not hide the full list.                       | `"只读浏览公开文章，不运行系统命令。"` |
-| `syntax`        | 引号或转义未结束。 / Unclosed quote or escape.                                                                                      | Conditional: unterminated quote/escape. Empty text falls back to the syntax key.                                                 | `"引号或转义未结束。"`                 |
-| `usage`         | 用法：{value} / Usage: {value}                                                                                                      | Conditional: wrong argument count. {value} becomes usage text; empty text falls back to usage.                                   | `"用法：{value}"`                      |
-| `unknown`       | 不支持此命令：{value} / Command not supported: {value}                                                                              | Conditional: unsupported command. {value} becomes the command name. Text cannot add commands.                                    | `"不支持命令：{value}"`                |
-| `notFound`      | 文件或目录不存在：{value} / No such file or directory: {value}                                                                      | Conditional: missing virtual path. {value} is the requested path, not an HTTP status.                                            | `"未找到：{value}"`                    |
-| `notDirectory`  | 不是目录：{value} / Not a directory: {value}                                                                                        | Conditional: cd target is not a directory; {value} is the target path.                                                           | `"不是目录：{value}"`                  |
-| `isDirectory`   | 这是目录：{value} / Is a directory: {value}                                                                                         | Conditional: cat/vi/vim/view target is not a file; {value} is the target path.                                                   | `"目标不是文件：{value}"`              |
-| `failed`        | 无法读取：{value} / Unable to read: {value}                                                                                         | Conditional: generic read failure; {value} is the path, without automatically appended original error details.                   | `"读取失败：{value}"`                  |
-| `tooLarge`      | 文件超过阅读大小限制：{value} / File exceeds the reading limit: {value}                                                             | Conditional: file exceeds the read limit. {value} is its path; editing text does not raise the limit.                            | `"文件过大：{value}"`                  |
-| `empty`         | （空目录） / (empty directory)                                                                                                      | Conditional: ls has no entries; not an empty-file-body notice.                                                                   | `"目录为空。"`                         |
-| `loading`       | 正在读取… / Loading…                                                                                                                | Conditional: Canvas input-position message while a command is pending; empty falls back to ..., without changing network policy. | `"正在读取…"`                          |
-| `readerTitle`   | 文章阅读器 / Article reader                                                                                                         | Currently unused: types/default text remain, but reader title uses the file title or path. This cannot override it.              | `"文章阅读器"`                         |
-| `readerHint`    | 只读 · 输入 :q 并回车退出 · Esc 关闭 / Read only · :q + Enter to exit · Esc to close                                                | Conditional: read-only reader hint. Empty falls back to :q; text does not change shortcuts or exit commands.                     | `"只读 · :q 回车退出 · Esc 关闭"`      |
-| `readerCommand` | 阅读器命令 / Reader command                                                                                                         | Conditional: accessible name of the reader input; empty falls back to the terminal input name.                                   | `"阅读器命令输入"`                     |
+| Field           | Simplified Chinese / English default                                                                                                | Status, purpose and limits                                                                                                       | Example value                                                          |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `commandInput`  | 终端命令 / Terminal command                                                                                                         | Conditional: accessible name of the command input; neither the prompt path nor visible panel title.                              | `"Terminal input"`                                                     |
+| `hint`          | 输入 help 开始探索。Tab 补全唯一路径，↑/↓ 查看历史命令。 / Type help to explore. Tab completes a unique path; ↑/↓ recalls commands. | Conditional: initialization hint. Startup also runs virtual pwd. Empty text clears the hint without disabling the terminal.      | `"Type help to see commands."`                                         |
+| `help`          | 只读虚拟文件，不会在服务器执行命令。 / Read-only virtual files. No commands run on a server.                                        | Conditional: explanatory line in help; fixed command help follows. Empty text does not hide the full list.                       | `"Browse public articles read-only, without running system commands."` |
+| `syntax`        | 引号或转义未结束。 / Unclosed quote or escape.                                                                                      | Conditional: unterminated quote/escape. Empty text falls back to the syntax key.                                                 | `"Unclosed quote or escape."`                                          |
+| `usage`         | 用法：{value} / Usage: {value}                                                                                                      | Conditional: wrong argument count. {value} becomes usage text; empty text falls back to usage.                                   | `"Usage: {value}"`                                                     |
+| `unknown`       | 不支持此命令：{value} / Command not supported: {value}                                                                              | Conditional: unsupported command. {value} becomes the command name. Text cannot add commands.                                    | `"Unsupported command: {value}"`                                       |
+| `notFound`      | 文件或目录不存在：{value} / No such file or directory: {value}                                                                      | Conditional: missing virtual path. {value} is the requested path, not an HTTP status.                                            | `"Not found: {value}"`                                                 |
+| `notDirectory`  | 不是目录：{value} / Not a directory: {value}                                                                                        | Conditional: cd target is not a directory; {value} is the target path.                                                           | `"Not a directory: {value}"`                                           |
+| `isDirectory`   | 这是目录：{value} / Is a directory: {value}                                                                                         | Conditional: cat/vi/vim/view target is not a file; {value} is the target path.                                                   | `"Not a file: {value}"`                                                |
+| `failed`        | 无法读取：{value} / Unable to read: {value}                                                                                         | Conditional: generic read failure; {value} is the path, without automatically appended original error details.                   | `"Unable to read: {value}"`                                            |
+| `tooLarge`      | 文件超过阅读大小限制：{value} / File exceeds the reading limit: {value}                                                             | Conditional: file exceeds the read limit. {value} is its path; editing text does not raise the limit.                            | `"File too large: {value}"`                                            |
+| `empty`         | （空目录） / (empty directory)                                                                                                      | Conditional: ls has no entries; not an empty-file-body notice.                                                                   | `"The directory is empty."`                                            |
+| `loading`       | 正在读取… / Loading…                                                                                                                | Conditional: Canvas input-position message while a command is pending; empty falls back to ..., without changing network policy. | `"Loading…"`                                                           |
+| `readerTitle`   | 文章阅读器 / Article reader                                                                                                         | Currently unused: types/default text remain, but reader title uses the file title or path. This cannot override it.              | `"Article reader"`                                                     |
+| `readerHint`    | 只读 · 输入 :q 并回车退出 · Esc 关闭 / Read only · :q + Enter to exit · Esc to close                                                | Conditional: read-only reader hint. Empty falls back to :q; text does not change shortcuts or exit commands.                     | `"Read only · :q + Enter to exit · Esc to close"`                      |
+| `readerCommand` | 阅读器命令 / Reader command                                                                                                         | Conditional: accessible name of the reader input; empty falls back to the terminal input name.                                   | `"Reader command input"`                                               |
 
 <a id="placeholders"></a>
 
@@ -49,25 +49,25 @@ readerTitle is unused, not a title-control switch. Its default string remaining 
 
 <a id="example"></a>
 
-## Mergeable Chinese example
+## Mergeable English example
 
 Merge into existing defineThemeConfig({...}) in src/site.config.ts, retaining other settings without duplicating i18n. Chinese-only overrides do not automatically change other languages; see [language fallback](/en/blog/config-languages/#fallback).
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         terminal: {
-          commandInput: '终端输入',
-          hint: '输入 help 查看命令。',
-          help: '只读浏览公开文章，不运行系统命令。',
-          usage: '用法：{value}',
-          notFound: '未找到：{value}',
-          failed: '读取失败：{value}',
-          tooLarge: '文件过大：{value}',
-          readerHint: '只读 · :q 回车退出 · Esc 关闭',
-          readerCommand: '阅读器命令输入',
+          commandInput: 'Terminal input',
+          hint: 'Type help to see commands.',
+          help: 'Browse public articles read-only, without running system commands.',
+          usage: 'Usage: {value}',
+          notFound: 'Not found: {value}',
+          failed: 'Unable to read: {value}',
+          tooLarge: 'File too large: {value}',
+          readerHint: 'Read only · :q + Enter to exit · Esc to close',
+          readerCommand: 'Reader command input',
         },
       },
     },
@@ -79,12 +79,12 @@ i18n: {
 
 ## Other configuration used by the terminal
 
-| Configuration                           | Terminal relationship                                                                                                    | Main reference                                                   |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| theme.enableAboutPage                   | boolean, default true. Disabling standard About also removes its terminal.                                               | [About switch](/en/blog/config-about/#page-enabled)              |
-| `i18n.locales.<语言>.about.scriptsPath` | string, default /root/bash/scripts. Virtual path prefix/initial directory, not server storage.                           | [About tool settings](/en/blog/config-about/#tool-fields)        |
-| `i18n.locales.<语言>.about.sections`    | Public biography contributes to virtual about.md, not command-error messages.                                            | [About body](/en/blog/config-about/#body-fields)                 |
-| Current-language articles               | Automatically populate the virtual filesystem; article JSON loads on demand, without manual registration in site.config. | [Writing posts](/en/blog/starter-guide-2-languages-and-routing/) |
+| Configuration                             | Terminal relationship                                                                                                    | Main reference                                                   |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| theme.enableAboutPage                     | boolean, default true. Disabling standard About also removes its terminal.                                               | [About switch](/en/blog/config-about/#page-enabled)              |
+| `i18n.locales.<locale>.about.scriptsPath` | string, default /root/bash/scripts. Virtual path prefix/initial directory, not server storage.                           | [About tool settings](/en/blog/config-about/#tool-fields)        |
+| `i18n.locales.<locale>.about.sections`    | Public biography contributes to virtual about.md, not command-error messages.                                            | [About body](/en/blog/config-about/#body-fields)                 |
+| Current-language articles                 | Automatically populate the virtual filesystem; article JSON loads on demand, without manual registration in site.config. | [Writing posts](/en/blog/starter-guide-2-languages-and-routing/) |
 
 About sidebar.allScripts and modals.allScripts.title rename tool entries/directory dialogs, not terminal commands. effects.backgroundLines is not an effective initial-hint override in an interactive session; see [About effect fields](/en/blog/config-about/#effect-fields) for its fallback-only status.
 

@@ -4,19 +4,19 @@ title: 'Referencia de configuración: inicio'
 subtitle: 'Título, presentación, entradas recientes y efectos Matrix'
 description: 'Tipos, valores, límites y ejemplos de los campos de inicio usados por el tema.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 [Vuelve al índice de configuración](/es/blog/config-reference/). Aquí se documentan los campos usados realmente por el inicio, sin cambiar el tema ni confundir ajustes personales del demo con valores predeterminados.
 
-Sustituye `<语言>` por un código activo. Los ejemplos usan zh y solo afectan chino; no cambian inglés ni activan idiomas. Combina los fragmentos en el defineThemeConfig existente de `src/site.config.ts` y conserva los otros campos theme, i18n y site.
+Sustituye `<locale>` por un código activo. Los ejemplos usan es y solo afectan español; no cambian inglés ni activan idiomas. Combina los fragmentos en el defineThemeConfig existente de `src/site.config.ts` y conserva los otros campos theme, i18n y site.
 
 ## 1. Título de inicio, presentación y descripción de metadatos
 
 <a id="home-title"></a>
 
-### `i18n.locales.<语言>.site.homeTitle`
+### `i18n.locales.<locale>.site.homeTitle`
 
 - **Tipo:** `string` opcional.
 - **Predeterminado del tema:** sin definir. Los idiomas integrados no tienen homeTitle independiente y terminan usando el nombre global, por defecto My Blog.
@@ -25,7 +25,7 @@ Sustituye `<语言>` por un código activo. Los ejemplos usan zh y solo afectan 
 
 <a id="home-hero"></a>
 
-### `i18n.locales.<语言>.site.hero`
+### `i18n.locales.<locale>.site.hero`
 
 - **Tipo:** `string` opcional.
 - **Predeterminado del tema:** presentación integrada por idioma. Chino simplificado: «在这里写一段站点简介，并告诉读者你将发布什么类型的内容。» Inglés: «Write a short introduction for your site and what readers can expect from your posts.» Los demás tienen valores propios.
@@ -34,7 +34,7 @@ Sustituye `<语言>` por un código activo. Los ejemplos usan zh y solo afectan 
 
 <a id="home-description"></a>
 
-### `i18n.locales.<语言>.messages.siteDescription`
+### `i18n.locales.<locale>.messages.siteDescription`
 
 - **Tipo:** sustitución `string` opcional.
 - **Predeterminado del tema:** texto integrado resuelto. Chino simplificado: «电影感网页界面与 AI 时代工程实践文章。» Inglés: «Cinematic web interfaces and AI-era engineering essays.»
@@ -46,12 +46,12 @@ Pueden configurarse juntos, pero son independientes:
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       site: {
-        homeTitle: '我的数字花园',
-        hero: '记录开发、阅读和生活。',
+        homeTitle: 'Mi jardín digital',
+        hero: 'Apuntes de desarrollo, lecturas y vida cotidiana.',
       },
-      messages: { siteDescription: '个人项目与学习笔记。' },
+      messages: { siteDescription: 'Proyectos y apuntes personales.' },
     },
   },
 },
@@ -109,7 +109,7 @@ Desactivar los dos primeros elimina su componente de arranque. No hay campos sit
 
 <a id="home-messages"></a>
 
-Son sustituciones `string` opcionales bajo `i18n.locales.<语言>.messages.home`. Los campos normales usan respaldo de mensajes. La tabla muestra chino simplificado / inglés; otros idiomas integrados tienen textos propios.
+Son sustituciones `string` opcionales bajo `i18n.locales.<locale>.messages.home`. Los campos normales usan respaldo de mensajes. La tabla muestra chino simplificado / inglés; otros idiomas integrados tienen textos propios.
 
 | Segmento final | Predeterminado chino simplificado / inglés                      | Función y límites                                                                                 |
 | -------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -123,13 +123,13 @@ Son condicionales a la existencia de sus zonas. Strings vacías quitan texto, no
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       messages: {
         home: {
-          latest: '最近更新',
-          viewAll: '全部文章',
-          noPosts: '这里还没有文章。',
-          openDoor: '打开走廊预览',
+          latest: 'Últimas entradas',
+          viewAll: 'Todas las entradas',
+          noPosts: 'Todavía no hay entradas.',
+          openDoor: 'Abrir vista del pasillo',
         },
       },
     },
@@ -139,7 +139,7 @@ i18n: {
 
 <a id="home-transmission"></a>
 
-### `i18n.locales.<语言>.messages.home.transmission`
+### `i18n.locales.<locale>.messages.home.transmission`
 
 - **Tipo:** sustitución `string` opcional.
 - **Predeterminado del tema:** `'Knock, knock.'` compartido por idiomas, incluido chino, sin ajustes personales.
@@ -151,16 +151,16 @@ Para texto compartido por idiomas sin sustitución propia:
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '这里留下一点线索。' } } },
+    es: { messages: { home: { transmission: 'Deja aquí una pequeña pista.' } } },
   },
 },
 ```
 
-El mismo campo en zh solo cambia chino. El texto no mide señales reales ni altera cerradura/pasillo.
+El mismo campo en es solo cambia español. El texto no mide señales reales ni altera cerradura/pasillo.
 
 <a id="message-hero"></a>
 
-### `i18n.locales.<语言>.messages.home.hero`
+### `i18n.locales.<locale>.messages.home.hero`
 
 - **Tipo:** sustitución `string` opcional.
 - **Predeterminado del tema:** presentación integrada por idioma; chino simplificado/inglés coinciden con site.hero de arriba.
@@ -170,7 +170,7 @@ El mismo campo en zh solo cambia chino. El texto no mide señales reales ni alte
 ```ts
 i18n: {
   locales: {
-    zh: { messages: { home: { hero: '仅在没有可用 site.hero 时使用的介绍。' } } },
+    es: { messages: { home: { hero: 'Introducción usada cuando site.hero no tiene un valor disponible.' } } },
   },
 },
 ```
@@ -200,12 +200,12 @@ Apagado, navega directamente. No ofrece duración, colores ni destino configurab
 
 No son exclusivos de inicio. Esta tabla describe su uso aquí; sus módulos principales los definen por completo.
 
-| Ruta completa                                  | Relación con inicio                                                                                      | Referencia principal                                                   |
-| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `theme.fragments.enabled`                      | Muestra avatar si hay fragments del idioma; también controla lista completa. Máximo tres vistas previas. | [Control Fragments](/es/blog/config-fragments/#enabled)                |
-| `i18n.locales.<语言>.messages.blog.allPosts`   | Tooltip de cantidad reciente y nombre accesible del archivo.                                             | [Textos compartidos de lista](/es/blog/config-blog-list/#tag-messages) |
-| `i18n.locales.<语言>.messages.fragments.title` | Nombre accesible del avatar, no texto a su lado.                                                         | [Textos Fragments](/es/blog/config-fragments/#fragment-messages)       |
-| `i18n.locales.<语言>.messages.fragments.close` | Nombre accesible de cerrar vista, no forma del botón.                                                    | [Textos Fragments](/es/blog/config-fragments/#fragment-messages)       |
+| Ruta completa                                    | Relación con inicio                                                                                      | Referencia principal                                                   |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `theme.fragments.enabled`                        | Muestra avatar si hay fragments del idioma; también controla lista completa. Máximo tres vistas previas. | [Control Fragments](/es/blog/config-fragments/#enabled)                |
+| `i18n.locales.<locale>.messages.blog.allPosts`   | Tooltip de cantidad reciente y nombre accesible del archivo.                                             | [Textos compartidos de lista](/es/blog/config-blog-list/#tag-messages) |
+| `i18n.locales.<locale>.messages.fragments.title` | Nombre accesible del avatar, no texto a su lado.                                                         | [Textos Fragments](/es/blog/config-fragments/#fragment-messages)       |
+| `i18n.locales.<locale>.messages.fragments.close` | Nombre accesible de cerrar vista, no forma del botón.                                                    | [Textos Fragments](/es/blog/config-fragments/#fragment-messages)       |
 
 Si falta aun activo, comprueba fragments del idioma actual. No copies IDs para forzar el avatar. Consulta [límites de imagen/código](/es/blog/config-fragments/#preview-and-links) y [publicar fragments](/es/blog/starter-guide-5-fragments/).
 
