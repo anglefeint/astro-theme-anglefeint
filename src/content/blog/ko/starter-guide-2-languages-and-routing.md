@@ -4,7 +4,7 @@ title: '사용 가이드 2: 글 작성과 콘텐츠 관리'
 subtitle: '글 작성, 표지와 태그, 목차, 이미지 미리보기, 코드 복사, 검색, 공유 이미지를 설명합니다.'
 description: '글 작성, 표지와 태그, 목차, 이미지 미리보기, 코드 복사, 검색, 공유 이미지를 설명합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-11'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -168,3 +168,9 @@ npx @anglefeint/astro-theme@latest upgrade
 업그레이드 실패 시 `dist/`를 배포하지 마세요. 의존성 복원은 이전 빌드 결과물을 복원하지 않습니다. 오류를 해결하고 `npm run doctor`가 성공한 뒤 배포하세요. pnpm 사용자는 릴리스 호환성을 확인하고 잠금 파일을 유지한 채 `pnpm add @anglefeint/astro-theme@latest`와 `pnpm run doctor`로 수동 업데이트하세요.
 
 [사용자 가이드 5: 조각 게시하기](../starter-guide-5-fragments/) — 짧은 생각을 Markdown으로 기록하고 선택적으로 팝업 댓글을 사용합니다.
+
+## Blog List 영구 커버 이미지 (0.36.0+)
+
+이 소스 변경은 다음 테마 출시가 필요하며 출시된 0.35.0에는 포함되지 않습니다. 기존 heroImage 경로를 유지하거나 새 원본을 src/assets/blog/covers/originals/에 넣고 글에서 참조하세요. 로컬 dev/doctor는 누락되거나 오래된 목록용 크기를 생성합니다. `npx @anglefeint/astro-theme prepare-covers`도 사용할 수 있고 `--check`는 쓰기 없이 검사합니다. 원본과 src/assets/blog/covers/ 전체(manifest.json, generated/)를 Git에 커밋하세요. 빌드와 CI doctor는 검사만 하며 누락·오래됨·수정된 파일에서 실패합니다. 배포 서버에서 재생성하거나 Astro 이미지 캐시에 의존하지 않습니다. 목록은 반응형 이미지와 두 커버 후보 우선 로딩을 사용합니다. WebP 품질 80은 기존 인코딩 목표이며 픽셀 무손실을 보장하지 않습니다. 원본은 유지하고 SVG/애니메이션 커버는 원래 형식을 유지합니다.
+
+글 상세 페이지의 기본 커버에도 같은 파일을 사용합니다. Fragments 로컬 이미지도 같은 준비·커밋 절차를 사용합니다. [가이드 5](../starter-guide-5-fragments/)를 참고하세요.

@@ -518,3 +518,11 @@ new-fragment gera um Nano ID de oito letras e dígitos, diferencia maiúsculas e
 No código atual, ativar `theme.fragments.enabled` adiciona um avatar em pixels abaixo do cabeçalho da página inicial quando há fragmentos no idioma atual. Ao abrir, aparecem os três mais recentes. Cada cartão abre o original; a contagem e a seta inferiores abrem a lista completa. A contagem significa prévias / total no idioma. Imagens e código têm altura limitada, com o excesso recortado. O botão não aparece quando desativado ou sem conteúdo. Não exige nova configuração; requer o tema 0.35.0 ou posterior.
 
 OUTPUT mantém palavras, tokens e o nome opcional do modelo. Tempo de leitura, latency e confidence deixam de ser exibidos, mesmo presentes no frontmatter; os campos antigos continuam aceitos. Texto e painel aparecem imediatamente e permanecem imóveis. A rede de fundo e a faixa luminosa do título permanecem.
+
+## Capas persistentes de Blog List (0.36.0+)
+
+Esta alteração exige o tema 0.36.0 ou posterior e não está na versão publicada 0.35.0. Mantenha os caminhos heroImage ou coloque novos originais em src/assets/blog/covers/originals/ e referencie-os nos artigos. dev/doctor locais geram tamanhos ausentes ou desatualizados. Também é possível executar `npx @anglefeint/astro-theme prepare-covers`; `--check` valida sem gravar. Inclua no Git os originais e todo src/assets/blog/covers/ (manifest.json, generated/). O build e doctor em CI apenas validam e falham para arquivos ausentes, antigos ou modificados; não regeneram na hospedagem nem dependem do cache Astro. A lista usa imagens responsivas e prioriza duas candidatas. WebP qualidade 80 mantém o objetivo anterior, sem garantir pixels sem perdas; originais não mudam e SVG/animações mantêm seu formato.
+
+A capa principal do artigo usa os mesmos arquivos responsivos; o efeito Canvas reutiliza a imagem selecionada sem baixar o original separadamente.
+
+As imagens locais de Fragments compartilham esse armazenamento, incluindo `/images/...` em public e links relativos Markdown/HTML. Dimensões ausentes são preenchidas; a lista e as prévias usam os mesmos arquivos responsivos. Imagens remotas não são convertidas.

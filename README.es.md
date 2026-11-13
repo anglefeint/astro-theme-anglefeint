@@ -609,3 +609,11 @@ new-fragment genera un Nano ID de ocho letras y dígitos, distingue mayúsculas 
 En el código actual, activar `theme.fragments.enabled` añade un avatar de píxeles bajo la cabecera de inicio si hay fragmentos en el idioma actual. Al abrirlo se muestran los tres más recientes. Cada tarjeta abre el original; el contador y la flecha inferiores abren la lista completa. El contador indica vistas previas / total del idioma. Imágenes y código tienen altura limitada y se recorta el exceso. No aparece si está desactivado o vacío. No requiere nueva configuración; necesita el tema 0.35.0 o posterior.
 
 OUTPUT conserva palabras, tokens y el nombre opcional del modelo. Ya no muestra tiempo de lectura, latency ni confidence, aunque estén en el frontmatter; los campos antiguos siguen siendo válidos. El texto y su panel aparecen directamente y permanecen quietos. Se conservan la red de fondo y la banda luminosa del título.
+
+## Portadas persistentes de Blog List (0.36.0+)
+
+Este cambio requiere el tema 0.36.0 o posterior y no está en la publicada 0.35.0. Mantén las rutas heroImage o coloca originales nuevos en src/assets/blog/covers/originals/ y referencia cada imagen desde un artículo. dev/doctor locales generan tamaños ausentes u obsoletos. También puedes ejecutar `npx @anglefeint/astro-theme prepare-covers`; `--check` valida sin escribir. Guarda en Git los originales y todo src/assets/blog/covers/ (manifest.json, generated/). El build y doctor en CI solo validan y fallan ante archivos ausentes, obsoletos o modificados; no regeneran en el servidor ni dependen de la caché Astro. La lista usa imágenes adaptables y prioriza dos candidatas. WebP calidad 80 mantiene el objetivo anterior, sin garantizar píxeles sin pérdida; los originales no cambian y SVG/animaciones conservan su formato.
+
+La portada principal del artículo usa los mismos archivos adaptables; el efecto Canvas reutiliza la imagen seleccionada sin descargar el original por separado.
+
+Las imágenes locales de Fragments comparten este almacenamiento, incluidas las rutas `/images/...` de public y los enlaces relativos Markdown/HTML. Se completan las dimensiones ausentes; la lista y las vistas previas usan los mismos archivos adaptables. Las imágenes remotas no se convierten.

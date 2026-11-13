@@ -4,7 +4,7 @@ title: '利用ガイド 2：記事を書く・コンテンツを整理する'
 subtitle: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 description: '記事の作成、カバーとタグの設定、目次、画像プレビュー、コードコピー、検索、共有画像の使い方。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-11'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -168,3 +168,9 @@ npx @anglefeint/astro-theme@latest upgrade
 更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。
 
 [ユーザーガイド 5：断片を公開する](../starter-guide-5-fragments/) — 短い思いを Markdown で残し、コメントをダイアログで表示します。
+
+## Blog List の永続カバー画像（0.36.0+）
+
+この変更には次回のテーマリリースが必要です。公開済み0.35.0には含まれません。既存の heroImage パスを維持するか、新しい原画像を src/assets/blog/covers/originals/ に置いて記事から参照します。ローカル dev/doctor は不足・古い一覧用サイズを生成します。`npx @anglefeint/astro-theme prepare-covers` も使え、`--check` は書き込まず検証します。原画像と src/assets/blog/covers/ 全体（manifest.json、generated/）をGitにコミットしてください。ビルドとCIのdoctorは検証のみで、不足・古い・変更済みファイルをエラーにし、配信環境で再生成せずAstroキャッシュにも依存しません。一覧はレスポンシブ画像を使い、カバー候補2枚を優先します。WebP品質80は従来のエンコード目標で、画素の無損失を保証しません。原画像は変更せず、SVG/アニメーションは元形式を維持します。
+
+記事詳細のメインカバーも同じ画像を使います。Fragments のローカル画像も同じ準備・コミット手順です。[ガイド 5](../starter-guide-5-fragments/)を参照してください。

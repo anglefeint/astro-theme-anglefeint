@@ -1,0 +1,629 @@
+{
+  "schema": 1,
+  "recipe": {
+    "version": 1,
+    "widths": [
+      400,
+      640,
+      800,
+      960,
+      1200
+    ],
+    "format": "webp",
+    "quality": 80,
+    "effort": 4,
+    "autoOrient": true,
+    "crop": false
+  },
+  "recipeHash": "589dfafdbbfc7a9161ce117d8c4e4e17e97509e232c7a0edd3db358e1b40cf8b",
+  "sources": {
+    "src/assets/blog/default-covers/ai-01.webp": {
+      "sourceHash": "019777fd07dbb07094d0dcbfceea8d37d05f1841423291a439b64f28453e26f8",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "ai-01-e406206a-019777fd07db-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "5968c2bb11acc30c144671e2fb0fab8cdd62fda73b8f0c378a91dec77f912d57"
+        },
+        {
+          "file": "ai-01-e406206a-019777fd07db-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "26464cb565eed432c2047ca2ed39164fef47cb020cedb0f0874b96846d540cb8"
+        },
+        {
+          "file": "ai-01-e406206a-019777fd07db-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "eece1b1f0786701dd30d3ca09c5bd4967568a5ef7b2fec801039b7ebeba47939"
+        },
+        {
+          "file": "ai-01-e406206a-019777fd07db-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "d65899e2e265bee26864950f0d209891c69140cb40289ca8bda8fd4470ced4da"
+        },
+        {
+          "file": "ai-01-e406206a-019777fd07db-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "e63d1aa5211b8d2daa2225cc00fcc04394f9f14be658a2920c819806106bf610"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/ai-02.webp": {
+      "sourceHash": "11480043aec59d5ad9e74f3539901e7ba9580db08a5ee012a52c095e3ef3ee0c",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "ai-02-7b4796a8-11480043aec5-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "985bfb651af10b7de8f1b78e021d2bf37c0f0d2eeae2e9945a2e4ae151f48ca6"
+        },
+        {
+          "file": "ai-02-7b4796a8-11480043aec5-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "187e0062beb0420b085659767c6f7c718ec497532a13b6ade4332b39f0be0a1b"
+        },
+        {
+          "file": "ai-02-7b4796a8-11480043aec5-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "eed72b5b13a9936935e92cdc79cf3a77c63d0a9320ad42e6f44cba94f6eef79e"
+        },
+        {
+          "file": "ai-02-7b4796a8-11480043aec5-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "85d4672ca39b12fdd921d1a8286ba4b327e38f8533393cd32bfa821e02493041"
+        },
+        {
+          "file": "ai-02-7b4796a8-11480043aec5-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "4ffb79999ceda2acb81e2aedafdfd4295c394dafcf954e4397e1f111dd497633"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/ai-03.webp": {
+      "sourceHash": "9d1ccb9678eb38d53995df6fa7573d84a5f5528a6e8b4fe3808b3a5ed231f4ac",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "ai-03-031d467b-9d1ccb9678eb-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "ef5f4614f5f81af431ba24fadfc23aa3242063baee2846f6337d1e6dd79a6b45"
+        },
+        {
+          "file": "ai-03-031d467b-9d1ccb9678eb-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "65ac1f257c5a1fa73abbf270a28d64d0b8b5117ee59533cdcd66a44335ace839"
+        },
+        {
+          "file": "ai-03-031d467b-9d1ccb9678eb-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "bd05b0a93a7fceb6f032428a8e856eefb5800674c9450b4c182b239769e5cb0c"
+        },
+        {
+          "file": "ai-03-031d467b-9d1ccb9678eb-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "e7d909b271b83be84357a9d48fa93bc644d33eb628197b530813067c6d2b36bd"
+        },
+        {
+          "file": "ai-03-031d467b-9d1ccb9678eb-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "f45ce6bb4427e2b86483f5f2987f266d76887140eea089a5d50bf19e55f9fc1a"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/architecture-01.webp": {
+      "sourceHash": "f4f6b49d140b237154b37737346a108961e621ac432d8f0e83086494574bef0f",
+      "width": 1600,
+      "height": 837,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "architecture-01-d9464f0b-f4f6b49d140b-589dfafd-400w.webp",
+          "width": 400,
+          "height": 209,
+          "sha256": "ff3f17111878054f717c2784a274fb935245c1e265327af967c4656d87eefaea"
+        },
+        {
+          "file": "architecture-01-d9464f0b-f4f6b49d140b-589dfafd-640w.webp",
+          "width": 640,
+          "height": 335,
+          "sha256": "612a9d4a6d05cad6d7a58894847f8ee1174fbf663f94f1fde8ed6904d1084e4c"
+        },
+        {
+          "file": "architecture-01-d9464f0b-f4f6b49d140b-589dfafd-800w.webp",
+          "width": 800,
+          "height": 418,
+          "sha256": "116b769934c7604c08ae5009e9abdd4f9675bdd1dc11dfd33518d98cf05cc4fd"
+        },
+        {
+          "file": "architecture-01-d9464f0b-f4f6b49d140b-589dfafd-960w.webp",
+          "width": 960,
+          "height": 502,
+          "sha256": "c22be067caf1e4646f31cd756785da774acce20b51f5d1d0493e050be637f5a2"
+        },
+        {
+          "file": "architecture-01-d9464f0b-f4f6b49d140b-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 628,
+          "sha256": "45c747927ba80abcf15c0478f040d013b6b0ec8356b1dcfbdd0df18f1a921d38"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/cinematic-01.webp": {
+      "sourceHash": "39e8fe6a5debb31d6bbd5059027a3c7da1837fd145c372381d3ed18d916d63d7",
+      "width": 1600,
+      "height": 900,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "cinematic-01-627e4bbc-39e8fe6a5deb-589dfafd-400w.webp",
+          "width": 400,
+          "height": 225,
+          "sha256": "cd13fbd5b69e5c2743df3987a8d18111b7d4f5a6e98c9e4f1e84e70de2027371"
+        },
+        {
+          "file": "cinematic-01-627e4bbc-39e8fe6a5deb-589dfafd-640w.webp",
+          "width": 640,
+          "height": 360,
+          "sha256": "c904d828ba6e4ad28c4f7f6f38f99c1893af60b2ca8126ee6be272ed97a4efa2"
+        },
+        {
+          "file": "cinematic-01-627e4bbc-39e8fe6a5deb-589dfafd-800w.webp",
+          "width": 800,
+          "height": 450,
+          "sha256": "9c47466a8f5959151d5656255a59daa1f5cde711fc95c0bf1963d7ca56ce1382"
+        },
+        {
+          "file": "cinematic-01-627e4bbc-39e8fe6a5deb-589dfafd-960w.webp",
+          "width": 960,
+          "height": 540,
+          "sha256": "1465aa22193db228efc6bd66d77155db141f368d26cadd6178ec8fb145386ae5"
+        },
+        {
+          "file": "cinematic-01-627e4bbc-39e8fe6a5deb-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 675,
+          "sha256": "4b51e7af0786cf79820c1bde3209b25e8b4e5cc83e598d967029b422bfeeca28"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/cyber-01.webp": {
+      "sourceHash": "2a592fbb12785783f82315322f7a6ecce1bd404fd62427488eb74d0368beb923",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "cyber-01-6bde28c2-2a592fbb1278-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "24ba863c99e4b30af97e79d18a2b8a75801dbb67d60df6c12482db46f47eb1f7"
+        },
+        {
+          "file": "cyber-01-6bde28c2-2a592fbb1278-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "37bbb6152410a706acdb6779471d57f547da3ce329b1a42c5f90b89b6eda6fed"
+        },
+        {
+          "file": "cyber-01-6bde28c2-2a592fbb1278-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "77782ccf0d60d68002fa96a252acc2e60f825760343a965487edbd78b9b0074c"
+        },
+        {
+          "file": "cyber-01-6bde28c2-2a592fbb1278-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "004f5071ea6c414828e665e76c247b4ae4ac99f322bd11fef862858afa8acbd8"
+        },
+        {
+          "file": "cyber-01-6bde28c2-2a592fbb1278-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "0703b64f20056463da692cff3d5dbd7e7d16b49ab7eb934fb25488532c3dbbdb"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/cyber-02.webp": {
+      "sourceHash": "41da42323b04f363660d0e87643bd850feb323925afcde75936f1cc431cd41d2",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "cyber-02-f7a0cf17-41da42323b04-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "cd56daf101c3d7692d16356aa5525c433f56ef38dbb3ddcd7686a9765e357ebe"
+        },
+        {
+          "file": "cyber-02-f7a0cf17-41da42323b04-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "acaa32b645ea8acff6ecb5d8d6667d919c50dcd9dac22bf80061ac192f92eb16"
+        },
+        {
+          "file": "cyber-02-f7a0cf17-41da42323b04-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "e41f1d3e0721a108bd6aef8ffcdb126e476d3af6f3be8fb962d270354a594c89"
+        },
+        {
+          "file": "cyber-02-f7a0cf17-41da42323b04-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "b6820e5165fa819b23e0d11c1381202f1a4432a615b75bd8ba11b3c92e395e80"
+        },
+        {
+          "file": "cyber-02-f7a0cf17-41da42323b04-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "1ea044b848c783581dd0596a47693ed23b9c10078ad598b6c4f3b1766bfebc40"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/cyber-03.webp": {
+      "sourceHash": "4273620729887f3ca2ccd528e308dca611c55db42c277d12015dc5a6dce87275",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "cyber-03-085e4f4b-427362072988-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "7260d13b9ae4835032cf1dc512cf94a443abcc5ce5bed394bb0a0927298ddf04"
+        },
+        {
+          "file": "cyber-03-085e4f4b-427362072988-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "f6e2fec32ac50b9ea7fd8ead517a66d9bb1c457039130f731be1610d07a3b754"
+        },
+        {
+          "file": "cyber-03-085e4f4b-427362072988-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "f5f356f5187e2fbcb0ca1d5bab1efbd9c7f13c27685ece392ce566542707beaf"
+        },
+        {
+          "file": "cyber-03-085e4f4b-427362072988-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "356091afe88c908d6034af90099844eb43cee2c8fbe776fa90ef26d7aa2ee320"
+        },
+        {
+          "file": "cyber-03-085e4f4b-427362072988-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "2b9794e31e92e088bc23cba2c5acf46a3144c51eed8353c30c30f22f67fae390"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/cyber-04.webp": {
+      "sourceHash": "16949f8e2cee4f39a122cd2f80831f7d1f6ab2af2fb07c20a79ef3002d5fd470",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "cyber-04-158549b6-16949f8e2cee-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "0f9e6d4af25509e4ffd5e9224a9adbd4d8f27b56b1bbc5da9c18315673ae10df"
+        },
+        {
+          "file": "cyber-04-158549b6-16949f8e2cee-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "e1a467ec3d02f90e3ec30528f95406b17f4a76d9ada2e09f7711da9996c224f6"
+        },
+        {
+          "file": "cyber-04-158549b6-16949f8e2cee-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "9f9eb2410d5381f21627b9fe441e977fccb3dfbb28a346f7451fe7fed362a3b8"
+        },
+        {
+          "file": "cyber-04-158549b6-16949f8e2cee-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "13904ec3e8391b4dcf5fe180048fb73b3b8217b214d424e66c4928d6569acf9d"
+        },
+        {
+          "file": "cyber-04-158549b6-16949f8e2cee-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "048b6b55e76b1117c2492630f27f81e92e7551fac737054b35262b2a02c3f8de"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/hacker-01.webp": {
+      "sourceHash": "155d2b1ffd034cf31ef5c1e4873a6c9fd90314bbbfdc25379f1578112325b676",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "hacker-01-e582fa32-155d2b1ffd03-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "ade0671f01fd56820587e43e8a1058af663037e716441a93f38d119d5e939663"
+        },
+        {
+          "file": "hacker-01-e582fa32-155d2b1ffd03-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "fffa57d3bbf4564e96f25690c3f6a55b7daf25017cfef11126bce21d0a803689"
+        },
+        {
+          "file": "hacker-01-e582fa32-155d2b1ffd03-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "611823e4cb2645b1bb06d1e99672ccba24dea6cbc87531ce6b8695b09be6ca90"
+        },
+        {
+          "file": "hacker-01-e582fa32-155d2b1ffd03-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "bc2b0dedfd16fc34662cfd171b576bab5de0c57b0f1afbbe24f8ab24fe145dc0"
+        },
+        {
+          "file": "hacker-01-e582fa32-155d2b1ffd03-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "4ca144ccf028ae9257bc20f9f564570c5d6d4f8c962d083b82c3715fd3e3ded9"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/hacker-02.webp": {
+      "sourceHash": "065321ee1fa91eb776f7987e8a8c10daa25bf6d522d4bc351366ede092acc224",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "hacker-02-bf9dcd41-065321ee1fa9-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "fff1da2a44b4f0d2abf0ec07757e9f88aa77c1d09af45a4ced35efab302e3aca"
+        },
+        {
+          "file": "hacker-02-bf9dcd41-065321ee1fa9-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "9f46a38c70e55ac37006475ae8aa077729fa80c35eee395cb46efd61c867cfc1"
+        },
+        {
+          "file": "hacker-02-bf9dcd41-065321ee1fa9-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "a1bbd5eda94922f563fa3301c0882467469a30f625433655b9a5e5435840f0c9"
+        },
+        {
+          "file": "hacker-02-bf9dcd41-065321ee1fa9-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "13e1ced38a2dfdbf335a0245a52fa7a7d9969a311338d9692ce6148e8aef6e92"
+        },
+        {
+          "file": "hacker-02-bf9dcd41-065321ee1fa9-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "ddaa552bb974dff0de21a65e976638ffdcc519a2148a5f81438a3714871045e9"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/horizon-01.webp": {
+      "sourceHash": "60418e2076ce951937929fa54f4d86e094d737425fa959693bcb05b6f1205ae2",
+      "width": 1600,
+      "height": 768,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "horizon-01-0f476825-60418e2076ce-589dfafd-400w.webp",
+          "width": 400,
+          "height": 192,
+          "sha256": "d2e9e57a1ee3c399dcc79ca1dfa2b0cce34f19f7657bd21cf958bdc58d23b767"
+        },
+        {
+          "file": "horizon-01-0f476825-60418e2076ce-589dfafd-640w.webp",
+          "width": 640,
+          "height": 307,
+          "sha256": "1abdffdc20650e1059a97ce9fe649610ed0468dfe90912f3fd3e3aa26bb475bc"
+        },
+        {
+          "file": "horizon-01-0f476825-60418e2076ce-589dfafd-800w.webp",
+          "width": 800,
+          "height": 384,
+          "sha256": "2e6907ce52b74ec3140b494d9d8935e96ce3ed9b29ea8a68ea5fa483b8388cd4"
+        },
+        {
+          "file": "horizon-01-0f476825-60418e2076ce-589dfafd-960w.webp",
+          "width": 960,
+          "height": 461,
+          "sha256": "d85177ce552685f21275e0e6bf4a0ea4fd4923681324fecf7c2a8cb0a18ee94d"
+        },
+        {
+          "file": "horizon-01-0f476825-60418e2076ce-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 576,
+          "sha256": "c42bfff09597285968fce2bc171f81bce50c31d78d559df371889e217a0a1917"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/matrix-01.webp": {
+      "sourceHash": "4cc29ad10be8545013758698a52728a198716cae5b9d7e034deb7960bfbb3c99",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "matrix-01-5e4a9108-4cc29ad10be8-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "777c6e9b509b36f8eb81e32d789d4557b0b003cbaa40cde88a5e124be258d964"
+        },
+        {
+          "file": "matrix-01-5e4a9108-4cc29ad10be8-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "d6e7db4f9824c0a68418054fba90a59243508ffc61b148959a82e6f599dc6961"
+        },
+        {
+          "file": "matrix-01-5e4a9108-4cc29ad10be8-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "1bf2be5a69c0cb69d349342ab91dd052d9c0f5afcd0d575f33537f7fb696ed7d"
+        },
+        {
+          "file": "matrix-01-5e4a9108-4cc29ad10be8-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "cb592c2e41ff50af51c7a4ad6420b6371c7ea5e39cbdb8ba71a75952b9383216"
+        },
+        {
+          "file": "matrix-01-5e4a9108-4cc29ad10be8-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "5e3dc2b4ef2d6ba3f6b856acebdc266347865e5a68aaa3f8c447b5ddb1f55ddd"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/matrix-02.webp": {
+      "sourceHash": "a816ad00efcc4bebb59396d1ad2d33e266370e7646d571c189f40d9fc74516bc",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "matrix-02-f71f7e4c-a816ad00efcc-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "fd571d4658e8f7d877953439b6e14c6acc6ce031ae426a72250f2e640fba2a18"
+        },
+        {
+          "file": "matrix-02-f71f7e4c-a816ad00efcc-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "440c46be5f46546b4f9230b959a5755d10a3e6adef24074b6382057500d62841"
+        },
+        {
+          "file": "matrix-02-f71f7e4c-a816ad00efcc-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "5e8c700b9985bf3aa6bedc3f5db6bb008b4825c7ad1656aa9964cab78c2b35fd"
+        },
+        {
+          "file": "matrix-02-f71f7e4c-a816ad00efcc-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "40612224dbb98d763953581fb5a1b2a44afa16b8ac09301581e36626b5828a30"
+        },
+        {
+          "file": "matrix-02-f71f7e4c-a816ad00efcc-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "872e88c849e1e38f05a753a439021e3bb40dc88d79953e5565e437af45531090"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/matrix-03.webp": {
+      "sourceHash": "002e0dc4c7f240b595dcd9d25ccbf2572516bd8d15ffc7eaf158fdf17c3ab48f",
+      "width": 2000,
+      "height": 1000,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "matrix-03-fb156967-002e0dc4c7f2-589dfafd-400w.webp",
+          "width": 400,
+          "height": 200,
+          "sha256": "627ed62ebe91b314c5fc286cc696f4403448d527136e734add3e4189cbed67ad"
+        },
+        {
+          "file": "matrix-03-fb156967-002e0dc4c7f2-589dfafd-640w.webp",
+          "width": 640,
+          "height": 320,
+          "sha256": "103458bfaf35da223aae4be173b32a211017e5cba1b9fedd53148b8b9202ca0e"
+        },
+        {
+          "file": "matrix-03-fb156967-002e0dc4c7f2-589dfafd-800w.webp",
+          "width": 800,
+          "height": 400,
+          "sha256": "16845ec5181c3550dcac0e60e1b682f9205ee88532d300a7f8bd00e1788f453b"
+        },
+        {
+          "file": "matrix-03-fb156967-002e0dc4c7f2-589dfafd-960w.webp",
+          "width": 960,
+          "height": 480,
+          "sha256": "48c1cf118f97a17c6e1ab9640c36ae3fa5434488d1efb8030f2e66f314ddd5fc"
+        },
+        {
+          "file": "matrix-03-fb156967-002e0dc4c7f2-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 600,
+          "sha256": "bbde19f11bed35f412d90c0c9dd5bdaecedc27eff8a36324685cc06d1ffdadf5"
+        }
+      ]
+    },
+    "src/assets/blog/default-covers/study-01.webp": {
+      "sourceHash": "3ae0b7971d3e8c5261dd0da41f6cb535db84dd7ad310af287dc363bcc704ebc1",
+      "width": 1536,
+      "height": 1024,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "study-01-0da2dfbb-3ae0b7971d3e-589dfafd-400w.webp",
+          "width": 400,
+          "height": 267,
+          "sha256": "0469f205a8856edb819b93cff981eacd2047ac4fb0c6a48f357dc8fcde41d31d"
+        },
+        {
+          "file": "study-01-0da2dfbb-3ae0b7971d3e-589dfafd-640w.webp",
+          "width": 640,
+          "height": 427,
+          "sha256": "c26a96acdee54c9c3df621f38dfea2a31b2bacf27615f41492e0f0a1243ee252"
+        },
+        {
+          "file": "study-01-0da2dfbb-3ae0b7971d3e-589dfafd-800w.webp",
+          "width": 800,
+          "height": 533,
+          "sha256": "99e98453f4e20d7319a91eaf4813c64d070db1ebf8fcf91d0378bdb7762a7f8e"
+        },
+        {
+          "file": "study-01-0da2dfbb-3ae0b7971d3e-589dfafd-960w.webp",
+          "width": 960,
+          "height": 640,
+          "sha256": "03bfffce0489f218d799ed095800532b73a90290ea077f43abb0cde7e7aaaef8"
+        },
+        {
+          "file": "study-01-0da2dfbb-3ae0b7971d3e-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 800,
+          "sha256": "f1ef918d958f933b83adbab3985696c7eb3e017477000673e23d487bbd3a4374"
+        }
+      ]
+    }
+  }
+}

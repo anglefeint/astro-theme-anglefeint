@@ -4,7 +4,7 @@ title: 'User Guide 2: Write and Organize Content'
 subtitle: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 description: 'Create posts and use covers, tags, the table of contents, image previews, code copying, search, and social images.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-11'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -168,3 +168,9 @@ The automatic updater currently supports npm only and refuses pnpm/yarn/bun lock
 If an upgrade fails, do not deploy `dist/`: dependency rollback does not restore previous build output. Resolve the error and run `npm run doctor` successfully before deploying. pnpm users update explicitly with `pnpm add @anglefeint/astro-theme@latest` and `pnpm run doctor`; keep their lockfile and review release compatibility first.
 
 [User Guide 5: Publish Fragments](../starter-guide-5-fragments/) — Publish brief thoughts as Markdown, with optional popup comments.
+
+## Persistent Blog List covers (0.36.0+)
+
+This source change requires theme 0.36.0 or newer; it is not included in published 0.35.0. Keep existing heroImage paths, or place new originals in src/assets/blog/covers/originals/ and reference them from a post. Local dev and local doctor prepare missing/stale Blog List sizes automatically. You can also run `npx @anglefeint/astro-theme prepare-covers`; add `--check` for validation without writes. Commit the originals and all of src/assets/blog/covers/ (manifest.json and generated/). Builds and CI doctor only validate and fail if files are missing, stale or modified; they never regenerate on the deployment host or require an Astro image cache. The list uses native responsive images and prioritizes two cover candidates. WebP quality 80 preserves the existing encoding target, not lossless pixels; originals remain unchanged. SVG/animated covers retain their original format.
+
+These files also serve article detail covers. Local Fragment images share the same preparation and commit workflow; see [User Guide 5](../starter-guide-5-fragments/).
