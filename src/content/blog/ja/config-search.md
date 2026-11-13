@@ -4,7 +4,7 @@ title: '設定リファレンス：検索とコンテンツの発見'
 subtitle: '検索入口、記事の収録、言語別索引、その他の入口。'
 description: 'サイト内検索の設定・文面・記事収録を説明し、最新記事、関連記事、タグ、RSS、機械可読出力との違いを示します。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
@@ -27,9 +27,9 @@ heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 
 ## 記事別 search：site.config の項目ではない
 
-| 位置                                                        | 型 / 既定値                                         | 状態・役割・制約                                                                                     | 例            |
-| ----------------------------------------------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------- |
-| `src/content/blog/<语言>/某篇文章.md` の frontmatter.search | 任意 boolean / schema 未指定、記事レイアウトは true | 全体有効時の索引根マーカーを制御。false でも一覧・関連記事・RSS・機械可読出力・公開 URL は残ります。 | search: false |
+| 位置                                                           | 型 / 既定値                                         | 状態・役割・制約                                                                                     | 例            |
+| -------------------------------------------------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------- |
+| `src/content/blog/<locale>/some-post.md` の frontmatter.search | 任意 boolean / schema 未指定、記事レイアウトは true | 全体有効時の索引根マーカーを制御。false でも一覧・関連記事・RSS・機械可読出力・公開 URL は残ります。 | search: false |
 
 その記事だけを検索から外すには既存 frontmatter に追加します。
 
@@ -51,21 +51,21 @@ About、Fragments、Decoder、ホーム、一覧には既定の根マーカー�
 
 ## messages.search：11項目の文面
 
-接頭辞は `i18n.locales.<语言>.messages.search.` です。すべて任意 string で、内蔵現在言語と補完を使います。表は簡体中国語／英語の実既定値、例は項目値です。入口と対応 UI・状態がある場合だけ使います。
+接頭辞は `i18n.locales.<locale>.messages.search.` です。すべて任意 string で、内蔵現在言語と補完を使います。表は簡体中国語／英語の実既定値、例は項目値です。入口と対応 UI・状態がある場合だけ使います。
 
-| 項目          | 簡体中国語 / 英語既定値                                                                                                              | 役割・制約・プレースホルダー                                                   | 例                                  |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ----------------------------------- |
-| `label`       | 搜索 / Search                                                                                                                        | 入口ボタンのアクセシブル名・ヒント・ダイアログ見出しで、検索語ではありません。 | `"搜索文章"`                        |
-| `close`       | 关闭搜索 / Close search                                                                                                              | 閉じるボタンの名前とヒント。表示 esc と図形は固定です。                        | `"关闭搜索"`                        |
-| `placeholder` | 搜索文章… / Search articles…                                                                                                         | 入力欄の仮文面とアクセシブル名。検索語を事前入力しません。                     | `"输入文章关键词"`                  |
-| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | 本番の空入力時の案内。                                                         | `"搜索当前语言的文章。"`            |
-| `loading`     | 正在搜索… / Searching…                                                                                                               | 検索中・準備中の案内。遅延やロード方法は変えません。                           | `"正在查找…"`                       |
-| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | 結果なし。現在言語の索引なしでも表示する場合があります。                       | `"没有找到相关文章。"`              |
-| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | 索引一覧・モジュール・詳細の読込失敗で、ビルドエラーではありません。           | `"搜索暂时不可用，请重试。"`        |
-| `retry`       | 重试 / Retry                                                                                                                         | 失敗時の再試行。既存エンジンを再読込し、索引を再構築しません。                 | `"重新加载"`                        |
-| `more`        | 加载更多 / Load more                                                                                                                 | 残り結果を追加するボタンで、バッチ数は変えません。                             | `"更多结果"`                        |
-| `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | 総件数。{count} の最初の1回を置換し、表示カード数ではありません。              | `"共找到 {count} 篇文章"`           |
-| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | dev の案内。実検索はせず、文面変更で索引は作れません。                         | `"请构建后在 preview 中测试搜索。"` |
+| 項目          | 簡体中国語 / 英語既定値                                                                                                              | 役割・制約・プレースホルダー                                                   | 例                                                |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------- |
+| `label`       | 搜索 / Search                                                                                                                        | 入口ボタンのアクセシブル名・ヒント・ダイアログ見出しで、検索語ではありません。 | `"記事を検索"`                                    |
+| `close`       | 关闭搜索 / Close search                                                                                                              | 閉じるボタンの名前とヒント。表示 esc と図形は固定です。                        | `"検索を閉じる"`                                  |
+| `placeholder` | 搜索文章… / Search articles…                                                                                                         | 入力欄の仮文面とアクセシブル名。検索語を事前入力しません。                     | `"記事のキーワードを入力"`                        |
+| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | 本番の空入力時の案内。                                                         | `"現在の言語の記事を検索します。"`                |
+| `loading`     | 正在搜索… / Searching…                                                                                                               | 検索中・準備中の案内。遅延やロード方法は変えません。                           | `"検索中…"`                                       |
+| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | 結果なし。現在言語の索引なしでも表示する場合があります。                       | `"該当する記事はありません。"`                    |
+| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | 索引一覧・モジュール・詳細の読込失敗で、ビルドエラーではありません。           | `"検索を利用できません。再試行してください。"`    |
+| `retry`       | 重试 / Retry                                                                                                                         | 失敗時の再試行。既存エンジンを再読込し、索引を再構築しません。                 | `"再読み込み"`                                    |
+| `more`        | 加载更多 / Load more                                                                                                                 | 残り結果を追加するボタンで、バッチ数は変えません。                             | `"さらに表示"`                                    |
+| `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | 総件数。{count} の最初の1回を置換し、表示カード数ではありません。              | `"{count} 件の記事が見つかりました"`              |
+| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | dev の案内。実検索はせず、文面変更で索引は作れません。                         | `"ビルド後の preview で検索を確認してください。"` |
 
 プレーンテキストで、HTML は実行しません。空文字は文面だけを消してボタンは残り、アクセシブル名を失う場合があります。results の {count} は自動追加されないため、件数を出すなら1回残します。
 
@@ -77,13 +77,13 @@ src/site.config.ts の既存 defineThemeConfig({...}) に統合し、import・ex
 theme: { search: { enabled: true } },
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
         search: {
-          label: '搜索文章',
-          placeholder: '输入文章关键词',
-          results: '共找到 {count} 篇文章',
-          empty: '没有找到相关文章。',
+          label: '記事を検索',
+          placeholder: '記事のキーワードを入力',
+          results: '{count} 件の記事が見つかりました',
+          empty: '該当する記事はありません。',
         },
       },
     },
@@ -127,14 +127,14 @@ preview は出力を使います。記事、言語メタ、収録スイッチ、
 
 各モジュールの既存設定と既定値を使い、主説明は担当辞書に残します。別の検索設定を追加しません。
 
-| パス・位置                                      | 型 / 既定値                     | 役割・制約・例                                                                                   | 詳細                                                  |
-| ----------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
-| theme.homeLatestCount                           | number / 3                      | ホーム最新記事数。例 theme: { homeLatestCount: 5 }。検索バッチ・関連記事数は変えません。         | [ホーム](/ja/blog/config-home/#latest-count)          |
-| theme.blogPageSize                              | number / 10                     | ブログ・タグ一覧件数。例 theme: { blogPageSize: 8 }。検索数ではありません。                      | [一覧](/ja/blog/config-blog-list/#page-size)          |
-| theme.tags.enabled                              | boolean / true                  | タグ入口と標準ページ。例 theme: { tags: { enabled: false } }。記事 tags や全文検索は残ります。   | [タグ](/ja/blog/config-blog-list/#tags-enabled)       |
-| 記事 frontmatter.tags                           | 任意 string[] / 未指定          | タグ表示・アーカイブ。例 ['Astro', '随笔']。現在の関連記事の関連度や検索許可一覧ではありません。 | [記事](/ja/blog/config-article/#frontmatter)          |
-| `i18n.locales.<语言>.messages.blog.related`     | string / 内蔵現在言語、下表参照 | 末尾の関連記事見出し。例 '继续阅读'。文面だけ。                                                  | [記事文面](/ja/blog/config-article/#article-messages) |
-| `i18n.locales.<语言>.messages.blog.relatedAria` | string / 内蔵現在言語、下表参照 | 領域のアクセシブル名。例 '其他文章'。                                                            | [記事文面](/ja/blog/config-article/#article-messages) |
+| パス・位置                                        | 型 / 既定値                     | 役割・制約・例                                                                                   | 詳細                                                  |
+| ------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| theme.homeLatestCount                             | number / 3                      | ホーム最新記事数。例 theme: { homeLatestCount: 5 }。検索バッチ・関連記事数は変えません。         | [ホーム](/ja/blog/config-home/#latest-count)          |
+| theme.blogPageSize                                | number / 10                     | ブログ・タグ一覧件数。例 theme: { blogPageSize: 8 }。検索数ではありません。                      | [一覧](/ja/blog/config-blog-list/#page-size)          |
+| theme.tags.enabled                                | boolean / true                  | タグ入口と標準ページ。例 theme: { tags: { enabled: false } }。記事 tags や全文検索は残ります。   | [タグ](/ja/blog/config-blog-list/#tags-enabled)       |
+| 記事 frontmatter.tags                             | 任意 string[] / 未指定          | タグ表示・アーカイブ。例 ['Astro', '随笔']。現在の関連記事の関連度や検索許可一覧ではありません。 | [記事](/ja/blog/config-article/#frontmatter)          |
+| `i18n.locales.<locale>.messages.blog.related`     | string / 内蔵現在言語、下表参照 | 末尾の関連記事見出し。例 '继续阅读'。文面だけ。                                                  | [記事文面](/ja/blog/config-article/#article-messages) |
+| `i18n.locales.<locale>.messages.blog.relatedAria` | string / 内蔵現在言語、下表参照 | 領域のアクセシブル名。例 '其他文章'。                                                            | [記事文面](/ja/blog/config-article/#article-messages) |
 
 関連記事は現在言語の自身を除いた最新3件で、共通タグ・canonicalTopic・内容類似度では選びません。relatedCount、独立スイッチ、手動推薦設定はなく、候補なしなら非表示です。search: false でも推薦できます。
 
@@ -149,7 +149,7 @@ preview は出力を使います。記事、言語メタ、収録スイッチ、
 
 | 入口                     | 現在の動作と設定                                                                                                                                                                                                                |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/<语言>/rss.xml`        | 有効言語の記事概要購読。タイトルはサイト名、説明は messages.blog.archiveDescription。title・description・pubDate・公開パスを使い、search: false は除外せず、全文 RSS ではありません。theme.search に RSS スイッチはありません。 |
+| `/<locale>/rss.xml`      | 有効言語の記事概要購読。タイトルはサイト名、説明は messages.blog.archiveDescription。title・description・pubDate・公開パスを使い、search: false は除外せず、全文 RSS ではありません。theme.search に RSS スイッチはありません。 |
 | ページメタ・検索エンジン | 別出力で、search: false は noindex 追加・sitemap 停止・ネット検索の制御になりません。                                                                                                                                           |
 | 公開機械可読テキスト     | 記事・About・Fragments の独自出力で Pagefind に依存しません。[言語補足](/ja/blog/config-languages/#ai-context)を参照。search: false は非公開フィルターではありません。                                                          |
 

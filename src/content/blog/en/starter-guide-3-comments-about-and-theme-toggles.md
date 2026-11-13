@@ -47,7 +47,7 @@ It defaults to `Knock, knock.`. Set English first to provide shared text for lan
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+    en: { messages: { home: { transmission: 'Record ideas and leave a few clues.' } } },
   },
 },
 ```
@@ -60,21 +60,21 @@ See the [homepage reference](/en/blog/config-home/#startup-switches) for complet
 
 ## 2. Replace About with your introduction
 
-Open `/zh/about/` for the Chinese example. Body and contact details are configured per language, without editing theme page templates:
+Open `/en/about/` for the English example. Body and contact details are configured per language, without editing theme page templates:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       about: {
         metaLine: '$ profile | building and learning',
         sections: {
-          who: '我是小林，喜欢开发与写作。',
-          what: '这里记录我的项目和学习笔记。',
-          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
-          now: '最近在整理个人博客。',
-          contactLead: '欢迎联系我。',
-          signature: '> 谢谢你来这里。',
+          who: 'I am Alex, and I enjoy development and writing.',
+          what: 'This is where I share projects and study notes.',
+          ethos: ['Stay curious.', 'Turn ideas into useful things.'],
+          now: 'I am currently organizing my blog.',
+          contactLead: 'You are welcome to get in touch.',
+          signature: '> Thank you for visiting.',
         },
         contact: {
           email: 'you@example.com',
@@ -89,7 +89,7 @@ i18n: {
 
 Replace the sample name and addresses. `metaLine` is the panel's top status text. `who`, `what`, `ethos` and `now` hold biography, work, principles and current activity. `contactLead` introduces contact details; `signature` is the signature. `ethos` is a string array and replaces all previous entries when supplied.
 
-Paragraphs and signature are plain text. `\n` creates a line break and `\n\n` a blank line. Markdown/HTML are not parsed; do not use `<br>`. This example changes Simplified Chinese only. Other languages need their own text; no translation happens automatically. Missing fields use the language's configuration fallback rules.
+Paragraphs and signature are plain text. `\n` creates a line break and `\n\n` a blank line. Markdown/HTML are not parsed; do not use `<br>`. This example changes English only. Other languages need their own text; no translation happens automatically. Missing fields use the language's configuration fallback rules.
 
 Window controls close, minimize or fullscreen the panel and store its state locally in the browser. AI output and download progress are theme interactions, not connections to an AI service activated by entering text. Decoder tools process input locally in the browser.
 
@@ -105,18 +105,18 @@ It decodes text, interprets supported token calls and checks address formats wit
 
 Set `enableDecoderPage: false` in `theme` to disable the standalone page and theme-provided links independently. Disabling About does not disable Decoder, or vice versa. Maintain custom links yourself.
 
-Tribute text and reading cards are configured per language. For example, replace the Chinese list:
+Tribute text and reading cards are configured per language. For example, replace the English list:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         decoderPage: {
           readings: {
-            tribute: '思想与代码，让隐私和自由更进一步。',
+            tribute: 'Ideas and code advance privacy and freedom.',
             links: [
-              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+              { title: 'My reading list', href: 'https://example.com/', author: 'Author name', year: '2026' },
             ],
           },
         },
@@ -140,7 +140,7 @@ Basic social accounts use `social.links`, sharing array order between header and
 social: {
   links: [
     { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
-    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+    { href: 'https://example.com/community', label: 'My community', iconSrc: '/icons/community.svg' },
   ],
 },
 ```
@@ -154,11 +154,11 @@ Header social links are hidden on mobile; the footer retains them. `links: []` l
 ### Footer credits, text and extra links
 
 ```ts
-site: { tagline: '保持好奇，持续记录。' },
+site: { tagline: 'Stay curious and keep writing.' },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+    links: [{ label: 'Project source code', href: 'https://github.com/yourname/your-project' }],
   },
 },
 ```
@@ -179,7 +179,7 @@ Add your audio at `public/music/my-song.mp3`, then merge:
 theme: {
   music: {
     enabled: true,
-    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+    tracks: [{ title: 'A song of mine', artist: 'Author', src: '/music/my-song.mp3' }],
   },
 },
 ```
@@ -246,7 +246,7 @@ To present projects separately, run this at the project root:
 npm run new-page -- projects
 ```
 
-It creates `src/pages/[lang]/projects.astro` with the default `base` layout, generating `/<语言代码>/projects/` for enabled languages, such as `/en/projects/` or `/zh/projects/`. Edit that Astro file's body. It does not translate content or add a header navigation item. Link it from the body or footer links.
+It creates `src/pages/[lang]/projects.astro` with the default `base` layout, generating `/<locale>/projects/` for enabled languages, such as `/en/projects/` or `/zh/projects/`. Edit that Astro file's body. It does not translate content or add a header navigation item. Link it from the body or footer links.
 
 Add `--theme` when you want a specific atmosphere. For example, `npm run new-page -- portfolio --theme cyber` creates another Cyberpunk page. Options are `base`, `ai`, `cyber`, `hacker` and `matrix`. This selects the new page's layout, not a global theme switch. Slugs use lowercase letters, numbers and hyphens, with nested paths such as `projects/labs` supported. Avoid reserved standard routes. Existing files cause an error, so do not run five theme commands for the same path consecutively.
 

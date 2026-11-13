@@ -175,7 +175,7 @@ Para aparência básica, mescle `theme: { pagination: { style: { enabled: false 
 
 <a id="archive-messages"></a>
 
-Prefixo completo: `i18n.locales.<语言>.messages.blog`. Todos são substituições opcionais de `string` e condicionais ao uso do título, descrição ou controle. Os padrões usam textos integrados e fallback. A tabela traz só chinês simplificado e inglês; os outros idiomas têm seus próprios textos integrados.
+Prefixo completo: `i18n.locales.<locale>.messages.blog`. Todos são substituições opcionais de `string` e condicionais ao uso do título, descrição ou controle. Os padrões usam textos integrados e fallback. A tabela traz só chinês simplificado e inglês; os outros idiomas têm seus próprios textos integrados.
 
 | Campo                | Padrão em chinês simplificado / inglês                                                                           | Efeito e limites                                                                                                                           |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -187,13 +187,13 @@ Prefixo completo: `i18n.locales.<语言>.messages.blog`. Todos são substituiç�
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       messages: {
         blog: {
-          title: '文章归档',
-          pageTitle: '文章归档 - 第',
-          archiveDescription: '项目、阅读与学习笔记。',
-          pageDescription: '文章归档分页',
+          title: 'Arquivo de artigos',
+          pageTitle: 'Arquivo de artigos — página',
+          archiveDescription: 'Projetos, leituras e anotações de estudo.',
+          pageDescription: 'Página do arquivo de artigos',
         },
       },
     },
@@ -219,15 +219,15 @@ Também atendem às listas por tag e à paginação dos Fragments. As rotas do b
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       messages: {
         blog: {
-          previous: '前一页',
-          next: '后一页',
-          paginationAria: '文章分页',
-          jumpTo: '前往第几页',
-          jumpInputLabel: '目标页码',
-          jumpGo: '前往',
+          previous: 'Página anterior',
+          next: 'Próxima página',
+          paginationAria: 'Paginação de artigos',
+          jumpTo: 'Ir para a página',
+          jumpInputLabel: 'Número da página',
+          jumpGo: 'Ir',
         },
       },
     },
@@ -239,7 +239,7 @@ i18n: {
 
 <a id="tag-messages"></a>
 
-Usam `i18n.locales.<语言>.messages.blog`, com substituições opcionais string e fallback normal. Dependem da existência da área correspondente:
+Usam `i18n.locales.<locale>.messages.blog`, com substituições opcionais string e fallback normal. Dependem da existência da área correspondente:
 
 | Campo         | Padrão em chinês simplificado / inglês | Efeito e limites                                                                                                               |
 | ------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -251,13 +251,13 @@ Usam `i18n.locales.<语言>.messages.blog`, com substituições opcionais string
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       messages: {
         blog: {
-          tags: '按标签浏览',
-          allPosts: '返回全部文章',
-          noTags: '暂时没有可浏览的标签。',
-          taggedPosts: '篇文章',
+          tags: 'Explorar por tags',
+          allPosts: 'Voltar a todos os artigos',
+          noTags: 'Ainda não há tags para explorar.',
+          taggedPosts: 'artigos',
         },
       },
     },

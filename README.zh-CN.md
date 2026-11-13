@@ -56,11 +56,12 @@
 需要 **Node.js 22.12.0 或更新版本**，模板基于 **Astro 7**。在准备存放博客的目录执行：
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+创建向导询问是否安装依赖时选择 Yes；安装完成后进入目录启动即可。如果你主动跳过了依赖安装，再运行一次 `npm install`。`--no-ai` 仅跳过向导额外生成的通用 AI 助手指引，主题自己的指引由 starter 提供。
 
 打开终端输出的网址。已有项目只需在原目录运行 `npm install`、`npm run dev`，不用重新创建博客。停止服务按 Ctrl+C；后续命令在项目根目录执行，可停止 dev 后运行，或另开终端。
 
@@ -209,7 +210,9 @@ npx @anglefeint/astro-theme prepare-covers
 npx @anglefeint/astro-theme prepare-covers --check
 ```
 
-本地 dev 和本地 doctor 会准备缺失或过期的派生图片；build 和 CI doctor 只检查，不在部署端重新生成。原图以及整个 `src/assets/blog/covers/`（包含 `manifest.json`、`generated/`）都要提交到 Git。出现 missing／stale／modified 提示时，先在本地准备并提交，再重新构建。
+正常 dev、build 和 doctor（包括 CI）会复用有效派生图片，并自动补齐缺失、过期或损坏的文件；显式 `prepare-covers --check` 只读检查，配置同步也只校验。原图必须提交；建议同时提交整个 `src/assets/blog/covers/`（包含 `manifest.json`、`generated/`）以便后续复用。原图缺失、无法解码或路径越界仍会报错。
+
+这项 build／CI 自动准备行为需要主题 0.36.2 或更新版本；0.36.1 需先运行 dev 或 prepare-covers。
 
 这个命令不代表所有普通文章正文图片都已压缩；具体支持范围、图片路径和分享图规则见[图片教程](https://demo.anglefeint.com/zh/blog/starter-guide-images/)。
 

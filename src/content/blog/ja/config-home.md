@@ -4,19 +4,19 @@ title: '設定リファレンス：ホーム'
 subtitle: '見出し、紹介文、最新記事、案内文、ワイド画面ターミナル、クリック時の演出を調べます。'
 description: 'ホーム設定の型、テーマ既定値、適用範囲、制約、統合用の例、共有項目、未提供スイッチを説明します。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
 [設定リファレンス総合案内へ](/ja/blog/config-reference/)。実際にホームで使う項目を説明します。テーマを変更せず、デモの個人設定を既定値とも見なしません。
 
-`<语言>` は有効な実コードに置き換えます。例は zh で簡体中国語だけを変更し、英語の変更や言語の有効化はしません。断片はすべて `src/site.config.ts` の既存 defineThemeConfig に統合し、既存 theme・i18n・site の他設定を残します。
+`<locale>` は有効な実コードに置き換えます。例は ja で日本語だけを変更し、英語の変更や言語の有効化はしません。断片はすべて `src/site.config.ts` の既存 defineThemeConfig に統合し、既存 theme・i18n・site の他設定を残します。
 
 ## 1. ホームの大見出し、紹介文、メタ説明
 
 <a id="home-title"></a>
 
-### `i18n.locales.<语言>.site.homeTitle`
+### `i18n.locales.<locale>.site.homeTitle`
 
 - **型**：任意の `string`。
 - **テーマ既定値**：未指定。内蔵言語も homeTitle を個別指定せず、最終的にサイト名（既定 My Blog）を使います。
@@ -25,7 +25,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 <a id="home-hero"></a>
 
-### `i18n.locales.<语言>.site.hero`
+### `i18n.locales.<locale>.site.hero`
 
 - **型**：任意の `string`。
 - **テーマ既定値**：各言語の内蔵紹介文。簡体中国語既定は「在这里写一段站点简介，并告诉读者你将发布什么类型的内容。」、英語既定は「Write a short introduction for your site and what readers can expect from your posts.」。他言語も固有の内蔵値を使います。
@@ -34,7 +34,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 <a id="home-description"></a>
 
-### `i18n.locales.<语言>.messages.siteDescription`
+### `i18n.locales.<locale>.messages.siteDescription`
 
 - **型**：任意の `string` 上書き。
 - **テーマ既定値**：現在言語の内蔵文面。簡体中国語既定は「电影感网页界面与 AI 时代工程实践文章。」、英語既定は「Cinematic web interfaces and AI-era engineering essays.」。
@@ -46,12 +46,12 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       site: {
-        homeTitle: '我的数字花园',
-        hero: '记录开发、阅读和生活。',
+        homeTitle: '私のデジタルガーデン',
+        hero: '開発、読書、日々のことを記録します。',
       },
-      messages: { siteDescription: '个人项目与学习笔记。' },
+      messages: { siteDescription: '個人プロジェクトと学習ノート。' },
     },
   },
 },
@@ -109,7 +109,7 @@ theme: {
 
 <a id="home-messages"></a>
 
-すべて `i18n.locales.<语言>.messages.home` の任意 `string` 上書きで、通常項目は UI の補完規則を使います。以下は簡体中国語・英語の実際の既定値で、他言語には固有の文面があります。
+すべて `i18n.locales.<locale>.messages.home` の任意 `string` 上書きで、通常項目は UI の補完規則を使います。以下は簡体中国語・英語の実際の既定値で、他言語には固有の文面があります。
 
 | パス末尾   | 簡体中国語既定 / 英語既定                                       | 役割と制約                                                                              |
 | ---------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
@@ -123,13 +123,13 @@ theme: {
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
         home: {
-          latest: '最近更新',
-          viewAll: '全部文章',
-          noPosts: '这里还没有文章。',
-          openDoor: '打开走廊预览',
+          latest: '最近の更新',
+          viewAll: 'すべての記事',
+          noPosts: 'まだ記事はありません。',
+          openDoor: '回廊のプレビューを開く',
         },
       },
     },
@@ -139,7 +139,7 @@ i18n: {
 
 <a id="home-transmission"></a>
 
-### `i18n.locales.<语言>.messages.home.transmission`
+### `i18n.locales.<locale>.messages.home.transmission`
 
 - **型**：任意の `string` 上書き。
 - **テーマ既定値**：`'Knock, knock.'`。簡体中国語を含め、個人上書きがなければ共通です。
@@ -151,16 +151,16 @@ i18n: {
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '这里留下一点线索。' } } },
+    en: { messages: { home: { transmission: 'Leave a small trace here.' } } },
   },
 },
 ```
 
-zh の同じ位置なら簡体中国語だけを上書きします。実ネットワーク信号を調べたり、鍵穴から廊下を開く動作を変えたりしません。
+ja の同じ位置なら日本語だけを上書きします。実ネットワーク信号を調べたり、鍵穴から廊下を開く動作を変えたりしません。
 
 <a id="message-hero"></a>
 
-### `i18n.locales.<语言>.messages.home.hero`
+### `i18n.locales.<locale>.messages.home.hero`
 
 - **型**：任意の `string` 上書き。
 - **テーマ既定値**：各言語の内蔵紹介文。簡体中国語・英語は上記 site.hero の既定文と同じです。
@@ -170,7 +170,7 @@ zh の同じ位置なら簡体中国語だけを上書きします。実ネッ�
 ```ts
 i18n: {
   locales: {
-    zh: { messages: { home: { hero: '仅在没有可用 site.hero 时使用的介绍。' } } },
+    ja: { messages: { home: { hero: 'site.hero がない場合に使う紹介文です。' } } },
   },
 },
 ```
@@ -200,12 +200,12 @@ theme: { effects: { enableHomePassage: true } },
 
 ホーム専用ではないため、ここは関係だけを示し、完全定義は担当リファレンスにまとめます。
 
-| 完全パス                                       | ホームでの利用                                                              | 主説明                                                           |
-| ---------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| `theme.fragments.enabled`                      | 現在言語に内容があればアバター入口。全一覧にも適用し、プレビューは最大3件。 | [Fragments スイッチ](/ja/blog/config-fragments/#enabled)         |
-| `i18n.locales.<语言>.messages.blog.allPosts`   | 最新記事数の案内とアーカイブ入口のアクセシブル名。                          | [一覧共通文面](/ja/blog/config-blog-list/#tag-messages)          |
-| `i18n.locales.<语言>.messages.fragments.title` | アバターのアクセシブル名で、横の表示タイトルではありません。                | [Fragments の文面](/ja/blog/config-fragments/#fragment-messages) |
-| `i18n.locales.<语言>.messages.fragments.close` | 閉じるボタンのアクセシブル名で、図形は変えません。                          | [Fragments の文面](/ja/blog/config-fragments/#fragment-messages) |
+| 完全パス                                         | ホームでの利用                                                              | 主説明                                                           |
+| ------------------------------------------------ | --------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `theme.fragments.enabled`                        | 現在言語に内容があればアバター入口。全一覧にも適用し、プレビューは最大3件。 | [Fragments スイッチ](/ja/blog/config-fragments/#enabled)         |
+| `i18n.locales.<locale>.messages.blog.allPosts`   | 最新記事数の案内とアーカイブ入口のアクセシブル名。                          | [一覧共通文面](/ja/blog/config-blog-list/#tag-messages)          |
+| `i18n.locales.<locale>.messages.fragments.title` | アバターのアクセシブル名で、横の表示タイトルではありません。                | [Fragments の文面](/ja/blog/config-fragments/#fragment-messages) |
+| `i18n.locales.<locale>.messages.fragments.close` | 閉じるボタンのアクセシブル名で、図形は変えません。                          | [Fragments の文面](/ja/blog/config-fragments/#fragment-messages) |
 
 有効でもアバターがなければ現在言語に内容があるか確認し、既存 ID をコピーして表示させないでください。画像・コード・高さ制限は[Fragments リファレンス](/ja/blog/config-fragments/#preview-and-links)、投稿は[Fragment ガイド](/ja/blog/starter-guide-5-fragments/)にあります。
 

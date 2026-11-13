@@ -4,9 +4,11 @@ title: 'Referencia de configuración: idiomas, direcciones y respaldo'
 subtitle: 'Registro, traducciones de interfaz y prioridades'
 description: 'Tipos, valores, restricciones y ejemplos de activación de idiomas, URLs y resolución de textos.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
+
+Las cadenas chinas de los ejemplos bajo `locales.zh` son intencionales: ilustran cómo personalizar el contenido chino sin cambiar los demás idiomas. Los valores predeterminados chino/inglés de las tablas son citas del tema, no traducciones pendientes.
 
 Para activar idiomas o publicar traducciones paso a paso, empieza por [idiomas](/es/blog/starter-guide-languages/). Consulta el archivo en [instalación](/es/blog/starter-guide-1-configure-your-site/) y otros módulos en el [índice](/es/blog/config-reference/).
 
@@ -16,11 +18,11 @@ Cubre registro i18n, direcciones y resolución, sin repetir todos los textos de 
 
 ## i18n.defaultLocale e i18n.locales
 
-| Ruta completa         | Tipo / predeterminado del tema                                  | Estado, función y límites                                                                                                                                                            | Ejemplo                                                    |
-| --------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| i18n.defaultLocale    | string / 'en'                                                   | Activo: idioma/redirección raíz, respaldo obligatorio y enlaces predeterminados. Vacío normaliza a en. Sin detección de navegador. Predeterminado siempre activo, aun enabled: false | i18n: { defaultLocale: 'zh' }                              |
-| i18n.locales          | Record<string, LocaleConfig> / nueve idiomas integrados abajo   | Activo: claves definen códigos, directorios y URLs. Combinación recursiva: omitir integrado no lo borra. Nuevos requieren textos/contenido propios                                   | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
-| `i18n.locales.<语言>` | LocaleConfig parcial / integrados con ajustes, nuevos sin ellos | Activo: contiene meta, site, messages, about y aiReadableContent. Omitidos siguen combinación/respaldo; {} no limpia idioma                                                          | locales: { zh: { meta: { enabled: false } } }              |
+| Ruta completa           | Tipo / predeterminado del tema                                  | Estado, función y límites                                                                                                                                                            | Ejemplo                                                    |
+| ----------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| i18n.defaultLocale      | string / 'en'                                                   | Activo: idioma/redirección raíz, respaldo obligatorio y enlaces predeterminados. Vacío normaliza a en. Sin detección de navegador. Predeterminado siempre activo, aun enabled: false | i18n: { defaultLocale: 'zh' }                              |
+| i18n.locales            | Record<string, LocaleConfig> / nueve idiomas integrados abajo   | Activo: claves definen códigos, directorios y URLs. Combinación recursiva: omitir integrado no lo borra. Nuevos requieren textos/contenido propios                                   | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
+| `i18n.locales.<locale>` | LocaleConfig parcial / integrados con ajustes, nuevos sin ellos | Activo: contiene meta, site, messages, about y aiReadableContent. Omitidos siguen combinación/respaldo; {} no limpia idioma                                                          | locales: { zh: { meta: { enabled: false } } }              |
 
 La clave no es etiqueta de menú ni hreflang. EN no normaliza a en, ni directorios zh-CN a zh. Usa códigos minúsculos coherentes en directorios, config y creación: zh, en, pt-br, zh-hant. Scaffolding admite dos/tres letras y segmento opcional con guion. La normalización runtime no valida integralmente códigos/rutas: no uses rutas ni puntuación arbitraria.
 
@@ -44,7 +46,7 @@ Sin ajustes, nueve activos. en predeterminado no tiene respaldo; otros usan en. 
 
 <a id="meta"></a>
 
-## `i18n.locales.<语言>.meta`: cinco metadatos
+## `i18n.locales.<locale>.meta`: cinco metadatos
 
 Los campos relativos van dentro de meta. Valores integrados arriba y normalización de nuevos abajo. Entrada parcial: no necesitas reescribir todos.
 
@@ -78,21 +80,21 @@ Suponiendo defaultLocale en:
 | /en/about/        | About inglés, si activo          | About inglés, si activo       |
 | /zh/              | Inicio chino, si activo          | Inicio chino, si activo       |
 
-Las redirecciones son meta-refresh estático con canonical/noindex. No detectan ubicación ni configuran 301. Helpers internos suelen crear `/<代码>/.../`; cada entrada decide usar raíz.
+Las redirecciones son meta-refresh estático con canonical/noindex. No detectan ubicación ni configuran 301. Helpers internos suelen crear `/<locale>/.../`; cada entrada decide usar raíz.
 
 <a id="overrides"></a>
 
 ## Dónde sustituir site, messages y about
 
-Prefijo `i18n.locales.<语言>`. Objetos se combinan recursivamente; arrays sustituyen; undefined no sobrescribe. Vacío, false y [] se mantienen e interpretan por campo.
+Prefijo `i18n.locales.<locale>`. Objetos se combinan recursivamente; arrays sustituyen; undefined no sobrescribe. Vacío, false y [] se mantienen e interpretan por campo.
 
-| Ruta relativa  | Tipo / predeterminado                                                                           | Función, límites y ejemplo                                                                                                                       | Referencia                                           |
-| -------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
-| site           | { homeTitle?: string; hero?: string } / ajustes de inicio integrados                            | Solo inicio localizado; no sustituye identidad superior. Ejemplo site: { homeTitle: '我的博客' }                                                 | [Inicio](/es/blog/config-home/#site-fallbacks)       |
-| site.homeTitle | string opcional / sin definir                                                                   | Primer título recortado no vacío en cadena directa, después SITE_TITLE. Ejemplo '我的博客'. Vacío no detiene respaldo                            | [Título de inicio](/es/blog/config-home/#home-title) |
-| site.hero      | string opcional / presentación integrada; nuevos sin definir                                    | Primer definido en cadena. Vacío limpia y detiene. Sin ninguno, messages.home.hero es último respaldo. Ejemplo '记录项目与生活。'                | [Presentación](/es/blog/config-home/#home-hero)      |
-| messages       | DeepPartial<Messages> / sustituciones locales normalmente sin definir; runtime añade integrados | Botones, estados, metadescripciones, etc. Ejemplo messages: { nav: { home: '主页' } }. Solo texto, no funciones ni traducción de cuerpos         | [Índice](/es/blog/config-reference/)                 |
-| about          | DeepPartial<AboutConfig> / About integrado localizado                                           | Combina cadena recursivamente sobre About base. Ejemplo about: { sections: { who: '我是一名开发者。' } }. No lee cuerpo Markdown automáticamente | [About](/es/blog/config-about/#about-content)        |
+| Ruta relativa  | Tipo / predeterminado                                                                           | Función, límites y ejemplo                                                                                                                                           | Referencia                                           |
+| -------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| site           | { homeTitle?: string; hero?: string } / ajustes de inicio integrados                            | Solo inicio localizado; no sustituye identidad superior. Ejemplo site: { homeTitle: 'Mi blog' }                                                                      | [Inicio](/es/blog/config-home/#site-fallbacks)       |
+| site.homeTitle | string opcional / sin definir                                                                   | Primer título recortado no vacío en cadena directa, después SITE_TITLE. Ejemplo 'Mi blog'. Vacío no detiene respaldo                                                 | [Título de inicio](/es/blog/config-home/#home-title) |
+| site.hero      | string opcional / presentación integrada; nuevos sin definir                                    | Primer definido en cadena. Vacío limpia y detiene. Sin ninguno, messages.home.hero es último respaldo. Ejemplo 'Proyectos y vida cotidiana.'                         | [Presentación](/es/blog/config-home/#home-hero)      |
+| messages       | DeepPartial<Messages> / sustituciones locales normalmente sin definir; runtime añade integrados | Botones, estados, metadescripciones, etc. Ejemplo messages: { nav: { home: 'Inicio' } }. Solo texto, no funciones ni traducción de cuerpos                           | [Índice](/es/blog/config-reference/)                 |
+| about          | DeepPartial<AboutConfig> / About integrado localizado                                           | Combina cadena recursivamente sobre About base. Ejemplo about: { sections: { who: 'Me dedico al desarrollo de software.' } }. No lee cuerpo Markdown automáticamente | [About](/es/blog/config-about/#about-content)        |
 
 Valores hero exactos integrados a continuación. No existe homeTitle en defaults:
 
@@ -139,12 +141,12 @@ No añade artículos ingleses a listas chinas, genera archivos traducidos, relle
 
 ## Selector y textos compartidos
 
-Strings opcionales en `i18n.locales.<语言>.messages`, resolución normal. siteTitle localizado no cambia identidad estándar; tipo, valor y estado sin uso en [sitio](/es/blog/config-site-chrome/#legacy-site-title).
+Strings opcionales en `i18n.locales.<locale>.messages`, resolución normal. siteTitle localizado no cambia identidad estándar; tipo, valor y estado sin uso en [sitio](/es/blog/config-site-chrome/#legacy-site-title).
 
-| Campo relativo  | Predeterminado chino simplificado / inglés                                                       | Estado, función y límites                                                                                                         | Ejemplo                |
-| --------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| langLabel       | 语言 / Language                                                                                  | Activo: tooltip/nombre accesible de selector, no opciones. Estas usan meta.label                                                  | '选择语言'             |
-| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | Condicional: metadescripción de inicio, no presentación visible ni descripción de todas las páginas. Otras tienen fuentes propias | '我的项目与学习笔记。' |
+| Campo relativo  | Predeterminado chino simplificado / inglés                                                       | Estado, función y límites                                                                                                         | Ejemplo                                   |
+| --------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| langLabel       | 语言 / Language                                                                                  | Activo: tooltip/nombre accesible de selector, no opciones. Estas usan meta.label                                                  | 'Elegir idioma'                           |
+| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | Condicional: metadescripción de inicio, no presentación visible ni descripción de todas las páginas. Otras tienen fuentes propias | 'Mis proyectos y apuntes de aprendizaje.' |
 
 Textos internos en cada módulo. Un tipo existente sin consumidor no se activa por ello. El iframe de comentarios también usa theme.comments.lang, inglés fijo por defecto; consulta [comentarios](/es/blog/config-comments/#appearance).
 
@@ -152,7 +154,7 @@ Textos internos en cada módulo. Un tipo existente sin consumidor no se activa p
 
 ## aiReadableContent: respaldo especial de complemento
 
-`i18n.locales.<语言>.aiReadableContent` sustituye notes / links globales independientemente, sin meta.fallback. Omitidos heredan. notes vacío o links [] limpian explícitamente; {} no limpia global.
+`i18n.locales.<locale>.aiReadableContent` sustituye notes / links globales independientemente, sin meta.fallback. Omitidos heredan. notes vacío o links [] limpian explícitamente; {} no limpia global.
 
 Tipos, valores, validación y ejemplos en [contexto IA](/es/blog/config-analytics-ai/#locale-supplement). No es traducción ni cuerpo About: todo es público. Enlaces relativos a raíz publicada; / inicial evita base. Consulta [resolución](/es/blog/config-analytics-ai/#supplement).
 

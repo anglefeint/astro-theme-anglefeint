@@ -4,7 +4,7 @@ title: 'Guia 2: escrever o primeiro artigo'
 subtitle: 'Crie o artigo, preencha título e data e organize o corpo com sumário, tags, código e fórmulas.'
 description: 'Da criação pelo fluxo padrão ao preview local: campos suportados, Markdown, MDX, sumário, tags, pesquisa e estatísticas.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
@@ -24,9 +24,9 @@ npm run new-post -- my-first-post
 
 Se já executou o comando no primeiro guia, abra o arquivo existente e continue escrevendo. Arquivos de mesmo nome são ignorados, não sobrescritos.
 
-Sem `--locales` nem `ANGLEFEINT_LOCALES`, o comando cria `src/content/blog/<语言代码>/my-first-post.md` para todos os idiomas habilitados. A configuração inicial habilita nove idiomas e gera nove esqueletos; se você mudou os idiomas, usa a lista atual. O comando não traduz o corpo.
+Sem `--locales` nem `ANGLEFEINT_LOCALES`, o comando cria `src/content/blog/<locale>/my-first-post.md` para todos os idiomas habilitados. A configuração inicial habilita nove idiomas e gera nove esqueletos; se você mudou os idiomas, usa a lista atual. O comando não traduz o corpo.
 
-Escolha o arquivo do idioma que deseja editar. A URL é `/<语言代码>/blog/my-first-post/`, e a lista fica em `/<语言代码>/blog/`. Por exemplo, o artigo em inglês usa `/en/blog/my-first-post/`, e o chinês, `/zh/blog/my-first-post/`; cada idioma precisa estar habilitado. Não é necessário criar rotas manualmente.
+Escolha o arquivo do idioma que deseja editar. A URL é `/<locale>/blog/my-first-post/`, e a lista fica em `/<locale>/blog/`. Por exemplo, o artigo em inglês usa `/en/blog/my-first-post/`, e o chinês, `/zh/blog/my-first-post/`; cada idioma precisa estar habilitado. Não é necessário criar rotas manualmente.
 
 `my-first-post` é o slug. Use apenas letras inglesas minúsculas, números e hífens, como `learning-astro-1`, sem espaços, sublinhados ou `/`. Renomear o arquivo muda a URL sem criar um redirecionamento automático para o endereço antigo.
 
@@ -37,10 +37,10 @@ O comando preenche título, descrição, data UTC do dia e corpo provisório. Se
 Estas são alternativas ao comando padrão. Para apenas chinês simplificado, use zh; para inglês e chinês, en,zh. Não é necessário executar todos os exemplos:
 
 ```bash
-# 只创建中文
+# Criar apenas em chinês
 npm run new-post -- my-first-post --locales zh
 
-# 创建英文和中文
+# Criar em inglês e chinês
 npm run new-post -- my-first-post --locales en,zh
 ```
 
@@ -54,24 +54,24 @@ Abra o arquivo gerado. O YAML entre as duas primeiras linhas `---` é o frontmat
 
 ```md
 ---
-title: '我的第一篇文章'
-description: '记录我用 Anglefeint 搭建博客的过程。'
+title: 'Meu primeiro artigo'
+description: 'Como criei meu blog com Anglefeint.'
 pubDate: '2026-11-13'
-tags: ['astro', '笔记']
+tags: ['astro', 'anotações']
 ---
 
-这是我的第一篇文章。我准备在这里记录学习过程和遇到的问题。
+Este é meu primeiro artigo. Vou registrar aqui o que aprender e os problemas que encontrar.
 
-## 为什么开始写博客
+## Por que começar um blog
 
-写下自己的想法，也给以后的自己留下线索。
+Registre suas ideias e deixe pistas para seu eu do futuro.
 
-### 先从一个小问题开始
+### Comece com um pequeno problema
 
-今天先记录安装和发布过程。
+Hoje vou registrar a instalação e a publicação.
 ```
 
-Substitua a data pela publicação real. `title`, `description` e `pubDate` são obrigatórios; `tags` é opcional. O layout já mostra o título, então o corpo normalmente começa com `##`, sem repetir `# 我的第一篇文章`.
+Substitua a data pela publicação real. `title`, `description` e `pubDate` são obrigatórios; `tags` é opcional. O layout já mostra o título, então o corpo normalmente começa com `##`, sem repetir `# Meu primeiro artigo`.
 
 - `title` aparece no artigo, nas listas e nos metadados relacionados.
 - `description` é a descrição do artigo e da página; sem `context` próprio, também aparece na linha de contexto abaixo do título.
@@ -87,14 +87,14 @@ Prefira datas `YYYY-MM-DD` entre aspas. Para horário exato, use ISO com fuso, c
 Separe parágrafos com uma linha vazia. Exemplos comuns de Markdown:
 
 ```md
-这是一段正文，可以使用 **加粗**、_强调_ 和 `行内代码`。
+Este parágrafo aceita **negrito**, _ênfase_ e `código em linha`.
 
-- 第一个要点
-- 第二个要点
+- Primeiro ponto
+- Segundo ponto
 
-[链接文字](https://example.com/)
+[Texto do link](https://example.com/)
 
-> 这是一段引用。
+> Esta é uma citação.
 ```
 
 Os títulos `##` e `###` geram o sumário automaticamente. Em telas largas ele fica à direita do corpo; em telas estreitas, antes dele. Sem títulos de segundo ou terceiro nível, não aparece. Títulos de quarto nível ou mais profundos funcionam no corpo, mas não entram nesse sumário.
@@ -109,7 +109,7 @@ Sem `toc`, o artigo herda `theme.toc.enabled` de `src/site.config.ts`, habilitad
 
 ### Organizar artigos com tags
 
-Adicione `tags: ['astro', '笔记']` ao frontmatter para gerar links de tags e listas no idioma atual, sem criar rotas. Com tags habilitadas, consulte `/zh/tags/` no exemplo em chinês.
+Adicione `tags: ['astro', 'anotações']` ao frontmatter para gerar links de tags e listas no idioma atual, sem criar rotas. Com tags habilitadas, consulte `/zh/tags/` no exemplo em chinês.
 
 Tags distinguem maiúsculas de minúsculas: `Astro` e `astro` são diferentes. Espaços nas extremidades são removidos e tags duplicadas no mesmo artigo contam uma vez. Use os links gerados; caracteres chineses e especiais recebem codificação estável, sem precisar adivinhar o caminho. Renomear uma tag muda seu link.
 
@@ -131,7 +131,7 @@ Blocos no corpo do artigo recebem um botão de cópia, que preserva quebras de l
 Fórmulas são habilitadas por padrão, sem instalar outro plugin. Use `$...$` em linha e `$$` em linhas separadas para fórmulas destacadas:
 
 ```md
-保存量为 $C_{saved}$。
+A quantidade economizada é $C_{saved}$。
 
 $$
 \frac{a}{b} = x_1 + x_2
@@ -153,9 +153,9 @@ Use `.md` para escrita comum. Se precisar importar e usar componentes no artigo,
 Imagens do corpo podem ficar junto do artigo ou em `public/images/`. Coloque primeiro o arquivo real e use o caminho correspondente:
 
 ```md
-![照片内容的描述](./photo.jpg)
+![Descrição do conteúdo da foto](./photo.jpg)
 
-![照片内容的描述](/images/photo.jpg)
+![Descrição do conteúdo da foto](/images/photo.jpg)
 ```
 
 O primeiro caminho é relativo ao artigo; o segundo corresponde a `public/images/photo.jpg` e omite `public` na URL. A descrição é o texto alternativo da imagem.
@@ -164,11 +164,13 @@ Para trocar a capa, coloque `cover.jpg` junto do artigo e defina `heroImage: ./c
 
 Imagens comuns do corpo podem ser ampliadas ao clicar ou ao focar e pressionar Enter/espaço. Esc, o botão de fechar ou a máscara fecham a prévia. Capas e imagens dentro de links ou botões não participam. A ampliação reutiliza a fonte escolhida pelo navegador, sem buscar um original de maior resolução nem oferecer navegação de galeria.
 
-Depois de adicionar ou trocar capas, dev ou doctor local prepara arquivos responsivos. Faça commit do original e de todo `src/assets/blog/covers/`, incluindo manifest.json e generated/. O build de publicação e o doctor de CI apenas validam: arquivos ausentes, desatualizados ou modificados causam falha, sem recodificação na hospedagem. Essa persistência cobre capas e imagens locais de Fragments; imagens comuns de artigos seguem o processamento Markdown/MDX existente.
+Dev, build e doctor, inclusive em CI, reutilizam as capas derivadas válidas e completam as ausentes, desatualizadas ou danificadas. Preserve os originais; versionar também `src/assets/blog/covers/`, com manifest.json e generated/, permite reutilizar os arquivos. Essa preparação cobre capas e imagens locais compatíveis de Fragments; imagens comuns de artigos seguem o processamento Markdown/MDX existente.
+
+**Requer 0.36.2 ou posterior:** Dev, build e doctor (inclusive em CI) reutilizam derivados válidos e geram os ausentes, desatualizados ou danificados. Na versão 0.36.1, prepare as imagens primeiro com dev ou `prepare-covers` antes de build/CI. `prepare-covers --check` e a sincronização da configuração continuam sendo verificações somente de leitura.
 
 ## 6. Visualizar localmente e preparar a publicação
 
-Execute `npm run dev` e abra `/<语言代码>/blog/my-first-post/` no endereço do terminal, como `/en/blog/my-first-post/` ou `/zh/blog/my-first-post/`. Confira título, data, corpo, sumário, tags e imagens. Se adicionar traduções, verifique também os destinos do seletor de idioma.
+Execute `npm run dev` e abra `/<locale>/blog/my-first-post/` no endereço do terminal, como `/en/blog/my-first-post/` ou `/zh/blog/my-first-post/`. Confira título, data, corpo, sumário, tags e imagens. Se adicionar traduções, verifique também os destinos do seletor de idioma.
 
 Antes de publicar, pare dev e execute:
 
@@ -214,7 +216,7 @@ Artigos sem `ogImage` recebem por padrão uma imagem 1200×630 com título, auto
 | `aiModel`           | Rótulo informado por você, mostrado na área de estado do título e em OUTPUT. |
 | `aiMode`, `aiState` | Textos informados por você para modo e estado na área do título.             |
 
-Sem valores manuais, o tema estima a contagem pelo texto fonte: caracteres Han CJK, kana e hangul contam individualmente; o restante é dividido principalmente por espaços. Tokens padrão são `round(max(自动字词数, 1) × 1.3)`, uma estimativa, não o resultado de um tokenizador de modelo. Sobrescrever só `wordCount` não recalcula tokens; preencha ambos quando necessário.
+Sem valores manuais, o tema estima a contagem pelo texto fonte: caracteres Han CJK, kana e hangul contam individualmente; o restante é dividido principalmente por espaços. Tokens padrão são `round(max(contagem automática, 1) × 1.3)`, uma estimativa, não o resultado de um tokenizador de modelo. Sobrescrever só `wordCount` não recalcula tokens; preencha ambos quando necessário.
 
 A contagem remove parte do Markdown, mas não mede exatamente o texto visível; fórmulas e código MDX podem influenciá-la. Valores a partir de 1.000 aparecem com uma casa decimal e `k`. Modelo, modo e estado apenas exibem texto, sem conectar serviços de IA, verificar a origem do artigo ou executar tarefas.
 

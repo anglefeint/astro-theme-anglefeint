@@ -4,7 +4,7 @@ title: 'Руководство 6: дать читателям возможнос
 subtitle: 'Подключите Giscus и выберите связь обсуждений статей, переводов и заметок.'
 description: 'Настройка репозитория Giscus, комментарии статей и заметок, mapping, общие обсуждения переводов, параметры и устранение ошибок.'
 pubDate: '2026-11-10'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -105,7 +105,7 @@ doctor включает проверки и сборку; после успех�
 ```ts
 theme: {
   comments: {
-    // 保留 enabled: true 和自己的 repo、repoId、category、categoryId。
+    // Сохраните enabled: true и свои значения repo, repoId, category и categoryId.
     shareAcrossLocales: true,
     mapping: 'specific',
     term: '',

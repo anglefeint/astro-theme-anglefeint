@@ -4,7 +4,7 @@ title: 'Guia 6: permitir comentários dos leitores'
 subtitle: 'Conecte Giscus, habilite comentários de artigos ou Fragments e escolha se traduções compartilham discussões.'
 description: 'Preparação do Giscus, configuração, associação de artigos, compartilhamento entre idiomas, diferenças dos Fragments e diagnóstico de carregamento.'
 pubDate: '2026-11-10'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -105,7 +105,7 @@ Para traduções em chinês e inglês compartilharem uma discussão, mantendo ar
 ```ts
 theme: {
   comments: {
-    // 保留 enabled: true 和自己的 repo、repoId、category、categoryId。
+    // Mantenha enabled: true e seus valores de repo, repoId, category e categoryId.
     shareAcrossLocales: true,
     mapping: 'specific',
     term: '',

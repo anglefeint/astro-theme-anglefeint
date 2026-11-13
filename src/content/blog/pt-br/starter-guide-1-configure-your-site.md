@@ -42,14 +42,15 @@ node --version
 npm --version
 ```
 
-Crie o blog no diretório onde deseja guardar o projeto. O comando abaixo cria a pasta `my-blog`, sem instalar as dependências automaticamente:
+Crie o blog no diretório onde deseja guardar o projeto. O assistente cria a pasta `my-blog`; aceite instalar as dependências (Yes):
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+Se optar por pular a instalação, execute `npm install` dentro de `my-blog` antes de `npm run dev`. `--no-ai` evita instruções genéricas adicionais; o starter já inclui as orientações do tema.
 
 Você pode substituir `my-blog` por outro nome; altere também o nome depois de `cd`. Abra o endereço local exibido no terminal. Não presuma uma porta fixa: ela pode mudar se estiver ocupada. O servidor de desenvolvimento permanece em execução; pressione `Ctrl+C` para pará-lo.
 
@@ -63,11 +64,11 @@ O projeto instalado já contém `src/site.config.ts`. Abra esse arquivo e edite-
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录开发、阅读和生活。',
+  title: 'O blog de Lin',
+  description: 'Anotações sobre desenvolvimento, leituras e vida cotidiana.',
   url: 'https://example.com',
-  author: '小林',
-  tagline: '保持好奇，持续记录。',
+  author: 'Lin',
+  tagline: 'Mantenha a curiosidade e continue escrevendo.',
 },
 ```
 
@@ -147,7 +148,7 @@ Os tipos, valores padrão e endereços estão na [referência de idiomas](/pt-br
 
 ## 4. Substituir os exemplos pelos seus artigos
 
-As publicações ficam em `src/content/blog/<语言代码>/`. `welcome-to-anglefeint.md`, `starter-guide-*.md` e `config-*.md` são publicações comuns do starter: boas-vindas, oito tutoriais e dicionário de configuração. Após backup ou commit, mantenha ou remova conteúdo por idioma. Apagar boas-vindas e tutoriais não apaga o dicionário. Não apague imagens ainda referenciadas.
+As publicações ficam em `src/content/blog/<locale>/`. `welcome-to-anglefeint.md`, `starter-guide-*.md` e `config-*.md` são publicações comuns do starter: boas-vindas, oito tutoriais e dicionário de configuração. Após backup ou commit, mantenha ou remova conteúdo por idioma. Apagar boas-vindas e tutoriais não apaga o dicionário. Não apague imagens ainda referenciadas.
 
 Crie um artigo pelo fluxo padrão:
 
@@ -157,7 +158,7 @@ npm run new-post -- my-first-post
 
 Sem `--locales` nem `ANGLEFEINT_LOCALES`, o comando cria um esqueleto de mesmo nome para todos os idiomas habilitados; na configuração inicial, são nove arquivos. Ele não traduz o conteúdo e ignora arquivos existentes, sem sobrescrevê-los.
 
-Abra `src/content/blog/<语言代码>/my-first-post.md` e preencha título, descrição e corpo. A URL é `/<语言代码>/blog/my-first-post/`. Por exemplo, o arquivo em inglês fica em en e usa `/en/blog/my-first-post/`; em chinês simplificado, fica em zh e usa `/zh/blog/my-first-post/`. Antes de publicar, mova os esqueletos incompletos e não públicos para fora da coleção. Eles não são rascunhos ocultados automaticamente.
+Abra `src/content/blog/<locale>/my-first-post.md` e preencha título, descrição e corpo. A URL é `/<locale>/blog/my-first-post/`. Por exemplo, o arquivo em inglês fica em en e usa `/en/blog/my-first-post/`; em chinês simplificado, fica em zh e usa `/zh/blog/my-first-post/`. Antes de publicar, mova os esqueletos incompletos e não públicos para fora da coleção. Eles não são rascunhos ocultados automaticamente.
 
 Se quiser criar apenas um idioma, use `npm run new-post -- my-first-post --locales zh`. Para idiomas específicos, use `--locales en,zh`. São alternativas opcionais, não etapas para executar todas; `--locales` não habilita um idioma.
 
@@ -178,7 +179,9 @@ O `doctor` local prepara imagens responsivas ausentes ou desatualizadas, executa
 
 `preview` serve o site estático já gerado em `dist/`; abra o endereço do terminal. Ele não publica o blog na internet. A pesquisa de artigos precisa ser verificada nesse preview, pois `dev` não tem pesquisa completa em tempo real. Pare a prévia com `Ctrl+C`.
 
-Ao publicar, a hospedagem usa `npm run build` e o diretório de saída `dist`, com todos os arquivos. Após adicionar ou trocar imagens locais, execute dev ou doctor localmente e faça commit dos originais e de todo `src/assets/blog/covers/` gerado. O build de publicação e o doctor em CI apenas validam essas imagens e falham se faltarem ou estiverem desatualizadas; não as geram na hospedagem. Mudanças de conteúdo ou configuração exigem novo build e publicação.
+Ao publicar, a hospedagem usa `npm run build` e a saída `dist`, com todos os arquivos. Dev, build e doctor, inclusive em CI, preparam as imagens locais utilizadas: reutilizam derivados válidos e geram os ausentes, desatualizados ou danificados. Preserve os originais; versionar também `src/assets/blog/covers/` permite reutilizar derivados. Mudanças de conteúdo ou configuração exigem novo build e publicação.
+
+**Requer 0.36.2 ou posterior:** Dev, build e doctor (inclusive em CI) reutilizam derivados válidos e geram os ausentes, desatualizados ou danificados. Na versão 0.36.1, prepare as imagens primeiro com dev ou `prepare-covers` antes de build/CI. `prepare-covers --check` e a sincronização da configuração continuam sendo verificações somente de leitura.
 
 ## Como atualizar um projeto existente
 

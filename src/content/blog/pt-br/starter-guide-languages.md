@@ -4,9 +4,11 @@ title: 'Guia 7: receber leitores de outros idiomas'
 subtitle: 'Escolha idiomas, ajuste o endereço inicial e os textos localizados e adicione traduções de artigos e Fragments.'
 description: 'Habilitação de idiomas, padrão, rotas iniciais, fallback, novos idiomas e associações de artigos e Fragments conforme a implementação.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
+
+As expressões chinesas nos exemplos de `locales.zh` são intencionais: mostram como personalizar o conteúdo em chinês sem alterar os outros idiomas. Os valores padrão em chinês/inglês nas tabelas são citações do tema, não traduções pendentes.
 
 Esta é a parte 7 de 8 do guia inicial. [Veja a ordem completa](/pt-br/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Consulte a referência por campo](/pt-br/blog/config-reference/).
 
@@ -110,7 +112,7 @@ i18n: {
 - `messages.siteDescription` é a metadescrição, não a apresentação. Só mudar `site.description` global pode não substituir o texto interno localizado.
 - `messages.nav` altera o texto das entradas, sem modificar rotas nem conteúdo dos artigos.
 
-Da mesma forma, `i18n.locales.<代码>.about` altera About naquele idioma, e os módulos de `messages` mudam seus textos de interface. About, Decoder e outras páginas ainda dependem dos botões globais: escrever uma tradução não as habilita. Exemplos estão em [ajustar páginas e recursos](/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/).
+Da mesma forma, `i18n.locales.<locale>.about` altera About naquele idioma, e os módulos de `messages` mudam seus textos de interface. About, Decoder e outras páginas ainda dependem dos botões globais: escrever uma tradução não as habilita. Exemplos estão em [ajustar páginas e recursos](/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/).
 
 Metadados e endereço inicial estão na [referência de idiomas](/pt-br/blog/config-languages/#registry). Os três tipos de texto inicial são explicados na [referência da página inicial](/pt-br/blog/config-home/#home-title).
 
@@ -215,7 +217,7 @@ npm run doctor
 npm run preview
 ```
 
-doctor inclui verificação e build; não repita check ou build imediatamente após o sucesso. Use preview para testar a busca de artigos por idioma; o índice usa o idioma atual, sem misturar todos. O RSS de cada idioma ativo fica em `/<代码>/rss.xml` e contém apenas seus artigos.
+doctor inclui verificação e build; não repita check ou build imediatamente após o sucesso. Use preview para testar a busca de artigos por idioma; o índice usa o idioma atual, sem misturar todos. O RSS de cada idioma ativo fica em `/<locale>/rss.xml` e contém apenas seus artigos.
 
 Confira o domínio e publique todo `dist/` novamente. Ativar/desativar idiomas, alterar o endereço inicial ou conteúdo exige novo build; salvar localmente não muda o site online. Remova saídas antigas ao publicar: desabilitar idiomas não cria redirecionamentos automaticamente.
 

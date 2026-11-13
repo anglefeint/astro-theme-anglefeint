@@ -4,7 +4,7 @@ title: '설정 사전: Giscus 댓글과 다국어 토론 공유'
 subtitle: '글과 Fragments의 독립 스위치, 토론 매핑, 언어, 공유 규칙입니다.'
 description: '실제 코드로 모든 Giscus 공통 설정을 조회하고 기본값, 타입, 검증 조건, 글 번역 공유, Fragment 덮어쓰기 규칙을 설명합니다.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -185,16 +185,16 @@ theme: {
 
 ## 페이지 자체의 댓글 문구
 
-`i18n.locales.<语言>.messages` 아래의 선택적 string입니다. 현재 언어 내장 문구·대체값을 사용합니다. 해당 객체에 예시 값을 쓰며 바깥 라벨만 바꾸고 iframe 내부 버튼은 바꾸지 않습니다. 표는 중국어 간체 / 영어 기본값과 중국어 간체 예시입니다.
+`i18n.locales.<locale>.messages` 아래의 선택적 string입니다. 현재 언어 내장 문구·대체값을 사용합니다. 해당 객체에 예시 값을 쓰며 바깥 라벨만 바꾸고 iframe 내부 버튼은 바꾸지 않습니다. 표는 중국어 간체 / 영어 기본값과 한국어 예시입니다.
 
-| 상대 필드            | 중국어 간체 / 영어 기본값                                                                                                 | 상태·역할·제한                                                              | 중국어 간체 예시 값  |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------- |
-| `blog.comments`      | 评论 / Comments                                                                                                           | 조건부 적용: 글 댓글 영역의 접근 가능한 이름이며 추가 가시 제목은 아닙니다. | `"文章讨论"`         |
-| `fragments.comments` | 评论 / Comments                                                                                                           | 조건부 적용: Fragment 댓글 버튼·팝업 제목입니다.                            | `"参与讨论"`         |
-| `fragments.close`    | 关闭 / Close                                                                                                              | 조건부 적용: 팝업 닫기이며 홈 창 닫기 이름에도 씁니다.                      | `"关闭窗口"`         |
-| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | 조건부 적용: Fragment 댓글 로드 상태입니다.                                 | `"正在加载讨论…"`    |
-| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | 조건부 적용: Fragment 댓글 실패입니다.                                      | `"讨论暂时不可用。"` |
-| `fragments.retry`    | 重试 / Retry                                                                                                              | 조건부 적용: Fragment 댓글 재시도 버튼입니다.                               | `"重新加载"`         |
+| 상대 필드            | 중국어 간체 / 영어 기본값                                                                                                 | 상태·역할·제한                                                              | 한국어 예시 값                      |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------- |
+| `blog.comments`      | 评论 / Comments                                                                                                           | 조건부 적용: 글 댓글 영역의 접근 가능한 이름이며 추가 가시 제목은 아닙니다. | `"글 토론"`                         |
+| `fragments.comments` | 评论 / Comments                                                                                                           | 조건부 적용: Fragment 댓글 버튼·팝업 제목입니다.                            | `"토론 참여"`                       |
+| `fragments.close`    | 关闭 / Close                                                                                                              | 조건부 적용: 팝업 닫기이며 홈 창 닫기 이름에도 씁니다.                      | `"창 닫기"`                         |
+| `fragments.loading`  | 正在加载评论… / Loading comments…                                                                                         | 조건부 적용: Fragment 댓글 로드 상태입니다.                                 | `"토론을 불러오는 중…"`             |
+| `fragments.error`    | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | 조건부 적용: Fragment 댓글 실패입니다.                                      | `"현재 토론을 이용할 수 없습니다."` |
+| `fragments.retry`    | 重试 / Retry                                                                                                              | 조건부 적용: Fragment 댓글 재시도 버튼입니다.                               | `"다시 불러오기"`                   |
 
 나머지는 [글 사전](/ko/blog/config-article/#article-messages)과 [Fragments 사전](/ko/blog/config-fragments/#fragment-messages)에 있습니다. iframe 언어는 이 필드가 아닌 위 lang 규칙입니다.
 

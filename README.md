@@ -56,11 +56,12 @@ For theme development, start with this repository's [AGENTS.md](https://github.c
 Requires **Node.js 22.12.0 or newer**. The template uses **Astro 7**. In the directory where you want your blog, run:
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+Choose **Yes** when the setup wizard asks to install dependencies. If you deliberately skip installation, run `npm install` before `npm run dev`. `--no-ai` skips the wizard’s extra AI-agent instruction files; the theme’s own assistant guidance comes with the starter.
 
 Open the URL printed in the terminal. For an existing project, run `npm install` and `npm run dev` in its original directory rather than recreating it. Stop the server with Ctrl+C. Run subsequent commands at the project root, either after stopping dev or in another terminal.
 
@@ -78,9 +79,9 @@ Add the following `site` section inside the existing `defineThemeConfig({ ... })
 
 ```ts
 site: {
-  title: '我的博客',
-  author: '你的名字',
-  description: '记录项目、阅读和生活。',
+  title: 'My Blog',
+  author: 'Your Name',
+  description: 'Projects, reading, and everyday life.',
   url: 'https://your-domain.example',
 },
 ```
@@ -105,16 +106,16 @@ npm run new-post -- my-first-post
 
 Without `--locales` or `ANGLEFEINT_LOCALES`, the command reads all enabled project languages and creates a same-named skeleton for each. Initial settings enable nine languages, so nine files are created. If you changed enabled languages, it follows those settings. Bodies are not translated, and existing files are never overwritten.
 
-Files live at `src/content/blog/<语言>/my-first-post.md`, with article URL `/<语言>/blog/my-first-post/` and list `/<语言>/blog/`. For example: English `src/content/blog/en/my-first-post.md`, Chinese `src/content/blog/zh/my-first-post.md`. Open the files you need and edit title, description and body; routes require no manual creation. Minimal content:
+Files live at `src/content/blog/<locale>/my-first-post.md`, with article URL `/<locale>/blog/my-first-post/` and list `/<locale>/blog/`. For example: English `src/content/blog/en/my-first-post.md`, Chinese `src/content/blog/zh/my-first-post.md`. Open the files you need and edit title, description and body; routes require no manual creation. Minimal content:
 
 ```md
 ---
-title: '我的第一篇文章'
-description: '记录这次开始写博客的想法。'
+title: 'My First Post'
+description: 'Thoughts on starting this blog.'
 pubDate: '2026-11-13'
 ---
 
-这里开始写正文。
+Start writing here.
 ```
 
 Only required fields are shown. You may retain the generated cover and other optional fields. Ordinary article slugs use lowercase letters, digits and hyphens, such as `my-first-post`.
@@ -170,9 +171,9 @@ npm run new-fragment -- --locales en,zh
 
 Each invocation creates a new entry. These are alternatives, not a sequence to execute. CLI language selection does not change site language switches.
 
-Files appear in `src/content/fragments/<语言>/`, with names such as `2026-11-13-aB3dE6gH.md`; the terminal prints actual paths. Edit the body and retain the generated eight-character alphanumeric ID. Translations created together share ID and publication time. Do not rerun creation commands to edit an existing entry.
+Files appear in `src/content/fragments/<locale>/`, with names such as `2026-11-13-aB3dE6gH.md`; the terminal prints actual paths. Edit the body and retain the generated eight-character alphanumeric ID. Translations created together share ID and publication time. Do not rerun creation commands to edit an existing entry.
 
-Lists use `/<语言>/fragments/`, such as `/en/fragments/` and `/zh/fragments/`. A language's homepage shows the avatar preview when it has fragments. Stable sharing uses `/<语言>/fragments/#ID`, not page numbers as identity. Changing IDs affects links and discussion matching. Fragment comments default off.
+Lists use `/<locale>/fragments/`, such as `/en/fragments/` and `/zh/fragments/`. A language's homepage shows the avatar preview when it has fragments. Stable sharing uses `/<locale>/fragments/#ID`, not page numbers as identity. Changing IDs affects links and discussion matching. Fragment comments default off.
 
 Tutorial: [Publish a fragment](https://demo.anglefeint.com/en/blog/starter-guide-5-fragments/). Reference: [Fragments](https://demo.anglefeint.com/en/blog/config-fragments/).
 
@@ -184,7 +185,7 @@ Use `new-post` for articles and `new-page` for independent project or portfolio 
 npm run new-page -- projects
 ```
 
-This creates `src/pages/[lang]/projects.astro`, using the `base` theme by default. Edit its content and visit `/<语言>/projects/`, such as `/en/projects/`. One file generates pages for all enabled languages without translating content or adding navigation automatically.
+This creates `src/pages/[lang]/projects.astro`, using the `base` theme by default. Edit its content and visit `/<locale>/projects/`, such as `/en/projects/`. One file generates pages for all enabled languages without translating content or adding navigation automatically.
 
 To choose a visual style, add `--theme`: `base`, `matrix`, `cyber`, `hacker` or `ai`. For example, `npm run new-page -- portfolio --theme cyber` creates another Cyberpunk page.
 
@@ -202,14 +203,16 @@ Detailed steps: [Customize pages and features](https://demo.anglefeint.com/en/bl
 
 Article bodies use ordinary Markdown images: place `photo.jpg` beside the article and write `![Image description](./photo.jpg)`. For a cover, set frontmatter `heroImage: ./cover.jpg` after creating the file. Public image URLs omit the public prefix.
 
-Covers and supported local fragment images need persisted responsive files. Prepare them explicitly locally, or check existing output:
+Covers and supported local fragment images use persisted responsive files. Normal dev, build and doctor runs prepare them automatically, including CI. You can also prepare them explicitly or check existing output:
 
 ```bash
 npx @anglefeint/astro-theme prepare-covers
 npx @anglefeint/astro-theme prepare-covers --check
 ```
 
-Local dev and local doctor prepare missing/stale derivatives. build and CI doctor only check; deployment does not regenerate them. Commit originals and all of `src/assets/blog/covers/`, including `manifest.json` and `generated/`. For missing/stale/modified errors, prepare and commit locally before rebuilding.
+Correct files are reused; missing, stale or modified derivatives are repaired automatically. Commit originals and referenced source files. Committing `src/assets/blog/covers/manifest.json` and `generated/` lets other checkouts reuse them, but their absence does not prevent automatic preparation. Missing originals, unsafe paths and invalid inputs still fail validation. Configuration sync and explicit `prepare-covers --check` only validate.
+
+**Version note:** Automatic image preparation during normal builds and CI doctor runs requires 0.36.2 or later. With 0.36.1, first run dev or `prepare-covers` to prepare derivatives. Explicit `prepare-covers --check` and configuration sync remain read-only.
 
 This does not mean all ordinary article-body images are compressed. See the [image tutorial](https://demo.anglefeint.com/en/blog/starter-guide-images/) for supported inputs, paths and sharing rules.
 

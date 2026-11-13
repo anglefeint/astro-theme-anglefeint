@@ -59,31 +59,31 @@ frontmatter 전체 22개이며 site.config에 추가되는 것이 아닙니다. 
 
 ### 콘텐츠·메타 정보
 
-| 필드          | 타입·기본 동작                             | 역할·제한·예시                                                                                        |
-| ------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| `title`       | 필수 string, 기본 없음                     | 글 제목·메타 정보이며 사이트 이름은 아닙니다. 예: `title: '我的笔记'`                                 |
-| `description` | 필수 string, 기본 없음                     | 메타 설명이며 context 없을 때 맥락입니다. 전체 본문이 아닙니다. 예: `description: '一次调试的记录。'` |
-| `pubDate`     | 필수 해석 가능 날짜, 기본 없음             | 게시일·목록·메타입니다. UTC 표시이며 미래도 숨기지 않습니다. 예: `pubDate: '2026-11-13'`              |
-| `updatedDate` | 선택 날짜, 미설정                          | 수정일·sitemap 우선이며 pubDate 정렬을 대체하지 않습니다. 예: `updatedDate: '2026-11-14'`             |
-| `author`      | 선택 string, 없거나 공백이면 사이트 작성자 | 작성자 페이지는 만들지 않습니다. 예: `author: '另一位作者'`                                           |
-| `subtitle`    | 선택 string, 미설정                        | 부제이며 맥락과 같으면 중복 표시하지 않습니다. 예: `subtitle: '从现象到定位'`                         |
-| `context`     | 선택 string, 생략하면 description          | 제목 아래 맥락입니다. 빈 값은 행만 숨깁니다. 예: `context: '解决一个具体问题。'`                      |
-| `tags`        | 선택 string 배열, 없으면 항목 없음         | 전역 스위치도 따릅니다. 예: `tags: ['astro', '笔记']`                                                 |
-| `heroImage`   | 선택 로컬 이미지 경로, 없으면 표지 없음    | 원격·public URL 규칙은 아닙니다. 파일을 먼저 넣으세요. 예: `heroImage: ./cover.jpg`                   |
-| `ogImage`     | 선택 로컬·public·HTTPS, 생략은 공유 대체   | 본문 표지를 바꾸지 않습니다. 파일을 먼저 넣으세요. 예: `ogImage: /images/share.png`                   |
-| `toc`         | 선택 boolean, 전역 상속                    | true도 제목이 없으면 안 나옵니다. 예: `toc: false`                                                    |
-| `search`      | 선택 boolean, 기본 true                    | false는 검색만 제외하며 글·RSS·sitemap·AI는 공개입니다. 예: `search: false`                           |
+| 필드          | 타입·기본 동작                             | 역할·제한·예시                                                                                           |
+| ------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `title`       | 필수 string, 기본 없음                     | 글 제목·메타 정보이며 사이트 이름은 아닙니다. 예: `title: '내 노트'`                                     |
+| `description` | 필수 string, 기본 없음                     | 메타 설명이며 context 없을 때 맥락입니다. 전체 본문이 아닙니다. 예: `description: '디버깅 과정의 기록.'` |
+| `pubDate`     | 필수 해석 가능 날짜, 기본 없음             | 게시일·목록·메타입니다. UTC 표시이며 미래도 숨기지 않습니다. 예: `pubDate: '2026-11-13'`                 |
+| `updatedDate` | 선택 날짜, 미설정                          | 수정일·sitemap 우선이며 pubDate 정렬을 대체하지 않습니다. 예: `updatedDate: '2026-11-14'`                |
+| `author`      | 선택 string, 없거나 공백이면 사이트 작성자 | 작성자 페이지는 만들지 않습니다. 예: `author: '다른 작성자'`                                             |
+| `subtitle`    | 선택 string, 미설정                        | 부제이며 맥락과 같으면 중복 표시하지 않습니다. 예: `subtitle: '증상에서 원인까지'`                       |
+| `context`     | 선택 string, 생략하면 description          | 제목 아래 맥락입니다. 빈 값은 행만 숨깁니다. 예: `context: '구체적인 문제 하나를 해결합니다.'`           |
+| `tags`        | 선택 string 배열, 없으면 항목 없음         | 전역 스위치도 따릅니다. 예: `tags: ['astro', '노트']`                                                    |
+| `heroImage`   | 선택 로컬 이미지 경로, 없으면 표지 없음    | 원격·public URL 규칙은 아닙니다. 파일을 먼저 넣으세요. 예: `heroImage: ./cover.jpg`                      |
+| `ogImage`     | 선택 로컬·public·HTTPS, 생략은 공유 대체   | 본문 표지를 바꾸지 않습니다. 파일을 먼저 넣으세요. 예: `ogImage: /images/share.png`                      |
+| `toc`         | 선택 boolean, 전역 상속                    | true도 제목이 없으면 안 나옵니다. 예: `toc: false`                                                       |
+| `search`      | 선택 boolean, 기본 true                    | false는 검색만 제외하며 글·RSS·sitemap·AI는 공개입니다. 예: `search: false`                              |
 
 처음에는 필수만 쓰고 필요하면 보충하세요.
 
 ```yaml
 ---
-title: '我的笔记'
-description: '一次调试的记录。'
+title: '내 노트'
+description: '디버깅 과정의 기록.'
 pubDate: '2026-11-13'
-subtitle: '从现象到定位'
-context: '解决一个具体问题。'
-tags: ['astro', '笔记']
+subtitle: '증상에서 원인까지'
+context: '구체적인 문제 하나를 해결합니다.'
+tags: ['astro', '노트']
 toc: true
 search: true
 ---
@@ -95,20 +95,20 @@ search: true
 
 ### OUTPUT 통계·상태
 
-| 필드         | 타입·기본 동작                                                | 역할·제한·예시                                                               |
-| ------------ | ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `wordCount`  | 선택 비음수 정수, 기본 소스 텍스트 계산                       | 독립 덮어쓰기이며 tokenCount는 유지합니다. 예: `wordCount: 800`              |
-| `tokenCount` | 선택 비음수 정수, 기본 round(max(자동 단어·문자 수, 1) × 1.3) | 모델 토크나이저·실사용이 아닌 추정입니다. 예: `tokenCount: 1040`             |
-| `aiModel`    | 선택 string, 없으면 라벨 없음                                 | 제목·OUTPUT이며 실제 모델 검증은 없습니다. 예: `aiModel: '作者填写的模型名'` |
-| `aiMode`     | 선택 string, 없으면 라벨 없음                                 | 모드 문구만 표시하며 작업은 실행하지 않습니다. 예: `aiMode: 'notes'`         |
-| `aiState`    | 선택 string, 없으면 라벨 없음                                 | 상태 문구만 표시하며 서비스 검사는 없습니다. 예: `aiState: 'edited'`         |
+| 필드         | 타입·기본 동작                                                | 역할·제한·예시                                                                        |
+| ------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `wordCount`  | 선택 비음수 정수, 기본 소스 텍스트 계산                       | 독립 덮어쓰기이며 tokenCount는 유지합니다. 예: `wordCount: 800`                       |
+| `tokenCount` | 선택 비음수 정수, 기본 round(max(자동 단어·문자 수, 1) × 1.3) | 모델 토크나이저·실사용이 아닌 추정입니다. 예: `tokenCount: 1040`                      |
+| `aiModel`    | 선택 string, 없으면 라벨 없음                                 | 제목·OUTPUT이며 실제 모델 검증은 없습니다. 예: `aiModel: '작성자가 입력한 모델 이름'` |
+| `aiMode`     | 선택 string, 없으면 라벨 없음                                 | 모드 문구만 표시하며 작업은 실행하지 않습니다. 예: `aiMode: 'notes'`                  |
+| `aiState`    | 선택 string, 없으면 라벨 없음                                 | 상태 문구만 표시하며 서비스 검사는 없습니다. 예: `aiState: 'edited'`                  |
 
 일부 Markdown·코드·링크를 제거하고 CJK 한자·가나·한글은 문자별, 나머지는 주로 공백으로 셉니다. 수식·MDX가 추정에 영향을 줄 수 있습니다. wordCount만 입력해도 tokenCount는 재계산하지 않습니다. 1,000 이상은 소수 한 자리 k로 표시하며 원값은 유지합니다.
 
 ```yaml
 wordCount: 800
 tokenCount: 1040
-aiModel: '作者填写的模型名'
+aiModel: '작성자가 입력한 모델 이름'
 aiMode: 'notes'
 aiState: 'edited'
 ```
@@ -131,44 +131,44 @@ aiState: 'edited'
 
 <a id="article-messages"></a>
 
-접두사는 `i18n.locales.<语言>.messages.blog`이며 선택적 string, 일반 문구 대체 규칙입니다. 표는 중국어 간체／영어 기본값과 blog 객체의 중국어 간체 단일 멤버 예시입니다. frontmatter가 아닙니다.
+접두사는 `i18n.locales.<locale>.messages.blog`이며 선택적 string, 일반 문구 대체 규칙입니다. 표는 중국어 간체／영어 기본값과 blog 객체의 한국어 단일 멤버 예시입니다. frontmatter가 아닙니다.
 
 유효 문구는 해당 영역이 있어야 하는 조건부 적용입니다. 빈 문자열은 라벨만 비울 수 있고 기능을 숨기지 않습니다. 접근성 이름은 비우지 마세요. 미사용 필드는 효과가 없습니다.
 
-| 필드                 | 중국어 간체 기본값 / 영어 기본값     | 역할·제한                                                   | 상태        | 중국어 간체 멤버 예시             |
-| -------------------- | ------------------------------------ | ----------------------------------------------------------- | ----------- | --------------------------------- |
-| `rqBadge`            | 监视器信号 / monitor feed            | Red Queen이 켜졌을 때 모니터 배지이며 실제 감시가 아닙니다. | 조건부 적용 | `rqBadge: "监视器信号"`           |
-| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed | 모니터 재생 버튼 이름이며 자원·재생 전략은 안 바꿉니다.     | 조건부 적용 | `rqReplayAria: "重放监视器信号"`  |
-| `backToTop`          | 返回顶部 / Back to top               | 스크롤 상태에 따른 맨 위로 버튼 이름입니다.                 | 조건부 적용 | `backToTop: "返回顶部"`           |
-| `toastP10`           | 语境解析 10% / context parsed 10%    | 읽기 초기 안내이며 AI 요청 진행이 아닙니다.                 | 조건부 적용 | `toastP10: "语境解析 10%"`        |
-| `toastP30`           | 语境解析 30% / context parsed 30%    | 읽기 진행 안내이며 의미 분석 결과가 아닙니다.               | 조건부 적용 | `toastP30: "语境解析 30%"`        |
-| `toastP60`           | 推理稳定 60% / inference stable 60%  | 읽기 진행 안내이며 모델 추론 상태가 아닙니다.               | 조건부 적용 | `toastP60: "推理稳定 60%"`        |
-| `toastDone`          | 输出完成 / output finalized          | 읽기 완료 안내이며 생성·검증 완료의 증거가 아닙니다.        | 조건부 적용 | `toastDone: "输出完成"`           |
-| `metaPublished`      | 发布 / published                     | 게시일 앞 라벨이며 날짜는 안 바꿉니다.                      | 조건부 적용 | `metaPublished: "发布"`           |
-| `metaAuthor`         | 作者 / by                            | 작성자 라벨이며 값은 안 바꿉니다.                           | 조건부 적용 | `metaAuthor: "作者"`              |
-| `metaUpdated`        | 更新 / updated                       | updatedDate가 있을 때 수정일 라벨입니다.                    | 조건부 적용 | `metaUpdated: "更新"`             |
-| `systemStatusAria`   | 模型状态 / Model status              | 상태 필드가 하나 이상일 때 제목 상태 영역 이름입니다.       | 조건부 적용 | `systemStatusAria: "模型状态"`    |
-| `systemModelLabel`   | 模型 / model                         | aiModel이 있을 때 모델 라벨이며 OUTPUT에도 씁니다.          | 조건부 적용 | `systemModelLabel: "模型"`        |
-| `systemModeLabel`    | 模式 / mode                          | aiMode가 있을 때 모드 라벨입니다.                           | 조건부 적용 | `systemModeLabel: "模式"`         |
-| `systemStateLabel`   | 状态 / state                         | aiState가 있을 때 상태 라벨입니다.                          | 조건부 적용 | `systemStateLabel: "状态"`        |
-| `promptContextLabel` | 语境 / Context                       | 비어 있지 않은 맥락 앞 라벨입니다.                          | 조건부 적용 | `promptContextLabel: "语境"`      |
-| `heroMonitor`        | 神经监视器 / neural monitor          | heroImage가 있을 때 표지 모니터 문구입니다.                 | 조건부 적용 | `heroMonitor: "神经监视器"`       |
-| `heroSignalSync`     | 信号同步中 / signal sync active      | 고정 장식 동기화 문구이며 실제 상태 조회가 아닙니다.        | 조건부 적용 | `heroSignalSync: "信号同步中"`    |
-| `heroModelOnline`    | 模型在线 / model online              | 고정 장식 모델 문구이며 서비스 조회가 아닙니다.             | 조건부 적용 | `heroModelOnline: "模型在线"`     |
-| `toc`                | 文章目录 / On this page              | 목차가 켜지고 제목이 있을 때 이름입니다.                    | 조건부 적용 | `toc: "文章目录"`                 |
-| `responseOutput`     | 输出 / Output                        | 본문 OUTPUT 이름이며 본문을 제어하지 않습니다.              | 조건부 적용 | `responseOutput: "输出"`          |
-| `statsWords`         | 词 / words                           | 단어·문자 수 라벨이며 값은 안 바꿉니다.                     | 조건부 적용 | `statsWords: "词"`                |
-| `statsTokens`        | 令牌 / tokens                        | tokens 라벨이며 추정은 안 바꿉니다.                         | 조건부 적용 | `statsTokens: "令牌"`             |
-| `copySectionLink`    | 复制本节链接 / Copy section link     | 본문 h2／h3 링크 복사 이름이며 앵커 알고리즘은 안 바꿉니다. | 조건부 적용 | `copySectionLink: "复制本节链接"` |
-| `regenerate`         | 重播扫描 / Replay scan               | 스캔 재생 버튼 문구이며 시각 효과만 실행합니다.             | 조건부 적용 | `regenerate: "重播扫描"`          |
-| `relatedAria`        | 相关文章 / Related posts             | 다른 글이 있을 때 관련 글 접근성 이름입니다.                | 조건부 적용 | `relatedAria: "相关文章"`         |
-| `related`            | 相关文章 / Related                   | 관련 글 제목이며 알고리즘을 제어하지 않습니다.              | 조건부 적용 | `related: "相关文章"`             |
-| `backToBlogAria`     | 返回博客 / Back to blog              | 블로그로 돌아가기의 접근성 이름입니다.                      | 조건부 적용 | `backToBlogAria: "返回博客"`      |
-| `backToBlog`         | 返回博客 / Back to blog              | 블로그 링크의 가시 문구이며 목적지는 유지합니다.            | 조건부 적용 | `backToBlog: "返回博客"`          |
-| `comments`           | 评论 / Comments                      | 유효한 글 댓글 설정이 있을 때 영역 이름입니다.              | 조건부 적용 | `comments: "评论"`                |
-| `metaReadMinutes`    | 分钟阅读 / min read                  | 현재 미사용이며 읽기 시간을 복구하지 않습니다.              | 현재 미사용 | `metaReadMinutes: "分钟阅读"`     |
-| `latencyLabel`       | 延迟估计 / latency est               | 현재 미사용이며 지연을 복구하지 않습니다.                   | 현재 미사용 | `latencyLabel: "延迟估计"`        |
-| `confidenceLabel`    | 置信度 / confidence                  | 현재 미사용이며 신뢰도를 복구하지 않습니다.                 | 현재 미사용 | `confidenceLabel: "置信度"`       |
+| 필드                 | 중국어 간체 기본값 / 영어 기본값     | 역할·제한                                                   | 상태        | 한국어 멤버 예시                        |
+| -------------------- | ------------------------------------ | ----------------------------------------------------------- | ----------- | --------------------------------------- |
+| `rqBadge`            | 监视器信号 / monitor feed            | Red Queen이 켜졌을 때 모니터 배지이며 실제 감시가 아닙니다. | 조건부 적용 | `rqBadge: "모니터 신호"`                |
+| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed | 모니터 재생 버튼 이름이며 자원·재생 전략은 안 바꿉니다.     | 조건부 적용 | `rqReplayAria: "모니터 신호 다시 재생"` |
+| `backToTop`          | 返回顶部 / Back to top               | 스크롤 상태에 따른 맨 위로 버튼 이름입니다.                 | 조건부 적용 | `backToTop: "맨 위로"`                  |
+| `toastP10`           | 语境解析 10% / context parsed 10%    | 읽기 초기 안내이며 AI 요청 진행이 아닙니다.                 | 조건부 적용 | `toastP10: "맥락 분석 10%"`             |
+| `toastP30`           | 语境解析 30% / context parsed 30%    | 읽기 진행 안내이며 의미 분석 결과가 아닙니다.               | 조건부 적용 | `toastP30: "맥락 분석 30%"`             |
+| `toastP60`           | 推理稳定 60% / inference stable 60%  | 읽기 진행 안내이며 모델 추론 상태가 아닙니다.               | 조건부 적용 | `toastP60: "추론 안정화 60%"`           |
+| `toastDone`          | 输出完成 / output finalized          | 읽기 완료 안내이며 생성·검증 완료의 증거가 아닙니다.        | 조건부 적용 | `toastDone: "출력 완료"`                |
+| `metaPublished`      | 发布 / published                     | 게시일 앞 라벨이며 날짜는 안 바꿉니다.                      | 조건부 적용 | `metaPublished: "게시"`                 |
+| `metaAuthor`         | 作者 / by                            | 작성자 라벨이며 값은 안 바꿉니다.                           | 조건부 적용 | `metaAuthor: "작성자"`                  |
+| `metaUpdated`        | 更新 / updated                       | updatedDate가 있을 때 수정일 라벨입니다.                    | 조건부 적용 | `metaUpdated: "업데이트"`               |
+| `systemStatusAria`   | 模型状态 / Model status              | 상태 필드가 하나 이상일 때 제목 상태 영역 이름입니다.       | 조건부 적용 | `systemStatusAria: "모델 상태"`         |
+| `systemModelLabel`   | 模型 / model                         | aiModel이 있을 때 모델 라벨이며 OUTPUT에도 씁니다.          | 조건부 적용 | `systemModelLabel: "모델"`              |
+| `systemModeLabel`    | 模式 / mode                          | aiMode가 있을 때 모드 라벨입니다.                           | 조건부 적용 | `systemModeLabel: "모드"`               |
+| `systemStateLabel`   | 状态 / state                         | aiState가 있을 때 상태 라벨입니다.                          | 조건부 적용 | `systemStateLabel: "상태"`              |
+| `promptContextLabel` | 语境 / Context                       | 비어 있지 않은 맥락 앞 라벨입니다.                          | 조건부 적용 | `promptContextLabel: "맥락"`            |
+| `heroMonitor`        | 神经监视器 / neural monitor          | heroImage가 있을 때 표지 모니터 문구입니다.                 | 조건부 적용 | `heroMonitor: "신경망 모니터"`          |
+| `heroSignalSync`     | 信号同步中 / signal sync active      | 고정 장식 동기화 문구이며 실제 상태 조회가 아닙니다.        | 조건부 적용 | `heroSignalSync: "신호 동기화 중"`      |
+| `heroModelOnline`    | 模型在线 / model online              | 고정 장식 모델 문구이며 서비스 조회가 아닙니다.             | 조건부 적용 | `heroModelOnline: "모델 온라인"`        |
+| `toc`                | 文章目录 / On this page              | 목차가 켜지고 제목이 있을 때 이름입니다.                    | 조건부 적용 | `toc: "글 목차"`                        |
+| `responseOutput`     | 输出 / Output                        | 본문 OUTPUT 이름이며 본문을 제어하지 않습니다.              | 조건부 적용 | `responseOutput: "출력"`                |
+| `statsWords`         | 词 / words                           | 단어·문자 수 라벨이며 값은 안 바꿉니다.                     | 조건부 적용 | `statsWords: "단어"`                    |
+| `statsTokens`        | 令牌 / tokens                        | tokens 라벨이며 추정은 안 바꿉니다.                         | 조건부 적용 | `statsTokens: "토큰"`                   |
+| `copySectionLink`    | 复制本节链接 / Copy section link     | 본문 h2／h3 링크 복사 이름이며 앵커 알고리즘은 안 바꿉니다. | 조건부 적용 | `copySectionLink: "이 절 링크 복사"`    |
+| `regenerate`         | 重播扫描 / Replay scan               | 스캔 재생 버튼 문구이며 시각 효과만 실행합니다.             | 조건부 적용 | `regenerate: "스캔 다시 재생"`          |
+| `relatedAria`        | 相关文章 / Related posts             | 다른 글이 있을 때 관련 글 접근성 이름입니다.                | 조건부 적용 | `relatedAria: "관련 글"`                |
+| `related`            | 相关文章 / Related                   | 관련 글 제목이며 알고리즘을 제어하지 않습니다.              | 조건부 적용 | `related: "관련 글"`                    |
+| `backToBlogAria`     | 返回博客 / Back to blog              | 블로그로 돌아가기의 접근성 이름입니다.                      | 조건부 적용 | `backToBlogAria: "블로그로 돌아가기"`   |
+| `backToBlog`         | 返回博客 / Back to blog              | 블로그 링크의 가시 문구이며 목적지는 유지합니다.            | 조건부 적용 | `backToBlog: "블로그로 돌아가기"`       |
+| `comments`           | 评论 / Comments                      | 유효한 글 댓글 설정이 있을 때 영역 이름입니다.              | 조건부 적용 | `comments: "댓글"`                      |
+| `metaReadMinutes`    | 分钟阅读 / min read                  | 현재 미사용이며 읽기 시간을 복구하지 않습니다.              | 현재 미사용 | `metaReadMinutes: "분 읽기"`            |
+| `latencyLabel`       | 延迟估计 / latency est               | 현재 미사용이며 지연을 복구하지 않습니다.                   | 현재 미사용 | `latencyLabel: "예상 지연"`             |
+| `confidenceLabel`    | 置信度 / confidence                  | 현재 미사용이며 신뢰도를 복구하지 않습니다.                 | 현재 미사용 | `confidenceLabel: "신뢰도"`             |
 
 상태·표지·스크롤 안내는 분위기이며 실제 모델 온라인·동기화·정확도 검사가 아닙니다. regenerate는 스캔 효과만 재생하며 글을 쓰거나 AI를 요청하지 않습니다.
 
@@ -177,14 +177,14 @@ OUTPUT·절 링크 문구 예시입니다.
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ko: {
       messages: {
         blog: {
-          responseOutput: '正文',
-          statsWords: '字词',
-          statsTokens: '估算 tokens',
-          copySectionLink: '复制这一节的网址',
-          regenerate: '重播扫描效果',
+          responseOutput: '본문',
+          statsWords: '단어',
+          statsTokens: '추정 tokens',
+          copySectionLink: '이 절 주소 복사',
+          regenerate: '스캔 효과 다시 재생',
         },
       },
     },
@@ -198,23 +198,23 @@ i18n: {
 
 ### 코드 복사·이미지 미리보기 문구
 
-접두사는 `i18n.locales.<语言>.messages`이며 선택적 string, 조건부 적용입니다. 복사 권한·이미지 출처를 바꾸거나 기능 스위치를 추가하지 않습니다.
+접두사는 `i18n.locales.<locale>.messages`이며 선택적 string, 조건부 적용입니다. 복사 권한·이미지 출처를 바꾸거나 기능 스위치를 추가하지 않습니다.
 
-| 경로 마지막 부분     | 중국어 간체 기본값 / 영어 기본값                                    | 역할·제한                                                     | 중국어 간체 멤버 예시                                |
-| -------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------- |
-| `codeCopy.copy`      | 复制代码 / Copy code                                                | 코드 복사 버튼 문구이며 복사 내용은 유지합니다.               | `codeCopy: { copy: "复制代码" }`                     |
-| `codeCopy.copied`    | 已复制 / Copied                                                     | 코드·절 링크 복사 성공 안내입니다.                            | `codeCopy: { copied: "已复制" }`                     |
-| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | 코드·절 링크 실패 안내이며 클립보드 권한을 부여하지 않습니다. | `codeCopy: { failed: "复制失败，请手动选择代码。" }` |
-| `imagePreview.open`  | 查看大图 / View image                                               | 이미지 입구·팝업 접근성 이름입니다.                           | `imagePreview: { open: "查看大图" }`                 |
-| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | 이미지 닫기 이름이며 소스는 유지합니다.                       | `imagePreview: { close: "关闭图片预览" }`            |
+| 경로 마지막 부분     | 중국어 간체 기본값 / 영어 기본값                                    | 역할·제한                                                     | 한국어 멤버 예시                                                       |
+| -------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `codeCopy.copy`      | 复制代码 / Copy code                                                | 코드 복사 버튼 문구이며 복사 내용은 유지합니다.               | `codeCopy: { copy: "코드 복사" }`                                      |
+| `codeCopy.copied`    | 已复制 / Copied                                                     | 코드·절 링크 복사 성공 안내입니다.                            | `codeCopy: { copied: "복사했습니다" }`                                 |
+| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | 코드·절 링크 실패 안내이며 클립보드 권한을 부여하지 않습니다. | `codeCopy: { failed: "복사하지 못했습니다. 코드를 직접 선택하세요." }` |
+| `imagePreview.open`  | 查看大图 / View image                                               | 이미지 입구·팝업 접근성 이름입니다.                           | `imagePreview: { open: "큰 이미지 보기" }`                             |
+| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | 이미지 닫기 이름이며 소스는 유지합니다.                       | `imagePreview: { close: "이미지 미리보기 닫기" }`                      |
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ko: {
       messages: {
-        codeCopy: { copy: '复制内容', copied: '复制好了', failed: '无法复制，请手动选择。' },
-        imagePreview: { open: '放大这张图片', close: '收起图片' },
+        codeCopy: { copy: '내용 복사', copied: '복사 완료', failed: '복사할 수 없습니다. 직접 선택하세요.' },
+        imagePreview: { open: '이 이미지 확대', close: '이미지 접기' },
       },
     },
   },

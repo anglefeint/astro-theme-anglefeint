@@ -27,9 +27,9 @@ This is the only public theme.search leaf field. No server URL, API key, index d
 
 ## Per-article search: not a site.config field
 
-| Location                                                    | Type / default                                             | Status, purpose and limits                                                                                                                          | Example       |
-| ----------------------------------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| frontmatter.search in `src/content/blog/<语言>/某篇文章.md` | optional boolean / unset by schema, true in article layout | Conditional: outputs the indexing root when global search is on. False does not remove lists, recommendations, RSS, machine exports or public URLs. | search: false |
+| Location                                                      | Type / default                                             | Status, purpose and limits                                                                                                                          | Example       |
+| ------------------------------------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| frontmatter.search in `src/content/blog/<locale>/某篇文章.md` | optional boolean / unset by schema, true in article layout | Conditional: outputs the indexing root when global search is on. False does not remove lists, recommendations, RSS, machine exports or public URLs. | search: false |
 
 To exclude one article from site search, add to existing frontmatter:
 
@@ -51,21 +51,21 @@ About, Fragments, Decoder, home and lists have no default article indexing roots
 
 ## messages.search: eleven messages
 
-Full prefix: `i18n.locales.<语言>.messages.search.`. All are optional string overrides using built-in language text/fallback. Defaults below are Simplified Chinese / English. Examples are field values. All are conditional on the corresponding search entry/interface/state.
+Full prefix: `i18n.locales.<locale>.messages.search.`. All are optional string overrides using built-in language text/fallback. Defaults below are Simplified Chinese / English. Examples are field values. All are conditional on the corresponding search entry/interface/state.
 
-| Field         | Simplified Chinese / English default                                                                                                 | Purpose, limits and placeholders                                                                      | Example value                       |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| `label`       | 搜索 / Search                                                                                                                        | Search-entry accessible name/tooltip and dialog title, not a query.                                   | `"搜索文章"`                        |
-| `close`       | 关闭搜索 / Close search                                                                                                              | Close-button accessible name/tooltip; visible esc/icon stay fixed.                                    | `"关闭搜索"`                        |
-| `placeholder` | 搜索文章… / Search articles…                                                                                                         | Input placeholder and accessible label; does not prefill a query.                                     | `"输入文章关键词"`                  |
-| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | Production hint before a query.                                                                       | `"搜索当前语言的文章。"`            |
-| `loading`     | 正在搜索… / Searching…                                                                                                               | Searching/preparing status, not a timing/loading-policy setting.                                      | `"正在查找…"`                       |
-| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | No-result message; may also appear without an index for the language.                                 | `"没有找到相关文章。"`              |
-| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | Failure loading language manifest, search module or result details, not build-error text.             | `"搜索暂时不可用，请重试。"`        |
-| `retry`       | 重试 / Retry                                                                                                                         | Retry-button text; retries engine loading without rebuilding an index in the browser.                 | `"重新加载"`                        |
-| `more`        | 加载更多 / Load more                                                                                                                 | Loads another batch without changing batch size.                                                      | `"更多结果"`                        |
-| `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | Found-result count. Preserve literal {count}; first occurrence is replaced. Not displayed-card count. | `"共找到 {count} 篇文章"`           |
-| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | Development-mode notice. No real search in dev, and editing this cannot create indexes.               | `"请构建后在 preview 中测试搜索。"` |
+| Field         | Simplified Chinese / English default                                                                                                 | Purpose, limits and placeholders                                                                      | Example value                                    |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `label`       | 搜索 / Search                                                                                                                        | Search-entry accessible name/tooltip and dialog title, not a query.                                   | `"SearchArticles"`                               |
+| `close`       | 关闭搜索 / Close search                                                                                                              | Close-button accessible name/tooltip; visible esc/icon stay fixed.                                    | `"Close search"`                                 |
+| `placeholder` | 搜索文章… / Search articles…                                                                                                         | Input placeholder and accessible label; does not prefill a query.                                     | `"Enter article keywords"`                       |
+| `hint`        | 搜索当前语言的文章。 / Search articles in the current language.                                                                      | Production hint before a query.                                                                       | `"Search articles in the current language."`     |
+| `loading`     | 正在搜索… / Searching…                                                                                                               | Searching/preparing status, not a timing/loading-policy setting.                                      | `"Searching…"`                                   |
+| `empty`       | 没有找到匹配的文章。 / No matching articles.                                                                                         | No-result message; may also appear without an index for the language.                                 | `"No matching articles found."`                  |
+| `error`       | 搜索加载失败，请重试。 / Search could not load. Please try again.                                                                    | Failure loading language manifest, search module or result details, not build-error text.             | `"Search is unavailable; please retry."`         |
+| `retry`       | 重试 / Retry                                                                                                                         | Retry-button text; retries engine loading without rebuilding an index in the browser.                 | `"Reload"`                                       |
+| `more`        | 加载更多 / Load more                                                                                                                 | Loads another batch without changing batch size.                                                      | `"More results"`                                 |
+| `results`     | 找到 {count} 篇文章 / {count} articles found                                                                                         | Found-result count. Preserve literal {count}; first occurrence is replaced. Not displayed-card count. | `"{count} articles found"`                       |
+| `dev`         | 本地完整搜索请先运行 npm run build，再运行 npm run preview。 / To test full search locally, run npm run build, then npm run preview. | Development-mode notice. No real search in dev, and editing this cannot create indexes.               | `"Build the site, then test search in preview."` |
 
 Messages render as text, not executable HTML. Empty strings replace labels without hiding controls and may harm accessible naming. {count} is not appended automatically to custom results text; retain it once to show the number.
 
@@ -77,13 +77,13 @@ Merge into existing defineThemeConfig({...}) in src/site.config.ts, retaining im
 theme: { search: { enabled: true } },
 i18n: {
   locales: {
-    zh: {
+    en: {
       messages: {
         search: {
-          label: '搜索文章',
-          placeholder: '输入文章关键词',
-          results: '共找到 {count} 篇文章',
-          empty: '没有找到相关文章。',
+          label: 'Search articles',
+          placeholder: 'Enter article keywords',
+          results: 'Found {count} articles',
+          empty: 'No matching articles found.',
         },
       },
     },
@@ -127,14 +127,14 @@ With no indexable articles, an identifiable empty language manifest still allows
 
 These reuse their original modules' fields/defaults rather than adding search configuration:
 
-| Path or location                                | Type / default                            | Purpose, limits and example                                                                                              | Reference                                                     |
-| ----------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| theme.homeLatestCount                           | number / 3                                | Homepage latest count, e.g. theme: { homeLatestCount: 5 }; not search batch size or related-post count.                  | [Homepage count](/en/blog/config-home/#latest-count)          |
-| theme.blogPageSize                              | number / 10                               | Blog/tag items per page, e.g. theme: { blogPageSize: 8 }; not search results.                                            | [List pagination](/en/blog/config-blog-list/#page-size)       |
-| theme.tags.enabled                              | boolean / true                            | Tags and standard tag pages, e.g. theme: { tags: { enabled: false } }; does not delete tags or disable full-text search. | [Tags switch](/en/blog/config-blog-list/#tags-enabled)        |
-| Article frontmatter.tags                        | optional string[] / unset                 | Tag archives and labels, e.g. ['Astro', '随笔']; not current recommendation relevance or a search allowlist.             | [Article fields](/en/blog/config-article/#frontmatter)        |
-| `i18n.locales.<语言>.messages.blog.related`     | string / built-in language defaults below | Related-post heading, text only; example '继续阅读'.                                                                     | [Article messages](/en/blog/config-article/#article-messages) |
-| `i18n.locales.<语言>.messages.blog.relatedAria` | string / built-in language defaults below | Related-area accessible name; example '其他文章'.                                                                        | [Article messages](/en/blog/config-article/#article-messages) |
+| Path or location                                  | Type / default                            | Purpose, limits and example                                                                                              | Reference                                                     |
+| ------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| theme.homeLatestCount                             | number / 3                                | Homepage latest count, e.g. theme: { homeLatestCount: 5 }; not search batch size or related-post count.                  | [Homepage count](/en/blog/config-home/#latest-count)          |
+| theme.blogPageSize                                | number / 10                               | Blog/tag items per page, e.g. theme: { blogPageSize: 8 }; not search results.                                            | [List pagination](/en/blog/config-blog-list/#page-size)       |
+| theme.tags.enabled                                | boolean / true                            | Tags and standard tag pages, e.g. theme: { tags: { enabled: false } }; does not delete tags or disable full-text search. | [Tags switch](/en/blog/config-blog-list/#tags-enabled)        |
+| Article frontmatter.tags                          | optional string[] / unset                 | Tag archives and labels, e.g. ['Astro', 'Notes']; not current recommendation relevance or a search allowlist.            | [Article fields](/en/blog/config-article/#frontmatter)        |
+| `i18n.locales.<locale>.messages.blog.related`     | string / built-in language defaults below | Related-post heading, text only; example 'Keep reading'.                                                                 | [Article messages](/en/blog/config-article/#article-messages) |
+| `i18n.locales.<locale>.messages.blog.relatedAria` | string / built-in language defaults below | Related-area accessible name; example 'More articles'.                                                                   | [Article messages](/en/blog/config-article/#article-messages) |
 
 Related posts are the latest three current-language posts excluding the current one, not tag/content/canonicalTopic similarity. No relatedCount, related switch or manual recommendation list exists in site.config. With no other posts the area disappears. search: false posts can still be recommended.
 
@@ -149,7 +149,7 @@ Related posts are the latest three current-language posts excluding the current 
 
 | Entry                            | Current behavior and relationship                                                                                                                                                                                                                                              |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `/<语言>/rss.xml`                | Per-enabled-language article-summary feed. Title uses the site name, description messages.blog.archiveDescription. Items use title, description, pubDate and public URL. search: false does not exclude them. Not full-text RSS, and no RSS switch exists inside theme.search. |
+| `/<locale>/rss.xml`              | Per-enabled-language article-summary feed. Title uses the site name, description messages.blog.archiveDescription. Items use title, description, pubDate and public URL. search: false does not exclude them. Not full-text RSS, and no RSS switch exists inside theme.search. |
 | Page metadata and search engines | Separate from site-search indexes. search: false adds no noindex and does not disable sitemap or control Internet crawlers.                                                                                                                                                    |
 | Public machine-readable text     | Articles/About/Fragments have separate export pipelines independent of Pagefind. See [language context](/en/blog/config-languages/#ai-context). search: false is not a privacy filter.                                                                                         |
 

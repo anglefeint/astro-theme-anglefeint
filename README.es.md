@@ -56,11 +56,12 @@ Para desarrollar el tema, empieza por [AGENTS.md](https://github.com/anglefeint/
 Necesitas **Node.js 22.12.0 o posterior**. La plantilla usa **Astro 7**. Ejecuta donde quieras guardar el blog:
 
 ```bash
-npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
+npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
 cd my-blog
-npm install
 npm run dev
 ```
+
+En el asistente de creación, acepta instalar las dependencias (Yes). `--no-ai` evita generar instrucciones genéricas adicionales; el starter ya incluye las del tema. Si decidiste omitir la instalación, ejecuta `npm install` dentro de `my-blog` antes de iniciar dev.
 
 Abre la dirección de terminal. En un proyecto existente basta `npm install` y `npm run dev` en su directorio; no crees otro. Detén con Ctrl+C. Los comandos siguientes se ejecutan en la raíz; puedes detener dev o abrir otra terminal.
 
@@ -78,9 +79,9 @@ Añade este `site` dentro del `defineThemeConfig({ ... })` existente y sustituye
 
 ```ts
 site: {
-  title: '我的博客',
-  author: '你的名字',
-  description: '记录项目、阅读和生活。',
+  title: 'Mi blog',
+  author: 'Tu nombre',
+  description: 'Proyectos, lecturas y vida cotidiana.',
   url: 'https://your-domain.example',
 },
 ```
@@ -105,16 +106,16 @@ npm run new-post -- my-first-post
 
 Sin `--locales` ni `ANGLEFEINT_LOCALES`, lee todos los idiomas activos y crea estructuras con mismo nombre en cada uno. Inicialmente nueve archivos; si cambiaste idiomas, usa selección actual. No traduce cuerpos ni sobrescribe existentes.
 
-Están en `src/content/blog/<语言>/my-first-post.md`, con URL `/<语言>/blog/my-first-post/` y lista `/<语言>/blog/`. Inglés en `src/content/blog/en/my-first-post.md`, chino en `src/content/blog/zh/my-first-post.md`. Abre el que necesites y cambia título, descripción y cuerpo, sin crear rutas manuales. Ejemplo mínimo:
+Están en `src/content/blog/<locale>/my-first-post.md`, con URL `/<locale>/blog/my-first-post/` y lista `/<locale>/blog/`. Inglés en `src/content/blog/en/my-first-post.md`, chino en `src/content/blog/zh/my-first-post.md`. Abre el que necesites y cambia título, descripción y cuerpo, sin crear rutas manuales. Ejemplo mínimo:
 
 ```md
 ---
-title: '我的第一篇文章'
-description: '记录这次开始写博客的想法。'
+title: 'Mi primera entrada'
+description: 'Reflexiones al empezar este blog.'
 pubDate: '2026-11-13'
 ---
 
-这里开始写正文。
+Escribe el contenido aquí.
 ```
 
 Solo muestra campos obligatorios; puedes conservar portada y opcionales generados. Nombres normales en minúsculas, números y guiones, como `my-first-post`.
@@ -170,9 +171,9 @@ npm run new-fragment -- --locales en,zh
 
 Cada ejecución crea uno nuevo. Son alternativas según necesidad, no pasos consecutivos. Elegir idioma CLI no cambia controles del sitio.
 
-Archivos en `src/content/fragments/<语言>/`, nombres como `2026-11-13-aB3dE6gH.md`; la terminal muestra los reales. Edita cuerpo y conserva el ID alfanumérico de ocho caracteres; traducciones de la misma ejecución comparten ID y fecha. Para continuar uno existente no repitas creación.
+Archivos en `src/content/fragments/<locale>/`, nombres como `2026-11-13-aB3dE6gH.md`; la terminal muestra los reales. Edita cuerpo y conserva el ID alfanumérico de ocho caracteres; traducciones de la misma ejecución comparten ID y fecha. Para continuar uno existente no repitas creación.
 
-Lista en `/<语言>/fragments/`, por ejemplo `/en/fragments/` o `/zh/fragments/`. Si hay contenido actual aparece avatar de vista previa en inicio. Enlace estable `/<语言>/fragments/#ID`: no uses página como identidad. Cambiar ID afecta enlaces/comentarios; estos apagados por defecto.
+Lista en `/<locale>/fragments/`, por ejemplo `/en/fragments/` o `/zh/fragments/`. Si hay contenido actual aparece avatar de vista previa en inicio. Enlace estable `/<locale>/fragments/#ID`: no uses página como identidad. Cambiar ID afecta enlaces/comentarios; estos apagados por defecto.
 
 Tutorial: [publicar un fragment](https://demo.anglefeint.com/es/blog/starter-guide-5-fragments/). Referencia: [Fragments](https://demo.anglefeint.com/es/blog/config-fragments/).
 
@@ -184,7 +185,7 @@ Entradas con `new-post`; proyectos o portafolio independientes con `new-page`:
 npm run new-page -- projects
 ```
 
-Genera `src/pages/[lang]/projects.astro` con `base` predeterminado. Edita y visita `/<语言>/projects/`, por ejemplo `/en/projects/`. Un archivo genera todos los idiomas activos; no traduce ni añade navegación automáticamente.
+Genera `src/pages/[lang]/projects.astro` con `base` predeterminado. Edita y visita `/<locale>/projects/`, por ejemplo `/en/projects/`. Un archivo genera todos los idiomas activos; no traduce ni añade navegación automáticamente.
 
 `--theme` permite `base`, `matrix`, `cyber`, `hacker`, `ai`; por ejemplo `npm run new-page -- portfolio --theme cyber` crea otra página Cyberpunk.
 
@@ -200,7 +201,7 @@ Pasos: [personalizar páginas](https://demo.anglefeint.com/es/blog/starter-guide
 
 ## 6. Preparar imágenes y conservar archivos generados
 
-El cuerpo usa Markdown normal; pon `photo.jpg` junto a la entrada y escribe `![图片描述](./photo.jpg)`. Portada en frontmatter `heroImage: ./cover.jpg`, con archivo preparado antes; URLs públicas sin prefijo public.
+El cuerpo usa Markdown normal; pon `photo.jpg` junto a la entrada y escribe `![Descripción de la imagen](./photo.jpg)`. Portada en frontmatter `heroImage: ./cover.jpg`, con archivo preparado antes; URLs públicas sin prefijo public.
 
 Portadas e imágenes locales compatibles de fragments requieren derivados adaptativos persistentes. Prepáralos localmente o comprueba los actuales:
 
@@ -209,7 +210,9 @@ npx @anglefeint/astro-theme prepare-covers
 npx @anglefeint/astro-theme prepare-covers --check
 ```
 
-dev y doctor locales generan ausentes/obsoletos; build y doctor CI solo validan, sin regenerar en despliegue. Guarda originales y todo `src/assets/blog/covers/`, con `manifest.json` y `generated/`. Ante missing/stale/modified, prepara y guarda localmente antes de compilar otra vez.
+dev, build y doctor (también en CI) reutilizan los derivados válidos y completan los ausentes, obsoletos o dañados. Conserva originales y `src/assets/blog/covers/`, con manifiesto y generados, para reutilizarlos. Los originales ausentes o inválidos siguen causando errores.
+
+**Nota de versión:** La preparación automática de imágenes durante build y doctor en CI requiere 0.36.2 o posterior. Con 0.36.1, ejecuta primero dev o `prepare-covers` para preparar los derivados. `prepare-covers --check` y la sincronización de configuración siguen siendo comprobaciones de solo lectura.
 
 No significa comprimir todas las imágenes de cuerpos normales. Alcance, rutas e imágenes compartidas en el [tutorial de imágenes](https://demo.anglefeint.com/es/blog/starter-guide-images/).
 
@@ -247,7 +250,7 @@ npx @anglefeint/astro-theme@latest upgrade
 
 Actualiza dependencia y ejecuta doctor, conservando entradas, configuración, música, imágenes y páginas propias. Copia los dos archivos de dependencias en `.anglefeint/backups/`; no es copia completa. Si falla instalación/comprobación, restaura archivos e intenta reinstalar anteriores. No publiques `dist/` sobrante tras fallo.
 
-Usa `npx @anglefeint/astro-theme@latest upgrade --to <版本号>` para versión explícita compatible, sustituyendo el marcador. No admite bajar automáticamente. Tras éxito ya comprobó/compiló: usa `npm run preview` sin build inmediato. No publica ni migra Astro incompatible automáticamente.
+Usa `npx @anglefeint/astro-theme@latest upgrade --to <version>` para versión explícita compatible, sustituyendo el marcador. No admite bajar automáticamente. Tras éxito ya comprobó/compiló: usa `npm run preview` sin build inmediato. No publica ni migra Astro incompatible automáticamente.
 
 Esqueletos copiados anteriores a 0.27 requieren starter nuevo, conservar viejo y migrar contenido/recursos; sin actualización directa. No copies rutas estándar ni adaptadores antiguos.
 

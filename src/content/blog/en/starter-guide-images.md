@@ -26,7 +26,7 @@ This tutorial assumes the starter's default `src/` and `public/` directories. Fi
 An image used by one post can sit beside it:
 
 ```text
-src/content/blog/zh/
+src/content/blog/en/
   my-first-post.md
   photo.jpg
   cover.jpg
@@ -50,13 +50,13 @@ Keep the original. Generated WebP files are display derivatives, not replacement
 In the article Markdown, insert:
 
 ```md
-![这张照片里有什么](./photo.jpg)
+![Describe what is in this photo](./photo.jpg)
 ```
 
 `./photo.jpg` is relative to the article file; in the directory example, it is the neighboring `photo.jpg`. For a public file, use:
 
 ```md
-![这张照片里有什么](/images/shared-photo.jpg)
+![Describe what is in this photo](/images/shared-photo.jpg)
 ```
 
 This corresponds to `public/images/shared-photo.jpg`, omitting `public` from the URL. Bracketed text is alternative text: describe the image rather than writing only “image.”
@@ -75,7 +75,7 @@ heroImage: ./cover.jpg
 
 `heroImage` is optional. When provided, it must reference a local project image, not a direct HTTPS URL. Do not treat `/images/cover.jpg` as a public URL for this field: its path rules differ from body images.
 
-For centralized cover management, use `src/assets/blog/covers/originals/`. With the article at `src/content/blog/zh/my-first-post.md` and original at `src/assets/blog/covers/originals/my-cover.jpg`, write:
+For centralized cover management, use `src/assets/blog/covers/originals/`. With the article at `src/content/blog/en/my-first-post.md` and original at `src/assets/blog/covers/originals/my-cover.jpg`, write:
 
 ```yaml
 heroImage: ../../../assets/blog/covers/originals/my-cover.jpg
@@ -94,15 +94,15 @@ With `theme.fragments.enabled: false`, dev, build and prepare-covers/doctor skip
 Put the original at `public/images/fragments/my-photo.png`, then write this in an existing fragment body:
 
 ```md
-![这条碎片的配图说明](/images/fragments/my-photo.png)
+![Describe the image accompanying this fragment](/images/fragments/my-photo.png)
 ```
 
-Alternatively put `photo.png` beside the fragment and use `![配图说明](./photo.png)`. Adding a file to public alone does not trigger a universal image-library scan: reference it in an actual fragment.
+Alternatively put `photo.png` beside the fragment and use `![Image description](./photo.png)`. Adding a file to public alone does not trigger a universal image-library scan: reference it in an actual fragment.
 
 Reference-style images are supported:
 
 ```md
-![配图说明][photo]
+![Image description][photo]
 
 [photo]: /images/fragments/my-photo.png
 ```
@@ -110,14 +110,14 @@ Reference-style images are supported:
 Use HTML when you need manual dimensions:
 
 ```html
-<img src="/images/fragments/my-photo.png" alt="配图说明" width="640" height="360" />
+<img src="/images/fragments/my-photo.png" alt="Image description" width="640" height="360" />
 ```
 
 These dimensions are examples; use your image's actual proportions. Supported local images receive missing width/height attributes. Existing dimensions are retained; if only one is supplied, the other is computed from the source ratio. Incorrect existing dimensions are not corrected automatically.
 
 The first image on each fragment-list page loads with priority; other images and homepage thumbnails use lazy loading. Homepage previews have a maximum height and crop overflow. They are not complete image viewers: click the card to open the original fragment. See [publishing fragments](/en/blog/starter-guide-5-fragments/) for creation, stable IDs and comments.
 
-## 5. Prepare responsive files locally
+## 5. Prepare responsive files and run explicit checks
 
 After first referencing an image or replacing its original, start the local development server from the project root:
 
@@ -125,7 +125,7 @@ After first referencing an image or replacing its original, start the local deve
 npm run dev
 ```
 
-dev prepares missing or stale files and reacts to changes in relevant sources and references. Local `npm run doctor` also prepares them before checking and building. To prepare images without starting a page or full checks, stop dev and run:
+Normal `npm run dev`, `npm run build` and `npm run doctor`, including CI, prepare missing, stale or modified responsive files automatically. dev also reacts to changes in relevant sources and references. To prepare images without starting a page or full checks, stop dev and run:
 
 ```bash
 npx @anglefeint/astro-theme prepare-covers
@@ -155,21 +155,20 @@ Prepared files are organized as follows:
 
 ```text
 src/assets/blog/covers/
-  originals/      # 如果使用这个原图目录
-  manifest.json  # 来源、尺寸、规则与输出哈希
-  generated/     # 持久响应式文件
+  originals/      # If using this originals directory
+  manifest.json  # Source, dimensions, recipe and output hashes
+  generated/     # Persistent responsive files
 ```
 
-Commit these together:
-
-1. Article/fragment Markdown and newly added or replaced originals.
-2. All of `src/assets/blog/covers/`, including the manifest and generated files.
+Commit article/fragment Markdown and newly added or replaced originals. Keeping `manifest.json` and `generated/` in Git is recommended for reuse across checkouts; build can also prepare them when absent. Automatic preparation never commits files to Git for you.
 
 Commit originals stored in public or beside articles too, not only originals/. Fragment derivatives also live in this directory despite its blog/covers name.
 
 Stop dev before publication and run local `npm run doctor`. After success, use `npm run preview` to inspect the build. doctor already includes building, so another immediate build is unnecessary. Hosting still uses `npm run build`, output `dist`, with all files deployed.
 
-**Deployment builds validate and copy prepared responsive files without generating missing ones.** CI doctor also only validates. Missing, stale or modified derivatives fail the build: prepare locally, commit, then deploy again. This persistent pipeline does not depend on hosting retaining Astro's image cache.
+**Deployment builds and CI doctor prepare supported image derivatives automatically**, reusing correct output and repairing missing, stale or modified files. This does not require a deployment-platform image cache. Missing originals, unsafe paths, unsupported inputs and generation errors still fail validation. Explicit `prepare-covers --check` and configuration sync remain read-only.
+
+**Version note:** Automatic image preparation during normal builds and CI doctor runs requires 0.36.2 or later. With 0.36.1, first run dev or `prepare-covers` to prepare derivatives. Explicit `prepare-covers --check` and configuration sync remain read-only.
 
 Used derivatives are copied to `_blog-covers/` in build output. Do not upload only HTML or omit that directory. Old, unused generated files are not automatically deleted; check references before cleaning and avoid deleting needed originals.
 
@@ -216,16 +215,16 @@ Automatic sharing images live in `dist/_social/`. Platforms read deployed metada
 
 ## 8. Troubleshoot image problems
 
-| Symptom                                        | Check first                                                                                                                |
-| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Image missing                                  | File existence, exact case and paths relative to the current Markdown; omit `public` from public URLs.                     |
-| Cover preparation fails                        | `heroImage` must be a local project file rather than remote/public URL; see the full terminal error.                       |
-| missing/stale/modified derivatives             | Stop dev, run local prepare-covers, commit originals, manifest and generated files, then rebuild.                          |
-| Public file has no generated sizes             | Is it actually referenced by a fragment? Ordinary article-body public images are outside this derivative scan.             |
-| GIF/SVG remains large                          | Multiframe/vector files pass through; this command neither converts animations to video nor compresses them.               |
-| Remote fragment image is slow or shifts layout | Remote files are not converted or measured locally. Optimize the source and supply correct dimensions.                     |
-| Works locally but not after deployment         | Check that originals and generated files are committed, all dist files are deployed, and resource paths are not rewritten. |
-| Sharing preview stays old                      | Check rebuild/deployment, article-specific image priority and sharing-platform caches.                                     |
+| Symptom                                        | Check first                                                                                                            |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Image missing                                  | File existence, exact case and paths relative to the current Markdown; omit `public` from public URLs.                 |
+| Cover preparation fails                        | `heroImage` must be a local project file rather than remote/public URL; see the full terminal error.                   |
+| missing/stale/modified derivatives             | Run build or prepare-covers to repair them; --check is read-only. Verify originals if repair fails.                    |
+| Public file has no generated sizes             | Is it actually referenced by a fragment? Ordinary article-body public images are outside this derivative scan.         |
+| GIF/SVG remains large                          | Multiframe/vector files pass through; this command neither converts animations to video nor compresses them.           |
+| Remote fragment image is slow or shifts layout | Remote files are not converted or measured locally. Optimize the source and supply correct dimensions.                 |
+| Works locally but not after deployment         | Check that originals are committed, build succeeds, all dist files are deployed, and resource paths are not rewritten. |
+| Sharing preview stays old                      | Check rebuild/deployment, article-specific image priority and sharing-platform caches.                                 |
 
 If you customize Astro srcDir, publicDir or base-prefixed sources, prepare through that project's dev configuration. Standalone prepare-covers uses the default directories. Partial image support for base paths does not imply whole-theme support for arbitrary subdirectory deployments.
 

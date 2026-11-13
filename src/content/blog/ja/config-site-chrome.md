@@ -4,7 +4,7 @@ title: '設定リファレンス：サイト名、ドメイン、共通ナビゲ
 subtitle: 'サイト情報、環境変数の上書き、固定ナビゲーションと共通リンク。'
 description: 'site、social、footer、ナビゲーション文面の型、既定値、制約、環境変数、互換・未使用項目を実装に基づいて説明します。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-01.webp'
 ---
 
@@ -18,18 +18,18 @@ heroImage: '../../../assets/blog/default-covers/matrix-01.webp'
 
 site はオブジェクトで、部分設定では全項目を省略できます。表の全項目は条件付きで有効です。ページが読む際に使い、環境変数やページ固有の詳細な値が優先する場合があります。
 
-| 完全パス           | 型           | テーマ既定値                                                                            | 役割・制約・例                                                                                                                                           |
-| ------------------ | ------------ | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `site.title`       | string       | `"My Blog"`                                                                             | ヘッダーブランド、著作権名、RSS、構造化データ、一部ページ・自動共有画像のサイト名。ホームの大見出しとは別で、統一の空値補完はなし。例 `"我的博客"`。     |
-| `site.description` | string       | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | 全体・機械可読索引説明の一部。ホームは messages.siteDescription、About・一覧は固有説明を優先し、全ページを置換しない。例 `"记录项目、阅读和生活。"`。    |
-| `site.url`         | string       | `"https://example.com"`                                                                 | Astro site、canonical、RSS、sitemap、公開出力の絶対 HTTP(S) URL。記事 URL ではない。購入・DNS・証明書・公開を行わない。例 `"https://blog.example.com"`。 |
-| `site.author`      | string       | `"Your Name"`                                                                           | 既定著者と構造化データ。記事 author は上書き可。著作権は title で、About・メールも自動変更しない。例 `"小林"`。                                          |
-| `site.tagline`     | string       | `""`                                                                                    | trim するフッター短句。空または旧 Built with Astro. は表記重複を避け非表示。例 `"保持好奇，持续构建。"`。                                                |
-| `site.ogImage`     | string、任意 | `""`                                                                                    | ページ・記事の優先画像がないときの共有画像。空白は内蔵画像。public パス・HTTPS で、アバターや全記事カバー置換ではない。例 `"/images/share.webp"`。       |
+| 完全パス           | 型           | テーマ既定値                                                                            | 役割・制約・例                                                                                                                                                  |
+| ------------------ | ------------ | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `site.title`       | string       | `"My Blog"`                                                                             | ヘッダーブランド、著作権名、RSS、構造化データ、一部ページ・自動共有画像のサイト名。ホームの大見出しとは別で、統一の空値補完はなし。例 `"私のブログ"`。          |
+| `site.description` | string       | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | 全体・機械可読索引説明の一部。ホームは messages.siteDescription、About・一覧は固有説明を優先し、全ページを置換しない。例 `"プロジェクト、読書、日々の記録。"`。 |
+| `site.url`         | string       | `"https://example.com"`                                                                 | Astro site、canonical、RSS、sitemap、公開出力の絶対 HTTP(S) URL。記事 URL ではない。購入・DNS・証明書・公開を行わない。例 `"https://blog.example.com"`。        |
+| `site.author`      | string       | `"Your Name"`                                                                           | 既定著者と構造化データ。記事 author は上書き可。著作権は title で、About・メールも自動変更しない。例 `"林"`。                                                   |
+| `site.tagline`     | string       | `""`                                                                                    | trim するフッター短句。空または旧 Built with Astro. は表記重複を避け非表示。例 `"好奇心を持ち、作り続ける。"`。                                                 |
+| `site.ogImage`     | string、任意 | `""`                                                                                    | ページ・記事の優先画像がないときの共有画像。空白は内蔵画像。public パス・HTTPS で、アバターや全記事カバー置換ではない。例 `"/images/share.webp"`。              |
 
-site.title は全サイト名、`i18n.locales.<语言>.site.homeTitle` は各言語のホーム表示見出しです。後者は言語チェーンで非空値を探し、最後にサイト名へ戻ります。[ホーム見出し](/ja/blog/config-home/#home-title)を参照してください。messages.siteTitle は現在どちらにも使わないためブランド名変更には使えません。
+site.title は全サイト名、`i18n.locales.<locale>.site.homeTitle` は各言語のホーム表示見出しです。後者は言語チェーンで非空値を探し、最後にサイト名へ戻ります。[ホーム見出し](/ja/blog/config-home/#home-title)を参照してください。messages.siteTitle は現在どちらにも使わないためブランド名変更には使えません。
 
-site.description はホームの可視紹介文とは異なり、可視文は `i18n.locales.<语言>.site.hero`、メタ説明は messages.siteDescription です。[ホーム辞書](/ja/blog/config-home/#site-fallbacks)に優先順位があります。サイト情報を変えても既存 About 紹介は自動変更しません。
+site.description はホームの可視紹介文とは異なり、可視文は `i18n.locales.<locale>.site.hero`、メタ説明は messages.siteDescription です。[ホーム辞書](/ja/blog/config-home/#site-fallbacks)に優先順位があります。サイト情報を変えても既存 About 紹介は自動変更しません。
 
 ### 共有画像の優先順位とパス
 
@@ -45,13 +45,13 @@ site.ogImage は文字列で、Astro image import オブジェクトは指定し
 
 以下は site.config の新項目ではなく、現在読み込む string 環境変数です。未指定なら対応 site 値を使います。null 合体で読み、空文字を自動的に未指定とは見なしません。
 
-| 環境変数                | 優先して上書きする項目 | 例                                       |
-| ----------------------- | ---------------------- | ---------------------------------------- |
-| PUBLIC_SITE_TITLE       | site.title             | PUBLIC_SITE_TITLE=我的博客               |
-| PUBLIC_SITE_DESCRIPTION | site.description       | PUBLIC_SITE_DESCRIPTION=项目与学习笔记   |
-| PUBLIC_SITE_AUTHOR      | site.author            | PUBLIC_SITE_AUTHOR=小林                  |
-| PUBLIC_SITE_TAGLINE     | site.tagline           | PUBLIC_SITE_TAGLINE=保持好奇             |
-| PUBLIC_SITE_URL         | site.url               | PUBLIC_SITE_URL=https://blog.example.com |
+| 環境変数                | 優先して上書きする項目 | 例                                               |
+| ----------------------- | ---------------------- | ------------------------------------------------ |
+| PUBLIC_SITE_TITLE       | site.title             | PUBLIC_SITE_TITLE=私のブログ                     |
+| PUBLIC_SITE_DESCRIPTION | site.description       | PUBLIC_SITE_DESCRIPTION=プロジェクトと学習ノート |
+| PUBLIC_SITE_AUTHOR      | site.author            | PUBLIC_SITE_AUTHOR=林                            |
+| PUBLIC_SITE_TAGLINE     | site.tagline           | PUBLIC_SITE_TAGLINE=保持好奇                     |
+| PUBLIC_SITE_URL         | site.url               | PUBLIC_SITE_URL=https://blog.example.com         |
 
 統合は dev/build と --mode に対応する Vite dotenv モードで PUBLIC_SITE_URL を読み、Astro site と公開 URL を一致させます。既存プロセス環境は同名 dotenv より優先します。site.url だけ変えてホストの旧変数を忘れないでください。空文字は文面を消したり URL を無効にしたりし、既定へ戻す方法ではありません。
 
@@ -84,17 +84,17 @@ Frontier 自体の名前は固定で、子項目が全部ない場合に非表�
 
 ### ヘッダーとフッターの7文面
 
-接頭辞は `i18n.locales.<语言>.messages`、任意 string です。内蔵現在言語と補完を使い、表は簡体中国語／英語の実値です。対応する領域があるときに有効で、文字として描画し Markdown・任意 HTML は解析しません。
+接頭辞は `i18n.locales.<locale>.messages`、任意 string です。内蔵現在言語と補完を使い、表は簡体中国語／英語の実値です。対応する領域があるときに有効で、文字として描画し Markdown・任意 HTML は解析しません。
 
-| 相対項目           | 簡体中国語 / 英語既定値         | 役割と制約                                          | 例           |
-| ------------------ | ------------------------------- | --------------------------------------------------- | ------------ |
-| `nav.home`         | 首页 / Home                     | ホーム名。ルートは変えない。                        | `"首页"`     |
-| `nav.blog`         | 博客 / Blog                     | Blog 名。ルートは変えない。                         | `"文章"`     |
-| `nav.about`        | 关于 / About                    | About 名。ウィンドウ再表示入口も使う。              | `"关于我"`   |
-| `nav.status`       | system: online / system: online | 静的状態でネット・API・健康を検出しない。           | `"系统在线"` |
-| `nav.statusAria`   | 系统状态 / System status        | 状態領域のアクセシブル名。検査スイッチではない。    | `"站点状态"` |
-| `footer.theme`     | 主题： / Theme by               | テーマ表記接頭辞。Anglefeint の文字・リンクは固定。 | `"主题来自"` |
-| `footer.builtWith` | 构建工具： / Built with         | Astro 表記接頭辞。文字・リンクは固定。              | `"使用"`     |
+| 相対項目           | 簡体中国語 / 英語既定値         | 役割と制約                                          | 例                 |
+| ------------------ | ------------------------------- | --------------------------------------------------- | ------------------ |
+| `nav.home`         | 首页 / Home                     | ホーム名。ルートは変えない。                        | `"ホーム"`         |
+| `nav.blog`         | 博客 / Blog                     | Blog 名。ルートは変えない。                         | `"記事"`           |
+| `nav.about`        | 关于 / About                    | About 名。ウィンドウ再表示入口も使う。              | `"私について"`     |
+| `nav.status`       | system: online / system: online | 静的状態でネット・API・健康を検出しない。           | `"システム稼働中"` |
+| `nav.statusAria`   | 系统状态 / System status        | 状態領域のアクセシブル名。検査スイッチではない。    | `"サイトの状態"`   |
+| `footer.theme`     | 主题： / Theme by               | テーマ表記接頭辞。Anglefeint の文字・リンクは固定。 | `"テーマ提供"`     |
+| `footer.builtWith` | 构建工具： / Built with         | Astro 表記接頭辞。文字・リンクは固定。              | `"使用"`           |
 
 messages.langLabel は言語控件、選択名は meta.label です。[言語文面](/ja/blog/config-languages/#common-messages)へ。Contact・Fragments は各モジュールを使い、nav に独自項目を作りません。
 
@@ -152,12 +152,12 @@ public/icons/community.svg は iconSrc: '/icons/community.svg'。実 publicDir �
 
 ## theme.footer：リンクとクレジット
 
-| 完全パス                   | 型 / 既定値                            | 状態・役割・制約                                                                                                                 | 例                                                        |
-| -------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| theme.footer.showCredits   | boolean / true                         | 有効。テーマ・Astro のリンク表記。著作権、ソーシャル、短句、他リンクは残し、自動共有画像の表記にも反映するが独自画像は変えない。 | false                                                     |
-| theme.footer.links         | { label: string; href: string }[] / [] | 有効。配列順・全置換でヘッダーは変えない。レイアウトが Decoder を追加するため [] でも全リンク消去を保証しない。                  | [{ label: '项目', href: 'https://example.com/project/' }] |
-| theme.footer.links[].label | 必須 string / なし                     | 条件付き。表示名を文字として出力し、対象から自動取得しない。                                                                     | '项目'                                                    |
-| theme.footer.links[].href  | 必須 string / なし                     | 条件付き。そのままの URL。アイコン同等の検証や base 追加はなく、内部パスは正確に指定。既定は現タブ移動。                         | 'https://example.com/project/'                            |
+| 完全パス                   | 型 / 既定値                            | 状態・役割・制約                                                                                                                 | 例                                                                |
+| -------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| theme.footer.showCredits   | boolean / true                         | 有効。テーマ・Astro のリンク表記。著作権、ソーシャル、短句、他リンクは残し、自動共有画像の表記にも反映するが独自画像は変えない。 | false                                                             |
+| theme.footer.links         | { label: string; href: string }[] / [] | 有効。配列順・全置換でヘッダーは変えない。レイアウトが Decoder を追加するため [] でも全リンク消去を保証しない。                  | [{ label: 'プロジェクト', href: 'https://example.com/project/' }] |
+| theme.footer.links[].label | 必須 string / なし                     | 条件付き。表示名を文字として出力し、対象から自動取得しない。                                                                     | 'プロジェクト'                                                    |
+| theme.footer.links[].href  | 必須 string / なし                     | 条件付き。そのままの URL。アイコン同等の検証や base 追加はなく、内部パスは正確に指定。既定は現タブ移動。                         | 'https://example.com/project/'                                    |
 
 独自リンクを自動追加リンクの前に置き、重複除去しません。Decoder 有効なら fullTool 文面の完全ツールリンクを追加します。不要なら対応スイッチを変え、footer.links の消去では止まりません。
 
@@ -171,37 +171,37 @@ public/icons/community.svg は iconSrc: '/icons/community.svg'。実 publicDir �
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录项目、阅读和生活。',
+  title: '林のブログ',
+  description: 'プロジェクト、読書、日々の記録。',
   url: 'https://blog.example.com',
-  author: '小林',
-  tagline: '保持好奇，持续构建。',
+  author: '林',
+  tagline: '好奇心を持ち、作り続ける。',
 },
 social: {
   links: [
     { label: 'GitHub', href: 'https://github.com/yourname', icon: 'github' },
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: 'プロジェクトのホーム', href: 'https://example.com/project/' },
   ],
 },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目', href: 'https://example.com/project/' }],
+    links: [{ label: 'プロジェクト', href: 'https://example.com/project/' }],
   },
 },
 ```
 
 名前、ドメイン、リンクは実値に変えてください。通信検証はしません。独自アイコンや共有画像は先に public ファイルを準備してから iconSrc・site.ogImage に指定します。
 
-簡体中国語ナビゲーションと表記接頭辞だけを変える例です。
+日本語ナビゲーションと表記接頭辞だけを変える例です。
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
-        nav: { home: '首页', blog: '文章', about: '关于我' },
-        footer: { theme: '主题来自', builtWith: '使用' },
+        nav: { home: 'ホーム', blog: '記事', about: '私について' },
+        footer: { theme: 'テーマ提供', builtWith: '使用' },
       },
     },
   },
@@ -212,9 +212,9 @@ i18n: {
 
 ## 現在未使用：messages.siteTitle
 
-完全パスは `i18n.locales.<语言>.messages.siteTitle`。任意 string、簡体中国語・英語の実既定値は共に 'Angle Feint' です。現在の標準ホームと共通サイト情報は読まず、**現在未使用**です。siteTitle: '我的博客' でも変わりません。
+完全パスは `i18n.locales.<locale>.messages.siteTitle`。任意 string、簡体中国語・英語の実既定値は共に 'Angle Feint' です。現在の標準ホームと共通サイト情報は読まず、**現在未使用**です。siteTitle: '私のブログ' でも変わりません。
 
-ホームは `i18n.locales.<语言>.site.homeTitle`、共通名は最上位 site.title です。[ホーム](/ja/blog/config-home/#home-title)と[サイト情報](#identity)を参照し、改名のためにこの保持項目を埋める必要はありません。
+ホームは `i18n.locales.<locale>.site.homeTitle`、共通名は最上位 site.title です。[ホーム](/ja/blog/config-home/#home-title)と[サイト情報](#identity)を参照し、改名のためにこの保持項目を埋める必要はありません。
 
 <a id="boundaries"></a>
 

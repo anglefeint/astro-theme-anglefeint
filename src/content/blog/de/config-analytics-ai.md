@@ -60,12 +60,12 @@ Alte eigene Adapter ohne ANALYTICS-Zweig gelten als unkonfiguriert. Das ist inte
 
 Optionales MachineReadableSupplement-Objekt, standardmäßig nicht gesetzt. Auch ohne entstehen Maschinenlesedateien, nur ohne diese zusätzlichen Hinweise. {} deaktiviert den Export nicht.
 
-| Vollständiger Pfad              | Typ / Standard                                                           | Status, Wirkung und Grenzen                                                                                                                                 | Beispiel                                                      |
-| ------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| aiReadableContent.notes         | string, optional / nicht gesetzt, leere Ausgabe                          | Bedingt: Markdown-Website-Hinweise in öffentlichen Texten. Leer/Leerraum lässt Abschnitt weg. Kein Textersatz oder privater KI-Prompt                       | '本站内容是个人学习笔记，可能持续修订。'                      |
-| aiReadableContent.links         | { label: string; href: string }[], optional / nicht gesetzt, leere Liste | Bedingt: öffentliche Zusatzlinks. Array ersetzt vollständig, [] leert; keine öffentliche Höchstzahl oder automatisches Laden der Zielinhalte                | [{ label: '项目主页', href: 'https://example.com/project/' }] |
-| aiReadableContent.links[].label | string, Pflicht / keiner                                                 | Bedingt: nach trim nichtleer. Zeilenumbrüche werden Leerzeichen, Backslashes und Klammern escaped. Kein automatischer Zieltitel                             | '项目主页'                                                    |
-| aiReadableContent.links[].href  | string, Pflicht / keiner                                                 | Bedingt: nichtleer, gegen Veröffentlichungswurzel aufgelöst; nur HTTP(S) ohne Benutzer/Passwort. Ungültig ist Fehler; Existenz und Erreichbarkeit ungeprüft | 'https://example.com/project/'                                |
+| Vollständiger Pfad              | Typ / Standard                                                           | Status, Wirkung und Grenzen                                                                                                                                 | Beispiel                                                             |
+| ------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| aiReadableContent.notes         | string, optional / nicht gesetzt, leere Ausgabe                          | Bedingt: Markdown-Website-Hinweise in öffentlichen Texten. Leer/Leerraum lässt Abschnitt weg. Kein Textersatz oder privater KI-Prompt                       | 'Dies sind persönliche Lernnotizen, die überarbeitet werden können.' |
+| aiReadableContent.links         | { label: string; href: string }[], optional / nicht gesetzt, leere Liste | Bedingt: öffentliche Zusatzlinks. Array ersetzt vollständig, [] leert; keine öffentliche Höchstzahl oder automatisches Laden der Zielinhalte                | [{ label: 'Projektseite', href: 'https://example.com/project/' }]    |
+| aiReadableContent.links[].label | string, Pflicht / keiner                                                 | Bedingt: nach trim nichtleer. Zeilenumbrüche werden Leerzeichen, Backslashes und Klammern escaped. Kein automatischer Zieltitel                             | 'Projektseite'                                                       |
+| aiReadableContent.links[].href  | string, Pflicht / keiner                                                 | Bedingt: nichtleer, gegen Veröffentlichungswurzel aufgelöst; nur HTTP(S) ohne Benutzer/Passwort. Ungültig ist Fehler; Existenz und Erreichbarkeit ungeprüft | 'https://example.com/project/'                                       |
 
 notes und links haben kein allgemeines Zeichenlimit-Feld. Typen müssen stimmen. Falsche Typen, leere Labels, fremde Protokolle und Zugangsdaten in URLs können den Build stoppen. Das Theme führt keine Ergänzungsbefehle aus und lässt keine Modelle diese Hinweise erzeugen.
 
@@ -87,9 +87,9 @@ Ein einzelner Anfangs-/ löst vom Domain-Stamm auf und erhält /project/ nicht a
 
 ```ts
 aiReadableContent: {
-  notes: '本站内容是个人学习笔记，可能持续修订。详情见[文章列表](zh/blog/)。',
+  notes: 'Dies sind persönliche Lernnotizen, die überarbeitet werden können. Siehe die [Artikelliste](de/blog/).',
   links: [
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: 'Projektseite', href: 'https://example.com/project/' },
   ],
 },
 ```
@@ -98,7 +98,7 @@ aiReadableContent: {
 
 ## aiReadableContent je Sprache überschreiben
 
-Präfix `i18n.locales.<语言>.aiReadableContent`, ebenfalls optionales MachineReadableSupplement ohne Vorgabe. Gleiche Wirkung, bei fehlenden Feldern jedoch einzelne Vererbung globaler Werte:
+Präfix `i18n.locales.<Sprachcode>.aiReadableContent`, ebenfalls optionales MachineReadableSupplement ohne Vorgabe. Gleiche Wirkung, bei fehlenden Feldern jedoch einzelne Vererbung globaler Werte:
 
 | Relatives Feld | Typ / Standard                                                     | Wirkung und Grenzen                                                                                      | Beispiel             |
 | -------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | -------------------- |
@@ -132,14 +132,14 @@ Root-llms.txt nutzt immer globale Ergänzungen. Sprachwerte gelten für deren In
 
 Pfade gelten ab Veröffentlichungswurzel, mit entsprechendem Unterpfad-Präfix. Nur Sprachen mit tatsächlichen Exportinhalten erhalten Index und Sammlung. Ergänzungen erzeugen keine Artikel.
 
-| Ausgabe                       | Position und Inhalt                                                                                                                                 |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| llms.txt                      | Wurzeleinstieg: globale notes vor Sprachverzeichnis, links als Zusatzbereich. Auch ohne exportierbare Inhalte können globale Ergänzungen erscheinen |
-| `<语言>/llms.txt`             | Spracheinstieg mit überschriebenen Hinweisen und Links, vorhandene Dokumente nach Articles/Fragments/About                                          |
-| `<语言>/llms-full.txt`        | Öffentliche Volltextsammlung; Ergänzungen vor den Dokumenttexten                                                                                    |
-| Artikel-Markdown wie index.md | Nach Originaltext mit Trennlinie, Website-Ergänzungsmarker und gültigen Hinweisen; nicht als Autorentext vermischt                                  |
-| `<语言>/about/index.md`       | Öffentliche Vorstellung, Kontakt und erreichbare statische KI-Panels. Gleiche Ergänzung am Ende, nicht gesamte Werkzeugkonfiguration                |
-| `<语言>/fragments/index.md`   | Vereinte paginierte Fragments mit stabilen IDs; Ergänzung am Ende, keine doppelte Volltextsammlung pro Seite                                        |
+| Ausgabe                           | Position und Inhalt                                                                                                                                 |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| llms.txt                          | Wurzeleinstieg: globale notes vor Sprachverzeichnis, links als Zusatzbereich. Auch ohne exportierbare Inhalte können globale Ergänzungen erscheinen |
+| `<Sprachcode>/llms.txt`           | Spracheinstieg mit überschriebenen Hinweisen und Links, vorhandene Dokumente nach Articles/Fragments/About                                          |
+| `<Sprachcode>/llms-full.txt`      | Öffentliche Volltextsammlung; Ergänzungen vor den Dokumenttexten                                                                                    |
+| Artikel-Markdown wie index.md     | Nach Originaltext mit Trennlinie, Website-Ergänzungsmarker und gültigen Hinweisen; nicht als Autorentext vermischt                                  |
+| `<Sprachcode>/about/index.md`     | Öffentliche Vorstellung, Kontakt und erreichbare statische KI-Panels. Gleiche Ergänzung am Ende, nicht gesamte Werkzeugkonfiguration                |
+| `<Sprachcode>/fragments/index.md` | Vereinte paginierte Fragments mit stabilen IDs; Ergänzung am Ende, keine doppelte Volltextsammlung pro Seite                                        |
 
 Der Einzelpfad folgt dem Build-HTML: index.html wird index.md. Eigene Astro-Ausgaben können abweichen. Erfinde oder überschreibe keine generierten Pfade. Exportseiten erhalten Entdeckungslinks zu Markdown und Sprachindex.
 

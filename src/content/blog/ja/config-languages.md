@@ -4,7 +4,7 @@ title: '設定リファレンス：言語の有効化、URL、UI 翻訳、フォ
 subtitle: '言語登録、既定言語、ページ URL、内容ごとの補完規則。'
 description: 'i18n の型、既定値、スイッチ、ホーム接頭辞、翻訳、補完チェーン、内容・SEO の範囲を実装で説明します。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
 
@@ -16,11 +16,11 @@ heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 
 ## i18n.defaultLocale と i18n.locales
 
-| 完全パス              | 型 / テーマ既定値                                    | 状態・役割・制約                                                                                                                  | 例                                                         |
-| --------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
-| i18n.defaultLocale    | string / 'en'                                        | 有効。根ホーム・転送先・必要補完・既定リンクを決めます。空は en へ。ブラウザーで自動選択せず、常に有効で false でも止まりません。 | i18n: { defaultLocale: 'zh' }                              |
-| i18n.locales          | Record<string, LocaleConfig> / 下表9言語             | キーがディレクトリと URL。再帰マージで省略では内蔵言語を削除しません。新言語は独自文面・記事が必要です。                          | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
-| `i18n.locales.<语言>` | 部分 LocaleConfig / 内蔵は設定済み、新コードは未設定 | meta・site・messages・about・aiReadableContent を含む。省略はマージ・補完し、{} で既存言語は消えません。                          | locales: { zh: { meta: { enabled: false } } }              |
+| 完全パス                | 型 / テーマ既定値                                    | 状態・役割・制約                                                                                                                  | 例                                                         |
+| ----------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| i18n.defaultLocale      | string / 'en'                                        | 有効。根ホーム・転送先・必要補完・既定リンクを決めます。空は en へ。ブラウザーで自動選択せず、常に有効で false でも止まりません。 | i18n: { defaultLocale: 'zh' }                              |
+| i18n.locales            | Record<string, LocaleConfig> / 下表9言語             | キーがディレクトリと URL。再帰マージで省略では内蔵言語を削除しません。新言語は独自文面・記事が必要です。                          | i18n: { locales: { fr: { meta: { label: 'Français' } } } } |
+| `i18n.locales.<locale>` | 部分 LocaleConfig / 内蔵は設定済み、新コードは未設定 | meta・site・messages・about・aiReadableContent を含む。省略はマージ・補完し、{} で既存言語は消えません。                          | locales: { zh: { meta: { enabled: false } } }              |
 
 キーは表示名や hreflang とは別です。EN を en、zh-CN を zh へ自動変換しません。ディレクトリ・設定・生成コマンドは zh、en、pt-br、zh-hant などの小文字をそろえます。作成器は2–3英文字と任意1ハイフン区切りに対応します。実行時正規化は完全な言語・パス検証ではなく、任意記号やパスを入れないでください。
 
@@ -44,7 +44,7 @@ heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 
 <a id="meta"></a>
 
-## `i18n.locales.<语言>.meta`：5つのメタ項目
+## `i18n.locales.<locale>.meta`：5つのメタ項目
 
 以下は meta 内の相対パスです。内蔵の具体値は上表、新言語の未指定規則は下表です。部分設定が可能で、毎回全項目を書き直す必要はありません。
 
@@ -84,15 +84,15 @@ meta refresh、canonical、noindex 付き静的転送です。訪問地で言語
 
 ## site、messages、about：上書き場所
 
-接頭辞は `i18n.locales.<语言>`。オブジェクトは再帰マージ、配列は全置換、undefined は上書きしません。空文字・false・空配列は保持し、意味は各項目次第です。
+接頭辞は `i18n.locales.<locale>`。オブジェクトは再帰マージ、配列は全置換、undefined は上書きしません。空文字・false・空配列は保持し、意味は各項目次第です。
 
 | 相対パス       | 型 / 既定値                                                      | 役割・制約・例                                                                                                        | 詳細                                           |
 | -------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| site           | { homeTitle?: string; hero?: string } / 各言語の内蔵設定         | ホーム専用で最上位サイト情報は置換しません。例 site: { homeTitle: '我的博客' }。                                      | [ホーム](/ja/blog/config-home/#site-fallbacks) |
-| site.homeTitle | 任意 string / 未指定                                             | 現言語と直接参照言語の trim 後非空を順に探し、最後に SITE_TITLE。例 '我的博客'。空でも補完は止めません。              | [大見出し](/ja/blog/config-home/#home-title)   |
-| site.hero      | 任意 string / 各内蔵紹介、新言語は未指定                         | 最初の定義済み値、空は明示消去。なければ messages.home.hero。例 '记录项目与生活。'。                                  | [紹介](/ja/blog/config-home/#home-hero)        |
-| messages       | DeepPartial<Messages> / 個人上書き通常未指定、実行時に内蔵を統合 | ボタン・状態・メタ説明。例 messages: { nav: { home: '主页' } }。機能・訳文は増やしません。                            | [総合案内](/ja/blog/config-reference/)         |
-| about          | DeepPartial<AboutConfig> / 各言語の内蔵設定                      | 基本 About からチェーンに沿って統合。例 about: { sections: { who: '我是一名开发者。' } }。Markdown からは読みません。 | [About](/ja/blog/config-about/#about-content)  |
+| site           | { homeTitle?: string; hero?: string } / 各言語の内蔵設定         | ホーム専用で最上位サイト情報は置換しません。例 site: { homeTitle: '私のブログ' }。                                    | [ホーム](/ja/blog/config-home/#site-fallbacks) |
+| site.homeTitle | 任意 string / 未指定                                             | 現言語と直接参照言語の trim 後非空を順に探し、最後に SITE_TITLE。例 '私のブログ'。空でも補完は止めません。            | [大見出し](/ja/blog/config-home/#home-title)   |
+| site.hero      | 任意 string / 各内蔵紹介、新言語は未指定                         | 最初の定義済み値、空は明示消去。なければ messages.home.hero。例 'プロジェクトと日々のことを記録します。'。            | [紹介](/ja/blog/config-home/#home-hero)        |
+| messages       | DeepPartial<Messages> / 個人上書き通常未指定、実行時に内蔵を統合 | ボタン・状態・メタ説明。例 messages: { nav: { home: 'ホーム' } }。機能・訳文は増やしません。                          | [総合案内](/ja/blog/config-reference/)         |
+| about          | DeepPartial<AboutConfig> / 各言語の内蔵設定                      | 基本 About からチェーンに沿って統合。例 about: { sections: { who: '私は開発者です。' } }。Markdown からは読みません。 | [About](/ja/blog/config-about/#about-content)  |
 
 内蔵 site.hero の正確な既定値です。homeTitle は既定にありません。
 
@@ -139,12 +139,12 @@ en の nav.home を 'Start' にしても、内蔵 zh の「首页」は変わり
 
 ## 言語選択と共通文面
 
-`i18n.locales.<语言>.messages` の任意 string で通常補完を使います。siteTitle は現在標準サイト情報を変えません。型・既定・未使用状態は[サイト辞書](/ja/blog/config-site-chrome/#legacy-site-title)にあります。
+`i18n.locales.<locale>.messages` の任意 string で通常補完を使います。siteTitle は現在標準サイト情報を変えません。型・既定・未使用状態は[サイト辞書](/ja/blog/config-site-chrome/#legacy-site-title)にあります。
 
-| 相対項目        | 簡体中国語 / 英語既定値                                                                          | 状態・役割・制約                                                         | 例                     |
-| --------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ---------------------- |
-| langLabel       | 语言 / Language                                                                                  | 有効。共通選択のヒント・アクセシブル名。選択肢は meta.label。            | '选择语言'             |
-| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | 条件付き。ホームメタ説明で紹介・全ページ説明ではなく、他ページは固有値。 | '我的项目与学习笔记。' |
+| 相対項目        | 簡体中国語 / 英語既定値                                                                          | 状態・役割・制約                                                         | 例                               |
+| --------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ | -------------------------------- |
+| langLabel       | 语言 / Language                                                                                  | 有効。共通選択のヒント・アクセシブル名。選択肢は meta.label。            | '言語を選択'                     |
+| siteDescription | 电影感网页界面与 AI 时代工程实践文章。 / Cinematic web interfaces and AI-era engineering essays. | 条件付き。ホームメタ説明で紹介・全ページ説明ではなく、他ページは固有値。 | '私のプロジェクトと学習ノート。' |
 
 各機能文面は担当辞書へ。型に存在しても使用箇所がなければ有効になりません。コメント iframe は comments.lang にも従い既定固定英語です。[コメント](/ja/blog/config-comments/#appearance)へ。
 
@@ -152,7 +152,7 @@ en の nav.home を 'Start' にしても、内蔵 zh の「首页」は変わり
 
 ## aiReadableContent：言語別公開補足の特別規則
 
-`i18n.locales.<语言>.aiReadableContent` の notes・links が最上位を個別上書きし、meta.fallback は使いません。省略は全体継承、空 notes・links は消去、{} は全体を消しません。
+`i18n.locales.<locale>.aiReadableContent` の notes・links が最上位を個別上書きし、meta.fallback は使いません。省略は全体継承、空 notes・links は消去、{} は全体を消しません。
 
 型、既定、検証、全例は[AI 補足](/ja/blog/config-analytics-ai/#locale-supplement)へ。ページ翻訳や About 本文ではなく全て公開です。リンクは公開ルート基準で、先頭単一 / は base を飛ばします。[URL 解決](/ja/blog/config-analytics-ai/#supplement)を参照してください。
 

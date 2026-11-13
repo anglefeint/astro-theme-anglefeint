@@ -19,7 +19,7 @@ Los valores son del paquete del tema, no del demo. Combina en `defineThemeConfig
 | Lista y entrada de inicio            | `theme.fragments.enabled`                                                    |
 | Elementos por página completa        | `theme.fragments.pageSize`                                                   |
 | Comentarios independientes           | `theme.fragments.comments.enabled`, conexión compartida con `theme.comments` |
-| Título, descripción, avisos y cierre | `i18n.locales.<语言>.messages.fragments`                                     |
+| Título, descripción, avisos y cierre | `i18n.locales.<locale>.messages.fragments`                                   |
 | Números y salto de página            | `theme.pagination` y textos `messages.blog`                                  |
 | ID, hora y título individual         | Frontmatter Markdown, no site.config                                         |
 | Cantidad, altura y avatar de inicio  | Sin campos públicos correspondientes actualmente                             |
@@ -29,11 +29,11 @@ Los valores son del paquete del tema, no del demo. Combina en `defineThemeConfig
 ## theme.fragments.enabled: activar fragments
 
 - **Tipo / predeterminado:** boolean / `false`.
-- **Estado / función:** activo. Carga `src/content/fragments/<语言>/**/*.md`, genera listas e índices de posición de idiomas activos y entrada de inicio si ese idioma tiene contenido.
+- **Estado / función:** activo. Carga `src/content/fragments/<locale>/**/*.md`, genera listas e índices de posición de idiomas activos y entrada de inicio si ese idioma tiene contenido.
 - **Límites:** apagado no carga colección ni genera listas, sin borrar archivos. Activo sin contenido muestra estado vacío y no entrada de inicio. Solo carga `.md`, no `.mdx`.
 - **Ejemplo:** `theme: { fragments: { enabled: true } }`.
 
-Primera página `/<语言>/fragments/`; después `/<语言>/fragments/2/`, sin añadir `/1/` manual. Activa antes el idioma; consulta [idiomas](/es/blog/starter-guide-languages/).
+Primera página `/<locale>/fragments/`; después `/<locale>/fragments/2/`, sin añadir `/1/` manual. Activa antes el idioma; consulta [idiomas](/es/blog/starter-guide-languages/).
 
 Con `theme.fragments.enabled: false`, dev, build y prepare-covers/doctor omiten referencias de imágenes del contenido de Fragments. No exigen originales ni derivados de imágenes incluidas únicamente por esas referencias. Las referencias de portada y los conjuntos `src/assets/blog/default-covers/` y `src/assets/blog/covers/originals/` siguen preparándose y validándose, aunque una imagen se use solo en Fragments. No se borran archivos; reactivar restablece el procesamiento de Fragments.
 
@@ -73,7 +73,7 @@ theme: {
 
 Para comentar solo fragments, mantén artículos false y configura repo, repoId, category y categoryId. Tipos/valores/validación en [conexión](/es/blog/config-comments/#connection), y [ejemplos exclusivos de fragments](/es/blog/config-comments/#fragment-overrides). Lo local no prueba IDs/permisos remotos.
 
-Asocia `fragment/<稳定ID>`; IDs iguales comparten discusión entre idiomas. Ignora mapping, term, number y shareAcrossLocales de artículos. Fuerza specific, strict `'1'`, emitMetadata `'1'` e idioma de página en vez de `theme.comments.lang`. Los comentarios de artículos activos siguen su validación propia.
+Asocia `fragment/<ID-estable>`; IDs iguales comparten discusión entre idiomas. Ignora mapping, term, number y shareAcrossLocales de artículos. Fuerza specific, strict `'1'`, emitMetadata `'1'` e idioma de página en vez de `theme.comments.lang`. Los comentarios de artículos activos siguen su validación propia.
 
 Tema, reacciones y posición se comparten. La primera pulsación inserta cliente; eager significa inmediatamente después de pulsar, no al cargar página. Cerrar conserva iframe; cambiar fragment cambia discusión. Unos 15 segundos sin respuesta válida muestran fallo/reintento. No hay campo de timeout.
 
@@ -81,36 +81,36 @@ Tema, reacciones y posición se comparten. La primera pulsación inserta cliente
 
 ## Textos de interfaz: messages.fragments
 
-Prefijo: `i18n.locales.<语言>.messages.fragments`. Todos **string**, cambian texto, no conducta; usan valores integrados/respaldo. La tabla muestra chino simplificado / inglés. Omitir conserva; string vacía sustituye y no garantiza quitar control. Los ejemplos van dentro de fragments.
+Prefijo: `i18n.locales.<locale>.messages.fragments`. Todos **string**, cambian texto, no conducta; usan valores integrados/respaldo. La tabla muestra chino simplificado / inglés. Omitir conserva; string vacía sustituye y no garantiza quitar control. Los ejemplos van dentro de fragments.
 
-| Campo            | Predeterminado chino simplificado / inglés                                                                                | Estado, función y límites                                                                          | Ejemplo                                 |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| `title`          | 碎片 / Fragments                                                                                                          | Condicional: título de página/lista y nombre accesible de inicio, no título individual             | `title: '随手记'`                       |
-| `description`    | 沿途记录的几句话。 / Brief thoughts, kept along the way.                                                                  | Condicional: presentación visible y metadatos de lista; no aparece en ventana desplegada de inicio | `description: '记录工作与生活的小事。'` |
-| `empty`          | 还没有碎片。 / No fragments yet.                                                                                          | Condicional: lista completa vacía; no fuerza la entrada de inicio                                  | `empty: '稍后再来看看。'`               |
-| `comments`       | 评论 / Comments                                                                                                           | Condicional: texto del botón con comentarios activos                                               | `comments: '参与讨论'`                  |
-| `close`          | 关闭 / Close                                                                                                              | Condicional: cierre del diálogo y nombre accesible de cierre en inicio                             | `close: '关闭窗口'`                     |
-| `previous`       | 上一页 / Previous                                                                                                         | **Sin uso actual:** admitido por tipos, pero paginación usa messages.blog.previous                 | `previous: '上一页'`                    |
-| `next`           | 下一页 / Next                                                                                                             | **Sin uso actual:** admitido por tipos, pero paginación usa messages.blog.next                     | `next: '下一页'`                        |
-| `loading`        | 正在加载评论… / Loading comments…                                                                                         | Condicional: estado de carga de comentarios                                                        | `loading: '正在连接讨论…'`              |
-| `error`          | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | Condicional: fallo de comentarios, no del índice de posición                                       | `error: '讨论暂时不可用，请重试。'`     |
-| `retry`          | 重试 / Retry                                                                                                              | Condicional: botón de reintento tras fallo de carga                                                | `retry: '重新连接'`                     |
-| `copyLink`       | 复制碎片链接 / Copy fragment link                                                                                         | Condicional: title y nombre accesible de compartir; JavaScript activa el botón                     | `copyLink: '复制本条链接'`              |
-| `linkCopied`     | 链接已复制 / Link copied                                                                                                  | Condicional: copia correcta                                                                        | `linkCopied: '已复制'`                  |
-| `copyLinkFailed` | 未能自动复制，请复制下方链接。 / Unable to copy automatically. Copy the link below.                                       | Condicional: fallo de portapapeles, ofrece copia manual                                            | `copyLinkFailed: '请手动复制此链接。'`  |
-| `notFound`       | 找不到这条碎片，它可能已被移除。 / Fragment not found. It may have been removed.                                          | Condicional: fallo de localizar ID estable, no 404 general                                         | `notFound: '这条记录已不存在。'`        |
-| `indexError`     | 暂时无法定位这条碎片，请刷新页面后重试。 / Unable to locate this fragment. Refresh the page and try again.                | Condicional: fallo al solicitar o validar índice de posición                                       | `indexError: '定位失败，请刷新重试。'`  |
+| Campo            | Predeterminado chino simplificado / inglés                                                                                | Estado, función y límites                                                                          | Ejemplo                                                    |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `title`          | 碎片 / Fragments                                                                                                          | Condicional: título de página/lista y nombre accesible de inicio, no título individual             | `title: 'Notas breves'`                                    |
+| `description`    | 沿途记录的几句话。 / Brief thoughts, kept along the way.                                                                  | Condicional: presentación visible y metadatos de lista; no aparece en ventana desplegada de inicio | `description: 'Pequeños apuntes del trabajo y la vida.'`   |
+| `empty`          | 还没有碎片。 / No fragments yet.                                                                                          | Condicional: lista completa vacía; no fuerza la entrada de inicio                                  | `empty: 'Vuelve más tarde.'`                               |
+| `comments`       | 评论 / Comments                                                                                                           | Condicional: texto del botón con comentarios activos                                               | `comments: 'Participar en el debate'`                      |
+| `close`          | 关闭 / Close                                                                                                              | Condicional: cierre del diálogo y nombre accesible de cierre en inicio                             | `close: 'Cerrar ventana'`                                  |
+| `previous`       | 上一页 / Previous                                                                                                         | **Sin uso actual:** admitido por tipos, pero paginación usa messages.blog.previous                 | `previous: 'Página anterior'`                              |
+| `next`           | 下一页 / Next                                                                                                             | **Sin uso actual:** admitido por tipos, pero paginación usa messages.blog.next                     | `next: 'Página siguiente'`                                 |
+| `loading`        | 正在加载评论… / Loading comments…                                                                                         | Condicional: estado de carga de comentarios                                                        | `loading: 'Conectando con el debate…'`                     |
+| `error`          | 评论未能加载，请检查网络或评论配置后重试。 / Unable to load comments. Check your network or comment settings, then retry. | Condicional: fallo de comentarios, no del índice de posición                                       | `error: 'El debate no está disponible; reintenta.'`        |
+| `retry`          | 重试 / Retry                                                                                                              | Condicional: botón de reintento tras fallo de carga                                                | `retry: 'Reconectar'`                                      |
+| `copyLink`       | 复制碎片链接 / Copy fragment link                                                                                         | Condicional: title y nombre accesible de compartir; JavaScript activa el botón                     | `copyLink: 'Copiar enlace de esta nota'`                   |
+| `linkCopied`     | 链接已复制 / Link copied                                                                                                  | Condicional: copia correcta                                                                        | `linkCopied: 'Copiado'`                                    |
+| `copyLinkFailed` | 未能自动复制，请复制下方链接。 / Unable to copy automatically. Copy the link below.                                       | Condicional: fallo de portapapeles, ofrece copia manual                                            | `copyLinkFailed: 'Copia este enlace manualmente.'`         |
+| `notFound`       | 找不到这条碎片，它可能已被移除。 / Fragment not found. It may have been removed.                                          | Condicional: fallo de localizar ID estable, no 404 general                                         | `notFound: 'Esta nota ya no existe.'`                      |
+| `indexError`     | 暂时无法定位这条碎片，请刷新页面后重试。 / Unable to locate this fragment. Refresh the page and try again.                | Condicional: fallo al solicitar o validar índice de posición                                       | `indexError: 'No se pudo localizar; recarga y reintenta.'` |
 
-Por ejemplo, sustituye solo título/descripción chinos:
+Por ejemplo, sustituye solo título/descripción en español:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    es: {
       messages: {
         fragments: {
-          title: '随手记',
-          description: '记录工作与生活的小事。',
+          title: 'Notas breves',
+          description: 'Pequeños apuntes del trabajo y la vida.',
         },
       },
     },
@@ -122,13 +122,13 @@ i18n: {
 
 ## Ajustes compartidos usados por Fragments
 
-| Ruta                                                                                                         | Predeterminado y función                                   | Límites, ejemplos y referencia                                                                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `theme.pagination.*`                                                                                         | Comparte los ocho campos/valores de paginación Blog List   | Solo aparece con varias páginas; ejemplo `theme: { pagination: { windowSize: 5 } }`. Tipos/rangos/ejemplos en [paginación](/es/blog/config-blog-list/#pagination-window) y siguientes secciones |
-| `i18n.locales.<语言>.messages.blog.previous`、`next`、`paginationAria`、`jumpTo`、`jumpInputLabel`、`jumpGo` | string, texto integrado para etiquetas visibles/accesibles | Ejemplo `previous: '上一页'`; consulta [textos de paginación](/es/blog/config-blog-list/#pagination-messages), no los campos homónimos de fragments                                             |
-| `i18n.locales.<语言>.messages.blog.backToTop`                                                                | string, texto integrado                                    | Botón volver arriba de lista completa; ejemplo `backToTop: '回到顶部'`. Consulta [textos de artículos](/es/blog/config-article/#article-messages)                                               |
-| `i18n.locales.<语言>.messages.home.viewAll`                                                                  | string, texto integrado                                    | Nombre accesible del archivo en pie de inicio, combinado con título de fragments; ejemplo `viewAll: '查看全部'`. Consulta [inicio](/es/blog/config-home/#home-messages)                         |
-| `theme.math.enabled`                                                                                         | boolean / `true`                                           | Las listas solo incluyen estilos matemáticos en páginas que los necesitan. Ejemplo `theme: { math: { enabled: false } }`; consulta [matemáticas](/es/blog/config-article/#feature-switches)     |
+| Ruta                                                                                                           | Predeterminado y función                                   | Límites, ejemplos y referencia                                                                                                                                                                  |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `theme.pagination.*`                                                                                           | Comparte los ocho campos/valores de paginación Blog List   | Solo aparece con varias páginas; ejemplo `theme: { pagination: { windowSize: 5 } }`. Tipos/rangos/ejemplos en [paginación](/es/blog/config-blog-list/#pagination-window) y siguientes secciones |
+| `i18n.locales.<locale>.messages.blog.previous`、`next`、`paginationAria`、`jumpTo`、`jumpInputLabel`、`jumpGo` | string, texto integrado para etiquetas visibles/accesibles | Ejemplo `previous: 'Página anterior'`; consulta [textos de paginación](/es/blog/config-blog-list/#pagination-messages), no los campos homónimos de fragments                                    |
+| `i18n.locales.<locale>.messages.blog.backToTop`                                                                | string, texto integrado                                    | Botón volver arriba de lista completa; ejemplo `backToTop: 'Volver arriba'`. Consulta [textos de artículos](/es/blog/config-article/#article-messages)                                          |
+| `i18n.locales.<locale>.messages.home.viewAll`                                                                  | string, texto integrado                                    | Nombre accesible del archivo en pie de inicio, combinado con título de fragments; ejemplo `viewAll: 'Ver todo'`. Consulta [inicio](/es/blog/config-home/#home-messages)                         |
+| `theme.math.enabled`                                                                                           | boolean / `true`                                           | Las listas solo incluyen estilos matemáticos en páginas que los necesitan. Ejemplo `theme: { math: { enabled: false } }`; consulta [matemáticas](/es/blog/config-article/#feature-switches)     |
 
 Consulta [Giscus](/es/blog/config-comments/) para conexión/presentación. El mapping de artículos no controla asociación de fragments. Índice de contenido, OUTPUT y Red Queen no controlan estas listas, que tampoco tienen selector Cards/List de Blog List.
 
@@ -136,22 +136,22 @@ Consulta [Giscus](/es/blog/config-comments/) para conexión/presentación. El ma
 
 ## Tres campos frontmatter por fragment
 
-Pertenecen al Markdown de `src/content/fragments/<语言>/`, **no a site.config**. El schema público tiene estos tres, sin compatibilidad adicional.
+Pertenecen al Markdown de `src/content/fragments/<locale>/`, **no a site.config**. El schema público tiene estos tres, sin compatibilidad adicional.
 
 | Campo     | Tipo / predeterminado                          | Función, estado y límites                                                                                                     | Ejemplo                               |
 | --------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | `id`      | string obligatoria / ninguno                   | Activo. Ocho letras/dígitos ASCII exactos, único en el idioma. Enlaces y comentarios dependen de él; consérvalo tras publicar | `id: 'aB3dE6gH'`                      |
 | `pubDate` | Valor convertible a Date obligatorio / ninguno | Activo. Fecha interpretable; ordena y se muestra en UTC. Prefiere ISO con zona para evitar ambigüedad                         | `pubDate: '2026-11-13T08:00:00.000Z'` |
-| `title`   | string opcional / sin definir                  | Condicional. Título opcional de tarjeta/inicio. Puede omitirse; no se genera desde el nombre de archivo                       | `title: '今天的小发现'`               |
+| `title`   | string opcional / sin definir                  | Condicional. Título opcional de tarjeta/inicio. Puede omitirse; no se genera desde el nombre de archivo                       | `title: 'Un pequeño hallazgo de hoy'` |
 
 ```md
 ---
 id: 'aB3dE6gH'
 pubDate: '2026-11-13T08:00:00.000Z'
-title: '今天的小发现'
+title: 'Un pequeño hallazgo de hoy'
 ---
 
-这里写正文。图片和代码直接放在 Markdown 正文中。
+Escribe aquí el contenido. Añade imágenes y código directamente en el cuerpo Markdown.
 ```
 
 `npm run new-fragment -- --locales zh,en` genera archivos con nuevo ID y hora actual compartidos. Cada ejecución crea identidad nueva. Conserva el ID al añadir traducciones. Puede coincidir entre idiomas, no dentro de uno. Los archivos pueden renombrarse; el ID no debe depender de nombre/página. Formatos antiguos no se migran automáticamente; cambiar IDs rompe identidad de comentarios/enlaces.
@@ -167,8 +167,8 @@ No hay campos públicos adicionales para:
 - **Cantidad en inicio:** últimos tres del idioma actual o menos disponibles. El pie muestra vistos/total del idioma; otros no rellenan ausentes.
 - **Extracto:** obtiene texto, primera imagen HTTP(S) utilizable y primer bloque de código del HTML renderizado. Texto hasta 180 puntos Unicode; código hasta ocho líneas/800 puntos, con puntos suspensivos al recortar. Las tarjetas recortan exceso de altura; la lista conserva el contenido. Títulos separados. No es Markdown completo; no hay previewCount/previewHeight.
 - **Imágenes:** archivos locales admitidos reciben dimensiones/srcset del manifiesto. No garantiza optimizar remotos/no admitidos. Primera imagen de cada página eager/high; resto lazy, todas decoding asíncrono. Consulta [imágenes](/es/blog/starter-guide-images/) para originales, variantes y validación; no necesita heroImage.
-- **Enlaces estables:** `/<语言>/fragments/#<ID>`. El índice encuentra página y navega si hace falta, aun tras añadir o cambiar pageSize. Borrar/cambiar IDs pierde destino. Sin JavaScript funciona paginación, sin garantizar localización/copiar entre páginas.
+- **Enlaces estables:** `/<locale>/fragments/#<ID>`. El índice encuentra página y navega si hace falta, aun tras añadir o cambiar pageSize. Borrar/cambiar IDs pierde destino. Sin JavaScript funciona paginación, sin garantizar localización/copiar entre páginas.
 - **Idiomas:** abre primera página destino, no necesariamente mismo ID.
-- **Salida pública:** Markdown combinado `/<语言>/fragments/index.md`. No activa búsqueda/RSS de artículos. No publiques datos sensibles.
+- **Salida pública:** Markdown combinado `/<locale>/fragments/index.md`. No activa búsqueda/RSS de artículos. No publiques datos sensibles.
 
 Recursos de avatar, hover, bordes y altura de código no son campos site.config. Vuelve al [índice](/es/blog/config-reference/) para opciones compatibles.

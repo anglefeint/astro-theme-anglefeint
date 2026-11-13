@@ -8,6 +8,8 @@ updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/cyber-03.webp'
 ---
 
+**版本說明：** build 與 CI doctor 的自動圖片準備從 0.36.2 起支援；使用 0.36.1 時，請先透過 dev 或 `prepare-covers` 準備圖片。
+
 本篇是入門教學的第 3 / 8 篇。[檢視完整教學順序](/zh-hant/blog/starter-guide-1-configure-your-site/#tutorial-order) · [依欄位查設定字典](/zh-hant/blog/config-reference/)。
 
 你不需要手動制作多套尺寸，也不用把文章連結改成生成檔案名。先放好原圖，在文章或碎片中引用，再讓本機開發服務準備需要的回應式檔案即可。
@@ -50,16 +52,16 @@ public/images/
 打開文章 Markdown，在需要的位置插入：
 
 ```md
-![这张照片里有什么](./photo.jpg)
+![這張照片里有什么](./photo.jpg)
 ```
 
 `./photo.jpg` 相對於目前文章檔案。上面的目錄範例中，它指向同目錄的 `photo.jpg`。使用 public 裡的檔案則寫：
 
 ```md
-![这张照片里有什么](/images/shared-photo.jpg)
+![這張照片里有什么](/images/shared-photo.jpg)
 ```
 
-它對應 `public/images/shared-photo.jpg`，網址中不寫 `public`。方括號內是圖片的替代文字，建議描述實際內容，不要只寫“图片”。
+它對應 `public/images/shared-photo.jpg`，網址中不寫 `public`。方括號內是圖片的替代文字，建議描述實際內容，不要只寫「圖片」。
 
 文章內文的一般圖片支援點選放大，或聚焦後按 Enter／空格打開；Esc、關閉按鈕或蒙版收起。封面和連結、按鈕內部的圖片不參與這個預覽。放大使用瀏覽器已選擇的圖片來源，不會自動下載更高清的原圖，也不是相冊切換。
 
@@ -94,15 +96,15 @@ heroImage: ../../../assets/blog/covers/originals/my-cover.jpg
 將原圖放到 `public/images/fragments/my-photo.png`，在已有碎片 Markdown 內文中寫：
 
 ```md
-![这条碎片的配图说明](/images/fragments/my-photo.png)
+![這條碎片的配圖說明](/images/fragments/my-photo.png)
 ```
 
-也可以將 `photo.png` 放在碎片檔案旁邊，用 `![配图说明](./photo.png)`。只往 public 目錄放一張圖不會觸發通用圖片庫掃描，需要在實際碎片中引用它。
+也可以將 `photo.png` 放在碎片檔案旁邊，用 `![配圖說明](./photo.png)`。只往 public 目錄放一張圖不會觸發通用圖片庫掃描，需要在實際碎片中引用它。
 
 引用式圖片同樣支援：
 
 ```md
-![配图说明][photo]
+![配圖說明][photo]
 
 [photo]: /images/fragments/my-photo.png
 ```
@@ -110,7 +112,7 @@ heroImage: ../../../assets/blog/covers/originals/my-cover.jpg
 需要手動尺寸時可以使用 HTML：
 
 ```html
-<img src="/images/fragments/my-photo.png" alt="配图说明" width="640" height="360" />
+<img src="/images/fragments/my-photo.png" alt="配圖說明" width="640" height="360" />
 ```
 
 這裡的寬高是範例，實際使用時按自己圖片的比例填寫。支援的本機圖片會補齊缺少的寬高；已有尺寸保留，只寫一邊時按來源比例計算另一邊。寫錯已有寬高不會被自動糾正。
@@ -125,7 +127,7 @@ heroImage: ../../../assets/blog/covers/originals/my-cover.jpg
 npm run dev
 ```
 
-dev 會準備缺少或過期的檔案，相關原始檔案和引用變化也會觸發更新。本機 `npm run doctor` 也會先準備，再檢查和建置。如果只想準備圖片，不啟動頁面或完整檢查，可以在停止 dev 後執行：
+dev 會準備缺少或過期的檔案，相關原始檔案和引用變化也會觸發更新。`npm run doctor` 也會在 CI 中先準備，再檢查和建置。如果只想準備圖片，不啟動頁面或完整檢查，可以在停止 dev 後執行：
 
 ```bash
 npx @anglefeint/astro-theme prepare-covers
@@ -155,9 +157,9 @@ npx @anglefeint/astro-theme prepare-covers --check
 
 ```text
 src/assets/blog/covers/
-  originals/      # 如果使用这个原图目录
-  manifest.json  # 来源、尺寸、规则与输出哈希
-  generated/     # 持久响应式文件
+  originals/      # 如果使用這個原圖目錄
+  manifest.json  # 來源、尺寸、規則與輸出哈希
+  generated/     # 持久響應式檔案
 ```
 
 把以下內容一起提交到 Git：
@@ -169,7 +171,7 @@ src/assets/blog/covers/
 
 發佈前停止 dev，執行本機 `npm run doctor`；成功後可以執行 `npm run preview` 檢視建置結果。doctor 已包含建置，無需緊接著再執行 build。託管平臺仍使用 `npm run build`、輸出目錄 `dist`，部署其中全部檔案。
 
-**部署建置只驗證並複製已準備的回應式檔案，不在平臺上補生成。** CI 環境中的 doctor 同樣只驗證。缺少、過期或被修改時會失敗，應回到本機準備、提交，再重新部署。這套持久圖片流程不相依部署平臺保留 Astro 圖片快取。
+一般 dev、build 和 doctor（包含 CI）會自動補齊缺少、過期或損壞的衍生圖片，並重用正確的既有檔案。原圖缺失、無效圖片或不安全路徑仍會報錯。明確執行的 `prepare-covers --check` 與設定同步只驗證、不修復。將原圖及整個 `src/assets/blog/covers/` 提交到 Git 可以重用產物，不依賴部署平台保留圖片快取。
 
 目前使用的衍生檔案會複製到建置產物的 `_blog-covers/`。不要只上傳 HTML 或遺漏這個目錄。舊版本、不再使用的 generated 檔案不會自動刪除；清理前先確認引用，避免刪除仍需要的原圖。
 
@@ -216,16 +218,16 @@ site: {
 
 ## 8. 圖片不對時，按這裡排查
 
-| 現象                                      | 先檢查什麼                                                                                 |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| 圖片不顯示                                | 檔案是否存在、大小寫是否一致、相對路徑是否從目前 Markdown 出發；public 網址不要帶 `public` |
-| 封面準備失敗                              | `heroImage` 是否是專案內本機檔案，是否誤寫為外鏈或 public 網址；完整錯誤見終端機           |
-| 提示 missing／stale／modified derivatives | 停止 dev，執行本機 prepare-covers，提交原圖、清單和 generated，再重新建置                  |
-| 放進 public 卻沒有生成尺寸                | 是否在碎片內文實際引用；一般文章內文 public 圖片不屬於這套衍生掃描                         |
-| GIF 或 SVG 仍然很大                       | 多幀／矢量保留原檔案，準備指令不會替你轉影片或壓縮動畫                                     |
-| 遠程碎片圖片很慢或跳動                    | 外鏈不參與本機轉換，主題不能自動推斷遠程尺寸；自行最佳化原圖並填寫正確寬高                 |
-| 本機有圖，發佈後沒有                      | 原圖和 generated 是否提交，部署是否包含整個 dist，資源路徑是否被改寫                       |
-| 分享圖片仍舊                              | 是否重新建置並部署，文章專屬圖是否優先于網站預設圖，以及分享平臺是否快取                   |
+| 現象                                      | 先檢查什麼                                                                                                  |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| 圖片不顯示                                | 檔案是否存在、大小寫是否一致、相對路徑是否從目前 Markdown 出發；public 網址不要帶 `public`                  |
+| 封面準備失敗                              | `heroImage` 是否是專案內本機檔案，是否誤寫為外鏈或 public 網址；完整錯誤見終端機                            |
+| 提示 missing／stale／modified derivatives | 一般 build 會自動修復；若使用唯讀 --check，先停止 dev 並執行 prepare-covers。原圖缺失或路徑錯誤則先修正來源 |
+| 放進 public 卻沒有生成尺寸                | 是否在碎片內文實際引用；一般文章內文 public 圖片不屬於這套衍生掃描                                          |
+| GIF 或 SVG 仍然很大                       | 多幀／矢量保留原檔案，準備指令不會替你轉影片或壓縮動畫                                                      |
+| 遠程碎片圖片很慢或跳動                    | 外鏈不參與本機轉換，主題不能自動推斷遠程尺寸；自行最佳化原圖並填寫正確寬高                                  |
+| 本機有圖，發佈後沒有                      | 原圖和 generated 是否提交，部署是否包含整個 dist，資源路徑是否被改寫                                        |
+| 分享圖片仍舊                              | 是否重新建置並部署，文章專屬圖是否優先于網站預設圖，以及分享平臺是否快取                                    |
 
 如果自訂了 Astro 的 srcDir、publicDir 或帶 base 的來源路徑，用該專案設定下的 dev 準備；獨立 prepare-covers 指令使用預設目錄。圖片處理支援部分 base 路徑，並不代表整個主題已支援任意子目錄部署。
 

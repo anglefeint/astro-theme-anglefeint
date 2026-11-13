@@ -4,7 +4,7 @@ title: 'Referência de configuração: identidade, navegação e rodapé'
 subtitle: 'Nome, domínio, redes sociais e elementos públicos'
 description: 'Campos de identidade do site, ambiente, navegação, links sociais, créditos e compatibilidade.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-01.webp'
 ---
 
@@ -20,16 +20,16 @@ site é um objeto; todos os campos podem ser omitidos na configuração parcial.
 
 | Caminho completo   | Tipo             | Padrão do tema                                                                          | Efeito, limites e exemplo                                                                                                                                                                                                                   |
 | ------------------ | ---------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `site.title`       | string           | `"My Blog"`                                                                             | Marca do cabeçalho, nome do copyright, título RSS, nome nos dados estruturados e informações em algumas páginas e imagens sociais automáticas. Não é o título grande inicial; sem fallback uniforme para string vazia. Exemplo `"我的博客"` |
-| `site.description` | string           | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | Uma fonte da descrição global e do índice para máquinas. A página inicial prioriza messages.siteDescription; About e listas têm descrições próprias. Não substitui todas as páginas. Exemplo `"记录项目、阅读和生活。"`                     |
+| `site.title`       | string           | `"My Blog"`                                                                             | Marca do cabeçalho, nome do copyright, título RSS, nome nos dados estruturados e informações em algumas páginas e imagens sociais automáticas. Não é o título grande inicial; sem fallback uniforme para string vazia. Exemplo `"Meu blog"` |
+| `site.description` | string           | `"Cinematic web interfaces, AI-era engineering notes, and system architecture essays."` | Uma fonte da descrição global e do índice para máquinas. A página inicial prioriza messages.siteDescription; About e listas têm descrições próprias. Não substitui todas as páginas. Exemplo `"Projetos, leituras e vida cotidiana."`       |
 | `site.url`         | string           | `"https://example.com"`                                                                 | URL pública absoluta usada em Astro site, canonical, RSS, sitemap e exportações. Use HTTP(S) real, não URL de uma publicação. Não compra domínio nem configura DNS, certificado ou publicação. Exemplo `"https://blog.example.com"`         |
-| `site.author`      | string           | `"Your Name"`                                                                           | Autor padrão e dados estruturados; author da publicação pode substituir. Copyright usa site.title. Não altera automaticamente About ou email. Exemplo `"小林"`                                                                              |
-| `site.tagline`     | string           | `""`                                                                                    | Frase extra do rodapé, com trim; vazio não aparece. O valor antigo Built with Astro. também é oculto para não duplicar os créditos. Exemplo `"保持好奇，持续构建。"`                                                                        |
+| `site.author`      | string           | `"Your Name"`                                                                           | Autor padrão e dados estruturados; author da publicação pode substituir. Copyright usa site.title. Não altera automaticamente About ou email. Exemplo `"Lin"`                                                                               |
+| `site.tagline`     | string           | `""`                                                                                    | Frase extra do rodapé, com trim; vazio não aparece. O valor antigo Built with Astro. também é oculto para não duplicar os créditos. Exemplo `"Mantenha a curiosidade e continue criando."`                                                  |
 | `site.ogImage`     | string, opcional | `""`                                                                                    | Imagem social global quando não há imagem prioritária de página/publicação. Em branco usa a imagem do tema. Caminho public local ou HTTPS; não troca avatar ou todas as capas. Exemplo `"/images/share.webp"`                               |
 
-site.title é diferente de `i18n.locales.<语言>.site.homeTitle`: o primeiro é o nome global, o segundo altera só o título grande visível da página inicial do idioma. Procura um valor não vazio na cadeia de idiomas e só então usa o nome global. Veja [título inicial](/pt-br/blog/config-home/#home-title). messages.siteTitle não é usado na identidade padrão nem no título grande; preenchê-lo não muda a marca.
+site.title é diferente de `i18n.locales.<locale>.site.homeTitle`: o primeiro é o nome global, o segundo altera só o título grande visível da página inicial do idioma. Procura um valor não vazio na cadeia de idiomas e só então usa o nome global. Veja [título inicial](/pt-br/blog/config-home/#home-title). messages.siteTitle não é usado na identidade padrão nem no título grande; preenchê-lo não muda a marca.
 
-site.description também não é a apresentação inicial visível. Ela usa `i18n.locales.<语言>.site.hero`; a metadescrição inicial ainda tem messages.siteDescription. Veja a prioridade no [dicionário da página inicial](/pt-br/blog/config-home/#site-fallbacks). Alterar a identidade global não reescreve uma apresentação pessoal já preenchida no About.
+site.description também não é a apresentação inicial visível. Ela usa `i18n.locales.<locale>.site.hero`; a metadescrição inicial ainda tem messages.siteDescription. Veja a prioridade no [dicionário da página inicial](/pt-br/blog/config-home/#site-fallbacks). Alterar a identidade global não reescreve uma apresentação pessoal já preenchida no About.
 
 ### Prioridade e caminhos da imagem social
 
@@ -45,13 +45,13 @@ site.ogImage é string, não um objeto de importação de imagem Astro; frontmat
 
 Não são novos campos site.config, mas variáveis lidas atualmente. Todas são string e usam o campo site correspondente quando não definidas. A resolução usa coalescência nula: string vazia não vira automaticamente “não definido”.
 
-| Variável de ambiente    | Substitui prioritariamente | Exemplo                                  |
-| ----------------------- | -------------------------- | ---------------------------------------- |
-| PUBLIC_SITE_TITLE       | site.title                 | PUBLIC_SITE_TITLE=我的博客               |
-| PUBLIC_SITE_DESCRIPTION | site.description           | PUBLIC_SITE_DESCRIPTION=项目与学习笔记   |
-| PUBLIC_SITE_AUTHOR      | site.author                | PUBLIC_SITE_AUTHOR=小林                  |
-| PUBLIC_SITE_TAGLINE     | site.tagline               | PUBLIC_SITE_TAGLINE=保持好奇             |
-| PUBLIC_SITE_URL         | site.url                   | PUBLIC_SITE_URL=https://blog.example.com |
+| Variável de ambiente    | Substitui prioritariamente | Exemplo                                                |
+| ----------------------- | -------------------------- | ------------------------------------------------------ |
+| PUBLIC_SITE_TITLE       | site.title                 | PUBLIC_SITE_TITLE=Meu blog                             |
+| PUBLIC_SITE_DESCRIPTION | site.description           | PUBLIC_SITE_DESCRIPTION=Projetos e anotações de estudo |
+| PUBLIC_SITE_AUTHOR      | site.author                | PUBLIC_SITE_AUTHOR=Lin                                 |
+| PUBLIC_SITE_TAGLINE     | site.tagline               | PUBLIC_SITE_TAGLINE=Mantenha a curiosidade             |
+| PUBLIC_SITE_URL         | site.url                   | PUBLIC_SITE_URL=https://blog.example.com               |
 
 A integração lê PUBLIC_SITE_URL com o modo dotenv do Vite correspondente a dev/build e --mode para manter Astro site e a URL pública coerentes. Ambiente do processo tem prioridade sobre dotenv. Não altere só site.url e esqueça PUBLIC_SITE_URL na hospedagem. String vazia pode apagar texto ou invalidar endereço; não restaura padrões.
 
@@ -84,17 +84,17 @@ Veja idiomas e endereços no [dicionário de idiomas](/pt-br/blog/config-languag
 
 ### Sete textos do cabeçalho e rodapé
 
-Prefixo: `i18n.locales.<语言>.messages`. São strings opcionais, com padrões integrados e fallback; a tabela mostra apenas chinês simplificado / inglês. Todos são condicionais à navegação ou área de créditos correspondente existir. Renderizados como texto, sem Markdown ou HTML arbitrário.
+Prefixo: `i18n.locales.<locale>.messages`. São strings opcionais, com padrões integrados e fallback; a tabela mostra apenas chinês simplificado / inglês. Todos são condicionais à navegação ou área de créditos correspondente existir. Renderizados como texto, sem Markdown ou HTML arbitrário.
 
-| Campo relativo     | Padrão em chinês simplificado / inglês | Efeito e limites                                                   | Exemplo      |
-| ------------------ | -------------------------------------- | ------------------------------------------------------------------ | ------------ |
-| `nav.home`         | 首页 / Home                            | Texto da navegação inicial, sem alterar a rota                     | `"首页"`     |
-| `nav.blog`         | 博客 / Blog                            | Texto da entrada Blog, sem alterar a rota                          | `"文章"`     |
-| `nav.about`        | 关于 / About                           | Navegação About e entrada para reabrir a janela de conteúdo        | `"关于我"`   |
-| `nav.status`       | system: online / system: online        | Estado estático do cabeçalho; não verifica rede, APIs ou serviços  | `"系统在线"` |
-| `nav.statusAria`   | 系统状态 / System status               | Nome acessível da área de estado; não ativa monitoramento          | `"站点状态"` |
-| `footer.theme`     | 主题： / Theme by                      | Prefixo dos créditos do tema; texto e destino Anglefeint são fixos | `"主题来自"` |
-| `footer.builtWith` | 构建工具： / Built with                | Prefixo dos créditos Astro; texto e destino Astro são fixos        | `"使用"`     |
+| Campo relativo     | Padrão em chinês simplificado / inglês | Efeito e limites                                                   | Exemplo               |
+| ------------------ | -------------------------------------- | ------------------------------------------------------------------ | --------------------- |
+| `nav.home`         | 首页 / Home                            | Texto da navegação inicial, sem alterar a rota                     | `"Início"`            |
+| `nav.blog`         | 博客 / Blog                            | Texto da entrada Blog, sem alterar a rota                          | `"Artigos"`           |
+| `nav.about`        | 关于 / About                           | Navegação About e entrada para reabrir a janela de conteúdo        | `"Sobre mim"`         |
+| `nav.status`       | system: online / system: online        | Estado estático do cabeçalho; não verifica rede, APIs ou serviços  | `"Sistema conectado"` |
+| `nav.statusAria`   | 系统状态 / System status               | Nome acessível da área de estado; não ativa monitoramento          | `"Estado do site"`    |
+| `footer.theme`     | 主题： / Theme by                      | Prefixo dos créditos do tema; texto e destino Anglefeint são fixos | `"Tema de"`           |
+| `footer.builtWith` | 构建工具： / Built with                | Prefixo dos créditos Astro; texto e destino Astro são fixos        | `"Feito com"`         |
 
 messages.langLabel atende ao seletor de idiomas, cujas opções usam meta.label. Veja [textos de idioma](/pt-br/blog/config-languages/#common-messages). Contact e Fragments usam seus próprios módulos, sem inventar campos em messages.nav.
 
@@ -152,12 +152,12 @@ Com iconSrc válido, icon integrado não participa da escolha. Dimensões e espa
 
 ## theme.footer: links e créditos
 
-| Caminho completo           | Tipo / padrão                          | Estado, efeito e limites                                                                                                                                                                                                 | Exemplo                                                   |
-| -------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
-| theme.footer.showCredits   | boolean / true                         | Ativo: créditos com links do tema e Astro. Não apaga copyright, redes, frase ou outros links. Também participa dos créditos de imagens sociais automáticas de publicações, sem alterar imagens personalizadas existentes | false                                                     |
-| theme.footer.links         | { label: string; href: string }[] / [] | Ativo: links personalizados em ordem, substituindo todo o array. Não muda o cabeçalho. O layout pode acrescentar Decoder; [] não garante rodapé sem links                                                                | [{ label: '项目', href: 'https://example.com/project/' }] |
-| theme.footer.links[].label | string, obrigatório / nenhum           | Condicional: nome visível como texto, sem obter título do destino                                                                                                                                                        | '项目'                                                    |
-| theme.footer.links[].href  | string, obrigatório / nenhum           | Condicional: URL literal, sem a validação de caminhos das imagens sociais personalizadas nem prefixo base automático. Preencha caminhos internos corretamente. Navega na aba atual por padrão                            | 'https://example.com/project/'                            |
+| Caminho completo           | Tipo / padrão                          | Estado, efeito e limites                                                                                                                                                                                                 | Exemplo                                                      |
+| -------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| theme.footer.showCredits   | boolean / true                         | Ativo: créditos com links do tema e Astro. Não apaga copyright, redes, frase ou outros links. Também participa dos créditos de imagens sociais automáticas de publicações, sem alterar imagens personalizadas existentes | false                                                        |
+| theme.footer.links         | { label: string; href: string }[] / [] | Ativo: links personalizados em ordem, substituindo todo o array. Não muda o cabeçalho. O layout pode acrescentar Decoder; [] não garante rodapé sem links                                                                | [{ label: 'Projeto', href: 'https://example.com/project/' }] |
+| theme.footer.links[].label | string, obrigatório / nenhum           | Condicional: nome visível como texto, sem obter título do destino                                                                                                                                                        | 'Projeto'                                                    |
+| theme.footer.links[].href  | string, obrigatório / nenhum           | Condicional: URL literal, sem a validação de caminhos das imagens sociais personalizadas nem prefixo base automático. Preencha caminhos internos corretamente. Navega na aba atual por padrão                            | 'https://example.com/project/'                               |
 
 Links personalizados vêm antes dos adicionais do layout, sem deduplicação. Com Decoder ativo, o framework acrescenta seu link completo com messages.decoderPage.fullTool. Desative Decoder pelo controle próprio; limpar footer.links não remove esse link.
 
@@ -171,37 +171,37 @@ Preserve suas informações atuais e mescle só os campos desejados:
 
 ```ts
 site: {
-  title: '小林的博客',
-  description: '记录项目、阅读和生活。',
+  title: 'O blog de Lin',
+  description: 'Projetos, leituras e vida cotidiana.',
   url: 'https://blog.example.com',
-  author: '小林',
-  tagline: '保持好奇，持续构建。',
+  author: 'Lin',
+  tagline: 'Mantenha a curiosidade e continue criando.',
 },
 social: {
   links: [
     { label: 'GitHub', href: 'https://github.com/yourname', icon: 'github' },
-    { label: '项目主页', href: 'https://example.com/project/' },
+    { label: 'Página do projeto', href: 'https://example.com/project/' },
   ],
 },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目', href: 'https://example.com/project/' }],
+    links: [{ label: 'Projeto', href: 'https://example.com/project/' }],
   },
 },
 ```
 
 Troque contas, domínios e links de exemplo pelos seus; o tema não os verifica online. Para ícones sociais ou imagem global personalizada, prepare os arquivos public antes de informar iconSrc ou site.ogImage.
 
-Para alterar só a navegação chinesa e prefixos de créditos:
+Para alterar só a navegação em português brasileiro e os prefixos de créditos:
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'pt-br': {
       messages: {
-        nav: { home: '首页', blog: '文章', about: '关于我' },
-        footer: { theme: '主题来自', builtWith: '使用' },
+        nav: { home: 'Início', blog: 'Artigos', about: 'Sobre mim' },
+        footer: { theme: 'Tema de', builtWith: 'Feito com' },
       },
     },
   },
@@ -212,9 +212,9 @@ i18n: {
 
 ## Não usado atualmente: messages.siteTitle
 
-Caminho completo: `i18n.locales.<语言>.messages.siteTitle`, string opcional. Os padrões em chinês simplificado / inglês são 'Angle Feint'. O título grande inicial padrão e a identidade pública não o leem. **Não usado atualmente**: siteTitle: '我的博客' não muda esses nomes.
+Caminho completo: `i18n.locales.<locale>.messages.siteTitle`, string opcional. Os padrões em chinês simplificado / inglês são 'Angle Feint'. O título grande inicial padrão e a identidade pública não o leem. **Não usado atualmente**: siteTitle: 'Meu blog' não muda esses nomes.
 
-O título inicial usa `i18n.locales.<语言>.site.homeTitle` e a marca pública usa site.title global. Veja [título inicial](/pt-br/blog/config-home/#home-title) e [identidade](#identity). Não precisa preencher esse campo reservado para renomear o site.
+O título inicial usa `i18n.locales.<locale>.site.homeTitle` e a marca pública usa site.title global. Veja [título inicial](/pt-br/blog/config-home/#home-title) e [identidade](#identity). Não precisa preencher esse campo reservado para renomear o site.
 
 <a id="boundaries"></a>
 

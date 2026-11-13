@@ -4,7 +4,7 @@ title: '設定字典：音樂播放器'
 subtitle: '啟停播放器、填寫歌單、設定音頻路徑和介面文字。'
 description: '以實際程式碼查閱音樂播放器開關、曲目欄位、預設值、音頻載入方式及多語言文字，說明驗證規則和續播限制。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -43,7 +43,7 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 | 欄位   | 型別 / 預設值                        | 狀態、作用與限制                                                                                                                                 | 範例值               |
 | ------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
 | title  | string，必填 / 無                    | 條件生效：主顯示區、折疊標題及歌單中的歌曲名稱。必須是非空字串；首尾空白會被移除。空白標題報錯，不從檔案名或音頻標籤生成                         | '我的一首歌'         |
-| artist | string，可省略 / 未設定，正規化為 '' | 条件生效：主显示区和歌单中的作者文字。填写时必须为 string，首尾空白会移除；空值不自动补站点作者，也不读取音频元数据                              | '作者'               |
+| artist | string，可省略 / 未設定，正規化為 '' | 條件生效：主顯示區和播放清單中的作者文字。填寫時必須為 string，首尾空白會移除；空值不自動補網站作者，也不讀取音訊中繼資料                        | '作者'               |
 | src    | string，必填 / 無                    | 條件生效：音頻來源地址；必須以單個 / 或小寫 https:// 開頭，不能含空白或反斜線。HTTPS 地址還需能通過 URL 解析；不檢查檔案是否存在或內容是否為音頻 | '/music/my-song.mp3' |
 
 title 和 artist 按文字顯示，不解析 Markdown 或 HTML。沒有公開的封面、歌詞、時長、專輯、獨立 ID 或按曲目設定音量的欄位。
@@ -85,42 +85,42 @@ theme: {
 
 ## messages.music：十九項介面與無障礙文字
 
-完整前綴是 `i18n.locales.<语言>.messages.music.`。每項均為可省略的 **string**，預設來自內建目前語言文字和語言回退鏈。下表只列中文 / 英文預設值，範例列是欄位值；生效條件是播放器已呈現且對應控制項或狀態出現。空字串會覆寫文字，不是隱藏功能的開關，也可能使控制項失去清楚的無障礙名稱。
+完整前綴是 `i18n.locales.<locale>.messages.music.`。每項均為可省略的 **string**，預設來自內建目前語言文字和語言回退鏈。下表只列中文 / 英文預設值，範例列是欄位值；生效條件是播放器已呈現且對應控制項或狀態出現。空字串會覆寫文字，不是隱藏功能的開關，也可能使控制項失去清楚的無障礙名稱。
 
 | 欄位       | 簡體中文 / 英文預設值                                                                                           | 作用與限制                                                           | 範例值                                 |
 | ---------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------- |
-| `label`    | 音乐播放器 / Music player                                                                                       | 播放器 aside 區域的無障礙名稱，不是頂部 AUDIO CHANNEL 文字           | `"音乐播放器"`                         |
+| `label`    | 音乐播放器 / Music player                                                                                       | 播放器 aside 區域的無障礙名稱，不是頂部 AUDIO CHANNEL 文字           | `"音樂播放器"`                         |
 | `play`     | 播放 / Play                                                                                                     | 播放按鈕的無障礙名稱；可見按鈕仍為 PLAY                              | `"播放"`                               |
-| `pause`    | 暂停 / Pause                                                                                                    | 播放中或載入中按鈕的無障礙名稱；可見按鈕為 PAUSE                     | `"暂停"`                               |
+| `pause`    | 暂停 / Pause                                                                                                    | 播放中或載入中按鈕的無障礙名稱；可見按鈕為 PAUSE                     | `"暫停"`                               |
 | `prev`     | 上一首 / Previous                                                                                               | 上一首按鈕的無障礙名稱；可見文字為 PREV                              | `"上一首"`                             |
 | `next`     | 下一首 / Next                                                                                                   | 下一首按鈕的無障礙名稱；可見文字為 NEXT                              | `"下一首"`                             |
-| `open`     | 展开播放器 / Open player                                                                                        | 折疊狀態下展開按鈕的無障礙名稱；可見文字為 OPEN                      | `"展开播放器"`                         |
+| `open`     | 展开播放器 / Open player                                                                                        | 折疊狀態下展開按鈕的無障礙名稱；可見文字為 OPEN                      | `"展開播放器"`                         |
 | `close`    | 收起播放器 / Collapse player                                                                                    | 展開狀態下收起按鈕的無障礙名稱；可見文字為 MIN。收起不暫停播放       | `"收起播放器"`                         |
-| `progress` | 播放进度 / Progress                                                                                             | 進度滑塊的無障礙名稱，不改變進度或可跳轉範圍                         | `"播放进度"`                           |
+| `progress` | 播放进度 / Progress                                                                                             | 進度滑塊的無障礙名稱，不改變進度或可跳轉範圍                         | `"播放進度"`                           |
 | `volume`   | 音量 / Volume                                                                                                   | 音量滑塊的無障礙名稱，不設定預設音量；可見標籤仍為 LVL               | `"音量"`                               |
-| `queue`    | 歌单 / Playlist                                                                                                 | 歌單展開按鈕的無障礙名稱；可見 QUEUE、SHOW / HIDE 等文字固定         | `"展开或收起歌单"`                     |
-| `mute`     | 静音 / Mute                                                                                                     | 非靜音時靜音按鈕的無障礙名稱；可見文字為 MUTE                        | `"静音"`                               |
-| `unmute`   | 取消静音 / Unmute                                                                                               | 音量為零時還原音量按鈕的無障礙名稱；可見文字為 UNMUTE                | `"恢复音量"`                           |
+| `queue`    | 歌单 / Playlist                                                                                                 | 歌單展開按鈕的無障礙名稱；可見 QUEUE、SHOW / HIDE 等文字固定         | `"展開或收起歌單"`                     |
+| `mute`     | 静音 / Mute                                                                                                     | 非靜音時靜音按鈕的無障礙名稱；可見文字為 MUTE                        | `"靜音"`                               |
+| `unmute`   | 取消静音 / Unmute                                                                                               | 音量為零時還原音量按鈕的無障礙名稱；可見文字為 UNMUTE                | `"恢復音量"`                           |
 | `idle`     | 就绪 / Ready                                                                                                    | 初始或切換歌曲後的 SIGNAL 狀態文字                                   | `"等待播放"`                           |
-| `loading`  | 加载中 / Loading                                                                                                | 歌曲下載或等待播放時的 SIGNAL 狀態文字                               | `"正在加载歌曲"`                       |
+| `loading`  | 加载中 / Loading                                                                                                | 歌曲下載或等待播放時的 SIGNAL 狀態文字                               | `"正在載入歌曲"`                       |
 | `playing`  | 播放中 / Playing                                                                                                | 正在播放時的 SIGNAL 狀態文字                                         | `"正在播放"`                           |
-| `paused`   | 已暂停 / Paused                                                                                                 | 暫停時的 SIGNAL 狀態文字                                             | `"已暂停"`                             |
-| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | 瀏覽器拒絕播放權限時的提示；不能通過改文字解除限制                   | `"请点击播放以继续。"`                 |
-| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | 音頻請求、播放失敗的狀態，以及播放器掛載模組失敗時的提示             | `"歌曲未能加载，请重试。"`             |
-| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | 瀏覽器停用 JavaScript 時的 noscript 提示，不會提供原生音頻替代控制項 | `"启用 JavaScript 后可以使用播放器。"` |
+| `paused`   | 已暂停 / Paused                                                                                                 | 暫停時的 SIGNAL 狀態文字                                             | `"已暫停"`                             |
+| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | 瀏覽器拒絕播放權限時的提示；不能通過改文字解除限制                   | `"請點擊播放以繼續。"`                 |
+| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | 音頻請求、播放失敗的狀態，以及播放器掛載模組失敗時的提示             | `"歌曲未能載入，請重試。"`             |
+| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | 瀏覽器停用 JavaScript 時的 noscript 提示，不會提供原生音頻替代控制項 | `"啟用 JavaScript 后可以使用播放器。"` |
 
 這些文字不是整套終端機 UI 的可見文字替換表。PLAY / PAUSE、PREV / NEXT、OPEN / MIN、MUTE / UNMUTE、QUEUE、SHOW / HIDE、TRACKS、LVL、AUDIO CHANNEL、STATE、SIGNAL 和 STANDBY 等狀態代號由實作固定；對應可設定欄位用於無障礙名稱或 SIGNAL 行的可見狀態，不能因為按鈕仍顯示英文就把欄位判斷為未生效。
 
-例如只覆寫中文載入和錯誤提示：
+例如只覆寫繁體中文載入和錯誤提示：
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    'zh-hant': {
       messages: {
         music: {
-          loading: '正在加载歌曲',
-          error: '歌曲未能加载，请重试。',
+          loading: '正在載入歌曲',
+          error: '歌曲未能載入，請重試。',
         },
       },
     },

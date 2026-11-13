@@ -4,7 +4,7 @@ title: '사용 가이드 7: 더 많은 언어의 독자 맞이하기'
 subtitle: '언어와 홈 주소를 선택하고 현지화 문구를 작성한 뒤 글과 Fragments의 번역을 추가합니다.'
 description: '실제 설정을 기준으로 언어 활성화·비활성화, 기본 언어, 홈 라우트, 대체 동작, 새 언어 추가와 글·Fragments의 다국어 연결을 설명합니다.'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/hacker-01.webp'
 ---
 
@@ -110,7 +110,7 @@ i18n: {
 - `messages.siteDescription`은 홈 메타 설명이며 보이는 소개는 아닙니다. 최상위 `site.description`만 바꿔도 내장 홈 설명이 대체되지 않을 수 있습니다.
 - `messages.nav`는 해당 UI 입구의 문구만 바꾸며 라우트나 글 콘텐츠는 바꾸지 않습니다.
 
-마찬가지로 `i18n.locales.<코드>.about`은 해당 언어 About 콘텐츠, `messages` 아래 모듈은 UI 문구를 수정합니다. About과 Decoder는 계속 전역 기능 스위치가 제어하며 번역을 썼다고 자동 활성화되지 않습니다. 예시는 [페이지와 기능 꾸미기](/ko/blog/starter-guide-3-comments-about-and-theme-toggles/)를 참고하세요.
+마찬가지로 `i18n.locales.<locale>.about`은 해당 언어 About 콘텐츠, `messages` 아래 모듈은 UI 문구를 수정합니다. About과 Decoder는 계속 전역 기능 스위치가 제어하며 번역을 썼다고 자동 활성화되지 않습니다. 예시는 [페이지와 기능 꾸미기](/ko/blog/starter-guide-3-comments-about-and-theme-toggles/)를 참고하세요.
 
 언어 메타데이터와 기본 홈 주소는 [언어 사전](/ko/blog/config-languages/#registry), 홈 세 문구의 차이는 [홈 사전](/ko/blog/config-home/#home-title)에 있습니다.
 
@@ -215,7 +215,7 @@ npm run doctor
 npm run preview
 ```
 
-doctor는 검사와 빌드를 포함하므로 성공 직후 check나 build를 다시 실행할 필요는 없습니다. 빌드 뒤 preview에서 언어별 검색을 확인하세요. 인덱스는 현재 언어만 검색하며 모든 언어를 섞지 않습니다. 활성 언어별 RSS는 `/<코드>/rss.xml`이며 해당 언어 글만 포함합니다.
+doctor는 검사와 빌드를 포함하므로 성공 직후 check나 build를 다시 실행할 필요는 없습니다. 빌드 뒤 preview에서 언어별 검색을 확인하세요. 인덱스는 현재 언어만 검색하며 모든 언어를 섞지 않습니다. 활성 언어별 RSS는 `/<locale>/rss.xml`이며 해당 언어 글만 포함합니다.
 
 도메인이 맞는지 확인하고 `dist/` 전체를 다시 배포하세요. 언어 활성화·비활성화, 기본 주소, 콘텐츠 변경 모두 재빌드가 필요합니다. 로컬 설정만 바꿔서는 온라인 페이지가 바뀌지 않습니다. 재배포 시 이전 산출물을 정리해야 하며 언어 끄기는 이전 URL의 자동 리다이렉트가 아닙니다.
 

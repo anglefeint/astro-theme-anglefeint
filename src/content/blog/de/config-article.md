@@ -59,31 +59,31 @@ Vollständige 22 frontmatter-Felder, keine neuen site.config-Felder. Typen bezie
 
 ### Inhalt und Metadaten
 
-| Feld          | Typ und Standardverhalten                                | Wirkung, Grenzen und Beispiel                                                                               |
-| ------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `title`       | Pflicht-string, kein Standard                            | Titel und Metadaten, kein Website-Name; `title: '我的笔记'`                                                 |
-| `description` | Pflicht-string, kein Standard                            | Metabeschreibung und ohne context Kontextzeile, nicht Volltext; `description: '一次调试的记录。'`           |
-| `pubDate`     | Pflicht, parsebares Datum, kein Standard                 | Veröffentlichung, Listenfolge und Metadaten, UTC-Anzeige, Zukunft versteckt nicht; `pubDate: '2026-11-13'`  |
-| `updatedDate` | Optionales Datum, nicht gesetzt                          | Aktualisierung sichtbar und Sitemap-priorisiert, keine pubDate-Sortieränderung; `updatedDate: '2026-11-14'` |
-| `author`      | Optionaler string, fehlend/Leerraum Website-Autor        | Keine automatische Autorenseite; `author: '另一位作者'`                                                     |
-| `subtitle`    | Optionaler string, nicht gesetzt                         | Untertitel, bei gleichem Kontext nicht doppelt; `subtitle: '从现象到定位'`                                  |
-| `context`     | Optionaler string, sonst description                     | Kontextzeile, leer verbirgt ohne Metabeschreibung zu leeren; `context: '解决一个具体问题。'`                |
-| `tags`        | Optionales string-Array, sonst keine Tags                | Links auch vom globalen Tagschalter abhängig; `tags: ['astro', '笔记']`                                     |
-| `heroImage`   | Optionaler lokaler Bildpfad, sonst kein Titelbildbereich | Keine Remote-URL oder public-URL nach Textbildregeln; `heroImage: ./cover.jpg`, Datei vorbereiten           |
-| `ogImage`     | Optional lokal/public/HTTPS, sonst Bildfallback          | Kein Texter-/Titelbildersatz; `ogImage: /images/share.png`, Datei vorbereiten                               |
-| `toc`         | Optionaler boolean, globale Vorgabe                      | true überschreibt globale Deaktivierung, ohne Überschriften trotzdem unsichtbar; `toc: false`               |
-| `search`      | Optionaler boolean, Standard true                        | false schließt interne Suche aus, nicht Artikel, RSS, Sitemap oder KI-Export; `search: false`               |
+| Feld          | Typ und Standardverhalten                                | Wirkung, Grenzen und Beispiel                                                                                  |
+| ------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `title`       | Pflicht-string, kein Standard                            | Titel und Metadaten, kein Website-Name; `title: 'Meine Notizen'`                                               |
+| `description` | Pflicht-string, kein Standard                            | Metabeschreibung und ohne context Kontextzeile, nicht Volltext; `description: 'Notizen zu einer Fehlersuche.'` |
+| `pubDate`     | Pflicht, parsebares Datum, kein Standard                 | Veröffentlichung, Listenfolge und Metadaten, UTC-Anzeige, Zukunft versteckt nicht; `pubDate: '2026-11-13'`     |
+| `updatedDate` | Optionales Datum, nicht gesetzt                          | Aktualisierung sichtbar und Sitemap-priorisiert, keine pubDate-Sortieränderung; `updatedDate: '2026-11-14'`    |
+| `author`      | Optionaler string, fehlend/Leerraum Website-Autor        | Keine automatische Autorenseite; `author: 'Gastautor'`                                                         |
+| `subtitle`    | Optionaler string, nicht gesetzt                         | Untertitel, bei gleichem Kontext nicht doppelt; `subtitle: 'Vom Symptom zur Ursache'`                          |
+| `context`     | Optionaler string, sonst description                     | Kontextzeile, leer verbirgt ohne Metabeschreibung zu leeren; `context: 'Ein konkretes Problem lösen.'`         |
+| `tags`        | Optionales string-Array, sonst keine Tags                | Links auch vom globalen Tagschalter abhängig; `tags: ['astro', 'Notizen']`                                     |
+| `heroImage`   | Optionaler lokaler Bildpfad, sonst kein Titelbildbereich | Keine Remote-URL oder public-URL nach Textbildregeln; `heroImage: ./cover.jpg`, Datei vorbereiten              |
+| `ogImage`     | Optional lokal/public/HTTPS, sonst Bildfallback          | Kein Texter-/Titelbildersatz; `ogImage: /images/share.png`, Datei vorbereiten                                  |
+| `toc`         | Optionaler boolean, globale Vorgabe                      | true überschreibt globale Deaktivierung, ohne Überschriften trotzdem unsichtbar; `toc: false`                  |
+| `search`      | Optionaler boolean, Standard true                        | false schließt interne Suche aus, nicht Artikel, RSS, Sitemap oder KI-Export; `search: false`                  |
 
 Beginne mit Pflichtwerten und ergänze später:
 
 ```yaml
 ---
-title: '我的笔记'
-description: '一次调试的记录。'
+title: 'Meine Notizen'
+description: 'Notizen zu einer Fehlersuche.'
 pubDate: '2026-11-13'
-subtitle: '从现象到定位'
-context: '解决一个具体问题。'
-tags: ['astro', '笔记']
+subtitle: 'Vom Symptom zur Ursache'
+context: 'Ein konkretes Problem lösen.'
+tags: ['astro', 'Notizen']
 toc: true
 search: true
 ---
@@ -95,20 +95,20 @@ Kein draft, geplante Veröffentlichung, Einzel-comments, Einzel-Red-Queen oder E
 
 ### OUTPUT-Kennzahlen und Status
 
-| Feld         | Typ und Standardverhalten                                                  | Wirkung, Grenzen und Beispiel                                                 |
-| ------------ | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `wordCount`  | Optionale nichtnegative Ganzzahl, aus Textquelle                           | Unabhängige Zählüberschreibung; `wordCount: 800` ändert tokenCount nicht      |
-| `tokenCount` | Optionale nichtnegative Ganzzahl, round(max(automatische Anzahl, 1) × 1.3) | Schätzung, kein Tokenizer oder Verbrauch; `tokenCount: 1040`                  |
-| `aiModel`    | Optionaler string, sonst kein Label                                        | Titelstatus und OUTPUT ohne Modellverifikation; `aiModel: '作者填写的模型名'` |
-| `aiMode`     | Optionaler string, sonst kein Label                                        | Nur Modustext, keine Aufgabe; `aiMode: 'notes'`                               |
-| `aiState`    | Optionaler string, sonst kein Label                                        | Nur Statustext, keine Gesundheitsabfrage; `aiState: 'edited'`                 |
+| Feld         | Typ und Standardverhalten                                                  | Wirkung, Grenzen und Beispiel                                                                 |
+| ------------ | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `wordCount`  | Optionale nichtnegative Ganzzahl, aus Textquelle                           | Unabhängige Zählüberschreibung; `wordCount: 800` ändert tokenCount nicht                      |
+| `tokenCount` | Optionale nichtnegative Ganzzahl, round(max(automatische Anzahl, 1) × 1.3) | Schätzung, kein Tokenizer oder Verbrauch; `tokenCount: 1040`                                  |
+| `aiModel`    | Optionaler string, sonst kein Label                                        | Titelstatus und OUTPUT ohne Modellverifikation; `aiModel: 'Vom Autor angegebener Modellname'` |
+| `aiMode`     | Optionaler string, sonst kein Label                                        | Nur Modustext, keine Aufgabe; `aiMode: 'notes'`                                               |
+| `aiState`    | Optionaler string, sonst kein Label                                        | Nur Statustext, keine Gesundheitsabfrage; `aiState: 'edited'`                                 |
 
 Automatische Zählung entfernt Teile von Markdown, Code und Links. CJK, Kana und Koreanisch zählen zeichenweise, anderes hauptsächlich nach Leerraum. Formeln und MDX-Quelle können die Schätzung beeinflussen. Nur wordCount zu setzen berechnet tokenCount nicht neu. Ab 1.000 erscheinen beide mit einer Dezimalstelle und k, ohne Rohwerte zu ändern.
 
 ```yaml
 wordCount: 800
 tokenCount: 1040
-aiModel: '作者填写的模型名'
+aiModel: 'Vom Autor angegebener Modellname'
 aiMode: 'notes'
 aiState: 'edited'
 ```
@@ -131,44 +131,44 @@ Sichtbare Quellen gehören als Markdown-Links in den Text. Akzeptierte Altfelder
 
 <a id="article-messages"></a>
 
-Präfix `i18n.locales.<语言>.messages.blog`, optionale string-Überschreibungen mit normaler Sprachauflösung. Tabelle zeigt vereinfachtes Chinesisch/Englisch. Beispiele sind einzelne Mitglieder des blog-Objekts, kein frontmatter.
+Präfix `i18n.locales.<Sprachcode>.messages.blog`, optionale string-Überschreibungen mit normaler Sprachauflösung. Tabelle zeigt vereinfachtes Chinesisch/Englisch. Beispiele sind einzelne Mitglieder des blog-Objekts, kein frontmatter.
 
 Wirksame Texte brauchen ihren Bereich. Leer kann Labels leeren, verbirgt nicht die ganze Funktion; zugängliche Namen nicht leeren. Ungenutzte Felder haben keinen Seiteneffekt.
 
-| Feld                 | Standard vereinfachtes Chinesisch / Englisch | Wirkung und Grenzen                                          | Status            | Mitgliedsbeispiel                 |
-| -------------------- | -------------------------------------------- | ------------------------------------------------------------ | ----------------- | --------------------------------- |
-| `rqBadge`            | 监视器信号 / monitor feed                    | Monitor-Badge bei Red Queen, kein echtes Monitoring          | Bedingt wirksam   | `rqBadge: "监视器信号"`           |
-| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed         | Replay-Knopfname ohne Material-/Strategiewechsel             | Bedingt wirksam   | `rqReplayAria: "重放监视器信号"`  |
-| `backToTop`          | 返回顶部 / Back to top                       | Nach-oben-Name, sichtbar nach Scrollzustand                  | Bedingt wirksam   | `backToTop: "返回顶部"`           |
-| `toastP10`           | 语境解析 10% / context parsed 10%            | Früher Lesehinweis, kein KI-Fortschritt                      | Bedingt wirksam   | `toastP10: "语境解析 10%"`        |
-| `toastP30`           | 语境解析 30% / context parsed 30%            | Lesehinweis, kein Semantikergebnis                           | Bedingt wirksam   | `toastP30: "语境解析 30%"`        |
-| `toastP60`           | 推理稳定 60% / inference stable 60%          | Lesehinweis, kein Modellzustand                              | Bedingt wirksam   | `toastP60: "推理稳定 60%"`        |
-| `toastDone`          | 输出完成 / output finalized                  | Leseabschluss, keine Erzeugungs-/Validierungsgarantie        | Bedingt wirksam   | `toastDone: "输出完成"`           |
-| `metaPublished`      | 发布 / published                             | Veröffentlichungslabel, keine Datumsänderung                 | Bedingt wirksam   | `metaPublished: "发布"`           |
-| `metaAuthor`         | 作者 / by                                    | Autorenlabel, kein Wertwechsel                               | Bedingt wirksam   | `metaAuthor: "作者"`              |
-| `metaUpdated`        | 更新 / updated                               | Aktualisierungslabel nur mit updatedDate                     | Bedingt wirksam   | `metaUpdated: "更新"`             |
-| `systemStatusAria`   | 模型状态 / Model status                      | Zugänglicher Titelstatusname mit mindestens einem Statusfeld | Bedingt wirksam   | `systemStatusAria: "模型状态"`    |
-| `systemModelLabel`   | 模型 / model                                 | Modelllabel mit aiModel, auch OUTPUT                         | Bedingt wirksam   | `systemModelLabel: "模型"`        |
-| `systemModeLabel`    | 模式 / mode                                  | Moduslabel mit aiMode                                        | Bedingt wirksam   | `systemModeLabel: "模式"`         |
-| `systemStateLabel`   | 状态 / state                                 | Statuslabel mit aiState                                      | Bedingt wirksam   | `systemStateLabel: "状态"`        |
-| `promptContextLabel` | 语境 / Context                               | Kontextlabel mit nichtleerem Kontext                         | Bedingt wirksam   | `promptContextLabel: "语境"`      |
-| `heroMonitor`        | 神经监视器 / neural monitor                  | Titelbild-Monitor mit heroImage                              | Bedingt wirksam   | `heroMonitor: "神经监视器"`       |
-| `heroSignalSync`     | 信号同步中 / signal sync active              | Statische Titelbildmarkierung, keine Synchronabfrage         | Bedingt wirksam   | `heroSignalSync: "信号同步中"`    |
-| `heroModelOnline`    | 模型在线 / model online                      | Statische Titelbildmarkierung, keine Dienstabfrage           | Bedingt wirksam   | `heroModelOnline: "模型在线"`     |
-| `toc`                | 文章目录 / On this page                      | Verzeichnisname bei aktivem Verzeichnis und Überschriften    | Bedingt wirksam   | `toc: "文章目录"`                 |
-| `responseOutput`     | 输出 / Output                                | Name der OUTPUT-Leiste, kein Inhaltswechsel                  | Bedingt wirksam   | `responseOutput: "输出"`          |
-| `statsWords`         | 词 / words                                   | Zähllabel ohne Zahlenänderung                                | Bedingt wirksam   | `statsWords: "词"`                |
-| `statsTokens`        | 令牌 / tokens                                | Tokenlabel ohne Schätzungsänderung                           | Bedingt wirksam   | `statsTokens: "令牌"`             |
-| `copySectionLink`    | 复制本节链接 / Copy section link             | h2/h3-Linkkopiername ohne Ankeralgorithmuswechsel            | Bedingt wirksam   | `copySectionLink: "复制本节链接"` |
-| `regenerate`         | 重播扫描 / Replay scan                       | Scan-Replaytext, nur visueller Effekt                        | Bedingt wirksam   | `regenerate: "重播扫描"`          |
-| `relatedAria`        | 相关文章 / Related posts                     | Zugänglicher Empfehlungsname bei anderen Artikeln            | Bedingt wirksam   | `relatedAria: "相关文章"`         |
-| `related`            | 相关文章 / Related                           | Empfehlungsüberschrift ohne Algorithmuswechsel               | Bedingt wirksam   | `related: "相关文章"`             |
-| `backToBlogAria`     | 返回博客 / Back to blog                      | Zugänglicher Zurück-zum-Blog-Name                            | Bedingt wirksam   | `backToBlogAria: "返回博客"`      |
-| `backToBlog`         | 返回博客 / Back to blog                      | Sichtbarer Bloglink ohne Zielwechsel                         | Bedingt wirksam   | `backToBlog: "返回博客"`          |
-| `comments`           | 评论 / Comments                              | Zugänglicher Kommentarname bei gültiger Einrichtung          | Bedingt wirksam   | `comments: "评论"`                |
-| `metaReadMinutes`    | 分钟阅读 / min read                          | Derzeit ungenutzt, stellt Lesedauer nicht wieder her         | Derzeit ungenutzt | `metaReadMinutes: "分钟阅读"`     |
-| `latencyLabel`       | 延迟估计 / latency est                       | Derzeit ungenutzt, stellt Latenz nicht wieder her            | Derzeit ungenutzt | `latencyLabel: "延迟估计"`        |
-| `confidenceLabel`    | 置信度 / confidence                          | Derzeit ungenutzt, stellt Konfidenz nicht wieder her         | Derzeit ungenutzt | `confidenceLabel: "置信度"`       |
+| Feld                 | Standard vereinfachtes Chinesisch / Englisch | Wirkung und Grenzen                                          | Status            | Mitgliedsbeispiel                                |
+| -------------------- | -------------------------------------------- | ------------------------------------------------------------ | ----------------- | ------------------------------------------------ |
+| `rqBadge`            | 监视器信号 / monitor feed                    | Monitor-Badge bei Red Queen, kein echtes Monitoring          | Bedingt wirksam   | `rqBadge: "Monitorsignal"`                       |
+| `rqReplayAria`       | 重放监视器信号 / Replay monitor feed         | Replay-Knopfname ohne Material-/Strategiewechsel             | Bedingt wirksam   | `rqReplayAria: "Monitorsignal erneut abspielen"` |
+| `backToTop`          | 返回顶部 / Back to top                       | Nach-oben-Name, sichtbar nach Scrollzustand                  | Bedingt wirksam   | `backToTop: "Nach oben"`                         |
+| `toastP10`           | 语境解析 10% / context parsed 10%            | Früher Lesehinweis, kein KI-Fortschritt                      | Bedingt wirksam   | `toastP10: "Kontext analysiert: 10 %"`           |
+| `toastP30`           | 语境解析 30% / context parsed 30%            | Lesehinweis, kein Semantikergebnis                           | Bedingt wirksam   | `toastP30: "Kontext analysiert: 30 %"`           |
+| `toastP60`           | 推理稳定 60% / inference stable 60%          | Lesehinweis, kein Modellzustand                              | Bedingt wirksam   | `toastP60: "Analyse stabil: 60 %"`               |
+| `toastDone`          | 输出完成 / output finalized                  | Leseabschluss, keine Erzeugungs-/Validierungsgarantie        | Bedingt wirksam   | `toastDone: "Ausgabe abgeschlossen"`             |
+| `metaPublished`      | 发布 / published                             | Veröffentlichungslabel, keine Datumsänderung                 | Bedingt wirksam   | `metaPublished: "Veröffentlicht"`                |
+| `metaAuthor`         | 作者 / by                                    | Autorenlabel, kein Wertwechsel                               | Bedingt wirksam   | `metaAuthor: "Autor"`                            |
+| `metaUpdated`        | 更新 / updated                               | Aktualisierungslabel nur mit updatedDate                     | Bedingt wirksam   | `metaUpdated: "Aktualisiert"`                    |
+| `systemStatusAria`   | 模型状态 / Model status                      | Zugänglicher Titelstatusname mit mindestens einem Statusfeld | Bedingt wirksam   | `systemStatusAria: "Modellstatus"`               |
+| `systemModelLabel`   | 模型 / model                                 | Modelllabel mit aiModel, auch OUTPUT                         | Bedingt wirksam   | `systemModelLabel: "Modell"`                     |
+| `systemModeLabel`    | 模式 / mode                                  | Moduslabel mit aiMode                                        | Bedingt wirksam   | `systemModeLabel: "Modus"`                       |
+| `systemStateLabel`   | 状态 / state                                 | Statuslabel mit aiState                                      | Bedingt wirksam   | `systemStateLabel: "Status"`                     |
+| `promptContextLabel` | 语境 / Context                               | Kontextlabel mit nichtleerem Kontext                         | Bedingt wirksam   | `promptContextLabel: "Kontext"`                  |
+| `heroMonitor`        | 神经监视器 / neural monitor                  | Titelbild-Monitor mit heroImage                              | Bedingt wirksam   | `heroMonitor: "Neuronaler Monitor"`              |
+| `heroSignalSync`     | 信号同步中 / signal sync active              | Statische Titelbildmarkierung, keine Synchronabfrage         | Bedingt wirksam   | `heroSignalSync: "Signal wird synchronisiert"`   |
+| `heroModelOnline`    | 模型在线 / model online                      | Statische Titelbildmarkierung, keine Dienstabfrage           | Bedingt wirksam   | `heroModelOnline: "Modell online"`               |
+| `toc`                | 文章目录 / On this page                      | Verzeichnisname bei aktivem Verzeichnis und Überschriften    | Bedingt wirksam   | `toc: "Artikelverzeichnis"`                      |
+| `responseOutput`     | 输出 / Output                                | Name der OUTPUT-Leiste, kein Inhaltswechsel                  | Bedingt wirksam   | `responseOutput: "Ausgabe"`                      |
+| `statsWords`         | 词 / words                                   | Zähllabel ohne Zahlenänderung                                | Bedingt wirksam   | `statsWords: "Wörter"`                           |
+| `statsTokens`        | 令牌 / tokens                                | Tokenlabel ohne Schätzungsänderung                           | Bedingt wirksam   | `statsTokens: "Tokens"`                          |
+| `copySectionLink`    | 复制本节链接 / Copy section link             | h2/h3-Linkkopiername ohne Ankeralgorithmuswechsel            | Bedingt wirksam   | `copySectionLink: "Abschnittslink kopieren"`     |
+| `regenerate`         | 重播扫描 / Replay scan                       | Scan-Replaytext, nur visueller Effekt                        | Bedingt wirksam   | `regenerate: "Scan wiederholen"`                 |
+| `relatedAria`        | 相关文章 / Related posts                     | Zugänglicher Empfehlungsname bei anderen Artikeln            | Bedingt wirksam   | `relatedAria: "Ähnliche Artikel"`                |
+| `related`            | 相关文章 / Related                           | Empfehlungsüberschrift ohne Algorithmuswechsel               | Bedingt wirksam   | `related: "Ähnliche Artikel"`                    |
+| `backToBlogAria`     | 返回博客 / Back to blog                      | Zugänglicher Zurück-zum-Blog-Name                            | Bedingt wirksam   | `backToBlogAria: "Zurück zum Blog"`              |
+| `backToBlog`         | 返回博客 / Back to blog                      | Sichtbarer Bloglink ohne Zielwechsel                         | Bedingt wirksam   | `backToBlog: "Zurück zum Blog"`                  |
+| `comments`           | 评论 / Comments                              | Zugänglicher Kommentarname bei gültiger Einrichtung          | Bedingt wirksam   | `comments: "Kommentare"`                         |
+| `metaReadMinutes`    | 分钟阅读 / min read                          | Derzeit ungenutzt, stellt Lesedauer nicht wieder her         | Derzeit ungenutzt | `metaReadMinutes: "Minuten Lesezeit"`            |
+| `latencyLabel`       | 延迟估计 / latency est                       | Derzeit ungenutzt, stellt Latenz nicht wieder her            | Derzeit ungenutzt | `latencyLabel: "Geschätzte Latenz"`              |
+| `confidenceLabel`    | 置信度 / confidence                          | Derzeit ungenutzt, stellt Konfidenz nicht wieder her         | Derzeit ungenutzt | `confidenceLabel: "Konfidenz"`                   |
 
 Status-, Titelbild- und Scrollhinweise dienen der Atmosphäre, nicht echtem KI-Onlinestatus, Netzwerksynchronisation oder Genauigkeitsmessung. regenerate spielt nur Scan-Effekte ab, schreibt keinen Artikel um und ruft keine KI auf.
 
@@ -177,14 +177,14 @@ OUTPUT und Abschnittskopiertext ändern:
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
         blog: {
-          responseOutput: '正文',
-          statsWords: '字词',
-          statsTokens: '估算 tokens',
-          copySectionLink: '复制这一节的网址',
-          regenerate: '重播扫描效果',
+          responseOutput: 'Artikeltext',
+          statsWords: 'Wörter',
+          statsTokens: 'Geschätzte Tokens',
+          copySectionLink: 'Link zu diesem Abschnitt kopieren',
+          regenerate: 'Scaneffekt erneut abspielen',
         },
       },
     },
@@ -198,23 +198,23 @@ Zurück-zum-Blog bleibt die aktuelle Sprachliste. Empfehlungen sind die neuesten
 
 ### Codekopier- und Bildvorschautexte
 
-Präfix nun `i18n.locales.<语言>.messages`, ebenfalls optionale string und bedingt wirksam. Keine Änderung von Kopierrechten, Quellen oder Funktionsschaltern.
+Präfix nun `i18n.locales.<Sprachcode>.messages`, ebenfalls optionale string und bedingt wirksam. Keine Änderung von Kopierrechten, Quellen oder Funktionsschaltern.
 
-| Letzter Pfadteil     | Standard vereinfachtes Chinesisch / Englisch                        | Wirkung und Grenzen                                         | Mitgliedsbeispiel                                    |
-| -------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
-| `codeCopy.copy`      | 复制代码 / Copy code                                                | Code-Knopftext, kein Kopierinhaltwechsel                    | `codeCopy: { copy: "复制代码" }`                     |
-| `codeCopy.copied`    | 已复制 / Copied                                                     | Erfolg beim Code- und Abschnittslink-Kopieren               | `codeCopy: { copied: "已复制" }`                     |
-| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | Fehler beim Code-/Abschnittskopieren, keine Rechteerteilung | `codeCopy: { failed: "复制失败，请手动选择代码。" }` |
-| `imagePreview.open`  | 查看大图 / View image                                               | Zugänglicher Name des Bildvorschau-Einstiegs/Dialogs        | `imagePreview: { open: "查看大图" }`                 |
-| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | Schließknopfname ohne Bildquellenwechsel                    | `imagePreview: { close: "关闭图片预览" }`            |
+| Letzter Pfadteil     | Standard vereinfachtes Chinesisch / Englisch                        | Wirkung und Grenzen                                         | Mitgliedsbeispiel                                                                    |
+| -------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `codeCopy.copy`      | 复制代码 / Copy code                                                | Code-Knopftext, kein Kopierinhaltwechsel                    | `codeCopy: { copy: "Code kopieren" }`                                                |
+| `codeCopy.copied`    | 已复制 / Copied                                                     | Erfolg beim Code- und Abschnittslink-Kopieren               | `codeCopy: { copied: "Kopiert" }`                                                    |
+| `codeCopy.failed`    | 复制失败，请手动选择代码。 / Copy failed. Select the code manually. | Fehler beim Code-/Abschnittskopieren, keine Rechteerteilung | `codeCopy: { failed: "Kopieren fehlgeschlagen, bitte den Code manuell markieren." }` |
+| `imagePreview.open`  | 查看大图 / View image                                               | Zugänglicher Name des Bildvorschau-Einstiegs/Dialogs        | `imagePreview: { open: "Bild ansehen" }`                                             |
+| `imagePreview.close` | 关闭图片预览 / Close image preview                                  | Schließknopfname ohne Bildquellenwechsel                    | `imagePreview: { close: "Bildvorschau schließen" }`                                  |
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    de: {
       messages: {
-        codeCopy: { copy: '复制内容', copied: '复制好了', failed: '无法复制，请手动选择。' },
-        imagePreview: { open: '放大这张图片', close: '收起图片' },
+        codeCopy: { copy: 'Inhalt kopieren', copied: 'Kopiert', failed: 'Kopieren fehlgeschlagen. Bitte den Text manuell markieren.' },
+        imagePreview: { open: 'Dieses Bild vergrößern', close: 'Bild schließen' },
       },
     },
   },

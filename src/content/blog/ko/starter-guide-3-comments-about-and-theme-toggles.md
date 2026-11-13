@@ -4,7 +4,7 @@ title: '사용 가이드 5: 페이지와 기능을 취향에 맞게 조정하기
 subtitle: '바꾸고 싶은 영역별로 찾아보세요. 홈, About, Decoder, 소셜 링크, 푸터, 음악, 페이지 나누기를 다룹니다.'
 description: '작은 설정 변경으로 페이지 내용과 기능을 조정하며 실제 기본값, 적용 범위, 병합 방법, 로컬 확인 절차를 설명합니다.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -47,7 +47,7 @@ theme: {
 ```ts
 i18n: {
   locales: {
-    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+    en: { messages: { home: { transmission: 'Leave a small trace here.' } } },
   },
 },
 ```
@@ -60,21 +60,21 @@ About의 Oracle 입구는 독립적인 장면 미리보기를 사용하며 홈 �
 
 ## 2. About을 내 소개로 바꾸기
 
-`/zh/about/`를 열면 중국어 간체 콘텐츠를 볼 수 있습니다. 본문과 연락처는 언어별로 설정하며 테마 페이지 템플릿을 수정할 필요는 없습니다.
+`/ko/about/`를 열면 한국어 콘텐츠를 볼 수 있습니다. 본문과 연락처는 언어별로 설정하며 테마 페이지 템플릿을 수정할 필요는 없습니다.
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ko: {
       about: {
         metaLine: '$ profile | building and learning',
         sections: {
-          who: '我是小林，喜欢开发与写作。',
-          what: '这里记录我的项目和学习笔记。',
-          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
-          now: '最近在整理个人博客。',
-          contactLead: '欢迎联系我。',
-          signature: '> 谢谢你来这里。',
+          who: '개발과 글쓰기를 좋아하는 민수입니다.',
+          what: '내 프로젝트와 학습 노트를 여기에 기록합니다.',
+          ethos: ['호기심을 잃지 마세요.', '아이디어를 쓸 수 있는 것으로 만듭니다.'],
+          now: '최근 개인 블로그를 정리하고 있습니다.',
+          contactLead: '편하게 연락해 주세요.',
+          signature: '> 방문해 주셔서 감사합니다.',
         },
         contact: {
           email: 'you@example.com',
@@ -89,7 +89,7 @@ i18n: {
 
 예시 이름과 주소를 바꾸세요. `metaLine`은 개인 패널 위 상태 문구입니다. `who`, `what`, `ethos`, `now`에는 자기소개, 하는 일, 가치관, 근황을 씁니다. `contactLead`는 연락 안내이고 `signature`는 서명입니다. `ethos`는 문자열 배열이며 새 배열은 이전 항목 전체를 대체합니다.
 
-문단과 서명은 일반 텍스트입니다. 문자열 안의 `\n`은 줄바꿈, `\n\n`은 빈 줄입니다. Markdown과 HTML을 해석하지 않으므로 `<br>`로 줄바꿈하지 마세요. 이 예시는 중국어 간체만 수정합니다. 다른 언어는 직접 작성해야 하며 자동 번역하지 않습니다. 빠진 필드는 해당 언어의 설정 대체 규칙으로 채웁니다.
+문단과 서명은 일반 텍스트입니다. 문자열 안의 `\n`은 줄바꿈, `\n\n`은 빈 줄입니다. Markdown과 HTML을 해석하지 않으므로 `<br>`로 줄바꿈하지 마세요. 이 예시는 한국어만 수정합니다. 다른 언어는 직접 작성해야 하며 자동 번역하지 않습니다. 빠진 필드는 해당 언어의 설정 대체 규칙으로 채웁니다.
 
 About 창 컨트롤은 닫기, 최소화, 전체 화면을 지원하며 브라우저 로컬에 상태를 기록합니다. 페이지 도구의 AI 출력과 다운로드 진행은 테마 상호작용이며 문구를 넣었다고 실제 AI 서비스에 연결하지 않습니다. 디코딩 도구는 브라우저 로컬 입력을 처리합니다.
 
@@ -99,24 +99,24 @@ About이 필요 없다면 `theme`에 `enableAboutPage: false`를 설정하세요
 
 ## 3. Decoder 페이지와 읽기 카드 조정하기
 
-Decoder Lab은 `/zh/decoder/`에 있으며 기본 활성입니다. 시각적 표현은 사이퍼펑크와 디지털 자유의 선구자에 대한 헌사입니다. 로컬 처리와 P2P 네트워크 이미지는 개인이 도구와 데이터를 직접 통제한다는 생각을 반영합니다.
+Decoder Lab은 `/ko/decoder/`에 있으며 기본 활성입니다. 시각적 표현은 사이퍼펑크와 디지털 자유의 선구자에 대한 헌사입니다. 로컬 처리와 P2P 네트워크 이미지는 개인이 도구와 데이터를 직접 통제한다는 생각을 반영합니다.
 
 텍스트 디코딩, 지원하는 토큰 호출 해석, 주소 형식 검사를 제공하며 RPC, 지갑 연결, API Key는 필요하지 않습니다. 잔액을 조회하거나 거래를 실행하거나 주소 소유권을 증명하지 않습니다. calldata 입력도 계약의 실제 동작 검증이 아닙니다.
 
 `theme`의 `enableDecoderPage: false`는 Decoder 페이지와 테마 관련 입구를 독립적으로 끕니다. About을 끈다고 Decoder가 꺼지지 않으며 반대도 같습니다. 사용자 링크는 직접 관리해야 합니다.
 
-읽기 영역의 헌사 문구와 카드는 언어별로 설정합니다. 다음은 중국어 간체 목록을 대체하는 예시입니다.
+읽기 영역의 헌사 문구와 카드는 언어별로 설정합니다. 다음은 한국어 목록을 대체하는 예시입니다.
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ko: {
       messages: {
         decoderPage: {
           readings: {
-            tribute: '思想与代码，让隐私和自由更进一步。',
+            tribute: '사상과 코드로 프라이버시와 자유를 넓혀 갑니다.',
             links: [
-              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+              { title: '내 읽기 자료', href: 'https://example.com/', author: '작성자 이름', year: '2026' },
             ],
           },
         },
@@ -140,7 +140,7 @@ i18n: {
 social: {
   links: [
     { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
-    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+    { href: 'https://example.com/community', label: '내 커뮤니티', iconSrc: '/icons/community.svg' },
   ],
 },
 ```
@@ -154,11 +154,11 @@ social: {
 ### 푸터 크레딧, 설명, 추가 링크
 
 ```ts
-site: { tagline: '保持好奇，持续记录。' },
+site: { tagline: '호기심을 품고 꾸준히 기록합니다.' },
 theme: {
   footer: {
     showCredits: true,
-    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+    links: [{ label: '프로젝트 소스', href: 'https://github.com/yourname/your-project' }],
   },
 },
 ```
@@ -179,7 +179,7 @@ theme: {
 theme: {
   music: {
     enabled: true,
-    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+    tracks: [{ title: '나의 노래', artist: '작성자', src: '/music/my-song.mp3' }],
   },
 },
 ```

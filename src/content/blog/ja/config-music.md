@@ -4,7 +4,7 @@ title: '設定リファレンス：音楽プレーヤー'
 subtitle: '有効化、プレイリスト、音声 URL、UI 文面を設定します。'
 description: '音楽のスイッチ、曲項目、既定値、ロード、多言語文面、検証と再開の制約を実装に基づいて説明します。'
 pubDate: '2026-11-13'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -42,8 +42,8 @@ heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 
 | 項目   | 型 / 既定値                       | 状態・役割・制約                                                                                                               | 例                   |
 | ------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------- |
-| title  | 必須 string / なし                | 条件付き：主表示、折り畳み見出し、一覧の曲名。非空必須で前後空白除去。空白だけはエラー、ファイル名・音声タグから生成しません。 | '我的一首歌'         |
-| artist | 任意 string / 未指定、'' に正規化 | 主表示と一覧の作者。指定時 string 必須、前後空白を除去。サイト作者や音声メタ情報から補いません。                               | '作者'               |
+| title  | 必須 string / なし                | 条件付き：主表示、折り畳み見出し、一覧の曲名。非空必須で前後空白除去。空白だけはエラー、ファイル名・音声タグから生成しません。 | '私の一曲'           |
+| artist | 任意 string / 未指定、'' に正規化 | 主表示と一覧の作者。指定時 string 必須、前後空白を除去。サイト作者や音声メタ情報から補いません。                               | '著者'               |
 | src    | 必須 string / なし                | 単一 / または小文字 https:// から始め、空白・逆斜線不可。HTTPS は URL 解析可能なこと。存在・音声内容は検証しません。           | '/music/my-song.mp3' |
 
 title・artist はプレーンテキストで Markdown・HTML は解析しません。カバー、歌詞、長さ、アルバム、独立 ID、曲ごとの音量の公開項目はありません。
@@ -70,8 +70,8 @@ theme: {
     enabled: true,
     tracks: [
       {
-        title: '我的一首歌',
-        artist: '作者',
+        title: '私の一曲',
+        artist: '著者',
         src: '/music/my-song.mp3',
       },
     ],
@@ -85,42 +85,42 @@ theme: {
 
 ## messages.music：19項目の UI とアクセシブル文面
 
-接頭辞は `i18n.locales.<语言>.messages.music.`。任意 **string**、内蔵現在言語と補完を使います。表は簡体中国語／英語の実既定値、例は項目値です。プレーヤー描画と対象状態が条件です。空文字は機能を隠さず、意味あるアクセシブル名を失う場合があります。
+接頭辞は `i18n.locales.<locale>.messages.music.`。任意 **string**、内蔵現在言語と補完を使います。表は簡体中国語／英語の実既定値、例は項目値です。プレーヤー描画と対象状態が条件です。空文字は機能を隠さず、意味あるアクセシブル名を失う場合があります。
 
-| 項目       | 簡体中国語 / 英語既定値                                                                                         | 役割と制約                                                      | 例                                     |
-| ---------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | -------------------------------------- |
-| `label`    | 音乐播放器 / Music player                                                                                       | aside のアクセシブル名。上部 AUDIO CHANNEL ではない。           | `"音乐播放器"`                         |
-| `play`     | 播放 / Play                                                                                                     | 再生ボタンの名前。表示は PLAY。                                 | `"播放"`                               |
-| `pause`    | 暂停 / Pause                                                                                                    | 再生中・ロード中の名前。表示は PAUSE。                          | `"暂停"`                               |
-| `prev`     | 上一首 / Previous                                                                                               | 前の曲の名前。表示 PREV。                                       | `"上一首"`                             |
-| `next`     | 下一首 / Next                                                                                                   | 次の曲の名前。表示 NEXT。                                       | `"下一首"`                             |
-| `open`     | 展开播放器 / Open player                                                                                        | 展開の名前。表示 OPEN。                                         | `"展开播放器"`                         |
-| `close`    | 收起播放器 / Collapse player                                                                                    | 折畳みの名前。表示 MIN。閉じても停止しない。                    | `"收起播放器"`                         |
-| `progress` | 播放进度 / Progress                                                                                             | 進捗スライダーの名前。位置・可動範囲は変えない。                | `"播放进度"`                           |
-| `volume`   | 音量 / Volume                                                                                                   | 音量スライダーの名前。既定音量は変えず表示 LVL。                | `"音量"`                               |
-| `queue`    | 歌单 / Playlist                                                                                                 | 一覧展開の名前。QUEUE・SHOW / HIDE は固定。                     | `"展开或收起歌单"`                     |
-| `mute`     | 静音 / Mute                                                                                                     | 非ミュート時の名前。表示 MUTE。                                 | `"静音"`                               |
-| `unmute`   | 取消静音 / Unmute                                                                                               | 音量0時の復元名。表示 UNMUTE。                                  | `"恢复音量"`                           |
-| `idle`     | 就绪 / Ready                                                                                                    | 初期・曲切替後の SIGNAL 状態。                                  | `"等待播放"`                           |
-| `loading`  | 加载中 / Loading                                                                                                | 取得・再生待機の SIGNAL 状態。                                  | `"正在加载歌曲"`                       |
-| `playing`  | 播放中 / Playing                                                                                                | 再生時の SIGNAL 状態。                                          | `"正在播放"`                           |
-| `paused`   | 已暂停 / Paused                                                                                                 | 停止時の SIGNAL 状態。                                          | `"已暂停"`                             |
-| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | ブラウザー権限拒否の案内。文面で制限は解除できない。            | `"请点击播放以继续。"`                 |
-| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | 音声要求・再生失敗とマウント失敗の案内。                        | `"歌曲未能加载，请重试。"`             |
-| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | JavaScript 無効時の noscript。標準 audio 代替 UI は提供しない。 | `"启用 JavaScript 后可以使用播放器。"` |
+| 項目       | 簡体中国語 / 英語既定値                                                                                         | 役割と制約                                                      | 例                                                      |
+| ---------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------- |
+| `label`    | 音乐播放器 / Music player                                                                                       | aside のアクセシブル名。上部 AUDIO CHANNEL ではない。           | `"音楽プレーヤー"`                                      |
+| `play`     | 播放 / Play                                                                                                     | 再生ボタンの名前。表示は PLAY。                                 | `"再生"`                                                |
+| `pause`    | 暂停 / Pause                                                                                                    | 再生中・ロード中の名前。表示は PAUSE。                          | `"一時停止"`                                            |
+| `prev`     | 上一首 / Previous                                                                                               | 前の曲の名前。表示 PREV。                                       | `"前の曲"`                                              |
+| `next`     | 下一首 / Next                                                                                                   | 次の曲の名前。表示 NEXT。                                       | `"次の曲"`                                              |
+| `open`     | 展开播放器 / Open player                                                                                        | 展開の名前。表示 OPEN。                                         | `"プレーヤーを開く"`                                    |
+| `close`    | 收起播放器 / Collapse player                                                                                    | 折畳みの名前。表示 MIN。閉じても停止しない。                    | `"プレーヤーを閉じる"`                                  |
+| `progress` | 播放进度 / Progress                                                                                             | 進捗スライダーの名前。位置・可動範囲は変えない。                | `"再生位置"`                                            |
+| `volume`   | 音量 / Volume                                                                                                   | 音量スライダーの名前。既定音量は変えず表示 LVL。                | `"音量"`                                                |
+| `queue`    | 歌单 / Playlist                                                                                                 | 一覧展開の名前。QUEUE・SHOW / HIDE は固定。                     | `"曲一覧を開く・閉じる"`                                |
+| `mute`     | 静音 / Mute                                                                                                     | 非ミュート時の名前。表示 MUTE。                                 | `"ミュート"`                                            |
+| `unmute`   | 取消静音 / Unmute                                                                                               | 音量0時の復元名。表示 UNMUTE。                                  | `"ミュート解除"`                                        |
+| `idle`     | 就绪 / Ready                                                                                                    | 初期・曲切替後の SIGNAL 状態。                                  | `"再生待ち"`                                            |
+| `loading`  | 加载中 / Loading                                                                                                | 取得・再生待機の SIGNAL 状態。                                  | `"曲を読み込み中"`                                      |
+| `playing`  | 播放中 / Playing                                                                                                | 再生時の SIGNAL 状態。                                          | `"再生中"`                                              |
+| `paused`   | 已暂停 / Paused                                                                                                 | 停止時の SIGNAL 状態。                                          | `"一時停止中"`                                          |
+| `blocked`  | 浏览器阻止了自动播放，请点击 PLAY 继续播放。 / Click Play to continue. Your browser blocked automatic playback. | ブラウザー権限拒否の案内。文面で制限は解除できない。            | `"再生ボタンを押してください。"`                        |
+| `error`    | 播放失败，请重试或切换歌曲。 / Unable to play. Try again or select another track.                               | 音声要求・再生失敗とマウント失敗の案内。                        | `"曲を読み込めませんでした。再試行してください。"`      |
+| `noScript` | 请启用 JavaScript 使用播放器。 / Enable JavaScript to use the player.                                           | JavaScript 無効時の noscript。標準 audio 代替 UI は提供しない。 | `"JavaScript を有効にするとプレーヤーを利用できます。"` |
 
 全ターミナル UI の置換表ではありません。PLAY / PAUSE、PREV / NEXT、OPEN / MIN、MUTE / UNMUTE、QUEUE、SHOW / HIDE、TRACKS、LVL、AUDIO CHANNEL、STATE、SIGNAL、STANDBY は固定です。設定はアクセシブル名や SIGNAL の状態文面なので、英語が残っても無効とは限りません。
 
-簡体中国語のロード・エラーだけを上書きする例です。
+日本語のロード・エラーだけを上書きする例です。
 
 ```ts
 i18n: {
   locales: {
-    zh: {
+    ja: {
       messages: {
         music: {
-          loading: '正在加载歌曲',
-          error: '歌曲未能加载，请重试。',
+          loading: '曲を読み込み中',
+          error: '曲を読み込めませんでした。再試行してください。',
         },
       },
     },

@@ -4,7 +4,7 @@ title: '使用指南 4：發佈一條碎片'
 subtitle: '用 Markdown 記錄簡短想法，添加圖片或程式碼，再分享穩定連結；需要時開啟評論。'
 description: '從開啟 Fragments、建立和編輯 Markdown，到首頁預覽、分頁分享、多語言與選用 Giscus 評論。'
 pubDate: '2026-11-11'
-updatedDate: '2026-11-13'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
@@ -34,7 +34,7 @@ theme: {
 | `theme.fragments.pageSize`         | 預設 `20`；每頁碎片數量，必須是 1–100 的整數，與部落格每頁文章數獨立         |
 | `theme.fragments.comments.enabled` | 預設 `false`；開啟碎片的評論彈窗，還需要填寫後文的 Giscus 儲存庫設定         |
 
-本機執行 `npm run dev`，打開終端機地址下的 `/<语言代码>/fragments/`，例如 `/en/fragments/` 或 `/zh/fragments/`。前提是對應語言已在專案中啟用；沒有內容時顯示空列表，不需要先建立頁面檔案。碎片關閉時不生成該列表，首頁也不會顯示碎片入口，但不會刪除你的 Markdown 檔案。
+本機執行 `npm run dev`，打開終端機地址下的 `/<locale>/fragments/`，例如 `/en/fragments/` 或 `/zh/fragments/`。前提是對應語言已在專案中啟用；沒有內容時顯示空列表，不需要先建立頁面檔案。碎片關閉時不生成該列表，首頁也不會顯示碎片入口，但不會刪除你的 Markdown 檔案。
 
 ## 2. 按預設流程建立碎片
 
@@ -44,7 +44,7 @@ theme: {
 npm run new-fragment
 ```
 
-未指定 `--locales` 或 `ANGLEFEINT_LOCALES` 時，指令為專案全部已啟用語言生成同一條碎片的範本；初始設定會生成九份。檔案位於 `src/content/fragments/<语言代码>/`，同次呼叫共用 ID 和發佈時間，但不會自動翻譯。終端機會印出實際路徑，檔案名類似 `2026-11-13-q8Lm3XzP.md`，包含 UTC 日期和隨機 ID；打開自己剛生成的檔案，不必手動建立這個範例檔案名。
+未指定 `--locales` 或 `ANGLEFEINT_LOCALES` 時，指令為專案全部已啟用語言生成同一條碎片的範本；初始設定會生成九份。檔案位於 `src/content/fragments/<locale>/`，同次呼叫共用 ID 和發佈時間，但不會自動翻譯。終端機會印出實際路徑，檔案名類似 `2026-11-13-q8Lm3XzP.md`，包含 UTC 日期和隨機 ID；打開自己剛生成的檔案，不必手動建立這個範例檔案名。
 
 只想建立中文時，可改用 `npm run new-fragment -- --locales zh`；指定多種語言可用 `--locales en,zh`。這些是替代用法，依需求選擇一個，不必全部執行，也不會自動啟用相應語言。發佈前將未完成的其他語言範本移出碎片內容目錄。
 
@@ -56,7 +56,7 @@ npm run new-fragment
 npx @anglefeint/astro-theme new-fragment
 ```
 
-這是上一條建立指令的替代寫法，不要把兩條都執行來建立“同一条”碎片。
+這是上一條建立指令的替代寫法，不要把兩條都執行來建立「同一條」碎片。
 
 ## 3. 替換佔位內文，保留 ID
 
@@ -68,7 +68,7 @@ id: 'q8Lm3XzP'
 pubDate: '2026-11-13T09:00:00+08:00'
 ---
 
-今天把一个困扰很久的问题解决了，记下这个小进展。
+今天把一個困擾很久的問題解決了，記下這個小進展。
 ```
 
 碎片目前支援三個 frontmatter 欄位：
@@ -79,7 +79,7 @@ pubDate: '2026-11-13T09:00:00+08:00'
 | `pubDate` | 必填，可解析的發佈日期；建議保留指令生成的 ISO 時間，或填寫帶時間和時區的值        |
 | `title`   | 選用字串，填寫後作為列表卡片標題顯示；不填也可以正常發佈                           |
 
-添加標題時，在同一個 frontmatter 中補 `title: '一个小进展'` 即可。碎片不要求文章使用的 `description`，也沒有文章封面 `heroImage` 欄位；配圖寫在內文中。
+添加標題時，在同一個 frontmatter 中補 `title: '一個小進展'` 即可。碎片不要求文章使用的 `description`，也沒有文章封面 `heroImage` 欄位；配圖寫在內文中。
 
 列表按 `pubDate` 從新到舊排序，同一時間再按 ID 排序，不按檔案名排列。頁面顯示 UTC 時間，與你填寫的本機時區時間可能不同。只改內文或檔案名不會改變評論和分享身分；修改日期會改變排序及所在分頁。
 
@@ -92,10 +92,10 @@ pubDate: '2026-11-13T09:00:00+08:00'
 一般 Markdown 段落、連結、列表和引用都可以使用。圖片例如：
 
 ```md
-![这次进展的截图](/images/fragments/progress.png)
+![這次進展的截圖](/images/fragments/progress.png)
 ```
 
-先把實際圖片放到 `public/images/fragments/progress.png`；也可以在碎片旁放 `photo.png`，用 `![图片说明](./photo.png)` 引用。更多寫法、檔案尺寸和 Git 提交要求見[給文章和碎片添加圖片](/zh-hant/blog/starter-guide-images/)。
+先把實際圖片放到 `public/images/fragments/progress.png`；也可以在碎片旁放 `photo.png`，用 `![圖片說明](./photo.png)` 引用。更多寫法、檔案尺寸和 Git 提交要求見[給文章和碎片添加圖片](/zh-hant/blog/starter-guide-images/)。
 
 程式碼保留 Markdown 圍欄和縮進：
 
@@ -111,13 +111,13 @@ const progress = {
 
 全站數學開啟時，碎片同樣支援 `$x_1$` 行內公式和兩行 `$$` 之間的獨立公式。它們在建置時呈現，錯誤公式會導致編譯或建置失敗；關閉 `theme.math.enabled` 會關閉數學處理。公式寫法可參見[寫第一篇文章](/zh-hant/blog/starter-guide-2-languages-and-routing/)。
 
-本機 dev 或 doctor 會準備受支援的碎片圖片回應式檔案。提交碎片 Markdown、原圖及整個 `src/assets/blog/covers/`；部署建置和 CI doctor 只驗證，不會在平臺上補生成。不要只提交內文、漏掉圖片檔案。
+一般 dev、build 和 doctor（包含 CI）會自動補齊缺少、過期或損壞的衍生圖片，並重用正確的既有檔案。原圖缺失、無效圖片或不安全路徑仍會報錯。明確執行的 `prepare-covers --check` 與設定同步只驗證、不修復。將原圖及整個 `src/assets/blog/covers/` 提交到 Git 可以重用產物，不依賴部署平台保留圖片快取。 請連同碎片 Markdown 一起提交，勿遺漏原圖。build 新行為的版本範圍見[圖片教學](/zh-hant/blog/starter-guide-images/)。
 
 ## 5. 首頁預覽和列表分頁
 
 開啟碎片且目前語言存在內容時，首頁 header 下方會顯示像素頭像入口，打開後預覽最新的最多三條。不需要另開一個首頁設定，也不受 `homeLatestCount` 的文章數量設定控制。
 
-預覽可以包含文字、第一張可用圖片和第一段程式碼的摘要，不是完整內文。圖片與程式碼限高，超出部分裁切；多張圖片或多個程式碼塊不會全部顯示。點選整張卡片進入對應碎片；底部的“预览条数 / 当前语言总条数 →”進入完整列表。例如有兩條時顯示 `2 / 2`，不是固定顯示三條。空列表不顯示首頁入口。
+預覽可以包含文字、第一張可用圖片和第一段程式碼的摘要，不是完整內文。圖片與程式碼限高，超出部分裁切；多張圖片或多個程式碼塊不會全部顯示。點選整張卡片進入對應碎片；底部的「預覽條數 / 目前語言總條數 →」進入完整列表。例如有兩條時顯示 `2 / 2`，不是固定顯示三條。空列表不顯示首頁入口。
 
 完整列表按 `theme.fragments.pageSize` 分頁。首頁為 `/zh/fragments/`，第二頁為 `/zh/fragments/2/`。分頁外觀和跳頁行為共用 `theme.pagination`，但部落格的 `blogPageSize` 不決定碎片每頁數量。
 
@@ -149,7 +149,7 @@ npm run new-fragment -- --locales zh,en
 
 同一次指令生成的各語言檔案共享 ID 和時間戳，內文需要自己翻譯。`--locales` 只選擇建立哪些檔案，不會啟用語言。語言優先級是 `--locales` → `ANGLEFEINT_LOCALES` 環境變數 → 專案已啟用語言；省略參數時沒有自動翻譯能力。
 
-後續為已有中文碎片補英文版，應把原檔案複製到 `src/content/fragments/en/`，保留 `id` 和 `pubDate`，再翻譯標題與內文。不要重新執行建立指令來補“同一条”的譯文，那會分配另一個 ID。同一條的翻譯可以跨語言共用 ID，但同一語言不能放兩份同 ID 檔案。
+後續為已有中文碎片補英文版，應把原檔案複製到 `src/content/fragments/en/`，保留 `id` 和 `pubDate`，再翻譯標題與內文。不要重新執行建立指令來補「同一條」的譯文，那會分配另一個 ID。同一條的翻譯可以跨語言共用 ID，但同一語言不能放兩份同 ID 檔案。
 
 相同 ID 的譯文會共用碎片評論；不同 ID 不會因為文字或檔案名相同就自動關聯。
 
