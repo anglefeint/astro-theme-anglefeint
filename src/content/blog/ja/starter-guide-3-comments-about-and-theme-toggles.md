@@ -1,77 +1,80 @@
 ---
 tags: ['anglefeint', 'starter']
-title: '利用ガイド 3：必要な機能を有効化・カスタマイズする'
-subtitle: '音楽、コメント、About、ページ分割、機能スイッチ、多言語を必要に応じて設定します。'
-description: '音楽、コメント、About、ページ分割、機能スイッチ、多言語を必要に応じて設定します。'
+title: 'ユーザーガイド5：ページと機能を自分好みに変える'
+subtitle: '変更したい場所から探す：ホーム、About、Decoder、ソーシャルリンク、フッター、音楽、ページ分割。'
+description: '小さな設定変更でページと機能を調整し、実際の既定値、適用範囲、統合方法、ローカル確認手順を説明します。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-13'
 heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
-## AI が読み取れるコンテンツ
+入門ガイドの第5 / 8回です。[全ガイドの順序](/ja/blog/starter-guide-1-configure-your-site/#tutorial-order) · [設定リファレンス](/ja/blog/config-reference/)。
 
-ビルド時に公開記事、有効な Fragments と About を `/llms.txt`、言語別索引、全文ファイルへ含めます。記事の Markdown URL は変わりません。各言語に `/ja/fragments/index.md` と `/ja/about/index.md` を生成します（言語コードは置き換えてください）。Fragments は公開された全ページをまとめ、各 ID、公開日時、本文、安定した `/<locale>/fragments/#ID` リンクを保持します。HTML から Markdown を発見できます。`npm run build` 後と preview で利用でき、`dist/` 全体を公開します。
+ブログが起動できたら、変更したい場所から始められます。先に全設定を埋めたり、以下の例をすべてコピーしたりする必要はありません。
 
-About は公開プロフィール、連絡先、開ける AI テキストポップアップを出力し、端末設定・ツール・装飾 UI は除外します。コメントは出力しません。無効なページ／言語、削除済み内容、noindex、外部 canonical は除外し、再ビルドで古い生成物と発見リンクを削除します。ユーザーの独自ファイルは保護し、競合時はビルドを停止します。サイト／言語の補足情報は全出力に適用します。JSON-LD に言語を含め、About は AboutPage を使います。新しい設定・サーバー・UI 依存は不要で、AI の登録や引用は保証しません。
+すべての TypeScript 断片は `src/site.config.ts` の既存 `defineThemeConfig({...})` に統合します。`theme`、`i18n`、`social` は各1個だけにし、同名の項目は直接編集して他設定を残します。オブジェクトは既定値にマージしますが、配列は全置換なので、リンク・曲・項目を追加するときは残したい内容も含めます。
 
-## 既定の状態を見て必要なものだけ変更する
+これは操作目的別のよく使う設定であり、完全な項目辞書ではありません。変更したい領域の節を選んでください。
 
-対応する starter 向けの説明です。TypeScript の例はすべて `src/site.config.ts` の `defineThemeConfig({...})` に統合します。変更したい項目だけを設定してください。
+## 1. ホームの案内と効果を調整する
 
-| 機能                                         | 既定の状態     |
-| -------------------------------------------- | -------------- |
-| 検索・記事目次・タグ・自動共有画像           | 有効           |
-| 本文画像プレビュー・コードコピー             | 自動、設定不要 |
-| About・記事の Red Queen モニター             | 有効           |
-| 音楽・Giscus コメント                        | 無効           |
-| トップの最新記事数 / ブログ 1 ページの記事数 | 3 / 10         |
-
-## 1. 音楽プレーヤーを有効にする
-
-音源を `public/music/my-song.mp3` に置きます。必要ならディレクトリを作成し、設定を追加します。
+サイト名・ホームの大見出し・紹介文の違いは[インストールと個人情報の設定](/ja/blog/starter-guide-1-configure-your-site/)を参照してください。ここでは案内とインタラクションを調整します。
 
 ```ts
 theme: {
-  music: {
-    enabled: true,
-    tracks: [
-      { title: 'My Song', artist: 'Artist Name', src: '/music/my-song.mp3' },
-    ],
+  home: {
+    showInitialize: true,
+    showFollow: true,
+    showTrace: true,
   },
+  effects: { enableHomePassage: false },
 },
 ```
 
-URL に `public` は含めません。各曲の `title` と `src` は必須、`artist` は任意です。曲を増やすには `tracks` 配列にオブジェクトを追加します。HTTPS の音声直リンクも使えますが、ローカルのディスクパスや音楽サービスの共有ページは使えません。空白・バックスラッシュを避け、簡単なファイル名を推奨します。曲は同梱していません。
+| 項目                              | 既定値  | 変更する内容                                                                                                |
+| --------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------- |
+| `theme.home.showInitialize`       | `true`  | Initialize／done の起動文面。false でその段落を隠します。                                                   |
+| `theme.home.showFollow`           | `true`  | Wake Up／Follow の案内。false で独立して隠します。                                                          |
+| `theme.home.showTrace`            | `true`  | 下部 PIRATE SIGNAL／TRACE 状態領域。false で隠します。                                                      |
+| `theme.effects.enableHomePassage` | `false` | 有効時はホームの記事タイトルから約8秒の Matrix 演出後に移動します。動きを減らす場合は直接移動を維持します。 |
 
-空の曲リストでは表示されません。有効時にタイトルや URL の形式が不正なら設定エラーになります。共通テーマレイアウトを使うページに表示され、ページ単位のスイッチはありません。デスクトップでは左下、モバイルでは各ページで折りたたまれた状態から始まり、展開中はトップへ戻るボタンを一時的に隠します。
+これらはページ全体のコード雨や全体配色を切り替える項目ではありません。`showTrace` も右下のワイド画面用ターミナルのスイッチではありません。
 
-初回訪問では PLAY を押してから音声を読み込みます。同じタブのセッション内で曲・位置・音量を記憶します。再生中にページ移動、再読み込み、戻る・進むを行うと保存位置からの再生を試み、手動で一時停止した場合は停止状態を保ちます。短い途切れが生じる場合があり、シームレス再生ではありません。ブラウザーが自動再生をブロックした場合は PLAY を押してください。削除された曲の代わりに別の曲を自動再生しません。ストレージが使えない場合も手動再生は可能ですが、セッションの再生再開はできません。 まず `/music/my-song.mp3` に直接アクセスできるか確認してください。曲が終了すると次の曲を再生し、最後の曲の後は最初に戻ります。`enabled: false` で無効にできます。
+### ワイド画面のターミナル文面を変える
 
-再生前に曲全体をダウンロードしてブラウザーの Blob に変換するため、シークにサーバーの HTTP Range 対応は不要です。大きなファイルや遅い回線では待ち時間とメモリー使用量が増えます。一時停止からの再開は読み込み済みの曲を再利用し、曲の切り替え時に古い曲を解放します。ページ移動後は再読み込みしますが、ブラウザーの HTTP キャッシュが利用される場合があります。外部音源にはクロスオリジン取得を許可する CORS 設定が必要です。同一サイトの `public/music/` に置けば、この設定は不要です。
-
-## 2. Giscus コメントを有効にする
-
-[コメント設定ガイド](/ja/blog/starter-guide-4-giscus-comments/)
-
-## 3. About の内容を置き換える
-
-About の本文段落と署名では設定文字列の改行を保持します。`\n` は改行、`\n\n` は空行になり、長文は自動で折り返します。通常のテキストのままで、Markdown や HTML は解釈しません。`<br>` は挿入しないでください。
-
-About は既定で有効です。テンプレートを直接編集せず、言語ごとに本文を設定できます。
+既定では `Knock, knock.` を表示します。個別指定のない言語で共用するには、まず英語の設定を変更できます。
 
 ```ts
 i18n: {
   locales: {
-    ja: {
+    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
+  },
+},
+```
+
+各言語専用なら、その言語の `messages.home.transmission` に設定します。優先順は現在の言語 → 英語 → `Knock, knock.` で、通常 UI の完全なフォールバックチェーンは使いません。ターミナルはワイド画面のレイアウトに現れるため、スマートフォンで見えなくても設定失敗ではありません。鍵穴ボタンを押すと廊下プレビューが開きます。
+
+About の Oracle 入口は独立したシーンプレビューで、ホームの記事移動スイッチには従いません。ターミナルと下部の状態は雰囲気の演出で、実際の機器・ネットワーク・安全状態を示しません。
+
+完全な定義は[ホームの設定リファレンス](/ja/blog/config-home/#startup-switches)を参照してください。
+
+## 2. About を自分の紹介にする
+
+簡体中国語の例なら `/zh/about/` で内容を確認できます。本文と連絡先は言語別設定で変更でき、テーマのページテンプレートの編集は不要です。
+
+```ts
+i18n: {
+  locales: {
+    zh: {
       about: {
-        metaLine: '$ profile booted | mode: builder',
+        metaLine: '$ profile | building and learning',
         sections: {
-          who: 'Introduce yourself here.',
-          what: 'Describe what you build.',
-          ethos: ['Keep learning.', 'Build useful things.'],
-          now: 'What you are working on now.',
-          contactLead: 'Get in touch.',
-          signature: '> Your signature',
+          who: '我是小林，喜欢开发与写作。',
+          what: '这里记录我的项目和学习笔记。',
+          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
+          now: '最近在整理个人博客。',
+          contactLead: '欢迎联系我。',
+          signature: '> 谢谢你来这里。',
         },
         contact: {
           email: 'you@example.com',
@@ -84,25 +87,114 @@ i18n: {
 },
 ```
 
-この例は日本語の About だけを変更します。ほかの言語は別途記入し、自動翻訳はされません。`sidebar`、`labels`、`modals`、`effects` も上書きできますが、まず本文と連絡先から始めてください。About のツールウィンドウはテーマの対話的なデモで、文言を入力しても実際の AI サービスには接続しません。
+例の名前と URL を変更します。`metaLine` は個人パネル上の状態文、`who`・`what`・`ethos`・`now` は自己紹介・活動・理念・近況、`contactLead` は連絡案内、`signature` は署名です。`ethos` は文字列配列で、新配列は全項目を置き換えます。
 
-`/ja/about/` で本文とメール・GitHub リンクを確認します。不要なら `theme.enableAboutPage: false` にするとナビゲーションが消え、About ルートも生成されません。変更後は再ビルドします。
+段落と署名はプレーンテキストです。文字列内の `\n` は改行、`\n\n` は空行になります。Markdown や HTML は解析せず、`<br>` は使わないでください。この例は簡体中国語だけを変えます。他言語は自分で用意し、自動翻訳は行いません。欠けた項目はその言語のフォールバック規則で補います。
 
-### Decoder Lab：サイファーパンクへの敬意
+About のウィンドウ操作では閉じる・最小化・全画面にでき、状態をブラウザーに保存します。AI 出力やダウンロード進捗はテーマの演出で、文面を書いても実際の AI に接続しません。デコードツールはブラウザー内の入力を処理します。
 
-Decoder Lab のビジュアルは **cypherpunk（サイファーパンク）** 運動に着想を得ており、人間の自由、プライバシー、オープンなコードへの貢献に敬意を表しています。ピアツーピアのネットワーク表現とローカル処理は、個人がツールとデータを自分の手に持つという理念を反映しています。
+不要なら `theme` の `enableAboutPage: false` で止めます。既定は `true` です。ルート、公共ナビゲーション、関連の連絡入口を隠しますが、本文やフッターに自分で書いたリンクは削除しないので確認してください。
 
-私たちは、**プライバシーと自由を、権力を持つ人々の善意だけに委ねることはできない**と考えます。個人が自分の通信を守り、誰に何を明かすかを選び、可能な限り自分で検証できること。政府やプラットフォーム、第三者にすべての信頼を預けずに済むことが大切です。
+本文の全項目は[About リファレンス](/ja/blog/config-about/#about-content)、コマンド案内と読み取り専用リーダーは[ターミナルリファレンス](/ja/blog/config-terminal/#messages)を参照してください。
 
-**「Cypherpunks write code.」——サイファーパンクはコードを書く。** [A Cypherpunk’s Manifesto](https://www.activism.net/cypherpunk/manifesto.html) のこの言葉は、理想を使えるソフトウェアに変え、コードを公開し、他の人が検証・利用し、発展させられるようにする姿勢を表します。技術で個人の自律を守る、その精神に敬意を表します。
+## 3. Decoder と資料カードを調整する
 
-Decoder Lab はローカル処理、確認できるソースコード、ピアツーピアのネットワーク表現でこの精神に応えます。
+Decoder Lab は簡体中国語の例なら `/zh/decoder/` で、既定で有効です。サイファーパンクとデジタル自由の先駆者への敬意を表し、ローカル処理と P2P のイメージで、個人が道具とデータを掌握する理念を示します。
 
-完全版の **Decoder Lab** は `/<locale>/decoder/` にあります。ローカル処理履歴、EVM/HyperEVM/TRONのERC-20/TRC-20呼び出し解釈、EVM/TRON/Bitcoinアドレス確認に対応。Aboutの解読ダイアログから開けます。`src/site.config.ts` の `theme.enableDecoderPage: false` でページとリンクを個別に無効化できます。RPC、ウォレット接続、APIキーは不要です。
+テキストのデコード、対応するトークン呼び出しの説明、アドレス形式の検査を行い、RPC、ウォレット接続、API Key は不要です。残高照会、取引実行、所有者の証明は行わず、calldata の入力は実コントラクト動作の検証ではありません。
 
-## 4. 記事数とページ分割を調整する
+`theme.enableDecoderPage: false` は Decoder とテーマ提供の入口を独立して無効にします。About の無効化と Decoder は互いに独立です。独自リンクは自分で管理してください。
 
-件数の 2 項目だけでも設定できます。ページ分割の外観を固定したい場合に `pagination` を加えます。
+敬意を示す文面と資料カードは言語別です。簡体中国語の一覧を置き換える例です。
+
+```ts
+i18n: {
+  locales: {
+    zh: {
+      messages: {
+        decoderPage: {
+          readings: {
+            tribute: '思想与代码，让隐私和自由更进一步。',
+            links: [
+              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+            ],
+          },
+        },
+      },
+    },
+  },
+},
+```
+
+`tribute: ''` で文面、`links: []` でカードを隠し、省略すれば既定内容を使います。各項目は `title`・`href` が必須で、`author`・`year`・`cover` は任意です。カバーは `privacy-code`・`bitcoin` などの内蔵名、public パス、HTTPS 画像 URL に対応し、省略すると画像なしカードになります。
+
+`links` は全リストを置き換え、追加ではありません。旧項目を残すなら一緒に記入します。資料への入口を提供するだけで、相手記事の取得・転載や外部リソースの自動検証は行いません。
+
+型、内蔵カバー、既定一覧は[Decoder リファレンス](/ja/blog/config-decoder/#readings)を参照してください。
+
+## 4. ソーシャルリンクとフッターを調整する
+
+アカウントは `social.links` に指定し、ヘッダーとフッターが同じ配列順を使います。独自アイコンなら先に `public/icons/community.svg` を置けます。
+
+```ts
+social: {
+  links: [
+    { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
+    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+  ],
+},
+```
+
+`iconSrc` は public 内の SVG・PNG・WebP で、`/` 始まりのパスを使います。外部 URL、クエリ、フラグメント、エンコード文字は使えません。`icon` より優先し元の色を維持し、両方なければ文字を表示します。`label` はアクセシブルな名前です。ファイル不足や未対応の内蔵アイコン名は設定エラーになります。
+
+任意の `rel` はリンク関係を指定します。たとえば自分の Mastodon に `rel: 'me'` を指定できます。`noopener noreferrer` は常に維持し、プラットフォームに応じた me の自動追加はしません。本人確認は相手サービスが行うため、サイト公開後に返しリンクのある実ページをプロフィールに設定します。テーマは結果を保証しません。
+
+スマートフォン幅ではヘッダーのソーシャル入口を隠し、フッターには残します。`links: []` はクリック不可の3つの仮アイコンを残し、全領域を隠す設定ではありません。
+
+### フッターのクレジット、説明、追加リンク
+
+```ts
+site: { tagline: '保持好奇，持续记录。' },
+theme: {
+  footer: {
+    showCredits: true,
+    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+  },
+},
+```
+
+- `site.tagline` は独自のプレーンテキストで空なら非表示、自動翻訳はしません。旧既定の `Built with Astro.` は内蔵クレジットとして扱い、重複表示を避けます。
+- `theme.footer.showCredits` は既定 `true` でテーマ・Astro のクレジットを制御します。false でも著作権行、独自説明、追加リンクは残します。自動共有画像のテーマ表記も制御しますが、独自画像は変えません。
+- `theme.footer.links` は既定で空配列。著作権とクレジットの間に表示し、ソーシャルアイコンとは独立します。ラベルは入力どおりで自動翻訳せず、showCredits にも従いません。
+
+著作権の名称は全サイト名、年はビルド時に生成します。文面、クレジット、年の結果を変えたら再ビルド・再配備してください。
+
+パス、リンク項目、クレジット規則は[ソーシャル項目](/ja/blog/config-site-chrome/#social-fields)と[フッター項目](/ja/blog/config-site-chrome/#footer)を参照してください。
+
+## 5. 音楽プレーヤーを有効にする
+
+自分の音声を `public/music/my-song.mp3` に置いて統合します。
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+音楽は既定で無効で、曲は付属しません。曲ごとに `title`・`src` が必須、`artist` は任意です。空リストはプレーヤーを表示しません。追加時は旧項目も残します。URL は public を含めず、PC パスやサービスの共有ページは不可です。HTTPS の音声直リンクは使えますが、空白・バックスラッシュは禁止です。空タイトルや形式不正はエラーですが、形式が正しくても実在・アクセスは保証しません。
+
+共通テーマレイアウトのページに現れ、ページ別スイッチはありません。新ページでは初めは閉じています。初回は PLAY を押して音声を読み、曲の終了で次へ、最後の曲の終了で先頭へ戻ります。モバイルで展開中はトップへ戻るボタンを一時的に隠します。
+
+同じタブのセッションで曲・再生位置・音量を記憶します。再生中なら移動・再読込後に再開を試み、手動停止後は停止を維持します。シームレス再生ではなく、自動再生をブラウザーが拒む場合もあります。保存不能でも手動再生はできますが、セッション継続は保存しません。
+
+現在は曲全体をダウンロードして Blob に変換し、再生位置の変更にサーバーの Range 対応は不要です。大ファイルは待ち時間とメモリーを増やします。外部サーバーは CORS が必要で、同一サイト public は不要です。音声 URL を先に確認し、不要なら `theme.music.enabled: false` にします。
+
+曲、状態文面、再開の制約は[音楽プレーヤーリファレンス](/ja/blog/config-music/#track-fields)を参照してください。
+
+## 6. 一覧件数とページ分割を調整する
 
 ```ts
 theme: {
@@ -117,146 +209,62 @@ theme: {
 },
 ```
 
-`homeLatestCount` はトップの最新記事数、`blogPageSize` はブログ 1 ページの記事数で、タグの記事一覧にも使われます。適切な正の整数を指定してください。
+`homeLatestCount` は既定3でホームの記事数、`blogPageSize` は既定10でブログ・タグ一覧の1ページの記事数です。適切な正整数を使います。ホームの最大3件の Fragment には影響せず、その一覧件数は `theme.fragments.pageSize` で指定します。
 
-`windowSize` はページ番号の表示範囲で、コードでは 5～21 に制限されます。記事数ではありません。ジャンプ入力欄は `jump.enabled` が真で、総ページ数が `showJumpThreshold` を超える場合のみ表示されます。既定では 12 ページ超です。`enterToGo` は Enter での移動を制御します。
+`windowSize` は既定7、描画時5–21のページ番号表示幅で、記事数ではありません。ページジャンプは `jump.enabled` が true で総ページ数が `showJumpThreshold` を超えたときに表示し、既定は12ページ超です。`enterToGo` は Enter での移動を制御します。
 
-スタイルは `fixed`、`sequential`、`random` です。JavaScript 有効時、既定の `random` はページの読み込みごとにコンテナーと各ボタンの色を選び直します。同じ結果が続く場合もあります。JavaScript 無効時は生成 HTML の安定したコンテナー表示と静的なボタン色を使います。`style.enabled: false` は基本表示に戻し、ページ分割は無効にしません。
+外観は既定 `random` で、例の `fixed` は変体を固定します。`sequential` は順序選択、`random` はクライアント初期化で再選択し、重複することもあります。JavaScript 無効でもビルド済み静的外観は残ります。`variants` は候補数で描画時1–12、`fixedVariant` はその範囲に制限します。
 
-## 5. 不要な拡張機能を無効にする
+`style.enabled: false` は基本外観になり、ページ分割は止めません。ブログ・タグ・Fragments で共有するため、3か所の効果に注意してください。
 
-以下は無効化できる項目の例で、すべて無効にする推奨ではありません。変更したい項目だけを使います。
+完全な範囲、変体、UI 文面は[Blog List とタグ一覧リファレンス](/ja/blog/config-blog-list/#pagination-window)を参照してください。
 
-```ts
-theme: {
-  enableAboutPage: false,
-  effects: { enableRedQueen: false },
-  search: { enabled: false },
-  toc: { enabled: false },
-  tags: { enabled: false },
-  socialImage: { enabled: false },
-},
-```
+## 7. 不要な機能だけを無効にする
 
-`enableRedQueen` は記事の Red Queen モニターだけを制御し、AI テーマ全体や全エフェクトを無効にしません。`toc` はサイトの既定値で、記事の `toc: true` が優先されます。`socialImage` を無効にしても手動の `ogImage` は有効です。検索とタグは入口と生成物の両方に影響します。4 種の雰囲気は既存レイアウトが決めており、サイト全体を 4 テーマ間で切り替える設定はありません。
+以下はスイッチの適用範囲です。1機能の設定のために全項目を無効にしないでください。
 
-## 6. 言語を追加しトップページの URL を調整する
+| 設定パス                       | 既定値 | false にした場合                                                           |
+| ------------------------------ | ------ | -------------------------------------------------------------------------- |
+| `theme.enableAboutPage`        | `true` | About ルートとテーマ関連入口を非表示。                                     |
+| `theme.enableDecoderPage`      | `true` | Decoder ルートとテーマ関連入口を非表示。                                   |
+| `theme.effects.enableRedQueen` | `true` | 記事の Red Queen モニターのみを非表示にし、AI ページ全体の効果は止めない。 |
+| `theme.search.enabled`         | `true` | 記事検索入口と索引生成を止める。                                           |
+| `theme.toc.enabled`            | `true` | 既定の目次を止めるが、記事ごとの `toc: true` で上書き可能。                |
+| `theme.tags.enabled`           | `true` | タグ入口・ページ生成を止め、記事は削除しない。                             |
+| `theme.math.enabled`           | `true` | Markdown／MDX の数学処理を止める。                                         |
+| `theme.socialImage.enabled`    | `true` | 自動共有画像を止めるが、手動 ogImage は有効。                              |
 
-フランス語を追加する例です。
+たとえば記事のモニターだけなら `theme: { effects: { enableRedQueen: false } }` を統合します。検索、音楽、About は変わりません。
 
-```ts
-i18n: {
-  locales: {
-    fr: {
-      meta: { label: 'Français', hreflang: 'fr', ogLocale: 'fr_FR', enabled: true, fallback: ['en'] },
-      site: { hero: 'Bienvenue sur mon blog.' },
-      messages: { nav: { home: 'Accueil' }, siteDescription: 'Mes notes et projets.' },
-    },
-  },
-},
-```
+コメントと Fragments は既定で無効で、他機能のために有効にする必要はありません。[Giscus 設定](/ja/blog/starter-guide-4-giscus-comments/)と[Fragment の投稿](/ja/blog/starter-guide-5-fragments/)を必要時に参照してください。目次・数式・共有画像は[記事ガイド](/ja/blog/starter-guide-2-languages-and-routing/)と[画像ガイド](/ja/blog/starter-guide-images/)に説明します。
 
-`npm run new-post -- french-note --locales fr` で記事を作成します。UI 文言、トップの紹介、About、記事の翻訳は自分で用意します。`fallback` は不足する設定・文言を補い、記事の翻訳や別言語の記事の一覧への挿入はしません。必要に応じて既定言語がフォールバックチェーンに加わります。
+## 8. 作品ページなどの独自ページを作る
 
-メニュー名は `meta.label` で変えます。たとえば `zh` の既定表示は「简体中文」です。`hreflang` / `ogLocale` は言語メタ情報で、表示名の変更は言語コードや URL を変えません。
-
-既定の `i18n.routing.defaultLocalePrefix: 'always'` は `/` から既定言語のトップへ転送します。`'never'` は `/` を既定言語のトップとし、`/<既定言語>/` から `/` へ転送します。対象は既定言語のトップのみで、`/ja/blog/` が `/blog/` になるわけではありません。
-
-## 7. 設定を統合して動作確認する
-
-たとえば記事数と音楽を同時に変更する場合、1 つの `theme` にまとめます。
-
-```ts
-theme: {
-  homeLatestCount: 5,
-  music: {
-    enabled: true,
-    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
-  },
-},
-```
-
-既存の `theme.comments` なども同じオブジェクトに残します。例で自分の設定全体を上書きしないでください。配列は全体を置き換えるので、曲やリンクを追加するときは以前の項目も残します。
-
-開発画面で機能を確認した後、`npm run doctor` と `npm run preview` を実行します。doctor はチェックとビルドを含むため、成功後に check と build を繰り返す必要はありません。検索はビルド後のプレビューで確認し、公開には新しい出力をデプロイします。
-
-## 8. フッターのクレジットを表示・非表示にする
-
-フッターにはビルド時の年と `site.title` が表示されます。既定ではテーマと Astro へのリンクも表示されます：`© 2026 My Blog · Theme by Anglefeint · Built with Astro`。年はビルド時に生成され、固定値ではありません。
-
-両方の技術クレジットを非表示にするには、次の設定を `src/site.config.ts` に統合します：
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  theme: {
-    footer: { showCredits: false },
-  },
-});
-```
-
-`showCredits: true` で再表示できます。非表示にすると両方のリンクが削除され、著作権表示は残ります。任意の `site.tagline` は、このスイッチとは独立したプレーンテキストです。既定値は空です。旧既定値の `Built with Astro.` は重複を避けるため組み込みクレジットとして扱います。`All rights reserved` は追加しません。
-
-ホームのスイッチは `src/site.config.ts` の `theme.home` にあります。`showInitialize` は Initialize/done、`showFollow` は Wake Up/Follow、`showTrace` は右下の状態表示です。すべて既定は `true`、`false` で個別に非表示にできます。
-
-任意の `theme.footer.links` はフッターに独立した行を追加します。各項目は `label` と `href` を持ち、リンク間に中点を表示します。省略または空配列で非表示になります。ラベルは各言語でも設定した原文を保ち、ソーシャルアイコンや `showCredits` とは独立しています。
-
-```ts
-theme: {
-  home: { showInitialize: true, showFollow: true, showTrace: true },
-  footer: {
-    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
-  },
-},
-```
-
-自動共有画像には、コードレイン・ターミナル・ネオンネットワークの同梱背景を使い、サイト名・タイトル・著者は自分の情報を表示します。右下の小さな `Theme by Anglefeint` は `theme.footer.showCredits`（既定 `true`）に従います。`false` にするとフッターと画像のクレジットを非表示にします。変更後は再ビルド・再デプロイしてください。独自の `ogImage` は変更しません。背景はオフラインで使え、ブラウザー JavaScript は増えません。
-
-0.27 以降の統合 starter では、標準ページ、設定の既定値、ビルド機能をテーマパッケージが提供します。個人設定は `src/site.config.ts` に残ります。テーマ更新は記事、音楽、画像、独自ページを書き換えません。0.27 より前の構成は[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)に従って一度移行します。
-
-## このガイドの構成
-
-- [利用ガイド 1：ブログを立ち上げる](/ja/blog/starter-guide-1-configure-your-site/)
-- [利用ガイド 2：記事を書く・コンテンツを整理する](/ja/blog/starter-guide-2-languages-and-routing/)
-- [利用ガイド 3：必要な機能を有効化・カスタマイズする](/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)
-
-## 数式
-
-Markdown と MDX の記事では、LaTeX 形式の数式が既定で全体に有効です。インラインは `$C_{saved}$`、独立した数式は別々の行の `$$` で囲みます。記事ごとの指定やプラグインの追加インストールは不要です。
-
-```markdown
-Inline: $C_{saved}$
-
-$$
-\frac{a}{b}
-$$
-```
-
-`src/site.config.ts` の `theme: { math: { enabled: false } }` で無効にできます。曖昧なドル記号は `\$` と書きます。コードはそのまま表示されます。無効時は波括弧内の JavaScript 式を含む通常の MDX 規則に戻ります。
-
-ビルド時にレンダリングし、ローカルのスタイル・フォントとアクセシブルな MathML を使用します。ブラウザー用数式エンジンは不要です。長い独立数式は横スクロールできます。不正な数式はファイルと原因を示してビルドを停止します。タイトルと概要はプレーンテキストにし、数式は検索対象から除外されます。KaTeX の数式構文に対応し、完全な LaTeX 文書には対応しません。
-
-0.27 以降の統合 starter では、テーマパッケージが数式対応を含む Markdown 処理器を自動で接続します。一度の移行が必要なのは 0.27 より前の構成だけです。新しいプロジェクトへ処理器やアダプター実装をコピーしないでください。
-
-$C_{saved}$
-
-$$
-\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
-$$
-
----
-
-## テーマの更新
-
-標準ページ、設定の既定値、翻訳とビルド機能はテーマパッケージが管理します。記事、`src/site.config.ts`、音楽、画像、独自ページはプロジェクトに残ります。
-
-npm を使う新しい integration starter では、ルートで次のコマンドを実行します。互換性を確認し、依存ファイルをバックアップして特定バージョンをインストールし、doctor を実行します。失敗時は依存ファイルを戻して以前の依存関係の再インストールを試みます。公開は通常のデプロイ手順で行ってください。
+プロジェクトを個別紹介するならルートで実行します。
 
 ```bash
-npx @anglefeint/astro-theme@latest upgrade
+npm run new-page -- projects
 ```
 
-0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+`src/pages/[lang]/projects.astro` を既定の `base` レイアウトで生成し、現在の有効言語に `/<locale>/projects/`（例：`/en/projects/`、`/zh/projects/`）を生成します。その Astro ファイルで本文を編集します。自動翻訳や上部ナビゲーションの追加はしないため、本文やフッター links に入口を置けます。
 
-自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
+外観を指定する場合は `--theme` を使います。例の `npm run new-page -- portfolio --theme cyber` は別の Cyberpunk ページを作ります。候補は `base`・`ai`・`cyber`・`hacker`・`matrix` で、そのページのレイアウトだけを選び、全サイトの4つの雰囲気は変更しません。slug は英小文字・数字・ハイフン、`projects/labs` のような入れ子も可能です。標準ページと競合させないでください。同名ファイルはエラーなので、同じパスで5種類のテーマコマンドを続けて実行しないでください。
 
-更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。
+## 9. 保存後の確認
+
+dev で変更したページを開き、内容、リンク、入口を確認します。環境変数の旧上書きは[第1回の確認手順](/ja/blog/starter-guide-1-configure-your-site/)に従います。独自アイコン不足、音声取得失敗、外部リンク異常はそれぞれのパス・ネットワークを確認し、設定全体の上書きで解決しようとしないでください。
+
+公開前に dev を止めて実行します。
+
+```bash
+npm run doctor
+npm run preview
+```
+
+doctor はローカル準備・検証・ビルドを含み、成功直後の check・build は不要です。検索はビルド後の preview で確認し、preview 自体は公開しません。正式公開は `dist/` 全体を再配備し、ローカル保存だけでは変わりません。
+
+## ガイドと設定リファレンス
+
+[前の記事：Fragment を投稿する](/ja/blog/starter-guide-5-fragments/) · [次の記事：読者がコメントできるようにする](/ja/blog/starter-guide-4-giscus-comments/) · [8本のガイドの総合案内](/ja/blog/starter-guide-1-configure-your-site/#tutorial-order)。
+
+関連項目：[ホーム](/ja/blog/config-home/)、[About](/ja/blog/config-about/)、[ターミナル](/ja/blog/config-terminal/)、[Decoder](/ja/blog/config-decoder/)、[公共ナビゲーション・ソーシャル・フッター](/ja/blog/config-site-chrome/)、[音楽](/ja/blog/config-music/)、[一覧とページ分割](/ja/blog/config-blog-list/)。完全なパス、既定値、制約は[設定リファレンス総合案内](/ja/blog/config-reference/)を参照してください。

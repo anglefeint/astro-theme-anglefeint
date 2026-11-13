@@ -6,38 +6,54 @@
   </a>
 </p>
 
-<p align="center">Um tema Astro cinematográfico com múltiplas atmosferas para publicação pessoal — feito para leitores humanos e agentes de IA.</p>
+<p align="center">Tema Astro de publicação pessoal com atmosferas cinematográficas para leitores humanos e agentes de IA.</p>
 
-Gera automaticamente `llms.txt`, índices multilíngues, coletâneas de texto completo e artigos em Markdown para facilitar a leitura e a citação por agentes de IA e apoiar o GEO (otimização para mecanismos generativos).
-
-[Demo](https://demo.anglefeint.com/pt-br/) · [GitHub](https://github.com/anglefeint/astro-theme-anglefeint)
+Gera `llms.txt`, índices multilíngues, coletâneas integrais e Markdown de publicações para leitura e citação por agentes de IA, com suporte a GEO (otimização para mecanismos generativos).
 
 <p align="center">
-  <a href="#ai-assistant">Assistente de IA</a> · <a href="#installation">Instalação</a> · <a href="#setup">Configuração do site</a> · <a href="#writing">Escrever</a> · <a href="#upgrade">Atualizar</a> · <a href="#deployment">Compilar e publicar</a>
+  <a href="https://demo.anglefeint.com/">Demo online</a>
+  ·
+  <a href="https://github.com/anglefeint/astro-theme-anglefeint">Repositório</a>
+</p>
+
+<p align="center">
+  <a href="#ai-assistant">Assistente de IA</a> · <a href="#installation">Instalação</a> · <a href="#setup">Configuração</a> · <a href="#writing">Escrever</a> · <a href="#upgrade">Atualização</a> · <a href="#deployment">Compilação e implantação</a>
 </p>
 
 <p align="center">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
+  <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+## O que o Anglefeint oferece?
+
+Escreva publicações com Markdown/MDX e ideias curtas com Fragments. Inclui idiomas, busca, tags, sumário, cópia de código, prévia de imagens, matemática e imagens sociais automáticas. Comentários, música e GA4 podem ser ativados conforme necessário.
+
+| Página                 | Atmosfera visual                                                         |
+| ---------------------- | ------------------------------------------------------------------------ |
+| Página inicial         | Matrix: chuva verde de código, terminal e avatar em pixels               |
+| Blog e listas de tags  | Cyberpunk: neon, chuva e feixes de luz urbanos                           |
+| About                  | Hacker: apresentação pessoal, terminal virtual e ferramentas interativas |
+| Detalhes da publicação | AI: rede de fundo, monitores e painel de leitura OUTPUT                  |
+
+A compilação também gera Markdown público de publicações, About e Fragments, `llms.txt` e coletâneas multilíngues para ferramentas de IA. Não exige servidor de produção separado e não garante inclusão ou citação por modelos.
+
 <a id="ai-assistant"></a>
 
-## Usar um assistente de IA
+## Colabore com um assistente de IA
 
-Use Cursor, Codex ou Claude Code para configurar o site, escrever artigos e personalizar páginas. Comece pelo AGENTS.md do projeto atual; o código e a configuração real definem o comportamento. CLAUDE.md e as regras do Cursor apontam para as mesmas instruções.
+Cursor, Codex ou Claude Code podem configurar o site e gerenciar conteúdo seguindo o `AGENTS.md` do projeto atual. `CLAUDE.md` e regras Cursor existentes apontam às orientações correspondentes. Explique o que deseja alterar e peça ao assistente que consulte a configuração real e a seção deste documento; para detalhes de campos, use os dicionários do demo.
 
-- **Usuários do blog (starter)**: Comece por [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md) e consulte os guias de [configuração](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/pt-br/starter-guide-1-configure-your-site.md) / [escrita](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/pt-br/starter-guide-2-languages-and-routing.md) conforme a tarefa.
-- **Manutenção do tema (main)**: Leia [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [fluxo de IA](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md). Consulte a [arquitetura](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md) e siga o [fluxo de sincronização da documentação](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md) para atualizar a documentação após mudar o código.
+Para desenvolver o tema, comece por [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) e pelo [guia de contribuição](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CONTRIBUTING.md). Quem usa o blog não precisa aprender primeiro o fluxo de publicação dos mantenedores.
 
 <a id="installation"></a>
 
-## Instalação
+## 1. Instale e inicie
 
-Este template é baseado no **Astro 7**.
-
-Use Node.js 22.12.0 ou superior. Execute os comandos na pasta onde deseja criar seu blog e abra o endereço informado pelo servidor de desenvolvimento.
+Requer **Node.js 22.12.0 ou superior**. O template usa **Astro 7**. Execute na pasta onde deseja guardar o blog:
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
@@ -46,392 +62,236 @@ npm install
 npm run dev
 ```
 
-Se o blog já existe, execute `npm install` e `npm run dev` nele, sem criar outra cópia. Pare dev com Ctrl+C antes de outros comandos ou use outro terminal. Com pnpm, use `pnpm install` e `pnpm dev`.
+Abra a URL exibida no terminal. Em projeto existente, execute `npm install` e `npm run dev` na pasta original; não recrie o blog. Pare com Ctrl+C. Execute os próximos comandos na raiz do projeto após parar dev ou em outro terminal.
+
+Projetos novos também podem usar `pnpm install` e `pnpm dev`. Mantenha um gerenciador por projeto. Os exemplos seguintes usam npm; o atualizador automático só atende projetos npm atualmente.
+
+Passo a passo: [Instale o blog e coloque suas informações](https://demo.anglefeint.com/pt-br/blog/starter-guide-1-configure-your-site/).
 
 <a id="setup"></a>
 
-## Configuração do site
+## 2. Primeira configuração: suas informações
 
-Edite o objeto existente em `src/site.config.ts`. Esse é o ponto único para identidade do site, links sociais, About e opções do tema. Preserve imports/exports e mescle as configurações no objeto existente.
+O projeto instalado já inclui `src/site.config.ts`. **Abra e edite esse arquivo; não crie outro arquivo nem declare um novo objeto de configuração.**
+
+Acrescente o trecho `site` dentro do `defineThemeConfig({ ... })` existente e troque nome, autor, descrição e domínio. O starter omite site para usar os padrões do tema. Se já existir, edite os campos internos e preserve o resto, sem duplicar o objeto. Mantenha import, export e as outras configurações.
 
 ```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: {
-    title: 'My Blog',
-    author: 'Your Name',
-    description: 'My notes and projects.',
-    url: 'https://your-domain.example',
-  },
-});
+site: {
+  title: '我的博客',
+  author: '你的名字',
+  description: '记录项目、阅读和生活。',
+  url: 'https://your-domain.example',
+},
 ```
 
-Defina `site.url` com o endereço real do site. Se houver `PUBLIC_SITE_URL`, ele tem prioridade. Compile e publique novamente após alterar conteúdo ou configuração.
+Isso altera apenas as informações globais, sem mudar idiomas. Sem `homeTitle` localizado, o título grande inicial usa `title` global. Apresentação inicial, conteúdo About e links sociais também podem ser seus; consulte o tutorial e os dicionários ao fim desta seção.
+
+`site.url` é o endereço público de produção, não a URL dev local. `PUBLIC_SITE_URL` da hospedagem tem prioridade; confira essa variável se o domínio antigo continuar após alterar a configuração.
+
+A configuração inicial ativa nove idiomas, com inglês padrão; `/` leva a `/en/`. Ler este README em português não exige mudar o idioma do blog. Para trocar padrão ou publicar só alguns idiomas, siga o [tutorial de idiomas](https://demo.anglefeint.com/pt-br/blog/starter-guide-languages/). Omitir um idioma não o desativa; o padrão fica sempre ativo e o sistema não traduz publicações automaticamente. Pode apagar exemplos após backup ou commit Git, sem apagar imagens ainda referenciadas.
+
+Tutoriais: [Instalação e configuração inicial](https://demo.anglefeint.com/pt-br/blog/starter-guide-1-configure-your-site/), [Idiomas e endereço inicial](https://demo.anglefeint.com/pt-br/blog/starter-guide-languages/). Referências: [Site e interface pública](https://demo.anglefeint.com/pt-br/blog/config-site-chrome/), [Página inicial](https://demo.anglefeint.com/pt-br/blog/config-home/).
 
 <a id="writing"></a>
 
-## Escrever artigos
+## 3. Escreva sua primeira publicação
 
-### Criar um artigo
+Crie uma publicação na raiz do projeto:
 
 ```bash
-npm run new-post -- my-first-post --locales pt-br
+npm run new-post -- my-first-post
 ```
 
-Para criar somente português, use npm run new-post -- my-first-post --locales pt-br. Use letras minúsculas, números e hífens no slug. O arquivo src/content/blog/pt-br/my-first-post.md gera /pt-br/blog/my-first-post/. Arquivos existentes são preservados. --locales cria arquivos, mas não ativa idiomas.
+Sem `--locales` ou `ANGLEFEINT_LOCALES`, lê todos os idiomas ativos do projeto e cria um esqueleto com o mesmo nome em cada um. A configuração inicial tem nove idiomas, portanto cria nove arquivos; se você alterou os controles de idioma, usa a seleção ativa. Não traduz o corpo nem sobrescreve arquivos existentes.
 
-Traduções usam o mesmo slug. Sem tradução, o menu leva à lista do idioma escolhido; hreflang não apresenta essa lista como tradução do artigo.
+Os arquivos ficam em `src/content/blog/<语言>/my-first-post.md`, com URL `/<语言>/blog/my-first-post/` e lista `/<语言>/blog/`. Inglês usa `src/content/blog/en/my-first-post.md`; chinês usa `src/content/blog/zh/my-first-post.md`. Abra os arquivos desejados e edite título, descrição e corpo, sem criar rotas manualmente. Exemplo mínimo:
 
-### Preencher o cabeçalho
-
-```yaml
+```md
 ---
-title: 'My first post'
-description: 'My notes and projects'
-pubDate: '2026-10-03'
-tags: ['astro', 'notes']
+title: '我的第一篇文章'
+description: '记录这次开始写博客的想法。'
+pubDate: '2026-11-13'
 ---
+
+这里开始写正文。
 ```
 
-title, description e pubDate são obrigatórios. subtitle, updatedDate e author são opcionais; o autor padrão vem do site. Artigos são ordenados por pubDate. Não há filtro de rascunho ou agendamento: draft: true e datas futuras não ocultam artigos. Guarde textos inacabados fora de src/content/blog/.
+O exemplo mostra só os obrigatórios. Pode manter a capa e outros campos opcionais já gerados. Use nomes em letras minúsculas, dígitos e hífens, como `my-first-post`.
 
-heroImage: ./cover.jpg usa uma imagem ao lado do artigo. Se houver imagens em src/assets/blog/default-covers/, cada execução escolhe uma capa aleatória e a usa em todos os arquivos de idioma criados nessa execução. Os arquivos existentes são preservados; heroImage pode ser alterado depois. Não baixa imagens. Palavras e tokens são estimativas; wordCount e tokenCount substituem cada contagem separadamente. Os artigos não exibem tempo de leitura, latência ou confiança. Campos antigos podem permanecer; nenhum serviço de IA é conectado.
+Para criar apenas idiomas específicos, use `--locales`. São alternativas, não etapas para executar todas:
 
-## Páginas independentes
+```bash
+# 只生成英文
+npm run new-post -- my-first-post --locales en
 
-npm run new-page -- projects --theme cyber cria src/pages/[lang]/projects.astro. Edite seu conteúdo; o comando não traduz nem adiciona navegação. Temas: base, ai, cyber, hacker e matrix. Slugs aceitam caminhos como projects/labs. Um arquivo existente causa erro.
+# 只生成中文
+npm run new-post -- my-first-post --locales zh
 
-- [Guia 2: Escreva e organize conteúdo](https://demo.anglefeint.com/pt-br/blog/starter-guide-2-languages-and-routing/)
+# 生成指定的多种语言
+npm run new-post -- my-first-post --locales en,zh
+```
 
-## Fragmentos
+`--locales` seleciona arquivos, sem ativar idiomas. Eles precisam estar ativos na configuração para gerar páginas. Os arquivos novos da mesma chamada compartilham uma capa padrão aleatória, se houver imagens no conjunto de origem. Arquivos existentes continuam preservados.
 
-A partir de 0.33.2, Fragments compartilha o botão de voltar ao topo dos artigos: aparece após a rolagem e respeita a preferência por movimento reduzido. Não exige configuração.
+Também pode selecionar com `ANGLEFEINT_LOCALES`. Prioridade: `--locales` → ambiente → idiomas ativos do projeto. Em Bash, `ANGLEFEINT_LOCALES=zh,en npm run new-post -- my-first-post`. Em PowerShell, use diretamente os comandos `--locales` acima.
 
-Fragmentos requer o tema 0.29.0 ou posterior. Atualize blogs existentes antes de usar a configuração e o comando abaixo.
+**Não há ocultação automática de rascunhos ou datas futuras.** Os esqueletos de todos os idiomas também são públicos na compilação. Termine o conteúdo desejado antes de publicar e retire arquivos ainda privados da coleção. `draft: true` e `search: false` não tornam uma publicação privada.
 
-Publique pensamentos breves em Markdown, com comentários opcionais em uma janela. Adicione ao theme existente em src/site.config.ts. Fragmentos e comentários ficam desativados por padrão. O menu aparece abaixo de Decoder Lab.
+Tutoriais: [Primeira publicação](https://demo.anglefeint.com/pt-br/blog/starter-guide-2-languages-and-routing/), [Imagens](https://demo.anglefeint.com/pt-br/blog/starter-guide-images/). Referência: [Detalhes e frontmatter](https://demo.anglefeint.com/pt-br/blog/config-article/).
+
+## 4. Publique um fragment
+
+Fragments servem para texto curto, imagens ou código. **O tema e um starter novo vêm com fragments desativados; o demo os ativa por conta própria.** Para ativar, configure `fragments.enabled: true` dentro do objeto `theme` existente em `src/site.config.ts`. Abaixo está a estrutura mesclada; não duplique theme:
 
 ```ts
-fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+theme: {
+  fragments: { enabled: true },
+},
 ```
 
-A geração padrão para todos os idiomas habilitados exige o tema 0.31.0 ou mais recente. Atualize primeiro; nas versões 0.29–0.30, informe `--locales` explicitamente.
+Se já estiver `enabled: true`, não repita. Se for false, troque por true. Controla a lista e a entrada de prévia inicial; comentários continuam desativados por padrão.
+
+Crie um fragment. Por padrão, gera esqueletos do mesmo conteúdo em todos os idiomas ativos:
 
 ```bash
-npx @anglefeint/astro-theme@latest new-fragment
+npm run new-fragment
 ```
 
-Como `new-post`, por padrão cria esqueletos para todos os idiomas habilitados no projeto, com o mesmo ID e data e hora; não traduz o conteúdo. Prioridade: `--locales` → `ANGLEFEINT_LOCALES` → idiomas habilitados. Listas explícitas removem espaços e duplicatas e são convertidas para minúsculas; ignoram a leitura da configuração e criam apenas os diretórios solicitados, sem habilitar idiomas na configuração.
+Para idiomas específicos, escolha os parâmetros:
 
 ```bash
-npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
-npx @anglefeint/astro-theme@latest new-fragment --locales pt-br
+# 只生成中文
+npm run new-fragment -- --locales zh
+
+# 生成指定的多种语言
+npm run new-fragment -- --locales en,zh
 ```
 
-Compartilhamento a partir da versão 0.32.0: a data aponta para o fragmento na lista, com um controle de cópia ao lado. Compartilhe `/pt-br/fragments/#ID`, usando o id do frontmatter Markdown. Somente quando o fragmento não está na página atual é carregado um pequeno índice estático por idioma para localizar sua página. Reconstrua após adicionar conteúdo ou alterar datas ou pageSize, mantendo os IDs. A localização entre páginas e a cópia exigem JavaScript.
+Cada execução cria uma entrada nova. Escolha a alternativa necessária; não execute todas. A seleção do CLI não muda os controles de idioma do site.
 
-Paginação a partir da versão 0.32.0: os fragmentos compartilham com o Blog os números de página, os estilos de neon e o salto de página exibido conforme o limite configurado. `theme.pagination` controla as duas listas; `theme.fragments.pageSize` continua definindo separadamente os fragmentos por página.
+Arquivos em `src/content/fragments/<语言>/`, com nomes como `2026-11-13-aB3dE6gH.md`. O terminal mostra os caminhos reais. Edite o corpo e preserve o ID alfanumérico de oito caracteres. Traduções da mesma chamada compartilham ID e data. Não execute novamente a criação para editar a mesma entrada.
 
-[Guia 5: Publicar fragmentos](https://demo.anglefeint.com/pt-br/blog/starter-guide-5-fragments/)
+A lista fica em `/<语言>/fragments/`, como `/en/fragments/` e `/zh/fragments/`. Com conteúdo no idioma atual, a página inicial mostra a entrada do avatar. Links estáveis usam `/<语言>/fragments/#ID`; página não é identidade. Mudar ID afeta links e comentários. Comentários de fragments vêm desativados.
 
-<a id="upgrade"></a>
+Tutorial: [Publique um fragment](https://demo.anglefeint.com/pt-br/blog/starter-guide-5-fragments/). Referência: [Fragments](https://demo.anglefeint.com/pt-br/blog/config-fragments/).
 
-## Atualizar o tema
+## 5. Crie páginas personalizadas
 
-O pacote mantém páginas padrão, valores padrão, traduções e funções de build. Artigos, `src/site.config.ts`, músicas, imagens e páginas próprias ficam no projeto.
-
-No novo starter de integração com npm, execute na raiz o comando abaixo. Ele verifica compatibilidade, faz backup dos arquivos de dependências, instala uma versão exata e executa doctor. Em caso de falha, restaura os arquivos e tenta reinstalar as dependências anteriores. Publique pelo fluxo habitual; não há deploy automático.
+Use `new-post` para publicações e `new-page` para apresentações de projetos, portfólio e outras páginas:
 
 ```bash
-npx @anglefeint/astro-theme@latest upgrade
+npm run new-page -- projects
 ```
 
-Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Crie-o em outra pasta, copie artigos e recursos e combine os valores pessoais no novo site config. Não copie rotas padrão antigas, adapters ou helpers defaults/schema/runtime. Preserve slugs, caminhos de idiomas, URLs de músicas/imagens e configurações de hospedagem.
+Gera `src/pages/[lang]/projects.astro` com tema `base`. Edite o conteúdo e abra `/<语言>/projects/`, como `/en/projects/`. Um arquivo gera páginas para todos os idiomas ativos, sem traduzir conteúdo nem acrescentar navegação automaticamente.
 
-O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. `--check` verifica sem escrever; `--to 0.27.1` escolhe a versão. Veja o [guia](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) e [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+Para escolher estilo, use `--theme`: `base`, `matrix`, `cyber`, `hacker` ou `ai`. Por exemplo, `npm run new-page -- portfolio --theme cyber` cria outra página Cyberpunk.
 
-<a id="deployment"></a>
-
-## Compilar e publicar
+Aceita caminhos aninhados:
 
 ```bash
-npm run build
+npm run new-page -- projects/labs --theme hacker
 ```
 
-O site estático é gerado em `dist/`. Publique **todo o conteúdo** dessa pasta em qualquer hospedagem estática. Não é necessário servidor Node.js em produção nem adaptador de hospedagem.
+Cada segmento usa minúsculas, números e hífens, sem maiúsculas, sublinhado ou barras nas extremidades. Não sobrescreve arquivos nem recria caminhos padrão reservados do tema.
 
-Use `npm run preview` para conferir o resultado localmente; ele não publica o site. `npm run doctor` reúne verificações e compilação.
+Passo a passo: [Personalização de páginas](https://demo.anglefeint.com/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/).
 
-Publique na raiz do domínio e sirva o index.html de cada diretório. Subdiretórios exigem adaptação adicional; configurar Astro `base` não é suficiente.
+## 6. Prepare imagens e preserve os arquivos gerados
 
-O sitemap usa `updatedDate` ou `pubDate`. A integração combina `X-Robots-Tag: noindex` do JSON do terminal em `dist/_headers`, preservando regras e arquivos originais. Cloudflare Pages e hosts compatíveis aplicam as regras; outros precisam de cabeçalhos equivalentes. Confira a resposta publicada: Astro preview não aplica regras da hospedagem.
+Use imagens Markdown comuns no corpo. Coloque `photo.jpg` ao lado da publicação e escreva `![图片描述](./photo.jpg)`. Configure a capa com `heroImage: ./cover.jpg` no frontmatter, preparando o arquivo. URLs de public não incluem o prefixo public.
+
+Capas e imagens locais compatíveis dos fragments precisam de arquivos responsivos persistentes. Prepare localmente ou apenas valide os arquivos atuais:
+
+```bash
+npx @anglefeint/astro-theme prepare-covers
+npx @anglefeint/astro-theme prepare-covers --check
+```
+
+Dev local e doctor local preparam derivados ausentes ou desatualizados. build e doctor em CI só verificam, sem gerar novamente na implantação. Versione originais e toda a pasta `src/assets/blog/covers/`, incluindo `manifest.json` e `generated/`. Com missing/stale/modified, prepare e faça commit localmente antes de recompilar.
+
+Esse comando não significa comprimir todas as imagens comuns do corpo. Veja escopo, caminhos e imagens sociais no [tutorial de imagens](https://demo.anglefeint.com/pt-br/blog/starter-guide-images/).
 
 <a id="reference"></a>
 
-## Referência de recursos e configuração
+## Configure recursos quando precisar
 
-Os arquivos do blog e de tags permitem alternar entre cartões e lista e lembram a escolha neste navegador.
+Esta página cobre comandos comuns e primeiras operações. Para ajustar recursos, abra o tutorial ou a referência correspondente. Os dicionários explicam tipo, padrão, limites, exemplos e campos não usados.
 
-### Efeitos da página inicial e decodificadores
+| Objetivo                                              | Tutorial                                                                                                                                                                                   | Dicionário                                                                                                                                                                                            |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Página inicial, identidade, navegação, redes e rodapé | [Páginas e recursos](https://demo.anglefeint.com/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                             | [Página inicial](https://demo.anglefeint.com/pt-br/blog/config-home/), [Site e interface pública](https://demo.anglefeint.com/pt-br/blog/config-site-chrome/)                                         |
+| Quantidade, tags e paginação                          | [Páginas e recursos](https://demo.anglefeint.com/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                             | [Blog List e tags](https://demo.anglefeint.com/pt-br/blog/config-blog-list/)                                                                                                                          |
+| Sumário, matemática, OUTPUT ou inclusão na busca      | [Primeira publicação](https://demo.anglefeint.com/pt-br/blog/starter-guide-2-languages-and-routing/)                                                                                       | [Publicações](https://demo.anglefeint.com/pt-br/blog/config-article/), [Busca e descoberta](https://demo.anglefeint.com/pt-br/blog/config-search/)                                                    |
+| About, terminal ou Decoder                            | [Páginas e recursos](https://demo.anglefeint.com/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                             | [About](https://demo.anglefeint.com/pt-br/blog/config-about/), [Terminal](https://demo.anglefeint.com/pt-br/blog/config-terminal/), [Decoder](https://demo.anglefeint.com/pt-br/blog/config-decoder/) |
+| Ativar música ou comentários                          | [Música](https://demo.anglefeint.com/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/), [Comentários](https://demo.anglefeint.com/pt-br/blog/starter-guide-4-giscus-comments/) | [Música](https://demo.anglefeint.com/pt-br/blog/config-music/), [Giscus e discussões compartilhadas](https://demo.anglefeint.com/pt-br/blog/config-comments/)                                         |
+| Idiomas, estatísticas ou complemento público          | [Idiomas](https://demo.anglefeint.com/pt-br/blog/starter-guide-languages/), [Publicação](https://demo.anglefeint.com/pt-br/blog/starter-guide-deployment/)                                 | [Idiomas e fallback](https://demo.anglefeint.com/pt-br/blog/config-languages/), [GA4 e complementos IA](https://demo.anglefeint.com/pt-br/blog/config-analytics-ai/)                                  |
 
-Em `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow e `showTrace` controla o status inferior direito. Todos são `true` por padrão; `false` oculta cada parte separadamente. 0.18.1: Os dois estados inferiores começam ocultos e aparecem separadamente ao passar o mouse ou selecionar o texto. Selecionar tudo revela ambos; o cursor luminoso acompanha apenas o rastreamento à direita.
+Sem saber onde procurar, abra o [índice de configuração](https://demo.anglefeint.com/pt-br/blog/config-reference/). Alterar textos de um idioma não traduz conteúdo. Alterações de configuração e conteúdo exigem nova compilação e implantação.
 
-Configure o título principal da página inicial por idioma em `i18n.locales.<code>.site.homeTitle`, no arquivo `src/site.config.ts`, por exemplo `"pt-br": { site: { homeTitle: "Meu jardim digital" } }`. Também funciona com idiomas adicionados. Valores ausentes ou em branco seguem `meta.fallback` e depois usam `site.title` global ou `PUBLIC_SITE_TITLE`. Apenas o título visível muda; o título do navegador, a navegação, o rodapé, RSS e a identidade SEO mantêm o nome global. Compile e publique novamente.
+<a id="upgrade"></a>
 
-About inclui um índice localizado e uma seção Contact em destaque. O índice fica ao lado do painel de leitura em telas largas e dentro dele em telas menores. Contact no Frontier abre `/<locale>/about/#contact`; desativar About remove esse link, enquanto Decoder Lab mantém sua opção independente.
+## 7. Atualize um blog existente
 
-About permite fechar, minimizar ou exibir o painel de leitura em tela cheia, com estado local e comandos do terminal. A página padrão da integração é atualizada com o pacote; projetos anteriores a 0.27 seguem a migração inicial acima.
+Instalações novas podem pular para [validação, prévia e primeira implantação](#deployment).
 
-About inclui **Hacker Decryptor**: decodifique Base64/Base64URL, texto URL, hexadecimal, entidades HTML, escapes Unicode e cabeçalho/payload JWT no navegador, com detecção automática e animação numérica com as cores da página. Abra Decryptor na barra lateral; não exige API nem configuração extra.
-
-A versão completa do **Decoder Lab** fica em `/<locale>/decoder/`: histórico local, interpretação ERC-20/TRC-20 (EVM/HyperEVM/TRON) e inspeção de endereços EVM/TRON/Bitcoin. Abra pelo diálogo do About. Use `theme.enableDecoderPage: false` em `src/site.config.ts` para desativar página e link independentemente do About. Sem RPC, conexão de carteira ou chave API.
-
-A partir da versão 0.20.0: a seta independente **Frontier** no cabeçalho também abre o Decoder Lab. Os cartões ilustrados apontam para textos originais e sites de referência ou projetos; os textos não são reproduzidos. Personalize `tribute` e a lista completa `links` em `src/site.config.ts`, em `i18n.locales.<code>.messages.decoderPage.readings`. Texto vazio oculta a homenagem; `links: []` oculta os cartões. Todas as entradas são exibidas, até oito por linha no desktop. Veja o [exemplo](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration).
-
-O visual do Decoder Lab se inspira no movimento **cypherpunk**, em homenagem às suas contribuições à liberdade humana, à privacidade e ao código aberto. A rede ponto a ponto e o processamento local refletem a ideia de manter ferramentas e dados nas mãos de cada pessoa.
-
-Passagem Matrix opcional: `theme.effects.enableHomePassage` é `false` por padrão. Ao ativar, os links de posts na página inicial exibem uma passagem verde de 8 segundos antes da navegação. `Oracle` em About funciona separadamente: cada clique escolhe uma de quatro paletas sem repetir a anterior; após chegar, arraste para olhar ao redor, clique com o botão direito para voltar ao corredor e use Escape ou × para fechar. Com movimento reduzido, a navegação é direta e Oracle mostra uma prévia estática.
-
-Em telas de 1440px ou mais, o terminal inferior direito mostra `Knock, knock.`. O texto pode ser selecionado, copiado e rolado; o botão separado com fechadura inicia o corredor compartilhado. Configure `i18n.locales.en.messages.home.transmission` em `src/site.config.ts` para todos os idiomas e sobrescreva apenas os necessários em `i18n.locales.<code>.messages.home.transmission`. Ordem: configuração do idioma atual → configuração inglesa → `Knock, knock.`; difere da cadeia normal de traduções da interface. Após alterar, gere o build e publique novamente.
-
-## Conteúdo legível por IA
-
-O build inclui artigos públicos, Fragments e About habilitados em `/llms.txt`, índices e textos completos por idioma. As URLs Markdown dos artigos não mudam. Cada idioma tem `/pt-br/fragments/index.md` e `/pt-br/about/index.md` (substitua o idioma). Fragments reúne todas as páginas públicas, preservando ID, data, corpo e links estáveis `/<locale>/fragments/#ID`. O HTML anuncia o Markdown. Disponível após `npm run build` e no preview; publique todo `dist/`.
-
-About exporta a biografia pública, contatos e o painel de texto AI acessível; exclui configurações do terminal, ferramentas e decoração. Não exporta comentários. Páginas/idiomas desativados, conteúdo removido, noindex e canonical externos são excluídos; reconstruir limpa arquivos gerados e links obsoletos. Arquivos do usuário são protegidos e conflitos interrompem o build. Suplementos do site/idioma valem para todos os documentos. JSON-LD inclui o idioma; About usa AboutPage. Sem nova configuração, servidor ou biblioteca UI, nem garantia de indexação ou citação por IA.
-
-As opções `aiReadableContent.notes` (Markdown) e `aiReadableContent.links` (`{ label, href }[]`) em `src/site.config.ts` acrescentam contexto aos índices, coletâneas e artigos Markdown. Cada campo pode ser substituído em `i18n.locales.<code>.aiReadableContent`: campos omitidos herdam o valor global; `notes: ''` / `links: []` os ocultam. [Detalhes](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
-
-## Links sociais
-
-Configure `social.links` em `src/site.config.ts`; cabeçalho e rodapé compartilham a ordem do array. Adicione apenas os links que você usa:
-
-```ts
-// src/site.config.ts — defineThemeConfig({ ... })
-social: {
-  links: [
-    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
-    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
-  ],
-},
-```
-
-Nomes de `icon` incluídos: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
-
-O campo opcional `rel` aceita valores separados por espaços, como `me` ou `me nofollow`, com ícones, imagens próprias ou texto. Ausente ou vazio mantém `noopener noreferrer`. Os valores são convertidos para minúsculas e deduplicados; as proteções são mantidas e `opener` é ignorado. Nenhuma plataforma adiciona `me` automaticamente: use apenas para sua própria identidade. Para a [verificação do Mastodon](https://docs.joinmastodon.org/user/profile/#link-verification), publique e salve a URL HTTPS nos campos do perfil. Use uma página com o link de retorno, como `/en/`; a página de redirecionamento HTML da raiz pode não contê-lo. A verificação é feita pelo servidor Mastodon.
-
-```ts
-{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
-```
-
-Para uma imagem própria, coloque `community.svg` em `public/icons/` e defina `iconSrc: "/icons/community.svg"` no link. São aceitos SVG, PNG e WebP locais. Use um caminho iniciado por `/`, sem URL remota, consulta, fragmento ou caracteres codificados. O `base` do Astro é adicionado automaticamente. Arquivos ausentes ou nomes de ícones não suportados geram erro de configuração no desenvolvimento/build.
-
-Prioridade: `iconSrc` → `icon` → texto. Ícones incluídos herdam a cor do menu; imagens próprias mantêm suas cores. `label` fornece o nome acessível. No rodapé, os links quebram linha quando necessário; o cabeçalho mantém uma linha com rolagem horizontal quando falta espaço. Em larguras de até 720px, continuam ocultos no cabeçalho e visíveis no rodapé. Um array `links` vazio mantém os três marcadores não clicáveis. Refaça o build e o deploy após alterações.
-
-## Guia 1: Configure seu blog
-
-### Identidade e endereço inicial
-
-Edite o objeto em src/site.config.ts, mantendo imports e exports. Substitua domínio, nome, autor e textos pelos seus. Mescle o exemplo com suas configurações existentes.
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { title: 'My Blog', author: 'Your Name', url: 'https://your-domain.example' },
-  i18n: {
-    defaultLocale: 'pt-br',
-    routing: { defaultLocalePrefix: 'never' },
-    locales: {
-      'pt-br': {
-        site: { hero: 'My Blog' },
-        messages: { siteDescription: 'My Blog' },
-      },
-    },
-  },
-});
-```
-
-site.url define o domínio usado por canonical, RSS, sitemap e imagens sociais. PUBLIC_SITE_URL no ambiente de compilação ou no arquivo .env tem prioridade. Reinicie o desenvolvimento ou reconstrua após alterá-lo. O texto visível da página inicial vem de site.hero do idioma; messages.siteDescription define sua descrição. Alterar apenas site.description não substitui esses textos.
-
-Com defaultLocalePrefix: 'never', a página inicial do idioma padrão aparece diretamente em /. O padrão 'always' redireciona / para /<idioma>/ e pode exibir “Redirecting to home…”. Artigos continuam em /pt-br/blog/ mesmo com 'never'.
-
-Configure social.links com href, label e icon (github, twitter ou mastodon). Uma lista vazia mantém ícones ilustrativos sem links. site.tagline adiciona texto ao rodapé.
-
-Os parágrafos e a assinatura de Sobre preservam quebras de linha da configuração: `\n` inicia outra linha e `\n\n` deixa uma linha em branco. Frases longas continuam quebrando automaticamente. É texto simples, sem Markdown ou HTML; não insira `<br>`.
-
-O rodapé separa copyright, créditos do tema/Astro e o texto opcional `site.tagline`, com ícones sociais abaixo. Os créditos seguem o idioma da página; seu texto permanece igual em todos os idiomas. Texto vazio não ocupa espaço e textos longos quebram linha no celular. A configuração existente e `PUBLIC_SITE_TAGLINE` continuam funcionando; nenhuma migração é necessária.
-
-A opção `theme.footer.links` adiciona uma linha independente ao rodapé: cada item contém `label` e `href`, com pontos entre os links. Omitir a opção ou usar um array vazio oculta a linha. Os rótulos mantêm o texto configurado em todos os idiomas; a linha é independente dos ícones sociais e de `showCredits`.
-
-### Escolher idiomas
-
-Nove idiomas estão ativos: en, ja, ko, es, zh, pt-br, de, ru e zh-hant. Inglês é o padrão inicial. Para desativar idiomas, mescle entradas como estas:
-
-```ts
-i18n: {
-  locales: {
-    ja: { meta: { enabled: false } },
-    ko: { meta: { enabled: false } },
-  },
-},
-```
-
-Omitir um idioma não o desativa: a configuração é mesclada com os padrões. O idioma padrão permanece ativo. Para um blog em apenas um idioma, desative explicitamente os outros oito. Isso não apaga arquivos nem traduz textos.
-
-### Substituir exemplos e escrever
-
-Cada idioma do starter tem uma página de boas-vindas e três guias. Faça backup e remova os exemplos que não quiser; preserve imagens ainda utilizadas.
+Salve alterações, por exemplo em commit Git. Pare dev e preview. Na raiz original, confira compatibilidade e depois atualize:
 
 ```bash
-npm run new-post -- my-first-post --locales pt-br
+npx @anglefeint/astro-theme@latest upgrade --check
+npx @anglefeint/astro-theme@latest upgrade
 ```
 
-Comece com um artigo em português do Brasil. Sem `--locales pt-br`, o comando cria modelos para todos os idiomas ativos (inicialmente nove), sem tradução automática. Os arquivos existentes são preservados. Edite título, descrição e corpo em src/content/blog/pt-br/my-first-post.md.
+`--check` não modifica arquivos, instala ou compila. Atualização efetiva atende ao starter integrado com npm, `package-lock.json` e `anglefeint.projectSchema: 1`. Projetos pnpm/yarn/bun não podem contornar a restrição apagando o lockfile.
 
-### Regras de configuração
+O atualizador muda a dependência do tema e executa doctor, preservando publicações, configuração pessoal, música, imagens e páginas próprias. Guarda os dois arquivos de dependências em `.anglefeint/backups/`; não é backup integral. Em falha de instalação/verificação, restaura esses arquivos e tenta reinstalar dependências antigas. Não publique `dist/` remanescente após falha.
 
-- [Guia 2: Escreva e organize conteúdo](https://demo.anglefeint.com/pt-br/blog/starter-guide-2-languages-and-routing/)
+Para uma versão específica, `npx @anglefeint/astro-theme@latest upgrade --to <versão>`, substituindo pelo número explícito compatível. Sem downgrade automático. A atualização bem-sucedida já verificou e compilou: use `npm run preview` sem repetir build imediatamente. Não publica o site automaticamente nem migra versões Astro incompatíveis.
 
-## Idiomas
+Estruturas copiadas anteriores a 0.27 exigem criar outro starter, preservar o projeto antigo e migrar conteúdo/recursos pessoais. Não suportam atualização direta no mesmo lugar. Não copie rotas padrão ou implementações de adaptadores antigos.
 
-Nove idiomas ativos por padrão: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. `new-post` cria nove arquivos inicialmente, sem traduzir o texto. Desative os idiomas desnecessários com `meta.enabled: false` em `src/site.config.ts`; omitir uma entrada não a desativa. O idioma padrão permanece ativo. Para criar só português: `npm run new-post -- my-post --locales pt-br`.
+Passos e recuperação: [Atualizar projeto existente](https://demo.anglefeint.com/pt-br/blog/starter-guide-1-configure-your-site/), [Guia de atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md), [Versões](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
-### Sumário e tags
+<a id="deployment"></a>
 
-Use títulos Markdown ## e ###. O sumário aparece à direita em telas largas e acima do texto em telas pequenas. Sem títulos, ele fica oculto. toc: false desativa por artigo; toc: true prevalece sobre o padrão do site. Títulos criados por componentes MDX ou HTML não são coletados automaticamente.
+## 8. Valide, visualize e publique pela primeira vez
 
-tags: ['astro', 'notes'] cria arquivos de tags em /pt-br/tags/. Maiúsculas e minúsculas diferem; espaços nas pontas e duplicatas são removidos. Nomes não latinos recebem URLs codificadas. Renomear uma tag altera seu endereço. theme.tags.enabled: false desativa links e páginas.
+Pare dev na raiz, valide e compile, depois abra a prévia:
 
-### Imagens e código
-
-Use `![Descrição](./photo.jpg)` ou `![Descrição](https://demo.anglefeint.com/images/photo.jpg)`, fornecendo o arquivo correspondente. Imagens comuns do corpo abrem com clique ou Enter/Espaço e fecham com Escape, botão ou fundo. Capas e imagens dentro de links ou botões ficam de fora. A prévia usa a imagem já selecionada pelo navegador, sem baixar um original maior.
-
-Blocos Markdown cercados por três crases recebem um botão de cópia. Ele preserva a formatação e exige HTTPS ou localhost; em caso de falha, copie manualmente.
-
-### Busca
-
-Execute npm run build e npm run preview. A busca pesquisa títulos e corpo no idioma atual. Em dev há apenas um aviso. search: false exclui um artigo do índice, mas não o esconde das listas ou do acesso direto. theme.search.enabled: false desativa a busca e o índice. Reconstrua após editar artigos.
-
-### Imagens de compartilhamento
-
-Sem ogImage, a compilação gera um PNG de 1200×630 com título, autor e nome do site. Isso não altera heroImage. Use ogImage: ./share.png ou /images/share.png para uma imagem própria; HTTPS também funciona. Arquivos locais ausentes causam erro. Imagens externas dependem do serviço externo.
-
-Os cartões automáticos usam um fundo incluído de chuva de código, terminais e redes de neon, com o nome do seu site, título e autor. O pequeno crédito `Theme by Anglefeint` no canto inferior direito segue `theme.footer.showCredits` (padrão `true`); `false` oculta os créditos do rodapé e da imagem. Compile e publique novamente após alterar. Arquivos `ogImage` personalizados não são modificados. O fundo funciona offline e não adiciona JavaScript ao navegador.
-
-ogImage explícito tem prioridade. theme.socialImage.enabled: false desativa só a geração; as demais imagens usam capa ou imagem padrão. Confira og:image no HTML e os arquivos em dist/\_social/. Plataformas podem manter prévias antigas em cache. Emojis e todas as escritas do mundo não são garantidos.
-
-## Guia 3: Recursos opcionais
-
-A demonstração pública usa oito faixas do Free Music Archive; a música continua desativada no starter. Consulte os [créditos musicais](https://demo.anglefeint.com/music/credits.html) para autores, fontes e licenças individuais (CC0 1.0 ou CC BY 4.0). As gravações são separadas da licença MIT do código e não são distribuídas no pacote npm nem no starter. Ao adicionar ou reutilizar música, respeite sua licença e os requisitos de atribuição.
-
-### Música
-
-Coloque o áudio em public/music/ e mescle:
-
-```ts
-theme: {
-  music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] },
-},
+```bash
+npm run doctor
+npm run preview
 ```
 
-0.18.1: o player ativado começa compacto em cada página nova; clique em OPEN para expandir. Posição, volume e retomada independem do tamanho inicial.
+`npm run doctor` inclui validação e compilação. `npm run check` é sinônimo; escolha um, sem repetir check ou build imediatamente após sucesso. Para só verificar Astro/TypeScript, `npm run check:no-build`. preview mostra os arquivos compilados localmente; Ctrl+C para parar e não envia o site. Busca real também exige preview após compilação; dev só mostra um aviso.
 
-Faixas aceitam title, src e artist opcional. Sem faixas, o player fica oculto. A primeira reprodução exige clique. A sessão guarda faixa, posição e volume; retomar depende das permissões do navegador, e pode haver uma pausa entre páginas. Ao terminar a última faixa, a primeira recomeça.
+Se só precisa compilar sem a validação completa, use este outro grupo. Escolha apenas um:
 
-O arquivo completo é baixado antes de tocar; arquivos grandes aumentam espera e memória. Faixas externas exigem CORS. Prefira arquivos locais. enabled: false desativa o player.
-
-### Opcional: Google Analytics 4
-
-Adicione ou edite esta opção no nível superior do objeto `defineThemeConfig({...})` existente em `src/site.config.ts` (ao lado de `site`, não dentro de `theme`):
-
-```ts
-analytics: {
-  googleAnalyticsId: 'G-XXXXXXXXXX',
-},
+```bash
+npm run build
+npm run preview
 ```
 
-Copie o **ID de medição** (`G-...`) em Google Analytics → Administrador → Fluxos de dados → seu fluxo da Web. Não é o nome nem o ID numérico da propriedade. Deixe vazio para desativar. Um ID atende todos os idiomas e páginas do tema; compare idiomas pelo caminho da página. Compile e publique novamente, visite o site e confira o relatório Em tempo real do GA4.
+Em pnpm, use `pnpm run doctor` / `pnpm preview` ou `pnpm build` / `pnpm preview`. Não abrevie para `pnpm doctor`, pois executa diagnósticos do próprio pnpm. Escolha um grupo e evite compilar duas vezes.
 
-O modo de desenvolvimento e as prévias em localhost/loopback não enviam dados. Prévias remotas ou por endereço LAN coletam dados quando configuradas. O starter padrão não carrega scripts do Google. Evite instalação duplicada por GTM, Zaraz ou código manual. Não inclui banner nem gerenciamento de consentimento; se seu site precisar, configure-os antes de ativar a coleta. Bloqueadores podem impedir a medição. Projetos existentes precisam dos arquivos auxiliares de configuração e do adaptador correspondentes; consulte o [guia de atualização](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md).
+Na primeira implantação estática:
 
-### Comentários Giscus
+1. Defina `site.url` ou `PUBLIC_SITE_URL` para a URL oficial. Versione conteúdo-fonte, imagens originais e derivados.
+2. Configure `npm run build` como comando e `dist` como pasta publicada. Em envio manual, publique **todo o conteúdo de dist** de uma compilação bem-sucedida.
+3. Inclua `_astro/`, `pagefind/`, `_social/` e textos públicos gerados, não só HTML.
+4. Use a raiz do domínio e roteamento por index de diretórios. Subcaminhos arbitrários ainda exigem adaptação; definir base do Astro não garante suporte integral.
+5. Vincule domínio e HTTPS na hospedagem e confira página inicial, publicações, idiomas, imagens e busca.
 
-`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
+A saída é estática, sem servidor Node.js de produção ou adaptador extra de hospedagem. Cabeçalhos noindex do JSON do terminal são mesclados em `dist/_headers`. Plataformas compatíveis aplicam o arquivo; outras precisam de configuração equivalente. Astro preview não simula cabeçalhos da hospedagem. Recompile e publique tudo após mudar conteúdo/configuração.
 
-Prepare um repositório público com Discussions, instale o aplicativo e obtenha os IDs em [giscus.app](https://giscus.app/).
+Passo a passo: [Publique o blog em seu domínio](https://demo.anglefeint.com/pt-br/blog/starter-guide-deployment/).
 
-```ts
-theme: {
-  comments: {
-    enabled: true, repo: 'yourname/your-repository',
-    repoId: 'REPLACE_WITH_REPO_ID', category: 'Announcements',
-    categoryId: 'REPLACE_WITH_CATEGORY_ID', mapping: 'pathname', lang: '',
-  },
-},
-```
+## Licença
 
-Substitua os IDs e a categoria. Não cole um script em cada artigo. Campos essenciais vazios ocultam o componente. lang: '' acompanha o idioma: pt-br usa pt, zh-hant usa zh-TW e zh usa zh-CN. O padrão é inglês fixo.
+Este tema usa a [MIT License](LICENSE).
 
-`shareAcrossLocales: false`: mapping: 'pathname' associa discussões ao caminho. 'specific' exige term; 'number' exige number como texto com inteiro positivo. Valores inválidos causam erro. strict e reactionsEnabled usam '0' ou '1'. Se não aparecer, verifique IDs, permissões, conexão e bloqueios do navegador.
-
-Comentários e compartilhamento estão desativados por padrão. Para comentários por caminho, use a configuração acima. Para compartilhar uma discussão entre traduções, mantenha os dados do repositório e da categoria e substitua as opções de associação por:
-
-```ts
-theme: {
-  comments: {
-    // Mantenha seus valores de enabled, repo, repoId, category e categoryId.
-    shareAcrossLocales: true,
-    mapping: 'specific',
-    term: '',
-    number: '',
-    strict: '1',
-    lang: '',
-  },
-},
-```
-
-O compartilhamento exige mapping specific, term e number vazios e strict como texto 1. Cada artigo fornece a data-term seu slug completo sem o idioma. As nove traduções usam cypherpunk-ideals-ai-and-the-future-of-crypto; guides/setup e other/setup continuam sendo discussões distintas. Um slug ausente causa erro. As traduções precisam do mesmo slug. lang vazio acompanha o idioma da página; um valor explícito o fixa. O texto não é traduzido: apenas discussão e reações são compartilhadas.
-
-Sem compartilhamento, mapping, term, number e strict mantêm o comportamento atual: specific exige term não vazio; number exige inteiro positivo como texto. Com comentários e compartilhamento ativos, mapping incompatível, term/number não vazios ou strict diferente de 1 geram erro claro. Confira duas traduções e outro artigo. Comentar exige autorização do GitHub. Integre os campos ao objeto comments sem substituir outras configurações.
-
-Discussões existentes não são mescladas, movidas ou apagadas automaticamente. Ativar o compartilhamento pode selecionar outra discussão, sem mostrar os comentários antigos nela. Salve mapping, term, number e strict antes da mudança. Para restaurar a associação anterior, use shareAcrossLocales: false e recupere os valores originais. Se precisar transferir comentários, avalie e faça isso manualmente no GitHub; o tema não faz migração.
-
-[Guia de comentários](https://demo.anglefeint.com/pt-br/blog/starter-guide-4-giscus-comments/)
-
-### Página Sobre
-
-Edite i18n.locales['pt-br'].about: sections (who, what, ethos, now, contactLead, signature), contact (email, githubUrl, githubLabel), sidebar, labels, modals e effects. ethos é uma lista. Edite os demais idiomas separadamente. As ferramentas da página são demonstrações visuais, não serviços reais de IA. Um e-mail vazio oculta o link. theme.enableAboutPage: false remove página e navegação.
-
-### Contagens e recursos
-
-```ts
-theme: {
-  homeLatestCount: 3, blogPageSize: 10,
-  enableAboutPage: true, effects: { enableRedQueen: true },
-  search: { enabled: true }, toc: { enabled: true }, tags: { enabled: true },
-  socialImage: { enabled: true }, footer: { showCredits: true },
-},
-```
-
-Use false para desativar um recurso. enableRedQueen controla somente o monitor do artigo. toc: true no artigo pode prevalecer sobre a configuração global. socialImage desativa geração, mas mantém ogImage manual. Os ambientes são definidos pelos layouts, não por um seletor global.
-
-homeLatestCount controla recentes; blogPageSize controla listas e tags. pagination.windowSize varia de 5 a 21. A entrada de salto aparece quando jump.enabled é true e o total excede showJumpThreshold, inicialmente 12. jump.enterToGo controla Enter.
-
-Os modos são `fixed`, `sequential` e `random`. Com JavaScript, o padrão `random` escolhe novamente as cores do contêiner e dos botões a cada carregamento; os resultados podem se repetir. Sem JavaScript, o HTML gerado mantém uma variante estável do contêiner e cores estáticas nos botões. `style.enabled: false` usa a variante básica sem desativar a paginação.
-
-### Mais idiomas e endereço inicial
-
-Adicione um código em i18n.locales com meta (label, hreflang, ogLocale, enabled, fallback), site.hero, messages e about. Depois crie artigos com --locales. fallback fornece textos de configuração ausentes; não traduz artigos nem mistura idiomas nas listas. O idioma padrão entra na cadeia de fallback quando necessário. Alterar label muda apenas o nome no menu.
-
-defaultLocalePrefix: 'always' redireciona / para a página inicial localizada; 'never' faz o inverso para o idioma padrão. As rotas dos artigos continuam localizadas.
-
-### Rodapé e verificação
-
-footer.showCredits: false oculta os créditos do tema e do Astro, preservando o ano gerado e site.title. site.tagline adiciona texto independente. O antigo valor Built with Astro. é tratado como crédito interno para evitar duplicação.
-
-Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteriores. Teste em desenvolvimento, execute npm run doctor e use npm run preview para conferir a busca. Reconstrua e publique para aplicar mudanças.
-
-- [Guia 2: Escreva e organize conteúdo](https://demo.anglefeint.com/pt-br/blog/starter-guide-2-languages-and-routing/)
-
-## Prévia
+## Prévias
 
 ![Anglefeint — Four cinematic worlds](public/images/theme-previews/promo-overview.jpg)
 
@@ -441,88 +301,36 @@ Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteri
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
-### Prévias de compartilhamento
+### Prévia de compartilhamento
 
-![Imagem padrão de compartilhamento do Anglefeint](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
+![Imagem social padrão Anglefeint](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
 
-Esta imagem incluída de 1200×630 é a prévia padrão das páginas sem imagem própria, incluindo Fragments. Substitua a imagem padrão do site com `site.ogImage`.
+### Capturas de páginas
 
-Cada artigo gera seu próprio PNG de 1200×630 durante `npm run build`, usando o título, o autor e o nome do site. A geração ocorre na compilação; ao abrir o link, a imagem estática é usada, sem API de imagens nem JavaScript adicional no navegador. Compile e publique novamente ao alterar esses dados.
+| Página inicial                                                 | Lista do blog                                                             |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| ![Home preview](public/images/theme-previews/preview-home.jpg) | ![Blog Cards preview](public/images/theme-previews/preview-blog-list.jpg) |
 
-O `ogImage` no frontmatter do artigo tem prioridade sobre a geração automática. Com `theme.socialImage.enabled` definido como `false`, o `heroImage` do artigo tem prioridade sobre a imagem padrão do site; a imagem incluída é o último recurso.
-
-### Capturas das páginas
-
-![Home](public/images/theme-previews/preview-home.jpg)
-
-![Blog](public/images/theme-previews/preview-blog-list.jpg)
-
-| Blog · Visualização em lista                                               |
+| Blog · Modo lista                                                          |
 | -------------------------------------------------------------------------- |
 | ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
 
-![Article](public/images/theme-previews/preview-blog-post.jpg)
+| Publicação                                                               |
+| ------------------------------------------------------------------------ |
+| ![Blog post preview](public/images/theme-previews/preview-blog-post.jpg) |
 
-![About](public/images/theme-previews/preview-about.jpg)
+| About                                                            |
+| ---------------------------------------------------------------- |
+| ![About preview](public/images/theme-previews/preview-about.jpg) |
 
-![Paginação do blog](public/images/theme-previews/preview-blog-list-pagination.jpg)
+| Paginação do blog                                                                   | Publicações relacionadas                                                                |
+| ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| ![Paginação do blog](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![Publicações relacionadas](public/images/theme-previews/preview-blog-post-related.jpg) |
 
-![Artigos relacionados](public/images/theme-previews/preview-blog-post-related.jpg)
-
-![Decoder Lab](public/images/theme-previews/preview-decoder.jpg)
+| Decoder Lab                                                      |
+| ---------------------------------------------------------------- |
+| ![Decoder Lab](public/images/theme-previews/preview-decoder.jpg) |
 
 | Decoder Lab · Recursos cypherpunk                                                    |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
-
-## Licença
-
-MIT — [LICENSE](LICENSE).
-
-## Fórmulas matemáticas
-
-Artigos Markdown e MDX aceitam matemática no estilo LaTeX globalmente por padrão. Use `$C_{saved}$` em linha ou uma fórmula entre linhas separadas com `$$`. Não é necessário configurar cada artigo nem instalar plugins adicionais.
-
-```markdown
-Inline: $C_{saved}$
-
-$$
-\frac{a}{b}
-$$
-```
-
-Desative com `theme: { math: { enabled: false } }` em `src/site.config.ts`. Escape dólares ambíguos como `\$`; trechos de código permanecem literais. Ao desativar, voltam as regras normais de MDX, incluindo expressões JavaScript entre chaves.
-
-A renderização ocorre na compilação, com estilos e fontes locais e MathML acessível, sem motor matemático no navegador. Fórmulas longas têm rolagem horizontal. Erros interrompem a compilação indicando origem e causa. Mantenha títulos e descrições em texto simples; fórmulas ficam fora da busca. O suporte é à sintaxe matemática do KaTeX, não a documentos LaTeX completos.
-
-No starter integrado 0.27+, o pacote conecta automaticamente o processador Markdown e as fórmulas. Somente estruturas anteriores a 0.27 precisam da migração inicial; não copie implementações de processadores nem adapters para o projeto novo.
-
-## Estatísticas dos artigos
-
-A contagem é aproximada: caracteres CJK individualmente e o restante principalmente por espaços. Tokens são estimados por `round(max(words, 1) × 1.3)`, não por um tokenizador nem pelo uso real de IA. A partir de 1.000, usa-se uma casa decimal e k. `wordCount` e `tokenCount` no frontmatter substituem valores separadamente; mudar apenas wordCount não recalcula tokens. O código-fonte de fórmulas e MDX pode afetar as estimativas.
-
-## Imagem padrão e IDs curtos de Fragment (0.33.0+)
-
-Adicione site.ogImage ao objeto site existente em src/site.config.ts. Use um caminho a partir de public (/images/share.jpg corresponde a public/images/share.jpg) ou uma URL HTTPS. Em branco, utiliza a imagem Anglefeint incluída de 1200×630. Fragments e todos os links #ID compartilham essa imagem. As imagens específicas e geradas dos artigos mantêm prioridade; com a geração desativada, a capa do artigo também precede a imagem do site. Reconstrua e publique após alterar; plataformas podem manter a prévia em cache.
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { ogImage: '/images/share.jpg' },
-});
-```
-
-new-fragment gera um Nano ID de oito letras e dígitos, diferencia maiúsculas e minúsculas, verifica IDs Markdown de todos os idiomas e repete em caso de colisão. Cada execução compartilha ID e data entre idiomas. São aceitos apenas IDs alfanuméricos com exatamente oito caracteres. UUIDs e IDs longos antigos não são suportados: exclua e publique novamente, sem migração ou compatibilidade com links antigos. Preserve o novo ID publicado; alterá-lo cria outra associação de comentários.
-
-## Prévia de Fragments na página inicial (0.35.0+)
-
-No código atual, ativar `theme.fragments.enabled` adiciona um avatar em pixels abaixo do cabeçalho da página inicial quando há fragmentos no idioma atual. Ao abrir, aparecem os três mais recentes. Cada cartão abre o original; a contagem e a seta inferiores abrem a lista completa. A contagem significa prévias / total no idioma. Imagens e código têm altura limitada, com o excesso recortado. O botão não aparece quando desativado ou sem conteúdo. Não exige nova configuração; requer o tema 0.35.0 ou posterior.
-
-OUTPUT mantém palavras, tokens e o nome opcional do modelo. Tempo de leitura, latency e confidence deixam de ser exibidos, mesmo presentes no frontmatter; os campos antigos continuam aceitos. Texto e painel aparecem imediatamente e permanecem imóveis. A rede de fundo e a faixa luminosa do título permanecem.
-
-## Capas persistentes de Blog List (0.36.0+)
-
-Esta alteração exige o tema 0.36.0 ou posterior e não está na versão publicada 0.35.0. Mantenha os caminhos heroImage ou coloque novos originais em src/assets/blog/covers/originals/ e referencie-os nos artigos. dev/doctor locais geram tamanhos ausentes ou desatualizados. Também é possível executar `npx @anglefeint/astro-theme prepare-covers`; `--check` valida sem gravar. Inclua no Git os originais e todo src/assets/blog/covers/ (manifest.json, generated/). O build e doctor em CI apenas validam e falham para arquivos ausentes, antigos ou modificados; não regeneram na hospedagem nem dependem do cache Astro. A lista usa imagens responsivas e prioriza duas candidatas. WebP qualidade 80 mantém o objetivo anterior, sem garantir pixels sem perdas; originais não mudam e SVG/animações mantêm seu formato.
-
-A capa principal do artigo usa os mesmos arquivos responsivos; o efeito Canvas reutiliza a imagem selecionada sem baixar o original separadamente.
-
-As imagens locais de Fragments compartilham esse armazenamento, incluindo `/images/...` em public e links relativos Markdown/HTML. Dimensões ausentes são preenchidas; a lista e as prévias usam os mesmos arquivos responsivos. Imagens remotas não são convertidas.

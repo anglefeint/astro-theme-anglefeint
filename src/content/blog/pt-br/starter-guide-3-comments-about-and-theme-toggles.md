@@ -1,143 +1,270 @@
 ---
-tags:
-  - anglefeint
-  - starter
-title: 'Guia 3: Recursos opcionais'
-subtitle: 'Música, comentários, Sobre, paginação e opções visuais.'
-description: 'Música, comentários, Sobre, paginação e opções visuais.'
+tags: ['anglefeint', 'starter']
+title: 'Guia 5: ajustar páginas e recursos ao seu gosto'
+subtitle: 'Encontre a área que deseja alterar: início, About, Decoder, redes sociais, rodapé, música e paginação.'
+description: 'Ajustes pontuais de conteúdo e recursos, com padrões reais, alcance, mesclagem e verificação local.'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-12'
-heroImage: ../../../assets/blog/default-covers/matrix-02.webp
+updatedDate: '2026-11-13'
+heroImage: '../../../assets/blog/default-covers/matrix-02.webp'
 ---
 
-## Conteúdo legível por IA
+Esta é a parte 5 de 8 do guia inicial. [Veja a ordem completa](/pt-br/blog/starter-guide-1-configure-your-site/#tutorial-order) · [Consulte a referência por campo](/pt-br/blog/config-reference/).
 
-O build inclui artigos públicos, Fragments e About habilitados em `/llms.txt`, índices e textos completos por idioma. As URLs Markdown dos artigos não mudam. Cada idioma tem `/pt-br/fragments/index.md` e `/pt-br/about/index.md` (substitua o idioma). Fragments reúne todas as páginas públicas, preservando ID, data, corpo e links estáveis `/<locale>/fragments/#ID`. O HTML anuncia o Markdown. Disponível após `npm run build` e no preview; publique todo `dist/`.
+Com o blog funcionando, comece pelo que deseja alterar. Não é necessário preencher todas as opções nem copiar todos os exemplos abaixo.
 
-About exporta a biografia pública, contatos e o painel de texto AI acessível; exclui configurações do terminal, ferramentas e decoração. Não exporta comentários. Páginas/idiomas desativados, conteúdo removido, noindex e canonical externos são excluídos; reconstruir limpa arquivos gerados e links obsoletos. Arquivos do usuário são protegidos e conflitos interrompem o build. Suplementos do site/idioma valem para todos os documentos. JSON-LD inclui o idioma; About usa AboutPage. Sem nova configuração, servidor ou biblioteca UI, nem garantia de indexação ou citação por IA.
+Mescle cada trecho TypeScript no `defineThemeConfig({...})` existente de `src/site.config.ts`. Mantenha apenas um `theme`, um `i18n` e um `social` por objeto, alterando campos existentes e preservando suas outras escolhas. Objetos são mesclados com os padrões; arrays são substituídos inteiramente. Ao acrescentar links, músicas ou itens, inclua também o que deseja manter.
 
-## Música
+Este artigo oferece configurações comuns por objetivo, não um catálogo completo de campos. Encontre a área da página que quer mudar e leia a seção correspondente.
 
-Coloque o áudio em public/music/ e mescle:
+## 1. Ajustar avisos e efeitos da página inicial
+
+Para diferenciar nome do site, título principal e apresentação, veja [instalar o blog e colocar suas informações](/pt-br/blog/starter-guide-1-configure-your-site/). Aqui alteramos avisos e interações iniciais:
 
 ```ts
 theme: {
-  music: { enabled: true, tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }] },
+  home: {
+    showInitialize: true,
+    showFollow: true,
+    showTrace: true,
+  },
+  effects: { enableHomePassage: false },
 },
 ```
 
-Faixas aceitam title, src e artist opcional. Sem faixas, o player fica oculto. A primeira reprodução exige clique. A sessão guarda faixa, posição e volume; retomar depende das permissões do navegador, e pode haver uma pausa entre páginas. Ao terminar a última faixa, a primeira recomeça.
+| Campo                             | Padrão  | Efeito                                                                                                                                          |
+| --------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `theme.home.showInitialize`       | `true`  | Mostra o trecho Initialize/done; false o oculta.                                                                                                |
+| `theme.home.showFollow`           | `true`  | Mostra o trecho Wake Up/Follow; false o oculta independentemente.                                                                               |
+| `theme.home.showTrace`            | `true`  | Mostra PIRATE SIGNAL/TRACE na parte inferior; false oculta essa área.                                                                           |
+| `theme.effects.enableHomePassage` | `false` | Permite uma passagem Matrix de cerca de 8 segundos antes de navegar pelo título do artigo; com redução de movimento, mantém a navegação direta. |
 
-O arquivo completo é baixado antes de tocar; arquivos grandes aumentam espera e memória. Faixas externas exigem CORS. Prefira arquivos locais. enabled: false desativa o player.
+Esses campos não desligam a chuva de código inteira nem trocam as cores globais. `showTrace` também não controla o terminal de telas largas no canto inferior direito.
 
-## Comentários Giscus
+### Alterar o texto do terminal de telas largas
 
-[Guia de comentários](/pt-br/blog/starter-guide-4-giscus-comments/)
-
-## Página Sobre
-
-Os parágrafos e a assinatura de Sobre preservam quebras de linha da configuração: `\n` inicia outra linha e `\n\n` deixa uma linha em branco. Frases longas continuam quebrando automaticamente. É texto simples, sem Markdown ou HTML; não insira `<br>`.
-
-Edite i18n.locales['pt-br'].about: sections (who, what, ethos, now, contactLead, signature), contact (email, githubUrl, githubLabel), sidebar, labels, modals e effects. ethos é uma lista. Edite os demais idiomas separadamente. As ferramentas da página são demonstrações visuais, não serviços reais de IA. Um e-mail vazio oculta o link. theme.enableAboutPage: false remove página e navegação.
-
-### Decoder Lab: uma homenagem aos cypherpunks
-
-O visual do Decoder Lab se inspira no movimento **cypherpunk**, em homenagem às suas contribuições à liberdade humana, à privacidade e ao código aberto. A rede ponto a ponto e o processamento local refletem a ideia de manter ferramentas e dados nas mãos de cada pessoa.
-
-Compartilhamos esta convicção: **privacidade e liberdade não podem depender apenas da boa vontade de quem detém o poder.** Cada pessoa deve poder proteger suas comunicações, escolher o que revelar e a quem, e verificar por conta própria quando possível, sem depositar toda a confiança em governos, plataformas ou outros terceiros.
-
-**“Cypherpunks write code.”** Essa frase de [A Cypherpunk’s Manifesto](https://www.activism.net/cypherpunk/manifesto.html) expressa uma forma de agir: transformar ideais em software utilizável e publicar o código para que outras pessoas possam examiná-lo, usá-lo e desenvolvê-lo. Homenageamos esse compromisso com a autonomia individual por meio da tecnologia.
-
-O Decoder Lab reflete esse espírito com processamento local, código-fonte que pode ser examinado e uma rede ponto a ponto como motivo visual.
-
-A versão completa do **Decoder Lab** fica em `/<locale>/decoder/`: histórico local, interpretação ERC-20/TRC-20 (EVM/HyperEVM/TRON) e inspeção de endereços EVM/TRON/Bitcoin. Abra pelo diálogo do About. Use `theme.enableDecoderPage: false` em `src/site.config.ts` para desativar página e link independentemente do About. Sem RPC, conexão de carteira ou chave API.
-
-## Contagens e recursos
+O padrão é `Knock, knock.`. Você pode definir primeiro uma configuração em inglês para os idiomas sem substituição própria:
 
 ```ts
-theme: {
-  homeLatestCount: 3, blogPageSize: 10,
-  enableAboutPage: true, effects: { enableRedQueen: true },
-  search: { enabled: true }, toc: { enabled: true }, tags: { enabled: true },
-  socialImage: { enabled: true }, footer: { showCredits: true },
-},
-```
-
-Use false para desativar um recurso. enableRedQueen controla somente o monitor do artigo. toc: true no artigo pode prevalecer sobre a configuração global. socialImage desativa geração, mas mantém ogImage manual. Os ambientes são definidos pelos layouts, não por um seletor global.
-
-homeLatestCount controla recentes; blogPageSize controla listas e tags. pagination.windowSize varia de 5 a 21. A entrada de salto aparece quando jump.enabled é true e o total excede showJumpThreshold, inicialmente 12. jump.enterToGo controla Enter.
-
-Os modos são `fixed`, `sequential` e `random`. Com JavaScript, o padrão `random` escolhe novamente as cores do contêiner e dos botões a cada carregamento; os resultados podem se repetir. Sem JavaScript, o HTML gerado mantém uma variante estável do contêiner e cores estáticas nos botões. `style.enabled: false` usa a variante básica sem desativar a paginação.
-
-## Mais idiomas e endereço inicial
-
-Adicione um código em i18n.locales com meta (label, hreflang, ogLocale, enabled, fallback), site.hero, messages e about. Depois crie artigos com --locales. fallback fornece textos de configuração ausentes; não traduz artigos nem mistura idiomas nas listas. O idioma padrão entra na cadeia de fallback quando necessário. Alterar label muda apenas o nome no menu.
-
-defaultLocalePrefix: 'always' redireciona / para a página inicial localizada; 'never' faz o inverso para o idioma padrão. As rotas dos artigos continuam localizadas.
-
-## Rodapé e verificação
-
-footer.showCredits: false oculta os créditos do tema e do Astro, preservando o ano gerado e site.title. site.tagline adiciona texto independente. O antigo valor Built with Astro. é tratado como crédito interno para evitar duplicação.
-
-Em `src/site.config.ts`, `theme.home.showInitialize` controla Initialize/done, `showFollow` controla Wake Up/Follow e `showTrace` controla o status inferior direito. Todos são `true` por padrão; `false` oculta cada parte separadamente.
-
-A opção `theme.footer.links` adiciona uma linha independente ao rodapé: cada item contém `label` e `href`, com pontos entre os links. Omitir a opção ou usar um array vazio oculta a linha. Os rótulos mantêm o texto configurado em todos os idiomas; a linha é independente dos ícones sociais e de `showCredits`.
-
-```ts
-theme: {
-  home: { showInitialize: true, showFollow: true, showTrace: true },
-  footer: {
-    links: [{ label: "Source", href: "https://github.com/your-name/your-repo" }],
+i18n: {
+  locales: {
+    en: { messages: { home: { transmission: '记录想法，也留下一点线索。' } } },
   },
 },
 ```
 
-Os cartões automáticos usam um fundo incluído de chuva de código, terminais e redes de neon, com o nome do seu site, título e autor. O pequeno crédito `Theme by Anglefeint` no canto inferior direito segue `theme.footer.showCredits` (padrão `true`); `false` oculta os créditos do rodapé e da imagem. Compile e publique novamente após alterar. Arquivos `ogImage` personalizados não são modificados. O fundo funciona offline e não adiciona JavaScript ao navegador.
+Para uma versão específica, defina `messages.home.transmission` naquele idioma. A prioridade é configuração atual → configuração inglesa → `Knock, knock.`, sem percorrer toda a cadeia normal de textos. O terminal aparece em telas largas; sua ausência no celular não significa erro. O botão de fechadura abre a prévia do corredor.
 
-Mescle todas as opções no mesmo theme ou i18n. Listas substituem listas anteriores. Teste em desenvolvimento, execute npm run doctor e use npm run preview para conferir a busca. Reconstrua e publique para aplicar mudanças.
+A entrada Oracle de About usa uma prévia independente, sem depender da passagem de artigos da página inicial. Esse texto e os estados inferiores criam atmosfera; não indicam máquinas, rede ou segurança reais.
 
-- [Guia 1: Configure seu blog](/pt-br/blog/starter-guide-1-configure-your-site/)
-- [Guia 2: Escreva e organize conteúdo](/pt-br/blog/starter-guide-2-languages-and-routing/)
-- [Guia 3: Recursos opcionais](/pt-br/blog/starter-guide-3-comments-about-and-theme-toggles/)
+Consulte as definições completas desses campos na [referência da página inicial](/pt-br/blog/config-home/#startup-switches).
 
-## Fórmulas matemáticas
+## 2. Colocar sua apresentação em About
 
-Artigos Markdown e MDX aceitam matemática no estilo LaTeX globalmente por padrão. Use `$C_{saved}$` em linha ou uma fórmula entre linhas separadas com `$$`. Não é necessário configurar cada artigo nem instalar plugins adicionais.
+Abra `/zh/about/` para ver o exemplo em chinês. Corpo e contatos são configurados por idioma, sem editar o template da página:
 
-```markdown
-Inline: $C_{saved}$
-
-$$
-\frac{a}{b}
-$$
+```ts
+i18n: {
+  locales: {
+    zh: {
+      about: {
+        metaLine: '$ profile | building and learning',
+        sections: {
+          who: '我是小林，喜欢开发与写作。',
+          what: '这里记录我的项目和学习笔记。',
+          ethos: ['保持好奇。', '把想法变成可以使用的东西。'],
+          now: '最近在整理个人博客。',
+          contactLead: '欢迎联系我。',
+          signature: '> 谢谢你来这里。',
+        },
+        contact: {
+          email: 'you@example.com',
+          githubUrl: 'https://github.com/yourname',
+          githubLabel: 'GitHub',
+        },
+      },
+    },
+  },
+},
 ```
 
-Desative com `theme: { math: { enabled: false } }` em `src/site.config.ts`. Escape dólares ambíguos como `\$`; trechos de código permanecem literais. Ao desativar, voltam as regras normais de MDX, incluindo expressões JavaScript entre chaves.
+Substitua nome e endereços. `metaLine` é o estado no topo do painel. `who`, `what`, `ethos` e `now` representam apresentação, atividades, princípios e momento atual; `contactLead` introduz o contato e `signature` é a assinatura. `ethos` é um array de strings: um array novo substitui todos os itens antigos.
 
-A renderização ocorre na compilação, com estilos e fontes locais e MathML acessível, sem motor matemático no navegador. Fórmulas longas têm rolagem horizontal. Erros interrompem a compilação indicando origem e causa. Mantenha títulos e descrições em texto simples; fórmulas ficam fora da busca. O suporte é à sintaxe matemática do KaTeX, não a documentos LaTeX completos.
+Parágrafos e assinatura são texto simples: `\n` quebra a linha e `\n\n` deixa uma linha vazia. Não interpretam Markdown nem HTML; não use `<br>`. O exemplo altera apenas chinês simplificado. Outros idiomas precisam de textos próprios, sem tradução automática. Campos ausentes seguem as regras de fallback daquele idioma.
 
-No starter integrado 0.27+, o pacote conecta automaticamente o processador Markdown e as fórmulas. Somente estruturas anteriores a 0.27 precisam da migração inicial; não copie implementações de processadores nem adapters para o projeto novo.
+Os controles de janela permitem fechar, minimizar ou colocar o painel em tela cheia, guardando o estado localmente no navegador. A saída AI e o progresso de download são demonstrações do tema, sem conectar um serviço de IA ao preencher textos. O decodificador processa a entrada localmente no navegador.
 
-$C_{saved}$
+Para dispensar About, use `enableAboutPage: false` dentro de `theme`; o padrão é `true`. As rotas, navegação pública e entradas relacionadas de contato ficam desabilitadas. Links escritos por você no corpo ou rodapé não são apagados automaticamente: confira-os também.
 
-$$
-\frac{a}{b} = x_1 + x_2 + x_3 + x_4 + x_5 + x_6 + x_7 + x_8 + x_9 + x_{10}
-$$
+Outros campos estão na [referência de About](/pt-br/blog/config-about/#about-content). Avisos de comandos e do leitor somente leitura estão na [referência do terminal](/pt-br/blog/config-terminal/#messages).
 
----
+## 3. Ajustar Decoder e os cards de leitura
 
-## Atualizar o tema
+Decoder Lab fica em `/zh/decoder/` no exemplo e vem habilitado. Sua estética homenageia pioneiros cypherpunk e da liberdade digital. O processamento local e a imagem de redes ponto a ponto remetem à autonomia sobre ferramentas e dados.
 
-O pacote mantém páginas padrão, valores padrão, traduções e funções de build. Artigos, `src/site.config.ts`, músicas, imagens e páginas próprias ficam no projeto.
+Ele decodifica texto, interpreta chamadas de tokens suportadas e verifica formatos de endereço, sem RPC, conexão de carteira ou API Key. Não consulta saldo, executa transações nem comprova propriedade; inserir calldata não verifica o comportamento real de um contrato.
 
-No novo starter de integração com npm, execute na raiz o comando abaixo. Ele verifica compatibilidade, faz backup dos arquivos de dependências, instala uma versão exata e executa doctor. Em caso de falha, restaura os arquivos e tenta reinstalar as dependências anteriores. Publique pelo fluxo habitual; não há deploy automático.
+`enableDecoderPage: false` em `theme` desliga a página e suas entradas fornecidas pelo tema. Desabilitar About não desliga Decoder nem o contrário. Links personalizados continuam sob sua responsabilidade.
+
+Textos de homenagem e cards são definidos por idioma. Por exemplo, para substituir a lista em chinês:
+
+```ts
+i18n: {
+  locales: {
+    zh: {
+      messages: {
+        decoderPage: {
+          readings: {
+            tribute: '思想与代码，让隐私和自由更进一步。',
+            links: [
+              { title: '我的阅读资料', href: 'https://example.com/', author: '作者名', year: '2026' },
+            ],
+          },
+        },
+      },
+    },
+  },
+},
+```
+
+`tribute: ''` oculta a homenagem, `links: []` oculta os cards e omitir mantém os padrões. Cada item recebe `title` e `href`; `author`, `year` e `cover` são opcionais. `cover` aceita um nome interno, como `privacy-code` ou `bitcoin`, um caminho public ou uma imagem HTTPS. Sem ele, o card não tem imagem.
+
+`links` substitui a lista inteira, sem acrescentar só um card. Inclua os antigos se quiser mantê-los. São links para materiais escolhidos por você; o tema não extrai, republica nem valida automaticamente os recursos externos.
+
+Tipos de campos, capas internas e lista padrão estão na [referência de Decoder](/pt-br/blog/config-decoder/#readings).
+
+## 4. Ajustar redes sociais e rodapé
+
+As contas ficam em `social.links`, compartilhadas pelo topo e rodapé na ordem do array. Para um ícone próprio, coloque primeiro `public/icons/community.svg`:
+
+```ts
+social: {
+  links: [
+    { href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' },
+    { href: 'https://example.com/community', label: '我的社区', iconSrc: '/icons/community.svg' },
+  ],
+},
+```
+
+`iconSrc` aceita SVG, PNG e WebP locais de public, com caminho iniciado em `/`, sem URL remota, query, hash ou caracteres codificados. Tem prioridade sobre `icon` e preserva as cores. Sem ambos, aparece o texto. `label` fornece o nome acessível. Arquivo ausente ou nome de ícone interno não suportado causa erro.
+
+`rel` é opcional e informa relações, por exemplo `rel: 'me'` para sua conta Mastodon. O tema sempre mantém `noopener noreferrer` e não adiciona `me` automaticamente por plataforma. A verificação de identidade é feita pela plataforma: publique o site e informe no perfil o endereço real de uma página com o link de retorno. O tema não garante o resultado.
+
+No celular, as redes do topo ficam ocultas, mas as do rodapé permanecem. `links: []` mantém três ícones provisórios sem clique, não oculta toda a região.
+
+### Créditos, texto e links adicionais do rodapé
+
+```ts
+site: { tagline: '保持好奇，持续记录。' },
+theme: {
+  footer: {
+    showCredits: true,
+    links: [{ label: '项目源码', href: 'https://github.com/yourname/your-project' }],
+  },
+},
+```
+
+- `site.tagline` é texto simples próprio; vazio, fica oculto e não é traduzido automaticamente. O antigo padrão `Built with Astro.` é tratado como crédito interno para evitar duplicação.
+- `theme.footer.showCredits` é `true` por padrão e controla os créditos do tema e do Astro. Desligar preserva copyright, texto próprio e links. Também controla o crédito do tema nas imagens automáticas de artigos, sem alterar imagens próprias.
+- `theme.footer.links` é um array vazio por padrão, exibido entre copyright e créditos, independente dos ícones sociais. Os rótulos mantêm seu texto, sem tradução automática nem dependência de showCredits.
+
+O copyright usa o nome global, com ano definido no build. Depois de mudar textos, créditos ou resultados ligados ao ano, faça novo build e publicação.
+
+Caminhos de ícones, links e créditos estão nos [campos sociais](/pt-br/blog/config-site-chrome/#social-fields) e de [rodapé](/pt-br/blog/config-site-chrome/#footer).
+
+## 5. Habilitar o player de música
+
+Coloque primeiro seu áudio em `public/music/my-song.mp3` e mescle:
+
+```ts
+theme: {
+  music: {
+    enabled: true,
+    tracks: [{ title: '我的一首歌', artist: '作者', src: '/music/my-song.mp3' }],
+  },
+},
+```
+
+Música vem desabilitada, sem faixas incluídas. Cada faixa exige `title` e `src`; `artist` é opcional. Uma lista vazia não mostra o player. Ao adicionar músicas, mantenha os itens desejados no array. A URL omite `public`, não aceita caminhos do computador nem páginas de compartilhamento. Links HTTPS diretos são suportados, sem espaços ou barras invertidas. Título vazio ou formato de endereço inválido causa erro; formato válido não prova que o arquivo está acessível.
+
+O player aparece nas páginas com o layout comum, sem opção por página. Cada página nova começa recolhida. Na primeira visita, PLAY inicia o carregamento. Ao terminar, passa à próxima faixa; a última volta à primeira. No celular, abrir o player oculta temporariamente o botão de voltar ao topo.
+
+A sessão da aba guarda faixa, posição e volume. Se tocava antes, navegar ou recarregar tenta retomar; uma pausa manual permanece pausada. Não é reprodução sem interrupções, e o navegador pode bloquear o início automático. Sem armazenamento, a reprodução manual continua, mas sem retomada de sessão.
+
+A implementação baixa a faixa inteira e a reproduz como Blob, permitindo buscar na posição sem depender de Range do servidor. Arquivos grandes aumentam espera e memória. Servidores externos precisam permitir CORS; arquivos public da mesma origem não exigem esse ajuste. Confira a URL real e use `theme.music.enabled: false` quando não quiser música.
+
+Campos de faixas, mensagens e limites de retomada estão na [referência do player](/pt-br/blog/config-music/#track-fields).
+
+## 6. Ajustar quantidades e paginação
+
+```ts
+theme: {
+  homeLatestCount: 3,
+  blogPageSize: 10,
+  pagination: {
+    windowSize: 7,
+    showJumpThreshold: 12,
+    jump: { enabled: true, enterToGo: true },
+    style: { enabled: true, mode: 'fixed', variants: 9, fixedVariant: 1 },
+  },
+},
+```
+
+`homeLatestCount` vale 3 por padrão e controla os artigos recentes iniciais. `blogPageSize` vale 10 e controla artigos por página do blog e das tags. Use inteiros positivos razoáveis. Eles não alteram a prévia de até três Fragments; a lista completa usa `theme.fragments.pageSize`.
+
+`windowSize` vale 7, limita a janela de números a 5–21 ao renderizar e não define itens por página. O salto exige `jump.enabled` true e total de páginas maior que `showJumpThreshold`. Por padrão aparece acima de 12 páginas. `enterToGo` permite ou não saltar com Enter.
+
+O padrão de estilo é `random`; o exemplo escolhe `fixed` para fixar uma variante. `sequential` segue a ordem das páginas. `random` sorteia de novo na inicialização do cliente, podendo repetir. Sem JavaScript, permanece o estilo estático do build. `variants` limita a quantidade de variantes a 1–12; `fixedVariant` é limitado ao intervalo atual.
+
+`style.enabled: false` usa o estilo básico, sem remover a paginação. Blog, tags e Fragments compartilham essas opções; confira os efeitos nas três áreas.
+
+Intervalos, variantes e mensagens estão na [referência de Blog List e tags](/pt-br/blog/config-blog-list/#pagination-window).
+
+## 7. Desabilitar só o que não precisa
+
+A tabela mostra o alcance das opções. Configurar um recurso não exige desligar todos os demais.
+
+| Caminho                        | Padrão | Efeito de false                                                           |
+| ------------------------------ | ------ | ------------------------------------------------------------------------- |
+| `theme.enableAboutPage`        | `true` | Não gera About e oculta as entradas relacionadas do tema.                 |
+| `theme.enableDecoderPage`      | `true` | Não gera Decoder e oculta as entradas relacionadas do tema.               |
+| `theme.effects.enableRedQueen` | `true` | Oculta o monitor Red Queen do artigo, mantendo os demais efeitos AI.      |
+| `theme.search.enabled`         | `true` | Desabilita a entrada da busca de artigos e a geração de índices.          |
+| `theme.toc.enabled`            | `true` | Desabilita o sumário padrão; `toc: true` no artigo ainda pode prevalecer. |
+| `theme.tags.enabled`           | `true` | Desabilita entradas e páginas de tags, sem apagar artigos.                |
+| `theme.math.enabled`           | `true` | Desabilita o processamento matemático Markdown/MDX.                       |
+| `theme.socialImage.enabled`    | `true` | Desliga imagens automáticas de artigos; ogImage manual continua válido.   |
+
+Por exemplo, mescle `theme: { effects: { enableRedQueen: false } }` para desligar só o monitor, sem mudar busca, música ou About.
+
+Comentários e Fragments vêm desabilitados e não precisam ser ativados para outros recursos. Quando precisar, consulte [Giscus](/pt-br/blog/starter-guide-4-giscus-comments/) e [publicar um Fragment](/pt-br/blog/starter-guide-5-fragments/). Sumário, fórmulas e imagens de compartilhamento estão em [escrever o primeiro artigo](/pt-br/blog/starter-guide-2-languages-and-routing/) e no [guia de imagens](/pt-br/blog/starter-guide-images/).
+
+## 8. Criar uma página própria para projetos
+
+Para apresentar projetos separadamente, execute na raiz:
 
 ```bash
-npx @anglefeint/astro-theme@latest upgrade
+npm run new-page -- projects
 ```
 
-Projetos anteriores a 0.27 precisam migrar uma vez para um starter novo. Crie-o em outra pasta, copie artigos e recursos e combine os valores pessoais no novo site config. Não copie rotas padrão antigas, adapters ou helpers defaults/schema/runtime. Preserve slugs, caminhos de idiomas, URLs de músicas/imagens e configurações de hospedagem.
+O comando cria `src/pages/[lang]/projects.astro`, com layout `base` por padrão, e gera `/<语言代码>/projects/` para os idiomas ativos, como `/en/projects/` ou `/zh/projects/`. Edite o arquivo Astro para preencher o corpo. Ele não traduz nem acrescenta uma entrada ao menu automaticamente. Ofereça um link no conteúdo ou em links do rodapé.
 
-O atualizador automático suporta apenas npm e rejeita lockfiles pnpm/yarn/bun. `--check` verifica sem escrever; `--to 0.27.1` escolhe a versão. Veja o [guia](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md) e [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases).
+Use `--theme` quando quiser um estilo específico. Por exemplo, `npm run new-page -- portfolio --theme cyber` cria outra página Cyberpunk. As opções `base`, `ai`, `cyber`, `hacker` e `matrix` alteram o layout daquela página, não as quatro atmosferas globais. Use letras inglesas minúsculas, números e hífens no slug; caminhos aninhados como `projects/labs` são aceitos. Evite rotas padrão do pacote. Arquivos existentes geram erro: não execute as cinco variantes de tema para o mesmo caminho.
 
-Se a atualização falhar, não publique `dist/`: restaurar dependências não restaura o build anterior. Resolva o erro e execute `npm run doctor` com sucesso antes do deploy. Com pnpm, confira a compatibilidade e atualize manualmente com `pnpm add @anglefeint/astro-theme@latest` e `pnpm run doctor`, mantendo seu lockfile.
+## 9. Conferir depois de salvar
+
+Abra em dev as páginas alteradas e confira textos, links e entradas de recursos. Se variáveis antigas estiverem sobrescrevendo valores, siga o [diagnóstico do primeiro guia](/pt-br/blog/starter-guide-1-configure-your-site/). Ícones ausentes, áudios inacessíveis e links externos devem ser investigados pelos caminhos e pela rede, não sobrescrevendo toda a configuração repetidamente.
+
+Antes de publicar, pare dev e execute:
+
+```bash
+npm run doctor
+npm run preview
+```
+
+doctor já prepara arquivos locais, verifica e constrói. Após o sucesso, não repita check ou build imediatamente. A busca precisa ser conferida no preview do build; preview não publica. Atualize o site enviando todo `dist/`. Salvar a configuração local não muda o site online.
+
+## Navegação e referência de configuração
+
+[Anterior: publicar um Fragment](/pt-br/blog/starter-guide-5-fragments/) · [Próximo: permitir comentários dos leitores](/pt-br/blog/starter-guide-4-giscus-comments/) · [Índice dos oito guias](/pt-br/blog/starter-guide-1-configure-your-site/#tutorial-order).
+
+Campos relacionados: [página inicial](/pt-br/blog/config-home/), [About](/pt-br/blog/config-about/), [terminal](/pt-br/blog/config-terminal/), [Decoder](/pt-br/blog/config-decoder/), [navegação, redes e rodapé](/pt-br/blog/config-site-chrome/), [player](/pt-br/blog/config-music/) e [listas/paginação](/pt-br/blog/config-blog-list/). Consulte caminhos completos, valores padrão e limites no [índice da referência](/pt-br/blog/config-reference/).

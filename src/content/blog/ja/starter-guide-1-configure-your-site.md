@@ -1,163 +1,209 @@
 ---
 tags: ['anglefeint', 'starter']
-title: '利用ガイド 1：ブログを立ち上げる'
-subtitle: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
-description: 'インストールからサイト情報と言語の設定、サンプル記事の置き換え、ビルドと公開まで。'
+title: 'ユーザーガイド1：ブログをインストールして自分の情報に変える'
+subtitle: 'ブログをローカルで起動し、自分の情報に変え、既定の手順で記事を作成してから、必要に応じて言語やホームの文面を調整します。'
+description: 'インストール、個人情報の設定、既定の記事作成、ローカル確認まで。ホームの文面と言語は必要に応じて調整し、既存プロジェクトの更新方法は記事末尾で説明します。'
 pubDate: '2026-03-07'
-updatedDate: '2026-11-12'
+updatedDate: '2026-11-14'
 heroImage: '../../../assets/blog/default-covers/cyber-02.webp'
 ---
 
-## AI が読み取れるコンテンツ
+入門ガイドの第1 / 8回です。[全ガイドの順序](/ja/blog/starter-guide-1-configure-your-site/#tutorial-order) · [設定リファレンスを項目別に調べる](/ja/blog/config-reference/)。
 
-ビルド時に公開記事、有効な Fragments と About を `/llms.txt`、言語別索引、全文ファイルへ含めます。記事の Markdown URL は変わりません。各言語に `/ja/fragments/index.md` と `/ja/about/index.md` を生成します（言語コードは置き換えてください）。Fragments は公開された全ページをまとめ、各 ID、公開日時、本文、安定した `/<locale>/fragments/#ID` リンクを保持します。HTML から Markdown を発見できます。`npm run build` 後と preview で利用でき、`dist/` 全体を公開します。
+この記事では、自分のパソコンでブログを起動し、サイト名、ホームの紹介文、連絡先を変更して、記事を書く場所を確認します。音楽、コメント、ページのカスタマイズは、必要になってから設定できます。
 
-About は公開プロフィール、連絡先、開ける AI テキストポップアップを出力し、端末設定・ツール・装飾 UI は除外します。コメントは出力しません。無効なページ／言語、削除済み内容、noindex、外部 canonical は除外し、再ビルドで古い生成物と発見リンクを削除します。ユーザーの独自ファイルは保護し、競合時はビルドを停止します。サイト／言語の補足情報は全出力に適用します。JSON-LD に言語を含め、About は AboutPage を使います。新しい設定・サーバー・UI 依存は不要で、AI の登録や引用は保証しません。
+すでに Anglefeint のプロジェクトがある場合は、そのプロジェクトの設定を直接編集してください。テーマの更新は末尾の「既存プロジェクトの更新」を参照し、ブログを新しくインストールし直す必要はありません。
 
-## まずは最小限の設定から
+<a id="tutorial-order"></a>
 
-このガイドは対応する starter を対象とし、サイトの準備、記事の執筆、任意機能の順で説明します。最初からすべての設定を理解する必要はありません。サイト情報と内容を自分のものに置き換え、ほかは既定値のままで始められます。このガイド自体も通常のブログ記事なので、目次やコードコピー、検索を試せます。
+## 8本のガイドの読み方
 
-## 1. インストールしてローカルで開く
+初めて使う場合は、次の順序で読み進められます。Fragments、コメント、多言語の調整は任意であり、インストールを完了するために有効にする必要はありません。このガイドを読むためにプロジェクトの既定言語を変更する必要もありません。言語を変えたいときに該当章を参照してください。あとで特定の項目だけを変更したいときは、[設定リファレンス総合案内](/ja/blog/config-reference/)から探せます。
 
-Node.js 22.12.0 以降を用意して実行します。
+| 順序 | ガイド                                                                                       | できるようになること                                              |
+| ---- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| 1    | [ブログをインストールして自分の情報に変える](/ja/blog/starter-guide-1-configure-your-site/)  | ブログを起動し、個人情報と既定の操作を確認します。                |
+| 2    | [最初の記事を書く](/ja/blog/starter-guide-2-languages-and-routing/)                          | 記事を作成し、日付、見出し、タグ、コード、数式を使います。        |
+| 3    | [記事と Fragments に画像を追加する](/ja/blog/starter-guide-images/)                          | 元画像を配置し、カバーを設定して派生画像を生成・コミットします。  |
+| 4    | [Fragment を投稿する](/ja/blog/starter-guide-5-fragments/)                                   | Fragment を作成し、安定した ID を保ち、画像やコードを追加します。 |
+| 5    | [ページと機能を自分好みに変える](/ja/blog/starter-guide-3-comments-about-and-theme-toggles/) | ページ、音楽、ページ分割を調整し、独自ページを作成します。        |
+| 6    | [読者がコメントできるようにする](/ja/blog/starter-guide-4-giscus-comments/)                  | Giscus を接続し、記事・Fragments・翻訳間の議論の対応を選びます。  |
+| 7    | [より多くの言語の読者に届ける](/ja/blog/starter-guide-languages/)                            | 必要な言語を選び、ホームの URL を調整し、翻訳を追加します。       |
+| 8    | [自分のドメインでブログを公開する](/ja/blog/starter-guide-deployment/)                       | ビルド結果を確認し、全ファイルを配備してドメインを設定します。    |
+
+各記事の冒頭や末尾からいつでもこの目次に戻り、次の手順や必要な内容を探せます。
+
+## 1. インストールしてブログを開く
+
+Node.js 22.12.0 以降と npm を用意します。ターミナルで次の2つのコマンドを実行し、バージョン番号が表示されることを確認してください。
+
+```bash
+node --version
+npm --version
+```
+
+プロジェクトを置きたいディレクトリでブログを作成します。次のコマンドは `my-blog` フォルダーを作成しますが、依存関係は自動インストールしません。
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
-```
-
-このコマンドは依存関係をインストールせずに `my-blog` を作成します。親ディレクトリで実行し、名前を変える場合は作成コマンドと cd の両方を変更してください。次にインストールして起動します。
-
-```bash
 cd my-blog
 npm install
 npm run dev
 ```
 
-ターミナルに表示される URL を開きます。ポートは使用状況で変わることがあります。pnpm の場合も同じ作成コマンドを使い、その後は `pnpm install` と `pnpm dev` を実行します。
+`my-blog` は任意のディレクトリ名に変更できます。その場合は `cd` の後ろも同じ名前にしてください。ターミナルに表示されたローカル URL を開きます。使用中のポートがあると変更されるため、ポート番号を決めつけないでください。開発サーバーは実行したままにし、終了するときは `Ctrl+C` を押します。
 
-## 2. サイト名・トップページの紹介・リンクを変更する
+以降のコマンドはすべて、`package.json` のあるプロジェクトルートで実行します。既存プロジェクトを再度開くときは、そのディレクトリで `npm run dev` を実行すれば十分です。`npm install` が必要なのは、初回や依存関係を変更したときです。
 
-`src/site.config.ts` を開きます。import と export は残し、`defineThemeConfig({...})` 内のオブジェクトを編集します。以下は設定宣言全体の例です。ドメイン、名前、文章、リンクを自分のものに置き換えてください。
+この記事は npm を使用します。新規 pnpm プロジェクトでは `pnpm install`、`pnpm dev` に置き換えられますが、末尾で説明する自動更新ツールは現在 npm のみに対応します。1つのプロジェクトでは同じパッケージマネージャーを使い続けてください。
+
+## 2. サイト情報とホームの文面を自分のものにする
+
+インストール済みプロジェクトには `src/site.config.ts` があります。そのファイルを直接編集し、設定ファイルや設定オブジェクトを新しく作る必要はありません。starter は `site` を省略してテーマの既定値を使うため、既存の `defineThemeConfig({ ... })` 内に次の項目を追加します。すでに `site` がある場合はその中を編集し、ほかの個人設定を残して同名のオブジェクトを重複させないでください。既存の import、export、その他の内容は維持します。
 
 ```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: {
-    title: 'My Blog',
-    description: 'My notes and projects.',
-    url: 'https://example.com',
-    author: 'Your Name',
-    tagline: '',
-  },
-  i18n: {
-    defaultLocale: 'ja',
-    locales: {
-      ja: {
-        site: { hero: 'Welcome to my blog.' },
-        messages: { siteDescription: 'My notes and projects.' },
-      },
-    },
-  },
-  social: {
-    links: [{ href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' }],
-  },
-});
+site: {
+  title: '小林的博客',
+  description: '记录开发、阅读和生活。',
+  url: 'https://example.com',
+  author: '小林',
+  tagline: '保持好奇，持续记录。',
+},
 ```
 
-`site.title` はサイト名です。`site.url` には公開先の完全な URL を指定します。canonical、RSS、sitemap、共有画像の URL に影響します。`site.author` は記事の既定の著者、`site.tagline` はフッターの文言です。
+これは既存オブジェクトの内部メンバーだけを示したもので、新しい設定ファイル全体ではありません。名前、文面、ドメインを自分の情報に置き換えてください。既定言語や有効な言語一覧は変更されません。`site.url` には `https://your-domain.example` のような公開時のドメイン URL を指定し、ローカルプレビューや個別記事の URL を指定しないでください。まだドメインがなければ例のまま進め、公開前に変更できます。現在のテーマはドメインルートへの配置を前提としており、Astro の `base` を設定するだけではサブディレクトリ配置に対応しません。
 
-フッターは著作権、テーマ/Astro のクレジット、任意の `site.tagline` を別々に表示し、その下にソーシャルアイコンを配置します。クレジットはページの言語に従い、独自の文言は全言語でそのまま表示します。空の文言はスペースを取らず、長文はモバイルで折り返します。既存の設定と `PUBLIC_SITE_TAGLINE` による上書きは維持され、移行は不要です。
+各項目の役割は次のとおりです。
 
-トップページの大きな見出しの下に出る紹介文は、その言語の `site.hero` で設定します。`site.description` はサイトの既定の説明ですが、トップページのメタ説明では言語別の `messages.siteDescription` が優先されます。`site.description` だけを変えても、画面の紹介文は変わりません。
+| 項目               | 実際の役割                                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `site.title`       | サイト名。ページタイトル、ナビゲーション、フッターなどに使われ、ホームの見出しを別途指定しない場合の最終フォールバックにもなります。 |
+| `site.author`      | 著者を個別指定していない記事の既定著者。                                                                                             |
+| `site.url`         | canonical、RSS、sitemap、共有画像などの出力に使うサイト URL。                                                                        |
+| `site.description` | サイト全体の既定説明。ホームでは解決済みの `messages.siteDescription` が優先され、空の場合だけこの値を使います。                     |
+| `site.tagline`     | フッターの独自文面。`''` で非表示にできます。テーマと Astro のクレジットは別のスイッチで制御します。                                 |
 
-ソーシャルアイコンは `github`, `twitter`, `mastodon`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line` に対応します。独自の SVG/PNG/WebP は `public/icons/` に置き、`iconSrc: "/icons/community.svg"` を指定します。`icon` より優先され、元の色を保ちます。両方省略するとテキストになります。パスの制約と例は [README](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ja.md) を参照してください。`social: { links: [] }` でリンクを空にできます。空の場合もヘッダーとフッターに Mastodon、Twitter、GitHub のクリックできないプレースホルダーアイコンが表示されます。項目を設定すると、設定した項目だけが表示されます。`.env` の `PUBLIC_SITE_TITLE`、`PUBLIC_SITE_URL` などの上書き値は設定ファイルより優先されます。変更が反映されない場合はこちらも確認してください。
+### 必要に応じて各言語のホームの文面を変える
 
-0.27 以降の統合 starter では、テーマパッケージがプロジェクト直下の `.env` またはビルド環境の `PUBLIC_SITE_URL` を読み、`site.url` より優先して canonical、RSS、sitemap、共有画像の URL に使います。変更後は開発サーバーを再起動するか再ビルドしてください。starter の `astro.config.mjs` の統合エントリーは残します。ローカルの URL 解決スクリプトやコピーしたアダプターは不要です。0.27 より前の構成はアップグレードガイドに従って一度移行します。
-
-## 3. 使用する言語だけを残す
-
-既定では `en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant` が有効です。最初の例は既定言語を `ja` にするだけで、ほかの言語は無効になりません。日本語だけにするなら、紹介文の設定を残しつつ、既存の `i18n` に以下を統合します。
+ホームに表示する紹介文とメタ説明は、対応する言語の設定で指定します。次はプロジェクト既定の英語ホームの例です。既存の設定オブジェクトに `i18n` を追加・統合し、同名のオブジェクトがあれば該当項目だけを変更してください。
 
 ```ts
 i18n: {
-  defaultLocale: 'ja',
   locales: {
-    en: { meta: { enabled: false } },
-    ja: { meta: { enabled: true } },
-    ko: { meta: { enabled: false } },
-    es: { meta: { enabled: false } },
-    zh: { meta: { enabled: false } },
-    'pt-br': { meta: { enabled: false } },
-    de: { meta: { enabled: false } },
-    ru: { meta: { enabled: false } },
-    'zh-hant': { meta: { enabled: false } },
+    en: {
+      site: { hero: 'Notes on projects, reading and everyday life.' },
+      messages: { siteDescription: 'Personal projects and learning notes by Lin.' },
+    },
   },
 },
 ```
 
-設定は既定値と深くマージされます。言語を省略しても削除にはならず、`meta.enabled: false` の明示が必要です。既定言語は常に有効です。言語設定はメニューとルートを制御しますが、記事の翻訳やファイルの削除は行いません。`/ja/` で言語メニューを確認してください。
+`i18n.locales.en.site.hero` は英語ホームの大見出しの下に表示する紹介文、`messages.siteDescription` は SEO 説明を制御します。前者を `''` にすると表示文だけを空にでき、後者は消えません。en をほかの有効な言語コードに変えるとその言語の文面を変更できます。既定言語の変更や他言語への自動翻訳は行いません。
 
-## 4. サンプルを置き換えて最初の記事を書く
+ホームの大見出しは既定でサイト名を使います。別の見出しにする場合は、同じ `en.site` 内に `homeTitle` を追加し、既存の `hero` を残してください。
 
-記事は `src/content/blog/<言語コード>/` にあります。各既定言語の `welcome-to-anglefeint.md` と 3 つの `starter-guide-*.md` は、このガイドを含むサンプル記事です。バックアップ後、不要なサンプル Markdown を削除しても、手元の資料として残しても構いません。設定ディレクトリや、残す記事が参照する画像は削除しないでください。
+```ts
+site: {
+  homeTitle: "Lin's Digital Garden",
+  hero: 'Notes on projects, reading and everyday life.',
+},
+```
+
+ここでの `site` は `i18n.locales.en` 内のもので、最上位の `site` ではありません。`homeTitle` が変えるのはホームの表示見出しだけで、ブラウザーのタイトル、ナビゲーション、フッター、RSS のサイト名は変わりません。未指定または空白のみの場合は言語のフォールバックチェーンをたどり、最後にサイト名を使います。全項目は[ホームの設定リファレンス](/ja/blog/config-home/#home-title)を参照してください。
+
+### 自分のソーシャルリンクを設定する
+
+既存の設定オブジェクトに `social.links` を追加または編集し、`yourname` を実際のアカウントに置き換えます。
+
+```ts
+social: {
+  links: [{ href: 'https://github.com/yourname', label: 'GitHub', icon: 'github' }],
+},
+```
+
+各リンクには `href`（移動先 URL）と `label`（アクセシブルな名前）を指定し、`icon` は任意の内蔵アイコン名です。対応する内蔵名は `github`、`twitter`、`mastodon`、`youtube`、`bluesky`、`linkedin`、`discord`、`telegram`、`instagram`、`facebook`、`whatsapp`、`line` です。
+
+`social.links` はヘッダーとフッターで共有され、配列順に表示します。スマートフォン幅ではヘッダーのリンクが隠れますが、フッターには残ります。配列は既定リストを丸ごと置き換えるため、追加時には残したい項目も含めてください。今はアカウントを置かない場合、`social: { links: [] }` にできます。空リストではクリックできない3個のプレースホルダーアイコンが残り、領域全体は非表示になりません。
+
+### 変更が反映されない場合
+
+プロジェクトルートの `.env`、適用される `.env.*`、ホスティングサービスのビルド環境に、古い上書き値がないか確認してください。
+
+- `PUBLIC_SITE_TITLE` はサイト名を上書きします。
+- `PUBLIC_SITE_AUTHOR` は既定著者を上書きします。
+- `PUBLIC_SITE_URL` はサイト URL を上書きします。
+- `PUBLIC_SITE_DESCRIPTION` はサイト全体の説明を上書きしますが、空でないホームの言語別説明は置き換えません。
+- `PUBLIC_SITE_TAGLINE` はフッターの独自文面を上書きします。
+
+上書きが不要なら対応する変数を削除し、設定ファイルにまとめて構いません。テーマの利用のために `.env` を新設する必要はありません。環境変数を変更したら開発サーバーを再起動してください。公開済みサイトには再ビルドと再配備が必要であり、ローカルファイルを保存するだけではオンラインのページは変わりません。
+
+## 3. 既定言語を保ち、必要に応じて調整する
+
+初期状態では `en`、`ja`、`ko`、`es`、`zh`、`pt-br`、`de`、`ru`、`zh-hant` の9言語が有効で、既定言語は `en` です。`/` は `/en/` に移動します。日本語のガイドを読むためにブログを日本語に変更したり、最初の記事を書くためにほかの言語を無効にしたりする必要はありません。
+
+既定言語の変更、使用言語の絞り込み、既定言語のホームをルート `/` にする方法は、[第7回：より多くの言語の読者に届ける](/ja/blog/starter-guide-languages/)を参照してください。これらは任意の設定です。言語設定を省略しても無効にならず、明示的な `meta.enabled: false` が必要です。既定言語は常に有効です。言語を無効にしても記事ファイルは削除されません。
+
+言語設定の型、既定値、URL との関係は[言語の設定リファレンス](/ja/blog/config-languages/#registry)を参照してください。記事やホーム文面の自動翻訳は行いません。続く既定の作成手順では、どの言語のファイルが生成されたか確認しましょう。
+
+## 4. サンプルを自分の記事に置き換える
+
+記事は `src/content/blog/<locale>/` にあります。 starter の `welcome-to-anglefeint.md`、`starter-guide-*.md`、`config-*.md` は通常の記事で、歓迎サンプル、8本のガイド、設定辞典に対応します。バックアップや Git コミット後、言語ごとに必要な内容を残すか削除できます。歓迎記事とガイドだけを消しても辞典は残ります。他の内容が参照する画像は削除しないでください。
+
+既定の手順で記事を作成します。
 
 ```bash
 npm run new-post -- my-first-post
 ```
 
-現在有効な言語ごとに同名の記事ファイルを作成します。本文の自動翻訳はしません。生成された `src/content/blog/ja/my-first-post.md` のタイトル、説明、本文を書き換え、`/ja/blog/my-first-post/` を開きます。記事の項目、画像、タグはガイド 2 で説明します。
+`--locales` も `ANGLEFEINT_LOCALES` も指定しなければ、有効な全言語に同名のひな形を生成します。初期設定なら9ファイルです。自動翻訳は行わず、同名の既存ファイルは上書きせずにスキップします。
 
-## 5. チェック・ビルド・公開
+`src/content/blog/<locale>/my-first-post.md` を開き、タイトル、説明、本文を記入します。URL は `/<locale>/blog/my-first-post/` です。英語は en ディレクトリと `/en/blog/my-first-post/`、簡体中国語は zh と `/zh/blog/my-first-post/` に対応します。未完成で公開しないひな形は公開前にコンテンツディレクトリの外へ移してください。自動的に隠れる下書きではありません。
 
-開発中は `npm run dev` を使います。公開前にプロジェクトディレクトリで次を実行します。
+特定の言語だけに作成する場合は `npm run new-post -- my-first-post --locales zh`、複数言語なら `--locales en,zh` を使えます。これらは選択肢であり、すべての例を繰り返す必要はありません。`--locales` 自体は言語を有効にしません。
+
+記事項目、カバー、コード、数式の詳細は[記事とコンテンツの管理](/ja/blog/starter-guide-2-languages-and-routing/)を参照してください。
+
+## 5. ローカルで結果を確認する
+
+開発ページに戻り、サイト名とホームの紹介文、言語メニュー、自分の記事、ソーシャルリンクのアカウントが意図どおりか確認します。他言語の記事は、対応する言語が有効な場合だけルートが生成されます。
+
+ビルド結果の確認前に `Ctrl+C` で開発サーバーを止め、次を実行します。
 
 ```bash
 npm run doctor
 npm run preview
 ```
 
-`doctor` はプロジェクトを検査してビルドし、検索索引と既定の共有画像を含む静的出力を `dist/` に生成します。成功後に check や build を追加実行する必要はありません。`preview` はローカル確認用で、公開はしません。Ctrl+C で停止します。
+ローカルの `doctor` は、不足・期限切れのレスポンシブ画像を生成し、Astro のチェックとサイトのビルドを行います。About が有効なら、その実行時設定も確認します。成功後に `check` や `build` をすぐ繰り返す必要はありません。失敗したら先にターミナルのエラーを解決して `doctor` を再実行し、失敗後に残った `dist/` を公開しないでください。
 
-静的ホスティングのビルドコマンドを `npm run build`、出力ディレクトリを `dist` に設定し、先に `site.url` を実際のドメインに変更します。リポジトリ接続やドメイン、公開手順は [Astro のデプロイガイド](https://docs.astro.build/en/guides/deploy/) の各サービスの説明を参照してください。公開後はトップページ、記事、言語切り替え、検索、`/<言語コード>/rss.xml` を確認します。記事や設定の変更後は再ビルドと再デプロイが必要です。
+`preview` はビルド済みの `dist/` 内の静的サイトを開きます。ターミナルに表示された URL にアクセスしてください。インターネットへの公開は行いません。記事検索はビルド後のプレビューで確認する必要があり、`dev` にリアルタイム全文検索はありません。`Ctrl+C` でプレビューを停止します。
 
-Cloudflare は任意です。各サービスの設定と現在のルート公開の制約は [README のデプロイ手順](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/README.ja.md#deployment)を参照してください。
+公開時のホスティングサービスのビルドコマンドは `npm run build`、出力先は `dist` で、その全ファイルを配備します。ローカル画像の追加・変更後は、dev または doctor をローカルで実行し、元画像と生成された `src/assets/blog/covers/` 全体をコミットしてください。配備ビルドと CI の doctor はレスポンシブ画像を検証するだけで、不足・期限切れなら失敗し、プラットフォーム側では補完しません。内容や設定を変更したら再ビルドと再配備が必要です。
 
-## 6. 設定の 3 つの基本
+## 既存プロジェクトの更新
 
-同じオブジェクトに `theme` と `i18n` はそれぞれ 1 つだけ置きます。機能ごとの例は既存のオブジェクトに統合し、同じキーを追加しないでください。省略した項目は既定値を使い、曲やソーシャルリンクなどの配列は全体が置き換わります。
+新しくインストールしたブログでは、この節は不要です。既存プロジェクトでは Git にコミットするなどして変更を保存し、開発サーバーとプレビューを止めて、元のプロジェクトルートで次を実行してください。
 
-0.27 以降の統合 starter では、標準ページ、設定の既定値、ビルド機能をテーマパッケージが提供します。個人設定は `src/site.config.ts` に残ります。テーマ更新は記事、音楽、画像、独自ページを書き換えません。0.27 より前の構成は[アップグレードガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)に従って一度移行します。
+```bash
+npx @anglefeint/astro-theme@latest upgrade --check
+```
 
-## このガイドの構成
-
-- [利用ガイド 1：ブログを立ち上げる](/ja/blog/starter-guide-1-configure-your-site/)
-- [利用ガイド 2：記事を書く・コンテンツを整理する](/ja/blog/starter-guide-2-languages-and-routing/)
-- [利用ガイド 3：必要な機能を有効化・カスタマイズする](/ja/blog/starter-guide-3-comments-about-and-theme-toggles/)
-
----
-
-## テーマの更新
-
-標準ページ、設定の既定値、翻訳とビルド機能はテーマパッケージが管理します。記事、`src/site.config.ts`、音楽、画像、独自ページはプロジェクトに残ります。
-
-npm を使う新しい integration starter では、ルートで次のコマンドを実行します。互換性を確認し、依存ファイルをバックアップして特定バージョンをインストールし、doctor を実行します。失敗時は依存ファイルを戻して以前の依存関係の再インストールを試みます。公開は通常のデプロイ手順で行ってください。
+`--check` は対象バージョンを照会し、プロジェクト、Node.js、Astro の互換性を確認します。ファイルの変更、インストール、ビルドは行いません。確認が通ったら実際に更新します。
 
 ```bash
 npx @anglefeint/astro-theme@latest upgrade
 ```
 
-0.27 より前のプロジェクトは一度だけ新規 starter に移行してください。別ディレクトリへ作成し、記事とリソースをコピーして個人設定を新しい site config に統合します。旧標準ルート、adapter、defaults/schema/runtime はコピーしません。slug、言語パス、音楽・画像 URL とホスティング設定を保ちます。
+自動更新は npm と `package-lock.json` を使う統合版 starter が対象です。`package.json` に `anglefeint.projectSchema: 1` があり、標準ページはテーマパッケージから提供される必要があります。pnpm、yarn、bun のロックファイルを検出すると停止します。回避のためにロックファイルを削除しないでください。npm 以外では元のパッケージマネージャーで対象バージョンの互換性を確認して依存関係を更新し、プロジェクトの doctor を実行します。自動更新ツールはこの手順のロールバックを提供しません。
 
-自動更新は現在 npm のみ対応し、pnpm/yarn/bun のロックファイルがあれば停止します。`--check` は読み取り専用、`--to 0.27.1` は版指定です。[更新ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)と [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を確認してください。
+更新ツールはテーマ依存関係を更新して doctor を実行し、記事、設定、音楽、画像、独自ページを書き換えません。`package.json` と `package-lock.json` は `.anglefeint/backups/` に保存されますが、サイト全体のバックアップではありません。インストールまたは doctor が失敗するとこの2ファイルを復元して元の依存関係の再インストールを試みます。それも失敗したらターミナルのエラーに従って依存関係を直し、`npm run doctor` を成功させてください。古いビルド結果は復元されないため、失敗後の `dist/` は配備しないでください。
 
-更新に失敗したら `dist/` を公開しないでください。依存関係の復元は以前のビルド出力を復元しません。問題を直し、`npm run doctor` が成功してから公開します。pnpm ではリリースの互換性を確認し、ロックファイルを保ったまま `pnpm add @anglefeint/astro-theme@latest` と `pnpm run doctor` で手動更新します。
+Node.js、Astro、starter schema に互換性がなければ停止し、Astro を自動移行しません。`--to` で互換性のある具体的なテーマバージョンを指定できますが、自動ダウングレードには対応しません。変更点は [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)を参照してください。更新成功後はすでにビルド済みなので、直接 `npm run preview` で確認して通常どおり配備できます。直後に再ビルドする必要はありません。
 
-## 既定の共有画像と Fragment の短い ID（0.33.0+）
+0.27 より前のコピー式の旧構成は、そのまま自動更新できません。別ディレクトリにこの記事の手順で新しい starter を作り、旧プロジェクトを残したまま記事と素材を移し、個人設定の値を新しい `src/site.config.ts` に統合してください。旧標準ルート、adapter、defaults/schema/runtime の補助ファイルはコピーしないでください。記事の slug、言語別パス、音楽・画像 URL、ドメイン・ホスティング設定を確認してからローカルチェックと配備を行います。
 
-src/site.config.ts の既存の site 設定に site.ogImage を追加できます。public ルートのパス（/images/share.jpg は public/images/share.jpg）または HTTPS URL を指定します。空欄なら内蔵の 1200×630 Anglefeint 画像を使います。Fragments とすべての #ID 共有リンクは同じ画像を使います。記事固有の画像と自動生成画像が優先され、自動生成を無効にした場合も記事のカバー画像がサイト既定画像より優先されます。変更後は再ビルドしてデプロイしてください。共有サービスにはキャッシュが残る場合があります。
+## ガイドと設定リファレンス
 
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { ogImage: '/images/share.jpg' },
-});
-```
+[次の記事：最初の記事を書く](/ja/blog/starter-guide-2-languages-and-routing/) · [8本のガイドの総合案内](/ja/blog/starter-guide-1-configure-your-site/#tutorial-order)。
+
+関連項目：[サイト・ソーシャル・フッター](/ja/blog/config-site-chrome/)、[ホームの見出しと紹介文](/ja/blog/config-home/)、[言語設定](/ja/blog/config-languages/)。完全なパス、既定値、制約は[設定リファレンス総合案内](/ja/blog/config-reference/)を参照してください。

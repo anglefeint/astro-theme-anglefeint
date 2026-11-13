@@ -6,9 +6,9 @@
   </a>
 </p>
 
-<p align="center">사람과 AI 에이전트 모두를 위해 설계된, 다양한 분위기의 시네마틱 Astro 개인 퍼블리싱 테마.</p>
+<p align="center">사람과 AI 에이전트를 위한 영화 같은 여러 분위기의 Astro 개인 출판 테마.</p>
 
-`llms.txt`, 다국어 색인, 전문 모음과 글의 Markdown을 자동 생성해 AI 에이전트의 읽기·인용과 GEO(생성형 엔진 최적화)를 지원합니다.
+`llms.txt`, 다국어 인덱스, 전문 모음, 글 Markdown을 자동 생성해 AI 에이전트가 읽고 인용하도록 돕고 GEO(생성형 엔진 최적화)를 지원합니다.
 
 <p align="center">
   <a href="https://demo.anglefeint.com/">라이브 데모</a>
@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="#ai-assistant">AI 도우미</a> · <a href="#installation">설치</a> · <a href="#setup">사이트 설정</a> · <a href="#writing">글쓰기</a> · <a href="#upgrade">업그레이드</a> · <a href="#deployment">빌드와 배포</a>
+  <a href="#ai-assistant">AI 도우미</a> · <a href="#installation">설치</a> · <a href="#setup">사이트 설정</a> · <a href="#writing">글 쓰기</a> · <a href="#upgrade">업그레이드</a> · <a href="#deployment">빌드·배포</a>
 </p>
 
 <p align="center">
@@ -28,22 +28,32 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
+## Anglefeint로 무엇을 할 수 있나요?
+
+Markdown／MDX로 글을 쓰고 Fragments로 짧은 생각을 기록합니다. 다국어, 검색, 태그, 목차, 코드 복사, 이미지 미리보기, 수식, 자동 글 공유 이미지를 제공합니다. 댓글, 음악, GA4는 필요할 때 켤 수 있습니다.
+
+| 페이지           | 시각적 분위기                               |
+| ---------------- | ------------------------------------------- |
+| 홈               | Matrix: 녹색 코드 비, 터미널, 픽셀 아바타   |
+| 블로그·태그 목록 | Cyberpunk: 네온, 비, 도시 광선              |
+| About            | Hacker: 자기소개, 가상 터미널, 대화형 도구  |
+| 글 상세          | AI: 네트워크 배경, 모니터, OUTPUT 읽기 패널 |
+
+빌드 시 공개 글, About, Fragments의 Markdown, `llms.txt`, 다국어 전문 모음도 생성합니다. 별도 운영 서버 없이 AI 도구가 읽도록 돕지만 모델 수록·인용을 보장하지는 않습니다.
+
 <a id="ai-assistant"></a>
 
-## AI 도우미 사용
+## AI 도우미와 협업하기
 
-Cursor, Codex 또는 Claude Code로 사이트 설정, 글 작성, 페이지 맞춤 작업을 진행할 수 있습니다. 현재 프로젝트의 AGENTS.md부터 읽고 실제 코드와 설정을 기준으로 삼으세요. CLAUDE.md와 Cursor 규칙도 같은 지침을 참조합니다.
+Cursor, Codex, Claude Code가 현재 프로젝트의 `AGENTS.md`에 따라 사이트 설정과 콘텐츠 관리를 하도록 요청할 수 있습니다. 기존 `CLAUDE.md`와 Cursor 규칙도 해당 지침을 가리킵니다. 바꾸려는 내용을 설명하고 실제 설정과 이 문서의 해당 절을 확인하게 한 뒤 필드 세부 내용이 필요하면 demo 사전을 참고하세요.
 
-- **블로그 사용자 (starter)**: [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/AGENTS.md)부터 읽고 필요에 따라 [설정](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/ko/starter-guide-1-configure-your-site.md) / [글쓰기](https://github.com/anglefeint/astro-theme-anglefeint/blob/starter/src/content/blog/ko/starter-guide-2-languages-and-routing.md) 가이드를 참고하세요.
-- **테마 유지보수자 (main)**: [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) → [AI 작업 흐름](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/AI_WORKFLOW.md) 순서로 읽으세요. 구현 구조는 [아키텍처 문서](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)에서 확인하고, 코드 변경 후 설명은 [문서 동기화 절차](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/DOC_SYNC_WORKFLOW.md)에 따라 갱신하세요.
+테마 개발에 참여하려면 저장소의 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md)와 [기여 가이드](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CONTRIBUTING.md)부터 읽으세요. 블로그 사용자가 유지보수자의 배포 흐름을 먼저 배울 필요는 없습니다.
 
 <a id="installation"></a>
 
-## 설치
+## 1. 설치하고 실행하기
 
-이 템플릿은 **Astro 7**을 기반으로 합니다.
-
-Node.js 22.12.0 이상을 사용하세요. 블로그를 만들 상위 폴더에서 다음 명령을 실행한 뒤 개발 서버가 출력한 주소를 여세요.
+**Node.js 22.12.0 이상**이 필요하며 템플릿은 **Astro 7** 기반입니다. 블로그를 둘 디렉터리에서 실행하세요.
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-install --no-ai
@@ -52,244 +62,234 @@ npm install
 npm run dev
 ```
 
-기존 블로그가 있다면 해당 폴더에서 `npm install`과 `npm run dev`를 실행하고 새로 만들지 마세요. 다른 명령 전 Ctrl+C로 dev를 종료하거나 별도 터미널을 사용하세요. pnpm은 `pnpm install`과 `pnpm dev`를 사용합니다.
+터미널에 출력된 주소를 여세요. 기존 프로젝트는 원래 디렉터리에서 `npm install`, `npm run dev`만 실행하면 되며 다시 만들 필요는 없습니다. Ctrl+C로 멈추세요. 이후 명령은 루트에서 실행하며 dev를 멈추거나 다른 터미널을 사용하세요.
+
+새 프로젝트는 `pnpm install`, `pnpm dev`도 가능합니다. 한 프로젝트에서는 같은 패키지 관리자를 유지하세요. 아래는 npm 기준이며 자동 업그레이드는 현재 npm만 지원합니다.
+
+자세한 절차: [블로그 설치와 내 정보 설정](https://demo.anglefeint.com/ko/blog/starter-guide-1-configure-your-site/).
 
 <a id="setup"></a>
 
-## 사이트 설정
+## 2. 첫 설정: 내 정보로 바꾸기
 
-`src/site.config.ts`의 기존 설정 객체를 편집하세요. 사이트 정보, 소셜 링크, About 내용, 테마 옵션을 여기서 설정합니다. import/export를 유지하고 기존 객체에 설정을 합치세요.
+프로젝트에는 이미 `src/site.config.ts`가 있습니다. **이 파일을 바로 수정하면 되며 새 설정 파일이나 설정 객체를 선언할 필요는 없습니다.**
+
+기존 `defineThemeConfig({ ... })` 안에 아래 `site`를 넣고 이름, 작성자, 소개, 도메인을 내 것으로 바꾸세요. starter는 `site`를 생략하고 기본값을 사용합니다. 이미 있다면 필드만 바꾸고 다른 설정을 유지하세요. 같은 객체를 중복 추가하지 말고 기존 import, export와 설정도 유지하세요.
 
 ```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: {
-    title: 'My Blog',
-    author: 'Your Name',
-    description: 'My notes and projects.',
-    url: 'https://your-domain.example',
-  },
-});
+site: {
+  title: '我的博客',
+  author: '你的名字',
+  description: '记录项目、阅读和生活。',
+  url: 'https://your-domain.example',
+},
 ```
 
-`site.url`에 실제 사이트 주소를 입력하세요. `PUBLIC_SITE_URL`이 있으면 해당 값이 우선합니다. 글이나 설정을 바꾼 뒤 다시 빌드하고 배포하세요.
+전역 정보만 수정하며 언어는 바꾸지 않습니다. 언어별 `homeTitle`이 없으면 홈 대제목은 전역 `title`입니다. 홈 소개, About, 소셜 링크도 내 것으로 바꿀 수 있으며 아래 가이드·사전에 필드가 있습니다.
+
+`site.url`은 로컬 dev가 아닌 정식 공개 주소입니다. 배포 환경의 `PUBLIC_SITE_URL`이 우선하므로 이전 도메인이 계속 나오면 확인하세요.
+
+초기에는 아홉 언어가 켜져 있고 기본 언어는 영어이며 `/`는 `/en/`으로 갑니다. 한국어 README를 읽는다고 블로그를 한국어로 바꿀 필요는 없습니다. 기본·활성 언어를 조정하려면 [언어 가이드](https://demo.anglefeint.com/ko/blog/starter-guide-languages/)를 따르세요. 생략한 언어도 유지하고 기본 언어는 항상 켜며 글은 자동 번역하지 않습니다. 예시 글은 백업·Git 커밋 후 삭제할 수 있지만 참조 중인 이미지는 지우지 마세요.
+
+가이드: [설치와 첫 설정](https://demo.anglefeint.com/ko/blog/starter-guide-1-configure-your-site/), [언어와 홈 주소](https://demo.anglefeint.com/ko/blog/starter-guide-languages/). 필드 참조: [사이트·공용 UI](https://demo.anglefeint.com/ko/blog/config-site-chrome/), [홈](https://demo.anglefeint.com/ko/blog/config-home/).
 
 <a id="writing"></a>
 
-## 새 글 만들기
+## 3. 첫 글 쓰기
 
-먼저 한국어 글 하나를 만드세요:
+프로젝트 루트에서 글을 만드세요.
 
 ```bash
-npm run new-post -- my-first-post --locales ko
+npm run new-post -- my-first-post
 ```
 
-`src/content/blog/ko/my-first-post.md`의 제목, 설명, 본문을 편집하세요. 활성화된 모든 언어에 같은 slug의 틀을 만들려면 `--locales`를 생략하세요. 초기 설정에서는 파일 9개를 만들며 자동 번역하거나 기존 파일을 덮어쓰지 않습니다.
+`--locales`나 `ANGLEFEINT_LOCALES`를 지정하지 않으면 모든 활성 언어에 같은 이름의 뼈대 파일을 만듭니다. 초기 아홉 언어 설정에서는 아홉 파일이며 언어 스위치를 바꿨다면 그 목록을 따릅니다. 본문은 자동 번역하지 않으며 기존 파일을 덮어쓰지 않습니다.
 
-Slug 규칙: 소문자 영문, 숫자, 하이픈만 사용하세요 (예: `my-first-post`).
-`src/assets/blog/default-covers/`에 이미지가 있으면 명령을 실행할 때마다 커버 한 장을 무작위로 선택하여 해당 실행에서 새로 만드는 모든 언어의 글에 사용합니다. 기존 파일은 덮어쓰지 않으며, `heroImage`는 나중에 변경할 수 있습니다.
-선택 로케일 지정:
+파일은 `src/content/blog/<locale>/my-first-post.md`, 글은 `/<locale>/blog/my-first-post/`, 목록은 `/<locale>/blog/`입니다. 예를 들어 영어 파일은 `src/content/blog/en/my-first-post.md`, 중국어 간체는 `src/content/blog/zh/my-first-post.md`입니다. 필요한 파일을 열어 제목·설명·본문을 바꾸세요. 라우트를 직접 만들 필요는 없습니다. 최소 콘텐츠 예시입니다.
+
+```md
+---
+title: '我的第一篇文章'
+description: '记录这次开始写博客的想法。'
+pubDate: '2026-11-13'
+---
+
+这里开始写正文。
+```
+
+필수만 보여 줍니다. 생성 파일의 표지·선택 필드는 유지해도 됩니다. 일반 글 이름은 `my-first-post`처럼 소문자 영문·숫자·하이픈입니다.
+
+특정 언어만 만들 때 `--locales`를 쓰세요. 선택적 사용법이므로 모두 실행할 필요는 없습니다.
 
 ```bash
+# 只生成英文
+npm run new-post -- my-first-post --locales en
+
+# 只生成中文
+npm run new-post -- my-first-post --locales zh
+
+# 生成指定的多种语言
 npm run new-post -- my-first-post --locales en,zh
-# 또는
-ANGLEFEINT_LOCALES=en,zh npm run new-post -- my-first-post
 ```
 
-`ANGLEFEINT_LOCALES=...` 문법은 Bash/POSIX 셸용입니다. PowerShell에서는 위의 `--locales` 명령을 사용하세요.
+`--locales`는 파일만 선택하고 언어를 켜지 않습니다. 해당 언어가 설정에서 활성화되어야 페이지를 만듭니다. 같은 호출의 새 파일은 무작위 기본 표지를 공유하며(소스 풀에 이미지가 있을 때), 기존 파일은 유지합니다.
 
-URL 규칙:
+`ANGLEFEINT_LOCALES` 환경변수도 가능하며 우선순위는 `--locales` → 환경변수 → 활성 언어입니다. Bash는 `ANGLEFEINT_LOCALES=zh,en npm run new-post -- my-first-post`, PowerShell은 위 `--locales`를 쓰면 됩니다.
 
-- 파일: `src/content/blog/ko/my-first-post.md`
-- URL: `/ko/blog/my-first-post/`
-- 블로그 목록: `/ko/blog/`
-- 라우트를 수동으로 추가할 필요가 없습니다. Astro가 빌드 시 자동 생성합니다.
+**현재 초안·미래 날짜 자동 숨김은 없습니다.** 각 언어의 뼈대도 빌드와 함께 공개되므로 배포 전에 완성하고 미공개 파일은 컬렉션 밖으로 옮기세요. `draft: true`, `search: false`는 비공개가 아닙니다.
 
-`--locales`는 글 파일만 만들며 언어를 활성화하지 않습니다. 라우트를 생성하려면 `src/site.config.ts`에서 해당 언어를 추가하거나 활성화하세요.
+가이드: [첫 글 쓰기](https://demo.anglefeint.com/ko/blog/starter-guide-2-languages-and-routing/), [이미지 추가](https://demo.anglefeint.com/ko/blog/starter-guide-images/). 참조: [글 상세·frontmatter](https://demo.anglefeint.com/ko/blog/config-article/).
 
-## 새 페이지 만들기
+## 4. Fragment 게시하기
 
-`new-post` 는 블로그 글만 생성합니다. 커스텀 페이지는 아래 명령으로 생성하세요:
-
-```bash
-npm run new-page -- projects --theme base
-```
-
-지원 테마: `base`, `ai`, `cyber`, `hacker`, `matrix`.
-명령은 `src/pages/[lang]/projects.astro` 를 만들고 `getStaticPaths()` 로 모든 로케일 라우트를 생성합니다.
-slug 규칙: 소문자, 숫자, 하이픈만 허용하며 중첩 경로(예: `projects/labs`)를 지원합니다. `_` 와 대문자는 허용되지 않습니다.
-
-예시 (`projects`에 사용할 명령 하나만 선택하세요. 연속 실행하면 두 번째부터 파일이 이미 있어 실패합니다):
-
-```bash
-npm run new-page -- projects --theme base
-npm run new-page -- projects --theme ai
-npm run new-page -- projects --theme cyber
-npm run new-page -- projects --theme hacker
-npm run new-page -- projects --theme matrix
-```
-
-## 조각
-
-0.33.2부터 Fragments는 글 페이지와 같은 맨 위로 버튼을 사용합니다. 스크롤 후 표시되며 동작 줄이기 설정을 따릅니다. 추가 설정은 필요하지 않습니다.
-
-조각 기능은 테마 0.29.0 이상이 필요합니다. 기존 블로그는 먼저 업그레이드한 뒤 아래 설정과 명령을 사용하세요.
-
-짧은 생각을 Markdown으로 기록하고 선택적으로 팝업 댓글을 사용합니다. src/site.config.ts의 기존 theme에 합칩니다. 조각과 댓글은 기본적으로 꺼져 있습니다. 메뉴는 Decoder Lab 아래에 표시됩니다.
+짧은 문구, 이미지, 코드에 적합합니다. **테마·새 starter는 기본 꺼짐이고 demo에서 별도로 켰습니다.** 내 블로그에서 사용하려면 `src/site.config.ts`의 기존 `theme`에 `fragments.enabled: true`를 설정하세요. 아래는 병합한 구조이며 theme를 중복 생성하지 마세요.
 
 ```ts
-fragments: { enabled: true, pageSize: 20, comments: { enabled: false } },
+theme: {
+  fragments: { enabled: true },
+},
 ```
 
-모든 활성 언어를 기본으로 생성하려면 테마 0.31.0 이상이 필요합니다. 먼저 업그레이드하세요. 0.29–0.30에서는 `--locales`로 명시해야 합니다.
+이미 true면 추가할 필요 없고 false면 바꾸세요. 목록·홈 입구를 제어하며 댓글은 계속 기본 꺼짐입니다.
+
+그다음 Fragment 하나를 만듭니다. 기본은 모든 활성 언어에 같은 콘텐츠의 뼈대를 만듭니다.
 
 ```bash
-npx @anglefeint/astro-theme@latest new-fragment
+npm run new-fragment
 ```
 
-`new-post`와 동일하게 기본적으로 프로젝트의 모든 활성 언어에 같은 ID와 타임스탬프를 공유하는 골격을 만듭니다. 자동 번역은 하지 않습니다. 우선순위는 `--locales` → `ANGLEFEINT_LOCALES` → 활성 언어입니다. 명시한 목록은 공백 제거, 소문자 변환, 중복 제거를 거치며 설정을 읽지 않고 지정 언어 디렉터리만 만듭니다. 언어 활성화 설정은 바꾸지 않습니다.
+특정 언어만 원하면 매개변수를 선택하세요.
 
 ```bash
-npx @anglefeint/astro-theme@latest new-fragment --locales en,zh
-npx @anglefeint/astro-theme@latest new-fragment --locales ko
+# 只生成中文
+npm run new-fragment -- --locales zh
+
+# 生成指定的多种语言
+npm run new-fragment -- --locales en,zh
 ```
 
-0.32.0 이상 공유 기능: 날짜 링크로 목록의 해당 조각을 찾고 옆에서 링크를 복사할 수 있습니다. 공유 주소는 `/ko/fragments/#ID`이며 ID는 Markdown frontmatter의 id입니다. 현재 페이지에 없을 때만 언어별 소형 정적 인덱스를 읽어 해당 페이지로 이동합니다. 내용 추가, 날짜 또는 pageSize 변경 후 다시 빌드하고 ID는 유지하세요. 페이지 간 위치 찾기와 복사에는 JavaScript가 필요합니다.
+실행마다 새 항목이 생깁니다. 대체 사용법이므로 필요에 따라 고르고 모두 실행하지 마세요. CLI 언어 선택은 사이트 언어 스위치를 바꾸지 않습니다.
 
-0.32.0 이상 페이지 탐색 개선: 조각은 Blog와 페이지 번호, 네온 스타일, 설정한 기준에 따라 표시되는 페이지 이동 입력란을 공유합니다. `theme.pagination`은 두 목록에 공통으로 적용되며, 조각의 페이지당 개수는 계속 `theme.fragments.pageSize`로 별도 설정합니다.
+파일은 `src/content/fragments/<locale>/`, 이름은 `2026-11-13-aB3dE6gH.md` 형태이며 실제 경로는 터미널에 나옵니다. 본문을 편집하고 생성된 영문·숫자 8자리 ID를 유지하세요. 같은 호출의 번역은 ID·시간을 공유합니다. 같은 콘텐츠를 계속 쓸 때는 명령을 다시 실행하지 마세요.
 
-[사용자 가이드 5: 조각 게시하기](https://demo.anglefeint.com/ko/blog/starter-guide-5-fragments/)
+목록은 `/<locale>/fragments/`이며 예시는 `/en/fragments/`, `/zh/fragments/`입니다. 해당 언어 홈에 콘텐츠가 있으면 아바타 입구를 표시합니다. 안정적 공유는 `/<locale>/fragments/#ID`이며 페이지 번호를 정체성으로 쓰지 마세요. ID 변경은 링크·댓글을 바꿉니다. 댓글 기본은 꺼짐입니다.
 
-<a id="upgrade"></a>
+가이드: [Fragment 게시하기](https://demo.anglefeint.com/ko/blog/starter-guide-5-fragments/). 참조: [Fragments](https://demo.anglefeint.com/ko/blog/config-fragments/).
 
-## 테마 업그레이드
+## 5. 사용자 페이지 만들기
 
-표준 페이지, 기본 설정, 번역과 빌드 기능은 테마 패키지가 관리합니다. 글, `src/site.config.ts`, 음악, 이미지와 사용자 페이지는 프로젝트에 남습니다.
-
-npm을 사용하는 새 integration starter의 루트에서 아래 명령을 실행하세요. 호환성을 검사하고 의존성 파일을 백업한 뒤 정확한 버전을 설치하고 doctor를 실행합니다. 실패하면 의존성 파일을 복원하고 이전 의존성 재설치를 시도합니다. 배포는 기존 절차로 진행하며 자동 게시하지 않습니다.
+글은 `new-post`, 프로젝트 소개·작품 등 독립 페이지는 `new-page`입니다.
 
 ```bash
-npx @anglefeint/astro-theme@latest upgrade
+npm run new-page -- projects
 ```
 
-0.27 이전 프로젝트는 한 번 새 starter로 이전해야 합니다. 별도 폴더에 만들고 글과 리소스를 복사하며 개인 설정을 새 site config에 병합하세요. 이전 표준 라우트, adapter, defaults/schema/runtime 파일은 복사하지 마세요. slug, 언어 경로, 음악·이미지 URL과 호스팅 설정을 유지하세요.
+`src/pages/[lang]/projects.astro`를 만들며 기본은 `base`입니다. 편집한 다음 `/<locale>/projects/`, 예를 들어 `/en/projects/`로 여세요. 소스 하나로 모든 활성 언어에 페이지를 만들지만 자동 번역·내비게이션 추가는 없습니다.
 
-자동 업데이트는 현재 npm만 지원하며 pnpm/yarn/bun 잠금 파일이 있으면 중단합니다. `--check`는 읽기 전용이며 `--to 0.27.1`으로 버전을 지정합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)와 [GitHub Releases](https://github.com/anglefeint/astro-theme-anglefeint/releases)를 확인하세요.
+스타일이 필요하면 `--theme`로 `base`, `matrix`, `cyber`, `hacker`, `ai`를 고릅니다. 예를 들어 `npm run new-page -- portfolio --theme cyber`는 별도 Cyberpunk 페이지입니다.
 
-<a id="deployment"></a>
-
-## 빌드와 배포
+중첩 경로도 지원합니다.
 
 ```bash
-npm run build
+npm run new-page -- projects/labs --theme hacker
 ```
 
-정적 사이트는 `dist/`에 생성됩니다. 이 폴더의 **모든 내용**을 정적 호스팅에 게시하세요. 운영용 Node.js 서버나 호스팅 어댑터는 필요하지 않습니다.
+경로 각 구간은 소문자·숫자·하이픈이며 대문자·밑줄·앞뒤 슬래시는 쓰지 않습니다. 기존 파일은 덮어쓰지 않으며 테마 표준 예약 경로도 재생성할 수 없습니다.
 
-`npm run preview`로 빌드 결과를 로컬에서 확인할 수 있으며 사이트를 게시하지는 않습니다. `npm run doctor`는 검사와 빌드를 함께 실행합니다.
+절차: [페이지 꾸미기](https://demo.anglefeint.com/ko/blog/starter-guide-3-comments-about-and-theme-toggles/).
 
-도메인 루트에 배포하고 각 폴더의 index.html을 제공하세요. 하위 경로 배포에는 추가 작업이 필요하며 Astro `base` 설정만으로는 충분하지 않습니다.
+## 6. 이미지 준비와 생성 파일 유지
 
-문서 sitemap은 `updatedDate`, 없으면 `pubDate`를 사용합니다. integration이 터미널 JSON의 `X-Robots-Tag: noindex`를 빌드 결과 `dist/_headers`에 병합하고 기존 규칙과 원본 파일을 보존합니다. Cloudflare Pages 등 호환 호스트 외에는 같은 응답 헤더 설정이 필요합니다. Astro preview는 호스팅 규칙을 적용하지 않으므로 배포 응답을 확인하세요.
+본문에는 일반 Markdown 이미지를 씁니다. 글 옆의 `photo.jpg`는 `![이미지 설명](./photo.jpg)`입니다. 표지는 실제 파일을 먼저 두고 frontmatter의 `heroImage: ./cover.jpg`로 설정합니다. public URL에는 public 접두사를 넣지 않습니다.
+
+표지·지원되는 Fragment 로컬 이미지는 영구 반응형 파일이 필요합니다. 로컬 준비 또는 현재 산출물 검사에 사용하세요.
+
+```bash
+npx @anglefeint/astro-theme prepare-covers
+npx @anglefeint/astro-theme prepare-covers --check
+```
+
+로컬 dev·doctor는 없거나 오래된 파생 파일을 준비하고 build·CI doctor는 검사만 하며 배포 측에서 생성하지 않습니다. 원본과 `src/assets/blog/covers/` 전체(`manifest.json`, `generated/` 포함)를 Git에 커밋하세요. missing／stale／modified는 로컬 준비·커밋 뒤 재빌드합니다.
+
+모든 일반 본문 이미지가 압축되었다는 뜻은 아닙니다. 범위·경로·공유 규칙은 [이미지 가이드](https://demo.anglefeint.com/ko/blog/starter-guide-images/)에 있습니다.
 
 <a id="reference"></a>
 
-## 기능 및 설정 참고
+## 필요에 맞는 기능 설정
 
-블로그와 태그 글 목록은 카드/리스트 전환을 지원하며 브라우저에 선택을 저장합니다.
+자주 쓰는 명령·첫 작업은 여기서 마칠 수 있습니다. 기능 조정이 필요할 때 해당 가이드·필드 설명을 여세요. 사전은 타입·기본값·제한·예시·현재 미사용 상태를 설명합니다.
 
-### 홈 효과와 디코더 도구
+| 하려는 작업                    | 가이드                                                                                                                                                                           | 설정 사전                                                                                                                                                                                  |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 홈·사이트·내비게이션·소셜·푸터 | [페이지·기능](https://demo.anglefeint.com/ko/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                             | [홈](https://demo.anglefeint.com/ko/blog/config-home/), [사이트·공용 UI](https://demo.anglefeint.com/ko/blog/config-site-chrome/)                                                          |
+| 목록 수·태그·페이지 나누기     | [페이지·기능](https://demo.anglefeint.com/ko/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                             | [Blog List·태그](https://demo.anglefeint.com/ko/blog/config-blog-list/)                                                                                                                    |
+| 목차·수식·OUTPUT·검색 참여     | [첫 글 쓰기](https://demo.anglefeint.com/ko/blog/starter-guide-2-languages-and-routing/)                                                                                         | [글 상세](https://demo.anglefeint.com/ko/blog/config-article/), [검색·콘텐츠 발견](https://demo.anglefeint.com/ko/blog/config-search/)                                                     |
+| About·터미널·Decoder           | [페이지·기능](https://demo.anglefeint.com/ko/blog/starter-guide-3-comments-about-and-theme-toggles/)                                                                             | [About](https://demo.anglefeint.com/ko/blog/config-about/), [터미널](https://demo.anglefeint.com/ko/blog/config-terminal/), [Decoder](https://demo.anglefeint.com/ko/blog/config-decoder/) |
+| 음악·댓글                      | [음악](https://demo.anglefeint.com/ko/blog/starter-guide-3-comments-about-and-theme-toggles/), [독자 댓글](https://demo.anglefeint.com/ko/blog/starter-guide-4-giscus-comments/) | [음악](https://demo.anglefeint.com/ko/blog/config-music/), [Giscus·다국어 토론](https://demo.anglefeint.com/ko/blog/config-comments/)                                                      |
+| 언어·통계·공개 보충            | [다국어](https://demo.anglefeint.com/ko/blog/starter-guide-languages/), [배포](https://demo.anglefeint.com/ko/blog/starter-guide-deployment/)                                    | [언어·대체값](https://demo.anglefeint.com/ko/blog/config-languages/), [GA4·AI 보충](https://demo.anglefeint.com/ko/blog/config-analytics-ai/)                                              |
 
-선택적 Matrix 전환: `theme.effects.enableHomePassage` 기본값은 `false`입니다. 켜면 홈의 글 링크에서 8초 녹색 전환 후 이동합니다. About의 `Oracle` 버튼은 독립적으로 작동하며 클릭할 때 네 가지 색상 중 직전과 다른 색상을 선택합니다. 도착 후 드래그로 둘러보고 오른쪽 클릭으로 복도로 돌아갑니다. Escape 또는 ×로 닫습니다. 동작 줄이기 설정에서는 홈 링크가 바로 이동하고 Oracle은 정적 미리보기를 표시합니다.
+위치를 모르겠다면 [사전 시작 페이지](https://demo.anglefeint.com/ko/blog/config-reference/)에서 찾으세요. 한 언어 문구를 바꿔도 콘텐츠는 자동 번역하지 않습니다. 설정·콘텐츠 변경은 재빌드·재배포가 필요합니다.
 
-너비 1440px 이상에서는 오른쪽 아래 터미널에 `Knock, knock.`이 표시됩니다. 글은 선택·복사·스크롤할 수 있으며 별도 열쇠구멍 버튼으로 공통 복도 미리보기를 시작합니다. `src/site.config.ts`의 `i18n.locales.en.messages.home.transmission`을 공통 문구로 설정하고 필요한 언어만 `i18n.locales.<code>.messages.home.transmission`으로 덮어쓰세요. 우선순위는 현재 언어 설정 → 영어 설정 → `Knock, knock.`이며 일반 UI 번역과 다릅니다. 변경 후 다시 빌드하고 배포하세요.
+<a id="upgrade"></a>
 
-`src/site.config.ts`의 `theme.home`에서 `showInitialize`는 Initialize/done, `showFollow`는 Wake Up/Follow, `showTrace`는 오른쪽 아래 상태를 제어합니다. 기본값은 모두 `true`이며 `false`로 각각 숨길 수 있습니다. 0.18.1: 하단 두 상태 항목은 처음에는 숨겨지며 마우스를 올리거나 선택한 항목만 나타납니다. 전체 선택 시 둘 다 표시되고 빛나는 커서는 오른쪽 추적 항목에만 따라옵니다.
+## 7. 기존 블로그 업그레이드
 
-언어별 홈의 큰 제목은 `src/site.config.ts`의 `i18n.locales.<code>.site.homeTitle`로 설정합니다（예: `ko: { site: { homeTitle: "나의 디지털 정원" } }`）。새로 추가한 언어에도 적용됩니다. 생략하거나 공백만 입력하면 `meta.fallback` 순서로 찾고, 마지막으로 전역 `site.title` 또는 `PUBLIC_SITE_TITLE`을 사용합니다. 홈의 큰 제목만 변경되며 브라우저 제목, 탐색 메뉴, 푸터, RSS 및 SEO 사이트 이름은 전역 설정을 유지합니다. 변경 후 다시 빌드하고 배포하세요.
+새 설치라면 이 절을 건너뛰고 [검사·미리보기·첫 배포](#deployment)로 가세요.
 
-About에는 현지화된 목차와 강조된 Contact 항목이 있습니다. 넓은 화면에서는 본문 틀 오른쪽에, 작은 화면에서는 본문 안에 목차를 표시합니다. Frontier의 Contact는 `/<locale>/about/#contact`로 바로 이동합니다. About을 끄면 이 링크가 사라지며 Decoder Lab은 별도 설정을 따릅니다.
+먼저 Git 커밋 등으로 변경을 저장하고 dev·preview를 멈추세요. 기존 프로젝트 루트에서 호환성을 검사한 다음 업그레이드합니다.
 
-About 창은 닫기·최소화·전체 화면, 브라우저 내 상태 저장 및 해당 터미널 명령을 지원합니다. integration의 표준 페이지는 패키지와 함께 업데이트됩니다. 0.27 이전 프로젝트는 위의 일회성 이전 절차를 따르세요.
+```bash
+npx @anglefeint/astro-theme@latest upgrade --check
+npx @anglefeint/astro-theme@latest upgrade
+```
 
-About의 **Hacker Decryptor**는 Base64/Base64URL, URL 인코딩, 16진수, HTML 엔티티, Unicode 이스케이프 및 JWT 헤더/페이로드를 브라우저에서 디코딩합니다. 자동 형식 감지와 페이지 색상에 맞춘 숫자 결과 애니메이션을 지원합니다. 사이드바의 Decryptor에서 열 수 있으며 API나 추가 설정이 필요 없습니다.
+`--check`는 파일 변경·설치·빌드를 하지 않습니다. 실제 업그레이드는 npm, `package-lock.json`, `anglefeint.projectSchema: 1`이 있는 통합 starter에 적용합니다. pnpm／yarn／bun 잠금 파일을 지워 제한을 우회하지 마세요.
 
-전체 **Decoder Lab**는 `/<locale>/decoder/`에서 로컬 처리 기록, EVM/HyperEVM/TRON의 ERC-20/TRC-20 호출 해석 및 EVM/TRON/Bitcoin 주소 확인을 제공합니다. About 디코더 창에서 열 수 있습니다. `src/site.config.ts`에서 `theme.enableDecoderPage: false`로 페이지와 링크를 독립적으로 끌 수 있습니다. RPC, 지갑 연결, API 키가 필요 없습니다.
+테마 의존성을 업데이트하고 doctor를 실행하며 글·설정·음악·이미지·사용자 페이지를 유지합니다. 의존성 파일 두 개를 `.anglefeint/backups/`에 보관하지만 전체 사이트 백업은 아닙니다. 설치·검사 실패 시 복구하고 이전 의존성 재설치를 시도합니다. 실패 후 남은 `dist/`를 배포하지 마세요.
 
-0.20.0부터: 헤더의 독립된 **Frontier** 화살표에서도 Decoder Lab을 열 수 있습니다. 이미지 카드는 원문과 자료·프로젝트 공식 사이트로 연결되며 본문은 전재하지 않습니다. `src/site.config.ts`의 `i18n.locales.<code>.messages.decoderPage.readings`에서 `tribute`와 전체 `links` 목록을 설정합니다. 빈 문구는 헌사를, `links: []`는 카드를 숨깁니다. 설정한 항목을 모두 표시하며 데스크톱에서는 한 줄에 최대 8개입니다. [설정 예시](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/packages/theme/README.md#decoder-reading-configuration)를 참고하세요.
+특정 버전은 `npx @anglefeint/astro-theme@latest upgrade --to <버전>`으로 지정하며 자리표시자를 호환되는 명시 버전으로 바꾸세요. 자동 다운그레이드는 없습니다. 성공 시 검사·빌드를 마쳤으므로 `npm run preview`를 바로 쓰며 build를 반복할 필요는 없습니다. 자동 게시·비호환 Astro 이전은 하지 않습니다.
 
-Decoder Lab의 시각적 스타일은 **cypherpunk(사이퍼펑크)** 운동에서 영감을 받아 인간의 자유, 프라이버시, 열린 코드에 대한 기여에 경의를 표합니다. P2P 네트워크 이미지와 로컬 처리는 도구와 데이터를 개인의 손에 두자는 생각을 반영합니다.
+0.27 이전 복사형 골격은 별도 starter를 만들고 기존 프로젝트를 유지하며 개인 콘텐츠·자원을 옮겨야 합니다. 제자리 업그레이드는 안 됩니다. 이전 표준 라우트·adapter 구현은 복사하지 마세요.
 
-## 요구 사항
+절차·복구: [기존 프로젝트 업그레이드](https://demo.anglefeint.com/ko/blog/starter-guide-1-configure-your-site/), [업그레이드 가이드](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md), [버전 기록](https://github.com/anglefeint/astro-theme-anglefeint/releases).
 
-- Node.js `22.12.0+` (LTS 권장)
-- 0.8.0 starter의 문서 명령은 Linux에서 npm + Node 22, pnpm 10 + Node 24로 검증했습니다. yarn/bun은 테스트하지 않았습니다. [검증 기록](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/releases/0.8.0.md)을 참고하세요.
+<a id="deployment"></a>
 
-## 배포 전 검사와 미리보기
+## 8. 검사·미리보기·첫 배포
 
-사이트 설정과 글 작성을 마친 뒤 개발 서버를 중지하고 실행하세요:
+루트에서 dev를 멈추고 검사·빌드한 다음 미리보세요.
 
 ```bash
 npm run doctor
 npm run preview
 ```
 
-`doctor`에는 검사와 빌드가 포함되므로 `npm run check`를 다시 실행할 필요가 없습니다. `preview`가 출력한 URL을 열고 종료할 때 `Ctrl+C`를 누르세요. 미리보기는 로컬에서만 실행되며 사이트를 게시하지 않습니다.
+`npm run doctor`는 검사·빌드이며 `npm run check`는 같은 명령이므로 하나만 쓰세요. 성공 직후 check·build를 반복할 필요는 없습니다. 빌드 없이 Astro／TypeScript만 검사하려면 `npm run check:no-build`를 씁니다. preview는 로컬 결과만 보여 주며 Ctrl+C로 멈추고 업로드하지 않습니다. 실제 검색도 빌드 뒤 preview에서 확인하며 dev는 개발 안내만 표시합니다.
 
-전체 검사 없이 빌드와 미리보기만 하려면 다음을 대신 사용하세요:
+검사 전체 없이 빌드만 필요하면 다음 대안을 고르세요. 두 묶음 중 하나만 사용합니다.
 
 ```bash
 npm run build
 npm run preview
 ```
 
-pnpm에서는 `pnpm doctor` 다음에 `pnpm preview`를 실행하세요. 빌드만 하려면 `pnpm build` 다음에 `pnpm preview`를 사용하세요.
+pnpm 프로젝트는 `pnpm run doctor`／`pnpm preview` 또는 `pnpm build`／`pnpm preview`입니다. `pnpm doctor`로 줄이면 pnpm 자체 진단 명령이 실행될 수 있으므로 줄이지 마세요. 한 묶음만 선택하며 빌드를 반복할 필요는 없습니다.
 
-정적 출력은 `dist/`에 있습니다. 호스팅의 빌드 명령은 `npm run build`, 출력 디렉터리는 `dist/`로 지정하고 [Astro 배포 가이드](https://docs.astro.build/en/guides/deploy/)를 따르세요. 배포 후 실제 도메인, 글, 언어 메뉴와 검색을 확인하세요.
+첫 정적 호스팅 배포에서는:
 
-## AI가 읽을 수 있는 콘텐츠
+1. `site.url` 또는 `PUBLIC_SITE_URL`을 정식 주소로 정하고 소스·원본·생성 파일을 커밋하세요.
+2. 플랫폼 빌드 명령은 `npm run build`, 출력은 `dist`입니다. 수동 업로드는 성공적으로 빌드한 **dist의 전체 내용**을 올리세요.
+3. `_astro/`, `pagefind/`, `_social/`, 공개 텍스트 등 전체 산출물을 유지하고 HTML만 올리지 마세요.
+4. 도메인 루트와 디렉터리 index 라우트를 사용하세요. 임의 하위 경로는 추가 조정이 필요하며 Astro base만으로 전체 지원이 되지 않습니다.
+5. 플랫폼에 따라 도메인·HTTPS를 연결하고 홈·글·언어·이미지·검색을 확인하세요.
 
-빌드 시 공개 글과 활성화된 Fragments, About을 `/llms.txt`, 언어별 색인과 전체 본문 모음에 포함합니다. 글의 Markdown URL은 유지됩니다. 각 언어에 `/ko/fragments/index.md`, `/ko/about/index.md`를 생성합니다(언어 코드는 바꿔 사용하세요). Fragments는 모든 공개 페이지를 합치며 각 ID, 게시 시간, 본문과 안정적인 `/<locale>/fragments/#ID` 링크를 보존합니다. HTML에서 Markdown 링크를 찾을 수 있습니다. `npm run build` 후와 preview에서 사용할 수 있으며 `dist/` 전체를 배포합니다.
+정적 산출물이므로 운영 Node.js 서버·추가 adapter는 필요 없습니다. 터미널 JSON의 noindex 헤더는 `dist/_headers`에 합치며 지원 플랫폼은 적용하고 다른 플랫폼은 동등 설정이 필요합니다. Astro preview는 호스팅 헤더를 흉내 내지 않습니다. 콘텐츠·설정이 바뀌면 전체 재빌드·재배포하세요.
 
-About은 공개 소개, 연락처 링크와 열 수 있는 AI 텍스트 팝업을 내보내며 터미널 설정, 도구와 장식 UI는 제외합니다. 댓글은 내보내지 않습니다. 비활성 페이지·언어, 삭제된 내용, noindex와 외부 canonical은 제외하고 재빌드 시 오래된 생성 파일과 발견 링크를 정리합니다. 사용자 파일은 보호하며 충돌 시 빌드를 중단합니다. 사이트·언어 보충 정보는 모든 문서에 적용됩니다. JSON-LD에 언어를 포함하고 About은 AboutPage를 사용합니다. 새 설정·서버·UI 의존성이 필요 없으며 AI 색인이나 인용을 보장하지 않습니다.
+자세한 절차: [내 도메인에 블로그 배포하기](https://demo.anglefeint.com/ko/blog/starter-guide-deployment/).
 
-`src/site.config.ts`의 선택 설정 `aiReadableContent.notes`(Markdown)와 `aiReadableContent.links`(`{ label, href }[]`)로 색인, 전체 본문 모음, 개별 Markdown에 사이트 설명을 추가할 수 있습니다. `i18n.locales.<code>.aiReadableContent`에서 필드별로 재정의하며, 생략하면 전역 설정을 상속하고 `notes: ''` / `links: []`이면 숨깁니다. [자세히](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md#optional-machine-readable-context).
+## 라이선스
 
-## 첫 설정: 사이트 정보와 홈 주소
-
-배포 전에 `src/site.config.ts`의 기존 `defineThemeConfig({...})` 객체를 편집하세요. 아래 항목을 기존 설정에 합치고, 파일의 import/export와 기존 언어 및 기능 설정은 유지하세요. 예시 제목, 작성자와 `https://your-domain.example`을 자신의 정보로 바꾸세요.
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: {
-    title: '나의 블로그',
-    author: '작성자 이름',
-    url: 'https://your-domain.example',
-  },
-  i18n: {
-    defaultLocale: 'ko',
-    routing: {
-      defaultLocalePrefix: 'never',
-    },
-  },
-});
-```
-
-**도메인을 열었을 때 홈에 진입하는 방식을 선택하세요:**
-
-- `'always'`(테마 기본값): `/`에서 `/<기본 언어>/`로 이동합니다. 초기 설정에서는 `/en/`이며, 홈이 표시되기 전에 **“Redirecting to home…”**가 잠깐 보일 수 있습니다.
-- `'never'`(위 예시): `/`에서 기본 언어 홈을 바로 표시하므로 루트 URL에서는 중간 이동 화면을 거치지 않습니다. `/<기본 언어>/`는 `/`로 돌아갑니다. 예시의 기본 언어는 한국어입니다.
-
-`defaultLocale`은 활성화된 언어인 `ko`, `en`, `zh`, `ja`, `es` 등에서 선택하세요. 이 설정은 기본 언어의 **홈 주소만** 바꾸며, 블로그와 글 주소에는 `/ko/blog/`처럼 언어 접두사가 유지됩니다.
-
-canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url`을 실제 운영 사이트 주소로 설정하세요. 환경 파일이나 호스팅 빌드 설정에 `PUBLIC_SITE_URL`이 있으면 이 값이 `site.url`보다 우선하므로 함께 확인하세요. 변경 후에는 다시 빌드하고 배포해야 합니다(`npm run build` 또는 연결된 호스팅의 빌드). 로컬 파일만 수정해도 운영 사이트가 바로 바뀌지는 않습니다.
-
-## 사용할 언어 선택
-
-기본으로 9개 언어가 활성화됩니다: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`. 기본 언어는 영어입니다. `src/site.config.ts`에서 불필요한 언어의 `i18n.locales.<code>.meta.enabled: false`를 설정하세요. 생략만으로는 비활성화되지 않으며 기본 언어는 항상 활성화됩니다. `new-post`는 처음에 파일 9개를 만들지만 자동 번역하지 않습니다. 한국어만 만들려면: `npm run new-post -- my-post --locales ko`.
-
-## 언어
-
-[English](README.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [繁體中文](README.zh-Hant.md)
+이 테마는 [MIT License](LICENSE)를 따릅니다.
 
 ## 미리보기
 
@@ -305,12 +305,6 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 
 ![Anglefeint 기본 공유 이미지](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
 
-내장된 1200×630 이미지는 Fragments를 포함해 전용 공유 이미지가 없는 페이지의 기본 미리보기입니다. `site.ogImage`로 사이트 기본 이미지를 바꿀 수 있습니다.
-
-각 글은 `npm run build` 시 제목, 작성자, 사이트 이름을 사용해 개별 1200×630 PNG를 자동 생성합니다. 빌드할 때 생성되며, 공유 링크를 열 때는 정적 이미지를 사용합니다. 이미지 API나 추가 브라우저 JavaScript는 필요하지 않습니다. 이 정보를 바꾸면 다시 빌드하고 배포하세요.
-
-글 frontmatter의 `ogImage`가 자동 생성 이미지보다 우선합니다. `theme.socialImage.enabled`를 `false`로 설정하면 글의 `heroImage`가 사이트 기본 이미지보다 우선하며, 내장 이미지는 마지막 대체 이미지입니다.
-
 ### 페이지 스크린샷
 
 | 홈                                                             | 블로그 목록                                                               |
@@ -321,7 +315,7 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 | -------------------------------------------------------------------------- |
 | ![Blog List view](public/images/theme-previews/preview-blog-list-mode.jpg) |
 
-| 글 상세                                                                  |
+| 글 페이지                                                                |
 | ------------------------------------------------------------------------ |
 | ![Blog post preview](public/images/theme-previews/preview-blog-post.jpg) |
 
@@ -329,9 +323,9 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 | ---------------------------------------------------------------- |
 | ![About preview](public/images/theme-previews/preview-about.jpg) |
 
-| 블로그 페이지 이동                                                                   | 관련 게시물                                                                |
-| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| ![블로그 페이지 이동](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![관련 게시물](public/images/theme-previews/preview-blog-post-related.jpg) |
+| 블로그 페이지 나누기                                                                   | 관련 글                                                                |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| ![블로그 페이지 나누기](public/images/theme-previews/preview-blog-list-pagination.jpg) | ![관련 글](public/images/theme-previews/preview-blog-post-related.jpg) |
 
 | Decoder Lab                                                      |
 | ---------------------------------------------------------------- |
@@ -340,280 +334,3 @@ canonical, 피드, 사이트맵에 올바른 도메인이 쓰이도록 `site.url
 | Decoder Lab · 사이퍼펑크 자료                                                        |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
-
-## 라우트별 분위기
-
-- `/<default-locale>/` (기본적으로 `/` 는 여기로 리다이렉트): Matrix 스타일 터미널 랜딩
-- `/:lang/blog`: 사이버펑크 아카이브 무드
-- `/:lang/blog/[slug]`: AI 인터페이스형 읽기 레이아웃
-- `/:lang/about`: 선택형 해커 스타일 About 페이지
-
-## 테마 네이밍 규약
-
-- 테마 파라미터: `base`, `ai`, `cyber`, `hacker`, `matrix`
-- 내부 셀렉터/스크립트 접두사: `ai-*`, `cyber-*`, `hacker-*`
-- 기본 구성 레이어: `ThemeFrame -> Shell -> Layout -> Page`
-
-## 주요 기능
-
-- 현재 언어의 Pagefind 글 검색
-- 자동 글 목차와 정적 태그 목록
-- 코드 복사와 본문 이미지 미리보기
-- Astro 7 정적 출력
-- Markdown + MDX 콘텐츠 컬렉션
-- 스타터에 포함된 예시 로케일: `en`, `ja`, `ko`, `es`, `zh`, `pt-br`, `de`, `ru`, `zh-hant`
-- 로케일별 RSS 피드
-- sitemap + robots 지원
-- 설정 중심의 커스터마이징
-- 짧은 페이지에서도 Footer 하단 고정
-
-## 테마 설정
-
-1. 환경 변수로 사이트 정보를 덮어쓰려는 경우에만 `.env.example`을 `.env`로 복사합니다. 그렇지 않으면 `src/site.config.ts`를 사용합니다.
-2. `src/site.config.ts` 를 수정합니다:
-   - `site.title`, `site.description`, `site.url`, `site.author`, `site.tagline`: 사이트 정체성과 기본 메타데이터
-   - `i18n.defaultLocale`: 기본 언어를 설정
-   - `i18n.routing.defaultLocalePrefix`: 기본 언어를 `/<default-locale>/`(기본값) 또는 `/` 중 어디에 둘지 설정
-   - `i18n.locales`: 지원 언어를 한 곳에서 추가/제거하는 단일 소스
-   - `i18n.locales.<code>.messages`: 로케일별 UI 문구 오버라이드
-   - `i18n.locales.<code>.meta.label`: 언어 메뉴 표시 이름 (`zh` 기본값은 `简体中文`). 이름을 바꿔도 URL은 변경되지 않습니다
-   - `i18n.locales.<code>.site.hero`: 로케일별 홈 hero 문구 오버라이드
-   - `social.links`: 소셜 링크
-   - `i18n.locales.<code>.about`: 로케일별 About 콘텐츠와 런타임 문구
-   - `theme.enableAboutPage`: About 노출 제어
-   - `theme.effects.enableRedQueen`: 글 상세 사이드 모니터 이펙트 on/off
-   - `theme.comments`: Giscus 활성화/설정 (핵심 ID + 동작 파라미터)
-3. `src/content/blog/<locale>/` 의 샘플 글을 교체합니다.
-
-About 본문 단락과 서명은 설정 문자열의 줄바꿈을 유지합니다. `\n`은 줄바꿈, `\n\n`은 빈 줄이며 긴 문장은 자동으로 줄바꿈됩니다. 일반 텍스트이므로 Markdown이나 HTML을 해석하지 않습니다. `<br>`을 넣지 마세요.
-
-푸터는 저작권, 테마/Astro 크레딧, 선택적인 `site.tagline`을 각각 표시하고 아래에 소셜 아이콘을 배치합니다. 기본 크레딧은 페이지 언어를 따르며 사용자 문구는 모든 언어에서 원문을 유지합니다. 빈 문구는 공간을 차지하지 않고 긴 문구는 모바일에서 줄바꿈됩니다. 기존 설정과 `PUBLIC_SITE_TAGLINE` 재정의는 그대로 작동하며 마이그레이션이 필요 없습니다.
-
-선택 사항인 `theme.footer.links`는 푸터에 별도 행을 추가합니다. 각 항목의 `label`과 `href`를 설정하며 링크 사이에는 가운데 점이 표시됩니다. 생략하거나 빈 배열을 사용하면 숨겨집니다. 라벨은 언어가 바뀌어도 설정한 원문을 유지하며 소셜 아이콘 및 `showCredits`와 독립적입니다.
-
-### 선택 사항: Google Analytics 4
-
-`src/site.config.ts`의 기존 `defineThemeConfig({...})` 객체에 다음 최상위 설정을 추가하거나 수정하세요(`theme` 내부가 아닌 `site`와 같은 단계).
-
-```ts
-analytics: {
-  googleAnalyticsId: 'G-XXXXXXXXXX',
-},
-```
-
-Google Analytics → 관리 → 데이터 스트림 → 웹 스트림에서 **측정 ID**(`G-...`)를 복사하세요. 속성 이름이나 숫자 속성 ID가 아닙니다. 비워 두면 비활성화됩니다. 모든 언어와 테마 페이지에서 하나의 ID를 사용하며 페이지 경로로 언어를 비교할 수 있습니다. 다시 빌드·배포한 후 실제 사이트를 방문하고 GA4 실시간 보고서에서 확인하세요.
-
-개발 모드와 localhost/루프백 미리보기는 데이터를 보내지 않습니다. 설정된 원격 및 LAN 주소 미리보기는 집계됩니다. 기본 템플릿은 Google 스크립트를 로드하지 않습니다. GTM, Zaraz 또는 수동 코드와 중복 설치하지 마세요. 동의 배너와 동의 관리는 포함되지 않으므로 필요한 사이트는 추적 활성화 전에 마련하세요. 차단 도구로 수집이 중단될 수 있습니다. 기존 프로젝트에는 호환되는 설정 보조 파일과 어댑터가 필요합니다. [업그레이드 안내](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)를 참조하세요.
-
-### 선택: Giscus 댓글
-
-`shareAcrossLocales: false` (default) — `mapping: 'pathname'`
-
-댓글은 기본적으로 비활성화되어 있습니다. 활성화하려면:
-
-1. `src/site.config.ts` 에서 `theme.comments.enabled = true` 로 설정합니다.
-2. 필수 항목을 입력합니다:
-   - `theme.comments.repo`
-   - `theme.comments.repoId`
-   - `theme.comments.category`
-   - `theme.comments.categoryId`
-3. 선택 항목:
-   - `theme.comments.shareAcrossLocales` (`false`)
-   - `theme.comments.mapping`
-   - `theme.comments.term` (`mapping = "specific"` 일 때 필수) — `shareAcrossLocales: false`
-   - `theme.comments.number` (`mapping = "number"` 일 때 필수)
-   - `theme.comments.strict`
-   - `theme.comments.reactionsEnabled`
-   - `theme.comments.emitMetadata`
-   - `theme.comments.inputPosition` (`top` 또는 `bottom`)
-   - `theme.comments.theme`
-   - `theme.comments.lang`
-   - `theme.comments.loading`
-   - `theme.comments.crossorigin`
-
-`shareAcrossLocales: false`: 핵심 ID가 없으면 댓글을 표시하지 않습니다. 댓글 활성화 시 `mapping="specific"`의 `term`이 비어 있거나 `mapping="number"`의 `number`가 양의 정수 문자열이 아니면 설정 오류로 개발 서버 또는 빌드가 중단될 수 있습니다.
-
-CLI는 병합된 설정에서 활성화된 언어를 사용합니다. 설정 오류는 생성을 중단하며, 명시적인 `--locales` 또는 `ANGLEFEINT_LOCALES`는 설정을 읽지 않고 언어를 지정합니다.
-
-댓글과 언어 간 공유는 기본적으로 꺼져 있습니다. 경로별 댓글은 위 설정을 사용하세요. 번역끼리 하나의 토론을 공유하려면 저장소와 카테고리 값을 유지하고 매핑 옵션을 다음과 같이 바꾸세요:
-
-```ts
-theme: {
-  comments: {
-    // 기존 enabled, repo, repoId, category, categoryId 값을 유지하세요.
-    shareAcrossLocales: true,
-    mapping: 'specific',
-    term: '',
-    number: '',
-    strict: '1',
-    lang: '',
-  },
-},
-```
-
-공유 모드에서는 mapping이 specific, term과 number가 빈 문자열, strict가 문자열 1이어야 합니다. 글이 언어 접두사가 없는 전체 slug를 data-term으로 전달합니다. 아홉 언어에서 cypherpunk-ideals-ai-and-the-future-of-crypto를 함께 사용합니다. guides/setup과 other/setup은 서로 다른 토론입니다. slug가 없으면 오류가 발생합니다. 번역에는 같은 slug를 사용하세요. lang이 비어 있으면 페이지 언어를 따르고, 지정하면 고정됩니다. 댓글 본문은 번역하지 않고 토론과 반응을 공유합니다.
-
-공유를 끄면 사용자 지정 mapping, term, number, strict는 그대로 동작합니다. specific은 비어 있지 않은 term, number는 양의 정수 문자열이 필요합니다. 공유와 댓글이 켜진 상태에서 잘못된 mapping, 비어 있지 않은 term/number, 1이 아닌 strict는 설정 오류입니다. 번역 두 개와 다른 글에서 연결을 확인하세요. 댓글 작성에는 GitHub 인증이 필요합니다. 기존 comments 객체에 병합하고 다른 설정을 덮어쓰지 마세요.
-
-기존 토론을 자동으로 합치거나 이동하거나 삭제하지 않습니다. 공유를 켜면 다른 토론에 연결되어 이전 댓글이 보이지 않을 수 있습니다. 변경 전에 mapping, term, number, strict를 저장하세요. 복원하려면 shareAcrossLocales: false로 설정하고 원래 값을 되돌리세요. 기존 댓글의 이전이 필요하면 GitHub에서 직접 검토하고 처리하세요. 테마는 자동 이전하지 않습니다.
-
-[댓글 설정 가이드](https://demo.anglefeint.com/ko/blog/starter-guide-4-giscus-comments/)
-
-## 설정 표면
-
-- 단일 엔트리: `src/site.config.ts`
-- 홈 설명은 내장 및 대체 언어 문구를 포함한 `messages.siteDescription`을 우선 사용하고, 비어 있을 때만 `site.description`을 사용합니다.
-- 언어 설정은 기본값과 깊게 병합됩니다. 비활성화하려면 `i18n.locales.<code>.meta.enabled = false`를 사용합니다. 기본 언어는 항상 활성화됩니다.
-- 사이트 정보는 `PUBLIC_*` 환경 변수로도 덮어쓸 수 있습니다
-
-## 소셜 링크
-
-`src/site.config.ts`의 `social.links`에서 설정합니다. 헤더와 푸터는 배열 순서를 공유합니다. 필요한 링크만 추가하세요:
-
-```ts
-// src/site.config.ts — defineThemeConfig({ ... })
-social: {
-  links: [
-    { href: "https://www.youtube.com/@your-channel", label: "YouTube", icon: "youtube" },
-    { href: "https://bsky.app/profile/your-handle.bsky.social", label: "Bluesky", icon: "bluesky" },
-  ],
-},
-```
-
-내장 `icon` 이름: `mastodon`, `twitter`, `github`, `youtube`, `bluesky`, `linkedin`, `discord`, `telegram`, `instagram`, `facebook`, `whatsapp`, `line`.
-
-선택 항목 `rel`에는 `me`, `me nofollow`처럼 공백으로 구분한 값을 지정합니다. 기본 아이콘, 사용자 이미지, 텍스트 링크에 모두 적용됩니다. 생략하거나 비우면 `noopener noreferrer`를 유지합니다. 소문자 변환과 중복 제거 후 안전 속성을 유지하며 충돌하는 `opener`는 무시합니다. 플랫폼에 따라 `me`를 자동 추가하지 않습니다. 본인 계정에만 사용하세요. [Mastodon 인증](https://docs.joinmastodon.org/user/profile/#link-verification)은 배포 후 프로필 필드에 사이트 HTTPS 주소를 저장합니다. 링크가 있는 실제 페이지(예: `/en/`)를 사용하세요. 루트 HTML 리디렉션 페이지에는 링크가 없을 수 있습니다. 인증은 Mastodon 서버가 수행합니다.
-
-```ts
-{ href: "https://mastodon.social/@yourname", label: "Mastodon", icon: "mastodon", rel: "me" },
-```
-
-사용자 이미지는 `community.svg`를 `public/icons/`에 넣고 링크에 `iconSrc: "/icons/community.svg"`를 설정합니다. 로컬 SVG, PNG, WebP를 지원합니다. 경로는 `/`로 시작하며 원격 URL, 쿼리, 프래그먼트, 인코딩 문자는 사용하지 않습니다. Astro의 `base`는 자동으로 붙습니다. 파일 누락이나 지원하지 않는 아이콘 이름은 개발/빌드 시 설정 오류로 표시됩니다.
-
-우선순위는 `iconSrc` → `icon` → 텍스트입니다. 내장 아이콘은 메뉴 색상을 따르고 사용자 이미지는 원래 색상을 유지합니다. `label`은 접근성 이름입니다. 푸터 링크는 필요하면 줄바꿈되며, 헤더는 한 줄을 유지하고 공간이 부족하면 가로로 스크롤됩니다. 720px 이하에서는 기존처럼 헤더 소셜 링크가 숨겨지고 푸터는 표시됩니다. 빈 `links`는 클릭할 수 없는 기존 자리표시자 3개를 유지합니다. 변경 후 다시 빌드하고 배포하세요.
-
-## 문서
-
-- [아키텍처](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/ARCHITECTURE.md)
-- [비주얼 시스템](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/VISUAL_SYSTEMS.md)
-- [제출 체크리스트](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/docs/THEME_SUBMISSION_CHECKLIST.md)
-- [테마 등록 초안](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/ASTRO_THEME_LISTING.md)
-- [업그레이드 가이드](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/UPGRADING.md)
-- [변경 이력](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CHANGELOG.md)
-
-## 글 검색
-
-검색은 기본적으로 켜져 있습니다. 헤더에서 현재 언어의 글 제목과 본문을 검색합니다. `npm run build`가 색인을 자동 생성하여 정적 사이트와 함께 배포합니다. 별도 서버나 계정은 필요하지 않습니다.
-
-`src/site.config.ts`의 `theme.search.enabled: false`로 검색과 색인 생성을 끕니다. 글 frontmatter의 `search: false`는 해당 글만 제외합니다. 탐색 메뉴, 목차, 관련 글, 댓글과 장식 문구는 수집하지 않습니다.
-
-로컬 검색은 `npm run build` 실행 후 `npm run preview`로 확인하세요. `npm run dev`는 개발 안내를 표시합니다. 글을 수정한 뒤 다시 빌드하면 색인이 갱신됩니다.
-
-## 글 목차
-
-글 페이지는 Markdown `##`, `###` 제목으로 접을 수 있는 목차를 자동 생성하며 넓은 화면에서는 본문 오른쪽에 고정되고 좁은 화면에서는 본문 앞에 표시됩니다. 기본적으로 펼쳐집니다. 해당 제목이 없으면 숨깁니다. 긴 제목은 줄바꿈되며 번호를 추가하지 않습니다.
-
-`src/site.config.ts`의 `theme.toc.enabled`로 사이트 기본값(처음에는 `true`)을 설정합니다. 글 frontmatter의 `toc: false`는 목차를 숨기고, `toc: true`는 사이트 기본값이 꺼져 있어도 표시합니다. 생략하면 사이트 설정을 따릅니다.
-
-MDX의 Markdown 제목은 지원하지만 컴포넌트에서 생성하거나 HTML/JSX로 작성한 제목은 자동 수집하지 않습니다. 사용자 정의 글 라우트는 `render(post)`의 `headings`를 `BlogPost`에 전달해야 합니다. 전달하지 않으면 목차가 표시되지 않습니다.
-
-## 태그 탐색
-
-글 frontmatter에 `tags: ["Astro", "프론트엔드"]`를 추가하면 빌드 시 언어별 태그 목록과 페이지별 글 목록이 생성됩니다. 태그가 없는 글은 그대로 유지됩니다. `src/site.config.ts`에서 `theme: { tags: { enabled: false } }`로 끌 수 있습니다. 대소문자를 구분하며 앞뒤 공백과 중복을 제거합니다. 특수 이름은 안정적인 URL로 인코딩되며 이름 변경 시 URL도 바뀝니다. 추가 명령은 필요하지 않습니다.
-
-`/<locale>/tags/`에 직접 접속하거나 블로그의 태그 링크를 이용할 수 있습니다. 글의 태그는 `/<locale>/tags/<tagSlug>/`를 엽니다. 해당 언어에 태그가 없으면 목록은 비어 있고 블로그의 태그 진입 링크는 숨겨집니다.
-
-## 코드 복사
-
-코드 블록 오른쪽 위에 복사 버튼이 자동으로 표시됩니다. 일반 Markdown을 사용하면 되며 추가 설정은 없습니다. HTTPS 또는 localhost가 필요하고 실패 시 수동 복사 안내가 표시됩니다.
-
-## 본문 이미지 미리보기
-
-본문에서 링크가 없는 이미지는 클릭 또는 Enter/Space로 확대할 수 있습니다. Esc, 닫기 버튼 또는 배경으로 닫으며 읽던 위치를 유지합니다. 링크가 있는 이미지는 기존 이동 동작을 유지합니다.
-
-브라우저가 이미 선택한 이미지 소스를 표시하며 더 높은 해상도의 원본을 별도로 가져오지 않습니다. 대표 이미지와 링크 또는 버튼 안의 이미지는 제외됩니다.
-
-## 글 공유 이미지
-
-0.5.0 및 해당 starter에서 사용할 수 있으며, 0.4.0에는 포함되지 않습니다.
-
-`npm run build`는 `ogImage`가 없는 글에 제목·작성자·사이트 이름을 담은 1200×630 PNG를 생성합니다. 본문의 `heroImage`는 바뀌지 않습니다. 글 옆 이미지는 `ogImage: ./share.png`, public 이미지는 `ogImage: /images/share.png`로 지정합니다. HTTPS 주소도 지원하지만 가용성과 캐시는 제공자에게 달려 있습니다. 로컬 파일이 없으면 오류가 발생합니다.
-
-자동 공유 이미지는 코드 레인, 터미널, 네온 네트워크 배경을 포함하며 사이트 이름, 제목, 작성자는 사용자 콘텐츠에서 가져옵니다. 오른쪽 아래의 작은 `Theme by Anglefeint` 문구는 `theme.footer.showCredits`(기본 `true`)를 따릅니다. `false`로 설정하면 푸터와 이미지의 크레딧을 함께 숨깁니다. 변경 후 다시 빌드하고 배포하세요. 사용자 지정 `ogImage`는 수정하지 않습니다. 배경은 오프라인으로 사용되며 브라우저 JavaScript를 추가하지 않습니다.
-
-`src/site.config.ts`에서 `theme: { socialImage: { enabled: false } }`로 자동 생성을 끌 수 있습니다. 직접 지정한 이미지는 항상 우선하며, 나머지는 기존 표지 또는 기본 이미지로 돌아갑니다. 변경 후 다시 빌드하고 배포하세요. 생성 파일은 `dist/_social/`에 있으며 글 HTML의 `og:image`에서 정확한 URL을 확인할 수 있습니다. 외부 플랫폼의 링크 캐시는 바로 갱신되지 않을 수 있습니다.
-
-내장 폰트로 기본 9개 언어를 지원하며 이미지 API나 브라우저 JS는 필요 없습니다. 긴 제목은 이미지에서만 줄입니다. 모든 이모지와 문자 체계를 보장하지는 않습니다. 빌드 시간과 설치 용량은 늘지만 글 페이지에서 이 폰트를 추가로 다운로드하지 않습니다.
-
-## 선택적 음악 플레이어
-
-공개 데모는 Free Music Archive의 예시 음악 8곡을 사용하며, starter에서는 음악이 기본적으로 꺼져 있습니다. 창작자, 출처와 곡별 라이선스(CC0 1.0 또는 CC BY 4.0)는 [음악 크레딧](https://demo.anglefeint.com/music/credits.html)을 확인하세요. 음악은 테마 코드의 MIT 라이선스와 별개이며 npm 패키지나 starter에 포함되지 않습니다. 음악을 추가하거나 재사용할 때 해당 라이선스와 저작자 표시 조건을 준수하세요.
-
-기본적으로 비활성화되어 있습니다. 오디오를 `public/music/`에 넣고 다음 설정을 `src/site.config.ts`에 병합하세요:
-
-```ts
-theme: {
-  music: {
-    enabled: true,
-    tracks: [{ title: 'My Song', src: '/music/my-song.mp3' }],
-  },
-},
-```
-
-0.18.1: 활성화된 플레이어는 새 페이지에서 작게 시작하며 OPEN으로 펼칩니다. 재생 위치, 음량, 이어듣기는 초기 크기와 별개로 유지됩니다.
-
-각 곡에 `title`, `src`를 지정하며 `artist`는 선택 사항입니다. HTTPS 오디오 URL도 지원합니다. 목록이 비어 있으면 표시하지 않습니다. 첫 방문에서는 PLAY를 눌러야 음원을 불러옵니다. 같은 탭 세션에서 곡, 위치, 음량을 기억합니다. 재생 중이었다면 페이지 이동, 새로고침, 뒤로 또는 앞으로 이동할 때 저장 위치에서 이어 재생을 시도하며, 직접 일시 정지했다면 정지 상태를 유지합니다. 잠시 끊길 수 있으며 끊김 없는 재생은 아닙니다. 브라우저가 자동 재생을 차단하면 PLAY를 누르세요. 기존 곡이 삭제되어도 다른 곡을 자동 재생하지 않습니다. 저장소를 사용할 수 없으면 수동 재생은 가능하지만 세션 이어 재생은 불가능합니다.
-
-재생 전에 곡 전체를 다운로드하여 브라우저 Blob으로 변환하므로 탐색에 서버의 HTTP Range 지원이 필요하지 않습니다. 파일이 크거나 네트워크가 느리면 대기 시간과 메모리 사용량이 늘어납니다. 일시 정지 후 재생할 때는 불러온 곡을 재사용하고, 곡을 바꾸면 이전 곡을 해제합니다. 페이지 이동 후에는 다시 불러오며 브라우저 HTTP 캐시가 도움이 될 수 있습니다. 외부 음원 서버는 교차 출처 다운로드(CORS)를 허용해야 합니다. 같은 사이트의 `public/music/`에 두면 별도의 CORS 설정이 필요 없습니다.
-
-## 라이선스
-
-MIT License. `LICENSE` 를 참고하세요.
-
-## 수학 공식
-
-Markdown과 MDX 글에서 LaTeX 형식 수식을 기본으로 전체 활성화합니다. 인라인은 `$C_{saved}$`, 독립 수식은 별도 줄의 `$$`로 감쌉니다. 글마다 설정하거나 플러그인을 직접 설치할 필요가 없습니다.
-
-```markdown
-Inline: $C_{saved}$
-
-$$
-\frac{a}{b}
-$$
-```
-
-`src/site.config.ts`에서 `theme: { math: { enabled: false } }`로 끌 수 있습니다. 모호한 달러 기호는 `\$`로 쓰세요. 코드 영역은 그대로 유지됩니다. 끄면 중괄호 안의 JavaScript 표현식을 포함한 일반 MDX 규칙으로 돌아갑니다.
-
-빌드 시 렌더링하며 로컬 스타일·글꼴과 접근 가능한 MathML을 사용합니다. 브라우저 수식 엔진은 필요 없습니다. 긴 독립 수식은 가로로 스크롤합니다. 잘못된 수식은 출처와 원인을 표시하고 빌드를 중단합니다. 제목·요약은 일반 텍스트로 작성하며 수식은 검색 색인에서 제외됩니다. 완전한 LaTeX 문서가 아닌 KaTeX 수학 문법을 지원합니다.
-
-0.27+ 통합 starter에서는 테마 패키지가 수학 지원을 포함한 Markdown 처리기를 자동으로 연결합니다. 한 번의 이전이 필요한 것은 0.27 이전 구조뿐입니다. 새 프로젝트에 처리기나 어댑터 구현을 복사하지 마세요.
-
-## 글 통계
-
-단어 수는 원본 본문의 대략적인 통계입니다. 한중일 문자는 글자 단위, 나머지는 주로 공백 단위로 셉니다. tokens는 `round(max(words, 1) × 1.3)` 추정치이며 모델 토크나이저 결과나 실제 AI 사용량이 아닙니다. 1,000 이상은 소수점 한 자리와 k로 표시됩니다. frontmatter의 `wordCount`, `tokenCount`는 각각 덮어쓰며 wordCount만 바꿔도 tokens가 재계산되지는 않습니다. 수식과 MDX 원문도 추정치에 영향을 줍니다.
-
-## 기본 공유 이미지와 Fragment 짧은 ID (0.33.0+)
-
-src/site.config.ts의 기존 site 설정에 site.ogImage를 추가하세요. public 루트 경로(/images/share.jpg는 public/images/share.jpg) 또는 HTTPS URL을 지원합니다. 비워 두면 내장 1200×630 Anglefeint 이미지를 사용합니다. Fragments와 모든 #ID 공유 링크는 같은 기본 이미지를 사용합니다. 글 전용 이미지와 자동 생성 이미지가 우선하며, 자동 생성을 꺼도 글 표지 이미지가 사이트 기본 이미지보다 우선합니다. 변경 후 다시 빌드하고 배포하세요. 공유 서비스의 미리보기 캐시는 남을 수 있습니다.
-
-```ts
-export const THEME_CONFIG = defineThemeConfig({
-  site: { ogImage: '/images/share.jpg' },
-});
-```
-
-new-fragment는 대소문자를 구분하는 영숫자 8자리 Nano ID를 만들고 모든 언어의 기존 Markdown ID와 중복되면 다시 시도합니다. 한 번에 생성한 모든 언어는 ID와 게시 시간을 공유합니다. Fragment ID는 정확히 영숫자 8자리만 허용합니다. 기존 UUID와 긴 ID는 지원하지 않으므로 이전 항목을 삭제하고 다시 게시하세요. 마이그레이션이나 이전 링크 호환 기능은 없습니다. 게시 후 ID를 유지하세요. 변경하면 댓글 연결도 바뀝니다.
-
-## 홈 Fragment 미리보기 (0.35.0+)
-
-현재 소스에서는 `theme.fragments.enabled`가 켜져 있고 현재 언어에 글이 있으면 홈 헤더 아래에 픽셀 아바타 버튼이 나타납니다. 열면 최신 3개를 미리 볼 수 있습니다. 카드 전체는 원문으로, 하단 숫자와 화살표는 전체 목록으로 이동합니다. 숫자는 현재 언어의 미리보기 수 / 전체 수입니다. 이미지와 코드는 높이를 제한하고 넘치는 부분을 자릅니다. 기능이 꺼져 있거나 글이 없으면 버튼을 표시하지 않습니다. 추가 설정은 필요 없으며, 테마 0.35.0 이상이 필요합니다.
-
-글의 OUTPUT에는 단어 수, tokens, 선택적 모델 이름이 남습니다. 읽기 시간, latency, confidence는 frontmatter에 있어도 표시하지 않습니다. 기존 필드는 계속 허용됩니다. 본문과 패널은 즉시 나타나 정지 상태를 유지하며 배경 네트워크와 제목의 빛 효과는 유지합니다.
-
-## Blog List 영구 커버 이미지 (0.36.0+)
-
-이 소스 변경은 다음 테마 출시가 필요하며 출시된 0.35.0에는 포함되지 않습니다. 기존 heroImage 경로를 유지하거나 새 원본을 src/assets/blog/covers/originals/에 넣고 글에서 참조하세요. 로컬 dev/doctor는 누락되거나 오래된 목록용 크기를 생성합니다. `npx @anglefeint/astro-theme prepare-covers`도 사용할 수 있고 `--check`는 쓰기 없이 검사합니다. 원본과 src/assets/blog/covers/ 전체(manifest.json, generated/)를 Git에 커밋하세요. 빌드와 CI doctor는 검사만 하며 누락·오래됨·수정된 파일에서 실패합니다. 배포 서버에서 재생성하거나 Astro 이미지 캐시에 의존하지 않습니다. 목록은 반응형 이미지와 두 커버 후보 우선 로딩을 사용합니다. WebP 품질 80은 기존 인코딩 목표이며 픽셀 무손실을 보장하지 않습니다. 원본은 유지하고 SVG/애니메이션 커버는 원래 형식을 유지합니다.
-
-글 상세 페이지의 기본 커버도 같은 반응형 파일을 사용합니다. Canvas 효과는 선택된 이미지를 재사용하며 원본을 별도로 다운로드하지 않습니다.
-
-Fragments의 로컬 이미지도 같은 저장소를 사용합니다. public의 `/images/...`와 Markdown/HTML 상대 이미지 링크를 지원하고 누락된 너비·높이를 채웁니다. 목록과 홈 미리보기는 반응형 파일을 공유하며 원격 이미지는 변환하지 않습니다.
