@@ -273,6 +273,16 @@ async function collectDrift(sourceRef, targetRef) {
   return [...new Set(changed)];
 }
 
+// Structured preflight for an already locked release flow. Errors remain errors;
+// expected managed-file drift is data, never a swallowed CLI exit code.
+export async function preflightStarter({ from = 'main', target = 'starter' } = {}) {
+  validateSyncBranches(from, target);
+  validateManagedCoverage();
+  const sourceRef = await resolveRefCandidates(from);
+  const { compareRef } = await resolveBranchCandidates(target);
+  return { sourceRef, targetRef: compareRef, drift: await collectDrift(sourceRef, compareRef) };
+}
+
 async function writeManagedFilesFromRef(sourceRef, repoRoot) {
   const changed = [];
   for (const relPath of MANAGED_FILES) {

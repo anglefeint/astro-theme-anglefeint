@@ -49,7 +49,7 @@ export function parseVerifyArgs(argv) {
 
 export function verifyRelease(
   options,
-  { capture, destination, log, onFailure, attempts, delayMs, sleep } = {}
+  { capture, destination, log, onFailure, onWait, attempts, delayMs, sleep } = {}
 ) {
   return verifyPublishedPackage({
     name: '@anglefeint/astro-theme',
@@ -64,6 +64,7 @@ export function verifyRelease(
     destination,
     log,
     onFailure,
+    onWait,
     attempts,
     delayMs,
     sleep,
@@ -91,6 +92,9 @@ async function main(argv) {
         verifyRelease(options, {
           destination: download,
           onFailure: (failure) => (record.verificationFailures ??= []).push(failure),
+          onWait: (ms) => {
+            record.explicitWaitSeconds = (record.explicitWaitSeconds ?? 0) + ms / 1000;
+          },
           capture: async (args) =>
             (
               await exec(process.execPath, [npmCli, ...args], {

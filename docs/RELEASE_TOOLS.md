@@ -81,6 +81,31 @@ Starter generation and user upgrades retain their non-browser doctor contract. T
 
 ## Evidence and completion
 
+### Source handoff and announcement execution
+
+`release:flow` is maintainer-only and plans by default. Prepare the version, changelog, migration/check-plan prose and a commit-message file first; review and stage the intended changes together. Technical outcomes/identities/timings go into session evidence and the announcement, rather than another tracked-document edit between checks and commit.
+
+```bash
+npm run release:flow -- source --version 0.37.0 --message-file acceptance-results/commit-message.txt --check unit-tests --test tests/example.unit.test.mjs --check types-check --check build --check installed-build
+```
+
+Replace the example version and test with the actual candidate and existing literal test path. Inspect the plan, then add `--execute` only for an authorized release. The flag selects execution; it does not grant authorization or exceptional browser/full-suite consent. Select checks once, either in this flow or through the manual path; do not prepend the same independent checks and then repeat them inside it. One installation level and the existing tool-selection rules remain enforced. Exceptional source/matrix checks stay on their separately consented manual path.
+
+The flow holds one checkout session/lock and delegates to the canonical npm tool runner. Selected checks, registry-version gate, blocking main audit, packing and npm authentication complete first. Immediately before upload, it checks the staged tree/version again, commits through normal hooks using `--file`, checks the resulting clean tree, runs the structured starter drift preflight, pushes main and confirms the remote source. Then the existing single upload and exact-source/tag/download verifier run. Managed starter drift is data; unexpected preflight errors stop. Unstaged/untracked source, `HUSKY=0`, check/hook errors, hook-modified source or push/source drift stop before upload. It never stages unrelated files, changes versions or edits documentation itself.
+
+If hooks change the tested tree, the local commit remains for review/revalidation; the flow does not push it automatically. If an upload is accepted but verification fails, do not rerun source handoff: use the existing read-only `release:verify` recovery. The next step after verified npm delivery remains the existing starter delivery, including its install/audit/doctor/build and main restoration.
+
+After starter delivery, prepare and review the normal closeout `notes.md`/`receipt.json`. Then:
+
+```bash
+npm run release:flow -- announce --receipt acceptance-results/<closeout>/receipt.json
+npm run release:flow -- announce --receipt acceptance-results/<closeout>/receipt.json --execute
+```
+
+Announcement execution revalidates the reviewed note hash and fresh source/npm/starter identities before effects, refuses conflicting local/remote tags, creates/pushes a missing exact-source tag, creates a missing Release using the reviewed file, and runs the original complete readback verifier. It reuses an already correct tag/Release rather than forcing tags or editing announcement bodies. An existing wrong body/draft, unknown lookup/authentication error or changed receipt/source stops. A partial tag/Release failure can be retried against the same unchanged reviewed receipt; npm is never involved. Only the known `gh release view` missing-release response is treated as absence. Manual commands remain available for diagnostics/prereleases.
+
+The source flow supplies its owning session to the npm runner and calls the structured preflight directly. It does not invoke another lock-taking CLI while holding the lock. This preserves serialization without nested-lock deadlocks. Both flows retain detailed failure logs and accurate session timing; no historical receipt skips technical validation.
+
 ### Batched stable-release closeout
 
 Prepare user-facing changes, migration notes and the version ledger before freezing the source. After the selected checks, npm download verification and starter delivery, use the maintainer-only closeout tool instead of assembling temporary identity/announcement scripts:
@@ -91,7 +116,7 @@ npm run release:closeout -- prepare --version <version> --source <npm-gitHead> -
 
 Replace the placeholders with recorded values; repeat `--session` only for the specific sessions you want to summarize. This stable-release tool requires clean, pushed main and the exact delivered starter SHA. It batches fresh read-only Git/npm queries, checking source ancestry/version, remote main/starter, registry source/latest/checksums and starter package/lock range, version and integrity. An existing tag must already point to the exact npm source. It writes a new ignored `acceptance-results/release-closeout-<version>-*/` directory containing `notes.md` and `receipt.json`; it does not edit tracked documents. Markdown release-note links become absolute repository links, frontmatter is omitted, delivery identities are appended, and supplied session timings retain failed stages. Raw logs, environment evidence and command arguments are not copied into the public notes.
 
-HTML links/images in release notes must already use absolute URLs; ordinary relative Markdown destinations are normalized automatically, while code examples remain untouched. Review the generated notes. Create/push the exact-source tag and create the GitHub Release with that notes file, serially, using the [package runbook](PACKAGE_RELEASE.md#8-release-notes-contract). Then finish with:
+HTML links/images in release notes must already use absolute URLs; ordinary relative Markdown destinations are normalized automatically, while code examples remain untouched. Review the generated notes. Prefer the announcement flow above to create/push the exact-source tag, create the Release and run readback in one sequence. The manual [package runbook](PACKAGE_RELEASE.md#8-release-notes-contract) remains available; its final read-only check is:
 
 ```bash
 npm run release:closeout -- verify --receipt acceptance-results/<closeout>/receipt.json
@@ -106,5 +131,7 @@ Neither mode publishes, installs, commits, pushes, creates tags/releases, runs b
 Use one explicit technical plan with one installation level. Run dependency/build-mutating operations serially; batch independent read-only inspections. Preserve staged lint/format/metadata hooks and the starter's installed audit/doctor/build. Prepare the version ledger's changes, compatibility and check plan before the source commit; put changing final refs/timings in the generated announcement and local receipts. A post-delivery documentation commit is needed only for a substantive correction or intentionally maintained ledger facts, and should be one batch. Re-sync starter only if managed inputs changed. Do not add another source commit, starter sync or build merely to record the previous closeout commit's own ref.
 
 Tools retain the shared checkout lock, stage timing, logs and observational fingerprints under ignored acceptance-results. No old summary is used to skip checks. Failures stop subsequent upload; post-upload visibility failures use standalone read-only recovery. Clean/pushed main and authorization remain workflow requirements.
+
+New summaries include session/stage timestamps and `timing`: wall coverage, operation time, measured child-command time, explicit verifier backoff, evidence collection and between-stage coordination. Command time and explicit wait are subsets of operation time, not independent values to add to wall time. Command time covers `session.run` children; capture/filesystem work remains in operation time. Network waiting inside a child command cannot automatically be called registry propagation. Stage wall coverage uses interval union, with overlapping stages marked. Lock acquisition wait is separate. A session cannot account for agent/tool round trips outside that process; a whole-request report must label those intervals separately. Legacy missing metrics render as `not recorded`, never inferred as zero or pure waiting.
 
 Record source, npm identity, starter and tag/Release refs plus selected technical checks. Package delivery can complete without Cloudflare or demo acceptance. Mark demo as user-owned rather than waiting for or repeating their regression. Keep checkout mutations serial; do not run repository-wide scans through transient fixture output.

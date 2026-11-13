@@ -74,11 +74,13 @@ test('metadata and downloaded identity mismatches remain blocking', async () => 
 test('registry delays retry verification only and fail after the bounded attempt count', async () => {
   const { calls, capture } = fixture({ visible: '0.31.0' });
   let sleeps = 0;
+  const measured = [];
   await assert.rejects(
     verifyRelease(options, {
       capture,
       destination: 'fixture',
       attempts: 3,
+      onWait: (ms) => measured.push(ms),
       sleep: async () => {
         sleeps++;
       },
@@ -89,6 +91,12 @@ test('registry delays retry verification only and fail after the bounded attempt
   assert.equal(calls.length, 3);
   assert.ok(calls.every((args) => args[0] === 'view'));
   assert.equal(sleeps, 2);
+  assert.equal(measured.length, 2);
+  assert.ok(measured.every((ms) => Number.isFinite(ms) && ms >= 0));
+  assert.ok(
+    measured.every((ms) => ms < 10000),
+    'measure actual sleep rather than the configured delay'
+  );
 });
 
 test('transient failures identify stage/code, wait 10 seconds by default and recover read-only', async () => {

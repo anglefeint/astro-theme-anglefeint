@@ -66,6 +66,17 @@ export const npmReleaseTools = {
 // Existing standalone capabilities stay separate: asking for recovery or starter sync must
 // never pull npm publication into a dependency graph.
 export const deliveryTools = {
+  'source-handoff': {
+    command:
+      'npm run release:flow -- source --version <version> --message-file <file> --check <tool>',
+    purpose:
+      'Plan by default; --execute runs fresh selected checks, normal commit hooks, structured starter preflight, main push and canonical npm delivery under one lock',
+  },
+  'announcement-delivery': {
+    command: 'npm run release:flow -- announce --receipt <reviewed-receipt.json>',
+    purpose:
+      'Plan by default; --execute validates reviewed notes, creates missing exact tag/Release and reads back identities; never uploads npm',
+  },
   'starter-preflight': {
     command: 'npm run maintainer:sync-starter:check',
     purpose: 'Read-only managed-file drift check; expected drift exits 1',

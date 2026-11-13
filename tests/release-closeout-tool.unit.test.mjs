@@ -184,7 +184,7 @@ test('prepare aggregates fresh identities and explicit observational sessions; v
   assert.equal(prepared.receipt.status, 'prepared');
   assert.equal(prepared.receipt.observationalOnly, true);
   assert.equal(prepared.receipt.sessions[0].stages[0].status, 'failed');
-  assert.ok(notes.includes('| 1 | 15 | 1 | 1 |'));
+  assert.ok(notes.includes('| 1 | 15 | not recorded | not recorded | not recorded | 1 | 1 |'));
   assert.ok(notes.includes(`--template anglefeint/astro-theme-anglefeint#starter`));
   assert.ok(!notes.includes('session/summary.json'));
   assert.ok(
@@ -204,6 +204,34 @@ test('prepare aggregates fresh identities and explicit observational sessions; v
   assert.equal(
     JSON.parse(await readFile(path.join(prepared.output, 'receipt.json'), 'utf8')).status,
     'prepared'
+  );
+});
+
+test('closeout reports measured timing categories and rejects malformed timing', async (t) => {
+  const f = await fixture(t);
+  const file = path.join(f.root, 'acceptance-results/session/summary.json');
+  const summary = JSON.parse(await readFile(file, 'utf8'));
+  summary.timing = {
+    wallSeconds: 15,
+    commandSeconds: 5,
+    explicitWaitSeconds: 3,
+    betweenStagesSeconds: 2,
+  };
+  await writeFile(file, JSON.stringify(summary));
+  const prepared = await prepareCloseout(
+    { ...options, sessions: ['acceptance-results/session/summary.json'] },
+    f
+  );
+  assert.ok(
+    (await readFile(path.join(prepared.output, 'notes.md'), 'utf8')).includes(
+      '| 1 | 15 | 5 | 3 | 2 | 1 | 1 |'
+    )
+  );
+  summary.timing.explicitWaitSeconds = -1;
+  await writeFile(file, JSON.stringify(summary));
+  await assert.rejects(
+    prepareCloseout({ ...options, sessions: ['acceptance-results/session/summary.json'] }, f),
+    /Invalid session timing/
   );
 });
 

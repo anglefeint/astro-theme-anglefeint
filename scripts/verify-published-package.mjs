@@ -1,3 +1,4 @@
+import { performance } from 'node:perf_hooks';
 import assert from 'node:assert/strict';
 import { setTimeout } from 'node:timers/promises';
 
@@ -71,6 +72,7 @@ export async function verifyPublishedPackage({
   sleep = setTimeout,
   log = console.log,
   onFailure = () => {},
+  onWait = () => {},
   expected = {},
 }) {
   assert.ok(Number.isInteger(attempts) && attempts > 0);
@@ -144,7 +146,12 @@ export async function verifyPublishedPackage({
         `[release] Verification ${attempt}/${attempts} stage=${stage} code=${failure.code} action=${action}: ${reason}`
       );
       if (action === 'retry') {
-        await sleep(delayMs);
+        const waitStarted = performance.now();
+        try {
+          await sleep(delayMs);
+        } finally {
+          onWait(performance.now() - waitStarted);
+        }
         continue;
       }
       throw Object.assign(

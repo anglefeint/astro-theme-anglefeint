@@ -242,7 +242,20 @@ export async function prepareCloseout(
       Array.isArray(summary.stages) && Number.isFinite(summary.seconds) && summary.seconds >= 0,
       'Invalid session summary.'
     );
+    if (summary.timing) {
+      for (const key of [
+        'wallSeconds',
+        'commandSeconds',
+        'explicitWaitSeconds',
+        'betweenStagesSeconds',
+      ])
+        assert.ok(
+          Number.isFinite(summary.timing[key]) && summary.timing[key] >= 0,
+          'Invalid session timing.'
+        );
+    }
     sessions.push({
+      timing: summary.timing ?? null,
       file: path.relative(root, location).replaceAll('\\', '/'),
       seconds: summary.seconds,
       stages: summary.stages.map(({ status, seconds }) => ({ status, seconds })),
@@ -257,13 +270,13 @@ export async function prepareCloseout(
     notes += `\nCreate a consumer from the generated starter, not the GitHub source archive:\n\n\x60\x60\x60bash\nnpm create astro@latest -- --template ${starterTemplate}\n\x60\x60\x60\n`;
   if (sessions.length) {
     notes +=
-      '\nSession timings supplied by the operator (observational; failures remain recorded):\n\n| Evidence | Seconds | Passed stages | Failed stages |\n| --- | ---: | ---: | ---: |\n';
+      '\nSession timings supplied by the operator (observational; failures remain recorded):\n\n| Evidence | Wall s | Command s | Explicit wait s | Between stages s | Passed | Failed |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: |\n';
     sessions.forEach((summary, i) => {
-      notes += `| ${i + 1} | ${summary.seconds} | ${summary.stages.filter((s) => s.status === 'passed').length} | ${summary.stages.filter((s) => s.status === 'failed').length} |\n`;
+      notes += `| ${i + 1} | ${summary.seconds} | ${summary.timing?.commandSeconds ?? 'not recorded'} | ${summary.timing?.explicitWaitSeconds ?? 'not recorded'} | ${summary.timing?.betweenStagesSeconds ?? 'not recorded'} | ${summary.stages.filter((s) => s.status === 'passed').length} | ${summary.stages.filter((s) => s.status === 'failed').length} |\n`;
     });
   }
   notes +=
-    '\nThis identity collection does not rerun or replace technical checks, audits or the canonical npm download verifier. Historical summaries do not authorize skipping checks. Demo/browser acceptance remains user-owned.\n';
+    '\nWall time includes operations, evidence and between-stage coordination. Command time is measured child-process time, not CPU time; explicit wait records verifier backoff only. These are not additive independent categories. Legacy missing timings are not estimated. This identity collection does not rerun or replace technical checks, audits or the canonical npm download verifier. Historical summaries do not authorize skipping checks. Demo/browser acceptance remains user-owned.\n';
   const parent = await evidenceParent(root);
   const output = await mkdtemp(path.join(parent, `release-closeout-${version}-`));
   const receipt = {
@@ -286,10 +299,7 @@ export async function prepareCloseout(
   return { output, receipt };
 }
 
-export async function verifyCloseout(
-  options,
-  { root = process.cwd(), capture, now = () => new Date().toISOString() } = {}
-) {
+export async function checkPreparedCloseout(options, { root = process.cwd(), capture } = {}) {
   const receiptFile = await evidenceFile(root, options.receipt);
   const receipt = JSON.parse(await readFile(receiptFile, 'utf8'));
   assert.ok(
@@ -310,17 +320,28 @@ export async function verifyCloseout(
     receipt.registry,
     'Registry identity changed since preparation.'
   );
-  assert.equal(
-    identity.tagSource,
-    receipt.source,
-    'Remote release tag is missing or points elsewhere.'
-  );
   const notesFile = await evidenceFile(root, path.join(path.dirname(receiptFile), 'notes.md'));
   const notes = await readFile(notesFile, 'utf8');
   assert.equal(
     digest(notes),
     receipt.notesSha256,
     'Prepared notes changed; prepare a fresh announcement.'
+  );
+  return { receiptFile, receipt, identity, notesFile, notes };
+}
+
+export async function verifyCloseout(
+  options,
+  { root = process.cwd(), capture, now = () => new Date().toISOString() } = {}
+) {
+  const { receiptFile, receipt, identity, notes } = await checkPreparedCloseout(options, {
+    root,
+    capture,
+  });
+  assert.equal(
+    identity.tagSource,
+    receipt.source,
+    'Remote release tag is missing or points elsewhere.'
   );
   const release = JSON.parse(
     await capture('gh', [
@@ -381,7 +402,7 @@ async function main(argv) {
     console.log(`[release:closeout] ${result.receipt.status}; files: ${result.output}`);
     if (options.mode === 'prepare')
       console.log(
-        'Review notes.md, then create/push the exact source tag and GitHub Release serially; finish with verify --receipt <receipt.json>.'
+        'Review notes.md, then plan npm run release:flow -- announce --receipt <receipt.json>; add --execute for an authorized announcement. Manual tag/Release commands must finish with closeout verify.'
       );
   } finally {
     await session.close();

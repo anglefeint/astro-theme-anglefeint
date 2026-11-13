@@ -5,6 +5,7 @@ import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import { performance } from 'node:perf_hooks';
 import { captureMaintainerEvidence } from './maintainer-evidence.mjs';
+import { summarizeMaintainerTiming } from './maintainer-timing.mjs';
 
 // Maintainer-only reporting; never distributed to starter or the theme package.
 export async function createMaintainerSession(name, { root = process.cwd() } = {}) {
@@ -63,7 +64,7 @@ export async function createMaintainerSession(name, { root = process.cwd() } = {
     operation,
     { cwd = root, env = process.env, artifacts = false } = {}
   ) {
-    const record = { label, status: 'running' };
+    const record = { label, status: 'running', startedAt: new Date().toISOString() };
     stages.push(record);
     const start = Date.now();
     let evidenceMs = 0;
@@ -75,7 +76,15 @@ export async function createMaintainerSession(name, { root = process.cwd() } = {
       const beforeStarted = performance.now();
       record.evidence = { before: await captureMaintainerEvidence(cwd, { env }) };
       evidenceMs += performance.now() - beforeStarted;
-      const value = await operation(record);
+      const operationStarted = performance.now();
+      let value;
+      try {
+        value = await operation(record);
+      } finally {
+        record.operationSeconds = Number(
+          ((performance.now() - operationStarted) / 1000).toFixed(3)
+        );
+      }
       record.status = 'passed';
       return value;
     } catch (error) {
@@ -89,6 +98,7 @@ export async function createMaintainerSession(name, { root = process.cwd() } = {
       record.evidenceSeconds = Number((evidenceMs / 1000).toFixed(3));
       clearInterval(heartbeat);
       record.seconds = Number(((Date.now() - start) / 1000).toFixed(2));
+      record.endedAt = new Date().toISOString();
       console.log(
         `[stage] ${record.status.toUpperCase()} ${label} (${record.seconds}s)${record.log ? `; log: ${record.log}` : ''}`
       );
@@ -172,13 +182,18 @@ export async function createMaintainerSession(name, { root = process.cwd() } = {
     stage,
     run,
     async close() {
+      const ended = Date.now();
       try {
         await writeFile(
           path.join(directory, 'summary.json'),
           JSON.stringify(
             {
               name,
-              seconds: Number(((Date.now() - started) / 1000).toFixed(2)),
+              startedAt: new Date(started).toISOString(),
+              endedAt: new Date(ended).toISOString(),
+              lockWaitSeconds: Number(((started - waitingSince) / 1000).toFixed(3)),
+              seconds: Number(((ended - started) / 1000).toFixed(2)),
+              timing: summarizeMaintainerTiming(started, ended, stages),
               stages,
             },
             null,

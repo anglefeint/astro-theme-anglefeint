@@ -211,6 +211,9 @@ test('list/plan are read-only and show consent, while pre-push full trigger is a
   assert.equal(pkg.scripts['check:types'], 'astro check');
   assert.equal(pkg.scripts['check:about-output'], 'node scripts/check-about-runtime-config.mjs');
   assert.equal(pkg.scripts['release:closeout'], 'node scripts/release-closeout.mjs');
+  assert.equal(pkg.scripts['release:flow'], 'node scripts/release-flow.mjs');
+  assert.ok(deliveryTools['source-handoff'].command.includes('release:flow -- source'));
+  assert.ok(deliveryTools['announcement-delivery'].command.includes('release:flow -- announce'));
   assert.match(readFileSync('.husky/pre-commit', 'utf8'), /npm exec lint-staged/);
   assert.match(readFileSync('.husky/pre-commit', 'utf8'), /npm run check:docs/);
 });

@@ -51,6 +51,7 @@
     "release:npm": "node scripts/release-npm.mjs",
     "release:verify": "node scripts/verify-release.mjs",
     "release:closeout": "node scripts/release-closeout.mjs",
+    "release:flow": "node scripts/release-flow.mjs",
     "new-post": "anglefeint-new-post",
     "new-page": "anglefeint-new-page",
     "astro": "astro",

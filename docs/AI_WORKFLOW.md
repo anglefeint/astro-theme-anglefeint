@@ -129,10 +129,12 @@ Publish npm when the change affects installed users through the package, for exa
 If npm release is required, compose an explicit plan from the [tool catalog](RELEASE_TOOLS.md). Preserve these constraints:
 
 - Prepare the version, changelog and release ledger; keep main clean and commit/push the technically validated source after applicable starter drift preflight.
+- Prefer the [source handoff](RELEASE_TOOLS.md#source-handoff-and-announcement-execution): finish/stage reviewed version and check-plan prose first, select necessary checks inside one planned `release:flow source` invocation, then execute it for an authorized release. It retains normal commit hooks, structured starter preflight, main push and canonical npm mechanics under one lock. Do not duplicate the same checks outside and inside the flow or hand-edit tracked result prose after checks merely to record their completion.
 - Select `npm-delivery` for complete npm delivery. Preview with `npm run release:tools -- plan npm-delivery`, then execute with `npm run release:tools -- run npm-delivery`. The planner includes npm mechanics only. Explicitly select the relevant technical tools; all selected checks run before upload. It never consumes earlier check results. Existing `release:npm` remains a compatible entry.
 - Do not routinely prepend a full dry-run. Upload once, and recover accepted uploads through read-only registry verification.
 - Only after exact download/tag verification, deliver and push starter, complete the selected technical acceptance and exact-source tag/GitHub Release. Demo regression is user-owned and does not block package completion.
 - Record actual results and limitations. npm upload alone is not completion. See the catalog for tool effects and runbooks for delivery/evidence policy; do not duplicate their internal commands here.
+- After verified npm and starter delivery, prepare/review closeout notes once and use `release:flow announce` to compose exact-source tag/Release/readback. Existing prepare/verify remain read-only; the separate execution flow owns mutations and stops on mismatches. Its `--execute` flag never substitutes for user authorization.
 
 If npm release is not required but starter should still change:
 

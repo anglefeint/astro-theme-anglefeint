@@ -12,6 +12,16 @@ depends_on: [docs/DOC_SYNC_WORKFLOW.md, docs/ARCHITECTURE.md, docs/VISUAL_SYSTEM
 
 # 代码与文档核对记录：2026-09-14
 
+## 2026-11-13 Release handoff, announcement orchestration and timing
+
+以已发布 0.36.0 的 main `903f2a2182adc3586d20e35376e5e050e857c4c0` 为基线，仅调整维护工具和流程。新增 release:flow 的 source/announce 两个默认计划入口：source 在共享 session/lock 内执行选定检查和既有 npm 前置机制，接正常提交钩子、提交树核对、结构化 starter 预检、推送核对及单次上传/下载验证；announce 从已审阅的 notes/receipt 重新核对身份后接精确源 tag、Release 和原完整回读。没有嵌套调用持锁 CLI，没有缓存历史通过结果；上传已接受后仍只读恢复，不能重跑 source 上传。原 prepare/verify 保持只读，starter 的安装审计/doctor/build 未削减。
+
+maintainer-timing 以时间区间并集统计阶段覆盖，区分 session wall、operation、session.run 子命令、实际 verifier 退避等待、evidence、阶段间及锁等待。命令/等待是 operation 子集，不重复相加；子进程网络耗时不冒充 CPU 或 npm 传播。进程之外的 agent/tool 往返需单列，旧 summary 缺字段展示 not recorded。保留原重试次数、间隔、请求超时与错误分类。
+
+文档按职责同步 RELEASE_TOOLS、AI_WORKFLOW、MAINTAINER_WORKFLOW、VALIDATION_POLICY、PACKAGE_RELEASE、DOC_SYNC_WORKFLOW、CHANGELOG 与本记录。README、消费者教程、架构/视觉/图片规范和薄 agent 入口无交付契约变化，不复制维护命令；starter manifest/模板和包版本保持不变。针对性单元覆盖顺序、检查/钩子/源漂移/推送失败阻断、公告部分恢复、旧/新计时及共享锁；隔离 Git 用真实提交钩子，npm 上传与远程推送均为替身。未执行真实发布入口、提交/推送、tag/Release、浏览器或部署检查，不发布新的 npm 版本。
+
+本轮 62 项针对性测试通过；Windows 沙箱首次阻止 junction 与 Git 钩子 shell，随后在沙箱外对同一组隔离临时测试重跑通过，未跳过相关用例。lint、110 份文档元数据、全仓格式与 diff 空白检查通过。文档建议器核对 24 条路径，direct-hit 103、propagated 2、metadata errors 0；按上列职责处置，未将广域命中等同于全部改写。未运行全量测试、主工程构建或 demo 回归。
+
 ## 2026-11-13 Retrospective documentation workflow and engineering notes
 
 审阅边界：基线 `3d88682f2da8d4a6a5468867288bc77940f18a7c` 与其后的当前工作区，覆盖持久图片、About 首屏/工具加载、文章封面/数学样式、Fragments 图片/分页及模块拆分。没有把已提交的维护发布优化重复当成待发布主题功能。`suggest:docs -- --json` 初次输入 81 条变更路径，文档补齐后为 101 条；direct-hit 109、额外 propagated 0、metadata errors 0。广域 scope 已命中全部候选，不能据此要求重写每份文档；按职责作以下处置。

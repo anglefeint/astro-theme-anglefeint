@@ -45,6 +45,11 @@ test('maintainer command retains stdout/stderr and blocks after the original exi
     assert.ok(summary.stages[0].seconds >= 0);
     assert.ok(summary.stages[0].commandSeconds >= 0);
     assert.ok(summary.stages[0].evidenceSeconds >= 0);
+    assert.ok(Number.isFinite(Date.parse(summary.startedAt)));
+    assert.ok(Number.isFinite(Date.parse(summary.endedAt)));
+    assert.ok(summary.stages[0].operationSeconds >= summary.stages[0].commandSeconds);
+    assert.ok(summary.timing.betweenStagesSeconds >= 0);
+    assert.equal(summary.timing.overlappingStages, false);
     assert.equal(summary.stages[0].evidence.before.observationalOnly, true);
     assert.equal(summary.stages[0].evidence.after.observationalOnly, true);
     const log = await readFile(summary.stages[0].log, 'utf8');

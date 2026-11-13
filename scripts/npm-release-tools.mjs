@@ -201,25 +201,41 @@ export function createNpmOperations(
               destination: cacheDir,
               expected: { source: publishedSource },
               onFailure: (failure) => (record.verificationFailures ??= []).push(failure),
+              onWait: (ms) => {
+                record.explicitWaitSeconds = (record.explicitWaitSeconds ?? 0) + ms / 1000;
+              },
             })
           ),
   };
 }
 
-export async function runNpmTools(targets, opts = {}) {
+export async function runNpmTools(
+  targets,
+  opts = {},
+  { session: suppliedSession, beforeUpload } = {}
+) {
   const plan = planNpmTools(targets);
   validateToolSelection(plan, opts);
   for (const file of opts.testFiles ?? [])
     if (!existsSync(path.join(repoRoot, file))) throw new Error('Test file not found: ' + file);
-  const session = await createMaintainerSession('maintainer tools: ' + targets.join(', '));
+  const session =
+    suppliedSession ?? (await createMaintainerSession('maintainer tools: ' + targets.join(', ')));
   try {
-    return await release(opts, plan, session);
+    return await release(opts, plan, session, beforeUpload);
   } finally {
-    await session.close();
+    if (!suppliedSession) await session.close();
   }
 }
 
-async function release(opts, plan, session) {
+export async function executeNpmOperations(plan, operations, beforeUpload) {
+  await executeNpmToolPlan(plan, async (name) => {
+    console.log('[tool] ' + name);
+    if (name === 'npm-upload') await beforeUpload?.();
+    await operations[name]();
+  });
+}
+
+async function release(opts, plan, session, beforeUpload) {
   const run = (cmd, args, options) => session.run(cmd, args, options);
   const pkg = readThemePackage();
   const tarballName = resolveTarballName(pkg);
@@ -230,10 +246,7 @@ async function release(opts, plan, session) {
       throw new Error('--tag requires a non-empty value.');
     if (pkg.name !== packageName) throw new Error('Unexpected theme package name.');
     const operations = createNpmOperations(opts, { pkg, npmEnv, cacheDir, session, run });
-    await executeNpmToolPlan(plan, async (name) => {
-      console.log('[tool] ' + name);
-      await operations[name]();
-    });
+    await executeNpmOperations(plan, operations, beforeUpload);
     if (plan.includes('npm-delivery') && !opts.dryRun)
       console.log(
         '[release] npm verified. Record selected technical checks and source/starter/tag/announcement identities. Demo acceptance belongs to the user; do not launch browser or hosting checks.'
