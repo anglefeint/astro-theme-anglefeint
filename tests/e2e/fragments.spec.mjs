@@ -424,6 +424,7 @@ test('silent remote load times out; retry reuses the same iframe and client', as
   await page.clock.fastForward(15001);
   await expect(dialog).toHaveAttribute('data-comment-state', 'failed');
   await expect(dialog.locator('[data-fragment-status]')).toContainText('网络');
+  await expect(dialog.locator('[data-fragment-status]')).toHaveCSS('clip-path', 'none');
   await dialog.locator('[data-fragment-retry]').click();
   await expect(dialog).toHaveAttribute('data-comment-state', 'ready');
   await expect(frame).toHaveAttribute('data-retained', 'yes');
@@ -440,10 +441,12 @@ test('reduced motion keeps the connection signal static while waiting for commen
   const dialog = page.locator('[data-fragment-dialog]');
   await expect(dialog).toHaveAttribute('data-comment-state', 'loading');
   await expect(dialog.locator('.fragment-connection')).toHaveAttribute('aria-hidden', 'true');
-  await expect(dialog.locator('.signal-loading-bars span')).toHaveCount(5);
-  for (const bar of await dialog.locator('.signal-loading-bars span').all())
-    await expect(bar).toHaveCSS('animation-name', 'none');
+  await expect(dialog.locator('.protoss-loading')).toBeVisible();
+  await expect(dialog.locator('.warp-flow')).toHaveCount(2);
+  for (const part of await dialog.locator('.warp-flow').all())
+    await expect(part).toHaveCSS('animation-name', 'none');
   await expect(dialog.locator('[data-fragment-status]')).toContainText('Loading');
+  await expect(dialog.locator('[data-fragment-status]')).toHaveCSS('clip-path', 'inset(50%)');
   await page.keyboard.press('Escape');
   await expect(dialog).not.toBeVisible();
 });

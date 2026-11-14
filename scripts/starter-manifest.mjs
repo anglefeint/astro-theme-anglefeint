@@ -224,6 +224,7 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'public/images/theme-previews/promo-cyberpunk.jpg',
   'public/images/theme-previews/promo-hacker.jpg',
   'public/images/theme-previews/promo-ai.jpg',
+  'public/images/theme-previews/promo-fragments.jpg',
   'public/images/theme-previews/preview-about.jpg',
   'public/images/theme-previews/preview-decoder.jpg',
   'public/images/theme-previews/preview-blog-list.jpg',
@@ -233,6 +234,7 @@ export const STARTER_STATIC_MANAGED_FILES = [
   'public/images/theme-previews/preview-blog-post-related.jpg',
   'public/images/theme-previews/preview-blog-post.jpg',
   'public/images/theme-previews/preview-home.jpg',
+  'public/images/theme-previews/preview-fragments.jpg',
   'src/site.config.ts',
 ];
 

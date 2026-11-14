@@ -1,0 +1,5 @@
+Generator: built-in image_gen, localized size edit of fragments-space-v7.webp.
+Delivered asset: packages/theme/src/assets/theme/backgrounds/fragments-space-v8.webp
+
+Final prompt:
+One strictly localized edit to the supplied approved background: make the SMALL LOWER-RIGHT RINGED PLANET and its entire debris ring about 25% SMALLER in width and height, scaling uniformly about their CURRENT shared center. Keep that center at the same lower-right position. Preserve the ring angle, planetary orientation, current low brightness and muted gray-violet color. This should read as a more distant world. Cleanly restore the vacated perimeter with matching nearly black space, not an additional halo. Keep the large LOWER-LEFT planet unchanged in position, scale, terrain, exposure, color and shadow. Keep the UPPER-RIGHT asteroids unchanged in location, mirrored arrangement, size and brightness. Keep the stars, black central reading area, overall exposure, framing and image dimensions unchanged as closely as possible. Do not move or brighten the small planet, do not alter any other objects, do not add details, text, glow, ships or animation. Static widescreen background only.

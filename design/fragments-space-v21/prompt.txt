@@ -1,0 +1,7 @@
+Generator: built-in image_gen; sparse central-star refinement.
+Edit target: packages/theme/src/assets/theme/backgrounds/fragments-space-v20.webp
+Delivered asset: packages/theme/src/assets/theme/backgrounds/fragments-space-v21.webp
+Conversion: original canvas dimensions; WebP quality 85.
+
+Final prompt:
+Precise localized edit of this existing website background. Add ONLY a FEW tiny dim distant stars to the CENTRAL BLACK SKY: the area roughly x=35%-72%, y=12%-70%. Add about 15-20 subtle gray-white pinpoints in that area, irregularly spaced, mostly barely visible with only 2-3 slightly more discernible small points. Keep the center predominantly black and sparse; this is a small local increase, not a dense starfield. Do not add any stars at the outer left or right sky, do not increase overall peripheral density. Preserve all existing star locations and brightness. Preserve EVERYTHING ELSE unchanged as closely as possible: volcanic left planet, surface, glow, color and framing, warm haze, upper-right asteroid group, very dim tiny right planet, exact foreground mechanical deck, finite staggered edge, machinery, grilles, reflections and dark exposure. No stars on solid objects, no floating dust, no glow halos, no bokeh, no animation, no new objects or text. Same image size/aspect ratio. Only the small number of central distant star points should change.

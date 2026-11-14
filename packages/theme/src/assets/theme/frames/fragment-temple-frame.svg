@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" fill="none">
+  <defs>
+    <linearGradient id="stone" x1="0" y1="0" x2="150" y2="160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#41425b" />
+      <stop offset=".25" stop-color="#191c32" />
+      <stop offset=".65" stop-color="#0c1020" />
+      <stop offset="1" stop-color="#292a43" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d1b36a" />
+      <stop offset=".35" stop-color="#a18039" />
+      <stop offset=".7" stop-color="#645020" />
+      <stop offset="1" stop-color="#292619" />
+    </linearGradient>
+    <g id="corner">
+      <path d="M2 2H31L26 9H14L9 26 2 31Z" fill="url(#stone)" stroke="#070a13" stroke-width="2" />
+      <path
+        d="M3 3C12 8 23 7 31 4L24 13 14 15 12 24 4 31C7 20 7 12 3 3Z"
+        fill="url(#gold)"
+        stroke="#382e1a"
+      />
+      <path d="M4 4 14 10 27 7M5 29 10 15" stroke="#e4c77b" stroke-opacity=".48" />
+      <path d="M17 18 30 14 30 30 14 30Z" fill="#1c2039" stroke="#46475e" />
+      <path d="M20 21 27 18 26 26 18 27Z" fill="#0c1223" />
+      <path d="M22 22 25 21 24 24 21 25Z" fill="#4f8388" />
+    </g>
+  </defs>
+  <path fill="url(#stone)" fill-rule="evenodd" d="M2 2H158V158H2ZM29 29V131H131V29Z" />
+  <path d="M32 5H128M155 32V128M128 155H32M5 128V32" stroke="#50516a" stroke-opacity=".6" />
+  <path d="M32 11H128M149 32V128M128 149H32M11 128V32" stroke="#080d1b" stroke-width="4" />
+  <path d="M32 18H128M142 32V128M128 142H32M18 128V32" stroke="#33354f" stroke-width="3" />
+  <path d="M32 25H128M135 32V128M128 135H32M25 128V32" stroke="#080c17" stroke-width="3" />
+  <path
+    d="M40 15H50M74 15H79M100 15H117M15 41V57M15 85V91M15 108V117M145 42V50M145 70V86M145 111V119M43 145H56M81 145H89M110 145H119"
+    stroke="#79705b"
+    stroke-opacity=".3"
+  />
+  <use href="#corner" />
+  <use href="#corner" transform="translate(160 0) rotate(90)" />
+  <use href="#corner" transform="translate(160 160) rotate(180)" />
+  <use href="#corner" transform="translate(0 160) rotate(270)" />
+</svg>

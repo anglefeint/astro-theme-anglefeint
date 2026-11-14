@@ -7,6 +7,7 @@ import { fragmentFeedHtml } from '../../../utils/fragment-html';
 import imageData from 'virtual:anglefeint-blog-covers';
 import { rewriteFragmentImages } from '../../../covers/fragment-render.mjs';
 import CyberShell from '../../../layouts/shells/CyberShell.astro';
+import fragmentsSpaceUrl from '../../../assets/theme/backgrounds/fragments-space-v21.webp?url';
 import FragmentComments from '../../../components/FragmentComments.astro';
 import BackToTop from '../../../components/shared/BackToTop.astro';
 import CyberPagination from '../../../components/pagination/CyberPagination.astro';
@@ -76,6 +77,10 @@ const titleGlyphs = Array.from(
   new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(labels.title),
   (part) => part.segment
 );
+// Keep punctuation and whitespace intact while giving subtitle phrases a quiet offset.
+const descriptionParts = labels.description.match(
+  /[^,，、。.!！?？;；]+[,，、。.!！?？;；]*\s*/gu
+) ?? [labels.description];
 const titlePartCount = Math.min(3, titleGlyphs.length);
 const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
   titleGlyphs
@@ -94,6 +99,13 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
   localeHrefs={localeHrefs}
   includeAlternateLinks={current === 1}
 >
+  <div
+    slot="body-start"
+    class="fragments-space"
+    style={{ backgroundImage: `url("${fragmentsSpaceUrl}")` }}
+    aria-hidden="true"
+  >
+  </div>
   {needsMath && <link slot="head" rel="stylesheet" href={mathCssUrl} />}
   <section
     class="fragments-feed"
@@ -115,7 +127,9 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
       <h1 aria-label={labels.title}>
         {titleParts.map((part) => <span class="fragment-title-part">{part}</span>)}
       </h1>
-      <p class="fragments-description">{labels.description}</p>
+      <p class="fragments-description">
+        {descriptionParts.map((part) => <span class="fragment-description-part">{part}</span>)}
+      </p>
     </div>
     <p class="fragment-link-status" data-fragment-link-status role="status" hidden></p>
     {!cards.length && <p>{labels.empty}</p>}
@@ -231,58 +245,692 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
 </CyberShell>
 <script>
   import { initFragmentLinks } from '../../../scripts/fragment-links.js';
+  import { initFragmentsChrome } from '../../../scripts/fragments-chrome.js';
   initFragmentLinks();
+  initFragmentsChrome();
   document.addEventListener('astro:page-load', initFragmentLinks);
+  document.addEventListener('astro:page-load', initFragmentsChrome);
   window.addEventListener('pageshow', (event) => {
-    if (event.persisted) initFragmentLinks();
+    if (event.persisted) {
+      initFragmentLinks();
+      initFragmentsChrome();
+    }
   });
 </script>
+<style is:global>
+  /* Route-only neutral presentation; other Cyber pages keep their effects. */
+  body.cyber-page:has([data-fragments]) .cyber-spotlight,
+  body.cyber-page:has([data-fragments]) [data-cyber-layer] {
+    display: none;
+  }
+  body.cyber-page:has([data-fragments]) {
+    --chrome-active: #b5bdc8;
+    --chrome-link-hover: #e5e9ef;
+    --chrome-bg: rgba(7, 11, 18, 0.38);
+
+    main {
+      padding-top: calc(var(--fragments-nav-height, 80px) + 1rem);
+    }
+
+    .fragments-space {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-color: #020305;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    header {
+      background: var(--chrome-bg);
+      border-bottom-color: rgba(151, 165, 186, 0.18);
+    }
+    footer {
+      position: relative;
+      z-index: 5;
+      background: var(--chrome-bg);
+      border-top-color: rgba(151, 165, 186, 0.18);
+    }
+
+    .fragments-feed .fragment-card {
+      border: 16px solid transparent;
+      border-image: url('../../../assets/theme/frames/fragment-temple-frame.svg') 32 stretch;
+      background: transparent;
+      background-clip: padding-box;
+      clip-path: none;
+      box-shadow: inset 0 0 0 1px rgba(87, 82, 113, 0.25);
+      animation: none;
+    }
+    .fragments-feed .fragment-card::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -21px;
+      left: calc(50% - 5px);
+      bottom: auto;
+      right: auto;
+      width: 10px;
+      height: 22px;
+      background: linear-gradient(105deg, #17152c 10%, #655582 45%, #302444 50%, #19172e 85%);
+      clip-path: polygon(48% 0, 82% 22%, 100% 72%, 50% 100%, 0 76%, 22% 26%);
+      pointer-events: none;
+      filter: none;
+    }
+    .fragments-feed .fragment-card::after {
+      content: '';
+      display: block;
+      position: absolute;
+      inset: 8px -11px;
+      width: auto;
+      height: auto;
+      background:
+        url('../../../assets/theme/frames/fragment-temple-glyphs.svg') left center / 7px 28px
+          no-repeat,
+        url('../../../assets/theme/frames/fragment-temple-glyphs.svg') right center / 7px 28px
+          no-repeat;
+      pointer-events: none;
+      filter: none;
+    }
+    .fragments-feed [data-fragment-comments]::before,
+    .fragments-feed [data-fragment-comments]::after,
+    .pagination .pg-item::before {
+      display: none;
+    }
+    .fragments-feed .fragment-date,
+    .fragments-feed .fragment-copy {
+      color: #94a3b2;
+      text-shadow: 0 1px 0 #05080d;
+    }
+    .fragments-feed .fragment-date {
+      font-family: 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.025em;
+      text-transform: uppercase;
+    }
+    .fragments-feed .fragment-date:is(:hover, :focus-visible),
+    .fragments-feed .fragment-copy:is(:hover, :focus-visible) {
+      color: #ffe39a;
+      text-shadow: 0 1px 0 #05080d;
+    }
+    .fragments-feed .fragment-card :is(h2, h3) {
+      color: #cdd3d9;
+      font-family: 'Verdana', 'Geneva', 'Atkinson', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.035em;
+      line-height: 1.45;
+      text-shadow:
+        0 -1px 0 #d4e0ea26,
+        0 1px 0 #454f5c,
+        0 2px 0 #05080e;
+    }
+    .fragments-feed .fragment-card h2 {
+      margin-top: 0.2rem;
+      padding-bottom: 0.4rem;
+      background: linear-gradient(90deg, #b39b56 0 1.2rem, #35404d 1.2rem, transparent) left
+        bottom / min(14rem, 65%) 1px no-repeat;
+    }
+    .fragments-feed .fragment-body a {
+      color: #c5d3e3;
+      text-shadow: none;
+    }
+    .fragments-feed [data-fragment-comments] {
+      color: #d8cba6;
+      border: 2px solid;
+      border-color: #90775a #4b3540 #382832 #70513e;
+      border-radius: 9px 6px 10px 5px;
+      background:
+        radial-gradient(ellipse at 20% 0%, #98765340, transparent 55%),
+        linear-gradient(160deg, #302331, #1b151f);
+      clip-path: none;
+      box-shadow:
+        inset 0 0 0 1px #b49a6d33,
+        inset 0 1px 1px #ae8d5a22,
+        inset 0 -2px 2px #100b14;
+      text-shadow: 0 1px 1px #09060b;
+      animation: none;
+    }
+    .fragments-feed [data-fragment-comments]:is(:hover, :focus-visible) {
+      color: #f0dfad;
+      border-color: #b29a73 #705063 #50384a #96724f;
+      background:
+        radial-gradient(ellipse at 20% 0%, #ab89534d, transparent 55%),
+        linear-gradient(160deg, #3b2b3b, #241a29);
+      box-shadow:
+        inset 0 0 0 1px #cfb17c44,
+        inset 0 1px 1px #ae8d5a33,
+        inset 0 -2px 2px #100b14;
+    }
+    .fragments-feed [data-fragment-comments]:focus-visible {
+      outline: 2px solid #d8cba6;
+      outline-offset: 3px;
+    }
+    .pagination .pg-item,
+    .pagination-jump-btn {
+      position: relative;
+      box-sizing: border-box;
+      min-width: 52px;
+      min-height: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      padding-block: 0;
+      border: 2px solid;
+      border-color: #414b4f #0c1318 #04070b #242b2e;
+      border-radius: 1px;
+      background:
+        radial-gradient(ellipse at 0% 100%, #9b593311, transparent 65%),
+        radial-gradient(ellipse at 28% 0%, #ffffff30, #ffffff0b 32%, transparent 64%) center top /
+          100% 36% no-repeat,
+        var(--bc-face, linear-gradient(#070b0f, #020406 40%, #000102 65%, #030609));
+      color: #d7d9d4;
+      font-family: 'Verdana', 'Geneva', 'Atkinson', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      line-height: 1;
+      font-variant-numeric: lining-nums tabular-nums;
+      letter-spacing: 0.025em;
+      text-shadow: 0 1px 0 #020409;
+      box-shadow:
+        inset 0 0 0 1px #05080d,
+        inset 0 0 0 3px #1b2224,
+        inset 0 0 0 4px #060a10,
+        0 1px 0 #020407;
+      clip-path: none;
+      animation: none;
+      transform: none;
+    }
+    .pagination .pg-item:not(.current):not(.pg-ellipsis) {
+      --bc-face: linear-gradient(#0f1215, #06090c 45%, #010203);
+      box-shadow:
+        inset 0 0 0 1px #070a0c,
+        inset 0 0 0 3px #1f2728,
+        inset 0 1px 1px 3px #cdd4cd1f,
+        inset 0 -2px 3px 3px #000c,
+        0 1px 0 #020407;
+    }
+    .pagination .pg-item:is(:hover, :focus-visible),
+    .pagination-jump-btn:is(:hover, :focus-visible) {
+      color: #e1e9e8;
+      border-color: #637075 #233238 #101a20 #3d484d;
+      box-shadow:
+        inset 0 0 0 1px #070d15,
+        inset 0 0 0 3px #29363c,
+        inset 0 0 0 4px #070c14,
+        0 1px 0 #020407;
+      transform: none;
+    }
+    .pagination .pg-item.current {
+      --bc-face: linear-gradient(#000102, #030609);
+      color: #bfeaff;
+      box-shadow:
+        inset 0 0 0 1px #04080e,
+        inset 0 0 0 3px #1b2224,
+        inset 0 0 0 4px #04070c,
+        inset 0 0 9px 5px #000e,
+        0 1px 0 #020407;
+    }
+    .pagination .pg-item.current::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 2px solid;
+      border-color: #010203 #222829 #444b49 #080b0c;
+      box-shadow:
+        0 0 0 1px #010203,
+        inset 0 0 0 1px #0f1215;
+      pointer-events: none;
+    }
+    .pagination .pg-item.pg-ellipsis {
+      min-width: 0;
+      width: 1.2rem;
+      padding-inline: 0.15rem;
+      border: 0;
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+      color: #9cbbc6;
+      font-family: 'Consolas', 'Liberation Mono', monospace;
+      letter-spacing: 0.12em;
+      text-shadow: none;
+      font-size: 0;
+      opacity: 1;
+    }
+    .pagination .pg-item.pg-ellipsis::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow:
+        -6px 0 currentColor,
+        6px 0 currentColor;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .pagination-jump {
+      border-color: #28323d;
+      border-radius: 2px;
+      background: #0c1118d9;
+    }
+    .pagination-jump-label {
+      color: #9eaab5;
+    }
+    .pagination-jump-input {
+      color: #d3dbe1;
+      border-color: #2e3c4a;
+      border-radius: 2px;
+      background: #070c12;
+      font-variant-numeric: tabular-nums;
+    }
+    .pagination .pg-item:focus-visible,
+    .pagination-jump-btn:focus-visible,
+    .pagination-jump-input:focus {
+      outline: 2px solid #b2dfea;
+      outline-offset: 2px;
+      box-shadow: none;
+    }
+    .ai-back-to-top {
+      color: #d8cba6;
+      border: 3px solid;
+      border-color: #90775a #4b3540 #382832 #70513e;
+      border-radius: 42% 36% 43% 34%;
+      background:
+        radial-gradient(ellipse at 22% 15%, #98765355, transparent 38%),
+        radial-gradient(ellipse at 80% 85%, #5a354c55, transparent 45%),
+        radial-gradient(ellipse, #302331, #1b151f 72%);
+      box-shadow:
+        inset 0 0 0 1px #b49a6d44,
+        inset 2px 2px 3px #ae8d5a22,
+        inset -2px -3px 3px #100b14,
+        0 3px 8px #0008;
+      text-shadow: 0 1px 1px #09060b;
+      backdrop-filter: none;
+    }
+    .ai-back-to-top:is(:hover, :focus-visible) {
+      color: #f0dfad;
+      border-color: #b29a73 #705063 #50384a #96724f;
+      box-shadow:
+        inset 0 0 0 1px #cfb17c66,
+        inset 2px 2px 3px #ae8d5a33,
+        inset -2px -3px 3px #100b14,
+        0 3px 8px #0008;
+    }
+    .ai-back-to-top:focus-visible {
+      outline: 2px solid #d8cba6;
+      outline-offset: 4px;
+    }
+    footer {
+      box-shadow: none;
+    }
+    /* Brood War atmosphere: alloy, organic shadow and psionic light share one instrument. */
+    .music-deck {
+      --music-accent: #a5c5d6;
+      --music-accent-alt: #8c829f;
+      --music-text: #d4d1c7;
+      --music-muted: #a19b99;
+      --music-border: #48434b;
+      --music-border-strong: #b3def2;
+      --music-surface: #0c0b15;
+      --music-glow: transparent;
+      border: 3px solid;
+      border-color: #7c7461 #302c38 #1c1821 #5b493a;
+      border-radius: 4px 2px 5px 2px;
+      background:
+        radial-gradient(ellipse at 90% 12%, #58637314, transparent 48%),
+        radial-gradient(ellipse at 5% 95%, #63434d1c, transparent 58%),
+        radial-gradient(ellipse at 0% 0%, #8b806715, transparent 42%),
+        linear-gradient(145deg, #15141a99, #07090ca3 55%, #160e189e);
+      box-shadow:
+        inset 0 0 0 1px #020309,
+        inset 0 0 0 3px #303247,
+        inset 0 0 0 4px #0a0911,
+        inset 0 8px 16px #0007,
+        0 1px 0 #b7b4a238,
+        0 10px 28px #000b;
+      backdrop-filter: none;
+    }
+    .music-deck::before {
+      display: block;
+      background:
+        radial-gradient(ellipse at 35% -20%, #d5d4c612, transparent 62%),
+        radial-gradient(ellipse at 20% 100%, #7b56600c, transparent 48%);
+      background-size: auto;
+      mix-blend-mode: normal;
+      opacity: 1;
+    }
+    .music-deck .music-deck__topbar {
+      padding: 0.55rem 0.65rem 0.2rem;
+    }
+    .music-deck .music-deck__header {
+      padding: 0 0.65rem 0.4rem;
+    }
+    .music-deck .music-deck__body {
+      gap: 0.6rem;
+      padding: 0 0.65rem 0.65rem;
+    }
+    .music-deck .music-deck__controls,
+    .music-deck .music-deck__footer {
+      gap: 0.45rem;
+    }
+    .music-deck[data-collapsed='true'] .music-deck__topbar {
+      padding: 0.4rem 0.65rem 0.1rem;
+    }
+    .music-deck[data-collapsed='true'] .music-deck__header {
+      padding: 0 0.65rem 0.2rem;
+    }
+    .music-deck[data-collapsed='true'] .music-deck__body {
+      gap: 0.3rem;
+      padding: 0 0.65rem 0.55rem;
+    }
+    .music-deck .music-deck__chrome {
+      gap: 0.35rem;
+    }
+    .music-deck :is(.music-deck__led, .music-deck__led--alt) {
+      width: 4px;
+      height: 7px;
+      border-radius: 1px;
+      background: #c3dce5;
+      box-shadow:
+        inset 0 0 0 1px #e1f4ff33,
+        0 0 4px #7fa8c54d;
+      animation: none;
+    }
+    .music-deck .music-deck__led--alt {
+      height: 5px;
+      background: #b29a6d;
+      box-shadow: 0 0 3px #a78a5633;
+    }
+    .music-deck
+      :is(
+        .music-deck__collapse,
+        .music-deck__btn,
+        .music-deck__playlist-toggle,
+        .music-deck__track-chip
+      ) {
+      border: 1px solid;
+      border-color: #605b4e #343039 #29232d #50443c;
+      border-radius: 2px;
+      background:
+        radial-gradient(ellipse at 50% 0%, #cbb88a0c, transparent 75%),
+        linear-gradient(#1b191b, #111015);
+      box-shadow:
+        inset 0 1px 0 #c5c0cd0b,
+        inset 0 -1px 0 #0004;
+      color: #cfcbbe;
+      font-family: 'Verdana', 'Geneva', sans-serif;
+      text-shadow: 0 1px 1px #000;
+      transform: none;
+    }
+    .music-deck
+      :is(
+        .music-deck__collapse,
+        .music-deck__btn,
+        .music-deck__playlist-toggle,
+        .music-deck__track-chip
+      ):is(:hover, :focus-visible) {
+      color: #e5d8b8;
+      border-color: #8a7e62 #51454c #3c303b #716049;
+      background: linear-gradient(#272126, #19151b);
+      box-shadow:
+        inset 0 1px 0 #d1ceda14,
+        inset 0 -1px 0 #0004;
+      transform: none;
+    }
+    .music-deck
+      :is(
+        .music-deck__collapse,
+        .music-deck__btn,
+        .music-deck__playlist-toggle,
+        .music-deck__track-chip
+      ):focus-visible {
+      outline: 2px solid #b3e8ff;
+      outline-offset: 3px;
+    }
+    .music-deck :is(.music-deck__btn--primary, .music-deck__track-chip[data-active='true']) {
+      color: #d7f3ff;
+      border-color: #667e85 #37434f #29313f #4f6269;
+      background:
+        radial-gradient(ellipse at 50% 100%, #79a5ba12, transparent 72%),
+        linear-gradient(#182127, #0e151d);
+      box-shadow:
+        inset 0 1px 0 #bad7e212,
+        inset 0 -1px 0 #0005;
+    }
+    .music-deck .music-deck__btn--primary:is(:hover, :focus-visible) {
+      color: #f2fcff;
+      border-color: #82919f #525e70 #45515e #687886;
+      background:
+        radial-gradient(ellipse at 50% 100%, #83bed323, transparent 76%),
+        linear-gradient(#202a34, #151d27);
+      box-shadow:
+        inset 0 1px 0 #c6e8f21c,
+        inset 0 -1px 0 #0005;
+    }
+    .music-deck[data-status='playing'] .music-deck__btn--primary {
+      border-color: #353d48 #434b59 #586574 #3f4855;
+      box-shadow:
+        inset 0 1px 2px #0007,
+        inset 0 -1px 0 #c6e8f212;
+    }
+    .music-deck
+      :is(.music-deck__collapse, .music-deck__btn, .music-deck__playlist-toggle):active:not(
+        :disabled
+      ) {
+      border-color: #242027 #41353e #77674f #332a34;
+      background: linear-gradient(#08090d, #171219);
+      box-shadow:
+        inset 0 2px 4px #000c,
+        inset 1px 0 2px #0007,
+        inset 0 -1px 0 #d4c3a31a;
+      transform: none;
+      transition-duration: 60ms;
+    }
+    .music-deck :is(.music-deck__title, .music-deck__track-name, .music-deck__eyebrow) {
+      font-family: 'Verdana', 'Geneva', sans-serif;
+      font-variant-caps: normal;
+      letter-spacing: 0.055em;
+      text-shadow: 0 1px 2px #000;
+    }
+    .music-deck .music-deck__title {
+      color: #d6d1c3;
+      text-transform: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .music-deck .music-deck__eyebrow {
+      color: #bcb8a9;
+      letter-spacing: 0.12em;
+    }
+    .music-deck
+      :is(.music-deck__status-label, .music-deck__signal-label, .music-deck__volume span) {
+      color: #aa9d83;
+      font-family: 'Consolas', monospace;
+      letter-spacing: 0.16em;
+    }
+    .music-deck .music-deck__timer {
+      font-family: 'Consolas', monospace;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.75rem;
+      color: #98a8b9;
+    }
+    .music-deck .music-deck__track-index {
+      border-radius: 4px 1px;
+      border-color: #51495b;
+      background: #090812;
+      color: #aaa4b0;
+      box-shadow: inset 0 2px 3px #0009;
+    }
+    .music-deck .music-deck__playlist-toggle {
+      border-radius: 3px;
+      border-color: #5b4e48 #302832 #211b25 #4b393b;
+      background: linear-gradient(#1d171b, #0d0b10);
+      box-shadow:
+        inset 0 1px 0 #c4acbd0a,
+        inset 0 -1px 0 #0004;
+    }
+    .music-deck .music-deck__playlist-list {
+      gap: 0;
+      margin: 0;
+      padding: 0.15rem 0;
+      list-style: none;
+      border: 1px solid;
+      border-color: #08090d #39343c #39343c #08090d;
+      border-radius: 1px;
+      background: #06070b99;
+      box-shadow: inset 0 2px 5px #0008;
+      scrollbar-color: #514c55 #08090d;
+      scrollbar-width: thin;
+    }
+    .music-deck .music-deck__playlist-list .music-deck__track-chip {
+      gap: 0.4rem;
+      padding: 0.5rem 0.15rem;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      transform: none;
+      color: #b6b8bf;
+    }
+    .music-deck .music-deck__playlist-list .music-deck__track-index {
+      min-width: 1.7rem;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: #817e89;
+      font-family: 'Consolas', monospace;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.06em;
+    }
+    .music-deck .music-deck__playlist-list .music-deck__track-name {
+      font-size: 0.72rem;
+      letter-spacing: 0.035em;
+      text-transform: none;
+    }
+    .music-deck .music-deck__playlist-list .music-deck__track-artist-line {
+      color: #84818c;
+      font-size: 0.65rem;
+      letter-spacing: 0.02em;
+    }
+    .music-deck .music-deck__playlist-list .music-deck__track-chip[data-active='true'] {
+      color: #c6dce6;
+      background: #7d9db014;
+      box-shadow: none;
+    }
+    .music-deck
+      .music-deck__playlist-list
+      .music-deck__track-chip[data-active='true']
+      .music-deck__track-index {
+      color: #a3c9dc;
+    }
+    .music-deck .music-deck__playlist-list .music-deck__track-chip:is(:hover, :focus-visible) {
+      color: #e0e9ed;
+      background: #9ca7b218;
+      box-shadow: none;
+      transform: none;
+    }
+    .music-deck .music-deck__progress {
+      height: 0.4rem;
+      border: 1px solid;
+      border-color: #242033 #48405c #514a58 #242033;
+      border-radius: 3px;
+      background: #03040b;
+      box-shadow: inset 0 2px 3px #000;
+    }
+    .music-deck .music-deck__progress::before {
+      background: linear-gradient(90deg, #454157, #587589 55%, #a7ccda 88%, #e5f4f4);
+      box-shadow: 0 0 3px #82adbf33;
+    }
+    .music-deck .music-deck__progress::after {
+      width: 4px;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: #e3f8ff;
+      box-shadow:
+        0 0 2px #fff6,
+        0 0 5px #8fc5dc66;
+    }
+    .music-deck .music-deck__volume input[type='range'] {
+      accent-color: #91b9d3;
+    }
+  }
+  @media (max-width: 720px) {
+    body.cyber-page:has([data-fragments]) .fragments-space {
+      background-position: 20% center;
+    }
+  }
+</style>
 <style>
   .fragments-feed {
     max-width: 850px;
     margin: 0.65rem auto 1rem;
   }
   .fragments-heading {
+    position: sticky;
+    top: var(--fragments-nav-height, 80px);
+    z-index: 2;
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
     gap: 0.4rem 1.1rem;
     margin-bottom: 1.35rem;
+    margin-inline: -0.65rem;
+    padding: 0.65rem;
+    background: transparent;
   }
   h1 {
     position: relative;
     margin: 0;
     color: #d3e0e3;
     font:
-      700 clamp(1.65rem, 4vw, 2.4rem) / 1.15 ui-monospace,
-      monospace;
-    letter-spacing: 0.025em;
+      400 clamp(1.8rem, 4vw, 2.5rem) / 1.15 'Georgia',
+      'Times New Roman',
+      serif;
+    font-variant-caps: small-caps;
+    letter-spacing: 0.085em;
+    text-shadow:
+      0 1px 0 #020407,
+      0 2px 2px #0008;
   }
   .fragment-title-part {
     position: relative;
     display: inline-block;
   }
   .fragment-title-part + .fragment-title-part {
-    margin-left: 0.08em;
+    margin-left: 0.065em;
   }
   .fragment-title-part:nth-child(2) {
     color: #b5ced4;
-    transform: translateY(-1px) rotate(-1deg);
+    transform: translateY(-0.055em) skewX(-3deg);
   }
   .fragment-title-part:nth-child(3) {
     color: #93b7c0;
-    transform: translateY(1px);
+    transform: translateY(-0.08em) skewX(1deg);
   }
   .fragment-title-part::after {
     content: '';
     position: absolute;
     left: 0.08em;
     right: 0.04em;
-    bottom: -0.12em;
+    bottom: -0.22em;
     height: 1px;
-    background: linear-gradient(90deg, currentColor, transparent);
-    opacity: 0.3;
-    transform: rotate(-3deg);
+    background: linear-gradient(90deg, transparent, currentColor 45%, transparent);
+    opacity: 0.25;
+  }
+  .fragment-title-part:nth-child(2)::after {
+    left: 0.18em;
+    right: 0.12em;
+    bottom: -0.18em;
+  }
+  .fragment-title-part:nth-child(3)::after {
+    right: 0.2em;
+    bottom: -0.24em;
   }
   .fragments-description {
     flex: 1 1 13rem;
@@ -292,9 +940,19 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
     border-left: 1px solid #73969f55;
     color: #9fb2bb;
     font:
-      0.8rem / 1.45 ui-monospace,
-      monospace;
-    letter-spacing: 0.025em;
+      400 0.9rem / 1.45 'Georgia',
+      'Times New Roman',
+      serif;
+    font-variant-caps: small-caps;
+    letter-spacing: 0.07em;
+    text-shadow: 0 1px 1px #0008;
+  }
+  .fragment-description-part {
+    position: relative;
+  }
+  .fragment-description-part:nth-child(even) {
+    top: -0.04em;
+    margin-left: 0.06em;
   }
   .fragments-description::before {
     content: '';
@@ -307,7 +965,9 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
   }
   .fragment-card {
     position: relative;
-    scroll-margin-top: 6rem;
+    scroll-margin-top: calc(
+      var(--fragments-nav-height, 80px) + var(--fragments-title-height, 5rem) + 0.75rem
+    );
     margin: 0.65rem 0;
     padding: clamp(0.8rem, 1.8vw, 1rem);
     border: 1px solid transparent;
@@ -326,7 +986,8 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    min-height: 1.5em;
+    min-height: 1.25em;
+    line-height: 1.25;
   }
   .fragment-date {
     color: #a9bcc8;

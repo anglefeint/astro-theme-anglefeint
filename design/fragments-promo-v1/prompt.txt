@@ -1,0 +1,17 @@
+Tool: built-in image_gen
+Generated source: C:/Users/Administrator/.codex/generated_images/01a1d524-a164-7583-aeba-8b0f0e39e30f/exec-22153ca5-3263-4193-ac50-d522ca0c010f.png
+Archive: source.png
+Final export: public/images/theme-previews/promo-fragments.jpg (1600x900, JPEG quality 90)
+
+Use case: ads-marketing / screenshot compositing.
+Create ONE new promotional image for the Anglefeint Astro theme's Fragments page, as a matching fifth item in the existing README promotional gallery. Wide 16:9 landscape, intended final 1600x900.
+Input roles: image 1 (promo-cyberpunk.jpg) and image 2 (promo-hacker.jpg) are DESIGN SYSTEM REFERENCES ONLY: match their polished large typographic hierarchy, small spaced uppercase brand/category line, cinematic atmosphere, sharp readable screenshot showcase, restrained perspective and professional campaign composition. Image 3 (preview-fragments.jpg) is the ACTUAL PRODUCT SCREENSHOT and must supply the real Fragments UI.
+Create a new arrangement, not a recolor of either poster. Use the Fragments page's own original-StarCraft-Brood-War-inspired atmosphere visible in image 3: immense shadowed volcanic world with subdued molten-red scars, near-black orbital mechanical deck with pipes and armor, sparse distant stars, dark indigo temple-style note frames with tiny old-gold corners. Dark, mature, cinematic, deeply shaded. Restrained icy steel highlights and old-gold accents, local lava red; not bright neon purple/cyan, not cartoon, not plastic.
+Composition: editorial product showcase with a big high-fidelity Fragments browser panel occupying the lower/right main area, slight perspective only, clearly showing the real Anglefeint navigation, Fragments heading, temple-framed feed, volcanic world and orbital deck. A smaller overlapping excerpt of the actual text-only 'An open question' fragment from image 3 can help convey short-form writing, but no invented features or new UI. The distant planetary/deck atmosphere can extend naturally around the product as the poster background, without placing new ships, characters, weapons, or game logos. Preserve readable product details and real screenshot hierarchy, do not redesign the UI. The green image in the first fragment is actual user content, not a theme background; keep it contained within the real card rather than making the whole campaign green.
+Typography must be clean, accurately spelled, highly legible, integrated in the same family of promotional artwork as images 1 and 2. Main headline has generous breathing room; do not place UI behind headline text.
+Text verbatim, no extra marketing copy:
+Small brand/category line: 'ANGLEFEINT / FRAGMENTS'
+Main headline: 'Small thoughts. Vast worlds.'
+Subtitle: 'A Brood War atmosphere for your brief notes.'
+Small footer: 'Brief notes · Stable links · Optional comments'
+No watermark, no Blizzard logo, no official affiliation badge. This is an Anglefeint theme promo, not a StarCraft game advertisement. Keep the atmosphere dark but the headline and product framing clear.

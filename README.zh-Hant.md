@@ -21,39 +21,39 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.4.12-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Anglefeint 能做什麼？
+## 為個人部落格製作
 
-用 Markdown／MDX 寫文章，用 Fragments 記錄短想法；內建多語言、搜尋、標籤、目錄、程式碼複製、圖片預覽、數學公式和自動文章分享圖片。評論、音樂與 GA4 可依需求啟用。
+Anglefeint 是一個為個人部落格製作的 Astro 主題，每個頁面都有自己的風格：
 
-| 頁面             | 視覺氛圍                               |
-| ---------------- | -------------------------------------- |
-| 首頁             | Matrix：綠色程式碼雨、終端機與像素頭像 |
-| 部落格及標籤列表 | Cyberpunk：霓虹、雨幕與城市光束        |
-| About            | Hacker：個人介紹、虛擬終端機和互動工具 |
-| 文章詳情         | AI：網路背景、監視器與 OUTPUT 閱讀面板 |
+| 頁面        | 風格               |
+| ----------- | ------------------ |
+| 首頁        | Matrix             |
+| 部落格列表  | Cyberpunk          |
+| 文章詳情    | AI                 |
+| About       | Hacker             |
+| Decoder Lab | Cypherpunk         |
+| Fragments   | 星海爭霸：怒火燎原 |
 
-建置還會生成公開文章、About 和 Fragments 的 Markdown、`llms.txt` 及多語言全文合集，方便 AI 工具讀取，不需要另設正式環境伺服器；不保證模型收錄或引用。
+如果你也喜歡這些風格，歡迎使用 Anglefeint 建立自己的部落格。 即使你還不熟悉這些氛圍，也歡迎來體驗，相信你會喜歡。
 
 <a id="ai-assistant"></a>
 
 ## 用 AI 助手協作
 
-可讓 Cursor、Codex 或 Claude Code 按目前專案的 `AGENTS.md` 設定網站和管理內容；已有的 `CLAUDE.md`、Cursor 規則會指向對應指引。先說明要改什麼，讓助手查實際設定和本文相應章節，需要欄位細節時再進入 demo 字典。
-
-參與主題開發請從儲存庫的 [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) 和[貢獻指南](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CONTRIBUTING.md)進入；部落格使用者不需要先學習維護者發佈流程。
+非常推薦使用 AI coding IDE 來嘗試這個專案。專案已經為 AI 助手提供了[完善的引導](AGENTS.md)，幫助你輕鬆上手。
 
 <a id="installation"></a>
 
 ## 1. 安裝並啟動
 
-需要 **Node.js 22.12.0 或更新版本**，模板基于 **Astro 7**。在準備存放部落格的目錄執行：
+需要 **Node.js 22.12.0 或更新版本**，模板基于 **Astro 7.4.7+**。在準備存放部落格的目錄執行：
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
@@ -302,6 +302,8 @@ pnpm 專案對應使用 `pnpm run doctor`／`pnpm preview`，或 `pnpm build`／
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+![Anglefeint — Fragments, a Brood War atmosphere](public/images/theme-previews/promo-fragments.jpg)
+
 ### 分享預覽
 
 ![Anglefeint 預設分享圖片](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
@@ -335,3 +337,7 @@ pnpm 專案對應使用 `pnpm run doctor`／`pnpm preview`，或 `pnpm build`／
 | Decoder Lab · 密碼朋克資源                                                           |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
+
+| Fragments · 星海爭霸：怒火燎原                                           |
+| ------------------------------------------------------------------------ |
+| ![Fragments preview](public/images/theme-previews/preview-fragments.jpg) |

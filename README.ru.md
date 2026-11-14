@@ -21,39 +21,39 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.4.12-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Что умеет Anglefeint?
+## Для личных блогов
 
-Пишите статьи в Markdown/MDX и короткие мысли в Fragments. Встроены языки, поиск, теги, оглавление, копирование кода, просмотр изображений, формулы и автоматические превью статей. Комментарии, музыка и GA4 включаются по необходимости.
+Anglefeint — тема Astro, созданная для личных блогов. У каждой страницы своя атмосфера:
 
-| Страница    | Атмосфера                                                 |
-| ----------- | --------------------------------------------------------- |
-| Главная     | Matrix: зелёный дождь кода, терминал и пиксельный аватар  |
-| Блог и теги | Cyberpunk: неон, дождь и городские лучи                   |
-| About       | Hacker: представление, виртуальный терминал и инструменты |
-| Статья      | AI: сетевая графика, мониторы и панель чтения OUTPUT      |
+| Страница      | Стиль                |
+| ------------- | -------------------- |
+| Главная       | Matrix               |
+| Список статей | Cyberpunk            |
+| Статья        | AI                   |
+| About         | Hacker               |
+| Decoder Lab   | Cypherpunk           |
+| Fragments     | StarCraft: Brood War |
 
-Сборка также создаёт Markdown публичных статей, About и Fragments, `llms.txt` и полные многоязычные сборники для AI-инструментов без дополнительного production-сервера. Попадание в модели/цитирование не гарантируются.
+Если вам тоже нравятся эти стили, попробуйте Anglefeint для своего блога. Даже если эти атмосферы вам пока незнакомы, попробуйте познакомиться с ними. Вам понравится.
 
 <a id="ai-assistant"></a>
 
 ## Работа с AI-помощником
 
-Cursor, Codex или Claude Code могут настраивать сайт и управлять контентом по `AGENTS.md` текущего проекта. Существующие `CLAUDE.md` и Cursor-правила ведут к соответствующим указаниям. Сначала объясните задачу, попросите проверить настоящую конфигурацию и нужный раздел здесь; для подробностей полей используйте справочник demo.
-
-Для разработки темы начните с [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) и [правил участия](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CONTRIBUTING.md). Пользователю блога изучать процесс выпуска разработчика не нужно.
+Очень рекомендуем попробовать этот проект в IDE с ИИ-помощником. В проекте уже есть [подробные инструкции для ИИ](AGENTS.md), которые помогут вам легко начать работу.
 
 <a id="installation"></a>
 
 ## 1. Установка и запуск
 
-Нужен **Node.js 22.12.0 или новее**; шаблон основан на **Astro 7**. В каталоге для блога выполните:
+Нужен **Node.js 22.12.0 или новее**; шаблон основан на **Astro 7.4.7+**. В каталоге для блога выполните:
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
@@ -304,6 +304,8 @@ npm run preview
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+![Anglefeint — Fragments, a Brood War atmosphere](public/images/theme-previews/promo-fragments.jpg)
+
 ### Превью ссылки
 
 ![Стандартное превью Anglefeint](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
@@ -337,3 +339,7 @@ npm run preview
 | Decoder Lab · Материалы шифропанков                                                  |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
+
+| Fragments · StarCraft: Brood War                                         |
+| ------------------------------------------------------------------------ |
+| ![Fragments preview](public/images/theme-previews/preview-fragments.jpg) |

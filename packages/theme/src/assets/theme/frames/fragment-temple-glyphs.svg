@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="48" viewBox="0 0 12 48" fill="none">
+  <path
+    d="m3 2 6 3-2 5-4-2 2-3M2 15l7 2-4 4 4 3-6 2M8 32l-5 2 1 6 5-3M4 44l4 2"
+    stroke="#58aab0"
+    stroke-width="1.2"
+    stroke-linecap="square"
+    stroke-linejoin="bevel"
+  />
+  <path d="m4 16 3 1M4 35l3-1" stroke="#9ad7d4" stroke-width="1" />
+</svg>

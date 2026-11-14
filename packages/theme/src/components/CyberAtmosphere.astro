@@ -1,6 +1,5 @@
 ---
 import CyberRain from '../effects/cyber-rain/CyberRain.astro';
-import CyberDust from '../effects/cyber-dust/CyberDust.astro';
 interface Props {
   variant?: 'blog' | 'tags';
 }
@@ -8,7 +7,6 @@ const { variant = 'blog' } = Astro.props;
 ---
 
 <CyberRain sizing="viewport" data-atmosphere={variant} />
-<CyberDust sizing="viewport" />
 
 <script>
   import { initCyberRainAndDust } from '../scripts/cyber-rain-dust.js';

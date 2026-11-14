@@ -1,0 +1,5 @@
+Generator: built-in image_gen, localized highlight reduction of fragments-space-v9.webp.
+Delivered asset: packages/theme/src/assets/theme/backgrounds/fragments-space-v10.webp
+
+Final prompt:
+Extremely small LOCAL edit. In this supplied approved space background, identify the TINY DISTANT planet at LOWER RIGHT. Darken ONLY its upper-left illuminated crescent/highlight modestly, by approximately another 20–25%, so that the little lit edge is softer and less eye-catching. Keep a barely visible readable silhouette. Preserve that small world's exact size, center, hue, faint broken ring and existing surface simplicity. DO NOT darken or edit the enormous lower-left main planet, whose upper-left illuminated rim must remain unchanged. DO NOT alter the upper-right asteroid group, stars, background, exposure or any other image region. This is only a restrained reduction of the tiny lower-right planet's upper-left highlight, no overall brightness adjustment. No additional objects, glow, blur, text or animation. Preserve the existing dimensions and framing.

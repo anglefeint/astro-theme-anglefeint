@@ -1,0 +1,7 @@
+Generator: built-in image_gen; reduce distant-star density.
+Edit target: packages/theme/src/assets/theme/backgrounds/fragments-space-v19.webp
+Delivered asset: packages/theme/src/assets/theme/backgrounds/fragments-space-v20.webp
+Conversion: original canvas dimensions; WebP quality 85.
+
+Final prompt:
+Precise localized image edit. ONLY thin out the distant stars in this image. The current starfield is far too dense and evenly speckled. REMOVE about 80 percent of the visible stars, leaving ONLY around 70-90 very small irregularly spaced distant star points across the entire sky. Most remaining points should be dim gray-white; retain only 6-10 moderately brighter tiny white points. Create large clear patches of black empty space, especially across the central reading column. This should look sparse, quiet and deep, visibly much emptier than the input, but not completely starless. No haze or star clusters, no new glows, no dust/bokeh, no animation. Everything else must remain unchanged as closely as possible: left volcanic planet and its brightness, color, shape, surface; red haze; all upper-right asteroids; the tiny very dim right purple planet; exact mechanical deck, machinery, grilles, shadows, warm reflections and finite staggered edge. Same canvas, framing and exposure. Do not redraw the planet or platform, do not add objects. Only REMOVE and dim distant star points.

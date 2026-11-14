@@ -1,6 +1,6 @@
 {
   "name": "@anglefeint/astro-theme",
-  "version": "0.36.2",
+  "version": "0.37.0",
   "type": "module",
   "description": "Anglefeint core theme package for Astro",
   "keywords": [
@@ -107,7 +107,7 @@
     "./utils/fragments": "./src/utils/fragments.ts"
   },
   "peerDependencies": {
-    "astro": "^7.3.5"
+    "astro": "^7.4.7"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.3",

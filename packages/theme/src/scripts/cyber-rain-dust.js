@@ -4,7 +4,7 @@ import { mountCyberRain } from '../effects/cyber-rain/cyber-rain.js';
 export function initCyberRainAndDust() {
   const rainRoot = document.querySelector('[data-cyber-rain]');
   const dustRoot = document.querySelector('[data-cyber-dust]');
-  if (!(rainRoot instanceof HTMLElement) || !(dustRoot instanceof HTMLElement)) return;
+  if (!(rainRoot instanceof HTMLElement) && !(dustRoot instanceof HTMLElement)) return;
 
   const hash = (value) => {
     let h = 2166136261;
@@ -24,6 +24,6 @@ export function initCyberRainAndDust() {
     return (seed >>> 0) / 4294967296;
   };
 
-  mountCyberRain(rainRoot, { random: rand });
-  mountCyberDust(dustRoot, { random: rand });
+  if (rainRoot instanceof HTMLElement) mountCyberRain(rainRoot, { random: rand });
+  if (dustRoot instanceof HTMLElement) mountCyberDust(dustRoot, { random: rand });
 }

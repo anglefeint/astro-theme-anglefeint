@@ -1,0 +1,11 @@
+Generator: built-in image_gen, conservative edit of approved fragments-space-v3.webp.
+Delivered asset: packages/theme/src/assets/theme/backgrounds/fragments-space-v4.webp
+
+Final prompt:
+Edit the supplied image conservatively. This is an APPROVED dark static website background: preserve the existing immense lower-left gray-blue/violet planet, its position, size, terrain, shadows, atmosphere, and the near-black center EXACTLY as much as possible. Preserve the existing dark restrained color grading and sparse tiny stars. Add only two SMALL SUBORDINATE corner details for late-1990s original StarCraft / Brood War dark alien-space atmosphere.
+
+UPPER LEFT: a short sparse diagonal group of about 6–9 irregular dark rocky asteroid fragments, situated around x=8–19%, y=11–23%. The entire group spans no more than 13% of image width. Each rock is small and distant, with charcoal-gray rough facets and extremely faint cool edge illumination. Most rocks almost disappear into the black. NOT a cloud of bright particles and NOT a second giant planet. Keep a dark gap between this cluster and the main planet.
+
+LOWER RIGHT: one small, very distant dark slate-gray/violet ringed alien world centered approximately x=88%, y=78%. The planet disk is only 6–7% of full image width. A thin oblique elliptical debris ring made of faint irregular gravel surrounds it, total outer span no more than 12–14% of image width. The ring is viewed at an angle as a narrow ellipse, visibly passes behind/in front of the planet and is NOT a face-on spiral, vortex, galaxy, glowing halo, or black hole. Very subdued local rocky texture on a narrow crescent, mostly deep shadow. It must be dimmer and much smaller than the approved main planet; never bright Saturn photography or an orange/red world. Keep it away from the exact bottom/right edges so it can be seen in a website viewport.
+
+The main lower-left planet remains the dominant object. New corner details should be faint secondary discoveries, NOT competing hero objects. Central 55% of frame stays nearly black and open for readable feed text. Do not brighten the whole image or add stars beyond what is needed to preserve it. No ships, no spacecraft, no characters, no neon, no bright nebula, no flare, no Earth, no Moon, no red planet, no spiral, no text, no UI. Static background image only. Preserve widescreen composition.

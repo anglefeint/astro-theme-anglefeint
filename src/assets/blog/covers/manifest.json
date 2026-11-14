@@ -690,6 +690,44 @@
           "sha256": "f1ef918d958f933b83adbab3985696c7eb3e017477000673e23d487bbd3a4374"
         }
       ]
+    },
+    "src/assets/blog/starcraft-protoss-carrier.png": {
+      "sourceHash": "99931ae1df43f4f2a2b19d9d61a305d0460522c21be7406e66bd22679c485bd5",
+      "width": 3412,
+      "height": 1920,
+      "passthrough": false,
+      "variants": [
+        {
+          "file": "starcraft-protoss-carrier-e04e86c5-99931ae1df43-589dfafd-400w.webp",
+          "width": 400,
+          "height": 225,
+          "sha256": "3f583c1bdb19dab1196b18a46ed9d60a7c78d783165f485083122fd4d6b56a91"
+        },
+        {
+          "file": "starcraft-protoss-carrier-e04e86c5-99931ae1df43-589dfafd-640w.webp",
+          "width": 640,
+          "height": 360,
+          "sha256": "1060fd0bbe789f4a3913248e8f58e22b5c12ca1314192d045d1c750ac74aaf08"
+        },
+        {
+          "file": "starcraft-protoss-carrier-e04e86c5-99931ae1df43-589dfafd-800w.webp",
+          "width": 800,
+          "height": 450,
+          "sha256": "f8cbc50ed051d694e20b35282093d3059f3892e6f3d35eba5ac88622c57e3376"
+        },
+        {
+          "file": "starcraft-protoss-carrier-e04e86c5-99931ae1df43-589dfafd-960w.webp",
+          "width": 960,
+          "height": 540,
+          "sha256": "d9f20643e622b3ae3a0a36fd52af0ec4d9ca2532faca6a846f1a6aac69a7beb8"
+        },
+        {
+          "file": "starcraft-protoss-carrier-e04e86c5-99931ae1df43-589dfafd-1200w.webp",
+          "width": 1200,
+          "height": 675,
+          "sha256": "b5b9a84b149aeafa6688b0010c63cf1f9c441fd9de11b1089b5b58378290f3d1"
+        }
+      ]
     }
   }
 }

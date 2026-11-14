@@ -13,6 +13,15 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.37.0] - 2026-11-15
+
+- Require patched Astro `^7.4.7` and refresh the main/starter target to `^7.4.12`, addressing the dynamic tag-name injection and Node image-endpoint advisories. Existing Astro 7 projects should update Astro before the normal theme upgrade.
+- Give Fragments an original-StarCraft: Brood War-inspired space/deck background, transparent temple-framed notes, a sticky transparent heading and route-local Terran/Protoss/Zerg-inspired controls. Keep stable links, localization and the existing pagination model.
+- Restyle the Fragments music player with dark alloy surfaces, compact spacing, flat queue rows and momentary button-press feedback. Playback behavior and other pages retain their existing contracts.
+- Coordinate the Fragments comment dialog with a restrained Dark Templar/Dark Archon-inspired frame and Maelstrom-like binding-current loading decoration. Fragments uses the official `noborder_gray` Giscus theme locally; articles keep the configured theme. Preserve reduced-motion behavior and provider readiness/retry handling.
+- Remove floating dust from Blog and Tags while retaining their rain, fog and light beams; support independently mounted rain/dust roots.
+- Simplify the nine-language README introduction and AI-assistant guidance, add Fragments screenshot/promo assets, expand demo notes for long-pagination review, and add a nine-language StarCraft tribute article with the supplied carrier cover. See the [0.37.0 release record](docs/releases/0.37.0.md) for compatibility and the selected delivery plan.
+
 ## [0.36.2] - 2026-11-14
 
 - Prepare persistent responsive images during normal builds and doctor in local/CI environments, reusing valid assets and repairing missing/stale/corrupted derivatives. Preserve explicit read-only checks, path/source/output safeguards and original media.

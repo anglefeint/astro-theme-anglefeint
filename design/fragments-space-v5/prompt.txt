@@ -1,0 +1,5 @@
+Generator: built-in image_gen, precise edit of approved fragments-space-v4.webp.
+Delivered asset: packages/theme/src/assets/theme/backgrounds/fragments-space-v5.webp
+
+Final prompt:
+Edit this approved static space background with ONE precise change: relocate the small dark asteroid cluster currently at the UPPER LEFT (roughly x=5–20%, y=12–26%) to the UPPER RIGHT (roughly x=79–94%, y=12–26%). Remove those asteroids from their original upper-left location and fill that location with matching nearly black space. Move the SAME cluster, maintaining its count, small scale, sparse diagonal arrangement, dark rocky texture, low brightness and subtle edge lighting. Keep a comfortable margin from the top and right edges. All other content must remain unchanged: immense cropped lower-left gray-blue/violet planet, its exact position, terrain and shadow; small lower-right ringed planet, its exact position, size and lighting; star positions elsewhere; black central reading area; entire color grade and exposure. No additional objects, no brightening, no animation, no text. Do not mirror or move either planet. Preserve the original image dimensions and framing.

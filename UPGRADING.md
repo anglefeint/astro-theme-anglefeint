@@ -10,6 +10,17 @@ depends_on: [docs/PACKAGING_WORKFLOW.md, docs/PACKAGE_RELEASE.md]
 
 # Upgrading Anglefeint
 
+## 0.37.0: Fragments atmosphere and patched Astro 7
+
+This release requires Astro `^7.4.7`; new starter projects target `^7.4.12`. Earlier Astro releases are affected by [dynamic tag-name attribute injection](https://github.com/advisories/GHSA-mh32-jxcr-mh9f) and [the Node adapter image-endpoint path check](https://github.com/advisories/GHSA-r3h5-4585-7x3w). The latter concerns on-demand Node deployments, not this static starter, but the release audit does not exempt it. Update an existing Astro 7 project within the same major version before the normal theme upgrade:
+
+```bash
+npm install astro@^7.4.12
+npx @anglefeint/astro-theme@latest upgrade
+```
+
+The existing npm schema-1 preservation boundary remains: personal content, configuration, media and custom pages are retained. Fragments keeps its default-off switch and stable IDs; enabling it uses the new Brood War-inspired visual skin, and its dialog locally uses Giscus `noborder_gray` while article comments keep the configured theme. No new configuration field or project-schema migration is introduced. README/gallery updates and the nine-language tribute article are new-starter/demo material; upgrades do not replace personal README or article copies. See the [0.37.0 record](docs/releases/0.37.0.md) for compatibility and delivery evidence.
+
 ## 0.36.2: automatic image preparation during normal builds
 
 Automatic build/CI preparation requires 0.36.2 or later; see the [delivery record](docs/releases/0.36.2.md) for publication status. Version 0.36.1 still needs prior dev or prepare-covers preparation. Normal dev/build/doctor, including CI, prepare missing/stale/corrupted image derivatives and reuse valid files; config sync and explicit `prepare-covers --check` stay read-only. Commit originals; committing manifest/generated assets remains recommended for reuse rather than required for normal build success. Missing/invalid originals, path escapes and output conflicts still fail. No field, dependency, directory or project-schema migration is added. Personal content is not overwritten.

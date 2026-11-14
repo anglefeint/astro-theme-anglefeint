@@ -1,6 +1,5 @@
 ---
 import Giscus from './Giscus.astro';
-import SignalLoading from '../effects/signal-loading/SignalLoading.astro';
 import { THEME } from '@anglefeint/site-config/theme';
 import type { FragmentMessages } from '../i18n/fragments';
 interface Props {
@@ -8,6 +7,7 @@ interface Props {
   labels: Pick<FragmentMessages, 'comments' | 'close' | 'loading' | 'error' | 'retry'>;
 }
 const { locale, labels } = Astro.props;
+const fragmentComments = { ...THEME.COMMENTS, THEME: 'noborder_gray' };
 ---
 
 <dialog
@@ -15,6 +15,32 @@ const { locale, labels } = Astro.props;
   aria-labelledby="fragment-comments-title"
   data-fragment-dialog
 >
+  <svg
+    class="fragment-dialog-aura"
+    viewBox="0 0 1000 600"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+    fill="none"
+  >
+    <defs>
+      <linearGradient id="fragment-templar-refraction" x1="0" y1="0" x2="1" y2="0">
+        <stop stop-color="#3e465d" stop-opacity="0"></stop>
+        <stop offset=".2" stop-color="#64758b" stop-opacity=".3"></stop>
+        <stop offset=".42" stop-color="#9cbbc9" stop-opacity=".36"></stop>
+        <stop offset=".5" stop-color="#4c576f" stop-opacity="0"></stop>
+        <stop offset=".72" stop-color="#7e96ac" stop-opacity=".25"></stop>
+        <stop offset="1" stop-color="#323b53" stop-opacity="0"></stop>
+      </linearGradient>
+    </defs>
+    <g stroke="url(#fragment-templar-refraction)" stroke-width=".8">
+      <path
+        d="M564 4 L646 4 L665 2 L745 4 M768 4 C850 6 929 1 989 5 L995 12 L996 144"
+        vector-effect="non-scaling-stroke"></path>
+      <path
+        d="M4 443 L6 507 L3 526 L5 588 L12 595 C94 598 164 590 241 596 L352 594"
+        vector-effect="non-scaling-stroke"></path>
+    </g>
+  </svg>
   <div class="fragment-dialog-heading">
     <h2 id="fragment-comments-title">{labels.comments}</h2><button
       type="button"
@@ -25,13 +51,87 @@ const { locale, labels } = Astro.props;
   <div class="fragment-dialog-body" data-fragment-scroll>
     <p data-fragment-summary></p>
     <div class="fragment-connection" aria-hidden="true">
-      <SignalLoading />
+      <div class="protoss-loading" data-signal-loading hidden aria-hidden="true">
+        <svg viewBox="0 0 300 64" width="300" height="52" preserveAspectRatio="none" fill="none">
+          <defs>
+            <linearGradient
+              id="fragment-binding-ember"
+              x1="20"
+              y1="0"
+              x2="280"
+              y2="0"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#99170e" stop-opacity="0"></stop>
+              <stop offset=".25" stop-color="#a42d0e" stop-opacity=".7"></stop>
+              <stop offset=".5" stop-color="#dca14c"></stop>
+              <stop offset=".75" stop-color="#c46624" stop-opacity=".8"></stop>
+              <stop offset="1" stop-color="#8c120e" stop-opacity="0"></stop>
+            </linearGradient>
+            <linearGradient
+              id="fragment-binding-crimson"
+              x1="20"
+              y1="0"
+              x2="280"
+              y2="0"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#8f080b" stop-opacity="0"></stop>
+              <stop offset=".3" stop-color="#b31c12" stop-opacity=".75"></stop>
+              <stop offset=".65" stop-color="#901016" stop-opacity=".7"></stop>
+              <stop offset="1" stop-color="#9e180e" stop-opacity="0"></stop>
+            </linearGradient>
+          </defs>
+          <g
+            stroke="url(#fragment-binding-crimson)"
+            stroke-width="1.3"
+            stroke-linecap="round"
+            opacity=".55"
+          >
+            <path d="M24 40 C49 14 103 9 154 19 S237 54 276 23"></path>
+            <path d="M40 13 C69 50 124 58 178 39 S247 8 272 31"></path>
+            <path d="M73 9 C54 27 81 53 140 48 C188 44 229 20 217 10"></path>
+            <path d="M17 28 C66 53 126 48 179 22 S250 6 286 35" stroke-width=".75" opacity=".65"
+            ></path>
+            <path d="M37 47 C90 15 157 11 204 33 S254 56 278 42" stroke-width=".8" opacity=".55"
+            ></path>
+          </g>
+          <g
+            class="warp-flow warp-flow--amber"
+            stroke="url(#fragment-binding-ember)"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          >
+            <path pathLength="100" d="M24 40 C49 14 103 9 154 19 S237 54 276 23"></path>
+            <path pathLength="100" d="M73 9 C54 27 81 53 140 48 C188 44 229 20 217 10"></path>
+            <path
+              pathLength="100"
+              d="M17 28 C66 53 126 48 179 22 S250 6 286 35"
+              stroke-width="1"
+              opacity=".5"></path>
+          </g>
+          <g
+            class="warp-flow warp-flow--crimson"
+            stroke="url(#fragment-binding-ember)"
+            stroke-width="1.1"
+            stroke-linecap="round"
+            opacity=".65"
+          >
+            <path pathLength="100" d="M40 13 C69 50 124 58 178 39 S247 8 272 31"></path>
+            <path
+              pathLength="100"
+              d="M37 47 C90 15 157 11 204 33 S254 56 278 42"
+              stroke-width=".85"
+              opacity=".55"></path>
+          </g>
+        </svg>
+      </div>
     </div>
     <p data-fragment-status role="status" data-loading={labels.loading} data-error={labels.error}>
     </p>
     <button type="button" data-fragment-retry hidden>{labels.retry}</button>
     <div class="giscus" data-fragment-widget></div>
-    <Giscus comments={THEME.COMMENTS} resolvedLocale={locale} deferred />
+    <Giscus comments={fragmentComments} resolvedLocale={locale} deferred />
   </div>
 </dialog>
 <script>
@@ -42,15 +142,33 @@ const { locale, labels } = Astro.props;
 <style>
   dialog {
     --fragment-dialog-padding: 1.5rem;
-    width: min(800px, calc(100vw - 2rem));
+    width: min(840px, calc(100vw - 2rem));
     max-height: 90dvh;
     padding: 0;
-    border: 1px solid #58e5ee88;
-    border-radius: 12px;
-    background: radial-gradient(ellipse at top left, #163b452e, transparent 65%), #0b1521;
-    color: #e4edf7;
+    border: 4px solid;
+    border-color: #41425b #16192a #0c1020 #292a43;
+    border-radius: 4px;
+    background:
+      radial-gradient(ellipse at 0% 55%, #8b110d22, transparent 48%) padding-box,
+      radial-gradient(ellipse at 100% 100%, #971d101c, transparent 48%) padding-box,
+      radial-gradient(ellipse at 48% 42%, #110a0ca6, #0c090bad 65%, #090708b3) padding-box;
+    box-shadow:
+      inset 0 0 0 1px #080d1b,
+      inset 0 0 0 2px #33354f80,
+      inset 2px 0 9px #7c273414,
+      inset 0 -4px 6px #020106aa,
+      0 0 0 1px #101523,
+      0 18px 70px #0009;
+    color: #dedfd8;
     box-sizing: border-box;
     overflow: hidden;
+  }
+  .fragment-dialog-aura {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
   }
   dialog[open] {
     display: flex;
@@ -58,7 +176,7 @@ const { locale, labels } = Astro.props;
   }
   dialog[data-comment-state='loading'],
   dialog[data-comment-state='failed'] {
-    width: min(560px, calc(100vw - 2rem));
+    width: min(520px, calc(100vw - 2rem));
   }
   dialog::backdrop {
     background: #000b;
@@ -70,8 +188,8 @@ const { locale, labels } = Astro.props;
     gap: 1rem;
     flex-shrink: 0;
     margin: 0 var(--fragment-dialog-padding);
-    padding: var(--fragment-dialog-padding) 0 0.9rem;
-    border-bottom: 1px solid #58e5ee26;
+    padding: 1.15rem 0 1rem;
+    border-bottom: 1px solid #8a483838;
   }
   .fragment-dialog-body {
     position: relative;
@@ -81,22 +199,37 @@ const { locale, labels } = Astro.props;
     overflow-x: hidden;
     overscroll-behavior: contain;
     scrollbar-width: thin;
-    scrollbar-color: #43717d #0b1521;
+    scrollbar-color: #705044 #160d0b;
   }
   h2 {
     margin: 0;
     font-size: 1.05rem;
+    color: #c9b8a8;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    letter-spacing: 0.06em;
+    text-shadow: 0 1px 1px #02040a;
   }
   button {
-    padding: 0.5rem 0.9rem;
-    background: #183243;
-    color: #ceffff;
-    border: 1px solid #58e5ee88;
-    border-radius: 5px;
+    padding: 0.5rem 1.15rem;
+    background: linear-gradient(160deg, #2b201c, #170d0c);
+    color: #c9b8a8;
+    border: 1px solid;
+    border-color: #725347 #422727 #2b181c #553032;
+    border-radius: 3px;
+    box-shadow:
+      inset 0 1px 0 #d7b27c1a,
+      inset 0 -1px 0 #02040688;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 700;
     cursor: pointer;
   }
+  button:is(:hover, :focus-visible) {
+    color: #e5d1ab;
+    background: linear-gradient(160deg, #3b2920, #23120f);
+    border-color: #b08b58 #74503a #513124 #926344;
+  }
   button:focus-visible {
-    outline: 2px solid white;
+    outline: 2px solid #d0ad76;
     outline-offset: 3px;
   }
   [data-fragment-widget] :global(iframe.giscus-frame) {
@@ -122,7 +255,7 @@ const { locale, labels } = Astro.props;
   }
   [data-fragment-summary] {
     margin: 1rem 0 0;
-    color: #9eb2c4;
+    color: #a9b4bc;
     font-size: 0.875rem;
     line-height: 1.5;
     overflow-wrap: anywhere;
@@ -141,9 +274,55 @@ const { locale, labels } = Astro.props;
     gap: 1rem;
     margin: 1.75rem 0 0.65rem;
   }
+  .protoss-loading:not([hidden]) {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .protoss-loading svg {
+    display: block;
+    width: 100%;
+    height: 52px;
+  }
+  /* The field stays still: only short currents travel along open binding strands. */
+  .protoss-loading:not([hidden]) .warp-flow--amber {
+    stroke-dasharray: 18 82;
+    animation: protoss-binding-flow 4.6s linear infinite;
+  }
+  .protoss-loading:not([hidden]) .warp-flow--crimson {
+    stroke-dasharray: 12 88;
+    animation: protoss-binding-flow 6.2s linear infinite reverse;
+  }
+  @keyframes protoss-binding-flow {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .protoss-loading:not([hidden]) .warp-flow {
+      animation: none;
+      stroke-dasharray: none;
+    }
+  }
+  dialog[data-comment-state='loading'] [data-fragment-status] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
   [data-fragment-status] {
     margin: 0.7rem 0 1rem;
-    color: #a7dce5;
+    color: #c2aa8b;
     font-size: 0.875rem;
     line-height: 1.6;
     text-align: center;
@@ -152,7 +331,7 @@ const { locale, labels } = Astro.props;
     display: none;
   }
   dialog[data-comment-state='failed'] [data-fragment-status] {
-    color: #efadc9;
+    color: #e9ad96;
   }
   [data-fragment-retry]:not([hidden]) {
     display: block;
@@ -162,7 +341,8 @@ const { locale, labels } = Astro.props;
     dialog,
     dialog[data-comment-state='loading'],
     dialog[data-comment-state='failed'] {
-      --fragment-dialog-padding: 1rem;
+      --fragment-dialog-padding: 0.75rem;
+      border-width: 3px;
       width: calc(100vw - 1rem);
       max-height: 96dvh;
     }

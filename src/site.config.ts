@@ -40,6 +40,7 @@ export const THEME_CONFIG = defineThemeConfig({
       repoId: 'R_kgDORRyzkg',
       category: 'Comments',
       categoryId: 'DIC_kwDORRyzks4C3pRw',
+      theme: 'catppuccin_macchiato',
     },
     home: { showInitialize: true, showFollow: true, showTrace: true },
     footer: {
