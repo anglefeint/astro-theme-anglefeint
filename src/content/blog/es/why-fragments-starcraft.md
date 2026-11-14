@@ -8,8 +8,8 @@ tags: ['StarCraft', 'Fragments', 'Anglefeint']
 toc: false
 ---
 
-Para mí, el primer StarCraft, incluida su expansión Brood War, es el mejor RTS de la historia de la humanidad. Por eso siempre he querido traer su atmósfera a este blog.
+En mi opinión, el primer StarCraft, incluida su expansión Brood War, es el mejor RTS de la historia de la humanidad. También es uno de mis juegos favoritos, así que tenía muchas ganas de traer su atmósfera a este blog.
 
-StarCraft II también tiene cosas bien hechas, por supuesto. Pero su historia me parece un revoltijo de tópicos cinematográficos gastados, giros previsibles y finales que podrían encontrarse en cualquier novela barata de quiosco. Está muy lejos del primer juego y de Brood War.
+StarCraft II también tiene cosas bien hechas, por supuesto. Pero, en cuanto a la trama, en mi opinión su historia parece basura de la peor calaña, hecha a base de juntar escenas de cine de una cursilería insufrible, fórmulas gastadas, argumentos vulgares y finales aburridos que se encuentran en cualquier novela barata de quiosco. Su historia ni siquiera admite comparación con la del primer StarCraft y su expansión Brood War.
 
-Esta página es un homenaje al primer StarCraft y a Brood War.
+Por eso, el estilo de la página Fragments también es un homenaje al primer StarCraft y a Brood War: auténticos clásicos que marcaron una época.
