@@ -13,6 +13,11 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.37.1] - 2026-11-15
+
+- Remove the prohibited accessible-name attribute from the Decoder output's plain `pre` element. The enclosing named result region, keyboard focus, decoding and appearance remain unchanged in both the standalone page and About dialog.
+- Initialize Fragments navigation/title measurements before stable-link positioning on initial load, Astro page-load and persisted pageshow. Add no delay, wait or extra scrolling; preserve native anchors and cross-page fragment lookup. See the [0.37.1 release record](docs/releases/0.37.1.md).
+
 ## [0.37.0] - 2026-11-15
 
 - Require patched Astro `^7.4.7` and refresh the main/starter target to `^7.4.12`, addressing the dynamic tag-name injection and Node image-endpoint advisories. Existing Astro 7 projects should update Astro before the normal theme upgrade.

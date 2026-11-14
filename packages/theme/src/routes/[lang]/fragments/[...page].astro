@@ -246,14 +246,14 @@ const titleParts = Array.from({ length: titlePartCount }, (_, index) =>
 <script>
   import { initFragmentLinks } from '../../../scripts/fragment-links.js';
   import { initFragmentsChrome } from '../../../scripts/fragments-chrome.js';
-  initFragmentLinks();
   initFragmentsChrome();
-  document.addEventListener('astro:page-load', initFragmentLinks);
+  initFragmentLinks();
   document.addEventListener('astro:page-load', initFragmentsChrome);
+  document.addEventListener('astro:page-load', initFragmentLinks);
   window.addEventListener('pageshow', (event) => {
     if (event.persisted) {
-      initFragmentLinks();
       initFragmentsChrome();
+      initFragmentLinks();
     }
   });
 </script>
