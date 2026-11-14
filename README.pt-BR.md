@@ -21,39 +21,39 @@ Gera `llms.txt`, índices multilíngues, coletâneas integrais e Markdown de pub
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.4.12-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## O que o Anglefeint oferece?
+## Feito para blogs pessoais
 
-Escreva publicações com Markdown/MDX e ideias curtas com Fragments. Inclui idiomas, busca, tags, sumário, cópia de código, prévia de imagens, matemática e imagens sociais automáticas. Comentários, música e GA4 podem ser ativados conforme necessário.
+Anglefeint é um tema Astro criado para blogs pessoais. Cada página tem sua própria atmosfera:
 
-| Página                 | Atmosfera visual                                                         |
-| ---------------------- | ------------------------------------------------------------------------ |
-| Página inicial         | Matrix: chuva verde de código, terminal e avatar em pixels               |
-| Blog e listas de tags  | Cyberpunk: neon, chuva e feixes de luz urbanos                           |
-| About                  | Hacker: apresentação pessoal, terminal virtual e ferramentas interativas |
-| Detalhes da publicação | AI: rede de fundo, monitores e painel de leitura OUTPUT                  |
+| Página        | Estilo               |
+| ------------- | -------------------- |
+| Início        | Matrix               |
+| Lista do blog | Cyberpunk            |
+| Artigo        | AI                   |
+| About         | Hacker               |
+| Decoder Lab   | Cypherpunk           |
+| Fragments     | StarCraft: Brood War |
 
-A compilação também gera Markdown público de publicações, About e Fragments, `llms.txt` e coletâneas multilíngues para ferramentas de IA. Não exige servidor de produção separado e não garante inclusão ou citação por modelos.
+Se você também gosta desses estilos, experimente o Anglefeint no seu blog. Mesmo que essas atmosferas sejam novas para você, venha experimentar. Você vai gostar.
 
 <a id="ai-assistant"></a>
 
 ## Colabore com um assistente de IA
 
-Cursor, Codex ou Claude Code podem configurar o site e gerenciar conteúdo seguindo o `AGENTS.md` do projeto atual. `CLAUDE.md` e regras Cursor existentes apontam às orientações correspondentes. Explique o que deseja alterar e peça ao assistente que consulte a configuração real e a seção deste documento; para detalhes de campos, use os dicionários do demo.
-
-Para desenvolver o tema, comece por [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) e pelo [guia de contribuição](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CONTRIBUTING.md). Quem usa o blog não precisa aprender primeiro o fluxo de publicação dos mantenedores.
+Recomendamos muito usar uma IDE de programação com IA para experimentar este projeto. Ele já inclui [orientações claras](AGENTS.md) para os assistentes de IA ajudarem você a começar com facilidade.
 
 <a id="installation"></a>
 
 ## 1. Instale e inicie
 
-Requer **Node.js 22.12.0 ou superior**. O template usa **Astro 7**. Execute na pasta onde deseja guardar o blog:
+Requer **Node.js 22.12.0 ou superior**. O template usa **Astro 7.4.7+**. Execute na pasta onde deseja guardar o blog:
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
@@ -304,6 +304,8 @@ Este tema usa a [MIT License](LICENSE).
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+![Anglefeint — Fragments, a Brood War atmosphere](public/images/theme-previews/promo-fragments.jpg)
+
 ### Prévia de compartilhamento
 
 ![Imagem social padrão Anglefeint](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
@@ -337,3 +339,7 @@ Este tema usa a [MIT License](LICENSE).
 | Decoder Lab · Recursos cypherpunk                                                    |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
+
+| Fragments · StarCraft: Brood War                                         |
+| ------------------------------------------------------------------------ |
+| ![Fragments preview](public/images/theme-previews/preview-fragments.jpg) |

@@ -21,39 +21,39 @@
 </p>
 
 <p align="center">
-  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.3.7-BC52EE?logo=astro&logoColor=white" />
+  <img alt="Astro" src="https://img.shields.io/badge/Astro-7.4.12-BC52EE?logo=astro&logoColor=white" />
   <img alt="Node" src="https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white" />
   <img alt="Locales" src="https://img.shields.io/badge/i18n-9%20languages-0A7EA4" />
   <img alt="Deployment" src="https://img.shields.io/badge/Deploy-Static%20Hosting-0A7EA4" />
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Anglefeint でできること
+## 個人ブログのために
 
-Markdown／MDX で記事、Fragments で短い考えを投稿できます。多言語、検索、タグ、目次、コードコピー、画像プレビュー、数式、自動共有画像を内蔵し、コメント・音楽・GA4 は任意で有効にできます。
+Anglefeint は個人ブログのために作られた Astro テーマです。ページごとに異なる雰囲気を楽しめます。
 
-| ページ           | 世界観                                             |
-| ---------------- | -------------------------------------------------- |
-| ホーム           | Matrix：緑のコード雨、ターミナル、ピクセルアバター |
-| ブログ・タグ一覧 | Cyberpunk：ネオン、雨幕、街の光線                  |
-| About            | Hacker：自己紹介、仮想ターミナル、対話型ツール     |
-| 記事詳細         | AI：ネットワーク背景、モニター、OUTPUT 読書パネル  |
+| ページ      | スタイル             |
+| ----------- | -------------------- |
+| ホーム      | Matrix               |
+| ブログ一覧  | Cyberpunk            |
+| 記事詳細    | AI                   |
+| About       | Hacker               |
+| Decoder Lab | Cypherpunk           |
+| Fragments   | StarCraft: Brood War |
 
-公開記事、About、Fragments の Markdown、`llms.txt`、多言語全文集合もビルド時に生成します。AI ツールが読める静的出力で本番サーバーは不要ですが、モデルの収集や引用を保証しません。
+こうしたスタイルが好きなら、あなたのブログにも Anglefeint を使ってみてください。 こうした雰囲気をまだ知らなくても、ぜひ体験してみてください。きっと気に入るはずです。
 
 <a id="ai-assistant"></a>
 
 ## AI アシスタントと協力する
 
-Cursor、Codex、Claude Code にプロジェクトの `AGENTS.md` に従ってサイト設定や内容管理を依頼できます。`CLAUDE.md` と Cursor ルールも同じ案内を参照します。変更したいことを伝え、実設定とこの記事の該当節を確認してもらい、詳細な項目はデモの設定リファレンスで調べます。
-
-テーマ開発はリポジトリの [AGENTS.md](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/AGENTS.md) と[貢献ガイド](https://github.com/anglefeint/astro-theme-anglefeint/blob/main/CONTRIBUTING.md)から始めてください。ブログ利用者が保守者の公開手順を先に学ぶ必要はありません。
+AI コーディング IDE を使って、このプロジェクトを試してみることを強くおすすめします。[AI アシスタント向けのガイド](AGENTS.md)を整えているので、スムーズに使い始められます。
 
 <a id="installation"></a>
 
 ## 1. インストールして起動する
 
-**Node.js 22.12.0 以降**が必要で、**Astro 7** ベースです。ブログを置くディレクトリで実行します。
+**Node.js 22.12.0 以降**が必要で、**Astro 7.4.7+** ベースです。ブログを置くディレクトリで実行します。
 
 ```bash
 npm create astro@latest -- my-blog --template anglefeint/astro-theme-anglefeint#starter --no-ai
@@ -302,6 +302,8 @@ pnpm は `pnpm run doctor`／`pnpm preview`、または `pnpm build`／`pnpm pre
 
 ![Anglefeint — AI reading and GEO](public/images/theme-previews/promo-ai.jpg)
 
+![Anglefeint — Fragments, a Brood War atmosphere](public/images/theme-previews/promo-fragments.jpg)
+
 ### 共有プレビュー
 
 ![Anglefeint 既定共有画像](https://raw.githubusercontent.com/anglefeint/astro-theme-anglefeint/main/packages/theme/src/assets/theme/social/anglefeint-og.jpg)
@@ -335,3 +337,7 @@ pnpm は `pnpm run doctor`／`pnpm preview`、または `pnpm build`／`pnpm pre
 | Decoder Lab · サイファーパンク資料                                                   |
 | ------------------------------------------------------------------------------------ |
 | ![Decoder Lab resources](public/images/theme-previews/preview-decoder-resources.jpg) |
+
+| Fragments · StarCraft: Brood War                                         |
+| ------------------------------------------------------------------------ |
+| ![Fragments preview](public/images/theme-previews/preview-fragments.jpg) |

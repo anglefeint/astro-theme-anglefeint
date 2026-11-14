@@ -27,8 +27,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.3.7",
-    "@anglefeint/astro-theme": "^0.36.2"
+    "astro": "^7.4.12",
+    "@anglefeint/astro-theme": "^0.37.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
