@@ -13,6 +13,11 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.37.2] - 2026-11-16
+
+- Include Open Graph and large-image Twitter Card metadata in both static default-language Home redirect modes. Reuse the configured site image or bundled fallback, site title and localized description while retaining meta-refresh, canonical destination and `noindex, follow`. Sharing platforms still control fetching, caching and final preview selection. See the [0.37.2 release record](docs/releases/0.37.2.md).
+- Deliver the corrected consumer-agent Fragment guidance through starter synchronization: default creation uses all enabled languages, with shared IDs/timestamps and no automatic translation.
+
 ## [0.37.1] - 2026-11-15
 
 - Remove the prohibited accessible-name attribute from the Decoder output's plain `pre` element. The enclosing named result region, keyboard focus, decoding and appearance remain unchanged in both the standalone page and About dialog.

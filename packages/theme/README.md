@@ -291,6 +291,8 @@ The unified integration automatically forwards machine-readable context and loca
 
 Set site.ogImage in src/site.config.ts to a public-root image path (for example /images/share.jpg, stored at public/images/share.jpg) or an HTTPS URL. Merge the property into your existing site settings. Leave it blank to use the bundled 1200×630 Anglefeint artwork. Fragments and all of its #ID sharing links use this default. Article-specific and automatically generated article images retain priority; with automatic generation disabled, an article hero also takes priority over the site default. Rebuild and deploy after changing images; sharing platforms may cache previews.
 
+Default-language Home redirect pages also include Open Graph and large-image Twitter Card tags using this site image or the bundled fallback. This applies both to `/` redirecting to the prefixed homepage and to the prefixed homepage redirecting to `/`. The existing HTML redirect, canonical destination and noindex behavior are retained. Tags make the image available to crawlers without following the HTML redirect; the sharing platform still controls the final preview.
+
 ```ts
 export const THEME_CONFIG = defineThemeConfig({
   site: { ogImage: '/images/share.jpg' },
