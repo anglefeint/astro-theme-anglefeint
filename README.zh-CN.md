@@ -28,20 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## 为个人博客制作
+## 使用指南
 
-Anglefeint 是一个为个人博客制作的 Astro 主题，每个页面都有自己的风格：
-
-| 页面        | 风格               |
-| ----------- | ------------------ |
-| 首页        | Matrix             |
-| 博客列表    | Cyberpunk          |
-| 文章详情    | AI                 |
-| About       | Hacker             |
-| Decoder Lab | Cypherpunk         |
-| Fragments   | 星际争霸：母巢之战 |
-
-如果你也喜欢这些风格，欢迎使用 Anglefeint 搭建自己的博客。 即使你还不了解这些氛围，也欢迎来体验，相信你会喜欢。
+第一次使用 Anglefeint？demo 中提供了安装、语言设置、写文章、图片、Fragments、页面定制、评论和部署教程。可以从[入门目录](https://demo.anglefeint.com/zh/blog/start-here/)开始阅读，需要查找具体设置时打开[配置参考](https://demo.anglefeint.com/zh/blog/config-reference/)。
 
 <a id="ai-assistant"></a>
 
@@ -293,6 +282,21 @@ pnpm 项目对应使用 `pnpm run doctor`／`pnpm preview`，或 `pnpm build`／
 ## 许可证
 
 本主题采用 [MIT License](LICENSE)。
+
+## 主题风格
+
+Anglefeint 是一个为个人博客制作的 Astro 主题，每个页面都有自己的风格：
+
+| 页面        | 风格               |
+| ----------- | ------------------ |
+| 首页        | Matrix             |
+| 博客列表    | Cyberpunk          |
+| 文章详情    | AI                 |
+| About       | Hacker             |
+| Decoder Lab | Cypherpunk         |
+| Fragments   | 星际争霸：母巢之战 |
+
+如果你也喜欢这些风格，欢迎使用 Anglefeint 搭建自己的博客。 即使你还不了解这些氛围，也欢迎来体验，相信你会喜欢。
 
 ## 预览
 

@@ -28,20 +28,9 @@ Erzeugt automatisch `llms.txt`, mehrsprachige Indizes, Volltextsammlungen und Ar
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## Für persönliche Blogs
+## Anleitungen
 
-Anglefeint ist ein Astro-Theme für persönliche Blogs. Jede Seite hat ihre eigene Atmosphäre:
-
-| Seite         | Stil                 |
-| ------------- | -------------------- |
-| Startseite    | Matrix               |
-| Blogübersicht | Cyberpunk            |
-| Artikelseite  | AI                   |
-| About         | Hacker               |
-| Decoder Lab   | Cypherpunk           |
-| Fragments     | StarCraft: Brood War |
-
-Wenn dir diese Stile auch gefallen, probiere Anglefeint für deinen Blog aus. Auch wenn dir diese Atmosphären noch neu sind, probiere sie aus. Sie werden dir gefallen.
+Neu bei Anglefeint? Die Demo enthält Anleitungen zu Installation, Sprachen, Schreiben, Bildern, Fragments, Seitenanpassung, Kommentaren und Deployment. Beginne mit der [Tutorial-Übersicht](https://demo.anglefeint.com/de/blog/start-here/); einzelne Einstellungen findest du in der [Konfigurationsreferenz](https://demo.anglefeint.com/de/blog/config-reference/).
 
 <a id="ai-assistant"></a>
 
@@ -293,6 +282,21 @@ Details: [Auf der eigenen Domain veröffentlichen](https://demo.anglefeint.com/d
 ## Lizenz
 
 Dieses Theme steht unter der [MIT License](LICENSE).
+
+## Theme-Stile
+
+Anglefeint ist ein Astro-Theme für persönliche Blogs. Jede Seite hat ihre eigene Atmosphäre:
+
+| Seite         | Stil                 |
+| ------------- | -------------------- |
+| Startseite    | Matrix               |
+| Blogübersicht | Cyberpunk            |
+| Artikelseite  | AI                   |
+| About         | Hacker               |
+| Decoder Lab   | Cypherpunk           |
+| Fragments     | StarCraft: Brood War |
+
+Wenn dir diese Stile auch gefallen, probiere Anglefeint für deinen Blog aus. Auch wenn dir diese Atmosphären noch neu sind, probiere sie aus. Sie werden dir gefallen.
 
 ## Vorschau
 
