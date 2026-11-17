@@ -148,7 +148,7 @@ Sin JavaScript queda el HTML estático inicial, sin selección aleatoria cliente
 - **Tipo:** `number`.
 - **Predeterminado:** `9`.
 - **Función:** número de variantes 1–N, no array de selección ni temas del sitio.
-- **Estado y límites:** condicional. Se redondea hacia abajo y limita a 1–12. Los colores neón compartidos solo definen 1–9: 10–12 no son paletas completas extra y pueden heredar/base. Usa 1–9, normalmente 9. El rango aceptado no añade colores.
+- **Estado y límites:** condicional. Los valores se redondean hacia abajo y se limitan a 1–12. Las paletas neón completas son 1–11: 10 es el verde menta de Decoder y 11 el azul cristal de los protoss. La variante 12 no tiene paleta propia y puede heredar el color base. El valor predeterminado sigue siendo 9; usa 11 para incluir ambos colores nuevos.
 
 <a id="style-fixed"></a>
 
@@ -157,7 +157,7 @@ Sin JavaScript queda el HTML estático inicial, sin selección aleatoria cliente
 - **Tipo:** `number`.
 - **Predeterminado:** `1`.
 - **Función:** selecciona variante fija.
-- **Estado y límites:** se redondea hacia abajo y limita entre 1 y variants. random y sequential no la usan para fijarse. Colores completos 1–9. Usa enteros finitos.
+- **Estado y límites:** se redondea hacia abajo y limita entre 1 y variants. random y sequential no la usan para fijarse. Colores completos 1–11. Usa enteros finitos.
 
 Por ejemplo, fija la segunda:
 

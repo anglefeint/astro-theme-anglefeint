@@ -148,7 +148,7 @@ Sem JavaScript, mantém o estilo inicial do HTML, sem sorteio no cliente.
 - **Tipo:** `number`.
 - **Padrão do tema:** `9`.
 - **Efeito:** quantidade de variantes numeradas de 1 a N, não um array nem a quantidade de temas do site.
-- **Estado e limites:** condicional. O componente arredonda valores normais para baixo e limita a 1–12. As cores neon compartilhadas atuais só definem 1–9; 10–12 não são três paletas completas extras e podem herdar cores ou usar a base. Prefira 1–9 e mantenha 9 como escolha usual. O intervalo não acrescenta cores.
+- **Estado e limites:** condicional. Os valores são arredondados para baixo e limitados a 1–12. As paletas neon completas são 1–11: 10 é o verde-menta do Decoder e 11 é o azul-cristal dos protoss. A variante 12 não tem paleta própria e pode herdar a cor base. O padrão continua sendo 9; use 11 para incluir as duas novas cores.
 
 <a id="style-fixed"></a>
 
@@ -157,7 +157,7 @@ Sem JavaScript, mantém o estilo inicial do HTML, sem sorteio no cliente.
 - **Tipo:** `number`.
 - **Padrão do tema:** `1`.
 - **Efeito:** número da variante no modo fixed.
-- **Estado e limites:** condicional. Arredonda valores normais para baixo e limita de 1 a variants atual. random e sequential não usam este campo para fixar estilo. Para cores neon completas, prefira 1–9 e inteiro finito.
+- **Estado e limites:** condicional. Arredonda valores normais para baixo e limita de 1 a variants atual. random e sequential não usam este campo para fixar estilo. Para cores neon completas, prefira 1–11 e inteiro finito.
 
 Por exemplo, fixe a segunda aparência:
 
