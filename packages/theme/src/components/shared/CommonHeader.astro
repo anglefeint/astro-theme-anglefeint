@@ -51,13 +51,20 @@ const showAbout = THEME.ABOUT_PAGE_ENABLED;
 const showDecoder = THEME.DECODER_PAGE_ENABLED ?? true;
 const frontierItems = [
   ...(showDecoder
-    ? [{ label: 'Decoder Lab', href: alternatePathForLocale(locale, '/decoder/') }]
+    ? [
+        {
+          label: 'Decoder Lab',
+          href: alternatePathForLocale(locale, '/decoder/'),
+          palette: 'decoder' as const,
+        },
+      ]
     : []),
   ...(THEME.FRAGMENTS.enabled
     ? [
         {
           label: getMessages(locale).fragments.title,
           href: alternatePathForLocale(locale, '/fragments/'),
+          palette: 'protoss' as const,
         },
       ]
     : []),

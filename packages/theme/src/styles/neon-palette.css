@@ -1,4 +1,8 @@
 /* Shared neon tokens; components choose their own presentation. */
+:root {
+  --neon-decoder-mint: #8ee8c3;
+  --neon-protoss-cyan: #6ed4ff;
+}
 :where(.pagination-wrap),
 .neon-v1 {
   --neon-accent: rgba(224, 170, 236, 0.95);
@@ -61,4 +65,20 @@
   --neon-border: rgba(210, 214, 232, 0.58);
   --neon-bg: rgba(113, 125, 164, 0.22);
   --neon-glow: rgba(223, 229, 255, 0.56);
+}
+
+.neon-decoder,
+.neon-v10 {
+  --neon-accent: var(--neon-decoder-mint);
+  --neon-border: rgba(142, 232, 195, 0.55);
+  --neon-bg: rgba(47, 113, 88, 0.22);
+  --neon-glow: rgba(142, 232, 195, 0.48);
+}
+
+.neon-protoss,
+.neon-v11 {
+  --neon-accent: var(--neon-protoss-cyan);
+  --neon-border: rgba(110, 212, 255, 0.55);
+  --neon-bg: rgba(28, 81, 115, 0.22);
+  --neon-glow: rgba(110, 212, 255, 0.48);
 }

@@ -148,7 +148,7 @@ Without JavaScript, the initial static HTML styles remain; client-side random se
 - **Type:** `number`.
 - **Theme default:** `9`.
 - **Purpose:** Number of participating variants, numbered 1 through N; not a selection array or the number of site themes.
-- **Status and limits:** Conditional. Normal numeric values are floored and clamped to 1–12. Shared neon colors currently define only 1–9: 10–12 are not three additional complete palettes and may inherit/base-fallback. Use 1–9, normally the default 9. The accepted range does not add colors.
+- **Status and limits:** Conditional. Normal numeric values are floored and clamped to 1–12. Complete shared neon palettes are 1–11: 10 is Decoder mint and 11 is Protoss crystal blue. Variant 12 has no independent palette and may inherit/base-fallback. The default remains 9; use 11 to include both new colors.
 
 <a id="style-fixed"></a>
 
@@ -157,7 +157,7 @@ Without JavaScript, the initial static HTML styles remain; client-side random se
 - **Type:** `number`.
 - **Theme default:** `1`.
 - **Purpose:** Selects the variant in fixed mode.
-- **Status and limits:** Normal values are floored and clamped between 1 and variants. random and sequential do not use this to fix their appearance. Complete neon colors are currently 1–9. Use finite integers.
+- **Status and limits:** Normal values are floored and clamped between 1 and variants. random and sequential do not use this to fix their appearance. Complete neon colors are currently 1–11. Use finite integers.
 
 For example, fix the second appearance:
 

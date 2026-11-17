@@ -13,6 +13,11 @@ depends_on:
 
 All notable changes to this project are documented in this file.
 
+## [0.37.3] - 2026-11-17
+
+- Highlight the Frontier arrow, bottom marker and current menu item on Decoder Lab and Fragments, including paginated Fragments. Use Decoder mint and Protoss crystal blue without adding animation or changing other navigation items.
+- Extend the shared neon palette from nine to eleven colors, retaining variants 1–9 and adding reusable mint/crystal-blue tokens and named classes. Existing pagination variant settings/default 9 remain unchanged. Synchronize nine-language configuration references and starter templates. See the [0.37.3 release record](docs/releases/0.37.3.md).
+
 ## [0.37.2] - 2026-11-16
 
 - Include Open Graph and large-image Twitter Card metadata in both static default-language Home redirect modes. Reuse the configured site image or bundled fallback, site title and localized description while retaining meta-refresh, canonical destination and `noindex, follow`. Sharing platforms still control fetching, caching and final preview selection. See the [0.37.2 release record](docs/releases/0.37.2.md).

@@ -90,7 +90,7 @@ test('tags resample on a new document and do not recolor repeatedly within one v
   });
   initTagColors(reload.root, () => 0.99);
   assert.equal(first.link.className, 'unrelated neon-v1');
-  assert.equal(reload.link.className, 'unrelated neon-v9');
+  assert.equal(reload.link.className, `unrelated neon-v${NEON_COLOR_COUNT}`);
   assert.equal(first.link.getAttribute('href'), '/en/tags/example/');
 });
 

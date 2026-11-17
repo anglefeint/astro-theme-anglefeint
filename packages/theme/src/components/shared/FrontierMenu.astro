@@ -1,7 +1,8 @@
 ---
 import HeaderLink from '../HeaderLink.astro';
+import '../../styles/neon-palette.css';
 interface Props {
-  items: { label: string; href: string; emphasized?: boolean }[];
+  items: { label: string; href: string; emphasized?: boolean; palette?: 'decoder' | 'protoss' }[];
 }
 const { items } = Astro.props;
 ---
@@ -22,7 +23,9 @@ const { items } = Astro.props;
               {item.label} <span aria-hidden="true">↗</span>
             </a>
           ) : (
-            <HeaderLink href={item.href}>{item.label}</HeaderLink>
+            <HeaderLink href={item.href} class={item.palette && `neon-${item.palette}`}>
+              {item.label}
+            </HeaderLink>
           )
         )}
       </div>
@@ -68,6 +71,12 @@ const { items } = Astro.props;
     align-self: stretch;
     margin-left: 0.65rem;
   }
+  .frontier-dropdown:has(.frontier-dropdown-links :global(a.neon-decoder.active)) {
+    --frontier-active: var(--neon-decoder-mint);
+  }
+  .frontier-dropdown:has(.frontier-dropdown-links :global(a.neon-protoss.active)) {
+    --frontier-active: var(--neon-protoss-cyan);
+  }
   .frontier-title {
     position: relative;
     padding: 0.65rem 0.8rem 0.5rem;
@@ -107,19 +116,22 @@ const { items } = Astro.props;
     display: block;
     opacity: 0.8;
   }
-  .frontier-dropdown[open] summary {
-    border-bottom-color: var(--chrome-active, var(--accent));
+  .frontier-dropdown[open] summary,
+  .frontier-dropdown:has(.frontier-dropdown-links :global(a.active)) summary {
+    border-bottom-color: var(--frontier-active, var(--chrome-active, var(--accent)));
   }
   .frontier-dropdown summary::-webkit-details-marker {
     display: none;
   }
   .frontier-dropdown summary:hover,
-  .frontier-dropdown[open] summary {
-    color: var(--chrome-active, var(--accent));
+  .frontier-dropdown[open] summary,
+  .frontier-dropdown:has(.frontier-dropdown-links :global(a.active)) summary {
+    color: var(--frontier-active, var(--chrome-active, var(--accent)));
   }
   .frontier-dropdown summary:hover svg,
   .frontier-dropdown summary:focus-visible svg,
-  .frontier-dropdown[open] summary svg {
+  .frontier-dropdown[open] summary svg,
+  .frontier-dropdown:has(.frontier-dropdown-links :global(a.active)) summary svg {
     opacity: 1;
   }
   .frontier-dropdown summary:focus-visible {
@@ -154,6 +166,6 @@ const { items } = Astro.props;
     background: color-mix(in srgb, var(--chrome-active, var(--accent)) 15%, transparent);
   }
   .frontier-dropdown .frontier-dropdown-links :global(a.active) {
-    color: var(--chrome-active, var(--accent));
+    color: var(--neon-accent, var(--chrome-active, var(--accent)));
   }
 </style>

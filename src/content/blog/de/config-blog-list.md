@@ -148,7 +148,7 @@ Ohne JavaScript bleibt der anfängliche HTML-Stil ohne Client-Zufallsauswahl.
 - **Typ:** `number`.
 - **Theme-Standard:** `9`.
 - **Wirkung:** Anzahl auswählbarer Varianten 1 bis N, kein Mehrfacharray oder globale Theme-Anzahl.
-- **Status und Grenzen:** bedingt. Normale Werte werden abgerundet und auf 1–12 begrenzt. Gemeinsame Neonfarben existieren derzeit nur für 1–9. 10–12 sind keine drei weiteren vollständigen Paletten und können auf geerbte/Basisfarben fallen. Verwende vorzugsweise 1–9, gewöhnlich Standard 9. Die Bereichsangabe schafft keine neuen Farben.
+- **Status und Grenzen:** bedingt. Normale Werte werden abgerundet und auf 1–12 begrenzt. Vollständige gemeinsame Neonpaletten gibt es für 1–11: 10 ist Decoder-Mint, 11 ist Protoss-Kristallblau. Variante 12 hat keine eigene Palette und kann die Basisfarbe erben. Der Standard bleibt 9; mit 11 werden beide neuen Farben einbezogen.
 
 <a id="style-fixed"></a>
 
@@ -157,7 +157,7 @@ Ohne JavaScript bleibt der anfängliche HTML-Stil ohne Client-Zufallsauswahl.
 - **Typ:** `number`.
 - **Theme-Standard:** `1`.
 - **Wirkung:** Feste Variantennummer im fixed-Modus.
-- **Status und Grenzen:** bedingt. Normale Werte werden abgerundet und auf 1 bis variants begrenzt. random und sequential fixieren damit nichts. Für vollständige Neonfarben 1–9 und endliche Ganzzahlen wählen.
+- **Status und Grenzen:** bedingt. Normale Werte werden abgerundet und auf 1 bis variants begrenzt. random und sequential fixieren damit nichts. Für vollständige Neonfarben 1–11 und endliche Ganzzahlen wählen.
 
 Für die zweite feste Variante:
 

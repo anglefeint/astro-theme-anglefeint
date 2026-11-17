@@ -1,5 +1,5 @@
-// Matches the nine color tokens in styles/neon-palette.css; no component selectors here.
-export const NEON_COLOR_COUNT = 9;
+// Matches the shared color tokens in styles/neon-palette.css; no component selectors here.
+export const NEON_COLOR_COUNT = 11;
 
 /** @param {Element} element @param {number} variant */
 export function applyNeonVariant(element, variant) {

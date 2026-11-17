@@ -29,7 +29,9 @@ Breaking integration release: [0.27.0](./0.27.0.md), package-owned standard rout
 
 ## Contract
 
-Current release source: [0.37.2](./0.37.2.md), Open Graph/Twitter share metadata for both static Home redirect modes, preserving routing and existing image configuration. Its ledger and linked GitHub Release distinguish the selected plan from verified delivery.
+Current release source: [0.37.3](./0.37.3.md), fixed Frontier current-page highlights for Decoder Lab/Fragments and eleven shared neon palettes. Its ledger and linked GitHub Release distinguish preparation from verified delivery.
+
+Previous release source: [0.37.2](./0.37.2.md), Open Graph/Twitter share metadata for both static Home redirect modes, preserving routing and existing image configuration. Its ledger and linked GitHub Release distinguish the selected plan from verified delivery.
 
 Previous release source: [0.37.1](./0.37.1.md), Decoder output ARIA correction and Fragments chrome-before-anchor initialization, without visual changes or waits. Its ledger and linked GitHub Release record delivery evidence. Previous release: [0.37.0](./0.37.0.md), Brood War-inspired Fragments visuals, music/comment controls and localized demo presentation. Its ledger and linked GitHub Release distinguish prepared changes from verified delivery. Previous release: [0.36.2](./0.36.2.md), automatic image preparation during builds and corrected multilingual examples. Previous reliability/guides release: [0.36.1](./0.36.1.md). Its ledger defines compatibility and the selected technical plan; the linked GitHub Release and closeout evidence record actual delivery status and timings. Previous image/About release: [0.36.0](./0.36.0.md).
 
