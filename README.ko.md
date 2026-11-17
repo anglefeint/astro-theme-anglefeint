@@ -28,20 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## 개인 블로그를 위한 테마
+## 사용 가이드
 
-Anglefeint는 개인 블로그를 위해 만든 Astro 테마입니다. 페이지마다 서로 다른 분위기를 담았습니다.
-
-| 페이지      | 스타일               |
-| ----------- | -------------------- |
-| 홈          | Matrix               |
-| 블로그 목록 | Cyberpunk            |
-| 글 상세     | AI                   |
-| About       | Hacker               |
-| Decoder Lab | Cypherpunk           |
-| Fragments   | StarCraft: Brood War |
-
-이런 스타일을 좋아한다면, 여러분의 블로그에도 Anglefeint를 사용해 보세요. 이런 분위기가 아직 낯설더라도 직접 경험해 보세요. 분명 마음에 들 거예요.
+Anglefeint가 처음인가요? 데모에는 설치, 언어 설정, 글쓰기, 이미지, Fragments, 페이지 맞춤 설정, 댓글과 배포 가이드가 있습니다. [튜토리얼 목차](https://demo.anglefeint.com/ko/blog/start-here/)부터 시작하고, 개별 설정은 [설정 참고 문서](https://demo.anglefeint.com/ko/blog/config-reference/)에서 찾아보세요.
 
 <a id="ai-assistant"></a>
 
@@ -291,6 +280,21 @@ pnpm 프로젝트는 `pnpm run doctor`／`pnpm preview` 또는 `pnpm build`／`p
 ## 라이선스
 
 이 테마는 [MIT License](LICENSE)를 따릅니다.
+
+## 테마 스타일
+
+Anglefeint는 개인 블로그를 위해 만든 Astro 테마입니다. 페이지마다 서로 다른 분위기를 담았습니다.
+
+| 페이지      | 스타일               |
+| ----------- | -------------------- |
+| 홈          | Matrix               |
+| 블로그 목록 | Cyberpunk            |
+| 글 상세     | AI                   |
+| About       | Hacker               |
+| Decoder Lab | Cypherpunk           |
+| Fragments   | StarCraft: Brood War |
+
+이런 스타일을 좋아한다면, 여러분의 블로그에도 Anglefeint를 사용해 보세요. 이런 분위기가 아직 낯설더라도 직접 경험해 보세요. 분명 마음에 들 거예요.
 
 ## 미리보기
 

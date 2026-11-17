@@ -28,20 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## 為個人部落格製作
+## 使用指南
 
-Anglefeint 是一個為個人部落格製作的 Astro 主題，每個頁面都有自己的風格：
-
-| 頁面        | 風格               |
-| ----------- | ------------------ |
-| 首頁        | Matrix             |
-| 部落格列表  | Cyberpunk          |
-| 文章詳情    | AI                 |
-| About       | Hacker             |
-| Decoder Lab | Cypherpunk         |
-| Fragments   | 星海爭霸：怒火燎原 |
-
-如果你也喜歡這些風格，歡迎使用 Anglefeint 建立自己的部落格。 即使你還不熟悉這些氛圍，也歡迎來體驗，相信你會喜歡。
+第一次使用 Anglefeint？demo 中提供了安裝、語言設定、寫文章、圖片、Fragments、頁面自訂、留言和部署教學。可以從[入門目錄](https://demo.anglefeint.com/zh-hant/blog/start-here/)開始閱讀，需要查找具體設定時開啟[設定參考](https://demo.anglefeint.com/zh-hant/blog/config-reference/)。
 
 <a id="ai-assistant"></a>
 
@@ -291,6 +280,21 @@ pnpm 專案對應使用 `pnpm run doctor`／`pnpm preview`，或 `pnpm build`／
 ## 授權條款
 
 本主題采用 [MIT License](LICENSE)。
+
+## 主題風格
+
+Anglefeint 是一個為個人部落格製作的 Astro 主題，每個頁面都有自己的風格：
+
+| 頁面        | 風格               |
+| ----------- | ------------------ |
+| 首頁        | Matrix             |
+| 部落格列表  | Cyberpunk          |
+| 文章詳情    | AI                 |
+| About       | Hacker             |
+| Decoder Lab | Cypherpunk         |
+| Fragments   | 星海爭霸：怒火燎原 |
+
+如果你也喜歡這些風格，歡迎使用 Anglefeint 建立自己的部落格。 即使你還不熟悉這些氛圍，也歡迎來體驗，相信你會喜歡。
 
 ## 預覽
 

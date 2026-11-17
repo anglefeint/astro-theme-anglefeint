@@ -28,20 +28,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-MIT-2EA043" />
 </p>
 
-## 個人ブログのために
+## 使い方ガイド
 
-Anglefeint は個人ブログのために作られた Astro テーマです。ページごとに異なる雰囲気を楽しめます。
-
-| ページ      | スタイル             |
-| ----------- | -------------------- |
-| ホーム      | Matrix               |
-| ブログ一覧  | Cyberpunk            |
-| 記事詳細    | AI                   |
-| About       | Hacker               |
-| Decoder Lab | Cypherpunk           |
-| Fragments   | StarCraft: Brood War |
-
-こうしたスタイルが好きなら、あなたのブログにも Anglefeint を使ってみてください。 こうした雰囲気をまだ知らなくても、ぜひ体験してみてください。きっと気に入るはずです。
+Anglefeint を初めて使いますか？デモには、インストール、言語設定、記事の執筆、画像、Fragments、ページのカスタマイズ、コメント、デプロイのガイドがあります。[チュートリアル一覧](https://demo.anglefeint.com/ja/blog/start-here/)から始め、個別の設定は[設定リファレンス](https://demo.anglefeint.com/ja/blog/config-reference/)で確認できます。
 
 <a id="ai-assistant"></a>
 
@@ -291,6 +280,21 @@ pnpm は `pnpm run doctor`／`pnpm preview`、または `pnpm build`／`pnpm pre
 ## ライセンス
 
 このテーマは [MIT License](LICENSE) で公開しています。
+
+## テーマのスタイル
+
+Anglefeint は個人ブログのために作られた Astro テーマです。ページごとに異なる雰囲気を楽しめます。
+
+| ページ      | スタイル             |
+| ----------- | -------------------- |
+| ホーム      | Matrix               |
+| ブログ一覧  | Cyberpunk            |
+| 記事詳細    | AI                   |
+| About       | Hacker               |
+| Decoder Lab | Cypherpunk           |
+| Fragments   | StarCraft: Brood War |
+
+こうしたスタイルが好きなら、あなたのブログにも Anglefeint を使ってみてください。 こうした雰囲気をまだ知らなくても、ぜひ体験してみてください。きっと気に入るはずです。
 
 ## プレビュー
 
